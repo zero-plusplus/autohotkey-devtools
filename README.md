@@ -1,11 +1,13 @@
 ***NOTE: I am using a translator.***
 
 # About License
-**This project is not intended to be used by developers other than end users. For this reason, I intentionally do not use a license and claim maximum rights.**
+**This project is not intended to be used by developers other than end users. For this reason, I intentionally do not use a license and claim maximum rights. This is to protect the purpose of my activity, which is to grow my own software. Please understand.**
 
-**The source code is exposed for the sake of transparency, and in reality it behaves like closed source.**
+**The source code is publicly available for transparency, but use of it is prohibited, so its actual nature is closer to closed source.**
 
-**Only the end user may use the released software for personal use only.**
+**Modifying or redistributing the source code is prohibited. This also applies to things like extension pack for vscode that don't include the source code but are referenced. In addition, any act that refers to my software in any way and executes its features is also prohibited.**
+
+**Only the end user may use the released software for personal use only. Personal use in this context means downloading the software from the place where I officially provide the release and running it on that computer. Using it for work is acceptable as long as you follow these rules. However using it in a way that harms others is prohibited.**
 
 **Most importantly, please use my software at your own risk. I will do my best to eliminate problems as much as possible, but it is not perfect.**
 
