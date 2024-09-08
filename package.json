@@ -1,0 +1,19 @@
+{
+  "name": "autohotkey-devtools",
+  "version": "0.0.0",
+  "description": "[UNDER DEVELOPMENT] Tools used in the AutoHotkey integrated development environment.",
+  "keywords": [
+    "AutoHotkey"
+  ],
+  "homepage": "https://github.com/zero-plusplus/autohotkey-devtools",
+  "bugs": {
+    "url": "https://github.com/zero-plusplus/autohotkey-devtools/issues"
+  },
+  "license": "SEE LICENSE IN README.md",
+  "author": "zero-plusplus (https://github.com/zero-plusplus)",
+  "repository": "github:zero-plusplus/autohotkey-devtools",
+  "scripts": {
+    "test": "echo \"Error: no test specified\" && exit 1"
+  },
+  "private": true
+}
