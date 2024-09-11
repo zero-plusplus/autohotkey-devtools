@@ -15,5 +15,18 @@
   "scripts": {
     "test": "echo \"Error: no test specified\" && exit 1"
   },
-  "private": true
+  "devDependencies": {
+    "@eslint/js": "^9.10.0",
+    "@stylistic/eslint-plugin": "^2.8.0",
+    "@types/eslint__js": "^8.42.3",
+    "@typescript-eslint/eslint-plugin": "^8.5.0",
+    "@typescript-eslint/parser": "^8.5.0",
+    "eslint": "^9.10.0",
+    "globals": "^14.0.0",
+    "typescript-eslint": "^8.5.0"
+  },
+  "private": true,
+  "workspaces": [
+    "packages/eslint-style-rules"
+  ]
 }
