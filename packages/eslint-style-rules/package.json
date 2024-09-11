@@ -1,5 +1,5 @@
 {
-  "name": "eslint-style-rules",
+  "name": "@zero-plusplus/eslint-style-rules",
   "version": "0.0.0",
   "main": "src/index.js",
   "peerDependencies": {

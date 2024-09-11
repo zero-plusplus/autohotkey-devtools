@@ -1,4 +1,4 @@
-const rules = require('eslint-style-rules');
+const rules = require('@zero-plusplus/eslint-style-rules');
 
 module.exports = [
   ...rules.js.config(),
