@@ -1,12 +1,14 @@
-const stylistic = require('@stylistic/eslint-plugin');
+const jestPlugin = require('eslint-plugin-jest');
+const stylisticPlugin = require('@stylistic/eslint-plugin');
 const styles = require('./all/stylistic');
+const jest = require('./all/jest');
 
 const indentSize = 2;
 module.exports.config = (indent = indentSize) => {
   return [
     {
       plugins: {
-        '@stylistic': stylistic,
+        '@stylistic': stylisticPlugin,
       },
       rules: {
         ...styles.rules,
@@ -54,6 +56,19 @@ module.exports.config = (indent = indentSize) => {
         '@stylistic/semi': [ 'error', 'always' ],
         '@stylistic/space-before-function-paren': [ 'error', 'never' ],
         '@stylistic/type-annotation-spacing': 'error',
+      },
+    },
+    {
+      plugins: {
+        'jest': jestPlugin,
+      },
+      rules: {
+        ...jest.rules,
+
+        'jest/consistent-test-it': [ 'error', { fn: 'test', withinDescribe: 'test' } ],
+        'jest/max-expects': 'off',
+        'jest/prefer-expect-assertions': 'off',
+        'jest/prefer-importing-jest-globals': 'off',
       },
     },
   ];
