@@ -58,7 +58,11 @@ module.exports.config = () => {
   return [
     ...common.config(),
     {
-      files: [ '**/*.js' ],
+      files: [
+        '**/*.js',
+        '**/*.cjs',
+        '**/*.mjs',
+      ],
       rules: {
         ...module.exports.rules,
       },

@@ -70,7 +70,11 @@ module.exports.config = (tsconfigRootDir) => {
           tsconfigRootDir,
         },
       },
-      files: [ '**/*.ts' ],
+      files: [
+        '**/*.ts',
+        '**/*.cts',
+        '**/*.mts',
+      ],
       rules: {
         ...module.exports.rules,
       },
