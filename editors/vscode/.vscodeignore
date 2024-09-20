@@ -1,0 +1,9 @@
+../
+../../
+.vscode/
+build/demo
+scripts/
+src/
+eslint.config.js
+tsconfig.json
+*.vsix

@@ -1,0 +1,21 @@
+{
+	"folders": [
+		{
+			"path": ".",
+			"name": "🏠"
+		},
+		{
+			"path": "editors/vscode",
+			"name": "🖊️ VSCode",
+		},
+		{
+			"path": "packages/autohotkey-tmlanguage",
+			"name": "🧮Autohotkey tmLanguage"
+		},
+		{
+			"path": "packages/autohotkey-utilities",
+			"name": "🛠️AutoHotkey Utilities"
+		},
+	],
+	"settings": {}
+}

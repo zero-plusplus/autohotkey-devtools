@@ -23,17 +23,26 @@
     "@types/node": "^22.5.4",
     "@typescript-eslint/eslint-plugin": "^8.5.0",
     "@typescript-eslint/parser": "^8.5.0",
+    "esbuild": "0.23.1",
     "eslint": "^9.10.0",
     "eslint-plugin-jest": "^28.8.3",
     "globals": "^14.0.0",
     "jest": "^29.7.0",
     "ts-jest": "^29.2.5",
+    "tsx": "^4.19.1",
     "typescript": "^5.6.2",
     "typescript-eslint": "^8.5.0"
   },
+  "engines": {
+    "node": ">=22.0.0"
+  },
   "private": true,
-  "workspaces": [
-    "packages/eslint-style-rules",
-    "packages/autohotkey-utilities"
-  ]
+  "workspaces": {
+    "packages": [
+      "editors/vscode",
+      "packages/autohotkey-tmlanguage",
+      "packages/autohotkey-utilities",
+      "packages/eslint-style-rules"
+    ]
+  }
 }

@@ -1,0 +1,111 @@
+{
+  "name": "vscode-autohotkey-devtools",
+  "version": "0.0.0",
+  "author": "zero-plusplus (https://github.com/zero-plusplus)",
+  "publisher": "zero-plusplus",
+  "engines": {
+    "vscode": "^1.90.2"
+  },
+  "license": "SEE LICENSE IN README.md",
+  "displayName": "AutoHotkey Dev Tools",
+  "description": "[UNDER DEVELOPMENT] The goal is to provide an integrated AutoHotkey development environment in Visual Studio Code.",
+  "homepage": "https://github.com/zero-plusplus/autohotkey-devtools",
+  "repository": "github:zero-plusplus/autohotkey-devtools",
+  "bugs": {
+    "url": "https://github.com/zero-plusplus/autohotkey-devtools/issues"
+  },
+  "categories": [
+    "Programming Languages"
+  ],
+  "keywords": [
+    "AutoHotkey"
+  ],
+  "preview": true,
+  "main": "build/src/extension.js",
+  "browser": "build/src/browser/extension.js",
+  "contributes": {
+    "languages": [
+      {
+        "id": "autohotkey",
+        "aliases": [
+          "AutoHotkey"
+        ],
+        "extensions": [
+          ".ahk"
+        ],
+        "configuration": "./build/autohotkey.language-configuration.json"
+      },
+      {
+        "id": "autohotkeynext",
+        "aliases": [
+          "AutoHotkey Next"
+        ],
+        "configuration": "./build/autohotkeynext.language-configuration.json"
+      },
+      {
+        "id": "autohotkey2",
+        "aliases": [
+          "AutoHotkey v2"
+        ],
+        "extensions": [
+          ".ahk2"
+        ],
+        "configuration": "./build/autohotkey2.language-configuration.json"
+      },
+      {
+        "id": "autohotkeyl",
+        "aliases": [
+          "AutoHotkey v1.1"
+        ],
+        "extensions": [
+          ".ahkl"
+        ],
+        "configuration": "./build/autohotkeyl.language-configuration.json"
+      }
+    ],
+    "grammars": [
+      {
+        "language": "autohotkey",
+        "scopeName": "source.autohotkey",
+        "path": "build/autohotkey.tmLanguage.json"
+      },
+      {
+        "language": "autohotkeynext",
+        "scopeName": "source.autohotkeynext",
+        "path": "build/autohotkeynext.tmLanguage.json"
+      },
+      {
+        "language": "autohotkey2",
+        "scopeName": "source.autohotkey2",
+        "path": "build/autohotkey2.tmLanguage.json"
+      },
+      {
+        "language": "autohotkeyl",
+        "scopeName": "source.autohotkeyl",
+        "path": "build/autohotkeyl.tmLanguage.json"
+      }
+    ]
+  },
+  "activationEvents": [
+    "onLanguage:autohotkey",
+    "onLanguage:autohotkeynext",
+    "onLanguage:autohotkey2",
+    "onLanguage:autohotkeyl"
+  ],
+  "markdown": "github",
+  "qna": false,
+  "devDependencies": {
+    "@types/vscode": "^1.90.2",
+    "@vscode/vsce": "^3.1.0"
+  },
+  "scripts": {
+    "build": "npx tsx scripts/bin/build.mts",
+    "watch": "npx tsx watch scripts/bin/watch.mts",
+    "clean": "npx tsx scripts/bin/clean.mts",
+    "prepackage": "npx tsx scripts/bin/prepackage.mts",
+    "package": "npx @vscode/vsce package",
+    "vscode:prepublish": "npm run prepackage"
+  },
+  "icon": "icon.png",
+  "pricing": "Free"
+}
