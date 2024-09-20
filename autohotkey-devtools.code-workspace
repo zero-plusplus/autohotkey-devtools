@@ -10,11 +10,11 @@
 		},
 		{
 			"path": "packages/autohotkey-tmlanguage",
-			"name": "🧮Autohotkey tmLanguage"
+			"name": "🧮 AutoHotKey tmLanguage"
 		},
 		{
 			"path": "packages/autohotkey-utilities",
-			"name": "🛠️AutoHotkey Utilities"
+			"name": "🛠️ AutoHotKey Utilities"
 		},
 	],
 	"settings": {}
