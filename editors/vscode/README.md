@@ -1,3 +1,5 @@
+**NOTE: This document has been translated by a translator.**
+
 # TOC
 * [About License](#about-license)
 * [About Project](#about-project)
@@ -16,7 +18,7 @@ Although not relevant to end users, please note that reference acts such as incl
 
 This extension is a VSCode implementation of a suite of tools being developed with the goal of providing an integrated development environment for AutoHotkey.
 
-vscode-autohotkey-debug was separated from this project, but will be reorganized and integrated here as I needed to use the new license to continue development.
+[vscode-autohotkey-debug](https://github.com/zero-plusplus/vscode-autohotkey-debug) was separated from this project, but will be reorganized and integrated here as I needed to use the new license to continue development.
 
 Since vscode-autohotkey-debug took a lot of time to release because so many features were implemented at once, I plan to repeat the minimum number of releases this time.
 
