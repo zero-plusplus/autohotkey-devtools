@@ -1,5 +1,7 @@
+const { createDefaultPreset } = require('ts-jest');
+
 /** @type {import('ts-jest').JestConfigWithTsJest} **/
 module.exports = {
-  ...require('../../jest.config'),
+  ...createDefaultPreset(),
   moduleDirectories: [ '../../node_modules' ],
 };
