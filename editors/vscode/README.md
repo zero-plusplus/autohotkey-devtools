@@ -1,17 +1,19 @@
 **NOTE: This document has been translated by a translator.**
 
+# About License
+**Important**: **The full text of the license is [here](https://github.com/zero-plusplus/autohotkey-devtools?tab=readme-ov-file#about-license).**
+
+This project is not MIT licensed, unlike vscode-autohotkey-debug, but end users can use it without restrictions as long as they use it locally (any use that would harm anyone is of course prohibited).
+
+However, if you use it, you do so at your own risk. I will try to remove problems where possible, but it is not perfect.
+
+Although not relevant to end users, please note that reference acts such as inclusion in the vscode extension pack are also prohibited.
+
 # TOC
 * [About License](#about-license)
 * [About Project](#about-project)
 * [Features](#features)
   * [Syntax highlighting](#syntax-highlighting)
-
-# About License
-The full license is written [here](https://github.com/zero-plusplus/autohotkey-devtools?tab=readme-ov-file#about-license).
-
-This project is not MIT licensed, unlike vscode-autohotkey-debug, but end users can use it without restrictions as long as they use it locally (any use that would harm anyone is of course prohibited).
-
-Although not relevant to end users, please note that reference acts such as inclusion in vscode expansion pack are also prohibited.
 
 # About Project
 **Note: This extension is not yet complete.**
