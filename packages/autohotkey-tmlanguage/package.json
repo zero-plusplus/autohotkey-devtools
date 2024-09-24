@@ -2,6 +2,9 @@
   "name": "@zero-plusplus/autohotkey-tmlanguage",
   "version": "0.0.0",
   "description": "",
+  "scripts": {
+    "test": "npx jest"
+  },
   "devDependencies": {
     "vscode-oniguruma": "^2.0.1",
     "vscode-textmate": "^9.1.0"
