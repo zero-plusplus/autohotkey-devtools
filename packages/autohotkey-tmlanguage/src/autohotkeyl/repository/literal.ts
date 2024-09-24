@@ -1,28 +1,67 @@
-import { RuleName, MatchRule, Repository, Repositories, BeginEndRule, Utilities, PatternsRule } from '../../types';
+import { RuleName, MatchRule, Repository, Repositories, BeginEndRule, PatternsRule, ScopeName } from '../../types';
+import { createUtilities } from '../../utils';
 
 // [Escape Sequences](https://www.autohotkey.com/docs/v1/misc/EscapeChar.htm)
-const commonEscapeSequences = [ '`,', '`%', '``', '`;', '`::', '`n', '`r', '`b', '`t', '`v', '`a', '`f' ] as const;
+export const commonEscapeSequences: string[] = [ '`,', '`%', '``', '`;', '`::', '`r', '`n', '`b', '`t', '`v', '`a', '`f' ] as const;
+export const doubleStringEscapeSequences: string[] = [ ...commonEscapeSequences, `""` ] as const;
 
-export function createLiteralRepositories({ name, include }: Utilities): Repositories {
+export function createLiteralRepositories(scopeName: ScopeName): Repositories {
+  const { name, nameRule, includeRule } = createUtilities(scopeName);
+
   return {
     [Repository.String]: ((): PatternsRule => {
       return {
-        patterns: [ include(Repository.DoubleString) ],
+        patterns: [ includeRule(Repository.DoubleString) ],
       };
     })(),
     [Repository.DoubleString]: ((): BeginEndRule => {
       return {
         name: name(RuleName.DoubleString),
-        begin: '(?<!")"',
-        end: '(?<!")"',
-        patterns: [ include(Repository.DoubleStringEscapeSequence) ],
+        begin: '(?<!")(")',
+        beginCaptures: {
+          1: nameRule(RuleName.StringBegin),
+        },
+        end: '(")(?!")',
+        endCaptures: {
+          1: nameRule(RuleName.StringEnd),
+        },
+        patterns: [
+          includeRule(Repository.IllegalStringNewLine),
+          includeRule(Repository.IllegalStringContent),
+          includeRule(Repository.DoubleStringEscapeSequence),
+        ],
+      };
+    })(),
+    [Repository.IllegalStringContent]: ((): MatchRule => {
+      return {
+        match: '(.)(?=\\r\\n|\\n)',
+        captures: {
+          1: nameRule(RuleName.IllegalSingleLineStringContent),
+        },
+      };
+    })(),
+    [Repository.IllegalStringNewLine]: ((): PatternsRule => {
+      return {
+        patterns: [
+          {
+            match: '(\\r\\n)',
+            captures: {
+              1: nameRule(RuleName.IllegalStringNewLine),
+            },
+          },
+          {
+            match: '(\\r|\\n)',
+            captures: {
+              1: nameRule(RuleName.IllegalStringNewLine),
+            },
+          },
+        ],
       };
     })(),
     [Repository.DoubleStringEscapeSequence]: ((): MatchRule => {
-      const escapeSequences = [ ...commonEscapeSequences, `""` ];
       return {
         name: name(RuleName.DoubleStringEscapeSequence),
-        match: `(${escapeSequences.join('|')})`,
+        match: `(${doubleStringEscapeSequences.join('|')})(?!(\\r\\n|\\n))`,
       };
     })(),
   };

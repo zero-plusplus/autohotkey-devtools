@@ -2,16 +2,30 @@
 export const scopeNames = [ 'autohotkey', 'autohotkeynext', 'autohotkeyl', 'autohotkey2' ] as const;
 export const enum Repository {
   Self = '$self',
+
   Statement = 'statement',
   String = 'string',
+  IllegalStringContent = 'invalid.illegal.content',
+  IllegalStringNewLine = 'invalid.illegal.newline',
   DoubleString = 'string.quoted.double',
+  DoubleStringContent = 'string.quoted.double.content',
   DoubleStringEscapeSequence = 'constant.character.escape.double',
   SingleString = 'string.quoted.single',
   SingleStringEscapeSequence = 'constant.character.escape.single',
 }
+
+// https://macromates.com/manual/en/language_grammars#naming_conventions
+// https://github.com/microsoft/vscode/blob/main/extensions/theme-defaults/themes/dark_vs.json
+// https://github.com/microsoft/vscode/blob/main/extensions/theme-defaults/themes/dark_plus.json
 export const enum RuleName {
+  Emphasis = 'emphasis',
+  Directive = 'meta.preprocessor',
+  LegacyExpressionContent = 'string.legacy.content',
+
   CommentBlock = 'comment.block',
   DoubleString = 'string.quoted.double',
+  IllegalSingleLineStringContent = 'invalid.illegal.content',
+  IllegalStringNewLine = 'invalid.illegal.newline',
   DoubleStringEscapeSequence = 'constant.character.escape.double',
   SingleStringEscapeSequence = 'constant.character.escape.single',
   SingleString = 'string.quoted.single',
@@ -34,12 +48,15 @@ export interface TmLanguage {
 }
 
 // https://macromates.com/manual/en/language_grammars#rule_keys
-export type Rule = PatternsRule | MatchRule | BeginEndRule | BeginWhileRule | IncludeRule;
+export type Rule = NameRule | PatternsRule | MatchRule | BeginEndRule | BeginWhileRule | IncludeRule;
 export interface RuleBase {
   name?: string;
   comment?: string;
   disabled?: 1;
   patterns?: Rule[];
+}
+export interface NameRule extends RuleBase {
+  name: string;
 }
 export interface PatternsRule extends RuleBase {
   patterns: Rule[];
@@ -68,6 +85,8 @@ export interface IncludeRule {
 
 export interface Utilities {
   name: (...ruleNames: RuleName[]) => string;
-  include: (repositoryName: Repository) => IncludeRule;
+  nameRule: (...ruleNames: RuleName[]) => NameRule;
+  includeRule: (repositoryName: Repository) => IncludeRule;
+  includeScope: (scopeName: ScopeName) => IncludeRule;
 }
 // #endregion types

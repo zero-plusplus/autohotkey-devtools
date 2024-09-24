@@ -1,5 +1,7 @@
-import { Repositories, Utilities } from '../../types';
+import { Repositories, ScopeName } from '../../types';
 
-export function createRepositories(utils: Utilities): Repositories {
+export function createRepositories(scopeName: ScopeName): Repositories {
+  // const utils = createUtilities(scopeName);
+
   return {};
 }

@@ -1,8 +1,10 @@
 import { BeginWhileRule, RuleName, ScopeName, TmLanguage } from '../types';
+import { createUtilities } from '../utils';
 
 export function createTmLanguage(): TmLanguage {
   const scopeName: ScopeName = 'autohotkey';
-  // const utils = createUtilities(scopeName);
+  const { nameRule, includeScope } = createUtilities(scopeName);
+
   return {
     scopeName: `source.${scopeName}`,
     patterns: [
@@ -18,57 +20,57 @@ export function createTmLanguage(): TmLanguage {
         while: '^\\s*$',
       },
       autohotkeynext_explicit: {
-        begin: '(?i)^(#Requires) (AutoHotkey v2\\.1.*)$',
+        begin: '(?i)^\\s*(#Requires) (AutoHotkey v2\\.1.*)$',
         beginCaptures: {
-          1: { name: 'emphasis meta.preprocessor' },
-          2: { name: `emphasis ${RuleName.DoubleString}` },
+          1: nameRule(RuleName.Emphasis, RuleName.Directive),
+          2: nameRule(RuleName.Emphasis, RuleName.LegacyExpressionContent),
         },
         while: '(.*)',
         whileCaptures: {
           1: {
-            patterns: [ { include: 'source.autohotkeynext' } ],
+            patterns: [ includeScope('autohotkeynext') ],
           },
         },
-        patterns: [ { include: 'source.autohotkeynext' } ],
+        patterns: [ includeScope('autohotkeynext') ],
       },
       autohotkey2_explicit: {
-        begin: '(?i)^(#Requires) (AutoHotkey v2.*)$',
+        begin: '(?i)^\\s*(#Requires) (AutoHotkey v2.*)$',
         beginCaptures: {
-          1: { name: 'emphasis meta.preprocessor' },
-          2: { name: `emphasis ${RuleName.DoubleString}` },
+          1: nameRule(RuleName.Emphasis, RuleName.Directive),
+          2: nameRule(RuleName.Emphasis, RuleName.LegacyExpressionContent),
         },
         while: '(.*)',
         whileCaptures: {
           1: {
-            patterns: [ { include: 'source.autohotkey2' } ],
+            patterns: [ includeScope('autohotkey2') ],
           },
         },
-        patterns: [ { include: 'source.autohotkey2' } ],
+        patterns: [ includeScope('autohotkey2') ],
       },
       autohotkey2_implicit: {
-        begin: '(?i)^(?!#Requires)',
+        begin: '(?i)\\s*^(?!#Requires)',
         while: '(.*)',
         whileCaptures: {
           1: {
-            patterns: [ { include: 'source.autohotkey2' } ],
+            patterns: [ includeScope('autohotkey2') ],
           },
         },
-        patterns: [ { include: 'source.autohotkey2' } ],
+        patterns: [ includeScope('autohotkey2') ],
       },
       autohotkeyl_explicit: ((): BeginWhileRule => {
         return {
-          begin: '(?i)^(#Requires) (AutoHotkey v1.*)$',
+          begin: '(?i)^\\s*(#Requires) (AutoHotkey v1.*)$',
           beginCaptures: {
-            1: { name: 'emphasis meta.preprocessor' },
-            2: { name: `emphasis ${RuleName.DoubleString}` },
+            1: nameRule(RuleName.Emphasis, RuleName.Directive),
+            2: nameRule(RuleName.Emphasis, RuleName.LegacyExpressionContent),
           },
           while: '(.*)',
           whileCaptures: {
             1: {
-              patterns: [ { include: 'source.autohotkeyl' } ],
+              patterns: [ includeScope('autohotkeyl') ],
             },
           },
-          patterns: [ { include: 'source.autohotkeyl' } ],
+          patterns: [ includeScope('autohotkeyl') ],
         };
       })(),
     },

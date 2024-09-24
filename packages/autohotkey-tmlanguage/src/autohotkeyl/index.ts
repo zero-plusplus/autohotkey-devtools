@@ -1,15 +1,15 @@
 import { Repository, ScopeName, TmLanguage } from '../types';
-import { createUtilities } from '../utils';
-import { createLiteralRepositories } from './repository/literal';
+import { includeRule } from '../utils';
+import { createRepositories } from './repository';
 
 export function createTmLanguage(): TmLanguage {
   const scopeName: ScopeName = 'autohotkeyl';
-  const utils = createUtilities(scopeName);
+
   return {
     scopeName: `source.${scopeName}`,
-    patterns: [ utils.include(Repository.String) ],
+    patterns: [ includeRule(Repository.String) ],
     repository: {
-      ...createLiteralRepositories(utils),
+      ...createRepositories(scopeName),
     },
   };
 }
