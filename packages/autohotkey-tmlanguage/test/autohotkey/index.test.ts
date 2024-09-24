@@ -19,29 +19,6 @@ describe('autohotkey', () => {
     ]);
   });
 
-  test('treat as "autohotkey2" using #Requires', async() => {
-    const actual = await parse(scopeName, `
-      #Requires AutoHotkey v2.0
-      'string'
-    `);
-    // console.log(JSON.stringify(actual, undefined, 2));
-
-    expect(actual).toStrictEqual([
-      { text: `\n`, scopes: [] },
-      { text: `      `, scopes: [] },
-      { text: `#Requires`, scopes: [ name(RuleName.Emphasis), name(RuleName.Directive) ] },
-      { text: ` `, scopes: [] },
-      { text: `AutoHotkey v2.0`, scopes: [ name(RuleName.Emphasis), name(RuleName.LegacyExpressionContent) ] },
-      { text: `\n`, scopes: [] },
-      { text: `      `, scopes: [] },
-      { text: `'`, scopes: [ name_ahk2(RuleName.SingleString), name_ahk2(RuleName.StringBegin) ] },
-      { text: 'string', scopes: [ name_ahk2(RuleName.SingleString) ] },
-      { text: `'`, scopes: [ name_ahk2(RuleName.SingleString), name_ahk2(RuleName.StringEnd) ] },
-      { text: `\n`, scopes: [] },
-      { text: `    `, scopes: [] },
-    ]);
-  });
-
   test('treat as "autohotkeynext" using #Requires', async() => {
     const actual = await parse(scopeName, `
       #Requires AutoHotkey v2.1
@@ -65,16 +42,85 @@ describe('autohotkey', () => {
     ]);
   });
 
+  test('treat as "autohotkey2" using #Requires', async() => {
+    const actual = await parse(scopeName, `
+      #Requires AutoHotkey v2.0
+      'string'
+    `);
+    // console.log(JSON.stringify(actual, undefined, 2));
+
+    expect(actual).toStrictEqual([
+      { text: `\n`, scopes: [] },
+      { text: `      `, scopes: [] },
+      { text: `#Requires`, scopes: [ name(RuleName.Emphasis), name(RuleName.Directive) ] },
+      { text: ` `, scopes: [] },
+      { text: `AutoHotkey v2.0`, scopes: [ name(RuleName.Emphasis), name(RuleName.LegacyExpressionContent) ] },
+      { text: `\n`, scopes: [] },
+      { text: `      `, scopes: [] },
+      { text: `'`, scopes: [ name_ahk2(RuleName.SingleString), name_ahk2(RuleName.StringBegin) ] },
+      { text: 'string', scopes: [ name_ahk2(RuleName.SingleString) ] },
+      { text: `'`, scopes: [ name_ahk2(RuleName.SingleString), name_ahk2(RuleName.StringEnd) ] },
+      { text: `\n`, scopes: [] },
+      { text: `    `, scopes: [] },
+    ]);
+  });
+
   test('treat as "autohotkeyl" using #Requires', async() => {
     const actual = await parse(scopeName, `
       #Requires AutoHotkey v1.1
       'string'
     `);
-    console.log(JSON.stringify(actual, undefined, 2));
+    // console.log(JSON.stringify(actual, undefined, 2));
 
     expect(actual).toStrictEqual([
       { text: `\n`, scopes: [] },
       { text: `      `, scopes: [] },
+      { text: `#Requires`, scopes: [ name(RuleName.Emphasis), name(RuleName.Directive) ] },
+      { text: ` `, scopes: [] },
+      { text: `AutoHotkey v1.1`, scopes: [ name(RuleName.Emphasis), name(RuleName.LegacyExpressionContent) ] },
+      { text: `\n`, scopes: [] },
+      { text: `      'string'`, scopes: [] },
+      { text: `\n`, scopes: [] },
+      { text: `    `, scopes: [] },
+    ]);
+  });
+
+  test('treat as "autohotkeynext", "autohotkey2", "autohotkeyl" using #Requires', async() => {
+    const actual = await parse(scopeName, `
+      #Requires AutoHotkey v2.1
+      'string'
+      #Requires AutoHotkey v2.0
+      'string'
+      #Requires AutoHotkey v1.1
+      'string'
+    `);
+    // console.log(JSON.stringify(actual, undefined, 2));
+
+    expect(actual).toStrictEqual([
+      { text: `\n`, scopes: [] },
+      { text: `      `, scopes: [] },
+      { text: `#Requires`, scopes: [ name(RuleName.Emphasis), name(RuleName.Directive) ] },
+      { text: ` `, scopes: [] },
+      { text: `AutoHotkey v2.1`, scopes: [ name(RuleName.Emphasis), name(RuleName.LegacyExpressionContent) ] },
+      { text: `\n`, scopes: [] },
+      { text: `      `, scopes: [] },
+      { text: `'`, scopes: [ name_ahknext(RuleName.SingleString), name_ahknext(RuleName.StringBegin) ] },
+      { text: 'string', scopes: [ name_ahknext(RuleName.SingleString) ] },
+      { text: `'`, scopes: [ name_ahknext(RuleName.SingleString), name_ahknext(RuleName.StringEnd) ] },
+      { text: `\n`, scopes: [] },
+      { text: `      `, scopes: [] },
+
+      { text: `#Requires`, scopes: [ name(RuleName.Emphasis), name(RuleName.Directive) ] },
+      { text: ` `, scopes: [] },
+      { text: `AutoHotkey v2.0`, scopes: [ name(RuleName.Emphasis), name(RuleName.LegacyExpressionContent) ] },
+      { text: `\n`, scopes: [] },
+      { text: `      `, scopes: [] },
+      { text: `'`, scopes: [ name_ahk2(RuleName.SingleString), name_ahk2(RuleName.StringBegin) ] },
+      { text: 'string', scopes: [ name_ahk2(RuleName.SingleString) ] },
+      { text: `'`, scopes: [ name_ahk2(RuleName.SingleString), name_ahk2(RuleName.StringEnd) ] },
+      { text: `\n`, scopes: [] },
+      { text: `      `, scopes: [] },
+
       { text: `#Requires`, scopes: [ name(RuleName.Emphasis), name(RuleName.Directive) ] },
       { text: ` `, scopes: [] },
       { text: `AutoHotkey v1.1`, scopes: [ name(RuleName.Emphasis), name(RuleName.LegacyExpressionContent) ] },

@@ -25,12 +25,7 @@ export function createTmLanguage(): TmLanguage {
           1: nameRule(RuleName.Emphasis, RuleName.Directive),
           2: nameRule(RuleName.Emphasis, RuleName.LegacyExpressionContent),
         },
-        while: '(.*)',
-        whileCaptures: {
-          1: {
-            patterns: [ includeScope('autohotkeynext') ],
-          },
-        },
+        while: '^(?!\\s*#Requires)',
         patterns: [ includeScope('autohotkeynext') ],
       },
       autohotkey2_explicit: {
@@ -39,22 +34,12 @@ export function createTmLanguage(): TmLanguage {
           1: nameRule(RuleName.Emphasis, RuleName.Directive),
           2: nameRule(RuleName.Emphasis, RuleName.LegacyExpressionContent),
         },
-        while: '(.*)',
-        whileCaptures: {
-          1: {
-            patterns: [ includeScope('autohotkey2') ],
-          },
-        },
+        while: '^(?!\\s*#Requires)',
         patterns: [ includeScope('autohotkey2') ],
       },
       autohotkey2_implicit: {
         begin: '(?i)\\s*^(?!#Requires)',
-        while: '(.*)',
-        whileCaptures: {
-          1: {
-            patterns: [ includeScope('autohotkey2') ],
-          },
-        },
+        while: '^(?!\\s*#Requires)',
         patterns: [ includeScope('autohotkey2') ],
       },
       autohotkeyl_explicit: ((): BeginWhileRule => {
@@ -64,12 +49,7 @@ export function createTmLanguage(): TmLanguage {
             1: nameRule(RuleName.Emphasis, RuleName.Directive),
             2: nameRule(RuleName.Emphasis, RuleName.LegacyExpressionContent),
           },
-          while: '(.*)',
-          whileCaptures: {
-            1: {
-              patterns: [ includeScope('autohotkeyl') ],
-            },
-          },
+          while: '^(?!\\s*#Requires)',
           patterns: [ includeScope('autohotkeyl') ],
         };
       })(),
