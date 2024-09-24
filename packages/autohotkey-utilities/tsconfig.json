@@ -3,6 +3,6 @@
 	"include": [
 		"src/**/*",
 		"test/**/*",
-		"eslint.config.js"
+		"*.config.js"
 	]
 }

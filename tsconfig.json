@@ -46,7 +46,6 @@
 		"incremental": true,
 	},
 	"include": [
-		"packages/*/test/**/*.test.ts",
-		"eslint.config.js"
+		"*.config.js"
 	]
 }
