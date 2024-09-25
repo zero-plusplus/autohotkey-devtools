@@ -4,6 +4,7 @@ export const enum Repository {
   Self = '$self',
 
   Statement = 'statement',
+  ExpressionStatement = 'statement.expression',
   Literal = 'literal',
 
   // #region string

@@ -7,7 +7,7 @@ export function createTmLanguage(): TmLanguage {
 
   return {
     scopeName: `source.${scopeName}`,
-    patterns: [ includeRule(Repository.Literal) ],
+    patterns: [ includeRule(Repository.Statement) ],
     repository: {
       ...createRepositories(scopeName),
     },
