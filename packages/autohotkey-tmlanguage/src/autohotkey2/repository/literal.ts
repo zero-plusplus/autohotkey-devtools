@@ -20,8 +20,8 @@ export function createLiteralRepositories(scopeName: ScopeName): Repositories {
         ],
       };
     })(),
-    [Repository.IllegalStringContent]: ahklRepositories[Repository.IllegalStringContent],
-    [Repository.IllegalStringNewLine]: ahklRepositories[Repository.IllegalStringNewLine],
+    [Repository.InvalidStringContent]: ahklRepositories[Repository.InvalidStringContent],
+    [Repository.InvalidStringNewLine]: ahklRepositories[Repository.InvalidStringNewLine],
     [Repository.DoubleString]: ((): BeginEndRule => {
       return {
         name: name(RuleName.DoubleString),
@@ -34,8 +34,8 @@ export function createLiteralRepositories(scopeName: ScopeName): Repositories {
           1: nameRule(RuleName.StringEnd),
         },
         patterns: [
-          includeRule(Repository.IllegalStringNewLine),
-          includeRule(Repository.IllegalStringContent),
+          includeRule(Repository.InvalidStringNewLine),
+          includeRule(Repository.InvalidStringContent),
           includeRule(Repository.DoubleStringEscapeSequence),
         ],
       };
@@ -58,8 +58,8 @@ export function createLiteralRepositories(scopeName: ScopeName): Repositories {
         1: { name: name(RuleName.StringEnd) },
       },
       patterns: [
-        includeRule(Repository.IllegalStringNewLine),
-        includeRule(Repository.IllegalStringContent),
+        includeRule(Repository.InvalidStringNewLine),
+        includeRule(Repository.InvalidStringContent),
         includeRule(Repository.SingleStringEscapeSequence),
       ],
     },

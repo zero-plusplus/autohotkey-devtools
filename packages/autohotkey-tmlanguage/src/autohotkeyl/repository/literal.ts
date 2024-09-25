@@ -26,13 +26,13 @@ export function createLiteralRepositories(scopeName: ScopeName): Repositories {
           1: nameRule(RuleName.StringEnd),
         },
         patterns: [
-          includeRule(Repository.IllegalStringNewLine),
-          includeRule(Repository.IllegalStringContent),
+          includeRule(Repository.InvalidStringNewLine),
+          includeRule(Repository.InvalidStringContent),
           includeRule(Repository.DoubleStringEscapeSequence),
         ],
       };
     })(),
-    [Repository.IllegalStringContent]: ((): MatchRule => {
+    [Repository.InvalidStringContent]: ((): MatchRule => {
       return {
         match: '(.)(?=\\r\\n|\\n)',
         captures: {
@@ -40,7 +40,7 @@ export function createLiteralRepositories(scopeName: ScopeName): Repositories {
         },
       };
     })(),
-    [Repository.IllegalStringNewLine]: ((): PatternsRule => {
+    [Repository.InvalidStringNewLine]: ((): PatternsRule => {
       return {
         patterns: [
           {

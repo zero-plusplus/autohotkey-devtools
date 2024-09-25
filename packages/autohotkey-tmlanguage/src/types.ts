@@ -5,8 +5,8 @@ export const enum Repository {
 
   Statement = 'statement',
   String = 'string',
-  IllegalStringContent = 'invalid.illegal.content',
-  IllegalStringNewLine = 'invalid.illegal.newline',
+  InvalidStringContent = 'invalid.illegal.content',
+  InvalidStringNewLine = 'invalid.illegal.newline',
   DoubleString = 'string.quoted.double',
   DoubleStringContent = 'string.quoted.double.content',
   DoubleStringEscapeSequence = 'constant.character.escape.double',
