@@ -12,6 +12,14 @@ export function createLiteralRepositories(scopeName: ScopeName): Repositories {
   const ahklRepositories = ahkl.createLiteralRepositories(scopeName);
 
   return {
+    [Repository.Literal]: ((): PatternsRule => {
+      return {
+        patterns: [
+          includeRule(Repository.String),
+          includeRule(Repository.Number),
+        ],
+      };
+    })(),
     [Repository.String]: ((): PatternsRule => {
       return {
         patterns: [
@@ -20,6 +28,8 @@ export function createLiteralRepositories(scopeName: ScopeName): Repositories {
         ],
       };
     })(),
+
+    // #region string
     [Repository.InvalidStringContent]: ahklRepositories[Repository.InvalidStringContent],
     [Repository.InvalidStringNewLine]: ahklRepositories[Repository.InvalidStringNewLine],
     [Repository.DoubleString]: ((): BeginEndRule => {
@@ -70,5 +80,17 @@ export function createLiteralRepositories(scopeName: ScopeName): Repositories {
         match: `(${escapeSequences.join('|')})(?!\\r\\n|\\n)`,
       };
     })(),
+    // #endregion string
+
+    // #region number
+    [Repository.Number]: ahklRepositories[Repository.Number],
+    [Repository.Integer]: ahklRepositories[Repository.Integer],
+    [Repository.Float]: ahklRepositories[Repository.Float],
+    [Repository.InvalidFloat]: ahklRepositories[Repository.InvalidFloat],
+    [Repository.Hex]: ahklRepositories[Repository.Hex],
+    [Repository.InvalidHex]: ahklRepositories[Repository.InvalidHex],
+    [Repository.ScientificNotation]: ahklRepositories[Repository.ScientificNotation],
+    [Repository.InvalidScientificNotation]: ahklRepositories[Repository.InvalidScientificNotation],
+    // #endregion number
   };
 }

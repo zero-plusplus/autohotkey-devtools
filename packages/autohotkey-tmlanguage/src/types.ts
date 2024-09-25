@@ -4,6 +4,9 @@ export const enum Repository {
   Self = '$self',
 
   Statement = 'statement',
+  Literal = 'literal',
+
+  // #region string
   String = 'string',
   InvalidStringContent = 'invalid.illegal.content',
   InvalidStringNewLine = 'invalid.illegal.newline',
@@ -12,6 +15,18 @@ export const enum Repository {
   DoubleStringEscapeSequence = 'constant.character.escape.double',
   SingleString = 'string.quoted.single',
   SingleStringEscapeSequence = 'constant.character.escape.single',
+  // #endregion string
+
+  // #region number
+  Number = 'number',
+  Integer = 'constant.numeric.integer',
+  Float = 'constant.numeric.float',
+  InvalidFloat = 'invalid.illegal.float',
+  Hex = 'constant.numeric.hex',
+  InvalidHex = 'invalid.illegal.hex',
+  ScientificNotation = 'constant.numeric.scientificnotation',
+  InvalidScientificNotation = 'invalid.illegal.scientificnotation',
+  // #endregion number
 }
 
 // https://macromates.com/manual/en/language_grammars#naming_conventions
@@ -19,10 +34,13 @@ export const enum Repository {
 // https://github.com/microsoft/vscode/blob/main/extensions/theme-defaults/themes/dark_plus.json
 export const enum RuleName {
   Emphasis = 'emphasis',
+
   Directive = 'meta.preprocessor',
   LegacyExpressionContent = 'string.legacy.content',
 
   CommentBlock = 'comment.block',
+
+  // #region string
   DoubleString = 'string.quoted.double',
   InvalidSingleLineStringContent = 'invalid.illegal.content',
   InvalidStringNewLine = 'invalid.illegal.newline',
@@ -32,6 +50,22 @@ export const enum RuleName {
   MultiLineString = 'string.quoted.unquoted',
   StringBegin = 'punctuation.definition.string.begin',
   StringEnd = 'punctuation.definition.string.end',
+  // #endregion string
+
+  // #region number
+  InvalidNumber = 'invalid.illegal.number',
+  Integer = 'constant.numeric.integer',
+  DecimalPart = 'constant.numeric.decimal.part',
+  Float = 'constant.numeric.float',
+  DecimalPoint = 'constant.numeric.decimal.point',
+  Hex = 'constant.numeric.hex',
+  HexPrefix = 'constant.numeric.hex.prefix',
+  HexValue = 'constant.numeric.hex.value',
+  ScientificNotation = 'constant.numeric.scientificnotation',
+  ENotation = 'constant.numeric.e-notation',
+  ExponentPlusMinusSign = 'constant.numeric.exponent.plus-minus.sign',
+  Exponent = 'constant.numeric.exponent',
+  // #endregion number
 }
 // #endregion constant
 
