@@ -27,6 +27,12 @@ export const enum Repository {
   ScientificNotation = 'constant.numeric.scientificnotation',
   InvalidScientificNotation = 'invalid.illegal.scientificnotation',
   // #endregion number
+
+  // #region boolean
+  Boolean = 'constant.language.boolean',
+  True = 'constant.language.boolean.true',
+  False = 'constant.language.boolean.false',
+  // #endregion boolean
 }
 
 // https://macromates.com/manual/en/language_grammars#naming_conventions
@@ -66,6 +72,12 @@ export const enum RuleName {
   ExponentPlusMinusSign = 'constant.numeric.exponent.plus-minus.sign',
   Exponent = 'constant.numeric.exponent',
   // #endregion number
+
+  // #region boolean
+  Boolean = 'constant.language.boolean',
+  True = 'constant.language.boolean.true',
+  False = 'constant.language.boolean.false',
+  // #endregion boolean
 }
 // #endregion constant
 
