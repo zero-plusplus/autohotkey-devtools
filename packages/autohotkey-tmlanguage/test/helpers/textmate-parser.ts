@@ -49,7 +49,7 @@ async function createTextMateRegistry(): Promise<vsctm.Registry> {
   return registry;
 }
 
-export type ParsedResults = Array<{ text: string; scopes: string[] }>;
+export type ParsedResults = Array<{ text: string; scopes: string }>;
 export async function parse(scopeName: ScopeName, text: string): Promise<ParsedResults> {
   const registry = await createTextMateRegistry();
   const grammar = await registry.loadGrammar(`source.${scopeName}`);
@@ -81,7 +81,7 @@ export async function parse(scopeName: ScopeName, text: string): Promise<ParsedR
       .map((token) => {
         return {
           text: line.slice(token.startIndex, token.endIndex),
-          scopes: token.scopes.filter((scope) => scope !== `source.${scopeName}`), // remove scope name. e.g. `source.autohotkey`
+          scopes: token.scopes.filter((scope) => scope !== `source.${scopeName}`).join(' '), // remove scope name. e.g. `source.autohotkey`
         };
       }));
 

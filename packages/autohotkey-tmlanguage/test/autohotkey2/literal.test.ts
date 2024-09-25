@@ -17,9 +17,9 @@ describe.each([
         // console.log(JSON.stringify(actual, undefined, 2));
 
         expect(actual).toStrictEqual([
-          { text: '"', scopes: [ name(RuleName.DoubleString), name(RuleName.StringBegin) ] },
-          { text: 'string', scopes: [ name(RuleName.DoubleString) ] },
-          { text: '"', scopes: [ name(RuleName.DoubleString), name(RuleName.StringEnd) ] },
+          { text: '"', scopes: name(RuleName.DoubleString, RuleName.StringBegin) },
+          { text: 'string', scopes: name(RuleName.DoubleString) },
+          { text: '"', scopes: name(RuleName.DoubleString, RuleName.StringEnd) },
         ]);
       },
     );
@@ -31,11 +31,11 @@ describe.each([
         // console.log(JSON.stringify(actual, undefined, 2));
 
         expect(actual).toStrictEqual([
-          { text: '"', scopes: [ name(RuleName.DoubleString), name(RuleName.StringBegin) ] },
+          { text: '"', scopes: name(RuleName.DoubleString, RuleName.StringBegin) },
           ...doubleStringEscapeSequences.map((escapeSequence) => {
-            return { text: escapeSequence, scopes: [ name(RuleName.DoubleString), name(RuleName.DoubleStringEscapeSequence) ] };
+            return { text: escapeSequence, scopes: name(RuleName.DoubleString, RuleName.DoubleStringEscapeSequence) };
           }),
-          { text: '"', scopes: [ name(RuleName.DoubleString), name(RuleName.StringEnd) ] },
+          { text: '"', scopes: name(RuleName.DoubleString, RuleName.StringEnd) },
         ]);
       },
     );
@@ -47,13 +47,13 @@ describe.each([
         // console.log(JSON.stringify(actual, undefined, 2));
 
         expect(actual).toStrictEqual([
-          { text: '"', scopes: [ name(RuleName.DoubleString), name(RuleName.StringBegin) ] },
-          { text: 'a', scopes: [ name(RuleName.DoubleString) ] },
-          { text: 'b', scopes: [ name(RuleName.DoubleString), name(RuleName.InvalidSingleLineStringContent) ] },
-          { text: '\r\n', scopes: [ name(RuleName.DoubleString), name(RuleName.InvalidStringNewLine) ] },
-          { text: 'c', scopes: [ name(RuleName.DoubleString), name(RuleName.InvalidSingleLineStringContent) ] },
-          { text: '\n', scopes: [ name(RuleName.DoubleString), name(RuleName.InvalidStringNewLine) ] },
-          { text: '"', scopes: [ name(RuleName.DoubleString), name(RuleName.StringEnd) ] },
+          { text: '"', scopes: name(RuleName.DoubleString, RuleName.StringBegin) },
+          { text: 'a', scopes: name(RuleName.DoubleString) },
+          { text: 'b', scopes: name(RuleName.DoubleString, RuleName.InvalidSingleLineStringContent) },
+          { text: '\r\n', scopes: name(RuleName.DoubleString, RuleName.InvalidStringNewLine) },
+          { text: 'c', scopes: name(RuleName.DoubleString, RuleName.InvalidSingleLineStringContent) },
+          { text: '\n', scopes: name(RuleName.DoubleString, RuleName.InvalidStringNewLine) },
+          { text: '"', scopes: name(RuleName.DoubleString, RuleName.StringEnd) },
         ]);
       },
     );
@@ -67,9 +67,9 @@ describe.each([
         // console.log(JSON.stringify(actual, undefined, 2));
 
         expect(actual).toStrictEqual([
-          { text: `'`, scopes: [ name(RuleName.SingleString), name(RuleName.StringBegin) ] },
-          { text: 'string', scopes: [ name(RuleName.SingleString) ] },
-          { text: `'`, scopes: [ name(RuleName.SingleString), name(RuleName.StringEnd) ] },
+          { text: `'`, scopes: name(RuleName.SingleString, RuleName.StringBegin) },
+          { text: 'string', scopes: name(RuleName.SingleString) },
+          { text: `'`, scopes: name(RuleName.SingleString, RuleName.StringEnd) },
         ]);
       },
     );
@@ -81,11 +81,11 @@ describe.each([
         // console.log(JSON.stringify(actual, undefined, 2));
 
         expect(actual).toStrictEqual([
-          { text: `'`, scopes: [ name(RuleName.SingleString), name(RuleName.StringBegin) ] },
+          { text: `'`, scopes: name(RuleName.SingleString, RuleName.StringBegin) },
           ...singleStringEscapeSequences.map((escapeSequence) => {
-            return { text: escapeSequence, scopes: [ name(RuleName.SingleString), name(RuleName.SingleStringEscapeSequence) ] };
+            return { text: escapeSequence, scopes: name(RuleName.SingleString, RuleName.SingleStringEscapeSequence) };
           }),
-          { text: `'`, scopes: [ name(RuleName.SingleString), name(RuleName.StringEnd) ] },
+          { text: `'`, scopes: name(RuleName.SingleString, RuleName.StringEnd) },
         ]);
       },
     );
@@ -97,13 +97,13 @@ describe.each([
         // console.log(JSON.stringify(actual, undefined, 2));
 
         expect(actual).toStrictEqual([
-          { text: `'`, scopes: [ name(RuleName.SingleString), name(RuleName.StringBegin) ] },
-          { text: 'a', scopes: [ name(RuleName.SingleString) ] },
-          { text: 'b', scopes: [ name(RuleName.SingleString), name(RuleName.InvalidSingleLineStringContent) ] },
-          { text: '\r\n', scopes: [ name(RuleName.SingleString), name(RuleName.InvalidStringNewLine) ] },
-          { text: 'c', scopes: [ name(RuleName.SingleString), name(RuleName.InvalidSingleLineStringContent) ] },
-          { text: '\n', scopes: [ name(RuleName.SingleString), name(RuleName.InvalidStringNewLine) ] },
-          { text: `'`, scopes: [ name(RuleName.SingleString), name(RuleName.StringEnd) ] },
+          { text: `'`, scopes: name(RuleName.SingleString, RuleName.StringBegin) },
+          { text: 'a', scopes: name(RuleName.SingleString) },
+          { text: 'b', scopes: name(RuleName.SingleString, RuleName.InvalidSingleLineStringContent) },
+          { text: '\r\n', scopes: name(RuleName.SingleString, RuleName.InvalidStringNewLine) },
+          { text: 'c', scopes: name(RuleName.SingleString, RuleName.InvalidSingleLineStringContent) },
+          { text: '\n', scopes: name(RuleName.SingleString, RuleName.InvalidStringNewLine) },
+          { text: `'`, scopes: name(RuleName.SingleString, RuleName.StringEnd) },
         ]);
       },
     );
