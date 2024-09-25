@@ -45,10 +45,10 @@ describe('literal', () => {
       expect(actual).toStrictEqual([
         { text: '"', scopes: [ name(RuleName.DoubleString), name(RuleName.StringBegin) ] },
         { text: 'a', scopes: [ name(RuleName.DoubleString) ] },
-        { text: 'b', scopes: [ name(RuleName.DoubleString), name(RuleName.IllegalSingleLineStringContent) ] },
-        { text: '\r\n', scopes: [ name(RuleName.DoubleString), name(RuleName.IllegalStringNewLine) ] },
-        { text: 'c', scopes: [ name(RuleName.DoubleString), name(RuleName.IllegalSingleLineStringContent) ] },
-        { text: '\n', scopes: [ name(RuleName.DoubleString), name(RuleName.IllegalStringNewLine) ] },
+        { text: 'b', scopes: [ name(RuleName.DoubleString), name(RuleName.InvalidSingleLineStringContent) ] },
+        { text: '\r\n', scopes: [ name(RuleName.DoubleString), name(RuleName.InvalidStringNewLine) ] },
+        { text: 'c', scopes: [ name(RuleName.DoubleString), name(RuleName.InvalidSingleLineStringContent) ] },
+        { text: '\n', scopes: [ name(RuleName.DoubleString), name(RuleName.InvalidStringNewLine) ] },
         { text: '"', scopes: [ name(RuleName.DoubleString), name(RuleName.StringEnd) ] },
       ]);
     });

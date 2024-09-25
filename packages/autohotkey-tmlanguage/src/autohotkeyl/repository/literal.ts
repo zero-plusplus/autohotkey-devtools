@@ -36,7 +36,7 @@ export function createLiteralRepositories(scopeName: ScopeName): Repositories {
       return {
         match: '(.)(?=\\r\\n|\\n)',
         captures: {
-          1: nameRule(RuleName.IllegalSingleLineStringContent),
+          1: nameRule(RuleName.InvalidSingleLineStringContent),
         },
       };
     })(),
@@ -46,13 +46,13 @@ export function createLiteralRepositories(scopeName: ScopeName): Repositories {
           {
             match: '(\\r\\n)',
             captures: {
-              1: nameRule(RuleName.IllegalStringNewLine),
+              1: nameRule(RuleName.InvalidStringNewLine),
             },
           },
           {
             match: '(\\r|\\n)',
             captures: {
-              1: nameRule(RuleName.IllegalStringNewLine),
+              1: nameRule(RuleName.InvalidStringNewLine),
             },
           },
         ],

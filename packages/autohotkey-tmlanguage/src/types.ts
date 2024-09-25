@@ -24,8 +24,8 @@ export const enum RuleName {
 
   CommentBlock = 'comment.block',
   DoubleString = 'string.quoted.double',
-  IllegalSingleLineStringContent = 'invalid.illegal.content',
-  IllegalStringNewLine = 'invalid.illegal.newline',
+  InvalidSingleLineStringContent = 'invalid.illegal.content',
+  InvalidStringNewLine = 'invalid.illegal.newline',
   DoubleStringEscapeSequence = 'constant.character.escape.double',
   SingleStringEscapeSequence = 'constant.character.escape.single',
   SingleString = 'string.quoted.single',
