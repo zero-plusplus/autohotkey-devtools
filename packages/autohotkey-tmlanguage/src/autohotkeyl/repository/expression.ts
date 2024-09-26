@@ -23,13 +23,24 @@ export function createLiteralRepositories(scopeName: ScopeName): Repositories {
         },
       };
     })(),
-    [Repository.InvalidVariable]: ((): MatchRule => {
+    [Repository.InvalidVariable]: ((): PatternsRule => {
       return {
-        match: `((?:${variableParts.headChar})(?:${variableParts.tailChar}){252})((?:${variableParts.tailChar})+)`,
-        captures: {
-          1: nameRule(RuleName.Variable),
-          2: nameRule(RuleName.Variable, RuleName.InvalidVariable),
-        },
+        patterns: [
+          {
+            match: `(\\d+)((?:${variableParts.headChar})(?:${variableParts.tailChar}){0,252})`,
+            captures: {
+              1: nameRule(RuleName.Variable, RuleName.Integer, RuleName.InvalidVariable),
+              2: nameRule(RuleName.Variable),
+            },
+          },
+          {
+            match: `((?:${variableParts.headChar})(?:${variableParts.tailChar}){252})((?:${variableParts.tailChar})+)`,
+            captures: {
+              1: nameRule(RuleName.Variable),
+              2: nameRule(RuleName.Variable, RuleName.InvalidVariable),
+            },
+          },
+        ],
       };
     })(),
   };

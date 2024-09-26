@@ -27,6 +27,12 @@ describe('expression', () => {
           { text: 'v'.repeat(2), scopes: name(RuleName.Variable, RuleName.InvalidVariable) },
         ],
       ],
+      [
+        '12abc', [
+          { text: '12', scopes: name(RuleName.Variable, RuleName.Integer, RuleName.InvalidVariable) },
+          { text: 'abc', scopes: name(RuleName.Variable) },
+        ],
+      ],
     ])(
       'invalid',
       async(text, expected) => {
