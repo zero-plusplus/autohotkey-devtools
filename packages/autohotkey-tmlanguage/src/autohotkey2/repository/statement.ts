@@ -1,8 +1,10 @@
 import { Repository, Repositories, PatternsRule, ScopeName } from '../../types';
+import * as ahkl from '../../autohotkeyl/repository/statement';
 import { createUtilities } from '../../utils';
 
 export function createLiteralRepositories(scopeName: ScopeName): Repositories {
   const { includeRule } = createUtilities(scopeName);
+  const ahklRepositories = ahkl.createLiteralRepositories(scopeName);
 
   return {
     [Repository.Statement]: ((): PatternsRule => {
@@ -10,10 +12,6 @@ export function createLiteralRepositories(scopeName: ScopeName): Repositories {
         patterns: [ includeRule(Repository.ExpressionStatement) ],
       };
     })(),
-    [Repository.ExpressionStatement]: ((): PatternsRule => {
-      return {
-        patterns: [ includeRule(Repository.Literal) ],
-      };
-    })(),
+    [Repository.ExpressionStatement]: ahklRepositories[Repository.ExpressionStatement],
   };
 }

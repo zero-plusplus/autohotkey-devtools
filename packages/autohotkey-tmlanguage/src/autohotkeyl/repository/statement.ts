@@ -12,7 +12,7 @@ export function createLiteralRepositories(scopeName: ScopeName): Repositories {
     })(),
     [Repository.ExpressionStatement]: ((): PatternsRule => {
       return {
-        patterns: [ includeRule(Repository.Literal) ],
+        patterns: [ includeRule(Repository.Expression) ],
       };
     })(),
   };

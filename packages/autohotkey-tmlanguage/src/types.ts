@@ -7,6 +7,12 @@ export const enum Repository {
   ExpressionStatement = 'statement.expression',
   Literal = 'literal',
 
+  // #region expression
+  Expression = 'expression',
+  Variable = 'expression.variable',
+  InvalidVariable = 'invalid.illegal.variable',
+  // #endregion expression
+
   // #region string
   String = 'string',
   InvalidStringContent = 'invalid.illegal.content',
@@ -46,6 +52,11 @@ export const enum RuleName {
   LegacyExpressionContent = 'string.legacy.content',
 
   CommentBlock = 'comment.block',
+
+  // #region expression
+  Variable = 'variable.other',
+  InvalidVariable = 'invalid.illegal.variable',
+  // #endregion expression
 
   // #region string
   DoubleString = 'string.quoted.double',
@@ -130,7 +141,12 @@ export interface IncludeRule {
   include: string;
 }
 
+export interface VariableParts {
+  headChar: string;
+  tailChar: string;
+}
 export interface Utilities {
+  getVariableParts: () => VariableParts;
   name: (...ruleNames: RuleName[]) => string;
   nameRule: (...ruleNames: RuleName[]) => NameRule;
   includeRule: (repositoryName: Repository) => IncludeRule;
