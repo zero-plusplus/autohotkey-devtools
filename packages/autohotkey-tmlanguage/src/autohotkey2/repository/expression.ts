@@ -11,6 +11,7 @@ export function createLiteralRepositories(scopeName: ScopeName): Repositories {
       return {
         patterns: [
           includeRule(Repository.Literal),
+          includeRule(Repository.BuiltInVariable),
           includeRule(Repository.InvalidVariable),
           includeRule(Repository.Variable),
         ],
@@ -18,5 +19,6 @@ export function createLiteralRepositories(scopeName: ScopeName): Repositories {
     })(),
     [Repository.Variable]: ahklRepositories[Repository.Variable],
     [Repository.InvalidVariable]: ahklRepositories[Repository.InvalidVariable],
+    [Repository.BuiltInVariable]: ahklRepositories[Repository.BuiltInVariable],
   };
 }

@@ -2,14 +2,16 @@ import { Repository, Repositories, PatternsRule, ScopeName, MatchRule, RuleName 
 import { createUtilities } from '../../utils';
 
 export function createLiteralRepositories(scopeName: ScopeName): Repositories {
-  const { getVariableParts: getVariableParts, includeRule, nameRule } = createUtilities(scopeName);
+  const { getVariableParts, getBuiltInVariableNames, includeRule, nameRule } = createUtilities(scopeName);
   const variableParts = getVariableParts();
+  const builtinVariables = getBuiltInVariableNames();
 
   return {
     [Repository.Expression]: ((): PatternsRule => {
       return {
         patterns: [
           includeRule(Repository.Literal),
+          includeRule(Repository.BuiltInVariable),
           includeRule(Repository.InvalidVariable),
           includeRule(Repository.Variable),
         ],
@@ -43,5 +45,16 @@ export function createLiteralRepositories(scopeName: ScopeName): Repositories {
         ],
       };
     })(),
+
+    // #region builtin variable
+    [Repository.BuiltInVariable]: ((): MatchRule => {
+      return {
+        match: `(?i)(?<=\\b)(${builtinVariables.join('|')})(?=\\b)`,
+        captures: {
+          1: nameRule(RuleName.BuiltInVariable),
+        },
+      };
+    })(),
+    // #endregion builtin variable
   };
 }

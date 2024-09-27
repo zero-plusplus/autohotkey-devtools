@@ -430,6 +430,7 @@ export function nameRule(scopeName: ScopeName, ...ruleNames: RuleName[]): NameRu
 export function createUtilities(scopeName: ScopeName): Utilities {
   return {
     getVariableParts: () => getVariableParts(scopeName),
+    getBuiltInVariableNames: () => getBuiltInVariableNames(scopeName),
     name: (...ruleNames: RuleName[]): string => name(scopeName, ...ruleNames),
     nameRule: (...ruleNames: RuleName[]): NameRule => ({ name: name(scopeName, ...ruleNames) }),
     includeRule: (repositoryName: Repository) => includeRule(repositoryName),

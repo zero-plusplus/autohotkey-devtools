@@ -19,7 +19,6 @@ export function createLiteralRepositories(scopeName: ScopeName): Repositories {
         patterns: [
           includeRule(Repository.DoubleString),
           includeRule(Repository.Number),
-          includeRule(Repository.Boolean),
         ],
       };
     })(),
@@ -230,32 +229,5 @@ export function createLiteralRepositories(scopeName: ScopeName): Repositories {
       };
     })(),
     // #endregion number
-
-    // #region boolean
-    [Repository.Boolean]: ((): PatternsRule => {
-      return {
-        patterns: [
-          includeRule(Repository.True),
-          includeRule(Repository.False),
-        ],
-      };
-    })(),
-    [Repository.True]: ((): MatchRule => {
-      return {
-        match: '(?i)(?<=\\b)(true)(?=\\b)',
-        captures: {
-          1: nameRule(RuleName.Boolean, RuleName.True),
-        },
-      };
-    })(),
-    [Repository.False]: ((): MatchRule => {
-      return {
-        match: '(?i)(?<=\\b)(false)(?=\\b)',
-        captures: {
-          1: nameRule(RuleName.Boolean, RuleName.False),
-        },
-      };
-    })(),
-    // #endregion boolean
   };
 }

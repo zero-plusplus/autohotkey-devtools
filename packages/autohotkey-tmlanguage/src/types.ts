@@ -10,6 +10,7 @@ export const enum Repository {
   // #region expression
   Expression = 'expression',
   Variable = 'expression.variable',
+  BuiltInVariable = 'expression.variable.built-in',
   InvalidVariable = 'invalid.illegal.variable',
   // #endregion expression
 
@@ -34,12 +35,6 @@ export const enum Repository {
   ScientificNotation = 'constant.numeric.scientificnotation',
   InvalidScientificNotation = 'invalid.illegal.scientificnotation',
   // #endregion number
-
-  // #region boolean
-  Boolean = 'constant.language.boolean',
-  True = 'constant.language.boolean.true',
-  False = 'constant.language.boolean.false',
-  // #endregion boolean
 }
 
 // https://macromates.com/manual/en/language_grammars#naming_conventions
@@ -56,6 +51,7 @@ export const enum RuleName {
   // #region expression
   Variable = 'variable.other',
   InvalidVariable = 'invalid.illegal.variable',
+  BuiltInVariable = 'support.variable',
   // #endregion expression
 
   // #region string
@@ -84,12 +80,6 @@ export const enum RuleName {
   ExponentPlusMinusSign = 'constant.numeric.exponent.plus-minus.sign',
   Exponent = 'constant.numeric.exponent',
   // #endregion number
-
-  // #region boolean
-  Boolean = 'constant.language.boolean',
-  True = 'constant.language.boolean.true',
-  False = 'constant.language.boolean.false',
-  // #endregion boolean
 }
 // #endregion constant
 
@@ -147,6 +137,7 @@ export interface VariableParts {
 }
 export interface Utilities {
   getVariableParts: () => VariableParts;
+  getBuiltInVariableNames: () => string[];
   name: (...ruleNames: RuleName[]) => string;
   nameRule: (...ruleNames: RuleName[]) => NameRule;
   includeRule: (repositoryName: Repository) => IncludeRule;

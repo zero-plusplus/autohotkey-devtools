@@ -4,7 +4,8 @@ import { parse } from '../helpers/textmate-parser';
 
 describe('expression', () => {
   const scopeName: ScopeName = 'autohotkey2';
-  const { name } = createUtilities(scopeName);
+  const { getBuiltInVariableNames, name } = createUtilities(scopeName);
+  const builtinVariables = getBuiltInVariableNames();
 
   describe(`[${scopeName}] variable`, () => {
     test.each([
@@ -42,5 +43,16 @@ describe('expression', () => {
         expect(actual).toStrictEqual(expected);
       },
     );
+  });
+
+  describe(`[${scopeName}] built-in variable`, () => {
+    test.each(builtinVariables.map((builtinVariable) => {
+      return [ builtinVariable, [ { text: builtinVariable, scopes: name(RuleName.BuiltInVariable) } ] ];
+    }))('built-in variable', async(text, expected) => {
+      const actual = await parse(scopeName, text);
+      // console.log(JSON.stringify(actual, undefined, 2));
+
+      expect(actual).toStrictEqual(expected);
+    });
   });
 });

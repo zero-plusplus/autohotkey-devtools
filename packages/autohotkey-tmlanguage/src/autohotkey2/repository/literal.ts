@@ -17,7 +17,6 @@ export function createLiteralRepositories(scopeName: ScopeName): Repositories {
         patterns: [
           includeRule(Repository.String),
           includeRule(Repository.Number),
-          includeRule(Repository.Boolean),
         ],
       };
     })(),
@@ -93,11 +92,5 @@ export function createLiteralRepositories(scopeName: ScopeName): Repositories {
     [Repository.ScientificNotation]: ahklRepositories[Repository.ScientificNotation],
     [Repository.InvalidScientificNotation]: ahklRepositories[Repository.InvalidScientificNotation],
     // #endregion number
-
-    // #region boolean
-    [Repository.Boolean]: ahklRepositories[Repository.Boolean],
-    [Repository.True]: ahklRepositories[Repository.True],
-    [Repository.False]: ahklRepositories[Repository.False],
-    // #endregion boolean
   };
 }

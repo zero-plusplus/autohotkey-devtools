@@ -192,18 +192,4 @@ describe.each([
       },
     );
   });
-
-  describe(`[${scopeName}] boolean`, () => {
-    test.each([
-      [ 'true', [ { text: 'true', scopes: name(RuleName.Boolean, RuleName.True) } ] ],
-      [ 'True', [ { text: 'True', scopes: name(RuleName.Boolean, RuleName.True) } ] ],
-      [ 'false', [ { text: 'false', scopes: name(RuleName.Boolean, RuleName.False) } ] ],
-      [ 'False', [ { text: 'False', scopes: name(RuleName.Boolean, RuleName.False) } ] ],
-    ])('boolean', async(text, expected) => {
-      const actual = await parse(scopeName, text);
-      // console.log(JSON.stringify(actual, undefined, 2));
-
-      expect(actual).toStrictEqual(expected);
-    });
-  });
 });
