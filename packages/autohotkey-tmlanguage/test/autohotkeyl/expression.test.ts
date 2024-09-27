@@ -51,13 +51,39 @@ describe('expression', () => {
 
       test.each([
         [
+          '%%', [
+            { text: '%', scopes: name(RuleName.Dereference, RuleName.DereferencePercentBegin, RuleName.InvalidDereferencePercent) },
+            { text: '%', scopes: name(RuleName.Dereference, RuleName.DereferencePercentEnd, RuleName.InvalidDereferencePercent) },
+          ],
+        ],
+        [
           '%a', [
             { text: '%', scopes: name(RuleName.Dereference, RuleName.DereferencePercentBegin) },
             { text: 'a', scopes: name(RuleName.Dereference, RuleName.Variable, RuleName.InvalidDereference) },
           ],
         ],
+        [
+          '%a %', [
+            { text: '%', scopes: name(RuleName.Dereference, RuleName.DereferencePercentBegin) },
+            { text: 'a', scopes: name(RuleName.Dereference, RuleName.Variable, RuleName.InvalidDereference) },
+            { text: ' ', scopes: '' },
+            { text: '%', scopes: name(RuleName.Dereference, RuleName.DereferencePercentEnd) },
+          ],
+        ],
+        [
+          '%a b c %', [
+            { text: '%', scopes: name(RuleName.Dereference, RuleName.DereferencePercentBegin) },
+            { text: 'a', scopes: name(RuleName.Dereference, RuleName.Variable, RuleName.InvalidDereference) },
+            { text: ' ', scopes: '' },
+            { text: 'b', scopes: name(RuleName.Dereference, RuleName.Variable, RuleName.InvalidDereference) },
+            { text: ' ', scopes: '' },
+            { text: 'c', scopes: name(RuleName.Dereference, RuleName.Variable, RuleName.InvalidDereference) },
+            { text: ' ', scopes: '' },
+            { text: '%', scopes: name(RuleName.Dereference, RuleName.DereferencePercentEnd) },
+          ],
+        ],
       ])(
-        'valid',
+        'invalid',
         async(text, expected) => {
           const actual = await parse(scopeName, text);
           // console.log(JSON.stringify(actual, undefined, 2));

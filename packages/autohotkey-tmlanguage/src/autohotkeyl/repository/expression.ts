@@ -20,6 +20,7 @@ export function createLiteralRepositories(scopeName: ScopeName): Repositories {
           includeRule(Repository.BuiltInVariable),
           includeRule(Repository.InvalidVariable),
           includeRule(Repository.Variable),
+          includeRule(Repository.InvalidDereference),
           includeRule(Repository.Dereference),
         ],
       };
@@ -65,21 +66,86 @@ export function createLiteralRepositories(scopeName: ScopeName): Repositories {
     // #endregion variable
 
     // #region access
-    [Repository.Dereference]: ((): MatchRule => {
+    [Repository.Dereference]: ((): BeginEndRule => {
       return {
-        name: name(RuleName.Dereference),
-        match: `(%)([^\\s%]*)(?:(%)|([^\\s])(?=\\s+;|\\s*$))`,
-        captures: {
-          1: nameRule(RuleName.DereferencePercentBegin),
-          2: {
-            patterns: [
-              includeRule(Repository.BuiltInVariable),
-              includeRule(Repository.Variable),
-            ],
-          },
-          3: nameRule(RuleName.DereferencePercentEnd),
-          4: nameRule(RuleName.Variable, RuleName.InvalidDereference),
+        begin: '(%)',
+        beginCaptures: {
+          1: nameRule(RuleName.Dereference, RuleName.DereferencePercentBegin),
         },
+        end: '(?:(%)|(?=\\s+;|\\s*$))',
+        endCaptures: {
+          1: nameRule(RuleName.Dereference, RuleName.DereferencePercentEnd),
+        },
+        patterns: [
+          // %a b c %
+          //   ^ ^ ^ invalid
+          {
+            match: '([^%\\s]*)([^%\\s])\\s+',
+            captures: {
+              1: {
+                name: name(RuleName.Dereference),
+                patterns: [
+                  includeRule(Repository.BuiltInVariable),
+                  includeRule(Repository.Variable),
+                ],
+              },
+              2: nameRule(RuleName.Dereference, RuleName.Variable, RuleName.InvalidDereference),
+            },
+          },
+          // %abc%
+          //  ^^^ valid
+          {
+            name: name(RuleName.Dereference),
+            match: '([^%\\s]+)',
+            captures: {
+              1: {
+                patterns: [
+                  includeRule(Repository.BuiltInVariable),
+                  includeRule(Repository.Variable),
+                ],
+              },
+            },
+          },
+        ],
+      };
+    })(),
+    [Repository.InvalidDereference]: ((): PatternsRule => {
+      return {
+        patterns: [
+          // %%
+          //  ^ missing
+          {
+            match: '(%)(%)',
+            captures: {
+              1: nameRule(RuleName.Dereference, RuleName.DereferencePercentBegin, RuleName.InvalidDereferencePercent),
+              2: nameRule(RuleName.Dereference, RuleName.DereferencePercentEnd, RuleName.InvalidDereferencePercent),
+            },
+          },
+          // %
+          //  ^ missing
+          {
+            match: '(%)(?=\\s+;|\\s*$)',
+            captures: {
+              1: nameRule(RuleName.Dereference, RuleName.DereferencePercentBegin, RuleName.InvalidDereferencePercent),
+            },
+          },
+          // %abc
+          //     ^ missing
+          {
+            match: '(%)([^%\\s]*)([^%\\s])(?=\\s+;|\\s*$)',
+            captures: {
+              1: nameRule(RuleName.Dereference, RuleName.DereferencePercentBegin),
+              2: {
+                name: name(RuleName.Dereference),
+                patterns: [
+                  includeRule(Repository.BuiltInVariable),
+                  includeRule(Repository.Variable),
+                ],
+              },
+              3: nameRule(RuleName.Dereference, RuleName.Variable, RuleName.InvalidDereference),
+            },
+          },
+        ],
       };
     })(),
     // #endregion access

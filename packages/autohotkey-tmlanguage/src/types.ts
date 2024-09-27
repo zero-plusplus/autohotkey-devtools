@@ -19,6 +19,7 @@ export const enum Repository {
 
   // #region access
   Dereference = 'expression.dereference',
+  InvalidDereference = 'invalid.illegal.dereference',
   // #endregion access
 
   // #region string
@@ -66,6 +67,7 @@ export const enum RuleName {
   DereferencePercentBegin = 'punctuation.definition.dereference.begin',
   DereferencePercentEnd = 'punctuation.definition.dereference.end',
   InvalidDereference = 'invalid.illegal.dereference',
+  InvalidDereferencePercent = 'invalid.illegal.dereference.percent',
   // #endregion access
 
   // #region string
