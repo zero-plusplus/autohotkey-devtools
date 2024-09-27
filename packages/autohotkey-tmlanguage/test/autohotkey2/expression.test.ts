@@ -44,6 +44,37 @@ describe('expression', () => {
           expect(actual).toStrictEqual(expected);
         },
       );
+
+      test.each([
+        [
+          '%%', [
+            { text: '%', scopes: name(RuleName.Dereference, RuleName.DereferencePercentBegin, RuleName.InvalidDereferencePercent) },
+            { text: '%', scopes: name(RuleName.Dereference, RuleName.DereferencePercentEnd, RuleName.InvalidDereferencePercent) },
+          ],
+        ],
+        [ '%', [ { text: '%', scopes: name(RuleName.Dereference, RuleName.DereferencePercentBegin, RuleName.InvalidDereferencePercent) } ] ],
+        [
+          '%a', [
+            { text: '%', scopes: name(RuleName.Dereference, RuleName.DereferencePercentBegin) },
+            { text: 'a', scopes: name(RuleName.Dereference, RuleName.Variable, RuleName.InvalidDereference) },
+          ],
+        ],
+        [
+          '%abc', [
+            { text: '%', scopes: name(RuleName.Dereference, RuleName.DereferencePercentBegin) },
+            { text: 'ab', scopes: name(RuleName.Dereference, RuleName.Variable) },
+            { text: 'c', scopes: name(RuleName.Dereference, RuleName.Variable, RuleName.InvalidDereference) },
+          ],
+        ],
+      ])(
+        'invalid',
+        async(text, expected) => {
+          const actual = await parse(scopeName, text);
+          // console.log(JSON.stringify(actual, undefined, 2));
+
+          expect(actual).toStrictEqual(expected);
+        },
+      );
     });
   });
 
