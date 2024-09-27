@@ -1,12 +1,12 @@
-import { doubleStringEscapeSequences } from '../../src/autohotkeyl/repository/expression';
 import { RuleName, ScopeName } from '../../src/types';
 import { createUtilities } from '../../src/utils';
 import { parse } from '../helpers/textmate-parser';
 
 describe('expression', () => {
   const scopeName: ScopeName = 'autohotkeyl';
-  const { getBuiltInVariableNames, name } = createUtilities(scopeName);
+  const { getBuiltInVariableNames, getEscapeSequencesInfo, name } = createUtilities(scopeName);
   const builtinVariables = getBuiltInVariableNames();
+  const escapeSequencesInfo = getEscapeSequencesInfo();
 
   // #region variable
   describe(`[${scopeName}] variable`, () => {
@@ -78,12 +78,12 @@ describe('expression', () => {
     test(
       'escape sequences',
       async() => {
-        const actual = await parse(scopeName, `"${doubleStringEscapeSequences.join('')}"`);
+        const actual = await parse(scopeName, `"${escapeSequencesInfo.doubleQuote.join('')}"`);
         // console.log(JSON.stringify(actual, undefined, 2));
 
         expect(actual).toStrictEqual([
           { text: '"', scopes: name(RuleName.DoubleString, RuleName.StringBegin) },
-          ...doubleStringEscapeSequences.map((escapeSequence) => {
+          ...escapeSequencesInfo.doubleQuote.map((escapeSequence) => {
             return { text: escapeSequence, scopes: name(RuleName.DoubleString, RuleName.DoubleStringEscapeSequence) };
           }),
           { text: '"', scopes: name(RuleName.DoubleString, RuleName.StringEnd) },

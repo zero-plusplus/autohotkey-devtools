@@ -1,11 +1,11 @@
-import { doubleStringEscapeSequences, singleStringEscapeSequences } from '../../src/autohotkey2/repository/expression';
 import { RuleName, ScopeName } from '../../src/types';
 import { createUtilities } from '../../src/utils';
 import { parse } from '../helpers/textmate-parser';
 
 describe('expression', () => {
   const scopeName: ScopeName = 'autohotkey2';
-  const { getBuiltInVariableNames, name } = createUtilities(scopeName);
+  const { getBuiltInVariableNames, getEscapeSequencesInfo, name } = createUtilities(scopeName);
+  const escapeSequencesInfo = getEscapeSequencesInfo();
   const builtinVariables = getBuiltInVariableNames();
 
   // #region variable
@@ -78,12 +78,12 @@ describe('expression', () => {
     test(
       `escape sequences`,
       async() => {
-        const actual = await parse(scopeName, `"${doubleStringEscapeSequences.join('')}"`);
+        const actual = await parse(scopeName, `"${escapeSequencesInfo.doubleQuote.join('')}"`);
         // console.log(JSON.stringify(actual, undefined, 2));
 
         expect(actual).toStrictEqual([
           { text: '"', scopes: name(RuleName.DoubleString, RuleName.StringBegin) },
-          ...doubleStringEscapeSequences.map((escapeSequence) => {
+          ...escapeSequencesInfo.doubleQuote.map((escapeSequence) => {
             return { text: escapeSequence, scopes: name(RuleName.DoubleString, RuleName.DoubleStringEscapeSequence) };
           }),
           { text: '"', scopes: name(RuleName.DoubleString, RuleName.StringEnd) },
@@ -128,12 +128,12 @@ describe('expression', () => {
     test(
       `escape sequences`,
       async() => {
-        const actual = await parse(scopeName, `'${singleStringEscapeSequences.join('')}'`);
+        const actual = await parse(scopeName, `'${escapeSequencesInfo.singleQuote.join('')}'`);
         // console.log(JSON.stringify(actual, undefined, 2));
 
         expect(actual).toStrictEqual([
           { text: `'`, scopes: name(RuleName.SingleString, RuleName.StringBegin) },
-          ...singleStringEscapeSequences.map((escapeSequence) => {
+          ...escapeSequencesInfo.singleQuote.map((escapeSequence) => {
             return { text: escapeSequence, scopes: name(RuleName.SingleString, RuleName.SingleStringEscapeSequence) };
           }),
           { text: `'`, scopes: name(RuleName.SingleString, RuleName.StringEnd) },

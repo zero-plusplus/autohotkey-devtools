@@ -2,13 +2,9 @@ import { Repository, Repositories, PatternsRule, ScopeName, BeginEndRule, MatchR
 import * as ahkl from '../../autohotkeyl/repository/expression';
 import { createUtilities } from '../../utils';
 
-// [Escape Sequences](https://www.autohotkey.com/docs/v2/misc/EscapeChar.htm)
-export const commonEscapeSequences: string[] = [ '``', '`;', '`:', '`{', '`n', '`r', '`b', '`t', '`s', '`v', '`a', '`f' ] as const;
-export const doubleStringEscapeSequences: string[] = [ ...commonEscapeSequences, '`\"' ] as const;
-export const singleStringEscapeSequences: string[] = [ ...commonEscapeSequences, `\`'` ] as const;
-
 export function createLiteralRepositories(scopeName: ScopeName): Repositories {
-  const { name, nameRule, includeRule } = createUtilities(scopeName);
+  const { getEscapeSequencesInfo, name, nameRule, includeRule } = createUtilities(scopeName);
+  const escapeSequenceInfo = getEscapeSequencesInfo();
   const ahklRepositories = ahkl.createLiteralRepositories(scopeName);
 
   return {
@@ -66,10 +62,9 @@ export function createLiteralRepositories(scopeName: ScopeName): Repositories {
       };
     })(),
     [Repository.DoubleStringEscapeSequence]: ((): MatchRule => {
-      const escapeSequences = [ ...commonEscapeSequences, '`\"' ];
       return {
         name: name(RuleName.DoubleStringEscapeSequence),
-        match: `(${escapeSequences.join('|')})(?!\\r\\n|\\n)`,
+        match: `(${escapeSequenceInfo.doubleQuote.join('|')})(?!\\r\\n|\\n)`,
       };
     })(),
     [Repository.SingleString]: {
@@ -89,10 +84,9 @@ export function createLiteralRepositories(scopeName: ScopeName): Repositories {
       ],
     },
     [Repository.SingleStringEscapeSequence]: ((): MatchRule => {
-      const escapeSequences = [ ...commonEscapeSequences, `\`'` ];
       return {
         name: name(RuleName.SingleStringEscapeSequence),
-        match: `(${escapeSequences.join('|')})(?!\\r\\n|\\n)`,
+        match: `(${escapeSequenceInfo.singleQuote.join('|')})(?!\\r\\n|\\n)`,
       };
     })(),
     // #endregion string

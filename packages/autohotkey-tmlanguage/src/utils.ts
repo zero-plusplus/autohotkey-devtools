@@ -1,4 +1,4 @@
-import { IncludeRule, NameRule, Repository, RuleName, ScopeName, Utilities, VariableParts } from './types';
+import { EscapeSequencesInfo, IncludeRule, NameRule, Repository, RuleName, ScopeName, Utilities, VariableParts } from './types';
 
 export function getVariableParts(scopeName: ScopeName): VariableParts {
   const letter = '[a-zA-Z]';
@@ -25,6 +25,28 @@ export function getVariableParts(scopeName: ScopeName): VariableParts {
       return {
         headChar,
         tailChar,
+      };
+    }
+  }
+  throw Error(`Scope "${scopeName}" not found`);
+}
+export function getEscapeSequencesInfo(scopeName: ScopeName): EscapeSequencesInfo {
+  switch (scopeName) {
+    case 'autohotkeynext':
+    case 'autohotkey2': {
+      // [Escape Sequences](https://www.autohotkey.com/docs/v2/misc/EscapeChar.htm)
+      const commonEscapeSequences: string[] = [ '``', '`;', '`:', '`{', '`n', '`r', '`b', '`t', '`s', '`v', '`a', '`f' ];
+      return {
+        doubleQuote: [ ...commonEscapeSequences, '`\"' ],
+        singleQuote: [ ...commonEscapeSequences, `\`'` ],
+      };
+    }
+    case 'autohotkeyl': {
+      // [Escape Sequences](https://www.autohotkey.com/docs/v1/misc/EscapeChar.htm)
+      const commonEscapeSequences: string[] = [ '`,', '`%', '``', '`;', '`::', '`r', '`n', '`b', '`t', '`v', '`a', '`f' ];
+      return {
+        doubleQuote: [ ...commonEscapeSequences, `""` ],
+        singleQuote: [],
       };
     }
   }
@@ -430,6 +452,7 @@ export function nameRule(scopeName: ScopeName, ...ruleNames: RuleName[]): NameRu
 export function createUtilities(scopeName: ScopeName): Utilities {
   return {
     getVariableParts: () => getVariableParts(scopeName),
+    getEscapeSequencesInfo: () => getEscapeSequencesInfo(scopeName),
     getBuiltInVariableNames: () => getBuiltInVariableNames(scopeName),
     name: (...ruleNames: RuleName[]): string => name(scopeName, ...ruleNames),
     nameRule: (...ruleNames: RuleName[]): NameRule => ({ name: name(scopeName, ...ruleNames) }),

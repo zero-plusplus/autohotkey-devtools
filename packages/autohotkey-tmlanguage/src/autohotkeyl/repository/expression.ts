@@ -1,18 +1,15 @@
 import { Repository, Repositories, PatternsRule, ScopeName, MatchRule, RuleName, BeginEndRule } from '../../types';
 import { createUtilities } from '../../utils';
 
-// [Escape Sequences](https://www.autohotkey.com/docs/v1/misc/EscapeChar.htm)
-export const commonEscapeSequences: string[] = [ '`,', '`%', '``', '`;', '`::', '`r', '`n', '`b', '`t', '`v', '`a', '`f' ] as const;
-export const doubleStringEscapeSequences: string[] = [ ...commonEscapeSequences, `""` ] as const;
-
 export const integer = '[1-9][0-9]*|0';
 export const hexPrefix = '0[xX]';
 export const hexValue = '[0-9a-fA-F]+';
 export const hex = `${hexPrefix}${hexValue}` as string;
 
 export function createLiteralRepositories(scopeName: ScopeName): Repositories {
-  const { getVariableParts, getBuiltInVariableNames, includeRule, name, nameRule } = createUtilities(scopeName);
+  const { getVariableParts, getEscapeSequencesInfo, getBuiltInVariableNames, includeRule, name, nameRule } = createUtilities(scopeName);
   const variableParts = getVariableParts();
+  const escapeSequencesInfo = getEscapeSequencesInfo();
   const builtinVariables = getBuiltInVariableNames();
 
   return {
@@ -129,7 +126,7 @@ export function createLiteralRepositories(scopeName: ScopeName): Repositories {
     [Repository.DoubleStringEscapeSequence]: ((): MatchRule => {
       return {
         name: name(RuleName.DoubleStringEscapeSequence),
-        match: `(${doubleStringEscapeSequences.join('|')})(?!(\\r\\n|\\n))`,
+        match: `(${escapeSequencesInfo.doubleQuote.join('|')})(?!(\\r\\n|\\n))`,
       };
     })(),
     // #endregion string

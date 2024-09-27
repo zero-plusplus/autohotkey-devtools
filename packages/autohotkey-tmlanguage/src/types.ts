@@ -135,8 +135,13 @@ export interface VariableParts {
   headChar: string;
   tailChar: string;
 }
+export interface EscapeSequencesInfo {
+  doubleQuote: string[];
+  singleQuote: string[];
+}
 export interface Utilities {
   getVariableParts: () => VariableParts;
+  getEscapeSequencesInfo: () => EscapeSequencesInfo;
   getBuiltInVariableNames: () => string[];
   name: (...ruleNames: RuleName[]) => string;
   nameRule: (...ruleNames: RuleName[]) => NameRule;
