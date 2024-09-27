@@ -97,6 +97,13 @@ export const enum RuleName {
   Exponent = 'constant.numeric.exponent',
   // #endregion number
 }
+
+export const enum CommandArgsType {
+  Expression = 'expression',
+  Legacy = 'legacy',
+  Input = 'input',
+  Output = 'output',
+}
 // #endregion constant
 
 // #region types
@@ -147,6 +154,11 @@ export interface IncludeRule {
   include: string;
 }
 
+export type CommandKeywords = string[];
+export type CommandInfo = [
+  string, // command name
+  ...Array<CommandArgsType | CommandKeywords>,
+];
 export interface VariableParts {
   headChar: string;
   tailChar: string;
