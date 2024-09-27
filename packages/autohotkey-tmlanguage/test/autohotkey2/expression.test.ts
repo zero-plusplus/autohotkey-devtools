@@ -7,6 +7,46 @@ describe('expression', () => {
   const { getEscapeSequencesInfo, name } = createUtilities(scopeName);
   const escapeSequencesInfo = getEscapeSequencesInfo();
 
+  describe(`[${scopeName}] access`, () => {
+    describe(`[${scopeName}] dereference`, () => {
+      test.each([
+        [
+          '%abc%', [
+            { text: '%', scopes: name(RuleName.Dereference, RuleName.DereferencePercentBegin) },
+            { text: 'abc', scopes: name(RuleName.Dereference, RuleName.Variable) },
+            { text: '%', scopes: name(RuleName.Dereference, RuleName.DereferencePercentEnd) },
+          ],
+        ],
+        [
+          '%A_ScriptDir%',
+          [
+            { text: '%', scopes: name(RuleName.Dereference, RuleName.DereferencePercentBegin) },
+            { text: 'A_ScriptDir', scopes: name(RuleName.Dereference, RuleName.BuiltInVariable) },
+            { text: '%', scopes: name(RuleName.Dereference, RuleName.DereferencePercentEnd) },
+          ],
+        ],
+        [
+          '%"abc"%',
+          [
+            { text: '%', scopes: name(RuleName.Dereference, RuleName.DereferencePercentBegin) },
+            { text: '"', scopes: name(RuleName.Dereference, RuleName.DoubleString, RuleName.StringBegin) },
+            { text: 'abc', scopes: name(RuleName.Dereference, RuleName.DoubleString) },
+            { text: '"', scopes: name(RuleName.Dereference, RuleName.DoubleString, RuleName.StringEnd) },
+            { text: '%', scopes: name(RuleName.Dereference, RuleName.DereferencePercentEnd) },
+          ],
+        ],
+      ])(
+        'valid',
+        async(text, expected) => {
+          const actual = await parse(scopeName, text);
+          // console.log(JSON.stringify(actual, undefined, 2));
+
+          expect(actual).toStrictEqual(expected);
+        },
+      );
+    });
+  });
+
   // #region literal
   describe(`[${scopeName}] string`, () => {
     describe(`[${scopeName}] single quote string`, () => {

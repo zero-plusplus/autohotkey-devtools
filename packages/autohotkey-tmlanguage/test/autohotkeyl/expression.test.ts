@@ -6,7 +6,6 @@ describe('expression', () => {
   const scopeName: ScopeName = 'autohotkeyl';
   const { name } = createUtilities(scopeName);
 
-  // #region variable
   describe(`[${scopeName}] variable`, () => {
     test.each([
       [ 'var', [ { text: 'var', scopes: name(RuleName.Variable) } ] ],
@@ -21,5 +20,51 @@ describe('expression', () => {
       },
     );
   });
-  // #endregion variable
+
+  describe(`[${scopeName}] access`, () => {
+    describe(`[${scopeName}] dereference`, () => {
+      test.each([
+        [
+          '%abc%', [
+            { text: '%', scopes: name(RuleName.Dereference, RuleName.DereferencePercentBegin) },
+            { text: 'abc', scopes: name(RuleName.Dereference, RuleName.Variable) },
+            { text: '%', scopes: name(RuleName.Dereference, RuleName.DereferencePercentEnd) },
+          ],
+        ],
+        [
+          '%A_ScriptDir%',
+          [
+            { text: '%', scopes: name(RuleName.Dereference, RuleName.DereferencePercentBegin) },
+            { text: 'A_ScriptDir', scopes: name(RuleName.Dereference, RuleName.BuiltInVariable) },
+            { text: '%', scopes: name(RuleName.Dereference, RuleName.DereferencePercentEnd) },
+          ],
+        ],
+      ])(
+        'valid',
+        async(text, expected) => {
+          const actual = await parse(scopeName, text);
+          // console.log(JSON.stringify(actual, undefined, 2));
+
+          expect(actual).toStrictEqual(expected);
+        },
+      );
+
+      test.each([
+        [
+          '%a', [
+            { text: '%', scopes: name(RuleName.Dereference, RuleName.DereferencePercentBegin) },
+            { text: 'a', scopes: name(RuleName.Dereference, RuleName.Variable, RuleName.InvalidDereference) },
+          ],
+        ],
+      ])(
+        'valid',
+        async(text, expected) => {
+          const actual = await parse(scopeName, text);
+          // console.log(JSON.stringify(actual, undefined, 2));
+
+          expect(actual).toStrictEqual(expected);
+        },
+      );
+    });
+  });
 });

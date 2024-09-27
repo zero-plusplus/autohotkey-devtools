@@ -20,9 +20,12 @@ export function createLiteralRepositories(scopeName: ScopeName): Repositories {
           includeRule(Repository.BuiltInVariable),
           includeRule(Repository.InvalidVariable),
           includeRule(Repository.Variable),
+          includeRule(Repository.Dereference),
         ],
       };
     })(),
+
+    // #region variable
     [Repository.Variable]: ((): MatchRule => {
       return {
         match: `((?:${variableParts.headChar})(?:${variableParts.tailChar}){0,252})`,
@@ -51,8 +54,6 @@ export function createLiteralRepositories(scopeName: ScopeName): Repositories {
         ],
       };
     })(),
-
-    // #region builtin variable
     [Repository.BuiltInVariable]: ((): MatchRule => {
       return {
         match: `(?i)(?<=\\b)(${builtinVariables.join('|')})(?=\\b)`,
@@ -61,7 +62,27 @@ export function createLiteralRepositories(scopeName: ScopeName): Repositories {
         },
       };
     })(),
-    // #endregion builtin variable
+    // #endregion variable
+
+    // #region access
+    [Repository.Dereference]: ((): MatchRule => {
+      return {
+        name: name(RuleName.Dereference),
+        match: `(%)([^\\s%]*)(?:(%)|([^\\s])(?=\\s+;|\\s*$))`,
+        captures: {
+          1: nameRule(RuleName.DereferencePercentBegin),
+          2: {
+            patterns: [
+              includeRule(Repository.BuiltInVariable),
+              includeRule(Repository.Variable),
+            ],
+          },
+          3: nameRule(RuleName.DereferencePercentEnd),
+          4: nameRule(RuleName.Variable, RuleName.InvalidDereference),
+        },
+      };
+    })(),
+    // #endregion access
 
     // #region literal
     [Repository.Literal]: ((): PatternsRule => {

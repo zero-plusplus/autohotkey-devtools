@@ -9,10 +9,17 @@ export const enum Repository {
 
   // #region expression
   Expression = 'expression',
+  // #endregion expression
+
+  // #region variable
   Variable = 'expression.variable',
   BuiltInVariable = 'expression.variable.built-in',
   InvalidVariable = 'invalid.illegal.variable',
-  // #endregion expression
+  // #endregion variable
+
+  // #region access
+  Dereference = 'expression.dereference',
+  // #endregion access
 
   // #region string
   String = 'string',
@@ -48,11 +55,18 @@ export const enum RuleName {
 
   CommentBlock = 'comment.block',
 
-  // #region expression
+  // #region variable
   Variable = 'variable.other',
   InvalidVariable = 'invalid.illegal.variable',
   BuiltInVariable = 'support.variable',
-  // #endregion expression
+  // #endregion variable
+
+  // #region access
+  Dereference = 'expression.dereference',
+  DereferencePercentBegin = 'punctuation.definition.dereference.begin',
+  DereferencePercentEnd = 'punctuation.definition.dereference.end',
+  InvalidDereference = 'invalid.illegal.dereference',
+  // #endregion access
 
   // #region string
   DoubleString = 'string.quoted.double',

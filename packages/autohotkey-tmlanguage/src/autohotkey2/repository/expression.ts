@@ -15,12 +15,33 @@ export function createLiteralRepositories(scopeName: ScopeName): Repositories {
           includeRule(Repository.BuiltInVariable),
           includeRule(Repository.InvalidVariable),
           includeRule(Repository.Variable),
+          includeRule(Repository.Dereference),
         ],
       };
     })(),
+
+    // #region variable
     [Repository.Variable]: ahklRepositories[Repository.Variable],
     [Repository.InvalidVariable]: ahklRepositories[Repository.InvalidVariable],
     [Repository.BuiltInVariable]: ahklRepositories[Repository.BuiltInVariable],
+    // #endregion variable
+
+    // #region access
+    [Repository.Dereference]: ((): BeginEndRule => {
+      return {
+        name: name(RuleName.Dereference),
+        begin: '(%)',
+        beginCaptures: {
+          1: nameRule(RuleName.DereferencePercentBegin),
+        },
+        end: '(%)',
+        endCaptures: {
+          1: nameRule(RuleName.DereferencePercentEnd),
+        },
+        patterns: [ includeRule(Repository.Expression) ],
+      };
+    })(),
+    // #endregion access
 
     // #region literal
     [Repository.Literal]: ((): PatternsRule => {
