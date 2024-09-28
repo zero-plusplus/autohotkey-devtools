@@ -1,13 +1,34 @@
-import { CommandInfo, EscapeSequencesInfo, IncludeRule, NameRule, Repository, RuleName, ScopeName, Utilities, VariableParts } from './types';
+import { CommandArgsType, CommandInfo, EscapeSequencesInfo, IncludeRule, NameRule, Repository, RuleName, ScopeName, Utilities, VariableParts } from './types';
 
 export function getCommandInfos(): CommandInfo[] {
   // https://www.autohotkey.com/docs/v1/lib/index.htm
   return [
-    [ 'AutoTrim' ],
-    [ 'BlockInput' ],
-    [ 'Click' ],
-    [ 'ClipWait' ],
-    [ 'Control' ],
+    [ 'AutoTrim', [ [ CommandArgsType.Legacy, 'On', 'Off' ] ] ],
+    [ 'BlockInput', [ [ CommandArgsType.Legacy, 'On', 'Off', 'SendMouse', 'MouseMove' ] ] ],
+    [ 'Click', [ [ CommandArgsType.Legacy, 'Left', 'L', 'Right', 'R', 'Middle', 'M', 'X1', 'X2', 'Up', 'U', 'Down', 'D' ] ] ],
+    [ 'ClipWait', [ CommandArgsType.Expression, CommandArgsType.Expression ] ],
+    [
+      'Control', [
+        [ 'Check', CommandArgsType.None, CommandArgsType.Legacy, CommandArgsType.Legacy, CommandArgsType.Legacy, CommandArgsType.Legacy, CommandArgsType.Legacy ],
+        [ 'UnCheck', CommandArgsType.None, CommandArgsType.Legacy, CommandArgsType.Legacy, CommandArgsType.Legacy, CommandArgsType.Legacy, CommandArgsType.Legacy ],
+        [ 'Enable', CommandArgsType.None, CommandArgsType.Legacy, CommandArgsType.Legacy, CommandArgsType.Legacy, CommandArgsType.Legacy, CommandArgsType.Legacy ],
+        [ 'Disable', CommandArgsType.None, CommandArgsType.Legacy, CommandArgsType.Legacy, CommandArgsType.Legacy, CommandArgsType.Legacy, CommandArgsType.Legacy ],
+        [ 'Show', CommandArgsType.None, CommandArgsType.Legacy, CommandArgsType.Legacy, CommandArgsType.Legacy, CommandArgsType.Legacy, CommandArgsType.Legacy ],
+        [ 'Hide', CommandArgsType.None, CommandArgsType.Legacy, CommandArgsType.Legacy, CommandArgsType.Legacy, CommandArgsType.Legacy, CommandArgsType.Legacy ],
+        [ 'Style', CommandArgsType.ControlStyle, CommandArgsType.Legacy, CommandArgsType.Legacy, CommandArgsType.Legacy, CommandArgsType.Legacy, CommandArgsType.Legacy ],
+        [ 'ExStyle', CommandArgsType.ControlStyle, CommandArgsType.Legacy, CommandArgsType.Legacy, CommandArgsType.Legacy, CommandArgsType.Legacy, CommandArgsType.Legacy ],
+        [ 'ShowDropDown', CommandArgsType.None, CommandArgsType.Legacy, CommandArgsType.Legacy, CommandArgsType.Legacy, CommandArgsType.Legacy, CommandArgsType.Legacy ],
+        [ 'HideDropDown', CommandArgsType.None, CommandArgsType.Legacy, CommandArgsType.Legacy, CommandArgsType.Legacy, CommandArgsType.Legacy, CommandArgsType.Legacy ],
+        [ 'TabLeft', CommandArgsType.Legacy, CommandArgsType.Legacy, CommandArgsType.Legacy, CommandArgsType.Legacy, CommandArgsType.Legacy, CommandArgsType.Legacy ],
+        [ 'TabRight', CommandArgsType.Legacy, CommandArgsType.Legacy, CommandArgsType.Legacy, CommandArgsType.Legacy, CommandArgsType.Legacy, CommandArgsType.Legacy ],
+        [ 'Add', CommandArgsType.Legacy, CommandArgsType.Legacy, CommandArgsType.Legacy, CommandArgsType.Legacy, CommandArgsType.Legacy, CommandArgsType.Legacy ],
+        [ 'Delete', CommandArgsType.Legacy, CommandArgsType.Legacy, CommandArgsType.Legacy, CommandArgsType.Legacy, CommandArgsType.Legacy, CommandArgsType.Legacy ],
+        [ 'Choose', CommandArgsType.Legacy, CommandArgsType.Legacy, CommandArgsType.Legacy, CommandArgsType.Legacy, CommandArgsType.Legacy, CommandArgsType.Legacy ],
+        [ 'ChooseString', CommandArgsType.Legacy, CommandArgsType.Legacy, CommandArgsType.Legacy, CommandArgsType.Legacy, CommandArgsType.Legacy, CommandArgsType.Legacy ],
+        [ 'EditPaste', CommandArgsType.Legacy, CommandArgsType.Legacy, CommandArgsType.Legacy, CommandArgsType.Legacy, CommandArgsType.Legacy, CommandArgsType.Legacy ],
+      ],
+    ],
+    // TODO: Done here so far
     [ 'ControlClick' ],
     [ 'ControlFocus' ],
     [ 'ControlGet' ],

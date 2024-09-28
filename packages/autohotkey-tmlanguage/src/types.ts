@@ -99,10 +99,15 @@ export const enum RuleName {
 }
 
 export const enum CommandArgsType {
-  Expression = 'expression',
-  Legacy = 'legacy',
-  Input = 'input',
-  Output = 'output',
+  None,
+  Expression,
+  Legacy,
+  SubCommand,
+  Input,
+  Output,
+
+  // https://www.autohotkey.com/docs/v1/lib/Control.htm#Style
+  ControlStyle, // 0x123 ^0x123
 }
 // #endregion constant
 
@@ -154,11 +159,12 @@ export interface IncludeRule {
   include: string;
 }
 
-export type CommandKeywords = string[];
-export type CommandInfo = [
-  string, // command name
-  ...Array<CommandArgsType | CommandKeywords>,
-];
+export type CommandArgWithKeywords = [ CommandArgsType.Legacy, ...string[]];
+export type CommandSignatures = Array<CommandArgsType | CommandArgWithKeywords>;
+export type SubCommandSignatures = Array<[ string, ...CommandArgsType[]]>;
+export type CommandInfo =
+  | [ string /* command name */ ]
+  | [ string, /* command name */ SubCommandSignatures | CommandSignatures ];
 export interface VariableParts {
   headChar: string;
   tailChar: string;
