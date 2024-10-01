@@ -11,18 +11,18 @@ describe('legacy', () => {
       [
         'var = text', [
           { text: 'var', scopes: name(RuleName.LegacyAssignment, RuleName.Variable) },
-          { text: ' ', scopes: '' },
+          { text: ' ' },
           { text: '=', scopes: name(RuleName.LegacyAssignment, RuleName.Equals) },
-          { text: ' ', scopes: '' },
+          { text: ' ' },
           { text: 'text', scopes: name(RuleName.LegacyAssignment, RuleName.LegacyText) },
         ],
       ],
       [
         'var = %var2%', [
           { text: 'var', scopes: name(RuleName.LegacyAssignment, RuleName.Variable) },
-          { text: ' ', scopes: '' },
+          { text: ' ' },
           { text: '=', scopes: name(RuleName.LegacyAssignment, RuleName.Equals) },
-          { text: ' ', scopes: '' },
+          { text: ' ' },
           { text: '%', scopes: name(RuleName.LegacyAssignment, RuleName.Dereference, RuleName.DereferencePercentBegin) },
           { text: 'var2', scopes: name(RuleName.LegacyAssignment, RuleName.Dereference, RuleName.Variable) },
           { text: '%', scopes: name(RuleName.LegacyAssignment, RuleName.Dereference, RuleName.DereferencePercentEnd) },

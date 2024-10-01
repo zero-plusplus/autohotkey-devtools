@@ -28,18 +28,18 @@ describe('autohotkey', () => {
     // console.log(JSON.stringify(actual, undefined, 2));
 
     expect(actual).toStrictEqual([
-      { text: `\n`, scopes: '' },
-      { text: `      `, scopes: '' },
+      { text: `\n` },
+      { text: `      ` },
       { text: `#Requires`, scopes: name(RuleName.Emphasis, RuleName.Directive) },
-      { text: ` `, scopes: '' },
+      { text: ` ` },
       { text: `AutoHotkey v2.1`, scopes: name(RuleName.Emphasis, RuleName.LegacyText) },
-      { text: `\n`, scopes: '' },
-      { text: `      `, scopes: '' },
+      { text: `\n` },
+      { text: `      ` },
       { text: `"`, scopes: name_ahknext(RuleName.DoubleString, RuleName.StringBegin) },
       { text: 'string', scopes: name_ahknext(RuleName.DoubleString) },
       { text: `"`, scopes: name_ahknext(RuleName.DoubleString, RuleName.StringEnd) },
-      { text: `\n`, scopes: '' },
-      { text: `    `, scopes: '' },
+      { text: `\n` },
+      { text: `    ` },
     ]);
   });
 
@@ -51,18 +51,18 @@ describe('autohotkey', () => {
     // console.log(JSON.stringify(actual, undefined, 2));
 
     expect(actual).toStrictEqual([
-      { text: `\n`, scopes: '' },
-      { text: `      `, scopes: '' },
+      { text: `\n` },
+      { text: `      ` },
       { text: `#Requires`, scopes: name(RuleName.Emphasis, RuleName.Directive) },
-      { text: ` `, scopes: '' },
+      { text: ` ` },
       { text: `AutoHotkey v2.0`, scopes: name(RuleName.Emphasis, RuleName.LegacyText) },
-      { text: `\n`, scopes: '' },
-      { text: `      `, scopes: '' },
+      { text: `\n` },
+      { text: `      ` },
       { text: `"`, scopes: name_ahk2(RuleName.DoubleString, RuleName.StringBegin) },
       { text: 'string', scopes: name_ahk2(RuleName.DoubleString) },
       { text: `"`, scopes: name_ahk2(RuleName.DoubleString, RuleName.StringEnd) },
-      { text: `\n`, scopes: '' },
-      { text: `    `, scopes: '' },
+      { text: `\n` },
+      { text: `    ` },
     ]);
   });
 
@@ -74,18 +74,18 @@ describe('autohotkey', () => {
     // console.log(JSON.stringify(actual, undefined, 2));
 
     expect(actual).toStrictEqual([
-      { text: `\n`, scopes: '' },
-      { text: `      `, scopes: '' },
+      { text: `\n` },
+      { text: `      ` },
       { text: `#Requires`, scopes: name(RuleName.Emphasis, RuleName.Directive) },
-      { text: ` `, scopes: '' },
+      { text: ` ` },
       { text: `AutoHotkey v1.1`, scopes: name(RuleName.Emphasis, RuleName.LegacyText) },
-      { text: `\n`, scopes: '' },
-      { text: `      `, scopes: '' },
+      { text: `\n` },
+      { text: `      ` },
       { text: `"`, scopes: name_ahkl(RuleName.DoubleString, RuleName.StringBegin) },
       { text: 'string', scopes: name_ahkl(RuleName.DoubleString) },
       { text: `"`, scopes: name_ahkl(RuleName.DoubleString, RuleName.StringEnd) },
-      { text: `\n`, scopes: '' },
-      { text: `    `, scopes: '' },
+      { text: `\n` },
+      { text: `    ` },
     ]);
   });
 
@@ -101,40 +101,40 @@ describe('autohotkey', () => {
     // console.log(JSON.stringify(actual, undefined, 2));
 
     expect(actual).toStrictEqual([
-      { text: `\n`, scopes: '' },
-      { text: `      `, scopes: '' },
+      { text: `\n` },
+      { text: `      ` },
       { text: `#Requires`, scopes: name(RuleName.Emphasis, RuleName.Directive) },
-      { text: ` `, scopes: '' },
+      { text: ` ` },
       { text: `AutoHotkey v2.1`, scopes: name(RuleName.Emphasis, RuleName.LegacyText) },
-      { text: `\n`, scopes: '' },
-      { text: `      `, scopes: '' },
+      { text: `\n` },
+      { text: `      ` },
       { text: `"`, scopes: name_ahknext(RuleName.DoubleString, RuleName.StringBegin) },
       { text: 'string', scopes: name_ahknext(RuleName.DoubleString) },
       { text: `"`, scopes: name_ahknext(RuleName.DoubleString, RuleName.StringEnd) },
-      { text: `\n`, scopes: '' },
-      { text: `      `, scopes: '' },
+      { text: `\n` },
+      { text: `      ` },
 
       { text: `#Requires`, scopes: name(RuleName.Emphasis, RuleName.Directive) },
-      { text: ` `, scopes: '' },
+      { text: ` ` },
       { text: `AutoHotkey v2.0`, scopes: name(RuleName.Emphasis, RuleName.LegacyText) },
-      { text: `\n`, scopes: '' },
-      { text: `      `, scopes: '' },
+      { text: `\n` },
+      { text: `      ` },
       { text: `"`, scopes: name_ahk2(RuleName.DoubleString, RuleName.StringBegin) },
       { text: 'string', scopes: name_ahk2(RuleName.DoubleString) },
       { text: `"`, scopes: name_ahk2(RuleName.DoubleString, RuleName.StringEnd) },
-      { text: `\n`, scopes: '' },
-      { text: `      `, scopes: '' },
+      { text: `\n` },
+      { text: `      ` },
 
       { text: `#Requires`, scopes: name(RuleName.Emphasis, RuleName.Directive) },
-      { text: ` `, scopes: '' },
+      { text: ` ` },
       { text: `AutoHotkey v1.1`, scopes: name(RuleName.Emphasis, RuleName.LegacyText) },
-      { text: `\n`, scopes: '' },
-      { text: `      `, scopes: '' },
+      { text: `\n` },
+      { text: `      ` },
       { text: `"`, scopes: name_ahkl(RuleName.DoubleString, RuleName.StringBegin) },
       { text: 'string', scopes: name_ahkl(RuleName.DoubleString) },
       { text: `"`, scopes: name_ahkl(RuleName.DoubleString, RuleName.StringEnd) },
-      { text: `\n`, scopes: '' },
-      { text: `    `, scopes: '' },
+      { text: `\n` },
+      { text: `    ` },
     ]);
   });
 });

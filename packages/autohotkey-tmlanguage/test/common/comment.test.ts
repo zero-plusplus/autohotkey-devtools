@@ -14,9 +14,9 @@ describe.each([
       [ '; comment', [ { text: '; comment', scopes: name(RuleName.SingleLineComment) } ] ],
       [
         '  ; comment', [
-          { text: '  ', scopes: '' },
+          { text: '  ' },
           { text: '; comment', scopes: name(RuleName.SingleLineComment) },
-        ], 
+        ],
       ],
     ])('valid', async(text, expected) => {
       const actual = await parse(scopeName, text);
@@ -31,7 +31,7 @@ describe.each([
       [
         'var ; comment', [
           { text: 'var', scopes: name(RuleName.Variable) },
-          { text: ' ', scopes: '' },
+          { text: ' ' },
           { text: '; comment', scopes: name(RuleName.InLineComment) },
         ],
       ],

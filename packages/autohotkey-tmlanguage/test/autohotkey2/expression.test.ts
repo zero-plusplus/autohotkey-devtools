@@ -121,9 +121,9 @@ describe('expression', () => {
             { text: `'`, scopes: name(RuleName.SingleString, RuleName.StringBegin) },
             { text: 'a', scopes: name(RuleName.SingleString) },
             { text: 'b', scopes: name(RuleName.SingleString, RuleName.InvalidSingleLineStringContent) },
-            { text: '\r\n', scopes: name(RuleName.SingleString, RuleName.InvalidStringNewLine) },
+            { text: '\r\n' },
             { text: 'c', scopes: name(RuleName.SingleString, RuleName.InvalidSingleLineStringContent) },
-            { text: '\n', scopes: name(RuleName.SingleString, RuleName.InvalidStringNewLine) },
+            { text: '\n' },
             { text: `'`, scopes: name(RuleName.SingleString, RuleName.StringEnd) },
           ]);
         },

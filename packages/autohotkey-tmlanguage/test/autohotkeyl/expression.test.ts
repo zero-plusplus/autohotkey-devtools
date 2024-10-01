@@ -66,7 +66,7 @@ describe('expression', () => {
           '%a %', [
             { text: '%', scopes: name(RuleName.Dereference, RuleName.DereferencePercentBegin) },
             { text: 'a', scopes: name(RuleName.Dereference, RuleName.Variable, RuleName.InvalidDereference) },
-            { text: ' ', scopes: '' },
+            { text: ' ' },
             { text: '%', scopes: name(RuleName.Dereference, RuleName.DereferencePercentEnd) },
           ],
         ],
@@ -74,11 +74,11 @@ describe('expression', () => {
           '%a b c %', [
             { text: '%', scopes: name(RuleName.Dereference, RuleName.DereferencePercentBegin) },
             { text: 'a', scopes: name(RuleName.Dereference, RuleName.Variable, RuleName.InvalidDereference) },
-            { text: ' ', scopes: '' },
+            { text: ' ' },
             { text: 'b', scopes: name(RuleName.Dereference, RuleName.Variable, RuleName.InvalidDereference) },
-            { text: ' ', scopes: '' },
+            { text: ' ' },
             { text: 'c', scopes: name(RuleName.Dereference, RuleName.Variable, RuleName.InvalidDereference) },
-            { text: ' ', scopes: '' },
+            { text: ' ' },
             { text: '%', scopes: name(RuleName.Dereference, RuleName.DereferencePercentEnd) },
           ],
         ],
