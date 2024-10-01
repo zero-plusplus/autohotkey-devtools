@@ -28,6 +28,17 @@ describe('legacy', () => {
           { text: '%', scopes: name(RuleName.LegacyAssignment, RuleName.Dereference, RuleName.DereferencePercentEnd) },
         ],
       ],
+      [
+        'var = % abc', [
+          { text: 'var', scopes: name(RuleName.LegacyAssignment, RuleName.Variable) },
+          { text: ' ' },
+          { text: '=', scopes: name(RuleName.LegacyAssignment, RuleName.Equals) },
+          { text: ' ' },
+          { text: '%', scopes: name(RuleName.LegacyAssignment, RuleName.ForceExpression, RuleName.ForceExpressionPercent) },
+          { text: ' ' },
+          { text: 'abc', scopes: name(RuleName.LegacyAssignment, RuleName.ForceExpression, RuleName.Variable) },
+        ],
+      ],
     ])('valid', async(text, expected) => {
       const actual = await parse(scopeName, text);
       // console.log(JSON.stringify(actual, undefined, 2));

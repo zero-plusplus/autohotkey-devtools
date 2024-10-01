@@ -13,6 +13,7 @@ export const enum Repository {
   LegacyAssignment = 'expression.legacy.assignment',
   LegacyText = 'expression.legacy.text',
   LegacyTextEscapeSequence = 'expression.legacy.text.escape',
+  PercentExpression = 'expression.legacy.percent',
   // #endregion legacy
 
   // #region comment
@@ -69,6 +70,8 @@ export const enum RuleName {
   LegacyAssignment = 'expression.legacy.assignment',
   LegacyText = 'string.legacy.text',
   LegacyTextEscapeSequence = 'constant.character.escape.legacy.text',
+  ForceExpression = 'expression.legacy.expression.force',
+  ForceExpressionPercent = 'punctuation.definition.expression.force',
   // #endregion legacy
 
   // #region comment

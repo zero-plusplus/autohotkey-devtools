@@ -27,6 +27,7 @@ export function createRepositories(scopeName: ScopeName): Repositories {
           3: {
             name: name(RuleName.LegacyAssignment),
             patterns: [
+              includeRule(Repository.PercentExpression),
               includeRule(Repository.Dereference),
               includeRule(Repository.LegacyTextEscapeSequence),
               {
@@ -42,6 +43,18 @@ export function createRepositories(scopeName: ScopeName): Repositories {
       return {
         name: name(RuleName.LegacyTextEscapeSequence),
         match: escapeSequencesInfo.legacyText.join('|'),
+      };
+    })(),
+    [Repository.PercentExpression]: ((): MatchRule => {
+      return {
+        match: '(%)\\s+(.*)',
+        captures: {
+          1: nameRule(RuleName.ForceExpression, RuleName.ForceExpressionPercent),
+          2: {
+            name: name(RuleName.ForceExpression),
+            patterns: [ includeRule(Repository.Expression) ],
+          },
+        },
       };
     })(),
   };
