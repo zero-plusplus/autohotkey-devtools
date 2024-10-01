@@ -22,7 +22,7 @@ export function createTmLanguage(): TmLanguage {
       autohotkeynext_explicit: {
         begin: '(?i)^\\s*(#Requires) (AutoHotkey v2\\.1.*)$',
         beginCaptures: {
-          1: nameRule(RuleName.Emphasis, RuleName.Directive),
+          1: nameRule(RuleName.Emphasis, RuleName.DirectiveName),
           2: nameRule(RuleName.Emphasis, RuleName.LegacyText),
         },
         while: '^(?!\\s*#Requires)',
@@ -31,7 +31,7 @@ export function createTmLanguage(): TmLanguage {
       autohotkey2_explicit: {
         begin: '(?i)^\\s*(#Requires) (AutoHotkey v2.*)$',
         beginCaptures: {
-          1: nameRule(RuleName.Emphasis, RuleName.Directive),
+          1: nameRule(RuleName.Emphasis, RuleName.DirectiveName),
           2: nameRule(RuleName.Emphasis, RuleName.LegacyText),
         },
         while: '^(?!\\s*#Requires)',
@@ -46,7 +46,7 @@ export function createTmLanguage(): TmLanguage {
         return {
           begin: '(?i)^\\s*(#Requires) (AutoHotkey v1.*)$',
           beginCaptures: {
-            1: nameRule(RuleName.Emphasis, RuleName.Directive),
+            1: nameRule(RuleName.Emphasis, RuleName.DirectiveName),
             2: nameRule(RuleName.Emphasis, RuleName.LegacyText),
           },
           while: '^(?!\\s*#Requires)',

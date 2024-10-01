@@ -66,6 +66,10 @@ export const enum Repository {
 export const enum RuleName {
   Emphasis = 'emphasis',
 
+  // #region statement
+  DirectiveName = 'meta.preprocessor.directive',
+  // #endregion statement
+
   // #region legacy
   LegacyAssignment = 'expression.legacy.assignment',
   LegacyText = 'string.legacy.text',

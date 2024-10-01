@@ -30,7 +30,7 @@ describe('autohotkey', () => {
     expect(actual).toStrictEqual([
       { text: `\n` },
       { text: `      ` },
-      { text: `#Requires`, scopes: name(RuleName.Emphasis, RuleName.Directive) },
+      { text: `#Requires`, scopes: name(RuleName.Emphasis, RuleName.DirectiveName) },
       { text: ` ` },
       { text: `AutoHotkey v2.1`, scopes: name(RuleName.Emphasis, RuleName.LegacyText) },
       { text: `\n` },
@@ -53,7 +53,7 @@ describe('autohotkey', () => {
     expect(actual).toStrictEqual([
       { text: `\n` },
       { text: `      ` },
-      { text: `#Requires`, scopes: name(RuleName.Emphasis, RuleName.Directive) },
+      { text: `#Requires`, scopes: name(RuleName.Emphasis, RuleName.DirectiveName) },
       { text: ` ` },
       { text: `AutoHotkey v2.0`, scopes: name(RuleName.Emphasis, RuleName.LegacyText) },
       { text: `\n` },
@@ -76,7 +76,7 @@ describe('autohotkey', () => {
     expect(actual).toStrictEqual([
       { text: `\n` },
       { text: `      ` },
-      { text: `#Requires`, scopes: name(RuleName.Emphasis, RuleName.Directive) },
+      { text: `#Requires`, scopes: name(RuleName.Emphasis, RuleName.DirectiveName) },
       { text: ` ` },
       { text: `AutoHotkey v1.1`, scopes: name(RuleName.Emphasis, RuleName.LegacyText) },
       { text: `\n` },
@@ -103,7 +103,7 @@ describe('autohotkey', () => {
     expect(actual).toStrictEqual([
       { text: `\n` },
       { text: `      ` },
-      { text: `#Requires`, scopes: name(RuleName.Emphasis, RuleName.Directive) },
+      { text: `#Requires`, scopes: name(RuleName.Emphasis, RuleName.DirectiveName) },
       { text: ` ` },
       { text: `AutoHotkey v2.1`, scopes: name(RuleName.Emphasis, RuleName.LegacyText) },
       { text: `\n` },
@@ -114,7 +114,7 @@ describe('autohotkey', () => {
       { text: `\n` },
       { text: `      ` },
 
-      { text: `#Requires`, scopes: name(RuleName.Emphasis, RuleName.Directive) },
+      { text: `#Requires`, scopes: name(RuleName.Emphasis, RuleName.DirectiveName) },
       { text: ` ` },
       { text: `AutoHotkey v2.0`, scopes: name(RuleName.Emphasis, RuleName.LegacyText) },
       { text: `\n` },
@@ -125,7 +125,7 @@ describe('autohotkey', () => {
       { text: `\n` },
       { text: `      ` },
 
-      { text: `#Requires`, scopes: name(RuleName.Emphasis, RuleName.Directive) },
+      { text: `#Requires`, scopes: name(RuleName.Emphasis, RuleName.DirectiveName) },
       { text: ` ` },
       { text: `AutoHotkey v1.1`, scopes: name(RuleName.Emphasis, RuleName.LegacyText) },
       { text: `\n` },
