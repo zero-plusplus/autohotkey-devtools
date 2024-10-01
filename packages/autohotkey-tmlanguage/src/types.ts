@@ -5,7 +5,15 @@ export const enum Repository {
 
   Statement = 'statement',
   ExpressionStatement = 'statement.expression',
+  LegacyStatement = 'statement.expression.legacy',
   Literal = 'literal',
+
+  // #region legacy
+  Legacy = 'legacy',
+  LegacyAssignment = 'expression.legacy.assignment',
+  LegacyText = 'expression.legacy.text',
+  LegacyTextEscapeSequence = 'expression.legacy.text.escape',
+  // #endregion legacy
 
   // #region comment
   Comment = 'comment',
@@ -57,8 +65,11 @@ export const enum Repository {
 export const enum RuleName {
   Emphasis = 'emphasis',
 
-  Directive = 'meta.preprocessor',
-  LegacyExpressionContent = 'string.legacy.content',
+  // #region legacy
+  LegacyAssignment = 'expression.legacy.assignment',
+  LegacyText = 'string.legacy.text',
+  LegacyTextEscapeSequence = 'constant.character.escape.legacy.text',
+  // #endregion legacy
 
   // #region comment
   SingleLineComment = 'comment.single-line',
@@ -105,6 +116,10 @@ export const enum RuleName {
   ExponentPlusMinusSign = 'constant.numeric.exponent.plus-minus.sign',
   Exponent = 'constant.numeric.exponent',
   // #endregion number
+
+  // #region operator
+  Equals = 'keyword.operator.equals',
+  // #endregion operator
 }
 
 export const enum CommandArgsType {
@@ -181,10 +196,12 @@ export interface VariableParts {
 export interface EscapeSequencesInfo {
   doubleQuote: string[];
   singleQuote: string[];
+  legacyText: string[];
 }
 export interface Utilities {
   getVariableParts: () => VariableParts;
   getEscapeSequencesInfo: () => EscapeSequencesInfo;
+  getExpressionBegin: () => string;
   getBuiltInVariableNames: () => string[];
   name: (...ruleNames: RuleName[]) => string;
   nameRule: (...ruleNames: RuleName[]) => NameRule;

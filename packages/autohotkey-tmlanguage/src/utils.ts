@@ -245,6 +245,7 @@ export function getEscapeSequencesInfo(scopeName: ScopeName): EscapeSequencesInf
       return {
         doubleQuote: [ ...commonEscapeSequences, '`\"' ],
         singleQuote: [ ...commonEscapeSequences, `\`'` ],
+        legacyText: [],
       };
     }
     case 'autohotkeyl': {
@@ -253,8 +254,17 @@ export function getEscapeSequencesInfo(scopeName: ScopeName): EscapeSequencesInf
       return {
         doubleQuote: [ ...commonEscapeSequences, `""` ],
         singleQuote: [],
+        legacyText: commonEscapeSequences,
       };
     }
+  }
+  throw Error(`Scope "${scopeName}" not found`);
+}
+export function getExpressionBegin(scopeName: ScopeName): string {
+  switch (scopeName) {
+    case 'autohotkeynext':
+    case 'autohotkey2':
+    case 'autohotkeyl': return '(?<=^\\s*(?:,)?|:\\s*)';
   }
   throw Error(`Scope "${scopeName}" not found`);
 }
@@ -659,6 +669,7 @@ export function createUtilities(scopeName: ScopeName): Utilities {
   return {
     getVariableParts: () => getVariableParts(scopeName),
     getEscapeSequencesInfo: () => getEscapeSequencesInfo(scopeName),
+    getExpressionBegin: () => getExpressionBegin(scopeName),
     getBuiltInVariableNames: () => getBuiltInVariableNames(scopeName),
     name: (...ruleNames: RuleName[]): string => name(scopeName, ...ruleNames),
     nameRule: (...ruleNames: RuleName[]): NameRule => ({ name: name(scopeName, ...ruleNames) }),

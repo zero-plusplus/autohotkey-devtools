@@ -23,7 +23,7 @@ export function createTmLanguage(): TmLanguage {
         begin: '(?i)^\\s*(#Requires) (AutoHotkey v2\\.1.*)$',
         beginCaptures: {
           1: nameRule(RuleName.Emphasis, RuleName.Directive),
-          2: nameRule(RuleName.Emphasis, RuleName.LegacyExpressionContent),
+          2: nameRule(RuleName.Emphasis, RuleName.LegacyText),
         },
         while: '^(?!\\s*#Requires)',
         patterns: [ includeScope('autohotkeynext') ],
@@ -32,7 +32,7 @@ export function createTmLanguage(): TmLanguage {
         begin: '(?i)^\\s*(#Requires) (AutoHotkey v2.*)$',
         beginCaptures: {
           1: nameRule(RuleName.Emphasis, RuleName.Directive),
-          2: nameRule(RuleName.Emphasis, RuleName.LegacyExpressionContent),
+          2: nameRule(RuleName.Emphasis, RuleName.LegacyText),
         },
         while: '^(?!\\s*#Requires)',
         patterns: [ includeScope('autohotkey2') ],
@@ -47,7 +47,7 @@ export function createTmLanguage(): TmLanguage {
           begin: '(?i)^\\s*(#Requires) (AutoHotkey v1.*)$',
           beginCaptures: {
             1: nameRule(RuleName.Emphasis, RuleName.Directive),
-            2: nameRule(RuleName.Emphasis, RuleName.LegacyExpressionContent),
+            2: nameRule(RuleName.Emphasis, RuleName.LegacyText),
           },
           while: '^(?!\\s*#Requires)',
           patterns: [ includeScope('autohotkeyl') ],

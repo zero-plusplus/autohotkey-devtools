@@ -7,7 +7,15 @@ export function createLiteralRepositories(scopeName: ScopeName): Repositories {
   return {
     [Repository.Statement]: ((): PatternsRule => {
       return {
-        patterns: [ includeRule(Repository.ExpressionStatement) ],
+        patterns: [
+          includeRule(Repository.LegacyStatement),
+          includeRule(Repository.ExpressionStatement),
+        ],
+      };
+    })(),
+    [Repository.LegacyStatement]: ((): PatternsRule => {
+      return {
+        patterns: [ includeRule(Repository.Legacy) ],
       };
     })(),
     [Repository.ExpressionStatement]: ((): PatternsRule => {
