@@ -7,6 +7,12 @@ export const enum Repository {
   ExpressionStatement = 'statement.expression',
   Literal = 'literal',
 
+  // #region comment
+  Comment = 'comment',
+  SingleLineComment = 'comment.single-line',
+  InLineComment = 'comment.in-line',
+  // #endregion comment
+
   // #region expression
   Expression = 'expression',
   // #endregion expression
@@ -54,7 +60,10 @@ export const enum RuleName {
   Directive = 'meta.preprocessor',
   LegacyExpressionContent = 'string.legacy.content',
 
-  CommentBlock = 'comment.block',
+  // #region comment
+  SingleLineComment = 'comment.single-line',
+  InLineComment = 'comment.in-line',
+  // #endregion comment
 
   // #region variable
   Variable = 'variable.other',
