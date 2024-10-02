@@ -4,7 +4,8 @@ import { parse } from '../helpers/textmate-parser';
 
 describe('legacy', () => {
   const scopeName: ScopeName = 'autohotkeyl';
-  const { name } = createUtilities(scopeName);
+  const { getEscapeSequencesInfo, name } = createUtilities(scopeName);
+  const escapeSequencesInfo = getEscapeSequencesInfo();
 
   describe(`[${scopeName}] legacy assignment`, () => {
     test.each([
@@ -15,6 +16,29 @@ describe('legacy', () => {
           { text: '=', scopes: name(RuleName.LegacyAssignment, RuleName.Equals) },
           { text: ' ' },
           { text: 'text', scopes: name(RuleName.LegacyAssignment, RuleName.LegacyText) },
+        ],
+      ],
+      [
+        `var = ${escapeSequencesInfo.legacyText.join('')}`, [
+          { text: 'var', scopes: name(RuleName.LegacyAssignment, RuleName.Variable) },
+          { text: ' ' },
+          { text: '=', scopes: name(RuleName.LegacyAssignment, RuleName.Equals) },
+          { text: ' ' },
+          ...escapeSequencesInfo.legacyText.map((escapeSequence) => {
+            return { text: escapeSequence, scopes: name(RuleName.LegacyAssignment, RuleName.LegacyTextEscapeSequence) };
+          }),
+        ],
+      ],
+      [
+        'var = a `; ; comment', [
+          { text: 'var', scopes: name(RuleName.LegacyAssignment, RuleName.Variable) },
+          { text: ' ' },
+          { text: '=', scopes: name(RuleName.LegacyAssignment, RuleName.Equals) },
+          { text: ' ' },
+          { text: 'a ', scopes: name(RuleName.LegacyAssignment, RuleName.LegacyText) },
+          { text: '`;', scopes: name(RuleName.LegacyAssignment, RuleName.LegacyTextEscapeSequence) },
+          { text: ' ' },
+          { text: '; comment', scopes: name(RuleName.InLineComment) },
         ],
       ],
       [

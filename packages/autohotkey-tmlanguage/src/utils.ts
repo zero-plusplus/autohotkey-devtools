@@ -206,6 +206,9 @@ export function getCommandInfos(): CommandInfo[] {
     [ 'WinWaitClose' ],
   ];
 }
+export function getLegacyText(): string {
+  return '(?:(?<!`)[,%;:rRnNbBtTvVaAfF]|[^\\s,%`;:]|[^\\S\\r\\n](?!;))';
+}
 export function getVariableParts(scopeName: ScopeName): VariableParts {
   const letter = '[a-zA-Z]';
   const numberChar = '\\d';

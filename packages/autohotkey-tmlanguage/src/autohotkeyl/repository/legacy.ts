@@ -1,8 +1,8 @@
 import { Repository, Repositories, PatternsRule, ScopeName, RuleName, Rule, CommandArgsType, CommandInfo, MatchRule } from '../../types';
-import { createUtilities, getCommandInfos } from '../../utils';
+import { createUtilities, getLegacyText } from '../../utils';
 
 export function createRepositories(scopeName: ScopeName): Repositories {
-  const { getEscapeSequencesInfo, getExpressionBegin, getVariableParts, includeRule, name, nameRule } = createUtilities(scopeName);
+  const legacyText = getLegacyText();
   const expressionBegin = getExpressionBegin();
   const variableParts = getVariableParts();
   const escapeSequencesInfo = getEscapeSequencesInfo();
@@ -17,7 +17,7 @@ export function createRepositories(scopeName: ScopeName): Repositories {
     })(),
     [Repository.LegacyAssignment]: ((): MatchRule => {
       return {
-        match: `${expressionBegin}((?:${variableParts.headChar})(?:${variableParts.tailChar})*)\\s*(=)\\s*((?:[^\\r\\n;]|(?<!\\s);)*)(?=\\s+;|\\s*$)`,
+        match: `${expressionBegin}((?:${variableParts.headChar})(?:${variableParts.tailChar})*)\\s*(=)\\s*((?:${legacyText}|${escapeSequencesInfo.legacyText.join('|')}|%)*)(?=\\s+(?!\`);|\\s*$)`,
         captures: {
           1: {
             name: name(RuleName.LegacyAssignment),
@@ -32,7 +32,7 @@ export function createRepositories(scopeName: ScopeName): Repositories {
               includeRule(Repository.LegacyTextEscapeSequence),
               {
                 name: name(RuleName.LegacyText),
-                match: '((?:(?<!`)[^\\r\\n%])+)',
+                match: `(?:${legacyText})+`,
               },
             ],
           },
