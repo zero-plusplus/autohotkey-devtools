@@ -2,10 +2,13 @@ import { Repository, Repositories, PatternsRule, ScopeName, RuleName, Rule, Comm
 import { createUtilities, getLegacyText } from '../../utils';
 
 export function createRepositories(scopeName: ScopeName): Repositories {
+  const { getEscapeSequencesInfo, getExpressionBegin, getVariableParts, includeRule, name, nameRule } = createUtilities(scopeName);
   const legacyText = getLegacyText();
   const expressionBegin = getExpressionBegin();
   const variableParts = getVariableParts();
   const escapeSequencesInfo = getEscapeSequencesInfo();
+
+  const brackets = '(?:\\([^\\r\\n\\)]*\\)|\\[[^\\r\\n\\]]*\\]|\\{[^\\r\\n\\}]*\\})';
 
   return {
     [Repository.Legacy]: ((): PatternsRule => {
@@ -17,7 +20,7 @@ export function createRepositories(scopeName: ScopeName): Repositories {
     })(),
     [Repository.LegacyAssignment]: ((): MatchRule => {
       return {
-        match: `${expressionBegin}((?:${variableParts.headChar})(?:${variableParts.tailChar})*)\\s*(=)\\s*((?:${legacyText}|${escapeSequencesInfo.legacyText.join('|')}|%)*)(?=\\s+(?!\`);|\\s*$)`,
+        match: `${expressionBegin}((?:${variableParts.headChar})(?:${variableParts.tailChar})*)\\s*(=)\\s*((?:${brackets}|${legacyText}|${escapeSequencesInfo.legacyText.join('|')}|%)*)(?=\\s+(?!\`);|\\s*$)`,
         captures: {
           1: {
             name: name(RuleName.LegacyAssignment),
@@ -47,7 +50,7 @@ export function createRepositories(scopeName: ScopeName): Repositories {
     })(),
     [Repository.PercentExpression]: ((): MatchRule => {
       return {
-        match: '(%)\\s+(.*)',
+        match: `(%)\\s+((?:${brackets}|[^\\r\\n,])*)`,
         captures: {
           1: nameRule(RuleName.ForceExpression, RuleName.ForceExpressionPercent),
           2: {

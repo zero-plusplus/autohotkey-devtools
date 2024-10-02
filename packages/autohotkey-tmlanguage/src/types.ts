@@ -24,6 +24,7 @@ export const enum Repository {
 
   // #region expression
   Expression = 'expression',
+  ParenthesizedExpression = 'expression.parenthesized',
   // #endregion expression
 
   // #region variable
@@ -58,6 +59,10 @@ export const enum Repository {
   ScientificNotation = 'constant.numeric.scientificnotation',
   InvalidScientificNotation = 'invalid.illegal.scientificnotation',
   // #endregion number
+
+  // #region token
+  Comma = 'punctuation.separator.comma',
+  // #endregion token
 }
 
 // https://macromates.com/manual/en/language_grammars#naming_conventions
@@ -82,6 +87,9 @@ export const enum RuleName {
   SingleLineComment = 'comment.single-line',
   InLineComment = 'comment.in-line',
   // #endregion comment
+
+  // #region expression
+  ParenthesizedExpression = 'expression.parenthesized',
 
   // #region variable
   Variable = 'variable.other',
@@ -127,6 +135,13 @@ export const enum RuleName {
   // #region operator
   Equals = 'keyword.operator.equals',
   // #endregion operator
+  // #endregion expression
+
+  // #region token
+  Comma = 'punctuation.separator.comma',
+  OpenParen = 'meta.brace.round.begin',
+  CloseParen = 'meta.brace.round.end',
+  // #endregion token
 }
 
 export const enum CommandArgsType {

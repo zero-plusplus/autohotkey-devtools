@@ -11,6 +11,26 @@ describe.each([
   const builtinVariables = getBuiltInVariableNames();
   const escapeSequencesInfo = getEscapeSequencesInfo();
 
+  describe(`[${scopeName}] parenthesized expression`, () => {
+    test.each([
+      [
+        '(var)', [
+          { text: '(', scopes: name(RuleName.ParenthesizedExpression, RuleName.OpenParen) },
+          { text: 'var', scopes: name(RuleName.ParenthesizedExpression, RuleName.Variable) },
+          { text: ')', scopes: name(RuleName.ParenthesizedExpression, RuleName.CloseParen) },
+        ], 
+      ],
+    ])(
+      'valid',
+      async(text, expected) => {
+        const actual = await parse(scopeName, text);
+        // console.log(JSON.stringify(actual, undefined, 2));
+
+        expect(actual).toStrictEqual(expected);
+      },
+    );
+  });
+
   describe(`[${scopeName}] variable`, () => {
     describe(`[${scopeName}] variable`, () => {
       test.each([

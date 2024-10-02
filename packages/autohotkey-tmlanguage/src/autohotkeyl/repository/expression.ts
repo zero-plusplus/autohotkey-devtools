@@ -16,6 +16,9 @@ export function createLiteralRepositories(scopeName: ScopeName): Repositories {
     [Repository.Expression]: ((): PatternsRule => {
       return {
         patterns: [
+          includeRule(Repository.Comma),
+
+          includeRule(Repository.ParenthesizedExpression),
           includeRule(Repository.Literal),
           includeRule(Repository.BuiltInVariable),
           includeRule(Repository.InvalidVariable),
@@ -23,6 +26,20 @@ export function createLiteralRepositories(scopeName: ScopeName): Repositories {
           includeRule(Repository.InvalidDereference),
           includeRule(Repository.Dereference),
         ],
+      };
+    })(),
+    [Repository.ParenthesizedExpression]: ((): BeginEndRule => {
+      return {
+        name: name(RuleName.ParenthesizedExpression),
+        begin: '(\\()',
+        beginCaptures: {
+          1: nameRule(RuleName.OpenParen),
+        },
+        end: '(\\))',
+        endCaptures: {
+          1: nameRule(RuleName.CloseParen),
+        },
+        patterns: [ includeRule(Repository.Expression) ],
       };
     })(),
 
@@ -367,5 +384,14 @@ export function createLiteralRepositories(scopeName: ScopeName): Repositories {
     })(),
     // #endregion number
     // #endregion literal
+
+    // #region token
+    [Repository.Comma]: ((): MatchRule => {
+      return {
+        name: name(RuleName.Comma),
+        match: ',',
+      };
+    })(),
+    // #endregion token
   };
 }

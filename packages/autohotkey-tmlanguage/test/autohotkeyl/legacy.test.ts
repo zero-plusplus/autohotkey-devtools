@@ -63,6 +63,21 @@ describe('legacy', () => {
           { text: 'abc', scopes: name(RuleName.LegacyAssignment, RuleName.ForceExpression, RuleName.Variable) },
         ],
       ],
+      [
+        'var = % (foo,bar)', [
+          { text: 'var', scopes: name(RuleName.LegacyAssignment, RuleName.Variable) },
+          { text: ' ' },
+          { text: '=', scopes: name(RuleName.LegacyAssignment, RuleName.Equals) },
+          { text: ' ' },
+          { text: '%', scopes: name(RuleName.LegacyAssignment, RuleName.ForceExpression, RuleName.ForceExpressionPercent) },
+          { text: ' ' },
+          { text: '(', scopes: name(RuleName.LegacyAssignment, RuleName.ForceExpression, RuleName.ParenthesizedExpression, RuleName.OpenParen) },
+          { text: 'foo', scopes: name(RuleName.LegacyAssignment, RuleName.ForceExpression, RuleName.ParenthesizedExpression, RuleName.Variable) },
+          { text: ',', scopes: name(RuleName.LegacyAssignment, RuleName.ForceExpression, RuleName.ParenthesizedExpression, RuleName.Comma) },
+          { text: 'bar', scopes: name(RuleName.LegacyAssignment, RuleName.ForceExpression, RuleName.ParenthesizedExpression, RuleName.Variable) },
+          { text: ')', scopes: name(RuleName.LegacyAssignment, RuleName.ForceExpression, RuleName.ParenthesizedExpression, RuleName.CloseParen) },
+        ],
+      ],
     ])('valid', async(text, expected) => {
       const actual = await parse(scopeName, text);
       // console.log(JSON.stringify(actual, undefined, 2));

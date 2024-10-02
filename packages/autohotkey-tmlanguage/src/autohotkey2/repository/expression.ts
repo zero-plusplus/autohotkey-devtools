@@ -11,6 +11,9 @@ export function createLiteralRepositories(scopeName: ScopeName): Repositories {
     [Repository.Expression]: ((): PatternsRule => {
       return {
         patterns: [
+          includeRule(Repository.Comma),
+
+          includeRule(Repository.ParenthesizedExpression),
           includeRule(Repository.Literal),
           includeRule(Repository.BuiltInVariable),
           includeRule(Repository.InvalidVariable),
@@ -20,6 +23,7 @@ export function createLiteralRepositories(scopeName: ScopeName): Repositories {
         ],
       };
     })(),
+    [Repository.ParenthesizedExpression]: ahklRepositories[Repository.ParenthesizedExpression],
 
     // #region variable
     [Repository.Variable]: ahklRepositories[Repository.Variable],
@@ -175,5 +179,9 @@ export function createLiteralRepositories(scopeName: ScopeName): Repositories {
     [Repository.InvalidScientificNotation]: ahklRepositories[Repository.InvalidScientificNotation],
     // #endregion number
     // #endregion literal
+
+    // #region token
+    [Repository.Comma]: ahklRepositories[Repository.Comma],
+    // #endregion token
   };
 }
