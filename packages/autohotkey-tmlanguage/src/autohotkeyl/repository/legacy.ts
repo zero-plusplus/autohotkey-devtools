@@ -1,4 +1,4 @@
-import { Repository, Repositories, PatternsRule, ScopeName, RuleName, Rule, CommandArgsType, CommandInfo, MatchRule } from '../../types';
+import { Repository, Repositories, PatternsRule, ScopeName, RuleName, MatchRule } from '../../types';
 import { createUtilities, getLegacyText } from '../../utils';
 
 export function createRepositories(scopeName: ScopeName): Repositories {
@@ -13,9 +13,7 @@ export function createRepositories(scopeName: ScopeName): Repositories {
   return {
     [Repository.Legacy]: ((): PatternsRule => {
       return {
-        patterns: [
-          includeRule(Repository.LegacyAssignment),
-        ],
+        patterns: [ includeRule(Repository.LegacyAssignment) ],
       };
     })(),
     [Repository.LegacyAssignment]: ((): MatchRule => {
