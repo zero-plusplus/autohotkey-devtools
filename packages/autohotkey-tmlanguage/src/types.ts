@@ -3,17 +3,24 @@ export const scopeNames = [ 'autohotkey', 'autohotkeynext', 'autohotkeyl', 'auto
 export const enum Repository {
   Self = '$self',
 
+  // #region statement
   Statement = 'statement',
+  CommandStatement = 'statement.command',
   ExpressionStatement = 'statement.expression',
   LegacyStatement = 'statement.expression.legacy',
+  // #endregion statement
+
   Literal = 'literal',
 
   // #region legacy
   Legacy = 'legacy',
   LegacyAssignment = 'expression.legacy.assignment',
-  LegacyText = 'expression.legacy.text',
   LegacyTextEscapeSequence = 'expression.legacy.text.escape',
   PercentExpression = 'expression.legacy.percent',
+  Command = 'command',
+  CommandArgument = 'command.argument',
+  CommandArgumentText = 'command.argument.text',
+  ControlStyle = 'expression.legacy.controlstyle',
   // #endregion legacy
 
   // #region comment
@@ -81,6 +88,12 @@ export const enum RuleName {
   LegacyTextEscapeSequence = 'constant.character.escape.legacy.text',
   ForceExpression = 'expression.legacy.expression.force',
   ForceExpressionPercent = 'punctuation.definition.expression.force',
+  Command = 'legacy.command',
+  CommandName = 'support.function.command',
+  SubCommandName = 'strong string.legacy.subcommand',
+  CommandArgumentSeparator = 'punctuation.definition.command.argument',
+  CommandArgumentKeyword = 'strong string.legacy.text',
+  InvalidCommandArgument = 'invalid.illegal.command.argument',
   // #endregion legacy
 
   // #region comment
@@ -145,15 +158,16 @@ export const enum RuleName {
 }
 
 export const enum CommandArgsType {
-  None,
+  None = 0,
   Expression,
+  Enum,
   Legacy,
   SubCommand,
   Input,
   Output,
 
-  // https://www.autohotkey.com/docs/v1/lib/Control.htm#Style
-  ControlStyle, // 0x123 ^0x123
+  Parameters,   // e.g. `ControlClick x123 y123`, `Click, 100 100 LButton`
+  ControlStyle, // e.g. [`Control, Style, 0x123`, `Control, Style, ^0x123`](https://www.autohotkey.com/docs/v1/lib/Control.htm#Style)
 }
 // #endregion constant
 
@@ -205,12 +219,12 @@ export interface IncludeRule {
   include: string;
 }
 
-export type CommandArgWithKeywords = [ CommandArgsType.Legacy, ...string[]];
-export type CommandSignatures = Array<CommandArgsType | CommandArgWithKeywords>;
-export type SubCommandSignatures = Array<[ string, ...CommandArgsType[]]>;
+export type CommandArgWithKeywords = [ CommandArgsType, ...string[]];
+export type CommandSignature = CommandArgsType | CommandArgWithKeywords;
 export type CommandInfo =
   | [ string /* command name */ ]
-  | [ string, /* command name */ SubCommandSignatures | CommandSignatures ];
+  | [ string /* command name */, ...CommandSignature[] ]
+  | [ string /* command name */, string /* subcommand */, ...CommandSignature[] ];
 export interface VariableParts {
   headChar: string;
   tailChar: string;
@@ -224,6 +238,7 @@ export interface Utilities {
   getVariableParts: () => VariableParts;
   getEscapeSequencesInfo: () => EscapeSequencesInfo;
   getExpressionBegin: () => string;
+  getStatementBegin: () => string;
   getBuiltInVariableNames: () => string[];
   name: (...ruleNames: RuleName[]) => string;
   nameRule: (...ruleNames: RuleName[]) => NameRule;

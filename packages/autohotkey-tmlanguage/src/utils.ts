@@ -2,32 +2,30 @@ import { CommandArgsType, CommandInfo, EscapeSequencesInfo, IncludeRule, NameRul
 
 export function getCommandInfos(): CommandInfo[] {
   // https://www.autohotkey.com/docs/v1/lib/index.htm
-  return [
-    [ 'AutoTrim', [ [ CommandArgsType.Legacy, 'On', 'Off' ] ] ],
-    [ 'BlockInput', [ [ CommandArgsType.Legacy, 'On', 'Off', 'SendMouse', 'MouseMove' ] ] ],
-    [ 'Click', [ [ CommandArgsType.Legacy, 'Left', 'L', 'Right', 'R', 'Middle', 'M', 'X1', 'X2', 'Up', 'U', 'Down', 'D' ] ] ],
-    [ 'ClipWait', [ CommandArgsType.Expression, CommandArgsType.Expression ] ],
-    [
-      'Control', [
-        [ 'Check', CommandArgsType.None, CommandArgsType.Legacy, CommandArgsType.Legacy, CommandArgsType.Legacy, CommandArgsType.Legacy, CommandArgsType.Legacy ],
-        [ 'UnCheck', CommandArgsType.None, CommandArgsType.Legacy, CommandArgsType.Legacy, CommandArgsType.Legacy, CommandArgsType.Legacy, CommandArgsType.Legacy ],
-        [ 'Enable', CommandArgsType.None, CommandArgsType.Legacy, CommandArgsType.Legacy, CommandArgsType.Legacy, CommandArgsType.Legacy, CommandArgsType.Legacy ],
-        [ 'Disable', CommandArgsType.None, CommandArgsType.Legacy, CommandArgsType.Legacy, CommandArgsType.Legacy, CommandArgsType.Legacy, CommandArgsType.Legacy ],
-        [ 'Show', CommandArgsType.None, CommandArgsType.Legacy, CommandArgsType.Legacy, CommandArgsType.Legacy, CommandArgsType.Legacy, CommandArgsType.Legacy ],
-        [ 'Hide', CommandArgsType.None, CommandArgsType.Legacy, CommandArgsType.Legacy, CommandArgsType.Legacy, CommandArgsType.Legacy, CommandArgsType.Legacy ],
-        [ 'Style', CommandArgsType.ControlStyle, CommandArgsType.Legacy, CommandArgsType.Legacy, CommandArgsType.Legacy, CommandArgsType.Legacy, CommandArgsType.Legacy ],
-        [ 'ExStyle', CommandArgsType.ControlStyle, CommandArgsType.Legacy, CommandArgsType.Legacy, CommandArgsType.Legacy, CommandArgsType.Legacy, CommandArgsType.Legacy ],
-        [ 'ShowDropDown', CommandArgsType.None, CommandArgsType.Legacy, CommandArgsType.Legacy, CommandArgsType.Legacy, CommandArgsType.Legacy, CommandArgsType.Legacy ],
-        [ 'HideDropDown', CommandArgsType.None, CommandArgsType.Legacy, CommandArgsType.Legacy, CommandArgsType.Legacy, CommandArgsType.Legacy, CommandArgsType.Legacy ],
-        [ 'TabLeft', CommandArgsType.Legacy, CommandArgsType.Legacy, CommandArgsType.Legacy, CommandArgsType.Legacy, CommandArgsType.Legacy, CommandArgsType.Legacy ],
-        [ 'TabRight', CommandArgsType.Legacy, CommandArgsType.Legacy, CommandArgsType.Legacy, CommandArgsType.Legacy, CommandArgsType.Legacy, CommandArgsType.Legacy ],
-        [ 'Add', CommandArgsType.Legacy, CommandArgsType.Legacy, CommandArgsType.Legacy, CommandArgsType.Legacy, CommandArgsType.Legacy, CommandArgsType.Legacy ],
-        [ 'Delete', CommandArgsType.Legacy, CommandArgsType.Legacy, CommandArgsType.Legacy, CommandArgsType.Legacy, CommandArgsType.Legacy, CommandArgsType.Legacy ],
-        [ 'Choose', CommandArgsType.Legacy, CommandArgsType.Legacy, CommandArgsType.Legacy, CommandArgsType.Legacy, CommandArgsType.Legacy, CommandArgsType.Legacy ],
-        [ 'ChooseString', CommandArgsType.Legacy, CommandArgsType.Legacy, CommandArgsType.Legacy, CommandArgsType.Legacy, CommandArgsType.Legacy, CommandArgsType.Legacy ],
-        [ 'EditPaste', CommandArgsType.Legacy, CommandArgsType.Legacy, CommandArgsType.Legacy, CommandArgsType.Legacy, CommandArgsType.Legacy, CommandArgsType.Legacy ],
-      ],
-    ],
+  const commandInfos: CommandInfo[] = [
+    [ 'AutoTrim', [ CommandArgsType.Enum, 'On', 'Off', '1', '0' ] ],
+    [ 'BlockInput', [ CommandArgsType.Legacy, 'On', 'Off', 'SendMouse', 'MouseMove' ] ],
+    [ 'Click', [ CommandArgsType.Legacy, 'Left', 'L', 'Right', 'R', 'Middle', 'M', 'X1', 'X2', 'Up', 'U', 'Down', 'D' ] ],
+    [ 'ClipWait', CommandArgsType.Expression, CommandArgsType.Expression ],
+    // TODO: Need to implement and test highlighting of each parameter
+    [ 'Control' ],
+    // [ 'Control', 'Check', CommandArgsType.None, CommandArgsType.Legacy, CommandArgsType.Legacy, CommandArgsType.Legacy, CommandArgsType.Legacy, CommandArgsType.Legacy ],
+    // [ 'Control', 'UnCheck', CommandArgsType.None, CommandArgsType.Legacy, CommandArgsType.Legacy, CommandArgsType.Legacy, CommandArgsType.Legacy, CommandArgsType.Legacy ],
+    // [ 'Control', 'Enable', CommandArgsType.None, CommandArgsType.Legacy, CommandArgsType.Legacy, CommandArgsType.Legacy, CommandArgsType.Legacy, CommandArgsType.Legacy ],
+    // [ 'Control', 'Disable', CommandArgsType.None, CommandArgsType.Legacy, CommandArgsType.Legacy, CommandArgsType.Legacy, CommandArgsType.Legacy, CommandArgsType.Legacy ],
+    // [ 'Control', 'Show', CommandArgsType.None, CommandArgsType.Legacy, CommandArgsType.Legacy, CommandArgsType.Legacy, CommandArgsType.Legacy, CommandArgsType.Legacy ],
+    // [ 'Control', 'Hide', CommandArgsType.None, CommandArgsType.Legacy, CommandArgsType.Legacy, CommandArgsType.Legacy, CommandArgsType.Legacy, CommandArgsType.Legacy ],
+    // [ 'Control', 'Style', CommandArgsType.ControlStyle, CommandArgsType.Legacy, CommandArgsType.Legacy, CommandArgsType.Legacy, CommandArgsType.Legacy, CommandArgsType.Legacy ],
+    // [ 'Control', 'ExStyle', CommandArgsType.ControlStyle, CommandArgsType.Legacy, CommandArgsType.Legacy, CommandArgsType.Legacy, CommandArgsType.Legacy, CommandArgsType.Legacy ],
+    // [ 'Control', 'ShowDropDown', CommandArgsType.None, CommandArgsType.Legacy, CommandArgsType.Legacy, CommandArgsType.Legacy, CommandArgsType.Legacy, CommandArgsType.Legacy ],
+    // [ 'Control', 'HideDropDown', CommandArgsType.None, CommandArgsType.Legacy, CommandArgsType.Legacy, CommandArgsType.Legacy, CommandArgsType.Legacy, CommandArgsType.Legacy ],
+    // [ 'Control', 'TabLeft', CommandArgsType.Legacy, CommandArgsType.Legacy, CommandArgsType.Legacy, CommandArgsType.Legacy, CommandArgsType.Legacy, CommandArgsType.Legacy ],
+    // [ 'Control', 'TabRight', CommandArgsType.Legacy, CommandArgsType.Legacy, CommandArgsType.Legacy, CommandArgsType.Legacy, CommandArgsType.Legacy, CommandArgsType.Legacy ],
+    // [ 'Control', 'Add', CommandArgsType.Legacy, CommandArgsType.Legacy, CommandArgsType.Legacy, CommandArgsType.Legacy, CommandArgsType.Legacy, CommandArgsType.Legacy ],
+    // [ 'Control', 'Delete', CommandArgsType.Legacy, CommandArgsType.Legacy, CommandArgsType.Legacy, CommandArgsType.Legacy, CommandArgsType.Legacy, CommandArgsType.Legacy ],
+    // [ 'Control', 'Choose', CommandArgsType.Legacy, CommandArgsType.Legacy, CommandArgsType.Legacy, CommandArgsType.Legacy, CommandArgsType.Legacy, CommandArgsType.Legacy ],
+    // [ 'Control', 'ChooseString', CommandArgsType.Legacy, CommandArgsType.Legacy, CommandArgsType.Legacy, CommandArgsType.Legacy, CommandArgsType.Legacy, CommandArgsType.Legacy ],
+    // [ 'Control', 'EditPaste', CommandArgsType.Legacy, CommandArgsType.Legacy, CommandArgsType.Legacy, CommandArgsType.Legacy, CommandArgsType.Legacy, CommandArgsType.Legacy ],
     // TODO: Done here so far
     [ 'ControlClick' ],
     [ 'ControlFocus' ],
@@ -205,6 +203,9 @@ export function getCommandInfos(): CommandInfo[] {
     [ 'WinWaitNotActive' ],
     [ 'WinWaitClose' ],
   ];
+  return commandInfos.sort((a, b): number => {
+    return b[0].length - a[0].length;
+  });
 }
 export function getLegacyText(): string {
   return '(?:(?<!`)[,%;:rRnNbBtTvVaAfF]|[^\\s,%`;:]|[^\\S\\r\\n](?!;))';
@@ -260,6 +261,14 @@ export function getEscapeSequencesInfo(scopeName: ScopeName): EscapeSequencesInf
         legacyText: commonEscapeSequences,
       };
     }
+  }
+  throw Error(`Scope "${scopeName}" not found`);
+}
+export function getStatementBegin(scopeName: ScopeName): string {
+  switch (scopeName) {
+    case 'autohotkeynext':
+    case 'autohotkey2':
+    case 'autohotkeyl': return '(?<=^\\s*|:\\s*)';
   }
   throw Error(`Scope "${scopeName}" not found`);
 }
@@ -673,6 +682,7 @@ export function createUtilities(scopeName: ScopeName): Utilities {
     getVariableParts: () => getVariableParts(scopeName),
     getEscapeSequencesInfo: () => getEscapeSequencesInfo(scopeName),
     getExpressionBegin: () => getExpressionBegin(scopeName),
+    getStatementBegin: () => getStatementBegin(scopeName),
     getBuiltInVariableNames: () => getBuiltInVariableNames(scopeName),
     name: (...ruleNames: RuleName[]): string => name(scopeName, ...ruleNames),
     nameRule: (...ruleNames: RuleName[]): NameRule => ({ name: name(scopeName, ...ruleNames) }),
