@@ -76,6 +76,12 @@ export async function parse(scopeName: ScopeName, text: string): Promise<ParsedR
 
   let ruleStack = vsctm.INITIAL;
   for (const line of lines) {
+    const match = line.match(/\r\n|\n/);
+    if (match) {
+      parsed.push({ text: match[0] });
+      continue;
+    }
+
     const tokenized = grammar.tokenizeLine(line, ruleStack);
     parsed.push(...tokenized.tokens
       .map((token) => {
