@@ -1,4 +1,5 @@
-import { Repository, ScopeName, TmLanguage } from '../types';
+import { ScopeName, TmLanguage } from '../types';
+import { Repository } from '../constants';
 import { includeRule } from '../utils';
 import { createRepositories } from './repository';
 
@@ -9,7 +10,7 @@ export function createTmLanguage(): TmLanguage {
     scopeName: `source.${scopeName}`,
     patterns: [
       includeRule(Repository.Comment),
-      includeRule(Repository.Statement), 
+      includeRule(Repository.Statement),
     ],
     repository: {
       ...createRepositories(scopeName),

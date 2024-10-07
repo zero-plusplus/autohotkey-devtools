@@ -1,4 +1,5 @@
-import { Repository, Repositories, PatternsRule, ScopeName } from '../../types';
+import { Repositories, PatternsRule, ScopeName } from '../../types';
+import { Repository } from '../../constants';
 import { createUtilities } from '../../utils';
 
 export function createLiteralRepositories(scopeName: ScopeName): Repositories {

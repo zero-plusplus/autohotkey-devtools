@@ -1,4 +1,5 @@
-import { Repository, Repositories, PatternsRule, ScopeName, MatchRule, RuleName, BeginEndRule } from '../../types';
+import { Repositories, PatternsRule, ScopeName, MatchRule, BeginEndRule } from '../../types';
+import { RuleName, Repository } from '../../constants';
 import { createUtilities } from '../../utils';
 
 export const integer = '[1-9][0-9]*|0';

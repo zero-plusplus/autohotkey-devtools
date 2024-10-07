@@ -1,4 +1,5 @@
-import { Repository, Repositories, PatternsRule, ScopeName, RuleName, Rule, CommandArgsType, CommandInfo, MatchRule, BeginWhileRule, commandNames } from '../../types';
+import { Repositories, PatternsRule, ScopeName, Rule, CommandInfo, MatchRule, BeginWhileRule } from '../../types';
+import { commandNames, Repository, RuleName, CommandArgsType } from '../../constants';
 import { createUtilities, getCommandInfos, getLegacyTextChar } from '../../utils';
 
 export function createRepositories(scopeName: ScopeName): Repositories {

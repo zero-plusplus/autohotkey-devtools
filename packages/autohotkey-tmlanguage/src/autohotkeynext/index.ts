@@ -1,4 +1,5 @@
-import { Repository, ScopeName, TmLanguage } from '../types';
+import { ScopeName, TmLanguage } from '../types';
+import { Repository } from '../constants';
 import { includeRule } from '../utils';
 import * as repositories_ahk2 from '../autohotkey2/repository';
 import * as repositories_ahk2_1 from './repository/v2_1';
@@ -10,7 +11,7 @@ export function createTmLanguage(): TmLanguage {
     scopeName: `source.${scopeName}`,
     patterns: [
       includeRule(Repository.Comment),
-      includeRule(Repository.Statement), 
+      includeRule(Repository.Statement),
     ],
     repository: {
       ...repositories_ahk2.createRepositories(scopeName),

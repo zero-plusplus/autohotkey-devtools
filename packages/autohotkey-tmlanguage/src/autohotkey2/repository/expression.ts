@@ -1,4 +1,5 @@
-import { Repository, Repositories, PatternsRule, ScopeName, BeginEndRule, MatchRule, RuleName } from '../../types';
+import { Repositories, PatternsRule, ScopeName, BeginEndRule, MatchRule } from '../../types';
+import { Repository, RuleName } from '../../constants';
 import * as ahkl from '../../autohotkeyl/repository/expression';
 import { createUtilities } from '../../utils';
 

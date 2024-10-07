@@ -1,4 +1,5 @@
-import { Repository, Repositories, PatternsRule, ScopeName } from '../../types';
+import { Repositories, PatternsRule, ScopeName } from '../../types';
+import { Repository } from '../../constants';
 import * as ahkl from '../../autohotkeyl/repository/comment';
 import { createUtilities } from '../../utils';
 

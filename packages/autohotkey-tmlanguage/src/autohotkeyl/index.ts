@@ -1,4 +1,5 @@
-import { Repository, ScopeName, TmLanguage } from '../types';
+import { ScopeName, TmLanguage } from '../types';
+import { Repository } from '../constants';
 import { includeRule } from '../utils';
 import { createRepositories } from './repository';
 

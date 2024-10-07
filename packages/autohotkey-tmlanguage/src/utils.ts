@@ -1,4 +1,5 @@
-import { CommandArgsType, CommandInfo, EscapeSequencesInfo, IncludeRule, NameRule, Repository, RuleName, ScopeName, Utilities, VariableParts } from './types';
+import { CommandInfo, EscapeSequencesInfo, IncludeRule, NameRule, ScopeName, Utilities, VariableParts } from './types';
+import { RuleName, Repository, CommandArgsType } from './constants';
 
 export function getCommandInfos(): CommandInfo[] {
   // https://www.autohotkey.com/docs/v1/lib/index.htm

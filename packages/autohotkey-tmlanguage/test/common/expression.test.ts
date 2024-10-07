@@ -1,4 +1,5 @@
-import { RuleName, ScopeName } from '../../src/types';
+import { ScopeName } from '../../src/types';
+import { RuleName } from '../../src/constants';
 import { createUtilities } from '../../src/utils';
 import { parse } from '../helpers/textmate-parser';
 
@@ -18,7 +19,7 @@ describe.each([
           { text: '(', scopes: name(RuleName.ParenthesizedExpression, RuleName.OpenParen) },
           { text: 'var', scopes: name(RuleName.ParenthesizedExpression, RuleName.Variable) },
           { text: ')', scopes: name(RuleName.ParenthesizedExpression, RuleName.CloseParen) },
-        ], 
+        ],
       ],
     ])(
       'valid',
