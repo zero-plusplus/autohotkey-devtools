@@ -1,9 +1,9 @@
 import { Repository, Repositories, PatternsRule, ScopeName, RuleName, Rule, CommandArgsType, CommandInfo, MatchRule } from '../../types';
-import { createUtilities, getCommandInfos, getLegacyText } from '../../utils';
+import { createUtilities, getCommandInfos, getLegacyTextChar } from '../../utils';
 
 export function createRepositories(scopeName: ScopeName): Repositories {
   const { getEscapeSequencesInfo, getStatementBegin, includeRule, name, nameRule } = createUtilities(scopeName);
-  const legacyText = getLegacyText();
+  const legacyText = getLegacyTextChar();
   const commandInfos = getCommandInfos();
   const statementBegin = getStatementBegin();
   const escapeSequencesInfo = getEscapeSequencesInfo();

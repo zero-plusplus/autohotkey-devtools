@@ -207,8 +207,8 @@ export function getCommandInfos(): CommandInfo[] {
     return b[0].length - a[0].length;
   });
 }
-export function getLegacyText(): string {
-  return '(?:(?<!`)[,%;:rRnNbBtTvVaAfF]|[^\\s,%`;:]|[^\\S\\r\\n](?!;))';
+export function getLegacyTextChar(): string {
+  return '(?:[^\\s,%`;:]|[^\\S\\r\\n](?!;))';
 }
 export function getVariableParts(scopeName: ScopeName): VariableParts {
   const letter = '[a-zA-Z]';
