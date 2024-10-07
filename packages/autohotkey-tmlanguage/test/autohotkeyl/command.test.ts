@@ -58,15 +58,13 @@ describe('command', () => {
       ],
     ],
     [
-      'AutoTrim, %true% ; comment', [
+      'AutoTrim, %true%', [
         { text: 'AutoTrim', scopes: name(RuleName.Command, RuleName.CommandName) },
         { text: ',', scopes: name(RuleName.Command, RuleName.CommandArgumentSeparator) },
         { text: ' ' },
         { text: '%', scopes: name(RuleName.Command, RuleName.Dereference, RuleName.DereferencePercentBegin) },
         { text: 'true', scopes: name(RuleName.Command, RuleName.Dereference, RuleName.BuiltInVariable) },
         { text: '%', scopes: name(RuleName.Command, RuleName.Dereference, RuleName.DereferencePercentEnd) },
-        { text: ' ' },
-        { text: '; comment', scopes: name(RuleName.InLineComment) },
       ],
     ],
     [
@@ -77,6 +75,17 @@ describe('command', () => {
         { text: '%', scopes: name(RuleName.Command, RuleName.ForceExpression, RuleName.ForceExpressionPercent) },
         { text: ' ' },
         { text: 'true', scopes: name(RuleName.Command, RuleName.ForceExpression, RuleName.BuiltInVariable) },
+      ],
+    ],
+    [
+      `AutoTrim
+       , continuation argument`, [
+        { text: 'AutoTrim', scopes: name(RuleName.Command, RuleName.CommandName) },
+        { text: '\n' },
+        { text: '       ' },
+        { text: ',', scopes: name(RuleName.Command, RuleName.CommandArgumentSeparator) },
+        { text: ' ' },
+        { text: 'continuation argument', scopes: name(RuleName.Command, RuleName.LegacyText) },
       ],
     ],
     // invalid

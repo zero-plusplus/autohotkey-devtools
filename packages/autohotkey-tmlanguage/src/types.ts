@@ -18,8 +18,10 @@ export const enum Repository {
   LegacyTextEscapeSequence = 'expression.legacy.text.escape',
   PercentExpression = 'expression.legacy.percent',
   Command = 'command',
+  CommonCommand = 'command.common',
   CommandArgument = 'command.argument',
   CommandArgumentText = 'command.argument.text',
+  CommandArgumentSeparator = 'command.argument.separator',
   ControlStyle = 'expression.legacy.controlstyle',
   // #endregion legacy
 
@@ -91,7 +93,7 @@ export const enum RuleName {
   Command = 'legacy.command',
   CommandName = 'support.function.command',
   SubCommandName = 'strong string.legacy.subcommand',
-  CommandArgumentSeparator = 'punctuation.definition.command.argument',
+  CommandArgumentSeparator = 'punctuation.definition.command.argument.separator',
   CommandArgumentKeyword = 'strong string.legacy.text',
   InvalidCommandArgument = 'invalid.illegal.command.argument',
   // #endregion legacy
@@ -169,6 +171,190 @@ export const enum CommandArgsType {
   Parameters,   // e.g. `ControlClick x123 y123`, `Click, 100 100 LButton`
   ControlStyle, // e.g. [`Control, Style, 0x123`, `Control, Style, ^0x123`](https://www.autohotkey.com/docs/v1/lib/Control.htm#Style)
 }
+
+// https://www.autohotkey.com/docs/v1/lib/index.htm
+export const commandNames = [
+  'AutoTrim',
+  'BlockInput',
+  'Click',
+  'ClipWait',
+  'Control',
+  'ControlClick',
+  'ControlFocus',
+  'ControlGet',
+  'ControlGetFocus',
+  'ControlGetPos',
+  'ControlGetText',
+  'ControlMove',
+  'ControlSend',
+  'ControlSendRaw',
+  'ControlSetText',
+  'CoordMode',
+  'Critical',
+  'DetectHiddenText',
+  'DetectHiddenWindows',
+  'Drive',
+  'DriveGet',
+  'DriveSpaceFree',
+  'Edit',
+  'EnvAdd',
+  'EnvDiv', // Deprecated
+  'EnvGet',
+  'EnvMult', // Deprecated
+  'EnvSet',
+  'EnvSub',
+  'EnvUpdate',
+  'FileAppend',
+  'FileCopy',
+  'FileCopyDir',
+  'FileCreateDir',
+  'FileCreateShortcut',
+  'FileDelete',
+  'FileEncoding',
+  'FileInstall',
+  'FileGetAttrib',
+  'FileGetShortcut',
+  'FileGetSize',
+  'FileGetTime',
+  'FileGetVersion',
+  'FileMove',
+  'FileMoveDir',
+  'FileRead',
+  'FileReadLine',
+  'FileRecycle',
+  'FileRecycleEmpty',
+  'FileRemoveDir',
+  'FileSelectFile',
+  'FileSelectFolder',
+  'FileSetAttrib',
+  'FileSetTime',
+  'FormatTime',
+  'GetKeyState', // Deprecated
+  'Gosub',
+  'Goto',
+  'GroupActivate',
+  'GroupAdd',
+  'GroupClose',
+  'GroupDeactivate',
+  'Gui',
+  'GuiControl',
+  'GuiControlGet',
+  'Hotkey',
+  'ImageSearch',
+  'IniDelete',
+  'IniRead',
+  'IniWrite',
+  'Input',
+  'InputBox',
+  'KeyHistory',
+  'KeyWait',
+  'ListHotkeys',
+  'ListLines',
+  'ListVars',
+  'Menu',
+  'MouseClick',
+  'MouseClickDrag',
+  'MouseGetPos',
+  'MouseMove',
+  'MsgBox',
+  'OnExit', // Deprecated
+  'OutputDebug',
+  'PixelGetColor',
+  'PixelSearch',
+  'PostMessage',
+  'Process',
+  'Progress', // Deprecated
+  'Random',
+  'RegDelete',
+  'RegRead',
+  'RegWrite',
+  'Reload',
+  'Run',
+  'RunAs',
+  'RunWait',
+  'Send',
+  'SendRaw',
+  'SendInput',
+  'SendPlay',
+  'SendEvent',
+  'SendLevel',
+  'SendMessage',
+  'SendMode',
+  'SetBatchLines',
+  'SetCapsLockState',
+  'SetControlDelay',
+  'SetDefaultMouseSpeed',
+  'SetEnv', // Deprecated
+  'SetFormat', // Deprecated
+  'SetKeyDelay',
+  'SetMouseDelay',
+  'SetNumLockState',
+  'SetScrollLockState',
+  'SetRegView',
+  'SetStoreCapsLockMode',
+  'SetTimer',
+  'SetTitleMatchMode',
+  'SetWinDelay',
+  'SetWorkingDir',
+  'Sleep',
+  'Sort',
+  'SoundBeep',
+  'SoundGet',
+  'SoundGetWaveVolume',
+  'SoundPlay',
+  'SoundSet',
+  'SoundSetWaveVolume',
+  'SplashImage',
+  'SplashTextOn',
+  'SplashTextOff',
+  'SplitPath',
+  'StatusBarGetText',
+  'StatusBarWait',
+  'StringCaseSense',
+  'StringGetPos', // Deprecated
+  'StringLeft', // Deprecated
+  'StringLen', // Deprecated
+  'StringLower',
+  'StringMid', // Deprecated
+  'StringReplace', // Deprecated
+  'StringRight', // Deprecated
+  'StringSplit', // Deprecated
+  'StringTrimLeft', // Deprecated
+  'StringTrimRight', // Deprecated
+  'StringUpper',
+  'SysGet',
+  'Thread',
+  'ToolTip',
+  'Transform', // Deprecated
+  'TrayTip',
+  'UrlDownloadToFile',
+  'WinActivate',
+  'WinActivateBottom',
+  'WinClose',
+  'WinGetActiveStats',
+  'WinGetActiveTitle',
+  'WinGetClass',
+  'WinGet',
+  'WinGetPos',
+  'WinGetText',
+  'WinGetTitle',
+  'WinHide',
+  'WinKill',
+  'WinMaximize',
+  'WinMenuSelectItem',
+  'WinMinimize',
+  'WinMinimizeAll',
+  'WinMinimizeAllUndo',
+  'WinMove',
+  'WinRestore',
+  'WinSet',
+  'WinSetTitle',
+  'WinShow',
+  'WinWait',
+  'WinWaitActive',
+  'WinWaitNotActive',
+  'WinWaitClose',
+] as const;
 // #endregion constant
 
 // #region types
@@ -222,9 +408,9 @@ export interface IncludeRule {
 export type CommandArgWithKeywords = [ CommandArgsType, ...string[]];
 export type CommandSignature = CommandArgsType | CommandArgWithKeywords;
 export type CommandInfo =
-  | [ string /* command name */ ]
-  | [ string /* command name */, ...CommandSignature[] ]
-  | [ string /* command name */, string /* subcommand */, ...CommandSignature[] ];
+  | [ typeof commandNames[number] ]
+  | [ typeof commandNames[number], ...CommandSignature[] ]
+  | [ typeof commandNames[number], string /* subcommand */, ...CommandSignature[] ];
 export interface VariableParts {
   headChar: string;
   tailChar: string;

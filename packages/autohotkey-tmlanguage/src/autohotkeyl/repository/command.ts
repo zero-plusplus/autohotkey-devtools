@@ -1,12 +1,18 @@
-import { Repository, Repositories, PatternsRule, ScopeName, RuleName, Rule, CommandArgsType, CommandInfo, MatchRule } from '../../types';
+import { Repository, Repositories, PatternsRule, ScopeName, RuleName, Rule, CommandArgsType, CommandInfo, MatchRule, BeginWhileRule, commandNames } from '../../types';
 import { createUtilities, getCommandInfos, getLegacyTextChar } from '../../utils';
 
 export function createRepositories(scopeName: ScopeName): Repositories {
-  const { getEscapeSequencesInfo, getStatementBegin, includeRule, name, nameRule } = createUtilities(scopeName);
-  const legacyText = getLegacyTextChar();
+  const {
+    getEscapeSequencesInfo,
+    getStatementBegin,
+    includeRule,
+    name,
+    nameRule,
+  } = createUtilities(scopeName);
   const commandInfos = getCommandInfos();
+  const { legacyText: legacyTextEscapeSequence } = getEscapeSequencesInfo();
+  const legacyTextChar = getLegacyTextChar();
   const statementBegin = getStatementBegin();
-  const escapeSequencesInfo = getEscapeSequencesInfo();
   const createRepositoryNameByCommandInfo = (commandInfo: CommandInfo): string => {
     return commandInfo.reduce<string>((prev, current) => {
       if (typeof current === 'string') {
@@ -16,32 +22,78 @@ export function createRepositories(scopeName: ScopeName): Repositories {
     }, 'command');
   };
 
+  const legacyEndLine = '(?=\\s+(?!\`);|\\s*$)';
   const brackets = '(?:\\([^\\r\\n\\)]*\\)|\\[[^\\r\\n\\]]*\\]|\\{[^\\r\\n\\}]*\\})';
-  const commandLegacyArgument = `(?:(?:${brackets}|${legacyText}|${escapeSequencesInfo.legacyText.join('|')}|%)*)`;
+  const commandLegacyArgument = `(?:(?:${brackets}|${legacyTextChar}|${legacyTextEscapeSequence.join('|')}|%)*)`;
   const commandExpressionArgument = `(?:(?:${brackets}|[^\\r\\n,])*)`;
+  const argumentsPatterns = [
+    // In some cases, highlighting is not applied in a captures even if a repository with a complex patterns is specified?
+    // This problem is solved by specifying the rule directly
+    {
+      match: '(,)',
+      captures: {
+        1: nameRule(RuleName.CommandArgumentSeparator),
+      },
+    },
+    includeRule(Repository.CommandArgument),
+  ];
 
   return {
     [Repository.Command]: ((): PatternsRule => {
       return {
-        patterns: commandInfos.map((commandInfo) => {
-          return { include: `#${createRepositoryNameByCommandInfo(commandInfo)}` };
-        }),
+        patterns: [
+          ...commandInfos.map((commandInfo) => {
+            return { include: `#${createRepositoryNameByCommandInfo(commandInfo)}` };
+          }),
+          includeRule(Repository.CommonCommand),
+        ],
+      };
+    })(),
+    [Repository.CommonCommand]: ((): BeginWhileRule => {
+      const sortedCommandNames = [ ...commandNames ].sort((a, b) => b.length - a.length);
+      const commandNameCapture = `(${sortedCommandNames.join('|')})(?=\\b)`;
+
+      return {
+        name: name(RuleName.Command),
+        begin: `(?i)${statementBegin}${commandNameCapture}(?:\\s|(,))?\\s*(.*)${legacyEndLine}`,
+        beginCaptures: {
+          1: nameRule(RuleName.CommandName),
+          2: nameRule(RuleName.CommandArgumentSeparator),
+          3: { patterns: argumentsPatterns },
+          4: nameRule(RuleName.CommandArgumentSeparator),
+        },
+        while: `^\\s*(,)\\s*(.*)${legacyEndLine}`,
+        whileCaptures: {
+          1: nameRule(RuleName.CommandArgumentSeparator),
+          2: { patterns: argumentsPatterns },
+        },
       };
     })(),
     [Repository.CommandArgument]: ((): PatternsRule => {
       return {
         patterns: [
+          includeRule(Repository.PercentExpression),
           includeRule(Repository.Dereference),
+          includeRule(Repository.LegacyTextEscapeSequence),
           includeRule(Repository.CommandArgumentText),
+          includeRule(Repository.InLineComment),
         ],
       };
     })(),
     [Repository.CommandArgumentText]: ((): MatchRule => {
       return {
         name: name(RuleName.LegacyText),
-        match: `(?:${commandLegacyArgument})+`,
+        match: `${legacyTextChar}+`,
       };
     })(),
+    [Repository.CommandArgumentSeparator]: ((): MatchRule => {
+      return {
+        match: '(,)',
+        captures: {
+          1: nameRule(RuleName.CommandArgumentSeparator),
+        },
+      };
+    }),
     ...Object.fromEntries(commandInfos.map((commandInfo): [ string, Rule ] => {
       const [ commandName, ...args ] = commandInfo;
       const repositoryName = createRepositoryNameByCommandInfo(commandInfo);
@@ -74,6 +126,47 @@ export function createRepositories(scopeName: ScopeName): Repositories {
           return prev;
         }, '(?i)');
       };
+      const getArgumentRuleByType = (argType: CommandArgsType, keywords: string[]): PatternsRule => {
+        switch (argType) {
+          case CommandArgsType.None: return {
+            patterns: [ nameRule(RuleName.InvalidCommandArgument) ],
+          };
+          case CommandArgsType.Expression: return {
+            patterns: [ includeRule(Repository.Expression) ],
+          };
+          case CommandArgsType.Input:
+          case CommandArgsType.Output: return {
+            patterns: [
+              includeRule(Repository.BuiltInVariable),
+              includeRule(Repository.Variable),
+            ],
+          };
+          case CommandArgsType.ControlStyle: return { patterns: [ includeRule(Repository.ControlStyle) ] };
+          case CommandArgsType.Legacy: {
+            return 0 < keywords.length
+              ? { patterns: [ { match: `(?i)(?<=\\b)(${keywords.join('|')})(?=\\b)`, captures: { 1: nameRule(RuleName.CommandArgumentKeyword) } }, includeRule(Repository.CommandArgument) ] }
+              : { patterns: [ includeRule(Repository.CommandArgument) ] };
+          }
+          case CommandArgsType.Enum: {
+            if (keywords.length === 0) {
+              throw Error('Must specify one or more keywords.');
+            }
+
+            return {
+              patterns: [
+                {
+                  match: `(?i)(?<=\\b)(${keywords.join('|')})(?=\\b)`,
+                  captures: { 1: nameRule(RuleName.CommandArgumentKeyword) },
+                },
+                includeRule(Repository.PercentExpression),
+                includeRule(Repository.Dereference),
+                { name: name(RuleName.InvalidCommandArgument), match: '(.+)' },
+              ],
+            };
+          }
+        }
+        throw Error(`Specified an unknown argument type.\nSpecified: "${String(argType)}"`);
+      };
       // #endregion helpers
 
       const argsWithCaptures = createArgsRegExpText();
@@ -81,8 +174,8 @@ export function createRepositories(scopeName: ScopeName): Repositories {
       return [
         repositoryName, {
           name: name(RuleName.Command),
-          match: `(?i)${statementBegin}(${commandName})(${argsWithoutCaptures})?([^\\r\\n;]*)`,
-          captures: {
+          begin: `(?i)${statementBegin}(${commandName})(${argsWithoutCaptures})?\\s*(.*)${legacyEndLine}`,
+          beginCaptures: {
             1: nameRule(RuleName.CommandName),
             2: {
               patterns: [
@@ -95,54 +188,34 @@ export function createRepositories(scopeName: ScopeName): Repositories {
                     return [
                       [ separatorKey, nameRule(RuleName.CommandArgumentSeparator) ], ((): [ string, Rule ] => {
                         const argType = Array.isArray(arg) ? arg[0] : arg;
-                        const keywords = Array.isArray(arg) ? arg.slice(1) : [];
+                        const keywords = (Array.isArray(arg) ? arg.slice(1) : []) as string[];
 
                         const isSubCommand = typeof argType === 'string';
                         if (isSubCommand) {
                           return [ argKey, nameRule(RuleName.SubCommandName) ];
                         }
 
-                        switch (argType) {
-                          case CommandArgsType.None: return [ argKey, { name: name(RuleName.InvalidCommandArgument) } ];
-                          case CommandArgsType.Expression: return [ argKey, { patterns: [ includeRule(Repository.Expression) ] } ];
-                          case CommandArgsType.Input:
-                          case CommandArgsType.Output: return [ argKey, { patterns: [ includeRule(Repository.BuiltInVariable), includeRule(Repository.Variable) ] } ];
-                          case CommandArgsType.ControlStyle: return [ argKey, { patterns: [ includeRule(Repository.ControlStyle) ] } ];
-                          case CommandArgsType.Legacy: {
-                            return 0 < keywords.length
-                              ? [ argKey, { patterns: [ { match: `(?i)(?<=\\b)(${keywords.join('|')})(?=\\b)`, captures: { 1: nameRule(RuleName.CommandArgumentKeyword) } }, includeRule(Repository.CommandArgument) ] } ]
-                              : [ argKey, { patterns: [ includeRule(Repository.CommandArgument) ] } ];
-                          }
-                          case CommandArgsType.Enum: {
-                            if (keywords.length === 0) {
-                              throw Error('Must specify one or more keywords.');
-                            }
-
-                            const invalidRule: MatchRule = { name: name(RuleName.InvalidCommandArgument), match: '(.+)' };
-                            return [
-                              argKey, {
-                                patterns: [
-                                  {
-                                    match: `(?i)(?<=\\b)(${keywords.join('|')})(?=\\b)`,
-                                    captures: { 1: nameRule(RuleName.CommandArgumentKeyword) },
-                                  },
-                                  includeRule(Repository.PercentExpression),
-                                  includeRule(Repository.Dereference),
-                                  invalidRule,
-                                ],
-                              },
-                            ];
-                          }
-                          default: break;
-                        }
-                        throw Error(`Specified an unknown argument type.\nSpecified: "${String(argType)}"`);
+                        return [ argKey, getArgumentRuleByType(argType, keywords) ];
                       })(),
                     ];
                   })),
                 },
               ],
             },
-            3: nameRule(RuleName.InvalidCommandArgument),
+            3: {
+              patterns: [
+                includeRule(Repository.InLineComment),
+                {
+                  name: name(RuleName.InvalidCommandArgument),
+                  match: '(?:[^\\r\\n;]|(?<!\\s);)+(?!\\s;)',
+                },
+              ],
+            },
+          },
+          while: `^\\s*(,)\\s*(.*)${legacyEndLine}`,
+          whileCaptures: {
+            1: nameRule(RuleName.CommandArgumentSeparator),
+            2: { patterns: argumentsPatterns },
           },
         },
       ];

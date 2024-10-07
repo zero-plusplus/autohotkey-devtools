@@ -48,7 +48,7 @@ export function createRepositories(scopeName: ScopeName): Repositories {
     })(),
     [Repository.PercentExpression]: ((): MatchRule => {
       return {
-        match: `(%)\\s+((?:${brackets}|[^\\r\\n,])*)`,
+        match: `(%)\\s+((?:${brackets}|[^\\r\\n,;]|(?<!\\s);)*)`,
         captures: {
           1: nameRule(RuleName.ForceExpression, RuleName.ForceExpressionPercent),
           2: {
