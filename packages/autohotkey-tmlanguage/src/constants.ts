@@ -184,6 +184,68 @@ export const commandNames = [
   'WinWaitNotActive',
   'WinWaitClose',
 ] as const;
+
+// #region operators
+// https://www.autohotkey.com/docs/v2/Variables.htm#Operators
+// https://www.autohotkey.com/docs/v1/Variables.htm#Operators
+export const commonOperators = [
+  '+',    // e.g. `+1`, `1 + 1`
+  '++',   // e.g. `++1`, `1++`
+  '-',    // e.g. `-1`, `1 - 1`
+  '--',   // e.g. `--1`, `1--`
+  '*',    // e.g. `1 * 1`, `*expression`
+  '**',   // e.g. `1 ** 1`
+  '/',    // e.g. `1 / 1`
+  '//',   // e.g. `1 // 1`
+  '.',    // e.g. `1 . 1`, `obj.member`
+  '~',    // e.g. `~1`
+  '&',    // e.g. `&var`, `1 & 1`
+  '|',    // e.g. `1 | 1`
+  '^',    // e.g. `1 ^ 1`
+  '<<',   // e.g. `1 << 1`
+  '>>',   // e.g. `1 >> 1`
+  '>>>',  // e.g. `1 >>> 1`
+  '%',    // e.g. `%var%`, `a%b%c`
+  '!',    // e.g. `!expression`
+  'NOT',  // e.g. `not expression`
+  '&&',   // e.g. `1 && 1`
+  'AND',  // e.g. `1 and 1`
+  '||',   // e.g. `1 || 1`
+  'OR',   // e.g. `1 or 1`
+  '>',    // e.g. `1 > 1`
+  '>=',   // e.g. `1 >= 1`
+  '<',    // e.g. `1 < 1`
+  '<=',   // e.g. `1 <= 1`
+  '=',    // e.g. `1 = 1`
+  '==',   // e.g. `1 == 1`
+  '?',    // e.g. `a ? b : c`, `a?.b`
+  ':',    // e.g. `a ? b : c`
+  ':=',   // e.g. `a := 1`
+  '+=',   // e.g. `a += 1`
+  '-=',   // e.g. `a -= 1`
+  '*=',   // e.g. `a *= 1`
+  '/=',   // e.g. `a /= 1`
+  '//=',  // e.g. `a //= 1`
+  '.=',   // e.g. `a .= 1`
+  '|=',   // e.g. `a |= 1`
+  '&=',   // e.g. `a &= 1`
+  '^=',   // e.g. `a ^= 1`
+  '>>=',  // e.g. `a >>= 1`
+  '<<=',  // e.g. `a <<= 1`
+  '>>>=', // e.g. `a >>>= 1`
+  ',',    // e.g. `a, b`
+] as const;
+export const operators_v1: [ ...typeof commonOperators, '<>' ] = [
+  ...commonOperators,
+  '<>', // e.g. `1 <> 1` Deprecated
+] as const;
+export const operators_v2: [ ...typeof commonOperators, '=>', '??' ] = [
+  ...commonOperators,
+  '=>', // `(args*) => expression`
+  '??', // `a ?? b`
+] as const;
+// #endregion operators
+
 // #endregion constant
 
 // #region enum
@@ -248,8 +310,12 @@ export const enum Repository {
   ScientificNotation = 'constant.numeric.scientificnotation',
   InvalidScientificNotation = 'invalid.illegal.scientificnotation',
   // #endregion number
+  // #region operator
+  Operator = 'operator',
+  // #endregion operator
   // #region token
   Comma = 'punctuation.separator.comma',
+  // #endregion token
 }
 
 // https://macromates.com/manual/en/language_grammars#naming_conventions
@@ -279,6 +345,7 @@ export const enum RuleName {
   InLineComment = 'comment.in-line',
   // #endregion comment
   // #region expression
+  Expression = 'expression',
   ParenthesizedExpression = 'expression.parenthesized',
 
   // #region variable
@@ -319,6 +386,7 @@ export const enum RuleName {
   Exponent = 'constant.numeric.exponent',
   // #endregion number
   // #region operator
+  Operator = 'keyword.operator',
   Equals = 'keyword.operator.equals',
   // #endregion operator
   // #endregion expression

@@ -1,5 +1,5 @@
 import { CommandInfo, EscapeSequencesInfo, IncludeRule, NameRule, ScopeName, Utilities, VariableParts } from './types';
-import { RuleName, Repository, CommandArgsType } from './constants';
+import { RuleName, Repository, CommandArgsType, operators_v1, operators_v2 } from './constants';
 
 export function getCommandInfos(): CommandInfo[] {
   // https://www.autohotkey.com/docs/v1/lib/index.htm
@@ -269,6 +269,38 @@ export function getStatementBegin(scopeName: ScopeName): string {
     case 'autohotkeynext':
     case 'autohotkey2':
     case 'autohotkeyl': return '(?<=^\\s*|:\\s*)';
+  }
+  throw Error(`Scope "${scopeName}" not found`);
+}
+export function getOperators(scopeName: ScopeName): string[] {
+  switch (scopeName) {
+    case 'autohotkeynext':
+    case 'autohotkey2': {
+      return operators_v2.sort((a, b) => b.length - a.length);
+    }
+    case 'autohotkeyl': {
+      return operators_v1.sort((a, b) => b.length - a.length);
+    }
+  }
+  throw Error(`Scope "${scopeName}" not found`);
+}
+export function getContinuationBegin(scopeName: ScopeName): string {
+  // https://www.autohotkey.com/docs/v2/Scripts.htm#continuation-line
+  // https://www.autohotkey.com/docs/v1/Scripts.htm#continuation-line
+  const operators = getOperators(scopeName).filter((operator) => {
+    switch (operator) {
+      case '++':
+      case '--': return false;
+      default: return true;
+    }
+  }).map((operator) => escapeOnigurumaText(operator));
+
+  switch (scopeName) {
+    case 'autohotkeynext':
+    case 'autohotkey2':
+    case 'autohotkeyl': {
+      return `(?<=^\\s*(?:${operators.join('|')}))`;
+    }
   }
   throw Error(`Scope "${scopeName}" not found`);
 }
@@ -680,9 +712,11 @@ export function nameRule(scopeName: ScopeName, ...ruleNames: RuleName[]): NameRu
 export function createUtilities(scopeName: ScopeName): Utilities {
   return {
     getVariableParts: () => getVariableParts(scopeName),
+    getContinuationBegin: () => getContinuationBegin(scopeName),
     getEscapeSequencesInfo: () => getEscapeSequencesInfo(scopeName),
     getExpressionBegin: () => getExpressionBegin(scopeName),
     getStatementBegin: () => getStatementBegin(scopeName),
+    getOperators: () => getOperators(scopeName),
     getBuiltInVariableNames: () => getBuiltInVariableNames(scopeName),
     name: (...ruleNames: RuleName[]): string => name(scopeName, ...ruleNames),
     nameRule: (...ruleNames: RuleName[]): NameRule => ({ name: name(scopeName, ...ruleNames) }),
@@ -690,3 +724,10 @@ export function createUtilities(scopeName: ScopeName): Utilities {
     includeScope: (scopeName: ScopeName) => includeScope(scopeName),
   };
 }
+
+// #region helpers
+export function escapeOnigurumaText(text: string): string {
+  // https://github.com/kkos/oniguruma/blob/master/doc/SYNTAX.md
+  return text.replaceAll(/([\\.*?+{}|()[\]^])/gu, '\\$1');
+}
+// #endregion helpers

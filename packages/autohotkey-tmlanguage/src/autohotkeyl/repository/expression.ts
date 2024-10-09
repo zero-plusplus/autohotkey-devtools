@@ -1,6 +1,6 @@
 import { Repositories, PatternsRule, ScopeName, MatchRule, BeginEndRule } from '../../types';
 import { RuleName, Repository } from '../../constants';
-import { createUtilities } from '../../utils';
+import { createUtilities, escapeOnigurumaText } from '../../utils';
 
 export const integer = '[1-9][0-9]*|0';
 export const hexPrefix = '0[xX]';
@@ -8,7 +8,8 @@ export const hexValue = '[0-9a-fA-F]+';
 export const hex = `${hexPrefix}${hexValue}` as string;
 
 export function createLiteralRepositories(scopeName: ScopeName): Repositories {
-  const { getVariableParts, getEscapeSequencesInfo, getBuiltInVariableNames, includeRule, name, nameRule } = createUtilities(scopeName);
+  const { getOperators, getVariableParts, getEscapeSequencesInfo, getBuiltInVariableNames, includeRule, name, nameRule } = createUtilities(scopeName);
+  const operators = getOperators();
   const variableParts = getVariableParts();
   const escapeSequencesInfo = getEscapeSequencesInfo();
   const builtinVariables = getBuiltInVariableNames();
@@ -26,6 +27,8 @@ export function createLiteralRepositories(scopeName: ScopeName): Repositories {
           includeRule(Repository.Variable),
           includeRule(Repository.InvalidDereference),
           includeRule(Repository.Dereference),
+
+          includeRule(Repository.Operator),
         ],
       };
     })(),
@@ -391,6 +394,12 @@ export function createLiteralRepositories(scopeName: ScopeName): Repositories {
       return {
         name: name(RuleName.Comma),
         match: ',',
+      };
+    })(),
+    [Repository.Operator]: ((): MatchRule => {
+      return {
+        name: name(RuleName.Operator),
+        match: `(?i)${operators.filter((operator) => operator !== ',').map((operator) => escapeOnigurumaText(operator)).join('|')}`,
       };
     })(),
     // #endregion token

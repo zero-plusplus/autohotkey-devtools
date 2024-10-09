@@ -66,11 +66,12 @@ export interface Utilities {
   getVariableParts: () => VariableParts;
   getEscapeSequencesInfo: () => EscapeSequencesInfo;
   getExpressionBegin: () => string;
+  getOperators: () => string[];
   getStatementBegin: () => string;
+  getContinuationBegin: () => string;
   getBuiltInVariableNames: () => string[];
   name: (...ruleNames: RuleName[]) => string;
   nameRule: (...ruleNames: RuleName[]) => NameRule;
   includeRule: (repositoryName: Repository) => IncludeRule;
   includeScope: (scopeName: ScopeName) => IncludeRule;
 }
-// #endregion types
