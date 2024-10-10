@@ -89,6 +89,24 @@ describe('command', () => {
         { text: 'continuation argument', scopes: name(RuleName.Command, RuleName.LegacyText) },
       ],
     ],
+    [
+      `AutoTrim % continuation
+       + expressionArgument, legacyText`, [
+        { text: 'AutoTrim', scopes: name(RuleName.Command, RuleName.CommandName) },
+        { text: ' ' },
+        { text: '%', scopes: name(RuleName.Command, RuleName.ForceExpression, RuleName.ForceExpressionPercent) },
+        { text: ' ' },
+        { text: 'continuation', scopes: name(RuleName.Command, RuleName.ForceExpression, RuleName.Variable) },
+        { text: '\n' },
+        { text: '       ' },
+        { text: '+', scopes: name(RuleName.Command, RuleName.Operator) },
+        { text: ' ' },
+        { text: 'expressionArgument', scopes: name(RuleName.Command, RuleName.Variable) },
+        { text: ',', scopes: name(RuleName.Command, RuleName.CommandArgumentSeparator) },
+        { text: ' ' },
+        { text: 'legacyText', scopes: name(RuleName.Command, RuleName.LegacyText) },
+      ],
+    ],
     // invalid
     [
       'AutoTrim, No keyword', [

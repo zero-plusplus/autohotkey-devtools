@@ -41,6 +41,42 @@ export function createRepositories(scopeName: ScopeName): Repositories {
     includeRule(Repository.CommandArgument),
   ];
 
+  const expressionOperators = operators.filter((operator) => operator !== ',').map((operator) => escapeOnigurumaText(operator)).join('|');
+  const whileLegacyArgument = `^\\s*(,)\\s*(.*)${legacyEndLine}`;
+  const whileExpression = `^\\s*(${expressionOperators})(?:\\s*(${commandExpressionArgument})\\s*(,)?\\s*(.*))?${legacyEndLine}`;
+  const continuationArguments: Pick<BeginWhileRule, 'while' | 'whileCaptures' | 'patterns'> = {
+    while: `(?:${whileLegacyArgument}|${whileExpression})`,
+    whileCaptures: {
+      1: nameRule(RuleName.CommandArgumentSeparator),
+      2: { patterns: argumentsPatterns },
+      3: nameRule(RuleName.Operator),
+      4: { patterns: [ includeRule(Repository.Expression) ] },
+      5: nameRule(RuleName.CommandArgumentSeparator),
+      6: { patterns: argumentsPatterns },
+    },
+    patterns: [
+      {
+        begin: `^\\s*(,)\\s*`,
+        end: legacyEndLine,
+        captures: {
+          1: nameRule(RuleName.CommandArgumentSeparator),
+        },
+        patterns: argumentsPatterns,
+      },
+      {
+        begin: `^\\s*(${expressionOperators})\\s*`,
+        end: legacyEndLine,
+        captures: {
+          1: nameRule(RuleName.Operator),
+        },
+        patterns: [
+          includeRule(Repository.Expression),
+          ...argumentsPatterns,
+        ],
+      },
+    ],
+  };
+
   return {
     [Repository.Command]: ((): PatternsRule => {
       return {
@@ -55,10 +91,6 @@ export function createRepositories(scopeName: ScopeName): Repositories {
     [Repository.CommonCommand]: ((): BeginWhileRule => {
       const sortedCommandNames = [ ...commandNames ].sort((a, b) => b.length - a.length);
       const commandNameCapture = `(${sortedCommandNames.join('|')})(?=\\b)`;
-      const expressionOperators = operators.filter((operator) => operator !== ',').map((operator) => escapeOnigurumaText(operator)).join('|');
-
-      const whileLegacyArgument = `^\\s*(,)\\s*(.*)${legacyEndLine}`;
-      const whileExpression = `^\\s*(${expressionOperators})\\s*(.*)\\s*(,)?\\s*(.*))?${legacyEndLine})))`;
 
       return {
         name: name(RuleName.Command),
@@ -69,36 +101,7 @@ export function createRepositories(scopeName: ScopeName): Repositories {
           3: { patterns: argumentsPatterns },
           4: nameRule(RuleName.CommandArgumentSeparator),
         },
-        while: `(?:${whileLegacyArgument}|${whileExpression})`,
-        whileCaptures: {
-          1: nameRule(RuleName.CommandArgumentSeparator),
-          2: { patterns: argumentsPatterns },
-          3: nameRule(RuleName.Operator),
-          4: includeRule(Repository.Expression),
-          5: nameRule(RuleName.CommandArgumentSeparator),
-          6: { patterns: argumentsPatterns },
-        },
-        patterns: [
-          {
-            begin: `^\\s*(,)\\s*`,
-            end: legacyEndLine,
-            captures: {
-              1: nameRule(RuleName.CommandArgumentSeparator),
-            },
-            patterns: argumentsPatterns,
-          },
-          {
-            begin: `^\\s*(${expressionOperators})\\s*`,
-            end: legacyEndLine,
-            captures: {
-              1: nameRule(RuleName.Operator),
-            },
-            patterns: [
-              includeRule(Repository.Expression),
-              ...argumentsPatterns,
-            ],
-          },
-        ],
+        ...continuationArguments,
       };
     })(),
     [Repository.CommandArgument]: ((): PatternsRule => {
@@ -244,11 +247,7 @@ export function createRepositories(scopeName: ScopeName): Repositories {
               ],
             },
           },
-          while: `^\\s*(,)\\s*(.*)${legacyEndLine}`,
-          whileCaptures: {
-            1: nameRule(RuleName.CommandArgumentSeparator),
-            2: { patterns: argumentsPatterns },
-          },
+          ...continuationArguments,
         },
       ];
     })),
