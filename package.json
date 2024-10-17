@@ -42,7 +42,8 @@
       "editors/vscode",
       "packages/autohotkey-tmlanguage",
       "packages/autohotkey-utilities",
-      "packages/eslint-style-rules"
+      "packages/eslint-style-rules",
+      "packages/utilities"
     ]
   }
 }

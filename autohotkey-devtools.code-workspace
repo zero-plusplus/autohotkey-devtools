@@ -1,10 +1,6 @@
 {
 	"folders": [
 		{
-			"path": ".",
-			"name": "🏠"
-		},
-		{
 			"path": "editors/vscode",
 			"name": "🖊️ VSCode",
 		},
@@ -15,6 +11,14 @@
 		{
 			"path": "packages/autohotkey-utilities",
 			"name": "🛠️ AutoHotKey Utilities"
+		},
+		{
+			"path": "packages/utilities",
+			"name": "🔧 Utilities"
+		},
+		{
+			"path": ".",
+			"name": "🏠"
 		},
 	],
 	"settings": {}

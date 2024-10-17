@@ -2,6 +2,7 @@ import * as path from 'path';
 import * as fs from 'fs';
 import * as vsctm from 'vscode-textmate';
 import * as oniguruma from 'vscode-oniguruma';
+import { singleton } from '@zero-plusplus/utilities/src';
 import { TmLanguage, ScopeName } from '../../src/types';
 import * as grammars from '../../src';
 
@@ -9,12 +10,7 @@ const rootDirectory = path.resolve(__dirname, '../../../../');
 const nodeModulesDirectory = path.resolve(rootDirectory, 'node_modules');
 const onigurumaWasmPath = path.resolve(nodeModulesDirectory, 'vscode-oniguruma', 'release', 'onig.wasm');
 
-let registry: vsctm.Registry | undefined;
-async function createTextMateRegistry(): Promise<vsctm.Registry> {
-  if (registry) {
-    return registry;
-  }
-
+const createTextMateRegistry = singleton(async(): Promise<vsctm.Registry> => {
   const wasmBinary = fs.readFileSync(onigurumaWasmPath).buffer;
   await oniguruma.loadWASM(wasmBinary);
 
@@ -25,7 +21,7 @@ async function createTextMateRegistry(): Promise<vsctm.Registry> {
     'source.autohotkeyl': grammars.autohotkeyl.createTmLanguage(),
   };
 
-  registry = new vsctm.Registry({
+  return new vsctm.Registry({
     onigLib: new Promise((resolve): void => {
       resolve({
         createOnigScanner(sources): oniguruma.OnigScanner {
@@ -46,8 +42,7 @@ async function createTextMateRegistry(): Promise<vsctm.Registry> {
       });
     },
   });
-  return registry;
-}
+});
 
 export type ParsedResults = Array<{ text: string; scopes?: string }>;
 export async function parse(scopeName: ScopeName, text: string): Promise<ParsedResults> {
