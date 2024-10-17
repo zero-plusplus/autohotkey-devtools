@@ -44,8 +44,5 @@
 		"target": "ESNext",
 
 		"incremental": true,
-	},
-	"include": [
-		"*.config.js"
-	]
+	}
 }

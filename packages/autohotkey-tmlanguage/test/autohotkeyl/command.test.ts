@@ -1,5 +1,5 @@
-import { ScopeName } from '../../src/types';
 import { RuleName } from '../../src/constants';
+import type { ScopeName } from '../../src/types';
 import { createUtilities, getCommandInfos } from '../../src/utils';
 import { parse } from '../helpers/textmate-parser';
 

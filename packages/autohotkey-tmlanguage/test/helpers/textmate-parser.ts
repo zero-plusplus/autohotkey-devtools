@@ -1,10 +1,10 @@
-import * as path from 'path';
-import * as fs from 'fs';
-import * as vsctm from 'vscode-textmate';
-import * as oniguruma from 'vscode-oniguruma';
 import { singleton } from '@zero-plusplus/utilities/src';
-import { TmLanguage, ScopeName } from '../../src/types';
+import * as fs from 'fs';
+import * as path from 'path';
+import * as oniguruma from 'vscode-oniguruma';
+import * as vsctm from 'vscode-textmate';
 import * as grammars from '../../src';
+import type { ScopeName, TmLanguage } from '../../src/types';
 
 const rootDirectory = path.resolve(__dirname, '../../../../');
 const nodeModulesDirectory = path.resolve(rootDirectory, 'node_modules');

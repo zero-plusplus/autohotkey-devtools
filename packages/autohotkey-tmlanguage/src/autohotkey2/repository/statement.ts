@@ -1,6 +1,6 @@
-import { Repositories, PatternsRule, ScopeName } from '../../types';
-import { Repository } from '../../constants';
 import * as ahkl from '../../autohotkeyl/repository/statement';
+import { Repository } from '../../constants';
+import type { PatternsRule, Repositories, ScopeName } from '../../types';
 import { createUtilities } from '../../utils';
 
 export function createLiteralRepositories(scopeName: ScopeName): Repositories {

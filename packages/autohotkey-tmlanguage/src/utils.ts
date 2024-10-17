@@ -1,6 +1,6 @@
-import { CommandInfo, EscapeSequencesInfo, IncludeRule, NameRule, PatternsRule, Rule, ScopeName, Utilities, VariableParts } from './types';
-import { RuleName, Repository, CommandArgsType, operators_v1, operators_v2 } from './constants';
-import { escapeOnigurumaText, noCapture, negativeLookahead, seq, spaceOrTab, asciiChar, lookbehind, alt, opt, ordalt, startAnchor, zeroOrMore, chr, negchr } from './oniguruma';
+import { CommandArgsType, operators_v1, operators_v2, Repository, RuleName } from './constants';
+import { alt, asciiChar, chr, escapeOnigurumaText, lookbehind, negativeLookahead, negchr, noCapture, opt, ordalt, seq, spaceOrTab, startAnchor, zeroOrMore } from './oniguruma';
+import type { CommandInfo, EscapeSequencesInfo, IncludeRule, NameRule, PatternsRule, Rule, ScopeName, Utilities, VariableParts } from './types';
 
 export function getCommandInfos(): CommandInfo[] {
   // https://www.autohotkey.com/docs/v1/lib/index.htm

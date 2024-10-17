@@ -1,7 +1,7 @@
-import { Repositories, PatternsRule, ScopeName, MatchRule, BeginEndRule } from '../../types';
-import { RuleName, Repository } from '../../constants';
-import { createUtilities } from '../../utils';
+import { Repository, RuleName } from '../../constants';
 import { escapeOnigurumaText } from '../../oniguruma';
+import type { BeginEndRule, MatchRule, PatternsRule, Repositories, ScopeName } from '../../types';
+import { createUtilities } from '../../utils';
 
 export const integer = '[1-9][0-9]*|0';
 export const hexPrefix = '0[xX]';

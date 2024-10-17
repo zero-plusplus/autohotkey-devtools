@@ -1,5 +1,5 @@
-import { Repositories, PatternsRule, ScopeName, MatchRule } from '../../types';
-import { RuleName, Repository } from '../../constants';
+import { Repository, RuleName } from '../../constants';
+import type { MatchRule, PatternsRule, Repositories, ScopeName } from '../../types';
 import { createUtilities, getLegacyTextChar } from '../../utils';
 
 export function createRepositories(scopeName: ScopeName): Repositories {

@@ -1,5 +1,5 @@
-import { BeginWhileRule, ScopeName, TmLanguage } from '../types';
 import { RuleName } from '../constants';
+import type { BeginWhileRule, ScopeName, TmLanguage } from '../types';
 import { createUtilities } from '../utils';
 
 export function createTmLanguage(): TmLanguage {
