@@ -1,5 +1,6 @@
-import { CommandInfo, EscapeSequencesInfo, IncludeRule, NameRule, ScopeName, Utilities, VariableParts } from './types';
+import { CommandInfo, EscapeSequencesInfo, IncludeRule, NameRule, PatternsRule, Rule, ScopeName, Utilities, VariableParts } from './types';
 import { RuleName, Repository, CommandArgsType, operators_v1, operators_v2 } from './constants';
+import { escapeOnigurumaText, noCapture, negativeLookahead, seq, spaceOrTab, asciiChar, lookbehind, alt, opt, ordalt, startAnchor, zeroOrMore, chr, negchr } from './oniguruma';
 
 export function getCommandInfos(): CommandInfo[] {
   // https://www.autohotkey.com/docs/v1/lib/index.htm
@@ -208,20 +209,23 @@ export function getCommandInfos(): CommandInfo[] {
   });
 }
 export function getLegacyTextChar(): string {
-  return '(?:[^\\s,%`;:]|[^\\S\\r\\n](?!;))';
+  return noCapture(alt(
+    negchr('\\s', ',', '%', '`', ';', ':'),
+    seq(spaceOrTab(), negativeLookahead(';')),
+  ));
 }
 export function getVariableParts(scopeName: ScopeName): VariableParts {
   const letter = '[a-zA-Z]';
   const numberChar = '\\d';
-  const nonAsciiChar = '[^[:ascii:]]';
+  const nonAsciiChar = negchr(asciiChar());
 
   switch (scopeName) {
     // https://www.autohotkey.com/docs/v2/Concepts.htm#names
     case 'autohotkeynext':
     case 'autohotkey2': {
-      const symbol = '[_]';
-      const headChar = `${letter}|${nonAsciiChar}|${symbol}`;
-      const tailChar = `${letter}|${nonAsciiChar}|${symbol}|${numberChar}`;
+      const sign = chr('_');
+      const headChar = noCapture(alt(letter, nonAsciiChar, sign));
+      const tailChar = noCapture(alt(letter, nonAsciiChar, sign, numberChar));
       return {
         headChar,
         tailChar,
@@ -229,9 +233,9 @@ export function getVariableParts(scopeName: ScopeName): VariableParts {
     }
     // https://www.autohotkey.com/docs/v1/Concepts.htm#names
     case 'autohotkeyl': {
-      const symbol = '[_#@$]';
-      const headChar = `${letter}|${nonAsciiChar}|${symbol}`;
-      const tailChar = `${letter}|${nonAsciiChar}|${symbol}|${numberChar}`;
+      const sign = chr('_', '#', '@', '$');
+      const headChar = noCapture(alt(letter, nonAsciiChar, sign));
+      const tailChar = noCapture(alt(letter, nonAsciiChar, sign, numberChar));
       return {
         headChar,
         tailChar,
@@ -268,7 +272,10 @@ export function getStatementBegin(scopeName: ScopeName): string {
   switch (scopeName) {
     case 'autohotkeynext':
     case 'autohotkey2':
-    case 'autohotkeyl': return '(?<=^\\s*|:\\s*)';
+    case 'autohotkeyl': return lookbehind(alt(
+      seq(startAnchor(), zeroOrMore(spaceOrTab())),
+      seq(chr(':'), zeroOrMore(spaceOrTab())),
+    ));
   }
   throw Error(`Scope "${scopeName}" not found`);
 }
@@ -276,10 +283,10 @@ export function getOperators(scopeName: ScopeName): string[] {
   switch (scopeName) {
     case 'autohotkeynext':
     case 'autohotkey2': {
-      return operators_v2.sort((a, b) => b.length - a.length);
+      return operators_v2;
     }
     case 'autohotkeyl': {
-      return operators_v1.sort((a, b) => b.length - a.length);
+      return operators_v1;
     }
   }
   throw Error(`Scope "${scopeName}" not found`);
@@ -299,7 +306,11 @@ export function getContinuationBegin(scopeName: ScopeName): string {
     case 'autohotkeynext':
     case 'autohotkey2':
     case 'autohotkeyl': {
-      return `(?<=^\\s*(?:${operators.join('|')}))`;
+      return lookbehind(seq(
+        startAnchor(),
+        zeroOrMore(spaceOrTab()),
+        noCapture(ordalt(...operators)),
+      ));
     }
   }
   throw Error(`Scope "${scopeName}" not found`);
@@ -308,7 +319,12 @@ export function getExpressionBegin(scopeName: ScopeName): string {
   switch (scopeName) {
     case 'autohotkeynext':
     case 'autohotkey2':
-    case 'autohotkeyl': return '(?<=^\\s*(?:,)?|:\\s*)';
+    case 'autohotkeyl': {
+      return lookbehind(alt(
+        seq(startAnchor(), zeroOrMore(spaceOrTab()), opt(chr(','))),
+        seq(chr(':'), zeroOrMore(spaceOrTab())),
+      ));
+    }
   }
   throw Error(`Scope "${scopeName}" not found`);
 }
@@ -697,18 +713,6 @@ export function getBuiltInVariableNames(scopeName: ScopeName): string[] {
   }
   throw Error(`Scope "${scopeName}" not found`);
 }
-export function includeRule(repositoryName: Repository): IncludeRule {
-  return { include: `#${repositoryName}` };
-}
-export function includeScope(scopeName: ScopeName): IncludeRule {
-  return { include: `source.${scopeName}` };
-}
-export function name(scopeName: ScopeName, ...ruleNames: RuleName[]): string {
-  return ruleNames.map((ruleName) => `${ruleName}.${scopeName}`).join(' ');
-}
-export function nameRule(scopeName: ScopeName, ...ruleNames: RuleName[]): NameRule {
-  return { name: name(scopeName, ...ruleNames) };
-}
 export function createUtilities(scopeName: ScopeName): Utilities {
   return {
     getVariableParts: () => getVariableParts(scopeName),
@@ -725,9 +729,20 @@ export function createUtilities(scopeName: ScopeName): Utilities {
   };
 }
 
-// #region helpers
-export function escapeOnigurumaText(text: string): string {
-  // https://github.com/kkos/oniguruma/blob/master/doc/SYNTAX.md
-  return text.replaceAll(/([\\.*?+{}|()[\]^])/gu, '\\$1');
+// #region rule combinators
+export function includeRule(repositoryName: Repository): IncludeRule {
+  return { include: `#${repositoryName}` };
 }
-// #endregion helpers
+export function includeScope(scopeName: ScopeName): IncludeRule {
+  return { include: `source.${scopeName}` };
+}
+export function name(scopeName: ScopeName, ...ruleNames: RuleName[]): string {
+  return ruleNames.map((ruleName) => `${ruleName}.${scopeName}`).join(' ');
+}
+export function nameRule(scopeName: ScopeName, ...ruleNames: RuleName[]): NameRule {
+  return { name: name(scopeName, ...ruleNames) };
+}
+export function patternsRule(rules: Rule[]): PatternsRule {
+  return { patterns: rules };
+}
+// #endregion rule combinators

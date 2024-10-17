@@ -1,6 +1,7 @@
 import { Repositories, PatternsRule, ScopeName, Rule, CommandInfo, MatchRule, BeginWhileRule } from '../../types';
 import { commandNames, Repository, RuleName, CommandArgsType } from '../../constants';
-import { createUtilities, escapeOnigurumaText, getCommandInfos, getLegacyTextChar } from '../../utils';
+import { createUtilities, getCommandInfos, getLegacyTextChar } from '../../utils';
+import { escapeOnigurumaText } from '../../oniguruma';
 
 export function createRepositories(scopeName: ScopeName): Repositories {
   const {
