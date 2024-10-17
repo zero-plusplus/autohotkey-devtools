@@ -43,6 +43,7 @@ module.exports.rules = {
   '@typescript-eslint/no-invalid-void-type': 'off',
   '@typescript-eslint/no-non-null-assertion': 'off',
   '@typescript-eslint/no-unnecessary-condition': [ 'error', { allowConstantLoopConditions: true } ],
+  '@typescript-eslint/no-unnecessary-type-parameters': 'off',
   '@typescript-eslint/no-unsafe-call': 'off',
   '@typescript-eslint/no-unused-expressions': 'off',
   '@typescript-eslint/no-use-before-define': [ 'error', { functions: false, classes: false, enums: false } ],
