@@ -1,16 +1,28 @@
 import { Repository, RuleName } from '../../constants';
-import { escapeOnigurumaText } from '../../oniguruma';
+import { alt, anyChar, capture, char, charRange, endAnchor, escapeOnigurumaTexts, ignoreCase, inlineSpaces0, inlineSpaces1, lookahead, lookbehind, many0, many1, manyRange, negativeLookahead, negativeLookbehind, negChar, noCapture, number, numbers0, numbers1, opt, ordalt, seq, whitespace, wordBound } from '../../oniguruma';
 import type { BeginEndRule, MatchRule, PatternsRule, Repositories, ScopeName } from '../../types';
 import { createUtilities } from '../../utils';
 
-export const integer = '[1-9][0-9]*|0';
-export const hexPrefix = '0[xX]';
-export const hexValue = '[0-9a-fA-F]+';
-export const hex = `${hexPrefix}${hexValue}` as string;
+export const integer: string = alt(
+  seq(charRange('1', '9'), numbers0()),
+  char('0'),
+);
+export const hexPrefix: string = seq(char('0'), ignoreCase(char('x')));
+export const hexValue: string = many1(noCapture(alt(
+  charRange('0', '9'),
+  charRange('a', 'f'),
+  charRange('A', 'F'),
+)));
+export const hex: string = seq(hexPrefix, hexValue);
 
 export function createLiteralRepositories(scopeName: ScopeName): Repositories {
   const { getOperators, getVariableParts, getEscapeSequencesInfo, getBuiltInVariableNames, includeRule, name, nameRule } = createUtilities(scopeName);
   const operators = getOperators();
+
+  const endLine = alt(
+    seq(inlineSpaces1(), char(';')),
+    seq(inlineSpaces0(), endAnchor()),
+  );
   const variableParts = getVariableParts();
   const escapeSequencesInfo = getEscapeSequencesInfo();
   const builtinVariables = getBuiltInVariableNames();
@@ -36,11 +48,11 @@ export function createLiteralRepositories(scopeName: ScopeName): Repositories {
     [Repository.ParenthesizedExpression]: ((): BeginEndRule => {
       return {
         name: name(RuleName.ParenthesizedExpression),
-        begin: '(\\()',
+        begin: capture(char('(')),
         beginCaptures: {
           1: nameRule(RuleName.OpenParen),
         },
-        end: '(\\))',
+        end: capture(char(')')),
         endCaptures: {
           1: nameRule(RuleName.CloseParen),
         },
@@ -51,7 +63,7 @@ export function createLiteralRepositories(scopeName: ScopeName): Repositories {
     // #region variable
     [Repository.Variable]: ((): MatchRule => {
       return {
-        match: `((?:${variableParts.headChar})(?:${variableParts.tailChar}){0,252})`,
+        match: capture(seq(variableParts.headChar, manyRange(variableParts.tailChar, 0, 252))),
         captures: {
           1: nameRule(RuleName.Variable),
         },
@@ -61,14 +73,20 @@ export function createLiteralRepositories(scopeName: ScopeName): Repositories {
       return {
         patterns: [
           {
-            match: `(\\d+)((?:${variableParts.headChar})(?:${variableParts.tailChar}){0,252})`,
+            match: seq(
+              capture(numbers1()),
+              capture(seq(variableParts.headChar, manyRange(variableParts.tailChar, 0, 252))),
+            ),
             captures: {
               1: nameRule(RuleName.Variable, RuleName.Integer, RuleName.InvalidVariable),
               2: nameRule(RuleName.Variable),
             },
           },
           {
-            match: `((?:${variableParts.headChar})(?:${variableParts.tailChar}){252})((?:${variableParts.tailChar})+)`,
+            match: seq(
+              capture(seq(variableParts.headChar, manyRange(variableParts.tailChar, 252))),
+              capture(many1(variableParts.tailChar)),
+            ),
             captures: {
               1: nameRule(RuleName.Variable),
               2: nameRule(RuleName.Variable, RuleName.InvalidVariable),
@@ -79,7 +97,11 @@ export function createLiteralRepositories(scopeName: ScopeName): Repositories {
     })(),
     [Repository.BuiltInVariable]: ((): MatchRule => {
       return {
-        match: `(?i)(?<=\\b)(${builtinVariables.join('|')})(?=\\b)`,
+        match: ignoreCase(seq(
+          lookbehind(wordBound()),
+          capture(ordalt(...builtinVariables)),
+          lookahead(wordBound()),
+        )),
         captures: {
           1: nameRule(RuleName.BuiltInVariable),
         },
@@ -89,12 +111,17 @@ export function createLiteralRepositories(scopeName: ScopeName): Repositories {
 
     // #region access
     [Repository.Dereference]: ((): BeginEndRule => {
+      const dereferenceContent = negChar('%', whitespace());
+
       return {
-        begin: '(%)',
+        begin: capture(char('%')),
         beginCaptures: {
           1: nameRule(RuleName.Dereference, RuleName.DereferencePercentBegin),
         },
-        end: '(?:(%)|(?=\\s+;|\\s*$))',
+        end: alt(
+          capture(char('%')),
+          lookahead(endLine),
+        ),
         endCaptures: {
           1: nameRule(RuleName.Dereference, RuleName.DereferencePercentEnd),
         },
@@ -102,7 +129,11 @@ export function createLiteralRepositories(scopeName: ScopeName): Repositories {
           // %a b c %
           //   ^ ^ ^ invalid
           {
-            match: '([^%\\s]*)([^%\\s])\\s+',
+            match: seq(
+              capture(many0(dereferenceContent)),
+              capture(dereferenceContent),
+              inlineSpaces1(),
+            ),
             captures: {
               1: {
                 name: name(RuleName.Dereference),
@@ -118,7 +149,7 @@ export function createLiteralRepositories(scopeName: ScopeName): Repositories {
           //  ^^^ valid
           {
             name: name(RuleName.Dereference),
-            match: '([^%\\s]+)',
+            match: capture(many1(dereferenceContent)),
             captures: {
               1: {
                 patterns: [
@@ -132,12 +163,17 @@ export function createLiteralRepositories(scopeName: ScopeName): Repositories {
       };
     })(),
     [Repository.InvalidDereference]: ((): PatternsRule => {
+      const dereferenceContent = negChar('%', whitespace());
+
       return {
         patterns: [
           // %%
           //  ^ missing
           {
-            match: '(%)(%)',
+            match: seq(
+              capture(char('%')),
+              capture(char('%')),
+            ),
             captures: {
               1: nameRule(RuleName.Dereference, RuleName.DereferencePercentBegin, RuleName.InvalidDereferencePercent),
               2: nameRule(RuleName.Dereference, RuleName.DereferencePercentEnd, RuleName.InvalidDereferencePercent),
@@ -146,7 +182,10 @@ export function createLiteralRepositories(scopeName: ScopeName): Repositories {
           // %
           //  ^ missing
           {
-            match: '(%)(?=\\s+;|\\s*$)',
+            match: seq(
+              capture(char('%')),
+              lookahead(endLine),
+            ),
             captures: {
               1: nameRule(RuleName.Dereference, RuleName.DereferencePercentBegin, RuleName.InvalidDereferencePercent),
             },
@@ -154,7 +193,12 @@ export function createLiteralRepositories(scopeName: ScopeName): Repositories {
           // %abc
           //     ^ missing
           {
-            match: '(%)([^%\\s]*)([^%\\s])(?=\\s+;|\\s*$)',
+            match: seq(
+              capture(char('%')),
+              capture(many0(dereferenceContent)),
+              capture(dereferenceContent),
+              lookahead(endLine),
+            ),
             captures: {
               1: nameRule(RuleName.Dereference, RuleName.DereferencePercentBegin),
               2: {
@@ -189,13 +233,14 @@ export function createLiteralRepositories(scopeName: ScopeName): Repositories {
       };
     })(),
     [Repository.DoubleString]: ((): BeginEndRule => {
+      const quote = char('"');
       return {
         name: name(RuleName.DoubleString),
-        begin: '(?<!")(")',
+        begin: seq(negativeLookbehind(quote), capture(quote)),
         beginCaptures: {
           1: nameRule(RuleName.StringBegin),
         },
-        end: '(")(?!")',
+        end: seq(capture(quote), negativeLookahead(quote)),
         endCaptures: {
           1: nameRule(RuleName.StringEnd),
         },
@@ -207,7 +252,11 @@ export function createLiteralRepositories(scopeName: ScopeName): Repositories {
     })(),
     [Repository.InvalidStringContent]: ((): MatchRule => {
       return {
-        match: '(.)(?=\\r\\n|\\n)',
+        match: seq(
+          capture(anyChar()),
+          inlineSpaces0(),
+          lookahead(endAnchor()),
+        ),
         captures: {
           1: nameRule(RuleName.InvalidSingleLineStringContent),
         },
@@ -216,7 +265,10 @@ export function createLiteralRepositories(scopeName: ScopeName): Repositories {
     [Repository.DoubleStringEscapeSequence]: ((): MatchRule => {
       return {
         name: name(RuleName.DoubleStringEscapeSequence),
-        match: `(${escapeSequencesInfo.doubleQuote.join('|')})(?!(\\r\\n|\\n))`,
+        match: seq(
+          capture(ordalt(...escapeSequencesInfo.doubleQuote)),
+          negativeLookahead(endAnchor()),
+        ),
       };
     })(),
     // #endregion string
@@ -237,7 +289,12 @@ export function createLiteralRepositories(scopeName: ScopeName): Repositories {
     })(),
     [Repository.Integer]: ((): MatchRule => {
       return {
-        match: `(?<=\\b)(\\d+)(?!\\.)(?=\\b)`,
+        match: seq(
+          lookbehind(wordBound()),
+          capture(numbers1()),
+          negativeLookahead(char('.')),
+          lookahead(wordBound()),
+        ),
         captures: {
           1: nameRule(RuleName.Integer),
         },
@@ -246,7 +303,13 @@ export function createLiteralRepositories(scopeName: ScopeName): Repositories {
     [Repository.Float]: ((): MatchRule => {
       return {
         name: name(RuleName.Float),
-        match: `(?<=\\b)(\\d+)(\\.)(\\d+)(?=\\b)`,
+        match: seq(
+          lookbehind(wordBound()),
+          capture(numbers1()),
+          capture(char('.')),
+          capture(numbers1()),
+          lookahead(wordBound()),
+        ),
         captures: {
           1: nameRule(RuleName.Integer),
           2: nameRule(RuleName.DecimalPoint),
@@ -259,7 +322,12 @@ export function createLiteralRepositories(scopeName: ScopeName): Repositories {
         patterns: [
           {
             name: name(RuleName.Float),
-            match: `(?<=\\b)(\\d+)(\\.)(?!\\d)`,
+            match: seq(
+              lookbehind(wordBound()),
+              capture(numbers1()),
+              capture(char('.')),
+              negativeLookahead(number()),
+            ),
             captures: {
               1: nameRule(RuleName.Integer),
               2: nameRule(RuleName.DecimalPoint, RuleName.InvalidNumber),
@@ -271,7 +339,12 @@ export function createLiteralRepositories(scopeName: ScopeName): Repositories {
     [Repository.Hex]: ((): MatchRule => {
       return {
         name: name(RuleName.Hex),
-        match: `(?<=\\b)(${hexPrefix})(${hexValue})(?=\\b)`,
+        match: seq(
+          lookbehind(wordBound()),
+          capture(hexPrefix),
+          capture(hexValue),
+          lookahead(wordBound()),
+        ),
         captures: {
           1: nameRule(RuleName.HexPrefix),
           2: nameRule(RuleName.HexValue),
@@ -282,7 +355,13 @@ export function createLiteralRepositories(scopeName: ScopeName): Repositories {
       return {
         patterns: [
           {
-            match: `(\\d+)((${hexPrefix})(${hexValue})?)`,
+            match: seq(
+              capture(numbers1()),
+              capture(seq(
+                capture(hexPrefix),
+                opt(capture(hexValue)),
+              )),
+            ),
             captures: {
               1: nameRule(RuleName.HexPrefix, RuleName.InvalidNumber),
               2: nameRule(RuleName.Hex),
@@ -291,14 +370,22 @@ export function createLiteralRepositories(scopeName: ScopeName): Repositories {
             },
           },
           {
-            match: `(?i)(0)(x)(?!${hexValue})`,
+            match: ignoreCase(seq(
+              capture(char('0')),
+              capture(char('x')),
+              negativeLookahead(hexValue),
+            )),
             captures: {
               1: nameRule(RuleName.Hex, RuleName.HexPrefix),
               2: nameRule(RuleName.Hex, RuleName.HexPrefix, RuleName.InvalidNumber),
             },
           },
           {
-            match: `(?i)(${hexPrefix})(${hexValue})(\\.\\d*)`,
+            match: ignoreCase(seq(
+              capture(hexPrefix),
+              capture(hexValue),
+              capture(seq(char('.'), numbers0())),
+            )),
             captures: {
               1: nameRule(RuleName.Hex, RuleName.HexPrefix),
               2: nameRule(RuleName.Hex, RuleName.HexValue),
@@ -310,7 +397,17 @@ export function createLiteralRepositories(scopeName: ScopeName): Repositories {
     })(),
     [Repository.ScientificNotation]: ((): MatchRule => {
       return {
-        match: `(?i)(?<=\\b)(?:(${integer})(\\.)(\\d+)|(${integer}))(e)([+-])?(\\d+)(?=\\b)`,
+        match: seq(
+          lookbehind(wordBound()),
+          noCapture(alt(
+            seq(capture(integer), capture(char('.')), capture(numbers1())),
+            capture(integer),
+          )),
+          capture(ignoreCase(char('e'))),
+          opt(capture(char('+', '-'))),
+          capture(numbers1()),
+          lookahead(wordBound()),
+        ),
         captures: {
           1: nameRule(RuleName.ScientificNotation, RuleName.Float, RuleName.Integer),
           2: nameRule(RuleName.ScientificNotation, RuleName.Float, RuleName.DecimalPoint),
@@ -328,7 +425,17 @@ export function createLiteralRepositories(scopeName: ScopeName): Repositories {
           // 123.0e+1.
           //         ^ Invalid
           {
-            match: `(?i)(?<=\\b)(?:(${integer})(\\.)(\\d+)|(${integer}))(e)([+-])?(\\d+)(\\.)`,
+            match: seq(
+              lookbehind(wordBound()),
+              noCapture(alt(
+                seq(capture(integer), capture(char('.')), capture(numbers1())),
+                capture(integer),
+              )),
+              capture(ignoreCase(char('e'))),
+              opt(capture(char('+', '-'))),
+              capture(numbers1()),
+              capture(char('.')),
+            ),
             captures: {
               1: nameRule(RuleName.ScientificNotation, RuleName.Float, RuleName.Integer),
               2: nameRule(RuleName.ScientificNotation, RuleName.Float, RuleName.DecimalPoint),
@@ -343,7 +450,16 @@ export function createLiteralRepositories(scopeName: ScopeName): Repositories {
           // 123.0e+
           //        ^ Missing
           {
-            match: `(?i)(?:(${integer})(\\.)(\\d+)|(${integer}))(e)([+-])(?![0-9])`,
+            match: seq(
+              lookbehind(wordBound()),
+              noCapture(alt(
+                seq(capture(integer), capture(char('.')), capture(numbers1())),
+                capture(integer),
+              )),
+              capture(ignoreCase(char('e'))),
+              capture(char('+', '-')),
+              negativeLookahead(number()),
+            ),
             captures: {
               1: nameRule(RuleName.ScientificNotation, RuleName.Float, RuleName.Integer),
               2: nameRule(RuleName.ScientificNotation, RuleName.Float, RuleName.DecimalPoint),
@@ -356,7 +472,15 @@ export function createLiteralRepositories(scopeName: ScopeName): Repositories {
           // 123.0e
           //       ^ Missing
           {
-            match: `(?i)(?:(${integer})(\\.)(\\d+)|(${integer}))(e)(?![\\+\\-0-9])`,
+            match: seq(
+              lookbehind(wordBound()),
+              noCapture(alt(
+                seq(capture(integer), capture(char('.')), capture(numbers1())),
+                capture(integer),
+              )),
+              capture(ignoreCase(char('e'))),
+              negativeLookahead(alt(char('+', '-'), number())),
+            ),
             captures: {
               1: nameRule(RuleName.ScientificNotation, RuleName.Float, RuleName.Integer),
               2: nameRule(RuleName.ScientificNotation, RuleName.Float, RuleName.DecimalPoint),
@@ -375,13 +499,13 @@ export function createLiteralRepositories(scopeName: ScopeName): Repositories {
     [Repository.Comma]: ((): MatchRule => {
       return {
         name: name(RuleName.Comma),
-        match: ',',
+        match: char(','),
       };
     })(),
     [Repository.Operator]: ((): MatchRule => {
       return {
         name: name(RuleName.Operator),
-        match: `(?i)${operators.filter((operator) => operator !== ',').map((operator) => escapeOnigurumaText(operator)).join('|')}`,
+        match: ignoreCase(ordalt(...escapeOnigurumaTexts(operators.filter((operator) => operator !== ',')))),
       };
     })(),
     // #endregion token

@@ -5,6 +5,15 @@ export function startAnchor(): string {
 export function endAnchor(): string {
   return '$';
 }
+export function number(): string {
+  return '\\d';
+}
+export function numbers0(): string {
+  return many0(number());
+}
+export function numbers1(): string {
+  return many1(number());
+}
 export function wordBound(): string {
   return '\\b';
 }
@@ -46,6 +55,18 @@ export function many0(onigurumaText: string): string {
 }
 export function many1(onigurumaText: string): string {
   return `${onigurumaText}+`;
+}
+export function manyRange(onigurumaText: string, start?: number, end?: number): string {
+  if (typeof start === 'number' && typeof end === 'number') {
+    return `${onigurumaText}{${start},${end}}`;
+  }
+  if (typeof start === 'number') {
+    return `${onigurumaText}{${start}}`;
+  }
+  if (typeof start === 'number') {
+    return `${onigurumaText}{,${end}}`;
+  }
+  throw Error('The argument is not specified correctly.');
 }
 export function reluctant(onigurumaText: string): string {
   if ((/(?<!\\)[?+*}]/).test(onigurumaText)) {
@@ -94,6 +115,9 @@ export function negChars0(...characters: string[]): string {
 }
 export function negChars1(...characters: string[]): string {
   return many1(negChar(...characters));
+}
+export function charRange(startCharacter: string, endCharacter: string): string {
+  return `[${startCharacter}-${endCharacter}]`;
 }
 export function capture(onigurumaText: string): string {
   return `(${onigurumaText})`;
