@@ -40,6 +40,7 @@ module.exports.rules = {
   '@typescript-eslint/naming-convention': 'off',
   '@typescript-eslint/no-explicit-any': 'off',
   '@typescript-eslint/no-floating-promises': 'off',
+  '@typescript-eslint/no-inferrable-types': 'off', // Incompatible with --isolatedDeclarations
   '@typescript-eslint/no-invalid-void-type': 'off',
   '@typescript-eslint/no-non-null-assertion': 'off',
   '@typescript-eslint/no-unnecessary-condition': [ 'error', { allowConstantLoopConditions: true } ],
