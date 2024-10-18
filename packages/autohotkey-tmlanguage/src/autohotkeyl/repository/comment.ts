@@ -1,5 +1,5 @@
 import { Repository, RuleName } from '../../constants';
-import { anyChars0, capture, chr, endAnchor, inlineSpace, inlineSpaces0, lookbehind, seq, startAnchor } from '../../oniguruma';
+import { anyChars0, capture, char, endAnchor, inlineSpace, inlineSpaces0, lookbehind, seq, startAnchor } from '../../oniguruma';
 import type { MatchRule, PatternsRule, Repositories, ScopeName } from '../../types';
 import { createUtilities, includeRule, patternsRule } from '../../utils';
 
@@ -16,7 +16,7 @@ export function createRepositories(scopeName: ScopeName): Repositories {
       return {
         match: seq(
           lookbehind(seq(startAnchor(), inlineSpaces0())),
-          capture(seq(chr(';'), anyChars0())),
+          capture(seq(char(';'), anyChars0())),
           endAnchor(),
         ),
         captures: {
@@ -28,7 +28,7 @@ export function createRepositories(scopeName: ScopeName): Repositories {
       return {
         match: seq(
           lookbehind(inlineSpace()),
-          capture(seq(chr(';'), anyChars0())),
+          capture(seq(char(';'), anyChars0())),
           endAnchor(),
         ),
         captures: {

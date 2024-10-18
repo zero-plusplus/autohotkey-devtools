@@ -1,5 +1,5 @@
 import { CommandArgsType, commandNames, Repository, RuleName } from '../../constants';
-import { alt, anyChar, anyChars0, anyChars1, capture, chr, endAnchor, escapeOnigurumaTexts, ignoreCase, inlineSpace, inlineSpaces0, inlineSpaces1, lookahead, lookbehind, many0, many1, negativeLookahead, negativeLookbehind, negchr, noCapture, opt, ordalt, seq, startAnchor, wordBound } from '../../oniguruma';
+import { alt, anyChars0, anyChars1, capture, char, endAnchor, escapeOnigurumaTexts, ignoreCase, inlineSpace, inlineSpaces0, inlineSpaces1, lookahead, lookbehind, many0, many1, negativeLookahead, negativeLookbehind, negChar, negChars0, noCapture, opt, ordalt, seq, startAnchor, wordBound } from '../../oniguruma';
 import type { BeginWhileRule, CommandInfo, IncludeRule, MatchRule, PatternsRule, Repositories, Rule, ScopeName } from '../../types';
 import { createUtilities, getCommandInfos, getLegacyTextChar, patternsRule } from '../../utils';
 
@@ -27,24 +27,24 @@ export function createRepositories(scopeName: ScopeName): Repositories {
   };
 
   const legacyEndLine = lookahead(alt(
-    seq(inlineSpaces1(), negativeLookahead(chr('`')), chr(';')),
+    seq(inlineSpaces1(), negativeLookahead(char('`')), char(';')),
     seq(inlineSpaces0(), endAnchor()),
   ));
 
   const brackets = noCapture(alt(
-    seq(chr('('), many0(negchr('\\r', '\\n', ')')), chr(')')),
-    seq(chr('['), many0(negchr('\\r', '\\n', ']')), chr(']')),
-    seq(chr('{'), many0(negchr('\\r', '\\n', '}')), chr('}')),
+    seq(char('('), negChars0('\\r', '\\n', ')'), char(')')),
+    seq(char('['), negChars0('\\r', '\\n', ']'), char(']')),
+    seq(char('{'), negChars0('\\r', '\\n', '}'), char('}')),
   ));
 
   const commandLegacyArgument = many0(noCapture(alt(
     brackets,
     legacyTextChar,
-    chr(...legacyTextEscapeSequence, '%'),
+    char(...legacyTextEscapeSequence, '%'),
   )));
   const commandExpressionArgument = many0(noCapture(alt(
     brackets,
-    negchr('\\r', '\\n', ','),
+    negChar('\\r', '\\n', ','),
   )));
   const argumentsPatterns = [
     // In some cases, highlighting is not applied in a captures even if a repository with a complex patterns is specified?
@@ -62,9 +62,9 @@ export function createRepositories(scopeName: ScopeName): Repositories {
   const whileLegacyArgument = seq(
     startAnchor(),
     inlineSpaces0(),
-    capture(chr(',')),
+    capture(char(',')),
     inlineSpaces0(),
-    capture(many0(anyChar())),
+    capture(anyChars0()),
     legacyEndLine,
   );
   const whileExpression = seq(
@@ -75,7 +75,7 @@ export function createRepositories(scopeName: ScopeName): Repositories {
       inlineSpaces0(),
       capture(commandExpressionArgument),
       inlineSpaces0(),
-      opt(capture(chr(','))),
+      opt(capture(char(','))),
       inlineSpaces0(),
       capture(anyChars0()),
     ))),
@@ -93,7 +93,7 @@ export function createRepositories(scopeName: ScopeName): Repositories {
     },
     patterns: [
       {
-        begin: seq(startAnchor(), inlineSpaces0(), capture(chr(',')), inlineSpaces0()),
+        begin: seq(startAnchor(), inlineSpaces0(), capture(char(',')), inlineSpaces0()),
         end: legacyEndLine,
         captures: {
           1: nameRule(RuleName.CommandArgumentSeparator),
@@ -135,7 +135,7 @@ export function createRepositories(scopeName: ScopeName): Repositories {
           capture(commandName),
           opt(noCapture(alt(
             inlineSpace(),
-            capture(chr(',')),
+            capture(char(',')),
           ))),
           inlineSpaces0(),
           capture(anyChars0()),
@@ -169,7 +169,7 @@ export function createRepositories(scopeName: ScopeName): Repositories {
     })(),
     [Repository.CommandArgumentSeparator]: ((): MatchRule => {
       return {
-        match: capture(chr(',')),
+        match: capture(char(',')),
         captures: {
           1: nameRule(RuleName.CommandArgumentSeparator),
         },
@@ -184,14 +184,14 @@ export function createRepositories(scopeName: ScopeName): Repositories {
         const group = shouldCapture ? capture : noCapture;
 
         const spaceSeparator = inlineSpaces1();
-        const commaSeparator = group(chr(','));
+        const commaSeparator = group(char(','));
         const firstSeparator = noCapture(alt(
           spaceSeparator,
           seq(inlineSpaces0(), commaSeparator, inlineSpaces0()),
         ));
         const argsSeparator = noCapture(seq(
           inlineSpaces0(),
-          seq(negativeLookahead(chr('`')), commaSeparator),
+          seq(negativeLookahead(char('`')), commaSeparator),
           inlineSpaces0(),
         ));
 
@@ -306,9 +306,9 @@ export function createRepositories(scopeName: ScopeName): Repositories {
                 {
                   name: name(RuleName.InvalidCommandArgument),
                   match: alt(
-                    negchr('\\r', '\\n', ';'),
-                    many1(noCapture(seq(negativeLookbehind(inlineSpace()), chr(';')))),
-                    negativeLookahead(seq(inlineSpaces1(), chr(';'))),
+                    negChar('\\r', '\\n', ';'),
+                    many1(noCapture(seq(negativeLookbehind(inlineSpace()), char(';')))),
+                    negativeLookahead(seq(inlineSpaces1(), char(';'))),
                   ),
                 },
               ],

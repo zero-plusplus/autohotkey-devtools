@@ -18,7 +18,7 @@ export function anyChars1(): string {
   return many1(anyChar());
 }
 export function inlineSpace(): string {
-  return charClass(' ', '\\t');
+  return char(' ', '\\t');
 }
 export function inlineSpaces0(): string {
   return many0(inlineSpace());
@@ -77,14 +77,24 @@ export function ignoreCase(onigurumaText?: string): string {
     ? `(?i:${onigurumaText})`
     : `(?i)`;
 }
-export function charClass(...characters: string[]): string {
-  return `[${characters.map((char) => escapeCharClass(char)).join('')}]`;
+export function char(...characters: string[]): string {
+  return `[${[ ...characters ].map((character) => escapeCharClass(character)).join('')}]`;
 }
-export const chr: typeof charClass = (...characters: string[]) => charClass(...characters);
-export function negativeCharClass(...characters: string[]): string {
-  return `[^${characters.map((char) => escapeCharClass(char)).join('')}]`;
+export function chars0(...characters: string[]): string {
+  return many0(char(...characters));
 }
-export const negchr: typeof negativeCharClass = (...characters: string[]) => negativeCharClass(...characters);
+export function chars1(...characters: string[]): string {
+  return many1(char(...characters));
+}
+export function negChar(...characters: string[]): string {
+  return `[^${[ ...characters ].map((character) => escapeCharClass(character)).join('')}]`;
+}
+export function negChars0(...characters: string[]): string {
+  return many0(negChar(...characters));
+}
+export function negChars1(...characters: string[]): string {
+  return many1(negChar(...characters));
+}
 export function capture(onigurumaText: string): string {
   return `(${onigurumaText})`;
 }

@@ -1,5 +1,5 @@
 import { CommandArgsType, operators_v1, operators_v2, Repository, RuleName } from './constants';
-import { alt, asciiChar, chr, escapeOnigurumaText, inlineSpace, inlineSpaces0, lookbehind, negativeLookahead, negchr, noCapture, opt, ordalt, seq, startAnchor } from './oniguruma';
+import { alt, asciiChar, char, escapeOnigurumaText, inlineSpace, inlineSpaces0, lookbehind, negativeLookahead, negChar, noCapture, opt, ordalt, seq, startAnchor } from './oniguruma';
 import type { CommandInfo, EscapeSequencesInfo, IncludeRule, NameRule, PatternsRule, Rule, ScopeName, Utilities, VariableParts } from './types';
 
 export function getCommandInfos(): CommandInfo[] {
@@ -210,20 +210,20 @@ export function getCommandInfos(): CommandInfo[] {
 }
 export function getLegacyTextChar(): string {
   return noCapture(alt(
-    negchr('\\s', ',', '%', '`', ';', ':'),
+    negChar('\\s', ',', '%', '`', ';', ':'),
     seq(inlineSpace(), negativeLookahead(';')),
   ));
 }
 export function getVariableParts(scopeName: ScopeName): VariableParts {
   const letter = '[a-zA-Z]';
   const numberChar = '\\d';
-  const nonAsciiChar = negchr(asciiChar());
+  const nonAsciiChar = negChar(asciiChar());
 
   switch (scopeName) {
     // https://www.autohotkey.com/docs/v2/Concepts.htm#names
     case 'autohotkeynext':
     case 'autohotkey2': {
-      const sign = chr('_');
+      const sign = char('_');
       const headChar = noCapture(alt(letter, nonAsciiChar, sign));
       const tailChar = noCapture(alt(letter, nonAsciiChar, sign, numberChar));
       return {
@@ -233,7 +233,7 @@ export function getVariableParts(scopeName: ScopeName): VariableParts {
     }
     // https://www.autohotkey.com/docs/v1/Concepts.htm#names
     case 'autohotkeyl': {
-      const sign = chr('_', '#', '@', '$');
+      const sign = char('_', '#', '@', '$');
       const headChar = noCapture(alt(letter, nonAsciiChar, sign));
       const tailChar = noCapture(alt(letter, nonAsciiChar, sign, numberChar));
       return {
@@ -274,7 +274,7 @@ export function getStatementBegin(scopeName: ScopeName): string {
     case 'autohotkey2':
     case 'autohotkeyl': return lookbehind(alt(
       seq(startAnchor(), inlineSpaces0()),
-      seq(chr(':'), inlineSpaces0()),
+      seq(char(':'), inlineSpaces0()),
     ));
   }
   throw Error(`Scope "${scopeName}" not found`);
@@ -321,8 +321,8 @@ export function getExpressionBegin(scopeName: ScopeName): string {
     case 'autohotkey2':
     case 'autohotkeyl': {
       return lookbehind(alt(
-        seq(startAnchor(), inlineSpaces0(), opt(chr(','))),
-        seq(chr(':'), inlineSpaces0()),
+        seq(startAnchor(), inlineSpaces0(), opt(char(','))),
+        seq(char(':'), inlineSpaces0()),
       ));
     }
   }
