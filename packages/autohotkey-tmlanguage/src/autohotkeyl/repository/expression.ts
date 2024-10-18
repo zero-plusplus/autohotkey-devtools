@@ -200,7 +200,6 @@ export function createLiteralRepositories(scopeName: ScopeName): Repositories {
           1: nameRule(RuleName.StringEnd),
         },
         patterns: [
-          includeRule(Repository.InvalidStringNewLine),
           includeRule(Repository.InvalidStringContent),
           includeRule(Repository.DoubleStringEscapeSequence),
         ],
@@ -212,24 +211,6 @@ export function createLiteralRepositories(scopeName: ScopeName): Repositories {
         captures: {
           1: nameRule(RuleName.InvalidSingleLineStringContent),
         },
-      };
-    })(),
-    [Repository.InvalidStringNewLine]: ((): PatternsRule => {
-      return {
-        patterns: [
-          {
-            match: '(\\r\\n)',
-            captures: {
-              1: nameRule(RuleName.InvalidStringNewLine),
-            },
-          },
-          {
-            match: '(\\r|\\n)',
-            captures: {
-              1: nameRule(RuleName.InvalidStringNewLine),
-            },
-          },
-        ],
       };
     })(),
     [Repository.DoubleStringEscapeSequence]: ((): MatchRule => {

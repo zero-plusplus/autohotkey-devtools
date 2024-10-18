@@ -293,7 +293,6 @@ export const enum Repository {
   // #region string
   String = 'string',
   InvalidStringContent = 'invalid.illegal.content',
-  InvalidStringNewLine = 'invalid.illegal.newline',
   DoubleString = 'string.quoted.double',
   DoubleStringContent = 'string.quoted.double.content',
   DoubleStringEscapeSequence = 'constant.character.escape.double',
