@@ -1,7 +1,7 @@
 import { CommandArgsType, commandNames, Repository, RuleName } from '../../constants';
-import { escapeOnigurumaText } from '../../oniguruma';
-import type { BeginWhileRule, CommandInfo, MatchRule, PatternsRule, Repositories, Rule, ScopeName } from '../../types';
-import { createUtilities, getCommandInfos, getLegacyTextChar } from '../../utils';
+import { alt, anyChar, anyChars0, anyChars1, capture, chr, endAnchor, escapeOnigurumaTexts, ignoreCase, inlineSpace, inlineSpaces0, inlineSpaces1, lookahead, lookbehind, many0, many1, negativeLookahead, negativeLookbehind, negchr, noCapture, opt, ordalt, seq, startAnchor, wordBound } from '../../oniguruma';
+import type { BeginWhileRule, CommandInfo, IncludeRule, MatchRule, PatternsRule, Repositories, Rule, ScopeName } from '../../types';
+import { createUtilities, getCommandInfos, getLegacyTextChar, patternsRule } from '../../utils';
 
 export function createRepositories(scopeName: ScopeName): Repositories {
   const {
@@ -26,10 +26,26 @@ export function createRepositories(scopeName: ScopeName): Repositories {
     }, 'command');
   };
 
-  const legacyEndLine = '(?=\\s+(?!\`);|\\s*$)';
-  const brackets = '(?:\\([^\\r\\n\\)]*\\)|\\[[^\\r\\n\\]]*\\]|\\{[^\\r\\n\\}]*\\})';
-  const commandLegacyArgument = `(?:(?:${brackets}|${legacyTextChar}|${legacyTextEscapeSequence.join('|')}|%)*)`;
-  const commandExpressionArgument = `(?:(?:${brackets}|[^\\r\\n,])*)`;
+  const legacyEndLine = lookahead(alt(
+    seq(inlineSpaces1(), negativeLookahead(chr('`')), chr(';')),
+    seq(inlineSpaces0(), endAnchor()),
+  ));
+
+  const brackets = noCapture(alt(
+    seq(chr('('), many0(negchr('\\r', '\\n', ')')), chr(')')),
+    seq(chr('['), many0(negchr('\\r', '\\n', ']')), chr(']')),
+    seq(chr('{'), many0(negchr('\\r', '\\n', '}')), chr('}')),
+  ));
+
+  const commandLegacyArgument = many0(noCapture(alt(
+    brackets,
+    legacyTextChar,
+    chr(...legacyTextEscapeSequence, '%'),
+  )));
+  const commandExpressionArgument = many0(noCapture(alt(
+    brackets,
+    negchr('\\r', '\\n', ','),
+  )));
   const argumentsPatterns = [
     // In some cases, highlighting is not applied in a captures even if a repository with a complex patterns is specified?
     // This problem is solved by specifying the rule directly
@@ -42,11 +58,31 @@ export function createRepositories(scopeName: ScopeName): Repositories {
     includeRule(Repository.CommandArgument),
   ];
 
-  const expressionOperators = operators.filter((operator) => operator !== ',').map((operator) => escapeOnigurumaText(operator)).join('|');
-  const whileLegacyArgument = `^\\s*(,)\\s*(.*)${legacyEndLine}`;
-  const whileExpression = `^\\s*(${expressionOperators})(?:\\s*(${commandExpressionArgument})\\s*(,)?\\s*(.*))?${legacyEndLine}`;
+  const expressionOperators = ignoreCase(ordalt(...escapeOnigurumaTexts(operators.filter((operator) => operator !== ','))));
+  const whileLegacyArgument = seq(
+    startAnchor(),
+    inlineSpaces0(),
+    capture(chr(',')),
+    inlineSpaces0(),
+    capture(many0(anyChar())),
+    legacyEndLine,
+  );
+  const whileExpression = seq(
+    startAnchor(),
+    inlineSpaces0(),
+    capture(expressionOperators),
+    opt(noCapture(seq(
+      inlineSpaces0(),
+      capture(commandExpressionArgument),
+      inlineSpaces0(),
+      opt(capture(chr(','))),
+      inlineSpaces0(),
+      capture(anyChars0()),
+    ))),
+    legacyEndLine,
+  );
   const continuationArguments: Pick<BeginWhileRule, 'while' | 'whileCaptures' | 'patterns'> = {
-    while: `(?:${whileLegacyArgument}|${whileExpression})`,
+    while: alt(whileLegacyArgument, whileExpression),
     whileCaptures: {
       1: nameRule(RuleName.CommandArgumentSeparator),
       2: { patterns: argumentsPatterns },
@@ -57,7 +93,7 @@ export function createRepositories(scopeName: ScopeName): Repositories {
     },
     patterns: [
       {
-        begin: `^\\s*(,)\\s*`,
+        begin: seq(startAnchor(), inlineSpaces0(), capture(chr(',')), inlineSpaces0()),
         end: legacyEndLine,
         captures: {
           1: nameRule(RuleName.CommandArgumentSeparator),
@@ -65,7 +101,7 @@ export function createRepositories(scopeName: ScopeName): Repositories {
         patterns: argumentsPatterns,
       },
       {
-        begin: `^\\s*(${expressionOperators})\\s*`,
+        begin: seq(startAnchor(), inlineSpaces0(), capture(expressionOperators), inlineSpaces0()),
         end: legacyEndLine,
         captures: {
           1: nameRule(RuleName.Operator),
@@ -90,12 +126,21 @@ export function createRepositories(scopeName: ScopeName): Repositories {
       };
     })(),
     [Repository.CommonCommand]: ((): BeginWhileRule => {
-      const sortedCommandNames = [ ...commandNames ].sort((a, b) => b.length - a.length);
-      const commandNameCapture = `(${sortedCommandNames.join('|')})(?=\\b)`;
+      const commandName = seq(ordalt(...commandNames), lookahead(wordBound()));
 
       return {
         name: name(RuleName.Command),
-        begin: `(?i)${statementBegin}${commandNameCapture}(?:\\s|(,))?\\s*(.*)${legacyEndLine}`,
+        begin: ignoreCase(seq(
+          statementBegin,
+          capture(commandName),
+          opt(noCapture(alt(
+            inlineSpace(),
+            capture(chr(',')),
+          ))),
+          inlineSpaces0(),
+          capture(anyChars0()),
+          legacyEndLine,
+        )),
         beginCaptures: {
           1: nameRule(RuleName.CommandName),
           2: nameRule(RuleName.CommandArgumentSeparator),
@@ -119,12 +164,12 @@ export function createRepositories(scopeName: ScopeName): Repositories {
     [Repository.CommandArgumentText]: ((): MatchRule => {
       return {
         name: name(RuleName.LegacyText),
-        match: `${legacyTextChar}+`,
+        match: many1(legacyTextChar),
       };
     })(),
     [Repository.CommandArgumentSeparator]: ((): MatchRule => {
       return {
-        match: '(,)',
+        match: capture(chr(',')),
         captures: {
           1: nameRule(RuleName.CommandArgumentSeparator),
         },
@@ -135,9 +180,20 @@ export function createRepositories(scopeName: ScopeName): Repositories {
       const repositoryName = createRepositoryNameByCommandInfo(commandInfo);
 
       // #region helpers
-      const createArgsRegExpText = (capture = true): string => {
-        const firstSeparator = `(?:\\s+|\\s*${capture ? '(,)' : ','}\\s*)`;
-        const argsSeparator = `(?:\\s*(?<!\`)${capture ? '(,)' : ','}\\s*)`;
+      const createArgsRegExpText = (shouldCapture = true): string => {
+        const group = shouldCapture ? capture : noCapture;
+
+        const spaceSeparator = inlineSpaces1();
+        const commaSeparator = group(chr(','));
+        const firstSeparator = noCapture(alt(
+          spaceSeparator,
+          seq(inlineSpaces0(), commaSeparator, inlineSpaces0()),
+        ));
+        const argsSeparator = noCapture(seq(
+          inlineSpaces0(),
+          seq(negativeLookahead(chr('`')), commaSeparator),
+          inlineSpaces0(),
+        ));
 
         return args.reduce<string>((prev, current, i) => {
           const separator = i === 0 ? firstSeparator : argsSeparator;
@@ -145,9 +201,7 @@ export function createRepositories(scopeName: ScopeName): Repositories {
 
           const isSubCommand = typeof argType === 'string';
           if (isSubCommand) {
-            prev += capture
-              ? `(?:${separator}(${argType}))?`
-              : `(?:${separator}(?:${argType}))?`;
+            prev += opt(seq(separator, group(argType)));
             return prev;
           }
 
@@ -156,32 +210,36 @@ export function createRepositories(scopeName: ScopeName): Repositories {
             case CommandArgsType.None:
             case CommandArgsType.Expression: commandArgument = commandExpressionArgument; break;
           }
-          prev += capture
-            ? `(?:${separator}(${commandArgument}))?`
-            : `(?:${separator}(?:${commandArgument}))?`;
+          prev += opt(seq(separator, group(commandArgument)));
           return prev;
-        }, '(?i)');
+        }, ignoreCase());
+      };
+      const createKeywordMatchRule = (keywords: string[]): MatchRule => {
+        return {
+          match: ignoreCase(seq(
+            lookbehind(wordBound()),
+            capture(ordalt(...keywords)),
+            lookahead(wordBound()),
+          )),
+          captures: { 1: nameRule(RuleName.CommandArgumentKeyword) },
+        };
       };
       const getArgumentRuleByType = (argType: CommandArgsType, keywords: string[]): PatternsRule => {
         switch (argType) {
-          case CommandArgsType.None: return {
-            patterns: [ nameRule(RuleName.InvalidCommandArgument) ],
-          };
-          case CommandArgsType.Expression: return {
-            patterns: [ includeRule(Repository.Expression) ],
-          };
+          case CommandArgsType.None: return patternsRule(nameRule(RuleName.InvalidCommandArgument));
+          case CommandArgsType.Expression: return patternsRule(includeRule(Repository.Expression));
           case CommandArgsType.Input:
-          case CommandArgsType.Output: return {
-            patterns: [
-              includeRule(Repository.BuiltInVariable),
-              includeRule(Repository.Variable),
-            ],
-          };
-          case CommandArgsType.ControlStyle: return { patterns: [ includeRule(Repository.ControlStyle) ] };
+          case CommandArgsType.Output: return patternsRule(
+            includeRule(Repository.BuiltInVariable),
+            includeRule(Repository.Variable),
+          );
+          case CommandArgsType.ControlStyle: return patternsRule(includeRule(Repository.ControlStyle));
           case CommandArgsType.Legacy: {
+            const commandArgumentRule: IncludeRule = includeRule(Repository.CommandArgument);
+
             return 0 < keywords.length
-              ? { patterns: [ { match: `(?i)(?<=\\b)(${keywords.join('|')})(?=\\b)`, captures: { 1: nameRule(RuleName.CommandArgumentKeyword) } }, includeRule(Repository.CommandArgument) ] }
-              : { patterns: [ includeRule(Repository.CommandArgument) ] };
+              ? patternsRule(createKeywordMatchRule(keywords), commandArgumentRule)
+              : patternsRule(commandArgumentRule);
           }
           case CommandArgsType.Enum: {
             if (keywords.length === 0) {
@@ -190,13 +248,10 @@ export function createRepositories(scopeName: ScopeName): Repositories {
 
             return {
               patterns: [
-                {
-                  match: `(?i)(?<=\\b)(${keywords.join('|')})(?=\\b)`,
-                  captures: { 1: nameRule(RuleName.CommandArgumentKeyword) },
-                },
+                createKeywordMatchRule(keywords),
                 includeRule(Repository.PercentExpression),
                 includeRule(Repository.Dereference),
-                { name: name(RuleName.InvalidCommandArgument), match: '(.+)' },
+                { name: name(RuleName.InvalidCommandArgument), match: anyChars1() },
               ],
             };
           }
@@ -210,7 +265,14 @@ export function createRepositories(scopeName: ScopeName): Repositories {
       return [
         repositoryName, {
           name: name(RuleName.Command),
-          begin: `(?i)${statementBegin}(${commandName})(${argsWithoutCaptures})?\\s*(.*)${legacyEndLine}`,
+          begin: ignoreCase(seq(
+            statementBegin,
+            capture(commandName),
+            opt(capture(argsWithoutCaptures)),
+            inlineSpaces0(),
+            capture(anyChars0()),
+            legacyEndLine,
+          )),
           beginCaptures: {
             1: nameRule(RuleName.CommandName),
             2: {
@@ -243,7 +305,11 @@ export function createRepositories(scopeName: ScopeName): Repositories {
                 includeRule(Repository.InLineComment),
                 {
                   name: name(RuleName.InvalidCommandArgument),
-                  match: '(?:[^\\r\\n;]|(?<!\\s);)+(?!\\s;)',
+                  match: alt(
+                    negchr('\\r', '\\n', ';'),
+                    many1(noCapture(seq(negativeLookbehind(inlineSpace()), chr(';')))),
+                    negativeLookahead(seq(inlineSpaces1(), chr(';'))),
+                  ),
                 },
               ],
             },

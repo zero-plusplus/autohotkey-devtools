@@ -1,5 +1,5 @@
 import { CommandArgsType, operators_v1, operators_v2, Repository, RuleName } from './constants';
-import { alt, asciiChar, chr, escapeOnigurumaText, lookbehind, negativeLookahead, negchr, noCapture, opt, ordalt, seq, spaceOrTab, startAnchor, zeroOrMore } from './oniguruma';
+import { alt, asciiChar, chr, escapeOnigurumaText, inlineSpace, inlineSpaces0, lookbehind, negativeLookahead, negchr, noCapture, opt, ordalt, seq, startAnchor } from './oniguruma';
 import type { CommandInfo, EscapeSequencesInfo, IncludeRule, NameRule, PatternsRule, Rule, ScopeName, Utilities, VariableParts } from './types';
 
 export function getCommandInfos(): CommandInfo[] {
@@ -211,7 +211,7 @@ export function getCommandInfos(): CommandInfo[] {
 export function getLegacyTextChar(): string {
   return noCapture(alt(
     negchr('\\s', ',', '%', '`', ';', ':'),
-    seq(spaceOrTab(), negativeLookahead(';')),
+    seq(inlineSpace(), negativeLookahead(';')),
   ));
 }
 export function getVariableParts(scopeName: ScopeName): VariableParts {
@@ -273,8 +273,8 @@ export function getStatementBegin(scopeName: ScopeName): string {
     case 'autohotkeynext':
     case 'autohotkey2':
     case 'autohotkeyl': return lookbehind(alt(
-      seq(startAnchor(), zeroOrMore(spaceOrTab())),
-      seq(chr(':'), zeroOrMore(spaceOrTab())),
+      seq(startAnchor(), inlineSpaces0()),
+      seq(chr(':'), inlineSpaces0()),
     ));
   }
   throw Error(`Scope "${scopeName}" not found`);
@@ -308,7 +308,7 @@ export function getContinuationBegin(scopeName: ScopeName): string {
     case 'autohotkeyl': {
       return lookbehind(seq(
         startAnchor(),
-        zeroOrMore(spaceOrTab()),
+        inlineSpaces0(),
         noCapture(ordalt(...operators)),
       ));
     }
@@ -321,8 +321,8 @@ export function getExpressionBegin(scopeName: ScopeName): string {
     case 'autohotkey2':
     case 'autohotkeyl': {
       return lookbehind(alt(
-        seq(startAnchor(), zeroOrMore(spaceOrTab()), opt(chr(','))),
-        seq(chr(':'), zeroOrMore(spaceOrTab())),
+        seq(startAnchor(), inlineSpaces0(), opt(chr(','))),
+        seq(chr(':'), inlineSpaces0()),
       ));
     }
   }
@@ -742,7 +742,7 @@ export function name(scopeName: ScopeName, ...ruleNames: RuleName[]): string {
 export function nameRule(scopeName: ScopeName, ...ruleNames: RuleName[]): NameRule {
   return { name: name(scopeName, ...ruleNames) };
 }
-export function patternsRule(rules: Rule[]): PatternsRule {
+export function patternsRule(...rules: Rule[]): PatternsRule {
   return { patterns: rules };
 }
 // #endregion rule combinators

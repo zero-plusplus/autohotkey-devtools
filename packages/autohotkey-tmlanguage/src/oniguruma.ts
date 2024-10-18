@@ -5,8 +5,35 @@ export function startAnchor(): string {
 export function endAnchor(): string {
   return '$';
 }
-export function spaceOrTab(): string {
+export function wordBound(): string {
+  return '\\b';
+}
+export function anyChar(): string {
+  return '.';
+}
+export function anyChars0(): string {
+  return many0(anyChar());
+}
+export function anyChars1(): string {
+  return many1(anyChar());
+}
+export function inlineSpace(): string {
   return charClass(' ', '\\t');
+}
+export function inlineSpaces0(): string {
+  return many0(inlineSpace());
+}
+export function inlineSpaces1(): string {
+  return many1(inlineSpace());
+}
+export function whitespace(): string {
+  return '\\s';
+}
+export function whitespaces0(): string {
+  return many0(whitespace());
+}
+export function whitespaces1(): string {
+  return many1(whitespace());
 }
 export function asciiChar(): string {
   return '[:ascii:]';
@@ -14,10 +41,10 @@ export function asciiChar(): string {
 // #endregion char classes
 
 // #region combinator
-export function zeroOrMore(onigurumaText: string): string {
+export function many0(onigurumaText: string): string {
   return `${onigurumaText}*`;
 }
-export function oneOrMore(onigurumaText: string): string {
+export function many1(onigurumaText: string): string {
   return `${onigurumaText}+`;
 }
 export function reluctant(onigurumaText: string): string {
@@ -33,7 +60,7 @@ export const opt: typeof optional = (onigurumaText: string) => optional(onigurum
 export function sequence(...onigurumaTexts: string[]): string {
   return onigurumaTexts.join('');
 }
-export const seq: typeof sequence = (onigurumaText: string) => sequence(onigurumaText);
+export const seq: typeof sequence = (...onigurumaTexts: string[]) => sequence(...onigurumaTexts);
 export function optseq(...onigurumaTexts: string[]): string {
   return optional(seq(...onigurumaTexts));
 }
@@ -80,11 +107,12 @@ export function negativeLookbehind(onigurumaText: string): string {
 
 // #region helpers
 export function escapeCharClass(text: string): string {
-  // https://github.com/kkos/oniguruma/blob/master/doc/SYNTAX.md
-  return text.replaceAll(/(?<!:)(\])/gu, '\\$1');
+  return text.replaceAll(/(?<!:)([\[\]])/gu, '\\$1');
 }
 export function escapeOnigurumaText(text: string): string {
-  // https://github.com/kkos/oniguruma/blob/master/doc/SYNTAX.md
-  return text.replaceAll(/([.*?+{}|()[\]^])/gu, '\\$1');
+  return text.replaceAll(/([.*?+{}|()[\]^/])/gu, '\\$1');
+}
+export function escapeOnigurumaTexts(onigurumaTexts: string[]): string[] {
+  return onigurumaTexts.map((onigurumaText) => escapeOnigurumaText(onigurumaText));
 }
 // #endregion helpers
