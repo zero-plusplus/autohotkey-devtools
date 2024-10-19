@@ -1,12 +1,12 @@
 import { RuleName } from '../../src/constants';
 import type { ScopeName } from '../../src/types';
-import { createUtilities } from '../../src/utils';
+import { createUtilities, getEscapeSequencesInfo } from '../../src/utils';
 import { parse } from '../helpers/textmate-parser';
 
 describe('expression', () => {
   const scopeName: ScopeName = 'autohotkey2';
-  const { getEscapeSequencesInfo, name } = createUtilities(scopeName);
-  const escapeSequencesInfo = getEscapeSequencesInfo();
+  const { name } = createUtilities(scopeName);
+  const escapeSequencesInfo = getEscapeSequencesInfo(scopeName);
 
   describe(`[${scopeName}] access`, () => {
     describe(`[${scopeName}] dereference`, () => {

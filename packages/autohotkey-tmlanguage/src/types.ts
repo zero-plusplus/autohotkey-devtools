@@ -63,13 +63,6 @@ export interface EscapeSequencesInfo {
   legacyText: string[];
 }
 export interface Utilities {
-  getVariableParts: () => VariableParts;
-  getEscapeSequencesInfo: () => EscapeSequencesInfo;
-  getExpressionBegin: () => string;
-  getOperators: () => string[];
-  getStatementBegin: () => string;
-  getContinuationBegin: () => string;
-  getBuiltInVariableNames: () => string[];
   name: (...ruleNames: RuleName[]) => string;
   nameRule: (...ruleNames: RuleName[]) => NameRule;
   includeRule: (repositoryName: Repository) => IncludeRule;

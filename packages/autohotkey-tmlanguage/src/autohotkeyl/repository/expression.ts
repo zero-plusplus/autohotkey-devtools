@@ -1,7 +1,7 @@
 import { Repository, RuleName } from '../../constants';
 import { alt, anyChar, capture, char, charRange, endAnchor, escapeOnigurumaTexts, group, groupMany1, ignoreCase, inlineSpaces0, inlineSpaces1, lookahead, lookbehind, many0, many1, manyRange, negativeLookahead, negativeLookbehind, negChar, number, numbers0, numbers1, opt, ordalt, seq, whitespace, wordBound } from '../../oniguruma';
 import type { BeginEndRule, MatchRule, PatternsRule, Repositories, ScopeName } from '../../types';
-import { createUtilities } from '../../utils';
+import { createUtilities, getBuiltInVariableNames, getEscapeSequencesInfo, getOperators, getVariableParts } from '../../utils';
 
 export const integer: string = alt(
   seq(charRange('1', '9'), numbers0()),
@@ -16,16 +16,16 @@ export const hexValue: string = groupMany1(alt(
 export const hex: string = seq(hexPrefix, hexValue);
 
 export function createLiteralRepositories(scopeName: ScopeName): Repositories {
-  const { getOperators, getVariableParts, getEscapeSequencesInfo, getBuiltInVariableNames, includeRule, name, nameRule } = createUtilities(scopeName);
-  const operators = getOperators();
+  const { includeRule, name, nameRule } = createUtilities(scopeName);
+  const operators = getOperators(scopeName);
 
   const endLine = alt(
     seq(inlineSpaces1(), char(';')),
     seq(inlineSpaces0(), endAnchor()),
   );
-  const variableParts = getVariableParts();
-  const escapeSequencesInfo = getEscapeSequencesInfo();
-  const builtinVariables = getBuiltInVariableNames();
+  const variableParts = getVariableParts(scopeName);
+  const escapeSequencesInfo = getEscapeSequencesInfo(scopeName);
+  const builtinVariables = getBuiltInVariableNames(scopeName);
 
   return {
     [Repository.Expression]: ((): PatternsRule => {

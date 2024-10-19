@@ -1,12 +1,12 @@
 import { RuleName } from '../../src/constants';
 import type { ScopeName } from '../../src/types';
-import { createUtilities } from '../../src/utils';
+import { createUtilities, getEscapeSequencesInfo } from '../../src/utils';
 import { parse } from '../helpers/textmate-parser';
 
 describe('legacy', () => {
   const scopeName: ScopeName = 'autohotkeyl';
-  const { getEscapeSequencesInfo, name } = createUtilities(scopeName);
-  const escapeSequencesInfo = getEscapeSequencesInfo();
+  const { name } = createUtilities(scopeName);
+  const escapeSequencesInfo = getEscapeSequencesInfo(scopeName);
 
   describe(`[${scopeName}] legacy assignment`, () => {
     test.each([

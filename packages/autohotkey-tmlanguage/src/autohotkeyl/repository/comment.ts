@@ -5,6 +5,7 @@ import { createUtilities, includeRule, patternsRule } from '../../utils';
 
 export function createRepositories(scopeName: ScopeName): Repositories {
   const { nameRule } = createUtilities(scopeName);
+
   return {
     [Repository.Comment]: ((): PatternsRule => {
       return patternsRule(

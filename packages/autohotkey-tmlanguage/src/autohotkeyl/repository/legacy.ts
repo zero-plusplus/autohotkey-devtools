@@ -1,20 +1,26 @@
 import { Repository, RuleName } from '../../constants';
 import { alt, capture, char, endAnchor, group, groupMany0, inlineSpace, inlineSpaces0, inlineSpaces1, lookahead, many1, negativeLookahead, negativeLookbehind, negChar, negChars0, ordalt, seq } from '../../oniguruma';
 import type { MatchRule, PatternsRule, Repositories, ScopeName } from '../../types';
-import { createUtilities, getLegacyTextChar } from '../../utils';
+import { createUtilities, getEscapeSequencesInfo, getExpressionBegin, getVariableParts } from '../../utils';
 
 export function createRepositories(scopeName: ScopeName): Repositories {
-  const { getEscapeSequencesInfo, getExpressionBegin, getVariableParts, includeRule, name, nameRule } = createUtilities(scopeName);
-  const legacyText = getLegacyTextChar();
-  const expressionBegin = getExpressionBegin();
-  const variableParts = getVariableParts();
-  const escapeSequencesInfo = getEscapeSequencesInfo();
+  const { includeRule, name, nameRule } = createUtilities(scopeName);
 
+  const expressionBegin = getExpressionBegin(scopeName);
+  const variableParts = getVariableParts(scopeName);
+  const escapeSequencesInfo = getEscapeSequencesInfo(scopeName);
+
+  // #region common matchers
+  const legacyText = group(alt(
+    negChar('\\s', ',', '%', '`', ';', ':'),
+    seq(inlineSpace(), negativeLookahead(';')),
+  ));
   const brackets = group(alt(
     seq(char('('), negChars0('\\r', '\\n', ')'), char(')')),
     seq(char('['), negChars0('\\r', '\\n', ']'), char(']')),
     seq(char('{'), negChars0('\\r', '\\n', '}'), char('}')),
   ));
+  // #endregion common matchers
 
   return {
     [Repository.Legacy]: ((): PatternsRule => {

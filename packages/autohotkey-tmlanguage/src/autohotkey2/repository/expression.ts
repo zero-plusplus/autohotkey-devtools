@@ -2,12 +2,14 @@ import * as ahkl from '../../autohotkeyl/repository/expression';
 import { Repository, RuleName } from '../../constants';
 import { alt, anyChars1, capture, char, endAnchor, inlineSpaces0, inlineSpaces1, lookahead, negativeLookahead, negativeLookbehind, negChar, negChars0, negChars1, ordalt, seq } from '../../oniguruma';
 import type { BeginEndRule, MatchRule, PatternsRule, Repositories, ScopeName } from '../../types';
-import { createUtilities } from '../../utils';
+import { createUtilities, getEscapeSequencesInfo } from '../../utils';
 
 export function createLiteralRepositories(scopeName: ScopeName): Repositories {
-  const { getEscapeSequencesInfo, name, nameRule, includeRule } = createUtilities(scopeName);
-  const escapeSequenceInfo = getEscapeSequencesInfo();
+  const { name, nameRule, includeRule } = createUtilities(scopeName);
+
+  const escapeSequenceInfo = getEscapeSequencesInfo(scopeName);
   const ahklRepositories = ahkl.createLiteralRepositories(scopeName);
+
   const endLine = lookahead(alt(
     seq(inlineSpaces1(), char(';')),
     seq(inlineSpaces0(), endAnchor()),

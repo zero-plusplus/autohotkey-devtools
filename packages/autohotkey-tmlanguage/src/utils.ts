@@ -1,5 +1,5 @@
 import { CommandArgsType, operators_v1, operators_v2, Repository, RuleName } from './constants';
-import { alt, asciiChar, char, escapeOnigurumaText, group, inlineSpace, inlineSpaces0, lookbehind, negativeLookahead, negChar, opt, ordalt, seq, startAnchor } from './oniguruma';
+import { alt, asciiChar, char, escapeOnigurumaText, group, inlineSpaces0, lookbehind, negChar, opt, ordalt, seq, startAnchor } from './oniguruma';
 import type { CommandInfo, EscapeSequencesInfo, IncludeRule, NameRule, PatternsRule, Rule, ScopeName, Utilities, VariableParts } from './types';
 
 export function getCommandInfos(): CommandInfo[] {
@@ -207,12 +207,6 @@ export function getCommandInfos(): CommandInfo[] {
   return commandInfos.sort((a, b): number => {
     return b[0].length - a[0].length;
   });
-}
-export function getLegacyTextChar(): string {
-  return group(alt(
-    negChar('\\s', ',', '%', '`', ';', ':'),
-    seq(inlineSpace(), negativeLookahead(';')),
-  ));
 }
 export function getVariableParts(scopeName: ScopeName): VariableParts {
   const letter = '[a-zA-Z]';
@@ -715,13 +709,6 @@ export function getBuiltInVariableNames(scopeName: ScopeName): string[] {
 }
 export function createUtilities(scopeName: ScopeName): Utilities {
   return {
-    getVariableParts: () => getVariableParts(scopeName),
-    getContinuationBegin: () => getContinuationBegin(scopeName),
-    getEscapeSequencesInfo: () => getEscapeSequencesInfo(scopeName),
-    getExpressionBegin: () => getExpressionBegin(scopeName),
-    getStatementBegin: () => getStatementBegin(scopeName),
-    getOperators: () => getOperators(scopeName),
-    getBuiltInVariableNames: () => getBuiltInVariableNames(scopeName),
     name: (...ruleNames: RuleName[]): string => name(scopeName, ...ruleNames),
     nameRule: (...ruleNames: RuleName[]): NameRule => ({ name: name(scopeName, ...ruleNames) }),
     includeRule: (repositoryName: Repository) => includeRule(repositoryName),

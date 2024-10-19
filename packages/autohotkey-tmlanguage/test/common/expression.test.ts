@@ -1,6 +1,6 @@
 import { RuleName } from '../../src/constants';
 import type { ScopeName } from '../../src/types';
-import { createUtilities } from '../../src/utils';
+import { createUtilities, getBuiltInVariableNames, getEscapeSequencesInfo } from '../../src/utils';
 import { parse } from '../helpers/textmate-parser';
 
 describe.each([
@@ -8,9 +8,9 @@ describe.each([
   [ 'autohotkey2' ],
   [ 'autohotkeyl' ],
 ] as ScopeName[][])('expression', (scopeName) => {
-  const { getBuiltInVariableNames, getEscapeSequencesInfo, name } = createUtilities(scopeName);
-  const builtinVariables = getBuiltInVariableNames();
-  const escapeSequencesInfo = getEscapeSequencesInfo();
+  const { name } = createUtilities(scopeName);
+  const builtinVariables = getBuiltInVariableNames(scopeName);
+  const escapeSequencesInfo = getEscapeSequencesInfo(scopeName);
 
   describe(`[${scopeName}] parenthesized expression`, () => {
     test.each([

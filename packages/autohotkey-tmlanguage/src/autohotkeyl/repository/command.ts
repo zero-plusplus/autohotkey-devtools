@@ -1,51 +1,15 @@
 import { CommandArgsType, commandNames, Repository, RuleName } from '../../constants';
 import { alt, anyChars0, anyChars1, capture, char, endAnchor, escapeOnigurumaTexts, group, groupMany0, groupMany1, ignoreCase, inlineSpace, inlineSpaces0, inlineSpaces1, lookahead, lookbehind, many1, negativeLookahead, negativeLookbehind, negChar, negChars0, opt, ordalt, seq, startAnchor, wordBound } from '../../oniguruma';
 import type { BeginWhileRule, CommandInfo, IncludeRule, MatchRule, PatternsRule, Repositories, Rule, ScopeName } from '../../types';
-import { createUtilities, getCommandInfos, getLegacyTextChar, patternsRule } from '../../utils';
+import { createUtilities, getCommandInfos, getEscapeSequencesInfo, getOperators, getStatementBegin, patternsRule } from '../../utils';
 
 export function createRepositories(scopeName: ScopeName): Repositories {
-  const {
-    getOperators,
-    getEscapeSequencesInfo,
-    getStatementBegin,
-    includeRule,
-    name,
-    nameRule,
-  } = createUtilities(scopeName);
+  const { includeRule, name, nameRule } = createUtilities(scopeName);
+
   const commandInfos = getCommandInfos();
-  const { legacyText: legacyTextEscapeSequence } = getEscapeSequencesInfo();
-  const legacyTextChar = getLegacyTextChar();
-  const statementBegin = getStatementBegin();
-  const operators = getOperators();
-  const createRepositoryNameByCommandInfo = (commandInfo: CommandInfo): string => {
-    return commandInfo.reduce<string>((prev, current) => {
-      if (typeof current === 'string') {
-        return `${prev}.${current.toLowerCase()}`;
-      }
-      return prev;
-    }, 'command');
-  };
-
-  const legacyEndLine = lookahead(alt(
-    seq(inlineSpaces1(), negativeLookahead(char('`')), char(';')),
-    seq(inlineSpaces0(), endAnchor()),
-  ));
-
-  const brackets = group(alt(
-    seq(char('('), negChars0('\\r', '\\n', ')'), char(')')),
-    seq(char('['), negChars0('\\r', '\\n', ']'), char(']')),
-    seq(char('{'), negChars0('\\r', '\\n', '}'), char('}')),
-  ));
-
-  const commandLegacyArgument = groupMany0(alt(
-    brackets,
-    legacyTextChar,
-    char(...legacyTextEscapeSequence, '%'),
-  ));
-  const commandExpressionArgument = groupMany0(alt(
-    brackets,
-    negChar('\\r', '\\n', ','),
-  ));
+  const { legacyText: legacyTextEscapeSequence } = getEscapeSequencesInfo(scopeName);
+  const statementBegin = getStatementBegin(scopeName);
+  const operators = getOperators(scopeName);
   const argumentsPatterns = [
     // In some cases, highlighting is not applied in a captures even if a repository with a complex patterns is specified?
     // This problem is solved by specifying the rule directly
@@ -57,6 +21,30 @@ export function createRepositories(scopeName: ScopeName): Repositories {
     },
     includeRule(Repository.CommandArgument),
   ];
+
+  // #region common matchers
+  const legacyTextChar = group(alt(
+    negChar('\\s', ',', '%', '`', ';', ':'),
+    seq(inlineSpace(), negativeLookahead(';')),
+  ));
+  const legacyEndLine = lookahead(alt(
+    seq(inlineSpaces1(), negativeLookahead(char('`')), char(';')),
+    seq(inlineSpaces0(), endAnchor()),
+  ));
+  const brackets = group(alt(
+    seq(char('('), negChars0('\\r', '\\n', ')'), char(')')),
+    seq(char('['), negChars0('\\r', '\\n', ']'), char(']')),
+    seq(char('{'), negChars0('\\r', '\\n', '}'), char('}')),
+  ));
+  const commandLegacyArgument = groupMany0(alt(
+    brackets,
+    legacyTextChar,
+    char(...legacyTextEscapeSequence, '%'),
+  ));
+  const commandExpressionArgument = groupMany0(alt(
+    brackets,
+    negChar('\\r', '\\n', ','),
+  ));
 
   const expressionOperators = ignoreCase(ordalt(...escapeOnigurumaTexts(operators.filter((operator) => operator !== ','))));
   const whileLegacyArgument = seq(
@@ -113,6 +101,7 @@ export function createRepositories(scopeName: ScopeName): Repositories {
       },
     ],
   };
+  // #endregion common matchers
 
   return {
     [Repository.Command]: ((): PatternsRule => {
@@ -320,3 +309,14 @@ export function createRepositories(scopeName: ScopeName): Repositories {
     })),
   };
 }
+
+// #region helpers
+function createRepositoryNameByCommandInfo(commandInfo: CommandInfo): string {
+  return commandInfo.reduce<string>((prev, current) => {
+    if (typeof current === 'string') {
+      return `${prev}.${current.toLowerCase()}`;
+    }
+    return prev;
+  }, 'command');
+}
+// #endregion helpers
