@@ -1,4 +1,5 @@
 import { Repository, RuleName } from '../../constants';
+import { alt, capture, char, endAnchor, inlineSpace, inlineSpaces0, inlineSpaces1, lookahead, many0, many1, negativeLookahead, negativeLookbehind, negChar, negChars0, noCapture, ordalt, seq } from '../../oniguruma';
 import type { MatchRule, PatternsRule, Repositories, ScopeName } from '../../types';
 import { createUtilities, getLegacyTextChar } from '../../utils';
 
@@ -9,7 +10,11 @@ export function createRepositories(scopeName: ScopeName): Repositories {
   const variableParts = getVariableParts();
   const escapeSequencesInfo = getEscapeSequencesInfo();
 
-  const brackets = '(?:\\([^\\r\\n\\)]*\\)|\\[[^\\r\\n\\]]*\\]|\\{[^\\r\\n\\}]*\\})';
+  const brackets = noCapture(alt(
+    seq(char('('), negChars0('\\r', '\\n', ')'), char(')')),
+    seq(char('['), negChars0('\\r', '\\n', ']'), char(']')),
+    seq(char('{'), negChars0('\\r', '\\n', '}'), char('}')),
+  ));
 
   return {
     [Repository.Legacy]: ((): PatternsRule => {
@@ -18,8 +23,26 @@ export function createRepositories(scopeName: ScopeName): Repositories {
       };
     })(),
     [Repository.LegacyAssignment]: ((): MatchRule => {
+      const endLine = lookahead(alt(
+        seq(inlineSpaces1(), negativeLookahead(char('`'))),
+        seq(inlineSpaces0(), endAnchor()),
+      ));
+
       return {
-        match: `${expressionBegin}((?:${variableParts.headChar})(?:${variableParts.tailChar})*)\\s*(=)\\s*((?:${brackets}|${legacyText}|${escapeSequencesInfo.legacyText.join('|')}|%)*)(?=\\s+(?!\`);|\\s*$)`,
+        match: seq(
+          expressionBegin,
+          capture(seq(variableParts.headChar, many0(noCapture(variableParts.tailChar)))),
+          inlineSpaces0(),
+          capture(char('=')),
+          inlineSpaces0(),
+          capture(many0(noCapture(alt(
+            brackets,
+            legacyText,
+            noCapture(ordalt(...escapeSequencesInfo.legacyText)),
+            char('%'),
+          )))),
+          endLine,
+        ),
         captures: {
           1: {
             name: name(RuleName.LegacyAssignment),
@@ -34,7 +57,7 @@ export function createRepositories(scopeName: ScopeName): Repositories {
               includeRule(Repository.LegacyTextEscapeSequence),
               {
                 name: name(RuleName.LegacyText),
-                match: `(?:${legacyText})+`,
+                match: many1(legacyText),
               },
             ],
           },
@@ -49,7 +72,15 @@ export function createRepositories(scopeName: ScopeName): Repositories {
     })(),
     [Repository.PercentExpression]: ((): MatchRule => {
       return {
-        match: `(%)\\s+((?:${brackets}|[^\\r\\n,;]|(?<!\\s);)*)`,
+        match: seq(
+          capture(char('%')),
+          inlineSpaces1(),
+          capture(many0(noCapture(alt(
+            brackets,
+            negChar('\\r', '\\n', ',', ';'),
+            seq(negativeLookbehind(inlineSpace()), char(';')),
+          )))),
+        ),
         captures: {
           1: nameRule(RuleName.ForceExpression, RuleName.ForceExpressionPercent),
           2: {
