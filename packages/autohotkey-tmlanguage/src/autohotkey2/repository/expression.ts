@@ -1,5 +1,6 @@
 import * as ahkl from '../../autohotkeyl/repository/expression';
 import { Repository, RuleName } from '../../constants';
+import { alt, anyChars1, capture, char, endAnchor, inlineSpaces0, inlineSpaces1, lookahead, negativeLookahead, negativeLookbehind, negChar, negChars0, negChars1, ordalt, seq } from '../../oniguruma';
 import type { BeginEndRule, MatchRule, PatternsRule, Repositories, ScopeName } from '../../types';
 import { createUtilities } from '../../utils';
 
@@ -7,6 +8,10 @@ export function createLiteralRepositories(scopeName: ScopeName): Repositories {
   const { getEscapeSequencesInfo, name, nameRule, includeRule } = createUtilities(scopeName);
   const escapeSequenceInfo = getEscapeSequencesInfo();
   const ahklRepositories = ahkl.createLiteralRepositories(scopeName);
+  const endLine = lookahead(alt(
+    seq(inlineSpaces1(), char(';')),
+    seq(inlineSpaces0(), endAnchor()),
+  ));
 
   return {
     [Repository.Expression]: ((): PatternsRule => {
@@ -35,7 +40,11 @@ export function createLiteralRepositories(scopeName: ScopeName): Repositories {
     // #region access
     [Repository.Dereference]: ((): MatchRule => {
       return {
-        match: '(%)([^\\r\\n]+)(%)',
+        match: seq(
+          capture(char('%')),
+          capture(negChars1('\\r', '\\n')),
+          capture(char('%')),
+        ),
         captures: {
           1: nameRule(RuleName.Dereference, RuleName.DereferencePercentBegin),
           2: {
@@ -44,7 +53,7 @@ export function createLiteralRepositories(scopeName: ScopeName): Repositories {
               includeRule(Repository.Dereference),
               {
                 name: name(RuleName.Dereference),
-                match: '(.+)',
+                match: capture(anyChars1()),
                 captures: {
                   1: {
                     patterns: [ includeRule(Repository.Expression) ],
@@ -63,7 +72,10 @@ export function createLiteralRepositories(scopeName: ScopeName): Repositories {
           // %%
           //  ^ missing
           {
-            match: '(%)(%)',
+            match: seq(
+              capture(char('%')),
+              capture(char('%')),
+            ),
             captures: {
               1: nameRule(RuleName.Dereference, RuleName.DereferencePercentBegin, RuleName.InvalidDereferencePercent),
               2: nameRule(RuleName.Dereference, RuleName.DereferencePercentEnd, RuleName.InvalidDereferencePercent),
@@ -73,7 +85,13 @@ export function createLiteralRepositories(scopeName: ScopeName): Repositories {
           //  ^ missing
           {
             name: name(RuleName.Dereference),
-            match: '(%)(?=[^\\S\\r\\n]+;|[^\\S\\r\\n]*$)',
+            match: seq(
+              capture(char('%')),
+              lookahead(alt(
+                seq(negChars1('\\S', '\\r', '\\n'), char(';')),
+                seq(negChars0('\\S', '\\r', '\\n'), endAnchor()),
+              )),
+            ),
             captures: {
               1: nameRule(RuleName.DereferencePercentBegin, RuleName.InvalidDereferencePercent),
             },
@@ -81,7 +99,13 @@ export function createLiteralRepositories(scopeName: ScopeName): Repositories {
           // %abc
           //     ^ missing
           {
-            match: '(%)([^\\r\\n%]*)(?!%)([^\\r\\n])(?=\\s+;|\\s*$)',
+            match: seq(
+              capture(char('%')),
+              capture(negChars0('\\r', '\\n', '%')),
+              negativeLookahead(char('%')),
+              capture(negChar('\\r', '\\n')),
+              endLine,
+            ),
             captures: {
               1: nameRule(RuleName.Dereference, RuleName.DereferencePercentBegin),
               2: {
@@ -123,11 +147,14 @@ export function createLiteralRepositories(scopeName: ScopeName): Repositories {
     [Repository.DoubleString]: ((): BeginEndRule => {
       return {
         name: name(RuleName.DoubleString),
-        begin: '(?<!`)(")',
+        begin: capture(char('"')),
         beginCaptures: {
           1: nameRule(RuleName.StringBegin),
         },
-        end: '(?<!`)(")',
+        end: seq(
+          negativeLookbehind(char('`')),
+          capture(char('"')),
+        ),
         endCaptures: {
           1: nameRule(RuleName.StringEnd),
         },
@@ -140,16 +167,22 @@ export function createLiteralRepositories(scopeName: ScopeName): Repositories {
     [Repository.DoubleStringEscapeSequence]: ((): MatchRule => {
       return {
         name: name(RuleName.DoubleStringEscapeSequence),
-        match: `(${escapeSequenceInfo.doubleQuote.join('|')})(?!\\r\\n|\\n)`,
+        match: seq(
+          capture(ordalt(...escapeSequenceInfo.doubleQuote)),
+          negativeLookahead(alt(char('\\r\\n'), char('\\n'))),
+        ),
       };
     })(),
     [Repository.SingleString]: {
       name: name(RuleName.SingleString),
-      begin: '(?<!`)(\')',
+      begin: capture(char(`'`)),
       beginCaptures: {
         1: { name: name(RuleName.StringBegin) },
       },
-      end: '(?<!`)(\')',
+      end: seq(
+        negativeLookbehind(char('`')),
+        capture(char(`'`)),
+      ),
       endCaptures: {
         1: { name: name(RuleName.StringEnd) },
       },
@@ -161,7 +194,10 @@ export function createLiteralRepositories(scopeName: ScopeName): Repositories {
     [Repository.SingleStringEscapeSequence]: ((): MatchRule => {
       return {
         name: name(RuleName.SingleStringEscapeSequence),
-        match: `(${escapeSequenceInfo.singleQuote.join('|')})(?!\\r\\n|\\n)`,
+        match: seq(
+          ordalt(...escapeSequenceInfo.singleQuote),
+          negativeLookahead(alt(char('\\r\\n'), char('\\n'))),
+        ),
       };
     })(),
     // #endregion string
