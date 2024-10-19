@@ -21,13 +21,14 @@ export function dedent(strings: TemplateStringsArray, ...values: any[]): string 
 
   return strings.reduce<string>((prev, current, i) => {
     const string = ((): string => {
+      let result = current;
       if (i === 0) {
-        return current.replace(/^(\r\n|\n)/, '');
+        result = result.replace(/^(\r\n|\n)/, '');
       }
       if (i === (strings.length - 1)) {
-        return current.trimEnd();
+        result = result.replace(/(\s*)$/gm, '');
       }
-      return current;
+      return result;
     })();
 
     if (trimTargetIndent === undefined) {
