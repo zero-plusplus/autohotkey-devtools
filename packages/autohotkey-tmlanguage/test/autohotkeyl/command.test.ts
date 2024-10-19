@@ -1,3 +1,4 @@
+import { dedent } from '@zero-plusplus/utilities/src';
 import { RuleName } from '../../src/constants';
 import type { ScopeName } from '../../src/types';
 import { createUtilities, getCommandInfos } from '../../src/utils';
@@ -79,26 +80,30 @@ describe('command', () => {
       ],
     ],
     [
-      `AutoTrim
-       , continuation argument`, [
+      dedent`
+        AutoTrim
+          , continuation argument
+      `, [
         { text: 'AutoTrim', scopes: name(RuleName.Command, RuleName.CommandName) },
         { text: '\n' },
-        { text: '       ' },
+        { text: '  ' },
         { text: ',', scopes: name(RuleName.Command, RuleName.CommandArgumentSeparator) },
         { text: ' ' },
         { text: 'continuation argument', scopes: name(RuleName.Command, RuleName.LegacyText) },
       ],
     ],
     [
-      `AutoTrim % continuation
-       + expressionArgument, legacyText`, [
+      dedent`
+        AutoTrim % continuation
+          + expressionArgument, legacyText
+      `, [
         { text: 'AutoTrim', scopes: name(RuleName.Command, RuleName.CommandName) },
         { text: ' ' },
         { text: '%', scopes: name(RuleName.Command, RuleName.ForceExpression, RuleName.ForceExpressionPercent) },
         { text: ' ' },
         { text: 'continuation', scopes: name(RuleName.Command, RuleName.ForceExpression, RuleName.Variable) },
         { text: '\n' },
-        { text: '       ' },
+        { text: '  ' },
         { text: '+', scopes: name(RuleName.Command, RuleName.Operator) },
         { text: ' ' },
         { text: 'expressionArgument', scopes: name(RuleName.Command, RuleName.Variable) },
