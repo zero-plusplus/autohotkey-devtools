@@ -1,5 +1,5 @@
 import { Repository, RuleName } from '../../constants';
-import { alt, anyChar, capture, char, charRange, endAnchor, escapeOnigurumaTexts, ignoreCase, inlineSpaces0, inlineSpaces1, lookahead, lookbehind, many0, many1, manyRange, negativeLookahead, negativeLookbehind, negChar, noCapture, number, numbers0, numbers1, opt, ordalt, seq, whitespace, wordBound } from '../../oniguruma';
+import { alt, anyChar, capture, char, charRange, endAnchor, escapeOnigurumaTexts, group, groupMany1, ignoreCase, inlineSpaces0, inlineSpaces1, lookahead, lookbehind, many0, many1, manyRange, negativeLookahead, negativeLookbehind, negChar, number, numbers0, numbers1, opt, ordalt, seq, whitespace, wordBound } from '../../oniguruma';
 import type { BeginEndRule, MatchRule, PatternsRule, Repositories, ScopeName } from '../../types';
 import { createUtilities } from '../../utils';
 
@@ -8,11 +8,11 @@ export const integer: string = alt(
   char('0'),
 );
 export const hexPrefix: string = seq(char('0'), ignoreCase(char('x')));
-export const hexValue: string = many1(noCapture(alt(
+export const hexValue: string = groupMany1(alt(
   charRange('0', '9'),
   charRange('a', 'f'),
   charRange('A', 'F'),
-)));
+));
 export const hex: string = seq(hexPrefix, hexValue);
 
 export function createLiteralRepositories(scopeName: ScopeName): Repositories {
@@ -399,7 +399,7 @@ export function createLiteralRepositories(scopeName: ScopeName): Repositories {
       return {
         match: seq(
           lookbehind(wordBound()),
-          noCapture(alt(
+          group(alt(
             seq(capture(integer), capture(char('.')), capture(numbers1())),
             capture(integer),
           )),
@@ -427,7 +427,7 @@ export function createLiteralRepositories(scopeName: ScopeName): Repositories {
           {
             match: seq(
               lookbehind(wordBound()),
-              noCapture(alt(
+              group(alt(
                 seq(capture(integer), capture(char('.')), capture(numbers1())),
                 capture(integer),
               )),
@@ -452,7 +452,7 @@ export function createLiteralRepositories(scopeName: ScopeName): Repositories {
           {
             match: seq(
               lookbehind(wordBound()),
-              noCapture(alt(
+              group(alt(
                 seq(capture(integer), capture(char('.')), capture(numbers1())),
                 capture(integer),
               )),
@@ -474,7 +474,7 @@ export function createLiteralRepositories(scopeName: ScopeName): Repositories {
           {
             match: seq(
               lookbehind(wordBound()),
-              noCapture(alt(
+              group(alt(
                 seq(capture(integer), capture(char('.')), capture(numbers1())),
                 capture(integer),
               )),

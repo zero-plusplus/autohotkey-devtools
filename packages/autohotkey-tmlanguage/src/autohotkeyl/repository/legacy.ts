@@ -1,5 +1,5 @@
 import { Repository, RuleName } from '../../constants';
-import { alt, capture, char, endAnchor, inlineSpace, inlineSpaces0, inlineSpaces1, lookahead, many0, many1, negativeLookahead, negativeLookbehind, negChar, negChars0, noCapture, ordalt, seq } from '../../oniguruma';
+import { alt, capture, char, endAnchor, group, groupMany0, inlineSpace, inlineSpaces0, inlineSpaces1, lookahead, many1, negativeLookahead, negativeLookbehind, negChar, negChars0, ordalt, seq } from '../../oniguruma';
 import type { MatchRule, PatternsRule, Repositories, ScopeName } from '../../types';
 import { createUtilities, getLegacyTextChar } from '../../utils';
 
@@ -10,7 +10,7 @@ export function createRepositories(scopeName: ScopeName): Repositories {
   const variableParts = getVariableParts();
   const escapeSequencesInfo = getEscapeSequencesInfo();
 
-  const brackets = noCapture(alt(
+  const brackets = group(alt(
     seq(char('('), negChars0('\\r', '\\n', ')'), char(')')),
     seq(char('['), negChars0('\\r', '\\n', ']'), char(']')),
     seq(char('{'), negChars0('\\r', '\\n', '}'), char('}')),
@@ -31,16 +31,16 @@ export function createRepositories(scopeName: ScopeName): Repositories {
       return {
         match: seq(
           expressionBegin,
-          capture(seq(variableParts.headChar, many0(noCapture(variableParts.tailChar)))),
+          capture(seq(variableParts.headChar, groupMany0(variableParts.tailChar))),
           inlineSpaces0(),
           capture(char('=')),
           inlineSpaces0(),
-          capture(many0(noCapture(alt(
+          capture(groupMany0(alt(
             brackets,
             legacyText,
-            noCapture(ordalt(...escapeSequencesInfo.legacyText)),
+            group(ordalt(...escapeSequencesInfo.legacyText)),
             char('%'),
-          )))),
+          ))),
           endLine,
         ),
         captures: {
@@ -75,11 +75,11 @@ export function createRepositories(scopeName: ScopeName): Repositories {
         match: seq(
           capture(char('%')),
           inlineSpaces1(),
-          capture(many0(noCapture(alt(
+          capture(groupMany0(alt(
             brackets,
             negChar('\\r', '\\n', ',', ';'),
             seq(negativeLookbehind(inlineSpace()), char(';')),
-          )))),
+          ))),
         ),
         captures: {
           1: nameRule(RuleName.ForceExpression, RuleName.ForceExpressionPercent),

@@ -56,6 +56,12 @@ export function many0(onigurumaText: string): string {
 export function many1(onigurumaText: string): string {
   return `${onigurumaText}+`;
 }
+export function groupMany0(onigurumaText: string): string {
+  return `${group(onigurumaText)}*`;
+}
+export function groupMany1(onigurumaText: string): string {
+  return `${group(onigurumaText)}+`;
+}
 export function manyRange(onigurumaText: string, start?: number, end?: number): string {
   if (typeof start === 'number' && typeof end === 'number') {
     return `${onigurumaText}{${start},${end}}`;
@@ -75,7 +81,7 @@ export function reluctant(onigurumaText: string): string {
   throw Error('The specified text is not a quantity specifier(e.g. `.*`, `.+`, `.{1,2}`).');
 }
 export function optional(onigurumaText: string): string {
-  return `${noCapture(onigurumaText)}?`;
+  return `${group(onigurumaText)}?`;
 }
 export const opt: typeof optional = (onigurumaText: string) => optional(onigurumaText);
 export function sequence(...onigurumaTexts: string[]): string {
@@ -122,7 +128,7 @@ export function charRange(startCharacter: string, endCharacter: string): string 
 export function capture(onigurumaText: string): string {
   return `(${onigurumaText})`;
 }
-export function noCapture(onigurumaText: string): string {
+export function group(onigurumaText: string): string {
   return `(?:${onigurumaText})`;
 }
 export function lookahead(onigurumaText: string): string {
