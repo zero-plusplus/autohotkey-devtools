@@ -106,6 +106,7 @@ export function createRepositories(scopeName: ScopeName): Repositories {
   return {
     [Repository.Command]: ((): PatternsRule => {
       return {
+        name: name(Repository.Command),
         patterns: [
           ...commandInfos.map((commandInfo) => {
             return { include: `#${createRepositoryNameByCommandInfo(commandInfo)}` };
@@ -118,7 +119,7 @@ export function createRepositories(scopeName: ScopeName): Repositories {
       const commandName = seq(ordalt(...commandNames), lookahead(wordBound()));
 
       return {
-        name: name(RuleName.Command),
+        name: name(Repository.Command),
         begin: ignoreCase(seq(
           statementBegin,
           capture(commandName),
@@ -245,7 +246,7 @@ export function createRepositories(scopeName: ScopeName): Repositories {
       const argsWithoutCaptures = createArgsRegExpText(false);
       return [
         repositoryName, {
-          name: name(RuleName.Command),
+          name: name(Repository.Command),
           begin: ignoreCase(seq(
             statementBegin,
             capture(commandName),

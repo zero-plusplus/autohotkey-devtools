@@ -709,8 +709,8 @@ export function getBuiltInVariableNames(scopeName: ScopeName): string[] {
 }
 export function createUtilities(scopeName: ScopeName): Utilities {
   return {
-    name: (...ruleNames: RuleName[]): string => name(scopeName, ...ruleNames),
-    nameRule: (...ruleNames: RuleName[]): NameRule => ({ name: name(scopeName, ...ruleNames) }),
+    name: (...ruleNames: Array<Repository | RuleName>): string => name(scopeName, ...ruleNames),
+    nameRule: (...ruleNames: Array<Repository | RuleName>): NameRule => ({ name: name(scopeName, ...ruleNames) }),
     includeRule: (repositoryName: Repository) => includeRule(repositoryName),
     includeScope: (scopeName: ScopeName) => includeScope(scopeName),
   };
@@ -723,10 +723,10 @@ export function includeRule(repositoryName: Repository): IncludeRule {
 export function includeScope(scopeName: ScopeName): IncludeRule {
   return { include: `source.${scopeName}` };
 }
-export function name(scopeName: ScopeName, ...ruleNames: RuleName[]): string {
+export function name(scopeName: ScopeName, ...ruleNames: Array<Repository | RuleName>): string {
   return ruleNames.map((ruleName) => `${ruleName}.${scopeName}`).join(' ');
 }
-export function nameRule(scopeName: ScopeName, ...ruleNames: RuleName[]): NameRule {
+export function nameRule(scopeName: ScopeName, ...ruleNames: Array<Repository | RuleName>): NameRule {
   return { name: name(scopeName, ...ruleNames) };
 }
 export function patternsRule(...rules: Rule[]): PatternsRule {

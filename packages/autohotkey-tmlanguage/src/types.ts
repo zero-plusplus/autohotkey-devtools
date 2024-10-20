@@ -63,8 +63,8 @@ export interface EscapeSequencesInfo {
   legacyText: string[];
 }
 export interface Utilities {
-  name: (...ruleNames: RuleName[]) => string;
-  nameRule: (...ruleNames: RuleName[]) => NameRule;
+  name: (...ruleNames: Array<Repository | RuleName>) => string;
+  nameRule: (...ruleNames: Array<Repository | RuleName>) => NameRule;
   includeRule: (repositoryName: Repository) => IncludeRule;
   includeScope: (scopeName: ScopeName) => IncludeRule;
 }

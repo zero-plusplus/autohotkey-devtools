@@ -340,7 +340,6 @@ export const enum RuleName {
   LegacyTextEscapeSequence = 'constant.character.escape.legacy.text',
   ForceExpression = 'expression.legacy.expression.force',
   ForceExpressionPercent = 'punctuation.definition.expression.force',
-  Command = 'legacy.command',
   CommandName = 'support.function.command',
   SubCommandName = 'strong string.legacy.subcommand',
   CommandArgumentSeparator = 'punctuation.definition.command.argument.separator',
