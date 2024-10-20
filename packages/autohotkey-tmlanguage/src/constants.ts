@@ -252,69 +252,77 @@ export const operators_v2: [ ...typeof commonOperators, '=>', '??' ] = [
 export const enum Repository {
   Self = '$self',
 
-  // #region statement
-  Statement = 'statement',
-  CommandStatement = 'statement.command',
-  ExpressionStatement = 'statement.expression',
-  LegacyStatement = 'statement.expression.legacy',
-  // #endregion statement
-  Literal = 'literal',
+  // #region trivas
+  Comment = 'repository.comment',
+  SingleLineComment = 'repository.comment.single-line',
+  InLineComment = 'repository.comment.in-line',
+  // #endregion trivas
 
-  // #region legacy
-  Legacy = 'legacy',
-  LegacyAssignment = 'expression.legacy.assignment',
-  LegacyTextEscapeSequence = 'expression.legacy.text.escape',
-  PercentExpression = 'expression.legacy.percent',
-  Command = 'command',
-  CommonCommand = 'command.common',
-  CommandArgument = 'command.argument',
-  CommandArgumentText = 'command.argument.text',
-  CommandArgumentSeparator = 'command.argument.separator',
-  ControlStyle = 'expression.legacy.controlstyle',
-  // #endregion legacy
-  // #region comment
-  Comment = 'comment',
-  SingleLineComment = 'comment.single-line',
-  InLineComment = 'comment.in-line',
-  // #endregion comment
-  // #region expression
-  Expression = 'expression',
-  ParenthesizedExpression = 'expression.parenthesized',
-  // #endregion expression
-  // #region variable
-  Variable = 'expression.variable',
-  BuiltInVariable = 'expression.variable.built-in',
-  InvalidVariable = 'invalid.illegal.variable',
-  // #endregion variable
-  // #region access
-  Dereference = 'expression.dereference',
-  InvalidDereference = 'invalid.illegal.dereference',
-  // #endregion access
+  // #region statements
+  Statement = 'repository.statement',
+  ExpressionStatement = 'repository.statement.expression',
+  CommandStatement = 'repository.statement.command',
+  LegacyStatement = 'repository.statement.legacy.expression',
+  // #endregion statements
+
+  // #region expressions
+  Expression = 'repository.expression',
+  ParenthesizedExpression = 'repository.expression.parenthesized',
+
+  // #region literal
+  Literal = 'repository.expression.literal',
+
   // #region string
-  String = 'string',
-  InvalidStringContent = 'invalid.illegal.content',
-  DoubleString = 'string.quoted.double',
-  DoubleStringContent = 'string.quoted.double.content',
-  DoubleStringEscapeSequence = 'constant.character.escape.double',
-  SingleString = 'string.quoted.single',
-  SingleStringEscapeSequence = 'constant.character.escape.single',
+  String = 'repository.expression.string',
+  InvalidStringContent = 'repository.expression.string.content.invalid',
+  DoubleString = 'repository.expression.string.double-quote',
+  DoubleStringEscapeSequence = 'repository.expression.string.content.escape-sequence.double-quote',
+  SingleString = 'repository.expression.string.single-quote',
+  SingleStringEscapeSequence = 'repository.expression.string.content.escape-sequence.single-quote',
   // #endregion string
   // #region number
-  Number = 'number',
-  Integer = 'constant.numeric.integer',
-  Float = 'constant.numeric.float',
-  InvalidFloat = 'invalid.illegal.float',
-  Hex = 'constant.numeric.hex',
-  InvalidHex = 'invalid.illegal.hex',
-  ScientificNotation = 'constant.numeric.scientificnotation',
-  InvalidScientificNotation = 'invalid.illegal.scientificnotation',
+  Number = 'repository.expression.number',
+  Integer = 'repository.expression.number.integer',
+  Float = 'repository.expression.number.float',
+  InvalidFloat = 'repository.expression.number.float.invalid',
+  Hex = 'repository.expression.number.hex',
+  InvalidHex = 'repository.expression.number.hex.invalid',
+  ScientificNotation = 'repository.expression.number.scientific-notation',
+  InvalidScientificNotation = 'repository.expression.number.scientific-notation.invalid',
   // #endregion number
-  // #region operator
-  Operator = 'operator',
-  // #endregion operator
-  // #region token
-  Comma = 'punctuation.separator.comma',
-  // #endregion token
+  // #endregion literal
+
+  // #region variable
+  Variable = 'repository.expression.variable',
+  BuiltInVariable = 'repository.expression.variable.built-in',
+  InvalidVariable = 'repository.expression.variable.invalid',
+  // #endregion variable
+
+  // #region access
+  Dereference = 'repository.expression.dereference',
+  InvalidDereference = 'repository.expression.dereference.invalid',
+  // #endregion access
+  // #endregion expressions
+
+  // #region operators
+  Operator = 'repository.operator.without-comma',
+  Comma = 'repository.operator.comma',
+  // #endregion operators
+
+  // #region v1 syntax
+  Command = 'repository.command',
+  CommonCommand = 'repository.common-command',
+  CommandArgument = 'repository.command.argument',
+  CommandArgumentText = 'repository.command.argument.text',
+  CommandArgumentControlStyleText = 'repository.command.argument.text.control-style',
+  // #endregion v1 syntax
+
+  // #region legacy
+  Legacy = 'repository.legacy',
+  LegacyAssignment = 'repository.legacy.expression.assignment',
+  LegacyTextEscapeSequence = 'repository.legacy.expression.content.escape-sequence.unquote',
+  PercentExpression = 'repository.legacy.expression.percent',
+  // #endregion legacy
 }
 
 // https://macromates.com/manual/en/language_grammars#naming_conventions

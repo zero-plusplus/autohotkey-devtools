@@ -156,14 +156,6 @@ export function createRepositories(scopeName: ScopeName): Repositories {
         match: many1(legacyTextChar),
       };
     })(),
-    [Repository.CommandArgumentSeparator]: ((): MatchRule => {
-      return {
-        match: capture(char(',')),
-        captures: {
-          1: nameRule(RuleName.CommandArgumentSeparator),
-        },
-      };
-    }),
     ...Object.fromEntries(commandInfos.map((commandInfo): [ string, Rule ] => {
       const [ commandName, ...args ] = commandInfo;
       const repositoryName = createRepositoryNameByCommandInfo(commandInfo);
@@ -222,7 +214,7 @@ export function createRepositories(scopeName: ScopeName): Repositories {
             includeRule(Repository.BuiltInVariable),
             includeRule(Repository.Variable),
           );
-          case CommandArgsType.ControlStyle: return patternsRule(includeRule(Repository.ControlStyle));
+          case CommandArgsType.ControlStyle: return patternsRule(includeRule(Repository.CommandArgumentControlStyleText));
           case CommandArgsType.Legacy: {
             const commandArgumentRule: IncludeRule = includeRule(Repository.CommandArgument);
 
