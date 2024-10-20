@@ -329,28 +329,16 @@ export const enum Repository {
 // https://github.com/microsoft/vscode/blob/main/extensions/theme-defaults/themes/dark_vs.json
 // https://github.com/microsoft/vscode/blob/main/extensions/theme-defaults/themes/dark_plus.json
 export const enum RuleName {
-  Emphasis = 'emphasis',
+  // #region trivias
+  SingleLineComment = 'comment.single-line',
+  InLineComment = 'comment.in-line',
+  // #endregion trivias
 
   // #region statement
   DirectiveName = 'meta.preprocessor.directive',
   // #endregion statement
-  // #region legacy
-  LegacyAssignment = 'expression.legacy.assignment',
-  LegacyText = 'string.legacy.text',
-  LegacyTextEscapeSequence = 'constant.character.escape.legacy.text',
-  ForceExpression = 'expression.legacy.expression.force',
-  ForceExpressionPercent = 'punctuation.definition.expression.force',
-  CommandName = 'support.function.command',
-  SubCommandName = 'strong string.legacy.subcommand',
-  CommandArgumentSeparator = 'punctuation.definition.command.argument.separator',
-  CommandArgumentKeyword = 'strong string.legacy.text',
-  InvalidCommandArgument = 'invalid.illegal.command.argument',
-  // #endregion legacy
-  // #region comment
-  SingleLineComment = 'comment.single-line',
-  InLineComment = 'comment.in-line',
-  // #endregion comment
-  // #region expression
+
+  // #region expressions
   Expression = 'expression',
   ParenthesizedExpression = 'expression.parenthesized',
 
@@ -391,15 +379,33 @@ export const enum RuleName {
   ExponentPlusMinusSign = 'constant.numeric.exponent.plus-minus.sign',
   Exponent = 'constant.numeric.exponent',
   // #endregion number
-  // #region operator
+  // #region operators
   Operator = 'keyword.operator',
   Equals = 'keyword.operator.equals',
-  // #endregion operator
-  // #endregion expression
-  // #region token
   Comma = 'punctuation.separator.comma',
+  // #endregion operators
+  // #endregion expressions
+
+  // #region token
   OpenParen = 'meta.brace.round.begin',
   CloseParen = 'meta.brace.round.end',
+  // #region tokens
+
+  // #region extra rules
+  Emphasis = 'emphasis',
+  Keyword = 'strong string.legacy.text',
+  Invalid = 'invalid.illegal',
+  // #endregion extra rules
+
+  // #region legacy
+  LegacyAssignment = 'expression.legacy.assignment',
+  LegacyText = 'string.legacy.text',
+  LegacyTextEscapeSequence = 'constant.character.escape.legacy.text',
+  ForceExpression = 'expression.legacy.expression.force',
+  ForceExpressionPercent = 'punctuation.definition.expression.force',
+  CommandName = 'support.function.command',
+  SubCommandName = 'strong string.legacy.subcommand',
+  // #endregion legacy
 }
 export const enum CommandArgsType {
   None = 0,

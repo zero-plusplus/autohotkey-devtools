@@ -29,9 +29,9 @@ describe('command', () => {
     [
       'AutoTrim, On', [
         { text: 'AutoTrim', scopes: name(Repository.Command, RuleName.CommandName) },
-        { text: ',', scopes: name(Repository.Command, RuleName.CommandArgumentSeparator) },
+        { text: ',', scopes: name(Repository.Command, Repository.CommandArgument, RuleName.Comma) },
         { text: ' ' },
-        { text: 'On', scopes: name(Repository.Command, RuleName.CommandArgumentKeyword) },
+        { text: 'On', scopes: name(Repository.Command, Repository.CommandArgument, RuleName.Keyword) },
       ],
     ],
     // space separator
@@ -39,7 +39,7 @@ describe('command', () => {
       'AutoTrim On', [
         { text: 'AutoTrim', scopes: name(Repository.Command, RuleName.CommandName) },
         { text: ' ' },
-        { text: 'On', scopes: name(Repository.Command, RuleName.CommandArgumentKeyword) },
+        { text: 'On', scopes: name(Repository.Command, Repository.CommandArgument, RuleName.Keyword) },
       ],
     ],
   ])('first separator', async(text, expected) => {
@@ -54,29 +54,29 @@ describe('command', () => {
     [
       'AutoTrim, On', [
         { text: 'AutoTrim', scopes: name(Repository.Command, RuleName.CommandName) },
-        { text: ',', scopes: name(Repository.Command, RuleName.CommandArgumentSeparator) },
+        { text: ',', scopes: name(Repository.Command, Repository.CommandArgument, RuleName.Comma) },
         { text: ' ' },
-        { text: 'On', scopes: name(Repository.Command, RuleName.CommandArgumentKeyword) },
+        { text: 'On', scopes: name(Repository.Command, Repository.CommandArgument, RuleName.Keyword) },
       ],
     ],
     [
       'AutoTrim, %true%', [
         { text: 'AutoTrim', scopes: name(Repository.Command, RuleName.CommandName) },
-        { text: ',', scopes: name(Repository.Command, RuleName.CommandArgumentSeparator) },
+        { text: ',', scopes: name(Repository.Command, Repository.CommandArgument, RuleName.Comma) },
         { text: ' ' },
-        { text: '%', scopes: name(Repository.Command, RuleName.Dereference, RuleName.DereferencePercentBegin) },
-        { text: 'true', scopes: name(Repository.Command, RuleName.Dereference, RuleName.BuiltInVariable) },
-        { text: '%', scopes: name(Repository.Command, RuleName.Dereference, RuleName.DereferencePercentEnd) },
+        { text: '%', scopes: name(Repository.Command, Repository.CommandArgument, RuleName.Dereference, RuleName.DereferencePercentBegin) },
+        { text: 'true', scopes: name(Repository.Command, Repository.CommandArgument, RuleName.Dereference, RuleName.BuiltInVariable) },
+        { text: '%', scopes: name(Repository.Command, Repository.CommandArgument, RuleName.Dereference, RuleName.DereferencePercentEnd) },
       ],
     ],
     [
       'AutoTrim, % true', [
         { text: 'AutoTrim', scopes: name(Repository.Command, RuleName.CommandName) },
-        { text: ',', scopes: name(Repository.Command, RuleName.CommandArgumentSeparator) },
+        { text: ',', scopes: name(Repository.Command, Repository.CommandArgument, RuleName.Comma) },
         { text: ' ' },
-        { text: '%', scopes: name(Repository.Command, RuleName.ForceExpression, RuleName.ForceExpressionPercent) },
+        { text: '%', scopes: name(Repository.Command, Repository.CommandArgument, RuleName.ForceExpression, RuleName.ForceExpressionPercent) },
         { text: ' ' },
-        { text: 'true', scopes: name(Repository.Command, RuleName.ForceExpression, RuleName.BuiltInVariable) },
+        { text: 'true', scopes: name(Repository.Command, Repository.CommandArgument, RuleName.ForceExpression, RuleName.BuiltInVariable) },
       ],
     ],
     [
@@ -87,9 +87,9 @@ describe('command', () => {
         { text: 'AutoTrim', scopes: name(Repository.Command, RuleName.CommandName) },
         { text: '\n' },
         { text: '  ' },
-        { text: ',', scopes: name(Repository.Command, RuleName.CommandArgumentSeparator) },
+        { text: ',', scopes: name(Repository.Command, Repository.CommandArgument, RuleName.Comma) },
         { text: ' ' },
-        { text: 'continuation argument', scopes: name(Repository.Command, RuleName.LegacyText) },
+        { text: 'continuation argument', scopes: name(Repository.Command, Repository.CommandArgument, RuleName.LegacyText) },
       ],
     ],
     [
@@ -99,26 +99,26 @@ describe('command', () => {
       `, [
         { text: 'AutoTrim', scopes: name(Repository.Command, RuleName.CommandName) },
         { text: ' ' },
-        { text: '%', scopes: name(Repository.Command, RuleName.ForceExpression, RuleName.ForceExpressionPercent) },
+        { text: '%', scopes: name(Repository.Command, Repository.CommandArgument, RuleName.ForceExpression, RuleName.ForceExpressionPercent) },
         { text: ' ' },
-        { text: 'continuation', scopes: name(Repository.Command, RuleName.ForceExpression, RuleName.Variable) },
+        { text: 'continuation', scopes: name(Repository.Command, Repository.CommandArgument, RuleName.ForceExpression, RuleName.Variable) },
         { text: '\n' },
         { text: '  ' },
-        { text: '+', scopes: name(Repository.Command, RuleName.Operator) },
+        { text: '+', scopes: name(Repository.Command, Repository.CommandArgument, RuleName.Operator) },
         { text: ' ' },
-        { text: 'expressionArgument', scopes: name(Repository.Command, RuleName.Variable) },
-        { text: ',', scopes: name(Repository.Command, RuleName.CommandArgumentSeparator) },
+        { text: 'expressionArgument', scopes: name(Repository.Command, Repository.CommandArgument, RuleName.Variable) },
+        { text: ',', scopes: name(Repository.Command, Repository.CommandArgument, RuleName.Comma) },
         { text: ' ' },
-        { text: 'legacyText', scopes: name(Repository.Command, RuleName.LegacyText) },
+        { text: 'legacyText', scopes: name(Repository.Command, Repository.CommandArgument, RuleName.LegacyText) },
       ],
     ],
     // invalid
     [
       'AutoTrim, No keyword', [
         { text: 'AutoTrim', scopes: name(Repository.Command, RuleName.CommandName) },
-        { text: ',', scopes: name(Repository.Command, RuleName.CommandArgumentSeparator) },
+        { text: ',', scopes: name(Repository.Command, Repository.CommandArgument, RuleName.Comma) },
         { text: ' ' },
-        { text: 'No keyword', scopes: name(Repository.Command, RuleName.InvalidCommandArgument) },
+        { text: 'No keyword', scopes: name(Repository.Command, Repository.CommandArgument, RuleName.LegacyText, RuleName.Invalid) },
       ],
     ],
   ])('enum argument', async(text, expected) => {
@@ -132,10 +132,10 @@ describe('command', () => {
     [
       'AutoTrim, On, Overflow, arguments', [
         { text: 'AutoTrim', scopes: name(Repository.Command, RuleName.CommandName) },
-        { text: ',', scopes: name(Repository.Command, RuleName.CommandArgumentSeparator) },
+        { text: ',', scopes: name(Repository.Command, Repository.CommandArgument, RuleName.Comma) },
         { text: ' ' },
-        { text: 'On', scopes: name(Repository.Command, RuleName.CommandArgumentKeyword) },
-        { text: ', Overflow, arguments', scopes: name(Repository.Command, RuleName.InvalidCommandArgument) },
+        { text: 'On', scopes: name(Repository.Command, Repository.CommandArgument, RuleName.Keyword) },
+        { text: ', Overflow, arguments', scopes: name(Repository.Command, Repository.CommandArgument, RuleName.LegacyText, RuleName.Invalid) },
       ],
     ],
   ])('too many arguments', async(text, expected) => {

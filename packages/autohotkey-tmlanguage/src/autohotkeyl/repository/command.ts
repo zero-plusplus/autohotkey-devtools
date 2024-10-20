@@ -16,7 +16,7 @@ export function createRepositories(scopeName: ScopeName): Repositories {
     {
       match: '(,)',
       captures: {
-        1: nameRule(RuleName.CommandArgumentSeparator),
+        1: nameRule(Repository.CommandArgument, RuleName.Comma),
       },
     },
     includeRule(Repository.CommandArgument),
@@ -72,19 +72,28 @@ export function createRepositories(scopeName: ScopeName): Repositories {
   const continuationArguments: Pick<BeginWhileRule, 'while' | 'whileCaptures' | 'patterns'> = {
     while: alt(whileLegacyArgument, whileExpression),
     whileCaptures: {
-      1: nameRule(RuleName.CommandArgumentSeparator),
-      2: { patterns: argumentsPatterns },
-      3: nameRule(RuleName.Operator),
-      4: { patterns: [ includeRule(Repository.Expression) ] },
-      5: nameRule(RuleName.CommandArgumentSeparator),
-      6: { patterns: argumentsPatterns },
+      1: nameRule(Repository.CommandArgument, RuleName.Comma),
+      2: {
+        name: name(Repository.CommandArgument),
+        patterns: argumentsPatterns,
+      },
+      3: nameRule(Repository.CommandArgument, RuleName.Operator),
+      4: {
+        name: name(Repository.CommandArgument),
+        patterns: [ includeRule(Repository.Expression) ],
+      },
+      5: nameRule(Repository.CommandArgument, RuleName.Comma),
+      6: {
+        name: name(Repository.CommandArgument),
+        patterns: argumentsPatterns,
+      },
     },
     patterns: [
       {
         begin: seq(startAnchor(), inlineSpaces0(), capture(char(',')), inlineSpaces0()),
         end: legacyEndLine,
         captures: {
-          1: nameRule(RuleName.CommandArgumentSeparator),
+          1: nameRule(Repository.CommandArgument, RuleName.Comma),
         },
         patterns: argumentsPatterns,
       },
@@ -133,9 +142,9 @@ export function createRepositories(scopeName: ScopeName): Repositories {
         )),
         beginCaptures: {
           1: nameRule(RuleName.CommandName),
-          2: nameRule(RuleName.CommandArgumentSeparator),
+          2: nameRule(Repository.CommandArgument, RuleName.Comma),
           3: { patterns: argumentsPatterns },
-          4: nameRule(RuleName.CommandArgumentSeparator),
+          4: nameRule(Repository.CommandArgument, RuleName.Comma),
         },
         ...continuationArguments,
       };
@@ -203,12 +212,12 @@ export function createRepositories(scopeName: ScopeName): Repositories {
             capture(ordalt(...keywords)),
             lookahead(wordBound()),
           )),
-          captures: { 1: nameRule(RuleName.CommandArgumentKeyword) },
+          captures: { 1: nameRule(RuleName.Keyword) },
         };
       };
       const getArgumentRuleByType = (argType: CommandArgsType, keywords: string[]): PatternsRule => {
         switch (argType) {
-          case CommandArgsType.None: return patternsRule(nameRule(RuleName.InvalidCommandArgument));
+          case CommandArgsType.None: return patternsRule(nameRule(RuleName.LegacyText, RuleName.Invalid));
           case CommandArgsType.Expression: return patternsRule(includeRule(Repository.Expression));
           case CommandArgsType.Input:
           case CommandArgsType.Output: return patternsRule(
@@ -229,11 +238,12 @@ export function createRepositories(scopeName: ScopeName): Repositories {
             }
 
             return {
+              name: name(Repository.CommandArgument),
               patterns: [
                 createKeywordMatchRule(keywords),
                 includeRule(Repository.PercentExpression),
                 includeRule(Repository.Dereference),
-                { name: name(RuleName.InvalidCommandArgument), match: anyChars1() },
+                { name: name(RuleName.LegacyText, RuleName.Invalid), match: anyChars1() },
               ],
             };
           }
@@ -266,7 +276,7 @@ export function createRepositories(scopeName: ScopeName): Repositories {
                     const argKey = `${(i * 2) + 2}`;
 
                     return [
-                      [ separatorKey, nameRule(RuleName.CommandArgumentSeparator) ], ((): [ string, Rule ] => {
+                      [ separatorKey, nameRule(Repository.CommandArgument, RuleName.Comma) ], ((): [ string, Rule ] => {
                         const argType = Array.isArray(arg) ? arg[0] : arg;
                         const keywords = (Array.isArray(arg) ? arg.slice(1) : []) as string[];
 
@@ -286,7 +296,7 @@ export function createRepositories(scopeName: ScopeName): Repositories {
               patterns: [
                 includeRule(Repository.InLineComment),
                 {
-                  name: name(RuleName.InvalidCommandArgument),
+                  name: name(Repository.CommandArgument, RuleName.LegacyText, RuleName.Invalid),
                   match: alt(
                     negChar('\\r', '\\n', ';'),
                     groupMany1(seq(negativeLookbehind(inlineSpace()), char(';'))),
