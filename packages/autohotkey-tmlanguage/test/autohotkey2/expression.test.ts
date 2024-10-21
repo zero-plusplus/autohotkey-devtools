@@ -1,4 +1,4 @@
-import { RuleName } from '../../src/constants';
+import { Repository, RuleName } from '../../src/constants';
 import type { ScopeName } from '../../src/types';
 import { createUtilities, getEscapeSequencesInfo } from '../../src/utils';
 import { parse } from '../helpers/textmate-parser';
@@ -13,27 +13,27 @@ describe('expression', () => {
       test.each([
         [
           '%abc%', [
-            { text: '%', scopes: name(RuleName.Dereference, RuleName.DereferencePercentBegin) },
-            { text: 'abc', scopes: name(RuleName.Dereference, RuleName.Variable) },
-            { text: '%', scopes: name(RuleName.Dereference, RuleName.DereferencePercentEnd) },
+            { text: '%', scopes: name(Repository.Dereference, RuleName.PercentBegin) },
+            { text: 'abc', scopes: name(Repository.Dereference, RuleName.Variable) },
+            { text: '%', scopes: name(Repository.Dereference, RuleName.PercentEnd) },
           ],
         ],
         [
           '%A_ScriptDir%',
           [
-            { text: '%', scopes: name(RuleName.Dereference, RuleName.DereferencePercentBegin) },
-            { text: 'A_ScriptDir', scopes: name(RuleName.Dereference, RuleName.BuiltInVariable) },
-            { text: '%', scopes: name(RuleName.Dereference, RuleName.DereferencePercentEnd) },
+            { text: '%', scopes: name(Repository.Dereference, RuleName.PercentBegin) },
+            { text: 'A_ScriptDir', scopes: name(Repository.Dereference, RuleName.BuiltInVariable) },
+            { text: '%', scopes: name(Repository.Dereference, RuleName.PercentEnd) },
           ],
         ],
         [
           '%"abc"%',
           [
-            { text: '%', scopes: name(RuleName.Dereference, RuleName.DereferencePercentBegin) },
-            { text: '"', scopes: name(RuleName.Dereference, RuleName.DoubleString, RuleName.StringBegin) },
-            { text: 'abc', scopes: name(RuleName.Dereference, RuleName.DoubleString) },
-            { text: '"', scopes: name(RuleName.Dereference, RuleName.DoubleString, RuleName.StringEnd) },
-            { text: '%', scopes: name(RuleName.Dereference, RuleName.DereferencePercentEnd) },
+            { text: '%', scopes: name(Repository.Dereference, RuleName.PercentBegin) },
+            { text: '"', scopes: name(Repository.Dereference, RuleName.DoubleString, RuleName.StringBegin) },
+            { text: 'abc', scopes: name(Repository.Dereference, RuleName.DoubleString) },
+            { text: '"', scopes: name(Repository.Dereference, RuleName.DoubleString, RuleName.StringEnd) },
+            { text: '%', scopes: name(Repository.Dereference, RuleName.PercentEnd) },
           ],
         ],
       ])(
@@ -49,22 +49,22 @@ describe('expression', () => {
       test.each([
         [
           '%%', [
-            { text: '%', scopes: name(RuleName.Dereference, RuleName.DereferencePercentBegin, RuleName.InvalidDereferencePercent) },
-            { text: '%', scopes: name(RuleName.Dereference, RuleName.DereferencePercentEnd, RuleName.InvalidDereferencePercent) },
+            { text: '%', scopes: name(Repository.Dereference, RuleName.PercentBegin, RuleName.Invalid) },
+            { text: '%', scopes: name(Repository.Dereference, RuleName.PercentEnd, RuleName.Invalid) },
           ],
         ],
-        [ '%', [ { text: '%', scopes: name(RuleName.Dereference, RuleName.DereferencePercentBegin, RuleName.InvalidDereferencePercent) } ] ],
+        [ '%', [ { text: '%', scopes: name(Repository.Dereference, RuleName.PercentBegin, RuleName.Invalid) } ] ],
         [
           '%a', [
-            { text: '%', scopes: name(RuleName.Dereference, RuleName.DereferencePercentBegin) },
-            { text: 'a', scopes: name(RuleName.Dereference, RuleName.Variable, RuleName.InvalidDereference) },
+            { text: '%', scopes: name(Repository.Dereference, RuleName.PercentBegin) },
+            { text: 'a', scopes: name(Repository.Dereference, RuleName.Variable, RuleName.Invalid) },
           ],
         ],
         [
           '%abc', [
-            { text: '%', scopes: name(RuleName.Dereference, RuleName.DereferencePercentBegin) },
-            { text: 'ab', scopes: name(RuleName.Dereference, RuleName.Variable) },
-            { text: 'c', scopes: name(RuleName.Dereference, RuleName.Variable, RuleName.InvalidDereference) },
+            { text: '%', scopes: name(Repository.Dereference, RuleName.PercentBegin) },
+            { text: 'ab', scopes: name(Repository.Dereference, RuleName.Variable) },
+            { text: 'c', scopes: name(Repository.Dereference, RuleName.Variable, RuleName.Invalid) },
           ],
         ],
       ])(
@@ -121,9 +121,9 @@ describe('expression', () => {
           expect(actual).toStrictEqual([
             { text: `'`, scopes: name(RuleName.SingleString, RuleName.StringBegin) },
             { text: 'a', scopes: name(RuleName.SingleString) },
-            { text: 'b', scopes: name(RuleName.SingleString, RuleName.InvalidSingleLineStringContent) },
+            { text: 'b', scopes: name(RuleName.SingleString, RuleName.Invalid) },
             { text: '\r\n' },
-            { text: 'c', scopes: name(RuleName.SingleString, RuleName.InvalidSingleLineStringContent) },
+            { text: 'c', scopes: name(RuleName.SingleString, RuleName.Invalid) },
             { text: '\n' },
             { text: `'`, scopes: name(RuleName.SingleString, RuleName.StringEnd) },
           ]);

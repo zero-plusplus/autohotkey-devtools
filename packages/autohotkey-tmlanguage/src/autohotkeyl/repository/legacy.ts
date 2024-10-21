@@ -51,12 +51,12 @@ export function createRepositories(scopeName: ScopeName): Repositories {
         ),
         captures: {
           1: {
-            name: name(RuleName.LegacyAssignment),
+            name: name(Repository.LegacyAssignment),
             patterns: [ includeRule(Repository.Variable) ],
           },
-          2: nameRule(RuleName.LegacyAssignment, RuleName.Equals),
+          2: nameRule(Repository.LegacyAssignment, RuleName.Equals),
           3: {
-            name: name(RuleName.LegacyAssignment),
+            name: name(Repository.LegacyAssignment),
             patterns: [
               includeRule(Repository.PercentExpression),
               includeRule(Repository.Dereference),
@@ -88,9 +88,9 @@ export function createRepositories(scopeName: ScopeName): Repositories {
           ))),
         ),
         captures: {
-          1: nameRule(RuleName.ForceExpression, RuleName.ForceExpressionPercent),
+          1: nameRule(Repository.PercentExpression, RuleName.PercentBegin),
           2: {
-            name: name(RuleName.ForceExpression),
+            name: name(Repository.PercentExpression),
             patterns: [ includeRule(Repository.Expression) ],
           },
         },

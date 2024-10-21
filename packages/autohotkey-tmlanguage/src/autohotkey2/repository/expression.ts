@@ -48,13 +48,13 @@ export function createLiteralRepositories(scopeName: ScopeName): Repositories {
           capture(char('%')),
         ),
         captures: {
-          1: nameRule(RuleName.Dereference, RuleName.DereferencePercentBegin),
+          1: nameRule(Repository.Dereference, RuleName.PercentBegin),
           2: {
             patterns: [
               includeRule(Repository.InvalidDereference),
               includeRule(Repository.Dereference),
               {
-                name: name(RuleName.Dereference),
+                name: name(Repository.Dereference),
                 match: capture(anyChars1()),
                 captures: {
                   1: {
@@ -64,7 +64,7 @@ export function createLiteralRepositories(scopeName: ScopeName): Repositories {
               },
             ],
           },
-          3: nameRule(RuleName.Dereference, RuleName.DereferencePercentEnd),
+          3: nameRule(Repository.Dereference, RuleName.PercentEnd),
         },
       };
     })(),
@@ -79,14 +79,14 @@ export function createLiteralRepositories(scopeName: ScopeName): Repositories {
               capture(char('%')),
             ),
             captures: {
-              1: nameRule(RuleName.Dereference, RuleName.DereferencePercentBegin, RuleName.InvalidDereferencePercent),
-              2: nameRule(RuleName.Dereference, RuleName.DereferencePercentEnd, RuleName.InvalidDereferencePercent),
+              1: nameRule(Repository.Dereference, RuleName.PercentBegin, RuleName.Invalid),
+              2: nameRule(Repository.Dereference, RuleName.PercentEnd, RuleName.Invalid),
             },
           },
           // %
           //  ^ missing
           {
-            name: name(RuleName.Dereference),
+            name: name(Repository.Dereference),
             match: seq(
               capture(char('%')),
               lookahead(alt(
@@ -95,7 +95,7 @@ export function createLiteralRepositories(scopeName: ScopeName): Repositories {
               )),
             ),
             captures: {
-              1: nameRule(RuleName.DereferencePercentBegin, RuleName.InvalidDereferencePercent),
+              1: nameRule(RuleName.PercentBegin, RuleName.Invalid),
             },
           },
           // %abc
@@ -109,16 +109,16 @@ export function createLiteralRepositories(scopeName: ScopeName): Repositories {
               endLine,
             ),
             captures: {
-              1: nameRule(RuleName.Dereference, RuleName.DereferencePercentBegin),
+              1: nameRule(Repository.Dereference, RuleName.PercentBegin),
               2: {
-                name: name(RuleName.Dereference),
+                name: name(Repository.Dereference),
                 patterns: [
                   includeRule(Repository.InvalidDereference),
                   includeRule(Repository.Dereference),
                   includeRule(Repository.Expression),
                 ],
               },
-              3: nameRule(RuleName.Dereference, RuleName.Variable, RuleName.InvalidDereference),
+              3: nameRule(Repository.Dereference, RuleName.Variable, RuleName.Invalid),
             },
           },
         ],

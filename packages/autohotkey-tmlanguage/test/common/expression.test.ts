@@ -1,4 +1,4 @@
-import { RuleName } from '../../src/constants';
+import { Repository, RuleName } from '../../src/constants';
 import type { ScopeName } from '../../src/types';
 import { createUtilities, getBuiltInVariableNames, getEscapeSequencesInfo } from '../../src/utils';
 import { parse } from '../helpers/textmate-parser';
@@ -16,9 +16,9 @@ describe.each([
     test.each([
       [
         '(var)', [
-          { text: '(', scopes: name(RuleName.ParenthesizedExpression, RuleName.OpenParen) },
-          { text: 'var', scopes: name(RuleName.ParenthesizedExpression, RuleName.Variable) },
-          { text: ')', scopes: name(RuleName.ParenthesizedExpression, RuleName.CloseParen) },
+          { text: '(', scopes: name(Repository.ParenthesizedExpression, RuleName.OpenParen) },
+          { text: 'var', scopes: name(Repository.ParenthesizedExpression, RuleName.Variable) },
+          { text: ')', scopes: name(Repository.ParenthesizedExpression, RuleName.CloseParen) },
         ],
       ],
     ])(
@@ -51,12 +51,12 @@ describe.each([
         [
           'v'.repeat(255), [
             { text: 'v'.repeat(253), scopes: name(RuleName.Variable) },
-            { text: 'v'.repeat(2), scopes: name(RuleName.Variable, RuleName.InvalidVariable) },
+            { text: 'v'.repeat(2), scopes: name(RuleName.Variable, RuleName.Invalid) },
           ],
         ],
         [
           '12abc', [
-            { text: '12', scopes: name(RuleName.Variable, RuleName.Integer, RuleName.InvalidVariable) },
+            { text: '12', scopes: name(RuleName.Variable, RuleName.Integer, RuleName.Invalid) },
             { text: 'abc', scopes: name(RuleName.Variable) },
           ],
         ],
@@ -121,9 +121,9 @@ describe.each([
         expect(actual).toStrictEqual([
           { text: '"', scopes: name(RuleName.DoubleString, RuleName.StringBegin) },
           { text: 'a', scopes: name(RuleName.DoubleString) },
-          { text: 'b', scopes: name(RuleName.DoubleString, RuleName.InvalidSingleLineStringContent) },
+          { text: 'b', scopes: name(RuleName.DoubleString, RuleName.Invalid) },
           { text: '\r\n' },
-          { text: 'c', scopes: name(RuleName.DoubleString, RuleName.InvalidSingleLineStringContent) },
+          { text: 'c', scopes: name(RuleName.DoubleString, RuleName.Invalid) },
           { text: '\n' },
           { text: '"', scopes: name(RuleName.DoubleString, RuleName.StringEnd) },
         ]);
@@ -177,7 +177,7 @@ describe.each([
         [
           '123.', [
             { text: '123', scopes: name(RuleName.Float, RuleName.Integer) },
-            { text: '.', scopes: name(RuleName.Float, RuleName.DecimalPoint, RuleName.InvalidNumber) },
+            { text: '.', scopes: name(RuleName.Float, RuleName.DecimalPoint, RuleName.Invalid) },
           ],
         ],
       ])(
@@ -212,7 +212,7 @@ describe.each([
       test.each([
         [
           '12300x123ABC', [
-            { text: '1230', scopes: name(RuleName.HexPrefix, RuleName.InvalidNumber) },
+            { text: '1230', scopes: name(RuleName.HexPrefix, RuleName.Invalid) },
             { text: '0x', scopes: name(RuleName.Hex, RuleName.HexPrefix) },
             { text: '123ABC', scopes: name(RuleName.Hex, RuleName.HexValue) },
           ],
@@ -220,14 +220,14 @@ describe.each([
         [
           '0x', [
             { text: '0', scopes: name(RuleName.Hex, RuleName.HexPrefix) },
-            { text: 'x', scopes: name(RuleName.Hex, RuleName.HexPrefix, RuleName.InvalidNumber) },
+            { text: 'x', scopes: name(RuleName.Hex, RuleName.HexPrefix, RuleName.Invalid) },
           ],
         ],
         [
           '0x123ABC.', [
             { text: '0x', scopes: name(RuleName.Hex, RuleName.HexPrefix) },
             { text: '123ABC', scopes: name(RuleName.Hex, RuleName.HexValue) },
-            { text: '.', scopes: name(RuleName.DecimalPoint, RuleName.InvalidNumber) },
+            { text: '.', scopes: name(RuleName.DecimalPoint, RuleName.Invalid) },
           ],
         ],
       ])(
@@ -286,14 +286,14 @@ describe.each([
         [
           '123e', [
             { text: '123', scopes: name(RuleName.ScientificNotation, RuleName.Integer) },
-            { text: 'e', scopes: name(RuleName.ScientificNotation, RuleName.ENotation, RuleName.InvalidNumber) },
+            { text: 'e', scopes: name(RuleName.ScientificNotation, RuleName.ENotation, RuleName.Invalid) },
           ],
         ],
         [
           '123e+', [
             { text: '123', scopes: name(RuleName.ScientificNotation, RuleName.Integer) },
             { text: 'e', scopes: name(RuleName.ScientificNotation, RuleName.ENotation) },
-            { text: '+', scopes: name(RuleName.ScientificNotation, RuleName.ExponentPlusMinusSign, RuleName.InvalidNumber) },
+            { text: '+', scopes: name(RuleName.ScientificNotation, RuleName.ExponentPlusMinusSign, RuleName.Invalid) },
           ],
         ],
         [
@@ -302,7 +302,7 @@ describe.each([
             { text: 'e', scopes: name(RuleName.ScientificNotation, RuleName.ENotation) },
             { text: '+', scopes: name(RuleName.ScientificNotation, RuleName.ExponentPlusMinusSign) },
             { text: '1', scopes: name(RuleName.ScientificNotation, RuleName.Exponent) },
-            { text: '.', scopes: name(RuleName.ScientificNotation, RuleName.DecimalPart, RuleName.InvalidNumber) },
+            { text: '.', scopes: name(RuleName.ScientificNotation, RuleName.DecimalPart, RuleName.Invalid) },
           ],
         ],
       ])(

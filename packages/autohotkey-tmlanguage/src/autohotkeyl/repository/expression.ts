@@ -47,7 +47,7 @@ export function createLiteralRepositories(scopeName: ScopeName): Repositories {
     })(),
     [Repository.ParenthesizedExpression]: ((): BeginEndRule => {
       return {
-        name: name(RuleName.ParenthesizedExpression),
+        name: name(Repository.ParenthesizedExpression),
         begin: capture(char('(')),
         beginCaptures: {
           1: nameRule(RuleName.OpenParen),
@@ -78,7 +78,7 @@ export function createLiteralRepositories(scopeName: ScopeName): Repositories {
               capture(seq(variableParts.headChar, manyRange(variableParts.tailChar, 0, 252))),
             ),
             captures: {
-              1: nameRule(RuleName.Variable, RuleName.Integer, RuleName.InvalidVariable),
+              1: nameRule(RuleName.Variable, RuleName.Integer, RuleName.Invalid),
               2: nameRule(RuleName.Variable),
             },
           },
@@ -89,7 +89,7 @@ export function createLiteralRepositories(scopeName: ScopeName): Repositories {
             ),
             captures: {
               1: nameRule(RuleName.Variable),
-              2: nameRule(RuleName.Variable, RuleName.InvalidVariable),
+              2: nameRule(RuleName.Variable, RuleName.Invalid),
             },
           },
         ],
@@ -116,14 +116,14 @@ export function createLiteralRepositories(scopeName: ScopeName): Repositories {
       return {
         begin: capture(char('%')),
         beginCaptures: {
-          1: nameRule(RuleName.Dereference, RuleName.DereferencePercentBegin),
+          1: nameRule(Repository.Dereference, RuleName.PercentBegin),
         },
         end: alt(
           capture(char('%')),
           lookahead(endLine),
         ),
         endCaptures: {
-          1: nameRule(RuleName.Dereference, RuleName.DereferencePercentEnd),
+          1: nameRule(Repository.Dereference, RuleName.PercentEnd),
         },
         patterns: [
           // %a b c %
@@ -136,19 +136,19 @@ export function createLiteralRepositories(scopeName: ScopeName): Repositories {
             ),
             captures: {
               1: {
-                name: name(RuleName.Dereference),
+                name: name(Repository.Dereference),
                 patterns: [
                   includeRule(Repository.BuiltInVariable),
                   includeRule(Repository.Variable),
                 ],
               },
-              2: nameRule(RuleName.Dereference, RuleName.Variable, RuleName.InvalidDereference),
+              2: nameRule(Repository.Dereference, RuleName.Variable, RuleName.Invalid),
             },
           },
           // %abc%
           //  ^^^ valid
           {
-            name: name(RuleName.Dereference),
+            name: name(Repository.Dereference),
             match: capture(many1(dereferenceContent)),
             captures: {
               1: {
@@ -175,8 +175,8 @@ export function createLiteralRepositories(scopeName: ScopeName): Repositories {
               capture(char('%')),
             ),
             captures: {
-              1: nameRule(RuleName.Dereference, RuleName.DereferencePercentBegin, RuleName.InvalidDereferencePercent),
-              2: nameRule(RuleName.Dereference, RuleName.DereferencePercentEnd, RuleName.InvalidDereferencePercent),
+              1: nameRule(Repository.Dereference, RuleName.PercentBegin, RuleName.Invalid),
+              2: nameRule(Repository.Dereference, RuleName.PercentEnd, RuleName.Invalid),
             },
           },
           // %
@@ -187,7 +187,7 @@ export function createLiteralRepositories(scopeName: ScopeName): Repositories {
               lookahead(endLine),
             ),
             captures: {
-              1: nameRule(RuleName.Dereference, RuleName.DereferencePercentBegin, RuleName.InvalidDereferencePercent),
+              1: nameRule(Repository.Dereference, RuleName.PercentBegin, RuleName.Invalid),
             },
           },
           // %abc
@@ -200,15 +200,15 @@ export function createLiteralRepositories(scopeName: ScopeName): Repositories {
               lookahead(endLine),
             ),
             captures: {
-              1: nameRule(RuleName.Dereference, RuleName.DereferencePercentBegin),
+              1: nameRule(Repository.Dereference, RuleName.PercentBegin),
               2: {
-                name: name(RuleName.Dereference),
+                name: name(Repository.Dereference),
                 patterns: [
                   includeRule(Repository.BuiltInVariable),
                   includeRule(Repository.Variable),
                 ],
               },
-              3: nameRule(RuleName.Dereference, RuleName.Variable, RuleName.InvalidDereference),
+              3: nameRule(Repository.Dereference, RuleName.Variable, RuleName.Invalid),
             },
           },
         ],
@@ -258,7 +258,7 @@ export function createLiteralRepositories(scopeName: ScopeName): Repositories {
           lookahead(endAnchor()),
         ),
         captures: {
-          1: nameRule(RuleName.InvalidSingleLineStringContent),
+          1: nameRule(RuleName.Invalid),
         },
       };
     })(),
@@ -330,7 +330,7 @@ export function createLiteralRepositories(scopeName: ScopeName): Repositories {
             ),
             captures: {
               1: nameRule(RuleName.Integer),
-              2: nameRule(RuleName.DecimalPoint, RuleName.InvalidNumber),
+              2: nameRule(RuleName.DecimalPoint, RuleName.Invalid),
             },
           },
         ],
@@ -363,7 +363,7 @@ export function createLiteralRepositories(scopeName: ScopeName): Repositories {
               )),
             ),
             captures: {
-              1: nameRule(RuleName.HexPrefix, RuleName.InvalidNumber),
+              1: nameRule(RuleName.HexPrefix, RuleName.Invalid),
               2: nameRule(RuleName.Hex),
               3: nameRule(RuleName.HexPrefix),
               4: nameRule(RuleName.HexValue),
@@ -377,7 +377,7 @@ export function createLiteralRepositories(scopeName: ScopeName): Repositories {
             )),
             captures: {
               1: nameRule(RuleName.Hex, RuleName.HexPrefix),
-              2: nameRule(RuleName.Hex, RuleName.HexPrefix, RuleName.InvalidNumber),
+              2: nameRule(RuleName.Hex, RuleName.HexPrefix, RuleName.Invalid),
             },
           },
           {
@@ -389,7 +389,7 @@ export function createLiteralRepositories(scopeName: ScopeName): Repositories {
             captures: {
               1: nameRule(RuleName.Hex, RuleName.HexPrefix),
               2: nameRule(RuleName.Hex, RuleName.HexValue),
-              3: nameRule(RuleName.DecimalPoint, RuleName.InvalidNumber),
+              3: nameRule(RuleName.DecimalPoint, RuleName.Invalid),
             },
           },
         ],
@@ -444,7 +444,7 @@ export function createLiteralRepositories(scopeName: ScopeName): Repositories {
               5: nameRule(RuleName.ScientificNotation, RuleName.ENotation),
               6: nameRule(RuleName.ScientificNotation, RuleName.ExponentPlusMinusSign),
               7: nameRule(RuleName.ScientificNotation, RuleName.Exponent),
-              8: nameRule(RuleName.ScientificNotation, RuleName.DecimalPart, RuleName.InvalidNumber),
+              8: nameRule(RuleName.ScientificNotation, RuleName.DecimalPart, RuleName.Invalid),
             },
           },
           // 123.0e+
@@ -466,7 +466,7 @@ export function createLiteralRepositories(scopeName: ScopeName): Repositories {
               3: nameRule(RuleName.ScientificNotation, RuleName.Float, RuleName.DecimalPart),
               4: nameRule(RuleName.ScientificNotation, RuleName.Integer),
               5: nameRule(RuleName.ScientificNotation, RuleName.ENotation),
-              6: nameRule(RuleName.ScientificNotation, RuleName.ExponentPlusMinusSign, RuleName.InvalidNumber),
+              6: nameRule(RuleName.ScientificNotation, RuleName.ExponentPlusMinusSign, RuleName.Invalid),
             },
           },
           // 123.0e
@@ -486,7 +486,7 @@ export function createLiteralRepositories(scopeName: ScopeName): Repositories {
               2: nameRule(RuleName.ScientificNotation, RuleName.Float, RuleName.DecimalPoint),
               3: nameRule(RuleName.ScientificNotation, RuleName.Float, RuleName.DecimalPart),
               4: nameRule(RuleName.ScientificNotation, RuleName.Integer),
-              5: nameRule(RuleName.ScientificNotation, RuleName.ENotation, RuleName.InvalidNumber),
+              5: nameRule(RuleName.ScientificNotation, RuleName.ENotation, RuleName.Invalid),
             },
           },
         ],

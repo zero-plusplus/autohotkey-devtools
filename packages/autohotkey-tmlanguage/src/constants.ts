@@ -339,25 +339,12 @@ export const enum RuleName {
   // #endregion statement
 
   // #region expressions
-  Expression = 'expression',
-  ParenthesizedExpression = 'expression.parenthesized',
-
   // #region variable
   Variable = 'variable.other',
-  InvalidVariable = 'invalid.illegal.variable',
   BuiltInVariable = 'support.variable',
   // #endregion variable
-  // #region access
-  Dereference = 'expression.dereference',
-  DereferencePercentBegin = 'punctuation.definition.dereference.begin',
-  DereferencePercentEnd = 'punctuation.definition.dereference.end',
-  InvalidDereference = 'invalid.illegal.dereference',
-  InvalidDereferencePercent = 'invalid.illegal.dereference.percent',
-  // #endregion access
   // #region string
   DoubleString = 'string.quoted.double',
-  InvalidSingleLineStringContent = 'invalid.illegal.content',
-  InvalidStringNewLine = 'invalid.illegal.newline',
   DoubleStringEscapeSequence = 'constant.character.escape.double',
   SingleStringEscapeSequence = 'constant.character.escape.single',
   SingleString = 'string.quoted.single',
@@ -366,7 +353,6 @@ export const enum RuleName {
   StringEnd = 'punctuation.definition.string.end',
   // #endregion string
   // #region number
-  InvalidNumber = 'invalid.illegal.number',
   Integer = 'constant.numeric.integer',
   DecimalPart = 'constant.numeric.decimal.part',
   Float = 'constant.numeric.float',
@@ -387,6 +373,8 @@ export const enum RuleName {
   // #endregion expressions
 
   // #region token
+  PercentBegin = 'meta.percent.begin',
+  PercentEnd = 'meta.percent.end',
   OpenParen = 'meta.brace.round.begin',
   CloseParen = 'meta.brace.round.end',
   // #region tokens
@@ -401,8 +389,6 @@ export const enum RuleName {
   LegacyAssignment = 'expression.legacy.assignment',
   LegacyText = 'string.legacy.text',
   LegacyTextEscapeSequence = 'constant.character.escape.legacy.text',
-  ForceExpression = 'expression.legacy.expression.force',
-  ForceExpressionPercent = 'punctuation.definition.expression.force',
   CommandName = 'support.function.command',
   SubCommandName = 'strong string.legacy.subcommand',
   // #endregion legacy

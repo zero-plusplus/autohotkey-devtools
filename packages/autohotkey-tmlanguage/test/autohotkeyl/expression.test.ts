@@ -1,4 +1,4 @@
-import { RuleName } from '../../src/constants';
+import { Repository, RuleName } from '../../src/constants';
 import type { ScopeName } from '../../src/types';
 import { createUtilities } from '../../src/utils';
 import { parse } from '../helpers/textmate-parser';
@@ -27,17 +27,17 @@ describe('expression', () => {
       test.each([
         [
           '%abc%', [
-            { text: '%', scopes: name(RuleName.Dereference, RuleName.DereferencePercentBegin) },
-            { text: 'abc', scopes: name(RuleName.Dereference, RuleName.Variable) },
-            { text: '%', scopes: name(RuleName.Dereference, RuleName.DereferencePercentEnd) },
+            { text: '%', scopes: name(Repository.Dereference, RuleName.PercentBegin) },
+            { text: 'abc', scopes: name(Repository.Dereference, RuleName.Variable) },
+            { text: '%', scopes: name(Repository.Dereference, RuleName.PercentEnd) },
           ],
         ],
         [
           '%A_ScriptDir%',
           [
-            { text: '%', scopes: name(RuleName.Dereference, RuleName.DereferencePercentBegin) },
-            { text: 'A_ScriptDir', scopes: name(RuleName.Dereference, RuleName.BuiltInVariable) },
-            { text: '%', scopes: name(RuleName.Dereference, RuleName.DereferencePercentEnd) },
+            { text: '%', scopes: name(Repository.Dereference, RuleName.PercentBegin) },
+            { text: 'A_ScriptDir', scopes: name(Repository.Dereference, RuleName.BuiltInVariable) },
+            { text: '%', scopes: name(Repository.Dereference, RuleName.PercentEnd) },
           ],
         ],
       ])(
@@ -53,34 +53,34 @@ describe('expression', () => {
       test.each([
         [
           '%%', [
-            { text: '%', scopes: name(RuleName.Dereference, RuleName.DereferencePercentBegin, RuleName.InvalidDereferencePercent) },
-            { text: '%', scopes: name(RuleName.Dereference, RuleName.DereferencePercentEnd, RuleName.InvalidDereferencePercent) },
+            { text: '%', scopes: name(Repository.Dereference, RuleName.PercentBegin, RuleName.Invalid) },
+            { text: '%', scopes: name(Repository.Dereference, RuleName.PercentEnd, RuleName.Invalid) },
           ],
         ],
         [
           '%a', [
-            { text: '%', scopes: name(RuleName.Dereference, RuleName.DereferencePercentBegin) },
-            { text: 'a', scopes: name(RuleName.Dereference, RuleName.Variable, RuleName.InvalidDereference) },
+            { text: '%', scopes: name(Repository.Dereference, RuleName.PercentBegin) },
+            { text: 'a', scopes: name(Repository.Dereference, RuleName.Variable, RuleName.Invalid) },
           ],
         ],
         [
           '%a %', [
-            { text: '%', scopes: name(RuleName.Dereference, RuleName.DereferencePercentBegin) },
-            { text: 'a', scopes: name(RuleName.Dereference, RuleName.Variable, RuleName.InvalidDereference) },
+            { text: '%', scopes: name(Repository.Dereference, RuleName.PercentBegin) },
+            { text: 'a', scopes: name(Repository.Dereference, RuleName.Variable, RuleName.Invalid) },
             { text: ' ' },
-            { text: '%', scopes: name(RuleName.Dereference, RuleName.DereferencePercentEnd) },
+            { text: '%', scopes: name(Repository.Dereference, RuleName.PercentEnd) },
           ],
         ],
         [
           '%a b c %', [
-            { text: '%', scopes: name(RuleName.Dereference, RuleName.DereferencePercentBegin) },
-            { text: 'a', scopes: name(RuleName.Dereference, RuleName.Variable, RuleName.InvalidDereference) },
+            { text: '%', scopes: name(Repository.Dereference, RuleName.PercentBegin) },
+            { text: 'a', scopes: name(Repository.Dereference, RuleName.Variable, RuleName.Invalid) },
             { text: ' ' },
-            { text: 'b', scopes: name(RuleName.Dereference, RuleName.Variable, RuleName.InvalidDereference) },
+            { text: 'b', scopes: name(Repository.Dereference, RuleName.Variable, RuleName.Invalid) },
             { text: ' ' },
-            { text: 'c', scopes: name(RuleName.Dereference, RuleName.Variable, RuleName.InvalidDereference) },
+            { text: 'c', scopes: name(Repository.Dereference, RuleName.Variable, RuleName.Invalid) },
             { text: ' ' },
-            { text: '%', scopes: name(RuleName.Dereference, RuleName.DereferencePercentEnd) },
+            { text: '%', scopes: name(Repository.Dereference, RuleName.PercentEnd) },
           ],
         ],
       ])(
