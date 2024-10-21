@@ -1,4 +1,4 @@
-// #region constant
+// #region constants
 export const scopeNames = [ 'autohotkey', 'autohotkeynext', 'autohotkeyl', 'autohotkey2' ] as const;
 
 // https://www.autohotkey.com/docs/v1/lib/index.htm
@@ -245,8 +245,7 @@ export const operators_v2: [ ...typeof commonOperators, '=>', '??' ] = [
   '??', // `a ?? b`
 ] as const;
 // #endregion operators
-
-// #endregion constant
+// #endregion constants
 
 // #region enum
 export const enum Repository {
