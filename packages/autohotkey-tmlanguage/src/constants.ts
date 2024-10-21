@@ -381,7 +381,7 @@ export const enum RuleName {
 
   // #region extra rules
   Emphasis = 'emphasis',
-  Keyword = 'strong string.legacy.text',
+  Strong = 'strong',
   Invalid = 'invalid.illegal',
   // #endregion extra rules
 

@@ -212,7 +212,7 @@ export function createRepositories(scopeName: ScopeName): Repositories {
             capture(ordalt(...keywords)),
             lookahead(wordBound()),
           )),
-          captures: { 1: nameRule(RuleName.Keyword) },
+          captures: { 1: nameRule(RuleName.LegacyText, RuleName.Strong) },
         };
       };
       const getArgumentRuleByType = (argType: CommandArgsType, keywords: string[]): PatternsRule => {

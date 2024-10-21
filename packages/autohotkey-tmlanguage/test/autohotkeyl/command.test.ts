@@ -31,7 +31,7 @@ describe('command', () => {
         { text: 'AutoTrim', scopes: name(Repository.Command, RuleName.CommandName) },
         { text: ',', scopes: name(Repository.Command, Repository.CommandArgument, RuleName.Comma) },
         { text: ' ' },
-        { text: 'On', scopes: name(Repository.Command, Repository.CommandArgument, RuleName.Keyword) },
+        { text: 'On', scopes: name(Repository.Command, Repository.CommandArgument, RuleName.LegacyText, RuleName.Strong) },
       ],
     ],
     // space separator
@@ -39,7 +39,7 @@ describe('command', () => {
       'AutoTrim On', [
         { text: 'AutoTrim', scopes: name(Repository.Command, RuleName.CommandName) },
         { text: ' ' },
-        { text: 'On', scopes: name(Repository.Command, Repository.CommandArgument, RuleName.Keyword) },
+        { text: 'On', scopes: name(Repository.Command, Repository.CommandArgument, RuleName.LegacyText, RuleName.Strong) },
       ],
     ],
   ])('first separator', async(text, expected) => {
@@ -56,7 +56,7 @@ describe('command', () => {
         { text: 'AutoTrim', scopes: name(Repository.Command, RuleName.CommandName) },
         { text: ',', scopes: name(Repository.Command, Repository.CommandArgument, RuleName.Comma) },
         { text: ' ' },
-        { text: 'On', scopes: name(Repository.Command, Repository.CommandArgument, RuleName.Keyword) },
+        { text: 'On', scopes: name(Repository.Command, Repository.CommandArgument, RuleName.LegacyText, RuleName.Strong) },
       ],
     ],
     [
@@ -134,7 +134,7 @@ describe('command', () => {
         { text: 'AutoTrim', scopes: name(Repository.Command, RuleName.CommandName) },
         { text: ',', scopes: name(Repository.Command, Repository.CommandArgument, RuleName.Comma) },
         { text: ' ' },
-        { text: 'On', scopes: name(Repository.Command, Repository.CommandArgument, RuleName.Keyword) },
+        { text: 'On', scopes: name(Repository.Command, Repository.CommandArgument, RuleName.LegacyText, RuleName.Strong) },
         { text: ', Overflow, arguments', scopes: name(Repository.Command, Repository.CommandArgument, RuleName.LegacyText, RuleName.Invalid) },
       ],
     ],
