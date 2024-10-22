@@ -1,13 +1,14 @@
 import { dedent } from '@zero-plusplus/utilities/src';
 import { Repository, RuleName } from '../../src/constants';
+import { commandInfos } from '../../src/definition';
 import type { ScopeName } from '../../src/types';
-import { createUtilities, getCommandInfos } from '../../src/utils';
+import { createUtilities } from '../../src/utils';
 import { parse } from '../helpers/textmate-parser';
 
 describe('command', () => {
   const scopeName: ScopeName = 'autohotkeyl';
+
   const { name } = createUtilities(scopeName);
-  const commandInfos = getCommandInfos();
 
   test('command name', async() => {
     const commandNames = commandInfos.map(([ commandName ]) => commandName);
