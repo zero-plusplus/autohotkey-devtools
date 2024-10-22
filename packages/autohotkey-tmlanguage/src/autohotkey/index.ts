@@ -1,4 +1,4 @@
-import { RuleName } from '../constants';
+import { Repository, RuleName } from '../constants';
 import type { BeginWhileRule, ScopeName, TmLanguage } from '../types';
 import { createUtilities } from '../utils';
 
@@ -23,8 +23,8 @@ export function createTmLanguage(): TmLanguage {
       autohotkeynext_explicit: {
         begin: '(?i)^\\s*(#Requires) (AutoHotkey v2\\.1.*)$',
         beginCaptures: {
-          1: nameRule(RuleName.Emphasis, RuleName.DirectiveName),
-          2: nameRule(RuleName.Emphasis, RuleName.LegacyText),
+          1: nameRule(Repository.DirecitiveStatement, RuleName.DirectiveName, RuleName.Emphasis),
+          2: nameRule(Repository.DirecitiveStatement, RuleName.LegacyText, RuleName.Emphasis),
         },
         while: '^(?!\\s*#Requires)',
         patterns: [ includeScope('autohotkeynext') ],
@@ -32,8 +32,8 @@ export function createTmLanguage(): TmLanguage {
       autohotkey2_explicit: {
         begin: '(?i)^\\s*(#Requires) (AutoHotkey v2.*)$',
         beginCaptures: {
-          1: nameRule(RuleName.Emphasis, RuleName.DirectiveName),
-          2: nameRule(RuleName.Emphasis, RuleName.LegacyText),
+          1: nameRule(Repository.DirecitiveStatement, RuleName.DirectiveName, RuleName.Emphasis),
+          2: nameRule(Repository.DirecitiveStatement, RuleName.LegacyText, RuleName.Emphasis),
         },
         while: '^(?!\\s*#Requires)',
         patterns: [ includeScope('autohotkey2') ],
@@ -47,8 +47,8 @@ export function createTmLanguage(): TmLanguage {
         return {
           begin: '(?i)^\\s*(#Requires) (AutoHotkey v1.*)$',
           beginCaptures: {
-            1: nameRule(RuleName.Emphasis, RuleName.DirectiveName),
-            2: nameRule(RuleName.Emphasis, RuleName.LegacyText),
+            1: nameRule(Repository.DirecitiveStatement, RuleName.DirectiveName, RuleName.Emphasis),
+            2: nameRule(Repository.DirecitiveStatement, RuleName.LegacyText, RuleName.Emphasis),
           },
           while: '^(?!\\s*#Requires)',
           patterns: [ includeScope('autohotkeyl') ],
