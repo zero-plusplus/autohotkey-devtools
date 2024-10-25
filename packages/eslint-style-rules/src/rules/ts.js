@@ -49,6 +49,7 @@ module.exports.rules = {
   '@typescript-eslint/no-unused-expressions': 'off',
   '@typescript-eslint/no-use-before-define': [ 'error', { functions: false, classes: false, enums: false } ],
   '@typescript-eslint/prefer-enum-initializers': 'off',
+  '@typescript-eslint/prefer-literal-enum-member': { allowBitwiseExpressions: true },
   '@typescript-eslint/prefer-readonly-parameter-types': 'off',
   '@typescript-eslint/prefer-regexp-exec': 'off',
   '@typescript-eslint/restrict-template-expressions': [ 'error', { allowNumber: true, allowBoolean: true } ],
