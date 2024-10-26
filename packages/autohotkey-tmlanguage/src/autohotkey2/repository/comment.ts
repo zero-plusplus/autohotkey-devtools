@@ -1,22 +1,11 @@
-import * as ahkl from '../../autohotkeyl/repository/comment';
+import * as v1 from '../../autohotkeyl/rules';
 import { Repository } from '../../constants';
-import type { PatternsRule, Repositories, ScopeName } from '../../types';
-import { createUtilities } from '../../utils';
+import type { Repositories, ScopeName } from '../../types';
 
 export function createRepositories(scopeName: ScopeName): Repositories {
-  const { includeRule } = createUtilities(scopeName);
-  const ahklRepositories = ahkl.createRepositories(scopeName);
-
   return {
-    [Repository.Comment]: ((): PatternsRule => {
-      return {
-        patterns: [
-          includeRule(Repository.SingleLineComment),
-          includeRule(Repository.InLineComment),
-        ],
-      };
-    })(),
-    [Repository.SingleLineComment]: ahklRepositories[Repository.SingleLineComment],
-    [Repository.InLineComment]: ahklRepositories[Repository.InLineComment],
+    [Repository.Comment]: v1.createCommentRule(),
+    [Repository.SingleLineComment]: v1.createSingleLineCommentRule(scopeName),
+    [Repository.InLineComment]: v1.createInLineCommentRule(scopeName),
   };
 }
