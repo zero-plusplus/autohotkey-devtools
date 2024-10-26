@@ -1,14 +1,16 @@
 import * as ahkl from '../../autohotkeyl/repository/expression';
-import { Repository, RuleName } from '../../constants';
+import { createBuiltinVariableRule, createInvalidVariableRule, createVariableRule } from '../../autohotkeyl/rules/expression/variable';
+import { builtinVaribles_v2, Repository, RuleName } from '../../constants';
 import { alt, anyChars1, capture, char, endAnchor, inlineSpaces0, inlineSpaces1, lookahead, negativeLookahead, negativeLookbehind, negChar, negChars0, negChars1, ordalt, seq } from '../../oniguruma';
 import type { BeginEndRule, MatchRule, PatternsRule, Repositories, ScopeName } from '../../types';
-import { createUtilities, getEscapeSequencesInfo } from '../../utils';
+import { createUtilities, getEscapeSequencesInfo, getVariableParts } from '../../utils';
 
 export function createLiteralRepositories(scopeName: ScopeName): Repositories {
   const { name, nameRule, includeRule } = createUtilities(scopeName);
 
   const escapeSequenceInfo = getEscapeSequencesInfo(scopeName);
   const ahklRepositories = ahkl.createLiteralRepositories(scopeName);
+  const variablePars = getVariableParts(scopeName);
 
   const endLine = lookahead(alt(
     seq(inlineSpaces1(), char(';')),
@@ -34,9 +36,9 @@ export function createLiteralRepositories(scopeName: ScopeName): Repositories {
     [Repository.ParenthesizedExpression]: ahklRepositories[Repository.ParenthesizedExpression],
 
     // #region variable
-    [Repository.Variable]: ahklRepositories[Repository.Variable],
-    [Repository.InvalidVariable]: ahklRepositories[Repository.InvalidVariable],
-    [Repository.BuiltInVariable]: ahklRepositories[Repository.BuiltInVariable],
+    [Repository.Variable]: createVariableRule(scopeName, variablePars.headChar, variablePars.tailChar),
+    [Repository.InvalidVariable]: createInvalidVariableRule(scopeName, variablePars.headChar, variablePars.tailChar),
+    [Repository.BuiltInVariable]: createBuiltinVariableRule(scopeName, [ ...builtinVaribles_v2 ]),
     // #endregion variable
 
     // #region access

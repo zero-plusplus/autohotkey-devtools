@@ -1,8 +1,8 @@
-import { Repository, RuleName } from '../../constants';
+import { builtinVaribles_v1, Repository, RuleName } from '../../constants';
 import { alt, anyChar, capture, char, charRange, endAnchor, escapeOnigurumaTexts, group, groupMany1, ignoreCase, inlineSpaces0, inlineSpaces1, lookahead, lookbehind, many0, many1, negativeLookahead, negativeLookbehind, negChar, number, numbers0, numbers1, opt, ordalt, seq, whitespace, wordBound } from '../../oniguruma';
 import type { BeginEndRule, MatchRule, PatternsRule, Repositories, ScopeName } from '../../types';
-import { createUtilities, getBuiltInVariableNames, getEscapeSequencesInfo, getOperators, getVariableParts, patternsRule } from '../../utils';
-import { createInvalidVariableRule, createVariableRule } from '../rules/expression/variable';
+import { createUtilities, getEscapeSequencesInfo, getOperators, getVariableParts, patternsRule } from '../../utils';
+import { createBuiltinVariableRule, createInvalidVariableRule, createVariableRule } from '../rules/expression/variable';
 
 export const integer: string = alt(
   seq(charRange('1', '9'), numbers0()),
@@ -28,7 +28,6 @@ export function createLiteralRepositories(scopeName: ScopeName): Repositories {
   );
   const variableParts = getVariableParts(scopeName);
   const escapeSequencesInfo = getEscapeSequencesInfo(scopeName);
-  const builtinVariables = getBuiltInVariableNames(scopeName);
 
   return {
     [Repository.Expression]: ((): PatternsRule => {
@@ -64,18 +63,7 @@ export function createLiteralRepositories(scopeName: ScopeName): Repositories {
     // #region variable
     [Repository.Variable]: createVariableRule(scopeName, variableParts.headChar, variableParts.tailChar),
     [Repository.InvalidVariable]: createInvalidVariableRule(scopeName, variableParts.headChar, variableParts.tailChar),
-    [Repository.BuiltInVariable]: ((): MatchRule => {
-      return {
-        match: ignoreCase(seq(
-          lookbehind(wordBound()),
-          capture(ordalt(...builtinVariables)),
-          lookahead(wordBound()),
-        )),
-        captures: {
-          1: nameRule(RuleName.BuiltInVariable),
-        },
-      };
-    })(),
+    [Repository.BuiltInVariable]: createBuiltinVariableRule(scopeName, [ ...builtinVaribles_v1 ]),
     // #endregion variable
 
     // #region access

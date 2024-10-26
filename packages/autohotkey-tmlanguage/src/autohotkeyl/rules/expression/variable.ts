@@ -1,5 +1,5 @@
 import { RuleName } from '../../../constants';
-import { capture, many1, manyRange, numbers1, seq } from '../../../oniguruma';
+import { capture, escapeOnigurumaTexts, ignoreCase, lookahead, lookbehind, many1, manyRange, numbers1, ordalt, seq, wordBound } from '../../../oniguruma';
 import type { MatchRule, PatternsRule, ScopeName } from '../../../types';
 import { nameRule, patternsRule } from '../../../utils';
 
@@ -34,4 +34,16 @@ export function createInvalidVariableRule(scopeName: ScopeName, nameStart: strin
       },
     },
   );
+}
+export function createBuiltinVariableRule(scopeName: ScopeName, builtinVariables: string[]): MatchRule {
+  return {
+    match: ignoreCase(seq(
+      lookbehind(wordBound()),
+      capture(ordalt(...escapeOnigurumaTexts(builtinVariables))),
+      lookahead(wordBound()),
+    )),
+    captures: {
+      1: nameRule(scopeName, RuleName.BuiltInVariable),
+    },
+  };
 }
