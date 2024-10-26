@@ -1,7 +1,8 @@
 import { builtinVaribles_v1, Repository, RuleName } from '../../constants';
-import { alt, anyChar, capture, char, charRange, endAnchor, escapeOnigurumaTexts, group, groupMany1, ignoreCase, inlineSpaces0, inlineSpaces1, lookahead, lookbehind, many0, many1, negativeLookahead, negativeLookbehind, negChar, number, numbers0, numbers1, opt, ordalt, seq, whitespace, wordBound } from '../../oniguruma';
+import { alt, anyChar, capture, char, charRange, endAnchor, escapeOnigurumaTexts, group, groupMany1, ignoreCase, inlineSpaces0, lookahead, lookbehind, negativeLookahead, negativeLookbehind, number, numbers0, numbers1, opt, ordalt, seq, wordBound } from '../../oniguruma';
 import type { BeginEndRule, MatchRule, PatternsRule, Repositories, ScopeName } from '../../types';
 import { createUtilities, getEscapeSequencesInfo, getOperators, getVariableParts, patternsRule } from '../../utils';
+import { createDereferenceRule, createInvalidDereferenceRule } from '../rules/expression/access';
 import { createBuiltinVariableRule, createInvalidVariableRule, createVariableRule } from '../rules/expression/variable';
 
 export const integer: string = alt(
@@ -22,10 +23,6 @@ export function createLiteralRepositories(scopeName: ScopeName): Repositories {
   const operatorTokens = getOperators(scopeName);
   const operators = ignoreCase(ordalt(...escapeOnigurumaTexts(operatorTokens.filter((operator) => operator !== ','))));
 
-  const endLine = alt(
-    seq(inlineSpaces1(), char(';')),
-    seq(inlineSpaces0(), endAnchor()),
-  );
   const variableParts = getVariableParts(scopeName);
   const escapeSequencesInfo = getEscapeSequencesInfo(scopeName);
 
@@ -67,108 +64,8 @@ export function createLiteralRepositories(scopeName: ScopeName): Repositories {
     // #endregion variable
 
     // #region access
-    [Repository.Dereference]: ((): BeginEndRule => {
-      const dereferenceContent = negChar('%', whitespace());
-
-      return {
-        begin: capture(char('%')),
-        beginCaptures: {
-          1: nameRule(Repository.Dereference, RuleName.PercentBegin),
-        },
-        end: alt(
-          capture(char('%')),
-          lookahead(endLine),
-        ),
-        endCaptures: {
-          1: nameRule(Repository.Dereference, RuleName.PercentEnd),
-        },
-        patterns: [
-          // %a b c %
-          //   ^ ^ ^ invalid
-          {
-            match: seq(
-              capture(many0(dereferenceContent)),
-              capture(dereferenceContent),
-              inlineSpaces1(),
-            ),
-            captures: {
-              1: {
-                name: name(Repository.Dereference),
-                patterns: [
-                  includeRule(Repository.BuiltInVariable),
-                  includeRule(Repository.Variable),
-                ],
-              },
-              2: nameRule(Repository.Dereference, RuleName.Variable, RuleName.Invalid),
-            },
-          },
-          // %abc%
-          //  ^^^ valid
-          {
-            name: name(Repository.Dereference),
-            match: capture(many1(dereferenceContent)),
-            captures: {
-              1: {
-                patterns: [
-                  includeRule(Repository.BuiltInVariable),
-                  includeRule(Repository.Variable),
-                ],
-              },
-            },
-          },
-        ],
-      };
-    })(),
-    [Repository.InvalidDereference]: ((): PatternsRule => {
-      const dereferenceContent = negChar('%', whitespace());
-
-      return patternsRule(
-        // %%
-        //  ^ missing
-        {
-          match: seq(
-            capture(char('%')),
-            capture(char('%')),
-          ),
-          captures: {
-            1: nameRule(Repository.Dereference, RuleName.PercentBegin, RuleName.Invalid),
-            2: nameRule(Repository.Dereference, RuleName.PercentEnd, RuleName.Invalid),
-          },
-        },
-        // %
-        //  ^ missing
-        {
-          match: seq(
-            capture(char('%')),
-            lookahead(endLine),
-          ),
-          captures: {
-            1: nameRule(Repository.Dereference, RuleName.PercentBegin, RuleName.Invalid),
-          },
-        },
-        // %abc
-        //     ^ missing
-        {
-          match: seq(
-            capture(char('%')),
-            capture(many0(dereferenceContent)),
-            capture(dereferenceContent),
-            lookahead(endLine),
-          ),
-          captures: {
-            1: nameRule(Repository.Dereference, RuleName.PercentBegin),
-            2: {
-              name: name(Repository.Dereference),
-              patterns: [
-                includeRule(Repository.BuiltInVariable),
-                includeRule(Repository.Variable),
-              ],
-            },
-            3: nameRule(Repository.Dereference, RuleName.Variable, RuleName.Invalid),
-          },
-        },
-      );
-    })(),
+    [Repository.Dereference]: createDereferenceRule(scopeName),
+    [Repository.InvalidDereference]: createInvalidDereferenceRule(scopeName),
     // #endregion access
 
     // #region literal

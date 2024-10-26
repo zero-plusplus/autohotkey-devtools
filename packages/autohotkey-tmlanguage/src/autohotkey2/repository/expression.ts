@@ -1,8 +1,8 @@
+import { createDereferenceRule, createInvalidDereferenceRule } from '../../autohotkey2/rules/expression/access';
 import * as ahkl from '../../autohotkeyl/repository/expression';
-import { createDereferenceRule } from '../../autohotkeyl/rules/expression/access';
 import { createBuiltinVariableRule, createInvalidVariableRule, createVariableRule } from '../../autohotkeyl/rules/expression/variable';
 import { builtinVaribles_v2, Repository, RuleName } from '../../constants';
-import { alt, capture, char, endAnchor, inlineSpaces0, inlineSpaces1, lookahead, negativeLookahead, negativeLookbehind, negChar, negChars0, negChars1, ordalt, seq } from '../../oniguruma';
+import { alt, capture, char, negativeLookahead, negativeLookbehind, ordalt, seq } from '../../oniguruma';
 import type { BeginEndRule, MatchRule, PatternsRule, Repositories, ScopeName } from '../../types';
 import { createUtilities, getEscapeSequencesInfo, getVariableParts } from '../../utils';
 
@@ -12,11 +12,6 @@ export function createLiteralRepositories(scopeName: ScopeName): Repositories {
   const escapeSequenceInfo = getEscapeSequencesInfo(scopeName);
   const ahklRepositories = ahkl.createLiteralRepositories(scopeName);
   const variablePars = getVariableParts(scopeName);
-
-  const endLine = lookahead(alt(
-    seq(inlineSpaces1(), char(';')),
-    seq(inlineSpaces0(), endAnchor()),
-  ));
 
   return {
     [Repository.Expression]: ((): PatternsRule => {
@@ -44,62 +39,7 @@ export function createLiteralRepositories(scopeName: ScopeName): Repositories {
 
     // #region access
     [Repository.Dereference]: createDereferenceRule(scopeName),
-    [Repository.InvalidDereference]: ((): PatternsRule => {
-      return {
-        patterns: [
-          // %%
-          //  ^ missing
-          {
-            match: seq(
-              capture(char('%')),
-              capture(char('%')),
-            ),
-            captures: {
-              1: nameRule(Repository.Dereference, RuleName.PercentBegin, RuleName.Invalid),
-              2: nameRule(Repository.Dereference, RuleName.PercentEnd, RuleName.Invalid),
-            },
-          },
-          // %
-          //  ^ missing
-          {
-            name: name(Repository.Dereference),
-            match: seq(
-              capture(char('%')),
-              lookahead(alt(
-                seq(negChars1('\\S', '\\r', '\\n'), char(';')),
-                seq(negChars0('\\S', '\\r', '\\n'), endAnchor()),
-              )),
-            ),
-            captures: {
-              1: nameRule(RuleName.PercentBegin, RuleName.Invalid),
-            },
-          },
-          // %abc
-          //     ^ missing
-          {
-            match: seq(
-              capture(char('%')),
-              capture(negChars0('\\r', '\\n', '%')),
-              negativeLookahead(char('%')),
-              capture(negChar('\\r', '\\n')),
-              endLine,
-            ),
-            captures: {
-              1: nameRule(Repository.Dereference, RuleName.PercentBegin),
-              2: {
-                name: name(Repository.Dereference),
-                patterns: [
-                  includeRule(Repository.InvalidDereference),
-                  includeRule(Repository.Dereference),
-                  includeRule(Repository.Expression),
-                ],
-              },
-              3: nameRule(Repository.Dereference, RuleName.Variable, RuleName.Invalid),
-            },
-          },
-        ],
-      };
-    })(),
+    [Repository.InvalidDereference]: createInvalidDereferenceRule(scopeName),
     // #endregion access
 
     // #region literal
