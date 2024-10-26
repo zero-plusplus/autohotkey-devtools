@@ -2,8 +2,8 @@ import * as v2 from '../../autohotkey2/rules';
 import * as ahkl from '../../autohotkeyl/repository/expression';
 import * as v1 from '../../autohotkeyl/rules';
 import { builtinVaribles_v2, Repository } from '../../constants';
-import type { PatternsRule, Repositories, ScopeName } from '../../types';
-import { createUtilities, getEscapeSequencesInfo, getVariableParts } from '../../utils';
+import type { Repositories, ScopeName } from '../../types';
+import { createUtilities, getEscapeSequencesInfo, getVariableParts, patternsRule } from '../../utils';
 
 export function createLiteralRepositories(scopeName: ScopeName): Repositories {
   const { includeRule } = createUtilities(scopeName);
@@ -13,7 +13,17 @@ export function createLiteralRepositories(scopeName: ScopeName): Repositories {
   const variablePars = getVariableParts(scopeName);
 
   return {
-    [Repository.Expression]: v2.createExpressionRule(),
+    [Repository.Expression]: patternsRule(
+      includeRule(Repository.Comma),
+
+      includeRule(Repository.ParenthesizedExpression),
+      includeRule(Repository.Literal),
+      includeRule(Repository.BuiltInVariable),
+      includeRule(Repository.InvalidVariable),
+      includeRule(Repository.Variable),
+      includeRule(Repository.InvalidDereference),
+      includeRule(Repository.Dereference),
+    ),
     [Repository.ParenthesizedExpression]: v2.createParenthesizedExpressionRule(scopeName),
 
     // #region variable
@@ -28,24 +38,16 @@ export function createLiteralRepositories(scopeName: ScopeName): Repositories {
     // #endregion access
 
     // #region literal
-    [Repository.Literal]: ((): PatternsRule => {
-      return {
-        patterns: [
-          includeRule(Repository.String),
-          includeRule(Repository.Number),
-        ],
-      };
-    })(),
+    [Repository.Literal]: patternsRule(
+      includeRule(Repository.String),
+      includeRule(Repository.Number),
+    ),
 
     // #region string
-    [Repository.String]: ((): PatternsRule => {
-      return {
-        patterns: [
-          includeRule(Repository.DoubleString),
-          includeRule(Repository.SingleString),
-        ],
-      };
-    })(),
+    [Repository.String]: patternsRule(
+      includeRule(Repository.DoubleString),
+      includeRule(Repository.SingleString),
+    ),
     [Repository.DoubleString]: v1.createStringRule(scopeName, '"', escapeSequenceInfo.doubleQuote),
     [Repository.SingleString]: v1.createStringRule(scopeName, `'`, escapeSequenceInfo.singleQuote),
     // #endregion string

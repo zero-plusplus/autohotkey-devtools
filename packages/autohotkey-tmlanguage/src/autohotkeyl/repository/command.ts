@@ -113,17 +113,12 @@ export function createRepositories(scopeName: ScopeName): Repositories {
   // #endregion common matchers
 
   return {
-    [Repository.Command]: ((): PatternsRule => {
-      return {
-        name: name(Repository.CommandStatement),
-        patterns: [
-          ...commandInfos.map((commandInfo) => {
-            return { include: `#${createRepositoryNameByCommandInfo(commandInfo)}` };
-          }),
-          includeRule(Repository.CommonCommand),
-        ],
-      };
-    })(),
+    [Repository.Command]: patternsRule(
+      ...commandInfos.map((commandInfo) => {
+        return { include: `#${createRepositoryNameByCommandInfo(commandInfo)}` };
+      }),
+      includeRule(Repository.CommonCommand),
+    ),
     [Repository.CommonCommand]: ((): BeginWhileRule => {
       const commandName = seq(ordalt(...commandNames), lookahead(wordBound()));
 
@@ -149,17 +144,13 @@ export function createRepositories(scopeName: ScopeName): Repositories {
         ...continuationArguments,
       };
     })(),
-    [Repository.CommandArgument]: ((): PatternsRule => {
-      return {
-        patterns: [
-          includeRule(Repository.PercentExpression),
-          includeRule(Repository.Dereference),
-          includeRule(Repository.LegacyTextEscapeSequence),
-          includeRule(Repository.CommandArgumentText),
-          includeRule(Repository.InLineComment),
-        ],
-      };
-    })(),
+    [Repository.CommandArgument]: patternsRule(
+      includeRule(Repository.PercentExpression),
+      includeRule(Repository.Dereference),
+      includeRule(Repository.LegacyTextEscapeSequence),
+      includeRule(Repository.CommandArgumentText),
+      includeRule(Repository.InLineComment),
+    ),
     [Repository.CommandArgumentText]: ((): MatchRule => {
       return {
         name: name(RuleName.LegacyText),

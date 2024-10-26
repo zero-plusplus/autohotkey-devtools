@@ -1,7 +1,7 @@
 import { Repository, RuleName } from '../../constants';
 import { alt, capture, char, endAnchor, group, groupMany0, inlineSpace, inlineSpaces0, inlineSpaces1, lookahead, many1, negativeLookahead, negativeLookbehind, negChar, negChars0, ordalt, seq } from '../../oniguruma';
-import type { MatchRule, PatternsRule, Repositories, ScopeName } from '../../types';
-import { createUtilities, getEscapeSequencesInfo, getExpressionBegin, getVariableParts } from '../../utils';
+import type { MatchRule, Repositories, ScopeName } from '../../types';
+import { createUtilities, getEscapeSequencesInfo, getExpressionBegin, getVariableParts, patternsRule } from '../../utils';
 
 export function createRepositories(scopeName: ScopeName): Repositories {
   const { includeRule, name, nameRule } = createUtilities(scopeName);
@@ -23,11 +23,7 @@ export function createRepositories(scopeName: ScopeName): Repositories {
   // #endregion common matchers
 
   return {
-    [Repository.Legacy]: ((): PatternsRule => {
-      return {
-        patterns: [ includeRule(Repository.LegacyAssignment) ],
-      };
-    })(),
+    [Repository.Legacy]: patternsRule(includeRule(Repository.LegacyAssignment)),
     [Repository.LegacyAssignment]: ((): MatchRule => {
       const endLine = lookahead(alt(
         seq(inlineSpaces1(), negativeLookahead(char('`'))),

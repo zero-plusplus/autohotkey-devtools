@@ -41,12 +41,10 @@ export function createLiteralRepositories(scopeName: ScopeName): Repositories {
     // #endregion access
 
     // #region literal
-    [Repository.Literal]: ((): PatternsRule => {
-      return patternsRule(
-        includeRule(Repository.DoubleString),
-        includeRule(Repository.Number),
-      );
-    })(),
+    [Repository.Literal]: patternsRule(
+      includeRule(Repository.DoubleString),
+      includeRule(Repository.Number),
+    ),
 
     // #region string
     [Repository.String]: patternsRule(includeRule(Repository.DoubleString)),
@@ -54,17 +52,15 @@ export function createLiteralRepositories(scopeName: ScopeName): Repositories {
     // #endregion string
 
     // #region number
-    [Repository.Number]: ((): PatternsRule => {
-      return patternsRule(
-        includeRule(Repository.Integer),
-        includeRule(Repository.InvalidFloat),
-        includeRule(Repository.Float),
-        includeRule(Repository.InvalidHex),
-        includeRule(Repository.Hex),
-        includeRule(Repository.InvalidScientificNotation),
-        includeRule(Repository.ScientificNotation),
-      );
-    })(),
+    [Repository.Number]: patternsRule(
+      includeRule(Repository.Integer),
+      includeRule(Repository.InvalidFloat),
+      includeRule(Repository.Float),
+      includeRule(Repository.InvalidHex),
+      includeRule(Repository.Hex),
+      includeRule(Repository.InvalidScientificNotation),
+      includeRule(Repository.ScientificNotation),
+    ),
     [Repository.Integer]: ((): MatchRule => {
       return {
         match: seq(

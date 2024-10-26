@@ -1,25 +1,10 @@
 import { Repository, RuleName } from '../../../constants';
 import { capture, char } from '../../../oniguruma';
-import type { BeginEndRule, PatternsRule, ScopeName } from '../../../types';
+import type { BeginEndRule, ScopeName } from '../../../types';
 import { includeRule, name, nameRule } from '../../../utils';
 
 export * from './access';
 
-export function createExpressionRule(): PatternsRule {
-  return {
-    patterns: [
-      includeRule(Repository.Comma),
-
-      includeRule(Repository.ParenthesizedExpression),
-      includeRule(Repository.Literal),
-      includeRule(Repository.BuiltInVariable),
-      includeRule(Repository.InvalidVariable),
-      includeRule(Repository.Variable),
-      includeRule(Repository.InvalidDereference),
-      includeRule(Repository.Dereference),
-    ],
-  };
-}
 export function createParenthesizedExpressionRule(scopeName: ScopeName): BeginEndRule {
   return {
     name: name(scopeName, Repository.ParenthesizedExpression),

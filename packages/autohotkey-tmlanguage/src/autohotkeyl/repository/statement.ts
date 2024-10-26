@@ -3,7 +3,7 @@ import type { PatternsRule, Repositories, ScopeName } from '../../types';
 import { createUtilities } from '../../utils';
 
 export function createLiteralRepositories(scopeName: ScopeName): Repositories {
-  const { includeRule } = createUtilities(scopeName);
+  const { name, includeRule } = createUtilities(scopeName);
 
   return {
     [Repository.Statement]: ((): PatternsRule => {
@@ -22,6 +22,7 @@ export function createLiteralRepositories(scopeName: ScopeName): Repositories {
     })(),
     [Repository.CommandStatement]: ((): PatternsRule => {
       return {
+        name: name(Repository.CommandStatement),
         patterns: [ includeRule(Repository.Command) ],
       };
     })(),
