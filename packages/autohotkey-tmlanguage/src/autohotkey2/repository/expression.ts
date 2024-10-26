@@ -1,5 +1,6 @@
 import { createDereferenceRule, createInvalidDereferenceRule } from '../../autohotkey2/rules/expression/access';
 import * as ahkl from '../../autohotkeyl/repository/expression';
+import { createExpressionRule, createParenthesizedExpressionRule } from '../../autohotkeyl/rules/expression';
 import { createBuiltinVariableRule, createInvalidVariableRule, createVariableRule } from '../../autohotkeyl/rules/expression/variable';
 import { builtinVaribles_v2, Repository, RuleName } from '../../constants';
 import { alt, capture, char, negativeLookahead, negativeLookbehind, ordalt, seq } from '../../oniguruma';
@@ -14,22 +15,8 @@ export function createLiteralRepositories(scopeName: ScopeName): Repositories {
   const variablePars = getVariableParts(scopeName);
 
   return {
-    [Repository.Expression]: ((): PatternsRule => {
-      return {
-        patterns: [
-          includeRule(Repository.Comma),
-
-          includeRule(Repository.ParenthesizedExpression),
-          includeRule(Repository.Literal),
-          includeRule(Repository.BuiltInVariable),
-          includeRule(Repository.InvalidVariable),
-          includeRule(Repository.Variable),
-          includeRule(Repository.InvalidDereference),
-          includeRule(Repository.Dereference),
-        ],
-      };
-    })(),
-    [Repository.ParenthesizedExpression]: ahklRepositories[Repository.ParenthesizedExpression],
+    [Repository.Expression]: createExpressionRule(),
+    [Repository.ParenthesizedExpression]: createParenthesizedExpressionRule(scopeName),
 
     // #region variable
     [Repository.Variable]: createVariableRule(scopeName, variablePars.headChar, variablePars.tailChar),

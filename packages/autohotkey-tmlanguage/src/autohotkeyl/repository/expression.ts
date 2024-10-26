@@ -2,6 +2,7 @@ import { builtinVaribles_v1, Repository, RuleName } from '../../constants';
 import { alt, anyChar, capture, char, charRange, endAnchor, escapeOnigurumaTexts, group, groupMany1, ignoreCase, inlineSpaces0, lookahead, lookbehind, negativeLookahead, negativeLookbehind, number, numbers0, numbers1, opt, ordalt, seq, wordBound } from '../../oniguruma';
 import type { BeginEndRule, MatchRule, PatternsRule, Repositories, ScopeName } from '../../types';
 import { createUtilities, getEscapeSequencesInfo, getOperators, getVariableParts, patternsRule } from '../../utils';
+import { createExpressionRule, createParenthesizedExpressionRule } from '../rules/expression';
 import { createDereferenceRule, createInvalidDereferenceRule } from '../rules/expression/access';
 import { createBuiltinVariableRule, createInvalidVariableRule, createVariableRule } from '../rules/expression/variable';
 
@@ -27,35 +28,8 @@ export function createLiteralRepositories(scopeName: ScopeName): Repositories {
   const escapeSequencesInfo = getEscapeSequencesInfo(scopeName);
 
   return {
-    [Repository.Expression]: ((): PatternsRule => {
-      return patternsRule(
-        includeRule(Repository.Comma),
-
-        includeRule(Repository.ParenthesizedExpression),
-        includeRule(Repository.Literal),
-        includeRule(Repository.BuiltInVariable),
-        includeRule(Repository.InvalidVariable),
-        includeRule(Repository.Variable),
-        includeRule(Repository.InvalidDereference),
-        includeRule(Repository.Dereference),
-
-        includeRule(Repository.Operator),
-      );
-    })(),
-    [Repository.ParenthesizedExpression]: ((): BeginEndRule => {
-      return {
-        name: name(Repository.ParenthesizedExpression),
-        begin: capture(char('(')),
-        beginCaptures: {
-          1: nameRule(RuleName.OpenParen),
-        },
-        end: capture(char(')')),
-        endCaptures: {
-          1: nameRule(RuleName.CloseParen),
-        },
-        patterns: [ includeRule(Repository.Expression) ],
-      };
-    })(),
+    [Repository.Expression]: createExpressionRule(),
+    [Repository.ParenthesizedExpression]: createParenthesizedExpressionRule(scopeName),
 
     // #region variable
     [Repository.Variable]: createVariableRule(scopeName, variableParts.headChar, variableParts.tailChar),
