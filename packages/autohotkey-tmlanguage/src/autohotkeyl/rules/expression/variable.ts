@@ -1,13 +1,37 @@
 import { RuleName } from '../../../constants';
-import { capture } from '../../../oniguruma';
-import type { MatchRule, ScopeName } from '../../../types';
-import { nameRule } from '../../../utils';
+import { capture, many1, manyRange, numbers1, seq } from '../../../oniguruma';
+import type { MatchRule, PatternsRule, ScopeName } from '../../../types';
+import { nameRule, patternsRule } from '../../../utils';
 
-export function createVariableRule(scopeName: ScopeName, name: string): MatchRule {
+export function createVariableRule(scopeName: ScopeName, nameStart: string, nameBody: string): MatchRule {
   return {
-    match: capture(name),
+    match: capture(seq(nameStart, manyRange(nameBody, 0, 252))),
     captures: {
       1: nameRule(scopeName, RuleName.Variable),
     },
   };
+}
+export function createInvalidVariableRule(scopeName: ScopeName, nameStart: string, nameBody: string): PatternsRule {
+  return patternsRule(
+    {
+      match: seq(
+        capture(numbers1()),
+        capture(seq(nameStart, manyRange(nameBody, 0, 252))),
+      ),
+      captures: {
+        1: nameRule(scopeName, RuleName.Variable, RuleName.Integer, RuleName.Invalid),
+        2: nameRule(scopeName, RuleName.Variable),
+      },
+    },
+    {
+      match: seq(
+        capture(seq(nameStart, manyRange(nameBody, 252))),
+        capture(many1(nameBody)),
+      ),
+      captures: {
+        1: nameRule(scopeName, RuleName.Variable),
+        2: nameRule(scopeName, RuleName.Variable, RuleName.Invalid),
+      },
+    },
+  );
 }
