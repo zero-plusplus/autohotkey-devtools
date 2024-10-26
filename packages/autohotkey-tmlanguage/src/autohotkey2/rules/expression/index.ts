@@ -3,6 +3,8 @@ import { capture, char } from '../../../oniguruma';
 import type { BeginEndRule, PatternsRule, ScopeName } from '../../../types';
 import { includeRule, name, nameRule } from '../../../utils';
 
+export * from './access';
+
 export function createExpressionRule(): PatternsRule {
   return {
     patterns: [

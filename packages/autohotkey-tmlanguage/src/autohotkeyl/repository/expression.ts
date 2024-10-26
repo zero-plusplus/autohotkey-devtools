@@ -2,9 +2,7 @@ import { builtinVaribles_v1, Repository, RuleName } from '../../constants';
 import { alt, anyChar, capture, char, charRange, endAnchor, escapeOnigurumaTexts, group, groupMany1, ignoreCase, inlineSpaces0, lookahead, lookbehind, negativeLookahead, negativeLookbehind, number, numbers0, numbers1, opt, ordalt, seq, wordBound } from '../../oniguruma';
 import type { BeginEndRule, MatchRule, PatternsRule, Repositories, ScopeName } from '../../types';
 import { createUtilities, getEscapeSequencesInfo, getOperators, getVariableParts, patternsRule } from '../../utils';
-import { createExpressionRule, createParenthesizedExpressionRule } from '../rules/expression';
-import { createDereferenceRule, createInvalidDereferenceRule } from '../rules/expression/access';
-import { createBuiltinVariableRule, createInvalidVariableRule, createVariableRule } from '../rules/expression/variable';
+import * as v1 from '../rules';
 
 export const integer: string = alt(
   seq(charRange('1', '9'), numbers0()),
@@ -28,18 +26,18 @@ export function createLiteralRepositories(scopeName: ScopeName): Repositories {
   const escapeSequencesInfo = getEscapeSequencesInfo(scopeName);
 
   return {
-    [Repository.Expression]: createExpressionRule(),
-    [Repository.ParenthesizedExpression]: createParenthesizedExpressionRule(scopeName),
+    [Repository.Expression]: v1.createExpressionRule(),
+    [Repository.ParenthesizedExpression]: v1.createParenthesizedExpressionRule(scopeName),
 
     // #region variable
-    [Repository.Variable]: createVariableRule(scopeName, variableParts.headChar, variableParts.tailChar),
-    [Repository.InvalidVariable]: createInvalidVariableRule(scopeName, variableParts.headChar, variableParts.tailChar),
-    [Repository.BuiltInVariable]: createBuiltinVariableRule(scopeName, [ ...builtinVaribles_v1 ]),
+    [Repository.Variable]: v1.createVariableRule(scopeName, variableParts.headChar, variableParts.tailChar),
+    [Repository.InvalidVariable]: v1.createInvalidVariableRule(scopeName, variableParts.headChar, variableParts.tailChar),
+    [Repository.BuiltInVariable]: v1.createBuiltinVariableRule(scopeName, [ ...builtinVaribles_v1 ]),
     // #endregion variable
 
     // #region access
-    [Repository.Dereference]: createDereferenceRule(scopeName),
-    [Repository.InvalidDereference]: createInvalidDereferenceRule(scopeName),
+    [Repository.Dereference]: v1.createDereferenceRule(scopeName),
+    [Repository.InvalidDereference]: v1.createInvalidDereferenceRule(scopeName),
     // #endregion access
 
     // #region literal

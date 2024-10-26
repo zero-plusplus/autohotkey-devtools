@@ -1,7 +1,6 @@
-import { createDereferenceRule, createInvalidDereferenceRule } from '../../autohotkey2/rules/expression/access';
+import * as v2 from '../../autohotkey2/rules';
 import * as ahkl from '../../autohotkeyl/repository/expression';
-import { createExpressionRule, createParenthesizedExpressionRule } from '../../autohotkeyl/rules/expression';
-import { createBuiltinVariableRule, createInvalidVariableRule, createVariableRule } from '../../autohotkeyl/rules/expression/variable';
+import * as v1 from '../../autohotkeyl/rules';
 import { builtinVaribles_v2, Repository, RuleName } from '../../constants';
 import { alt, capture, char, negativeLookahead, negativeLookbehind, ordalt, seq } from '../../oniguruma';
 import type { BeginEndRule, MatchRule, PatternsRule, Repositories, ScopeName } from '../../types';
@@ -15,18 +14,18 @@ export function createLiteralRepositories(scopeName: ScopeName): Repositories {
   const variablePars = getVariableParts(scopeName);
 
   return {
-    [Repository.Expression]: createExpressionRule(),
-    [Repository.ParenthesizedExpression]: createParenthesizedExpressionRule(scopeName),
+    [Repository.Expression]: v2.createExpressionRule(),
+    [Repository.ParenthesizedExpression]: v2.createParenthesizedExpressionRule(scopeName),
 
     // #region variable
-    [Repository.Variable]: createVariableRule(scopeName, variablePars.headChar, variablePars.tailChar),
-    [Repository.InvalidVariable]: createInvalidVariableRule(scopeName, variablePars.headChar, variablePars.tailChar),
-    [Repository.BuiltInVariable]: createBuiltinVariableRule(scopeName, [ ...builtinVaribles_v2 ]),
+    [Repository.Variable]: v1.createVariableRule(scopeName, variablePars.headChar, variablePars.tailChar),
+    [Repository.InvalidVariable]: v1.createInvalidVariableRule(scopeName, variablePars.headChar, variablePars.tailChar),
+    [Repository.BuiltInVariable]: v1.createBuiltinVariableRule(scopeName, [ ...builtinVaribles_v2 ]),
     // #endregion variable
 
     // #region access
-    [Repository.Dereference]: createDereferenceRule(scopeName),
-    [Repository.InvalidDereference]: createInvalidDereferenceRule(scopeName),
+    [Repository.Dereference]: v2.createDereferenceRule(scopeName),
+    [Repository.InvalidDereference]: v2.createInvalidDereferenceRule(scopeName),
     // #endregion access
 
     // #region literal
