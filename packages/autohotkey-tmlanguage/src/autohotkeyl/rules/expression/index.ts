@@ -4,6 +4,7 @@ import type { BeginEndRule, PatternsRule, ScopeName } from '../../../types';
 import { includeRule, name, nameRule, patternsRule } from '../../../utils';
 
 export * from './access';
+export * from './string';
 export * from './variable';
 
 export function createExpressionRule(): PatternsRule {

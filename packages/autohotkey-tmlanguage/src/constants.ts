@@ -729,6 +729,7 @@ export const enum RuleName {
   MultiLineString = 'string.quoted.unquoted',
   StringBegin = 'punctuation.definition.string.begin',
   StringEnd = 'punctuation.definition.string.end',
+  EscapeSequence = 'constant.character.escape',
   // #endregion string
   // #region number
   Integer = 'constant.numeric.integer',

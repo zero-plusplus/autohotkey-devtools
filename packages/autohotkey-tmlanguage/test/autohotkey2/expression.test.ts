@@ -105,7 +105,7 @@ describe('expression', () => {
           expect(actual).toStrictEqual([
             { text: `'`, scopes: name(RuleName.SingleString, RuleName.StringBegin) },
             ...escapeSequencesInfo.singleQuote.map((escapeSequence) => {
-              return { text: escapeSequence, scopes: name(RuleName.SingleString, RuleName.SingleStringEscapeSequence) };
+              return { text: escapeSequence, scopes: name(RuleName.SingleString, RuleName.EscapeSequence) };
             }),
             { text: `'`, scopes: name(RuleName.SingleString, RuleName.StringEnd) },
           ]);

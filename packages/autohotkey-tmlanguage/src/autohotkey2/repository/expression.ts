@@ -1,13 +1,12 @@
 import * as v2 from '../../autohotkey2/rules';
 import * as ahkl from '../../autohotkeyl/repository/expression';
 import * as v1 from '../../autohotkeyl/rules';
-import { builtinVaribles_v2, Repository, RuleName } from '../../constants';
-import { alt, capture, char, negativeLookahead, negativeLookbehind, ordalt, seq } from '../../oniguruma';
-import type { BeginEndRule, MatchRule, PatternsRule, Repositories, ScopeName } from '../../types';
+import { builtinVaribles_v2, Repository } from '../../constants';
+import type { PatternsRule, Repositories, ScopeName } from '../../types';
 import { createUtilities, getEscapeSequencesInfo, getVariableParts } from '../../utils';
 
 export function createLiteralRepositories(scopeName: ScopeName): Repositories {
-  const { name, nameRule, includeRule } = createUtilities(scopeName);
+  const { includeRule } = createUtilities(scopeName);
 
   const escapeSequenceInfo = getEscapeSequencesInfo(scopeName);
   const ahklRepositories = ahkl.createLiteralRepositories(scopeName);
@@ -47,63 +46,8 @@ export function createLiteralRepositories(scopeName: ScopeName): Repositories {
         ],
       };
     })(),
-    [Repository.InvalidStringContent]: ahklRepositories[Repository.InvalidStringContent],
-    [Repository.DoubleString]: ((): BeginEndRule => {
-      return {
-        name: name(RuleName.DoubleString),
-        begin: capture(char('"')),
-        beginCaptures: {
-          1: nameRule(RuleName.StringBegin),
-        },
-        end: seq(
-          negativeLookbehind(char('`')),
-          capture(char('"')),
-        ),
-        endCaptures: {
-          1: nameRule(RuleName.StringEnd),
-        },
-        patterns: [
-          includeRule(Repository.InvalidStringContent),
-          includeRule(Repository.DoubleStringEscapeSequence),
-        ],
-      };
-    })(),
-    [Repository.DoubleStringEscapeSequence]: ((): MatchRule => {
-      return {
-        name: name(RuleName.DoubleStringEscapeSequence),
-        match: seq(
-          capture(ordalt(...escapeSequenceInfo.doubleQuote)),
-          negativeLookahead(alt(char('\\r\\n'), char('\\n'))),
-        ),
-      };
-    })(),
-    [Repository.SingleString]: {
-      name: name(RuleName.SingleString),
-      begin: capture(char(`'`)),
-      beginCaptures: {
-        1: { name: name(RuleName.StringBegin) },
-      },
-      end: seq(
-        negativeLookbehind(char('`')),
-        capture(char(`'`)),
-      ),
-      endCaptures: {
-        1: { name: name(RuleName.StringEnd) },
-      },
-      patterns: [
-        includeRule(Repository.InvalidStringContent),
-        includeRule(Repository.SingleStringEscapeSequence),
-      ],
-    },
-    [Repository.SingleStringEscapeSequence]: ((): MatchRule => {
-      return {
-        name: name(RuleName.SingleStringEscapeSequence),
-        match: seq(
-          ordalt(...escapeSequenceInfo.singleQuote),
-          negativeLookahead(alt(char('\\r\\n'), char('\\n'))),
-        ),
-      };
-    })(),
+    [Repository.DoubleString]: v1.createStringRule(scopeName, '"', escapeSequenceInfo.doubleQuote),
+    [Repository.SingleString]: v1.createStringRule(scopeName, `'`, escapeSequenceInfo.singleQuote),
     // #endregion string
 
     // #region number

@@ -107,7 +107,7 @@ describe.each([
           expect(actual).toStrictEqual([
             { text: '"', scopes: name(RuleName.DoubleString, RuleName.StringBegin) },
             ...escapeSequencesInfo.doubleQuote.map((escapeSequence) => {
-              return { text: escapeSequence, scopes: name(RuleName.DoubleString, RuleName.DoubleStringEscapeSequence) };
+              return { text: escapeSequence, scopes: name(RuleName.DoubleString, RuleName.EscapeSequence) };
             }),
             { text: '"', scopes: name(RuleName.DoubleString, RuleName.StringEnd) },
           ]);

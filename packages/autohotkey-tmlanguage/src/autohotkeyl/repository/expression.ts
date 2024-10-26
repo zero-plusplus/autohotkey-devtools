@@ -1,6 +1,6 @@
 import { builtinVaribles_v1, Repository, RuleName } from '../../constants';
-import { alt, anyChar, capture, char, charRange, endAnchor, escapeOnigurumaTexts, group, groupMany1, ignoreCase, inlineSpaces0, lookahead, lookbehind, negativeLookahead, negativeLookbehind, number, numbers0, numbers1, opt, ordalt, seq, wordBound } from '../../oniguruma';
-import type { BeginEndRule, MatchRule, PatternsRule, Repositories, ScopeName } from '../../types';
+import { alt, capture, char, charRange, escapeOnigurumaTexts, group, groupMany1, ignoreCase, lookahead, lookbehind, negativeLookahead, number, numbers0, numbers1, opt, ordalt, seq, wordBound } from '../../oniguruma';
+import type { MatchRule, PatternsRule, Repositories, ScopeName } from '../../types';
 import { createUtilities, getEscapeSequencesInfo, getOperators, getVariableParts, patternsRule } from '../../utils';
 import * as v1 from '../rules';
 
@@ -49,48 +49,8 @@ export function createLiteralRepositories(scopeName: ScopeName): Repositories {
     })(),
 
     // #region string
-    [Repository.String]: ((): PatternsRule => {
-      return patternsRule(includeRule(Repository.DoubleString));
-    })(),
-    [Repository.DoubleString]: ((): BeginEndRule => {
-      const quote = char('"');
-      return {
-        name: name(RuleName.DoubleString),
-        begin: seq(negativeLookbehind(quote), capture(quote)),
-        beginCaptures: {
-          1: nameRule(RuleName.StringBegin),
-        },
-        end: seq(capture(quote), negativeLookahead(quote)),
-        endCaptures: {
-          1: nameRule(RuleName.StringEnd),
-        },
-        patterns: [
-          includeRule(Repository.InvalidStringContent),
-          includeRule(Repository.DoubleStringEscapeSequence),
-        ],
-      };
-    })(),
-    [Repository.InvalidStringContent]: ((): MatchRule => {
-      return {
-        match: seq(
-          capture(anyChar()),
-          inlineSpaces0(),
-          lookahead(endAnchor()),
-        ),
-        captures: {
-          1: nameRule(RuleName.Invalid),
-        },
-      };
-    })(),
-    [Repository.DoubleStringEscapeSequence]: ((): MatchRule => {
-      return {
-        name: name(RuleName.DoubleStringEscapeSequence),
-        match: seq(
-          capture(ordalt(...escapeSequencesInfo.doubleQuote)),
-          negativeLookahead(endAnchor()),
-        ),
-      };
-    })(),
+    [Repository.String]: patternsRule(includeRule(Repository.DoubleString)),
+    [Repository.DoubleString]: v1.createStringRule(scopeName, '"', escapeSequencesInfo.doubleQuote),
     // #endregion string
 
     // #region number
