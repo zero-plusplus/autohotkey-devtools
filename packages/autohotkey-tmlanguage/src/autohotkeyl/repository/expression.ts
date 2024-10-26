@@ -2,6 +2,7 @@ import { Repository, RuleName } from '../../constants';
 import { alt, anyChar, capture, char, charRange, endAnchor, escapeOnigurumaTexts, group, groupMany1, ignoreCase, inlineSpaces0, inlineSpaces1, lookahead, lookbehind, many0, many1, manyRange, negativeLookahead, negativeLookbehind, negChar, number, numbers0, numbers1, opt, ordalt, seq, whitespace, wordBound } from '../../oniguruma';
 import type { BeginEndRule, MatchRule, PatternsRule, Repositories, ScopeName } from '../../types';
 import { createUtilities, getBuiltInVariableNames, getEscapeSequencesInfo, getOperators, getVariableParts, patternsRule } from '../../utils';
+import { createVariableRule } from '../rules/expression/variable';
 
 export const integer: string = alt(
   seq(charRange('1', '9'), numbers0()),
@@ -61,14 +62,7 @@ export function createLiteralRepositories(scopeName: ScopeName): Repositories {
     })(),
 
     // #region variable
-    [Repository.Variable]: ((): MatchRule => {
-      return {
-        match: capture(seq(variableParts.headChar, manyRange(variableParts.tailChar, 0, 252))),
-        captures: {
-          1: nameRule(RuleName.Variable),
-        },
-      };
-    })(),
+    [Repository.Variable]: createVariableRule(scopeName, seq(variableParts.headChar, manyRange(variableParts.tailChar, 0, 252))),
     [Repository.InvalidVariable]: ((): PatternsRule => {
       return patternsRule(
         {
