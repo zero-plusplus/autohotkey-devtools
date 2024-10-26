@@ -1,7 +1,8 @@
 import * as ahkl from '../../autohotkeyl/repository/expression';
+import { createDereferenceRule } from '../../autohotkeyl/rules/expression/access';
 import { createBuiltinVariableRule, createInvalidVariableRule, createVariableRule } from '../../autohotkeyl/rules/expression/variable';
 import { builtinVaribles_v2, Repository, RuleName } from '../../constants';
-import { alt, anyChars1, capture, char, endAnchor, inlineSpaces0, inlineSpaces1, lookahead, negativeLookahead, negativeLookbehind, negChar, negChars0, negChars1, ordalt, seq } from '../../oniguruma';
+import { alt, capture, char, endAnchor, inlineSpaces0, inlineSpaces1, lookahead, negativeLookahead, negativeLookbehind, negChar, negChars0, negChars1, ordalt, seq } from '../../oniguruma';
 import type { BeginEndRule, MatchRule, PatternsRule, Repositories, ScopeName } from '../../types';
 import { createUtilities, getEscapeSequencesInfo, getVariableParts } from '../../utils';
 
@@ -42,34 +43,7 @@ export function createLiteralRepositories(scopeName: ScopeName): Repositories {
     // #endregion variable
 
     // #region access
-    [Repository.Dereference]: ((): MatchRule => {
-      return {
-        match: seq(
-          capture(char('%')),
-          capture(negChars1('\\r', '\\n')),
-          capture(char('%')),
-        ),
-        captures: {
-          1: nameRule(Repository.Dereference, RuleName.PercentBegin),
-          2: {
-            patterns: [
-              includeRule(Repository.InvalidDereference),
-              includeRule(Repository.Dereference),
-              {
-                name: name(Repository.Dereference),
-                match: capture(anyChars1()),
-                captures: {
-                  1: {
-                    patterns: [ includeRule(Repository.Expression) ],
-                  },
-                },
-              },
-            ],
-          },
-          3: nameRule(Repository.Dereference, RuleName.PercentEnd),
-        },
-      };
-    })(),
+    [Repository.Dereference]: createDereferenceRule(scopeName),
     [Repository.InvalidDereference]: ((): PatternsRule => {
       return {
         patterns: [
