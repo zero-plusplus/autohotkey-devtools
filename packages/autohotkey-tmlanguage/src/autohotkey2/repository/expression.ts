@@ -1,5 +1,4 @@
 import * as v2 from '../../autohotkey2/rules';
-import * as ahkl from '../../autohotkeyl/repository/expression';
 import * as v1 from '../../autohotkeyl/rules';
 import { builtinVaribles_v2, operators_v2, Repository } from '../../constants';
 import type { Repositories, ScopeName } from '../../types';
@@ -9,7 +8,6 @@ export function createLiteralRepositories(scopeName: ScopeName): Repositories {
   const { includeRule } = createUtilities(scopeName);
 
   const escapeSequenceInfo = getEscapeSequencesInfo(scopeName);
-  const ahklRepositories = ahkl.createLiteralRepositories(scopeName);
   const variablePars = getVariableParts(scopeName);
 
   return {
@@ -54,14 +52,22 @@ export function createLiteralRepositories(scopeName: ScopeName): Repositories {
     // #endregion string
 
     // #region number
-    [Repository.Number]: ahklRepositories[Repository.Number],
-    [Repository.Integer]: ahklRepositories[Repository.Integer],
-    [Repository.Float]: ahklRepositories[Repository.Float],
-    [Repository.InvalidFloat]: ahklRepositories[Repository.InvalidFloat],
-    [Repository.Hex]: ahklRepositories[Repository.Hex],
-    [Repository.InvalidHex]: ahklRepositories[Repository.InvalidHex],
-    [Repository.ScientificNotation]: ahklRepositories[Repository.ScientificNotation],
-    [Repository.InvalidScientificNotation]: ahklRepositories[Repository.InvalidScientificNotation],
+    [Repository.Number]: patternsRule(
+      includeRule(Repository.Integer),
+      includeRule(Repository.InvalidFloat),
+      includeRule(Repository.Float),
+      includeRule(Repository.InvalidHex),
+      includeRule(Repository.Hex),
+      includeRule(Repository.InvalidScientificNotation),
+      includeRule(Repository.ScientificNotation),
+    ),
+    [Repository.Integer]: v1.createIntegerRule(scopeName),
+    [Repository.Float]: v1.createFloatRule(scopeName),
+    [Repository.InvalidFloat]: v1.createInvalidFloatRule(scopeName),
+    [Repository.Hex]: v1.createHexRule(scopeName),
+    [Repository.InvalidHex]: v1.createInvalidHexRule(scopeName),
+    [Repository.ScientificNotation]: v1.createScientificNotationRule(scopeName),
+    [Repository.InvalidScientificNotation]: v1.createInvalidScientificNotationRule(scopeName),
     // #endregion number
     // #endregion literal
 

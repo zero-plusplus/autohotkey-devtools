@@ -4,6 +4,7 @@ import type { BeginEndRule, MatchRule, PatternsRule, ScopeName } from '../../../
 import { includeRule, name, nameRule, patternsRule } from '../../../utils';
 
 export * from './access';
+export * from './number';
 export * from './string';
 export * from './variable';
 
