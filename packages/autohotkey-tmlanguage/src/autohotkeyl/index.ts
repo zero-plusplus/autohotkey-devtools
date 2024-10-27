@@ -2,6 +2,7 @@ import { Repository } from '../constants';
 import type { Repositories, ScopeName, TmLanguage } from '../types';
 import { includeRule, name, patternsRule } from '../utils';
 import * as constants_v1 from './constants';
+import * as patterns_v1 from './patterns';
 import * as command from './repository/command';
 import * as rule_v1 from './rules';
 
@@ -62,8 +63,8 @@ export function createRepositories(scopeName: ScopeName): Repositories {
     [Repository.ParenthesizedExpression]: rule_v1.createParenthesizedExpressionRule(scopeName),
 
     // #region variable
-    [Repository.Variable]: rule_v1.createVariableRule(scopeName, constants_v1.nameStart, constants_v1.nameBody),
-    [Repository.InvalidVariable]: rule_v1.createInvalidVariableRule(scopeName, constants_v1.nameStart, constants_v1.nameBody),
+    [Repository.Variable]: rule_v1.createVariableRule(scopeName, patterns_v1.nameStart, patterns_v1.nameBody),
+    [Repository.InvalidVariable]: rule_v1.createInvalidVariableRule(scopeName, patterns_v1.nameStart, patterns_v1.nameBody),
     [Repository.BuiltInVariable]: rule_v1.createBuiltinVariableRule(scopeName, constants_v1.builtinVaribles),
     // #endregion variable
 

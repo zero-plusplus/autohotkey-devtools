@@ -2,7 +2,7 @@ import { Repository, RuleName } from '../../../constants';
 import { alt, capture, char, inlineSpaces1, lookahead, many0, many1, negChar, seq, whitespace } from '../../../oniguruma';
 import type { BeginEndRule, PatternsRule, ScopeName } from '../../../types';
 import { includeRule, name, nameRule, patternsRule } from '../../../utils';
-import * as constants_v1 from '../../constants';
+import * as patterns_v1 from '../../patterns';
 
 export function createDereferenceRule(scopeName: ScopeName): BeginEndRule {
   const dereferenceContent = negChar('%', whitespace());
@@ -14,7 +14,7 @@ export function createDereferenceRule(scopeName: ScopeName): BeginEndRule {
     },
     end: alt(
       capture(char('%')),
-      lookahead(constants_v1.expressionEndLine),
+      lookahead(patterns_v1.expressionEndLine),
     ),
     endCaptures: {
       1: nameRule(scopeName, Repository.Dereference, RuleName.PercentEnd),
@@ -77,7 +77,7 @@ export function createInvalidDereferenceRule(scopeName: ScopeName): PatternsRule
     {
       match: seq(
         capture(char('%')),
-        lookahead(constants_v1.expressionEndLine),
+        lookahead(patterns_v1.expressionEndLine),
       ),
       captures: {
         1: nameRule(scopeName, Repository.Dereference, RuleName.PercentBegin, RuleName.Invalid),
@@ -90,7 +90,7 @@ export function createInvalidDereferenceRule(scopeName: ScopeName): PatternsRule
         capture(char('%')),
         capture(many0(dereferenceContent)),
         capture(dereferenceContent),
-        lookahead(constants_v1.expressionEndLine),
+        lookahead(patterns_v1.expressionEndLine),
       ),
       captures: {
         1: nameRule(scopeName, Repository.Dereference, RuleName.PercentBegin),

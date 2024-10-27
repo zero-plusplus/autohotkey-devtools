@@ -3,6 +3,7 @@ import { alt, capture, char, endAnchor, escapeOnigurumaTexts, group, groupMany0,
 import type { MatchRule, ScopeName } from '../../types';
 import { includeRule, name, nameRule } from '../../utils';
 import * as constants_v1 from '../constants';
+import * as patterns_v1 from '../patterns';
 
 export function createLegacyAssignmentRule(scopeName: ScopeName): MatchRule {
   const endLine = lookahead(alt(
@@ -12,14 +13,14 @@ export function createLegacyAssignmentRule(scopeName: ScopeName): MatchRule {
 
   return {
     match: seq(
-      constants_v1.expressionBegin,
-      capture(seq(constants_v1.nameStart, groupMany0(constants_v1.nameBody))),
+      patterns_v1.expressionBegin,
+      capture(seq(patterns_v1.nameStart, groupMany0(patterns_v1.nameBody))),
       inlineSpaces0(),
       capture(char('=')),
       inlineSpaces0(),
       capture(groupMany0(alt(
-        constants_v1.brackets,
-        constants_v1.legacyText,
+        patterns_v1.brackets,
+        patterns_v1.legacyText,
         group(ordalt(...constants_v1.unquoteEscapeSequences)),
         char('%'),
       ))),
@@ -43,7 +44,7 @@ export function createLegacyAssignmentRule(scopeName: ScopeName): MatchRule {
           },
           {
             name: name(scopeName, RuleName.LegacyText),
-            match: many1(constants_v1.legacyText),
+            match: many1(patterns_v1.legacyText),
           },
         ],
       },
@@ -56,7 +57,7 @@ export function createPercentExpressionRule(scopeName: ScopeName): MatchRule {
       capture(char('%')),
       inlineSpaces1(),
       capture(groupMany0(alt(
-        constants_v1.brackets,
+        patterns_v1.brackets,
         negChar('\\r', '\\n', ',', ';'),
         seq(negativeLookbehind(inlineSpace()), char(';')),
       ))),
