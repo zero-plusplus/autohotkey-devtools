@@ -611,7 +611,6 @@ export const commonOperators = [
   '>>=',  // e.g. `a >>= 1`
   '<<=',  // e.g. `a <<= 1`
   '>>>=', // e.g. `a >>>= 1`
-  ',',    // e.g. `a, b`
 ] as const;
 export const operators_v1: [ ...typeof commonOperators, '<>' ] = [
   ...commonOperators,
@@ -745,6 +744,7 @@ export const enum RuleName {
   Exponent = 'constant.numeric.exponent',
   // #endregion number
   // #region operators
+  Separator = 'punctuation.separator',
   Operator = 'keyword.operator',
   Equals = 'keyword.operator.equals',
   Comma = 'punctuation.separator.comma',

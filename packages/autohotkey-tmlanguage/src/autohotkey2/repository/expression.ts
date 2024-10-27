@@ -1,7 +1,7 @@
 import * as v2 from '../../autohotkey2/rules';
 import * as ahkl from '../../autohotkeyl/repository/expression';
 import * as v1 from '../../autohotkeyl/rules';
-import { builtinVaribles_v2, Repository } from '../../constants';
+import { builtinVaribles_v2, operators_v2, Repository } from '../../constants';
 import type { Repositories, ScopeName } from '../../types';
 import { createUtilities, getEscapeSequencesInfo, getVariableParts, patternsRule } from '../../utils';
 
@@ -23,6 +23,7 @@ export function createLiteralRepositories(scopeName: ScopeName): Repositories {
       includeRule(Repository.Variable),
       includeRule(Repository.InvalidDereference),
       includeRule(Repository.Dereference),
+      includeRule(Repository.Operator),
     ),
     [Repository.ParenthesizedExpression]: v2.createParenthesizedExpressionRule(scopeName),
 
@@ -65,7 +66,8 @@ export function createLiteralRepositories(scopeName: ScopeName): Repositories {
     // #endregion literal
 
     // #region token
-    [Repository.Comma]: ahklRepositories[Repository.Comma],
+    [Repository.Comma]: v1.createSeparatorRule(scopeName, ','),
+    [Repository.Operator]: v1.createOperatorRule(scopeName, operators_v2),
     // #endregion token
   };
 }

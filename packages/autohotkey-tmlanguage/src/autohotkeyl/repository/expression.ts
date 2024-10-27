@@ -1,7 +1,7 @@
-import { builtinVaribles_v1, Repository, RuleName } from '../../constants';
-import { alt, capture, char, charRange, escapeOnigurumaTexts, group, groupMany1, ignoreCase, lookahead, lookbehind, negativeLookahead, number, numbers0, numbers1, opt, ordalt, seq, wordBound } from '../../oniguruma';
+import { builtinVaribles_v1, operators_v1, Repository, RuleName } from '../../constants';
+import { alt, capture, char, charRange, group, groupMany1, ignoreCase, lookahead, lookbehind, negativeLookahead, number, numbers0, numbers1, opt, seq, wordBound } from '../../oniguruma';
 import type { MatchRule, PatternsRule, Repositories, ScopeName } from '../../types';
-import { createUtilities, getEscapeSequencesInfo, getOperators, getVariableParts, patternsRule } from '../../utils';
+import { createUtilities, getEscapeSequencesInfo, getVariableParts, patternsRule } from '../../utils';
 import * as v1 from '../rules';
 
 export const integer: string = alt(
@@ -18,9 +18,6 @@ export const hex: string = seq(hexPrefix, hexValue);
 
 export function createLiteralRepositories(scopeName: ScopeName): Repositories {
   const { includeRule, name, nameRule } = createUtilities(scopeName);
-
-  const operatorTokens = getOperators(scopeName);
-  const operators = ignoreCase(ordalt(...escapeOnigurumaTexts(operatorTokens.filter((operator) => operator !== ','))));
 
   const variableParts = getVariableParts(scopeName);
   const escapeSequencesInfo = getEscapeSequencesInfo(scopeName);
@@ -262,18 +259,8 @@ export function createLiteralRepositories(scopeName: ScopeName): Repositories {
     // #endregion literal
 
     // #region token
-    [Repository.Comma]: ((): MatchRule => {
-      return {
-        name: name(RuleName.Comma),
-        match: char(','),
-      };
-    })(),
-    [Repository.Operator]: ((): MatchRule => {
-      return {
-        name: name(RuleName.Operator),
-        match: operators,
-      };
-    })(),
+    [Repository.Comma]: v1.createSeparatorRule(scopeName, ','),
+    [Repository.Operator]: v1.createOperatorRule(scopeName, operators_v1),
     // #endregion token
   };
 }

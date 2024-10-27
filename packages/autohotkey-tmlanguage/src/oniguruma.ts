@@ -152,7 +152,7 @@ export function escapeCharClass(text: string): string {
 export function escapeOnigurumaText(text: string): string {
   return text.replaceAll(/([.*?+{}|()[\]^/])/gu, '\\$1');
 }
-export function escapeOnigurumaTexts(onigurumaTexts: string[]): string[] {
+export function escapeOnigurumaTexts(onigurumaTexts: readonly string[]): string[] {
   return onigurumaTexts.map((onigurumaText) => escapeOnigurumaText(onigurumaText));
 }
 // #endregion helpers

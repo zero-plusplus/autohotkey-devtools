@@ -1,6 +1,6 @@
 import { Repository, RuleName } from '../../../constants';
-import { capture, char } from '../../../oniguruma';
-import type { BeginEndRule, PatternsRule, ScopeName } from '../../../types';
+import { capture, char, escapeOnigurumaTexts, negativeLookbehind, ordalt, seq } from '../../../oniguruma';
+import type { BeginEndRule, MatchRule, PatternsRule, ScopeName } from '../../../types';
 import { includeRule, name, nameRule, patternsRule } from '../../../utils';
 
 export * from './access';
@@ -34,5 +34,17 @@ export function createParenthesizedExpressionRule(scopeName: ScopeName): BeginEn
       1: nameRule(scopeName, RuleName.CloseParen),
     },
     patterns: [ includeRule(Repository.Expression) ],
+  };
+}
+export function createSeparatorRule(scopeName: ScopeName, separator: ','): MatchRule {
+  return {
+    name: name(scopeName, RuleName.Separator),
+    match: seq(negativeLookbehind(char('`')), char(separator)),
+  };
+}
+export function createOperatorRule(scopeName: ScopeName, operators: readonly string[]): MatchRule {
+  return {
+    name: name(scopeName, RuleName.Operator),
+    match: ordalt(...escapeOnigurumaTexts(operators)),
   };
 }
