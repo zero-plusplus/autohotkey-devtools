@@ -3,7 +3,6 @@ import { Repository } from '../constants';
 import type { Repositories, ScopeName, TmLanguage } from '../types';
 import { includeRule, patternsRule } from '../utils';
 import * as constants_v2 from './constants';
-import * as statement from './repository/statement';
 import * as rule_v2 from './rules';
 
 export function createTmLanguage(): TmLanguage {
@@ -21,16 +20,31 @@ export function createTmLanguage(): TmLanguage {
 
 export function createRepositories(scopeName: ScopeName): Repositories {
   return {
-    ...statement.createLiteralRepositories(scopeName),
-
-    // #region comment
+    // #region trivia
     [Repository.Comment]: patternsRule(
       includeRule(Repository.SingleLineComment),
       includeRule(Repository.InLineComment),
     ),
     [Repository.SingleLineComment]: rule_v1.createSingleLineCommentRule(scopeName),
     [Repository.InLineComment]: rule_v1.createInLineCommentRule(scopeName),
-    // #endregion comment
+    // #endregion trivia
+
+    // #region statement
+    [Repository.Statement]: patternsRule(includeRule(Repository.ExpressionStatement)),
+    [Repository.ExpressionStatement]: patternsRule(
+      includeRule(Repository.Comma),
+
+      includeRule(Repository.ParenthesizedExpression),
+      includeRule(Repository.Literal),
+      includeRule(Repository.BuiltInVariable),
+      includeRule(Repository.InvalidVariable),
+      includeRule(Repository.Variable),
+      includeRule(Repository.InvalidDereference),
+      includeRule(Repository.Dereference),
+
+      includeRule(Repository.Operator),
+    ),
+    // #endregion statement
 
     // #region expression
     [Repository.Expression]: patternsRule(

@@ -1,10 +1,9 @@
 import { Repository } from '../constants';
 import type { Repositories, ScopeName, TmLanguage } from '../types';
-import { includeRule, patternsRule } from '../utils';
+import { includeRule, name, patternsRule } from '../utils';
 import * as constants_v1 from './constants';
 import * as command from './repository/command';
 import * as legacy from './repository/legacy';
-import * as statement from './repository/statement';
 import * as rule_v1 from './rules';
 
 export function createTmLanguage(): TmLanguage {
@@ -24,19 +23,44 @@ export function createRepositories(scopeName: ScopeName): Repositories {
   return {
     ...command.createRepositories(scopeName),
     ...legacy.createRepositories(scopeName),
-    ...statement.createLiteralRepositories(scopeName),
 
-    // #region comment
+    // #region trivia
     [Repository.Comment]: patternsRule(
       includeRule(Repository.SingleLineComment),
       includeRule(Repository.InLineComment),
     ),
     [Repository.SingleLineComment]: rule_v1.createSingleLineCommentRule(scopeName),
     [Repository.InLineComment]: rule_v1.createInLineCommentRule(scopeName),
-    // #endregion comment
+    // #endregion trivia
+
+    // #region statement
+    [Repository.Statement]: patternsRule(
+      includeRule(Repository.CommandStatement),
+      includeRule(Repository.LegacyStatement),
+      includeRule(Repository.ExpressionStatement),
+    ),
+    [Repository.LegacyStatement]: patternsRule(includeRule(Repository.Legacy)),
+    [Repository.CommandStatement]: {
+      name: name(scopeName, Repository.CommandStatement),
+      patterns: [ includeRule(Repository.Command) ],
+    },
+    [Repository.ExpressionStatement]: patternsRule(includeRule(Repository.Expression)),
+    // #endregion statement
 
     // #region expression
-    [Repository.Expression]: rule_v1.createExpressionRule(),
+    [Repository.Expression]: patternsRule(
+      includeRule(Repository.Comma),
+
+      includeRule(Repository.ParenthesizedExpression),
+      includeRule(Repository.Literal),
+      includeRule(Repository.BuiltInVariable),
+      includeRule(Repository.InvalidVariable),
+      includeRule(Repository.Variable),
+      includeRule(Repository.InvalidDereference),
+      includeRule(Repository.Dereference),
+
+      includeRule(Repository.Operator),
+    ),
     [Repository.ParenthesizedExpression]: rule_v1.createParenthesizedExpressionRule(scopeName),
 
     // #region variable
