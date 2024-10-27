@@ -1,117 +1,25 @@
 import { CommandArgsType, Repository, RuleName } from '../../constants';
 import { commandInfos } from '../../definition';
-import { alt, anyChars0, anyChars1, capture, char, endAnchor, escapeOnigurumaTexts, group, groupMany0, groupMany1, ignoreCase, inlineSpace, inlineSpaces0, inlineSpaces1, lookahead, lookbehind, many1, negativeLookahead, negativeLookbehind, negChar, negChars0, opt, ordalt, seq, startAnchor, wordBound } from '../../oniguruma';
+import { alt, anyChars0, anyChars1, capture, char, group, groupMany1, ignoreCase, inlineSpace, inlineSpaces0, inlineSpaces1, lookahead, lookbehind, many1, negativeLookahead, opt, ordalt, seq, wordBound } from '../../oniguruma';
 import type { BeginWhileRule, CommandInfo, IncludeRule, MatchRule, PatternsRule, Repositories, Rule, ScopeName } from '../../types';
-import { createUtilities, getEscapeSequencesInfo, getOperators, getStatementBegin, patternsRule } from '../../utils';
+import { includeRule, name, nameRule, patternsRule } from '../../utils';
 import * as constants_v1 from '../constants';
+import * as patterns_v1 from '../patterns';
+import * as rule_v1 from '../rules';
 
 export function createRepositories(scopeName: ScopeName): Repositories {
-  const { includeRule, name, nameRule } = createUtilities(scopeName);
-
-  const { legacyText: legacyTextEscapeSequence } = getEscapeSequencesInfo(scopeName);
-  const statementBegin = getStatementBegin(scopeName);
-  const operators = getOperators(scopeName);
-  const argumentsPatterns = [
+  const argumentsPatternsRule = [
     // In some cases, highlighting is not applied in a captures even if a repository with a complex patterns is specified?
     // This problem is solved by specifying the rule directly
     {
       match: '(,)',
       captures: {
-        1: nameRule(Repository.CommandArgument, RuleName.Comma),
+        1: nameRule(scopeName, Repository.CommandArgument, RuleName.Comma),
       },
     },
     includeRule(Repository.CommandArgument),
   ];
-
-  // #region common matchers
-  const legacyTextChar = group(alt(
-    negChar('\\s', ',', '%', '`', ';', ':'),
-    seq(inlineSpace(), negativeLookahead(';')),
-  ));
-  const legacyEndLine = lookahead(alt(
-    seq(inlineSpaces1(), negativeLookahead(char('`')), char(';')),
-    seq(inlineSpaces0(), endAnchor()),
-  ));
-  const brackets = group(alt(
-    seq(char('('), negChars0('\\r', '\\n', ')'), char(')')),
-    seq(char('['), negChars0('\\r', '\\n', ']'), char(']')),
-    seq(char('{'), negChars0('\\r', '\\n', '}'), char('}')),
-  ));
-  const commandLegacyArgument = groupMany0(alt(
-    brackets,
-    legacyTextChar,
-    char(...legacyTextEscapeSequence, '%'),
-  ));
-  const commandExpressionArgument = groupMany0(alt(
-    brackets,
-    negChar('\\r', '\\n', ','),
-  ));
-
-  const expressionOperators = ignoreCase(ordalt(...escapeOnigurumaTexts(operators.filter((operator) => operator !== ','))));
-  const whileLegacyArgument = seq(
-    startAnchor(),
-    inlineSpaces0(),
-    capture(char(',')),
-    inlineSpaces0(),
-    capture(anyChars0()),
-    legacyEndLine,
-  );
-  const whileExpression = seq(
-    startAnchor(),
-    inlineSpaces0(),
-    capture(expressionOperators),
-    opt(group(seq(
-      inlineSpaces0(),
-      capture(commandExpressionArgument),
-      inlineSpaces0(),
-      opt(capture(char(','))),
-      inlineSpaces0(),
-      capture(anyChars0()),
-    ))),
-    legacyEndLine,
-  );
-  const continuationArguments: Pick<BeginWhileRule, 'while' | 'whileCaptures' | 'patterns'> = {
-    while: alt(whileLegacyArgument, whileExpression),
-    whileCaptures: {
-      1: nameRule(Repository.CommandArgument, RuleName.Comma),
-      2: {
-        name: name(Repository.CommandArgument),
-        patterns: argumentsPatterns,
-      },
-      3: nameRule(Repository.CommandArgument, RuleName.Operator),
-      4: {
-        name: name(Repository.CommandArgument),
-        patterns: [ includeRule(Repository.Expression) ],
-      },
-      5: nameRule(Repository.CommandArgument, RuleName.Comma),
-      6: {
-        name: name(Repository.CommandArgument),
-        patterns: argumentsPatterns,
-      },
-    },
-    patterns: [
-      {
-        begin: seq(startAnchor(), inlineSpaces0(), capture(char(',')), inlineSpaces0()),
-        end: legacyEndLine,
-        captures: {
-          1: nameRule(Repository.CommandArgument, RuleName.Comma),
-        },
-        patterns: argumentsPatterns,
-      },
-      {
-        begin: seq(startAnchor(), inlineSpaces0(), capture(expressionOperators), inlineSpaces0()),
-        end: legacyEndLine,
-        captures: {
-          1: nameRule(RuleName.Operator),
-        },
-        patterns: [
-          includeRule(Repository.Expression),
-          ...argumentsPatterns,
-        ],
-      },
-    ],
-  };
-  // #endregion common matchers
+  const continuationArgumentsRuleSnippet = rule_v1.createContinuationArgumentsRuleSnippet(scopeName);
 
   return {
     [Repository.Command]: patternsRule(
@@ -124,9 +32,9 @@ export function createRepositories(scopeName: ScopeName): Repositories {
       const commandName = seq(ordalt(...constants_v1.commandNames), lookahead(wordBound()));
 
       return {
-        name: name(Repository.CommandStatement),
+        name: name(scopeName, Repository.CommandStatement),
         begin: ignoreCase(seq(
-          statementBegin,
+          patterns_v1.statementBeginAnchor,
           capture(commandName),
           opt(group(alt(
             inlineSpace(),
@@ -134,15 +42,15 @@ export function createRepositories(scopeName: ScopeName): Repositories {
           ))),
           inlineSpaces0(),
           capture(anyChars0()),
-          legacyEndLine,
+          patterns_v1.commandArgumentEndLineAnchor,
         )),
         beginCaptures: {
-          1: nameRule(RuleName.CommandName),
-          2: nameRule(Repository.CommandArgument, RuleName.Comma),
-          3: { patterns: argumentsPatterns },
-          4: nameRule(Repository.CommandArgument, RuleName.Comma),
+          1: nameRule(scopeName, RuleName.CommandName),
+          2: nameRule(scopeName, Repository.CommandArgument, RuleName.Comma),
+          3: { patterns: argumentsPatternsRule },
+          4: nameRule(scopeName, Repository.CommandArgument, RuleName.Comma),
         },
-        ...continuationArguments,
+        ...continuationArgumentsRuleSnippet,
       };
     })(),
     [Repository.CommandArgument]: patternsRule(
@@ -154,8 +62,8 @@ export function createRepositories(scopeName: ScopeName): Repositories {
     ),
     [Repository.CommandArgumentText]: ((): MatchRule => {
       return {
-        name: name(RuleName.UnquotedString),
-        match: many1(legacyTextChar),
+        name: name(scopeName, RuleName.UnquotedString),
+        match: many1(patterns_v1.unquotedStringChar),
       };
     })(),
     ...Object.fromEntries(commandInfos.map((commandInfo): [ string, Rule ] => {
@@ -188,10 +96,10 @@ export function createRepositories(scopeName: ScopeName): Repositories {
             return prev;
           }
 
-          let commandArgument = commandLegacyArgument;
+          let commandArgument = patterns_v1.commandUnquotedStringArgument;
           switch (argType) {
             case CommandArgsType.None:
-            case CommandArgsType.Expression: commandArgument = commandExpressionArgument; break;
+            case CommandArgsType.Expression: commandArgument = patterns_v1.commandExpressionArgument; break;
           }
           prev += opt(seq(separator, captureOrGroup(commandArgument)));
           return prev;
@@ -204,12 +112,12 @@ export function createRepositories(scopeName: ScopeName): Repositories {
             capture(ordalt(...keywords)),
             lookahead(wordBound()),
           )),
-          captures: { 1: nameRule(RuleName.UnquotedString, RuleName.Strong) },
+          captures: { 1: nameRule(scopeName, RuleName.UnquotedString, RuleName.Strong) },
         };
       };
       const getArgumentRuleByType = (argType: CommandArgsType, keywords: string[]): PatternsRule => {
         switch (argType) {
-          case CommandArgsType.None: return patternsRule(nameRule(RuleName.UnquotedString, RuleName.Invalid));
+          case CommandArgsType.None: return patternsRule(nameRule(scopeName, RuleName.UnquotedString, RuleName.Invalid));
           case CommandArgsType.Expression: return patternsRule(includeRule(Repository.Expression));
           case CommandArgsType.Input:
           case CommandArgsType.Output: return patternsRule(
@@ -230,12 +138,12 @@ export function createRepositories(scopeName: ScopeName): Repositories {
             }
 
             return {
-              name: name(Repository.CommandArgument),
+              name: name(scopeName, Repository.CommandArgument),
               patterns: [
                 createKeywordMatchRule(keywords),
                 includeRule(Repository.PercentExpression),
                 includeRule(Repository.Dereference),
-                { name: name(RuleName.UnquotedString, RuleName.Invalid), match: anyChars1() },
+                { name: name(scopeName, RuleName.UnquotedString, RuleName.Invalid), match: anyChars1() },
               ],
             };
           }
@@ -248,17 +156,17 @@ export function createRepositories(scopeName: ScopeName): Repositories {
       const argsWithoutCaptures = createArgsRegExpText(false);
       return [
         repositoryName, {
-          name: name(Repository.CommandStatement),
+          name: name(scopeName, Repository.CommandStatement),
           begin: ignoreCase(seq(
-            statementBegin,
+            patterns_v1.statementBeginAnchor,
             capture(commandName),
             opt(capture(argsWithoutCaptures)),
             inlineSpaces0(),
             capture(anyChars0()),
-            legacyEndLine,
+            patterns_v1.commandArgumentEndLineAnchor,
           )),
           beginCaptures: {
-            1: nameRule(RuleName.CommandName),
+            1: nameRule(scopeName, RuleName.CommandName),
             2: {
               patterns: [
                 {
@@ -268,13 +176,13 @@ export function createRepositories(scopeName: ScopeName): Repositories {
                     const argKey = `${(i * 2) + 2}`;
 
                     return [
-                      [ separatorKey, nameRule(Repository.CommandArgument, RuleName.Comma) ], ((): [ string, Rule ] => {
+                      [ separatorKey, nameRule(scopeName, Repository.CommandArgument, RuleName.Comma) ], ((): [ string, Rule ] => {
                         const argType = Array.isArray(arg) ? arg[0] : arg;
                         const keywords = (Array.isArray(arg) ? arg.slice(1) : []) as string[];
 
                         const isSubCommand = typeof argType === 'string';
                         if (isSubCommand) {
-                          return [ argKey, nameRule(RuleName.SubCommandName) ];
+                          return [ argKey, nameRule(scopeName, RuleName.SubCommandName) ];
                         }
 
                         return [ argKey, getArgumentRuleByType(argType, keywords) ];
@@ -288,17 +196,16 @@ export function createRepositories(scopeName: ScopeName): Repositories {
               patterns: [
                 includeRule(Repository.InLineComment),
                 {
-                  name: name(Repository.CommandArgument, RuleName.UnquotedString, RuleName.Invalid),
-                  match: alt(
-                    negChar('\\r', '\\n', ';'),
-                    groupMany1(seq(negativeLookbehind(inlineSpace()), char(';'))),
-                    negativeLookahead(seq(inlineSpaces1(), char(';'))),
-                  ),
+                  name: name(scopeName, Repository.CommandArgument, RuleName.UnquotedString, RuleName.Invalid),
+                  match: groupMany1(alt(
+                    patterns_v1.unquotedStringChar,
+                    char(','),
+                  )),
                 },
               ],
             },
           },
-          ...continuationArguments,
+          ...continuationArgumentsRuleSnippet,
         },
       ];
     })),

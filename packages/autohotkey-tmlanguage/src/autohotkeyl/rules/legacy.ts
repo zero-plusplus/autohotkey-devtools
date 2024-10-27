@@ -13,14 +13,14 @@ export function createLegacyAssignmentRule(scopeName: ScopeName): MatchRule {
 
   return {
     match: seq(
-      patterns_v1.expressionBegin,
+      patterns_v1.expressionBeginAnchor,
       capture(seq(patterns_v1.nameStart, groupMany0(patterns_v1.nameBody))),
       inlineSpaces0(),
       capture(char('=')),
       inlineSpaces0(),
       capture(groupMany0(alt(
         patterns_v1.brackets,
-        patterns_v1.legacyText,
+        patterns_v1.unquotedStringChar,
         group(ordalt(...constants_v1.unquoteEscapeSequences)),
         char('%'),
       ))),
@@ -43,8 +43,8 @@ export function createLegacyAssignmentRule(scopeName: ScopeName): MatchRule {
             match: ordalt(...escapeOnigurumaTexts(constants_v1.unquoteEscapeSequences)),
           },
           {
-            name: name(RuleName.UnquotedString),
-            match: many1(patterns_v1.legacyText),
+            name: name(scopeName, RuleName.UnquotedString),
+            match: many1(patterns_v1.unquotedStringChar),
           },
         ],
       },
