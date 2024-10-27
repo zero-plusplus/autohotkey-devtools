@@ -35,7 +35,7 @@ export function createInvalidVariableRule(scopeName: ScopeName, nameStart: strin
     },
   );
 }
-export function createBuiltinVariableRule(scopeName: ScopeName, builtinVariables: string[]): MatchRule {
+export function createBuiltinVariableRule(scopeName: ScopeName, builtinVariables: readonly string[]): MatchRule {
   return {
     match: ignoreCase(seq(
       lookbehind(wordBound()),

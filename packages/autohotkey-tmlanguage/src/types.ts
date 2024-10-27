@@ -1,4 +1,5 @@
-import { CommandArgsType, commandNames, Repository, RuleName, scopeNames } from './constants';
+import type { commandNames } from './autohotkeyl/constants';
+import { CommandArgsType, Repository, RuleName, scopeNames } from './constants';
 
 export type Repositories = { [key in Partial<Repository>[number]]: Rule | undefined };
 export type Captures = Record<string | number, Rule | undefined>;

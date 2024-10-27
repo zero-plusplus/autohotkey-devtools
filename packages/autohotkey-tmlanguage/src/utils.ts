@@ -1,4 +1,6 @@
-import { builtinVaribles_v1, builtinVaribles_v2, operators_v1, operators_v2, Repository, RuleName } from './constants';
+import * as constants_v2 from './autohotkey2/constants';
+import * as constants_v1 from './autohotkeyl/constants';
+import { Repository, RuleName } from './constants';
 import { alt, asciiChar, char, escapeOnigurumaText, group, inlineSpaces0, lookbehind, negChar, opt, ordalt, seq, startAnchor } from './oniguruma';
 import type { EscapeSequencesInfo, IncludeRule, NameRule, PatternsRule, Rule, ScopeName, Utilities, VariableParts } from './types';
 
@@ -67,14 +69,14 @@ export function getStatementBegin(scopeName: ScopeName): string {
   }
   throw Error(`Scope "${scopeName}" not found`);
 }
-export function getOperators(scopeName: ScopeName): string[] {
+export function getOperators(scopeName: ScopeName): readonly string[] {
   switch (scopeName) {
     case 'autohotkeynext':
     case 'autohotkey2': {
-      return operators_v2;
+      return constants_v2.operators;
     }
     case 'autohotkeyl': {
-      return operators_v1;
+      return constants_v1.operators;
     }
   }
   throw Error(`Scope "${scopeName}" not found`);
@@ -116,14 +118,14 @@ export function getExpressionBegin(scopeName: ScopeName): string {
   }
   throw Error(`Scope "${scopeName}" not found`);
 }
-export function getBuiltInVariableNames(scopeName: ScopeName): string[] {
+export function getBuiltInVariableNames(scopeName: ScopeName): readonly string[] {
   switch (scopeName) {
     case 'autohotkeynext':
     case 'autohotkey2': {
-      return [ ...builtinVaribles_v2 ];
+      return constants_v2.builtinVaribles;
     }
     case 'autohotkeyl': {
-      return [ ...builtinVaribles_v1 ];
+      return constants_v1.builtinVaribles;
     }
   }
   throw Error(`Scope "${scopeName}" not found`);

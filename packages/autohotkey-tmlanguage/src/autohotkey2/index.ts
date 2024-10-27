@@ -1,9 +1,10 @@
-import * as v1 from '../autohotkeyl/rules';
+import * as rule_v1 from '../autohotkeyl/rules';
 import { Repository } from '../constants';
 import type { Repositories, ScopeName, TmLanguage } from '../types';
 import { includeRule, patternsRule } from '../utils';
-import * as expression from './repository/expression';
+import * as constants_v2 from './constants';
 import * as statement from './repository/statement';
+import * as rule_v2 from './rules';
 
 export function createTmLanguage(): TmLanguage {
   const scopeName: ScopeName = 'autohotkey2';
@@ -19,10 +20,7 @@ export function createTmLanguage(): TmLanguage {
 }
 
 export function createRepositories(scopeName: ScopeName): Repositories {
-  // const utils = createUtilities(scopeName);
-
   return {
-    ...expression.createLiteralRepositories(scopeName),
     ...statement.createLiteralRepositories(scopeName),
 
     // #region comment
@@ -30,8 +28,75 @@ export function createRepositories(scopeName: ScopeName): Repositories {
       includeRule(Repository.SingleLineComment),
       includeRule(Repository.InLineComment),
     ),
-    [Repository.SingleLineComment]: v1.createSingleLineCommentRule(scopeName),
-    [Repository.InLineComment]: v1.createInLineCommentRule(scopeName),
+    [Repository.SingleLineComment]: rule_v1.createSingleLineCommentRule(scopeName),
+    [Repository.InLineComment]: rule_v1.createInLineCommentRule(scopeName),
     // #endregion comment
+
+    // #region expression
+    [Repository.Expression]: patternsRule(
+      includeRule(Repository.Comma),
+
+      includeRule(Repository.ParenthesizedExpression),
+      includeRule(Repository.Literal),
+      includeRule(Repository.BuiltInVariable),
+      includeRule(Repository.InvalidVariable),
+      includeRule(Repository.Variable),
+      includeRule(Repository.InvalidDereference),
+      includeRule(Repository.Dereference),
+      includeRule(Repository.Operator),
+    ),
+    [Repository.ParenthesizedExpression]: rule_v2.createParenthesizedExpressionRule(scopeName),
+
+    // #region variable
+    [Repository.Variable]: rule_v1.createVariableRule(scopeName, constants_v2.nameStart, constants_v2.nameBody),
+    [Repository.InvalidVariable]: rule_v1.createInvalidVariableRule(scopeName, constants_v2.nameStart, constants_v2.nameBody),
+    [Repository.BuiltInVariable]: rule_v1.createBuiltinVariableRule(scopeName, constants_v2.builtinVaribles),
+    // #endregion variable
+
+    // #region access
+    [Repository.Dereference]: rule_v2.createDereferenceRule(scopeName),
+    [Repository.InvalidDereference]: rule_v2.createInvalidDereferenceRule(scopeName),
+    // #endregion access
+
+    // #region literal
+    [Repository.Literal]: patternsRule(
+      includeRule(Repository.String),
+      includeRule(Repository.Number),
+    ),
+
+    // #region string
+    [Repository.String]: patternsRule(
+      includeRule(Repository.DoubleString),
+      includeRule(Repository.SingleString),
+    ),
+    [Repository.DoubleString]: rule_v1.createStringRule(scopeName, '"', constants_v2.doubleQuoteEscapeSequences),
+    [Repository.SingleString]: rule_v1.createStringRule(scopeName, `'`, constants_v2.singleQuoteEscapeSequences),
+    // #endregion string
+
+    // #region number
+    [Repository.Number]: patternsRule(
+      includeRule(Repository.Integer),
+      includeRule(Repository.InvalidFloat),
+      includeRule(Repository.Float),
+      includeRule(Repository.InvalidHex),
+      includeRule(Repository.Hex),
+      includeRule(Repository.InvalidScientificNotation),
+      includeRule(Repository.ScientificNotation),
+    ),
+    [Repository.Integer]: rule_v1.createIntegerRule(scopeName),
+    [Repository.Float]: rule_v1.createFloatRule(scopeName),
+    [Repository.InvalidFloat]: rule_v1.createInvalidFloatRule(scopeName),
+    [Repository.Hex]: rule_v1.createHexRule(scopeName),
+    [Repository.InvalidHex]: rule_v1.createInvalidHexRule(scopeName),
+    [Repository.ScientificNotation]: rule_v1.createScientificNotationRule(scopeName),
+    [Repository.InvalidScientificNotation]: rule_v1.createInvalidScientificNotationRule(scopeName),
+    // #endregion number
+    // #endregion literal
+
+    // #region token
+    [Repository.Comma]: rule_v1.createSeparatorRule(scopeName, ','),
+    [Repository.Operator]: rule_v1.createOperatorRule(scopeName, constants_v2.operators),
+    // #endregion token
+    // #endregion expression
   };
 }

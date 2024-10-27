@@ -1,8 +1,9 @@
-import { CommandArgsType, commandNames, Repository, RuleName } from '../../constants';
+import { CommandArgsType, Repository, RuleName } from '../../constants';
 import { commandInfos } from '../../definition';
 import { alt, anyChars0, anyChars1, capture, char, endAnchor, escapeOnigurumaTexts, group, groupMany0, groupMany1, ignoreCase, inlineSpace, inlineSpaces0, inlineSpaces1, lookahead, lookbehind, many1, negativeLookahead, negativeLookbehind, negChar, negChars0, opt, ordalt, seq, startAnchor, wordBound } from '../../oniguruma';
 import type { BeginWhileRule, CommandInfo, IncludeRule, MatchRule, PatternsRule, Repositories, Rule, ScopeName } from '../../types';
 import { createUtilities, getEscapeSequencesInfo, getOperators, getStatementBegin, patternsRule } from '../../utils';
+import * as constants_v1 from '../constants';
 
 export function createRepositories(scopeName: ScopeName): Repositories {
   const { includeRule, name, nameRule } = createUtilities(scopeName);
@@ -120,7 +121,7 @@ export function createRepositories(scopeName: ScopeName): Repositories {
       includeRule(Repository.CommonCommand),
     ),
     [Repository.CommonCommand]: ((): BeginWhileRule => {
-      const commandName = seq(ordalt(...commandNames), lookahead(wordBound()));
+      const commandName = seq(ordalt(...constants_v1.commandNames), lookahead(wordBound()));
 
       return {
         name: name(Repository.CommandStatement),

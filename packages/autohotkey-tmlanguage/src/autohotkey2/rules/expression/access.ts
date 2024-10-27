@@ -1,4 +1,4 @@
-import { expressionEndLine } from '../../../autohotkeyl/constant';
+import * as constants_v1 from '../../../autohotkeyl/constants';
 import { Repository, RuleName } from '../../../constants';
 import { alt, anyChars1, capture, char, endAnchor, lookahead, negativeLookahead, negChar, negChars0, negChars1, seq } from '../../../oniguruma';
 import type { MatchRule, PatternsRule, ScopeName } from '../../../types';
@@ -70,7 +70,7 @@ export function createInvalidDereferenceRule(scopeName: ScopeName): PatternsRule
           capture(negChars0('\\r', '\\n', '%')),
           negativeLookahead(char('%')),
           capture(negChar('\\r', '\\n')),
-          lookahead(expressionEndLine),
+          lookahead(constants_v1.expressionEndLine),
         ),
         captures: {
           1: nameRule(scopeName, Repository.Dereference, RuleName.PercentBegin),
