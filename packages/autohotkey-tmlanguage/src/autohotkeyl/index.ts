@@ -3,7 +3,6 @@ import type { Repositories, ScopeName, TmLanguage } from '../types';
 import { includeRule, name, patternsRule } from '../utils';
 import * as constants_v1 from './constants';
 import * as command from './repository/command';
-import * as legacy from './repository/legacy';
 import * as rule_v1 from './rules';
 
 export function createTmLanguage(): TmLanguage {
@@ -22,7 +21,6 @@ export function createTmLanguage(): TmLanguage {
 export function createRepositories(scopeName: ScopeName): Repositories {
   return {
     ...command.createRepositories(scopeName),
-    ...legacy.createRepositories(scopeName),
 
     // #region trivia
     [Repository.Comment]: patternsRule(
@@ -110,5 +108,11 @@ export function createRepositories(scopeName: ScopeName): Repositories {
     [Repository.Operator]: rule_v1.createOperatorRule(scopeName, constants_v1.operators),
     // #endregion token
     // #endregion expression
+
+    // #region legacy
+    [Repository.Legacy]: patternsRule(includeRule(Repository.LegacyAssignment)),
+    [Repository.LegacyAssignment]: rule_v1.createLegacyAssignmentRule(scopeName),
+    [Repository.PercentExpression]: rule_v1.createPercentExpressionRule(scopeName),
+    // #endregion legacy
   };
 }
