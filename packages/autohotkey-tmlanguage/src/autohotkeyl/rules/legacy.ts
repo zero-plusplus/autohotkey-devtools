@@ -43,7 +43,7 @@ export function createLegacyAssignmentRule(scopeName: ScopeName): MatchRule {
             match: ordalt(...escapeOnigurumaTexts(constants_v1.unquoteEscapeSequences)),
           },
           {
-            name: name(scopeName, RuleName.LegacyText),
+            name: name(RuleName.UnquotedString),
             match: many1(patterns_v1.legacyText),
           },
         ],

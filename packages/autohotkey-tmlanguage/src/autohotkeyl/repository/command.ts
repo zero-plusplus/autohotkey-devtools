@@ -154,7 +154,7 @@ export function createRepositories(scopeName: ScopeName): Repositories {
     ),
     [Repository.CommandArgumentText]: ((): MatchRule => {
       return {
-        name: name(RuleName.LegacyText),
+        name: name(RuleName.UnquotedString),
         match: many1(legacyTextChar),
       };
     })(),
@@ -204,12 +204,12 @@ export function createRepositories(scopeName: ScopeName): Repositories {
             capture(ordalt(...keywords)),
             lookahead(wordBound()),
           )),
-          captures: { 1: nameRule(RuleName.LegacyText, RuleName.Strong) },
+          captures: { 1: nameRule(RuleName.UnquotedString, RuleName.Strong) },
         };
       };
       const getArgumentRuleByType = (argType: CommandArgsType, keywords: string[]): PatternsRule => {
         switch (argType) {
-          case CommandArgsType.None: return patternsRule(nameRule(RuleName.LegacyText, RuleName.Invalid));
+          case CommandArgsType.None: return patternsRule(nameRule(RuleName.UnquotedString, RuleName.Invalid));
           case CommandArgsType.Expression: return patternsRule(includeRule(Repository.Expression));
           case CommandArgsType.Input:
           case CommandArgsType.Output: return patternsRule(
@@ -235,7 +235,7 @@ export function createRepositories(scopeName: ScopeName): Repositories {
                 createKeywordMatchRule(keywords),
                 includeRule(Repository.PercentExpression),
                 includeRule(Repository.Dereference),
-                { name: name(RuleName.LegacyText, RuleName.Invalid), match: anyChars1() },
+                { name: name(RuleName.UnquotedString, RuleName.Invalid), match: anyChars1() },
               ],
             };
           }
@@ -288,7 +288,7 @@ export function createRepositories(scopeName: ScopeName): Repositories {
               patterns: [
                 includeRule(Repository.InLineComment),
                 {
-                  name: name(Repository.CommandArgument, RuleName.LegacyText, RuleName.Invalid),
+                  name: name(Repository.CommandArgument, RuleName.UnquotedString, RuleName.Invalid),
                   match: alt(
                     negChar('\\r', '\\n', ';'),
                     groupMany1(seq(negativeLookbehind(inlineSpace()), char(';'))),

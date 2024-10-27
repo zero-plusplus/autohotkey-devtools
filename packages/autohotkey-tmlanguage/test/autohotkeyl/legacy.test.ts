@@ -16,7 +16,7 @@ describe('legacy', () => {
           { text: ' ' },
           { text: '=', scopes: name(Repository.LegacyAssignment, RuleName.Operator) },
           { text: ' ' },
-          { text: 'text', scopes: name(Repository.LegacyAssignment, RuleName.LegacyText) },
+          { text: 'text', scopes: name(Repository.LegacyAssignment, RuleName.UnquotedString) },
         ],
       ],
       [
@@ -36,7 +36,7 @@ describe('legacy', () => {
           { text: ' ' },
           { text: '=', scopes: name(Repository.LegacyAssignment, RuleName.Operator) },
           { text: ' ' },
-          { text: 'a ', scopes: name(Repository.LegacyAssignment, RuleName.LegacyText) },
+          { text: 'a ', scopes: name(Repository.LegacyAssignment, RuleName.UnquotedString) },
           { text: '`;', scopes: name(Repository.LegacyAssignment, RuleName.EscapeSequence) },
           { text: ' ' },
           { text: '; comment', scopes: name(RuleName.InLineComment) },

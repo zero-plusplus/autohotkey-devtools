@@ -56,7 +56,7 @@ export function createTmLanguage(): TmLanguage {
         ),
         beginCaptures: {
           1: nameRule(Repository.DirecitiveStatement, RuleName.DirectiveName, RuleName.Emphasis),
-          2: nameRule(Repository.DirecitiveStatement, RuleName.LegacyText, RuleName.Emphasis),
+          2: nameRule(Repository.DirecitiveStatement, RuleName.UnquotedString, RuleName.Emphasis),
         },
         while: seq(
           startAnchor(),
@@ -77,7 +77,7 @@ export function createTmLanguage(): TmLanguage {
         ),
         beginCaptures: {
           1: nameRule(Repository.DirecitiveStatement, RuleName.DirectiveName, RuleName.Emphasis),
-          2: nameRule(Repository.DirecitiveStatement, RuleName.LegacyText, RuleName.Emphasis),
+          2: nameRule(Repository.DirecitiveStatement, RuleName.UnquotedString, RuleName.Emphasis),
         },
         while: seq(
           startAnchor(),
@@ -115,7 +115,7 @@ export function createTmLanguage(): TmLanguage {
           ),
           beginCaptures: {
             1: nameRule(Repository.DirecitiveStatement, RuleName.DirectiveName, RuleName.Emphasis),
-            2: nameRule(Repository.DirecitiveStatement, RuleName.LegacyText, RuleName.Emphasis),
+            2: nameRule(Repository.DirecitiveStatement, RuleName.UnquotedString, RuleName.Emphasis),
           },
           while: seq(
             startAnchor(),

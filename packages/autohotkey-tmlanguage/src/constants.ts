@@ -150,6 +150,7 @@ export const enum RuleName {
   BuiltInVariable = 'support.variable',
   // #endregion variable
   // #region string
+  UnquotedString = 'string.unquoted',
   DoubleString = 'string.quoted.double',
   DoubleStringEscapeSequence = 'constant.character.escape.double',
   SingleStringEscapeSequence = 'constant.character.escape.single',
@@ -195,7 +196,6 @@ export const enum RuleName {
 
   // #region legacy
   LegacyAssignment = 'expression.legacy.assignment',
-  LegacyText = 'string.legacy.text',
   LegacyTextEscapeSequence = 'constant.character.escape.legacy.text',
   CommandName = 'support.function.command',
   SubCommandName = 'strong string.legacy.subcommand',

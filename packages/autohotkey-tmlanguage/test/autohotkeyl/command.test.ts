@@ -32,7 +32,7 @@ describe('command', () => {
         { text: 'AutoTrim', scopes: name(Repository.CommandStatement, RuleName.CommandName) },
         { text: ',', scopes: name(Repository.CommandStatement, Repository.CommandArgument, RuleName.Comma) },
         { text: ' ' },
-        { text: 'On', scopes: name(Repository.CommandStatement, Repository.CommandArgument, RuleName.LegacyText, RuleName.Strong) },
+        { text: 'On', scopes: name(Repository.CommandStatement, Repository.CommandArgument, RuleName.UnquotedString, RuleName.Strong) },
       ],
     ],
     // space separator
@@ -40,7 +40,7 @@ describe('command', () => {
       'AutoTrim On', [
         { text: 'AutoTrim', scopes: name(Repository.CommandStatement, RuleName.CommandName) },
         { text: ' ' },
-        { text: 'On', scopes: name(Repository.CommandStatement, Repository.CommandArgument, RuleName.LegacyText, RuleName.Strong) },
+        { text: 'On', scopes: name(Repository.CommandStatement, Repository.CommandArgument, RuleName.UnquotedString, RuleName.Strong) },
       ],
     ],
   ])('first separator', async(text, expected) => {
@@ -57,7 +57,7 @@ describe('command', () => {
         { text: 'AutoTrim', scopes: name(Repository.CommandStatement, RuleName.CommandName) },
         { text: ',', scopes: name(Repository.CommandStatement, Repository.CommandArgument, RuleName.Comma) },
         { text: ' ' },
-        { text: 'On', scopes: name(Repository.CommandStatement, Repository.CommandArgument, RuleName.LegacyText, RuleName.Strong) },
+        { text: 'On', scopes: name(Repository.CommandStatement, Repository.CommandArgument, RuleName.UnquotedString, RuleName.Strong) },
       ],
     ],
     [
@@ -90,7 +90,7 @@ describe('command', () => {
         { text: '  ' },
         { text: ',', scopes: name(Repository.CommandStatement, Repository.CommandArgument, RuleName.Comma) },
         { text: ' ' },
-        { text: 'continuation argument', scopes: name(Repository.CommandStatement, Repository.CommandArgument, RuleName.LegacyText) },
+        { text: 'continuation argument', scopes: name(Repository.CommandStatement, Repository.CommandArgument, RuleName.UnquotedString) },
       ],
     ],
     [
@@ -110,7 +110,7 @@ describe('command', () => {
         { text: 'expressionArgument', scopes: name(Repository.CommandStatement, Repository.CommandArgument, RuleName.Variable) },
         { text: ',', scopes: name(Repository.CommandStatement, Repository.CommandArgument, RuleName.Comma) },
         { text: ' ' },
-        { text: 'legacyText', scopes: name(Repository.CommandStatement, Repository.CommandArgument, RuleName.LegacyText) },
+        { text: 'legacyText', scopes: name(Repository.CommandStatement, Repository.CommandArgument, RuleName.UnquotedString) },
       ],
     ],
     // invalid
@@ -119,7 +119,7 @@ describe('command', () => {
         { text: 'AutoTrim', scopes: name(Repository.CommandStatement, RuleName.CommandName) },
         { text: ',', scopes: name(Repository.CommandStatement, Repository.CommandArgument, RuleName.Comma) },
         { text: ' ' },
-        { text: 'No keyword', scopes: name(Repository.CommandStatement, Repository.CommandArgument, RuleName.LegacyText, RuleName.Invalid) },
+        { text: 'No keyword', scopes: name(Repository.CommandStatement, Repository.CommandArgument, RuleName.UnquotedString, RuleName.Invalid) },
       ],
     ],
   ])('enum argument', async(text, expected) => {
@@ -135,8 +135,8 @@ describe('command', () => {
         { text: 'AutoTrim', scopes: name(Repository.CommandStatement, RuleName.CommandName) },
         { text: ',', scopes: name(Repository.CommandStatement, Repository.CommandArgument, RuleName.Comma) },
         { text: ' ' },
-        { text: 'On', scopes: name(Repository.CommandStatement, Repository.CommandArgument, RuleName.LegacyText, RuleName.Strong) },
-        { text: ', Overflow, arguments', scopes: name(Repository.CommandStatement, Repository.CommandArgument, RuleName.LegacyText, RuleName.Invalid) },
+        { text: 'On', scopes: name(Repository.CommandStatement, Repository.CommandArgument, RuleName.UnquotedString, RuleName.Strong) },
+        { text: ', Overflow, arguments', scopes: name(Repository.CommandStatement, Repository.CommandArgument, RuleName.UnquotedString, RuleName.Invalid) },
       ],
     ],
   ])('too many arguments', async(text, expected) => {
