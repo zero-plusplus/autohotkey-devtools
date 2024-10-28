@@ -2,8 +2,8 @@ import { Repository } from '../constants';
 import type { Repositories, ScopeName, TmLanguage } from '../types';
 import { includeRule, name, patternsRule } from '../utils';
 import * as constants_v1 from './constants';
+import * as definition_v1 from './definition';
 import * as patterns_v1 from './patterns';
-import * as command from './repository/command';
 import * as rule_v1 from './rules';
 
 export function createTmLanguage(): TmLanguage {
@@ -21,8 +21,6 @@ export function createTmLanguage(): TmLanguage {
 
 export function createRepositories(scopeName: ScopeName): Repositories {
   return {
-    ...command.createRepositories(scopeName),
-
     // #region trivia
     [Repository.Comment]: patternsRule(
       includeRule(Repository.SingleLineComment),
@@ -109,6 +107,26 @@ export function createRepositories(scopeName: ScopeName): Repositories {
     [Repository.Operator]: rule_v1.createOperatorRule(scopeName, constants_v1.operators),
     // #endregion token
     // #endregion expression
+
+    // #region command
+    [Repository.Command]: patternsRule(
+      ...definition_v1.commandDefinitions.flatMap((commandDefinition) => {
+        return commandDefinition.signatures.map((signature) => {
+          return rule_v1.createCommandRule(scopeName, commandDefinition, signature);
+        });
+      }),
+      includeRule(Repository.CommonCommand),
+    ),
+    [Repository.CommonCommand]: rule_v1.createCommandCommonRule(scopeName, constants_v1.commandNames),
+    [Repository.CommandArgument]: patternsRule(
+      includeRule(Repository.PercentExpression),
+      includeRule(Repository.Dereference),
+      includeRule(Repository.LegacyTextEscapeSequence),
+      includeRule(Repository.CommandArgumentText),
+      includeRule(Repository.InLineComment),
+    ),
+    [Repository.CommandArgumentText]: rule_v1.createUnquotedString(scopeName, patterns_v1.unquotedStringChar),
+    // #endregion command
 
     // #region legacy
     [Repository.Legacy]: patternsRule(includeRule(Repository.LegacyAssignment)),

@@ -1,5 +1,5 @@
 import type { commandNames } from './autohotkeyl/constants';
-import { CommandArgsType, Repository, RuleName, scopeNames } from './constants';
+import { CommandArgsType, CommandParameterFlag, CommandSignatureFlag, HighlightType, Repository, RuleName, scopeNames } from './constants';
 
 export type Repositories = { [key in Partial<Repository>[number]]: Rule | undefined };
 export type Captures = Record<string | number, Rule | undefined>;
@@ -49,11 +49,11 @@ export interface IncludeRule {
 }
 
 export type CommandArgWithKeywords = [ CommandArgsType, ...string[]];
-export type CommandSignature = CommandArgsType | CommandArgWithKeywords;
+export type _CommandSignature = CommandArgsType | CommandArgWithKeywords;
 export type CommandInfo =
   | [ typeof commandNames[number] ]
-  | [ typeof commandNames[number], ...CommandSignature[] ]
-  | [ typeof commandNames[number], string /* subcommand */, ...CommandSignature[] ];
+  | [ typeof commandNames[number], ..._CommandSignature[] ]
+  | [ typeof commandNames[number], string /* subcommand */, ..._CommandSignature[] ];
 export interface VariableParts {
   headChar: string;
   tailChar: string;
@@ -68,4 +68,18 @@ export interface Utilities {
   nameRule: (...ruleNames: Array<Repository | RuleName>) => NameRule;
   includeRule: (repositoryName: Repository) => IncludeRule;
   includeScope: (scopeName: ScopeName) => IncludeRule;
+}
+
+export interface CommandParameter {
+  readonly type: HighlightType;
+  readonly flags: CommandParameterFlag;
+  readonly values?: string[];
+}
+export interface CommandSignature {
+  readonly flags: CommandSignatureFlag;
+  readonly parameters: CommandParameter[];
+}
+export interface CommandDefinition {
+  readonly name: string;
+  readonly signatures: CommandSignature[];
 }

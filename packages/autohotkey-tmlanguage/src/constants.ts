@@ -213,4 +213,27 @@ export const enum CommandArgsType {
   Parameters, // e.g. `ControlClick x123 y123`, `Click, 100 100 LButton`
   ControlStyle,
 }
+
+export const enum HighlightType {
+  None = 0,
+  Blank,
+  Expression,
+  Enum,
+  UnquotedString,
+  SubCommand,
+  Input,
+  Output,
+
+  Parameters, // e.g. `ControlClick x123 y123`, `Click, 100 100 LButton`
+  ControlStyle,
+}
+export const enum CommandSignatureFlag {
+  None = 0,
+  Deprecated = 1 << 0,
+}
+export const enum CommandParameterFlag {
+  None = 0,
+  Deprecated = 1 << 0,
+  Keyword = 1 << 1,
+}
 // #endregion enum
