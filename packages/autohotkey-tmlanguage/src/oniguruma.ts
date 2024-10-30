@@ -83,22 +83,30 @@ export function reluctant(onigurumaText: string): string {
 export function optional(onigurumaText: string): string {
   return `${group(onigurumaText)}?`;
 }
-export const opt: typeof optional = (onigurumaText: string) => optional(onigurumaText);
+export function opt(...args: Parameters<typeof optional>): ReturnType<typeof optional> {
+  return optional(...args);
+}
 export function sequence(...onigurumaTexts: string[]): string {
   return onigurumaTexts.join('');
 }
-export const seq: typeof sequence = (...onigurumaTexts: string[]) => sequence(...onigurumaTexts);
+export function seq(...args: Parameters<typeof sequence>): ReturnType<typeof sequence> {
+  return sequence(...args);
+}
 export function optseq(...onigurumaTexts: string[]): string {
   return optional(seq(...onigurumaTexts));
 }
 export function alternative(...onigurumaTexts: string[]): string {
   return onigurumaTexts.join('|');
 }
-export const alt: typeof alternative = (...onigurumaTexts: string[]) => alternative(...onigurumaTexts);
+export function alt(...args: Parameters<typeof alternative>): ReturnType<typeof alternative> {
+  return alternative(...args);
+}
 export function orderedAlternative(...onigurumaTexts: string[]): string {
   return alternative(...onigurumaTexts.sort((a, b) => b.length - a.length));
 }
-export const ordalt: typeof orderedAlternative = (...onigurumaTexts: string[]) => orderedAlternative(...onigurumaTexts);
+export function ordalt(...args: Parameters<typeof orderedAlternative>): ReturnType<typeof orderedAlternative> {
+  return orderedAlternative(...args);
+}
 export function ignoreCase(onigurumaText?: string): string {
   return typeof onigurumaText === 'string'
     ? `(?i:${onigurumaText})`
