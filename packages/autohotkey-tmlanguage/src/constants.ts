@@ -220,12 +220,16 @@ export const enum HighlightType {
   Expression,
   Enum,
   UnquotedString,
+  UnquotedStringShouldEscapeComma,
   SubCommand,
+  GuiSubCommand,
   Input,
   Output,
 
-  Parameters, // e.g. `ControlClick x123 y123`, `Click, 100 100 LButton`
-  ControlStyle,
+  Options, // e.g. `ControlClick x123 y123`, `Click, 100 100 LButton`
+  CombiOptions, // e.g. `FileSetAttributes, +HA-R`
+  GuiOptions, // e.g. `Gui, +Resize -MaximizeBox`
+  Style, // e.g. `Control, Style, ^0x800000`, `WinSet, Style, -0xC00000`
 }
 export const enum CommandSignatureFlag {
   None = 0,
@@ -235,5 +239,10 @@ export const enum CommandParameterFlag {
   None = 0,
   Deprecated = 1 << 0,
   Keyword = 1 << 1,
+  IgnoreCase = 1 << 2,
+}
+export const enum CommandFlag {
+  None = 0,
+  Deprecated = 1 << 0,
 }
 // #endregion enum
