@@ -10,6 +10,101 @@ export const winParams: CommandParameter[] = [
 ] as const;
 // #endregion common parameter(s)
 
+// #region directives
+export const directiveDefinitions: CommandDefinition[] = [
+  // https://www.autohotkey.com/docs/v1/lib/_ClipboardTimeout.htm
+  command('#ClipboardTimeout', signature([ unquoted() ])),
+
+  // https://www.autohotkey.com/docs/v1/lib/_CommentFlag.htm
+  command('#CommentFlag', signature([ unquoted() ]), CommandFlag.Deprecated),
+
+  // https://www.autohotkey.com/docs/v1/lib/_EscapeChar.htm#Delimiter
+  command('#Delimiter', signature([ unquoted() ]), CommandFlag.Deprecated),
+
+  // https://www.autohotkey.com/docs/v1/lib/_EscapeChar.htm#DerefChar
+  command('#DerefChar', signature([ unquoted() ]), CommandFlag.Deprecated),
+
+  // https://www.autohotkey.com/docs/v1/lib/_ErrorStdOut.htm
+  command('#ErrorStdOut', signature([ encoding() ])),
+
+  // https://www.autohotkey.com/docs/v1/lib/_EscapeChar.htm
+  command('#EscapeChar', signature([ unquoted() ]), CommandFlag.Deprecated),
+
+  // https://www.autohotkey.com/docs/v1/lib/_HotkeyInterval.htm
+  command('#HotkeyInterval', signature([ unquoted() ])),
+
+  // https://www.autohotkey.com/docs/v1/lib/_HotkeyModifierTimeout.htm
+  command('#HotkeyModifierTimeout', signature([ unquoted() ])),
+
+  // https://www.autohotkey.com/docs/v1/lib/_Hotstring.htm
+  command('#Hotstring', signature([ unquoted([ 'NoMouse', 'EndChars' ]) ])),
+
+  // https://www.autohotkey.com/docs/v1/lib/_If.htm
+  command('#If', signature([ expression() ])),
+
+  // https://www.autohotkey.com/docs/v1/lib/_IfTimeout.htm
+  command('#IfTimeout', signature([ unquoted() ])),
+
+  // https://www.autohotkey.com/docs/v1/lib/index.htm
+  ...commands([ '#IfWinActive', '#IfWinNotActive', '#IfWinExist', '#IfWinNotExist' ], signature([ winTitle(), unquoted() ])),
+
+  // https://www.autohotkey.com/docs/v1/lib/_InputLevel.htm
+  command('#InputLevel', signature([ unquoted() ])),
+
+  // https://www.autohotkey.com/docs/v1/lib/_InstallKeybdHook.htm
+  // https://www.autohotkey.com/docs/v1/lib/_InstallMouseHook.htm
+  ...commands([ '#InstallKeybdHook', '#InstallMouseHook' ], signature([])),
+
+  // https://www.autohotkey.com/docs/v1/lib/_KeyHistory.htm
+  command('#KeyHistory', signature([ unquoted() ])),
+
+  // https://www.autohotkey.com/docs/v1/Scripts.htm#LTrim
+  command('#LTrim', signature([ keyword([ 'Off' ]) ])),
+
+  // https://www.autohotkey.com/docs/v1/lib/_MaxHotkeysPerInterval.htm
+  command('#MaxHotkeysPerInterval', signature([ unquoted() ])),
+
+  // https://www.autohotkey.com/docs/v1/lib/_MaxMem.htm
+  command('#MaxMem', signature([ unquoted() ])),
+
+  // https://www.autohotkey.com/docs/v1/lib/_MaxThreads.htm
+  command('#MaxThreads', signature([ unquoted() ])),
+
+  // https://www.autohotkey.com/docs/v1/lib/_MaxThreadsBuffer.htm
+  command('#MaxThreadsBuffer', signature([ onOff() ])),
+
+  // https://www.autohotkey.com/docs/v1/lib/_MaxThreadsPerHotkey.htm
+  command('#MaxThreadsPerHotkey', signature([ unquoted() ])),
+
+  // https://www.autohotkey.com/docs/v1/lib/_MenuMaskKey.htm
+  command('#MenuMaskKey', signature([ keyName() ])),
+
+  // https://www.autohotkey.com/docs/v1/lib/_NoEnv.htm
+  command('#NoEnv', signature([])),
+
+  // https://www.autohotkey.com/docs/v1/lib/_NoTrayIcon.htm
+  command('#NoTrayIcon', signature([])),
+
+  // https://www.autohotkey.com/docs/v1/lib/_Persistent.htm
+  command('#Persistent', signature([])),
+
+  // https://www.autohotkey.com/docs/v1/lib/_SingleInstance.htm
+  command('#SingleInstance', signature([ keyword([ 'Force', 'Ignore', 'Prompt', 'Off' ]) ])),
+
+  // https://www.autohotkey.com/docs/v1/lib/_UseHook.htm
+  command('#UseHook', signature([ onOff() ])),
+
+  // https://www.autohotkey.com/docs/v1/lib/_Warn.htm
+  command('#Warn', signature([
+    keyword([ 'UseUnsetLocal', 'UseUnsetGlobal', 'UseEnv', 'LocalSameAsGlobal', 'ClassOverwrite', 'Unreachable' ]),
+    keyword([ 'MsgBox', 'StdOut', 'OutputDebug', 'Off' ]),
+  ])),
+
+  // https://www.autohotkey.com/docs/v1/lib/_WinActivateForce.htm
+  command('#WinActivateForce', signature([])),
+];
+// #endregion directives
+
 // #region commands
 export const commandDefinitions: CommandDefinition[] = [
   // https://www.autohotkey.com/docs/v1/lib/AutoTrim.htm
