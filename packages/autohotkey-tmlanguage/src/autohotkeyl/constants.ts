@@ -275,8 +275,6 @@ export const commandNames = [
   'FileSetTime',
   'FormatTime',
   'GetKeyState', // Deprecated
-  'Gosub',
-  'Goto',
   'GroupActivate',
   'GroupAdd',
   'GroupClose',
@@ -399,6 +397,14 @@ export const commandNames = [
   'WinWaitActive',
   'WinWaitNotActive',
   'WinWaitClose',
+] as const;
+export const jumpStatementNames = [
+  'Break',
+  'Exit',
+  'ExitApp',
+  'Gosub',
+  'Goto',
+  'Return',
 ] as const;
 // https://www.autohotkey.com/docs/v1/lib/index.htm
 export const directiveNames = [
