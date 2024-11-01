@@ -1,5 +1,5 @@
 import type { commandNames } from './autohotkeyl/constants';
-import { CommandArgsType, CommandParameterFlag, CommandSignatureFlag, HighlightType, Repository, RuleName, scopeNames } from './constants';
+import { CommandArgsType, CommandParameterFlag, CommandSignatureFlag, HighlightType, Repository, RuleName, scopeNames, type CommandFlag } from './constants';
 
 export type Repositories = { [key in Partial<Repository>[number]]: Rule | undefined };
 export type Captures = Record<string | number, Rule | undefined>;
@@ -81,5 +81,6 @@ export interface CommandSignature {
 }
 export interface CommandDefinition {
   readonly name: string;
+  readonly flags: CommandFlag;
   readonly signatures: CommandSignature[];
 }
