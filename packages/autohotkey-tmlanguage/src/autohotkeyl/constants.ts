@@ -400,4 +400,43 @@ export const commandNames = [
   'WinWaitNotActive',
   'WinWaitClose',
 ] as const;
+// https://www.autohotkey.com/docs/v1/lib/index.htm
+export const directiveNames = [
+  '#ClipboardTimeout',
+  '#CommentFlag', // Deprecated
+  '#Delimiter', // Deprecated
+  '#DerefChar', // Deprecated
+  '#ErrorStdOut',
+  '#EscapeChar', // Deprecated
+  '#HotkeyInterval',
+  '#HotkeyModifierTimeout',
+  '#Hotstring',
+  '#If',
+  '#IfTimeout',
+  '#IfWinActive',
+  '#IfWinNotActive',
+  '#IfWinExist',
+  '#IfWinNotExist',
+  '#Include',
+  '#IncludeAgain',
+  '#InputLevel',
+  '#InstallKeybdHook',
+  '#InstallMouseHook',
+  '#KeyHistory',
+  '#LTrim',
+  '#MaxHotkeysPerInterval',
+  '#MaxMem',
+  '#MaxThreads',
+  '#MaxThreadsBuffer',
+  '#MaxThreadsPerHotkey',
+  '#MenuMaskKey',
+  '#NoEnv',
+  '#NoTrayIcon',
+  '#Persistent',
+  '#Requires',
+  '#SingleInstance',
+  '#UseHook',
+  '#Warn',
+  '#WinActivateForce',
+] as const;
 // #endregion BuiltIn

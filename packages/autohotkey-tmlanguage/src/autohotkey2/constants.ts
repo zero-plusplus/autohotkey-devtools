@@ -186,4 +186,26 @@ export const builtinVaribles = [
   // #endregion Loop Parse
   // #endregion Loop
 ] as const;
+// https://www.autohotkey.com/docs/v2/lib/index.htm
+export const directiveNames = [
+  '#ClipboardTimeout',
+  '#DllLoad',
+  '#ErrorStdOut',
+  '#Hotstring',
+  '#HotIf',
+  '#HotIfTimeout',
+  '#Include',
+  '#IncludeAgain',
+  '#InputLevel',
+  '#MaxThreads',
+  '#MaxThreadsBuffer',
+  '#MaxThreadsPerHotkey',
+  '#NoTrayIcon',
+  '#Requires',
+  '#SingleInstance',
+  '#SuspendExempt',
+  '#UseHook',
+  '#Warn',
+  '#WinActivateForce',
+] as const;
 // #endregion BuiltIn
