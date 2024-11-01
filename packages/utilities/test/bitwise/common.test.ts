@@ -1,8 +1,5 @@
 import { describe, expect, test } from '@jest/globals';
-import { hasFlag } from '../../src/bitwise/hasFlag';
-import { mergeFlags } from '../../src/bitwise/mergeFlags';
-import { offFlag } from '../../src/bitwise/offFlag';
-import { onFlag } from '../../src/bitwise/onFlag';
+import { hasFlag, mergeFlags, offFlag, onFlag } from '../../src';
 
 describe('hasFlag', () => {
   test('hasFlag / mergeFlags / onFlag / offFlag', () => {
