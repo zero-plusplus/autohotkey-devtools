@@ -27,7 +27,7 @@ export function anyChars1(): string {
   return many1(anyChar());
 }
 export function inlineSpace(): string {
-  return char(' ', '\\t');
+  return '\\s';
 }
 export function inlineSpaces0(): string {
   return many0(inlineSpace());
