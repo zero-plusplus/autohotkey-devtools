@@ -2,7 +2,7 @@ import { commonOperators } from '../constants';
 
 // #region [Escape Sequences](https://www.autohotkey.com/docs/v1/misc/EscapeChar.htm)
 export const unquoteEscapeSequences = [ '`,', '`%', '``', '`;', '`::', '`r', '`n', '`b', '`t', '`v', '`a', '`f' ] as const;
-export const doubleQuoteEscapeSequences: [ ...typeof unquoteEscapeSequences, '""'] = [ ...unquoteEscapeSequences, '""' ] as const;
+export const doubleQuoteEscapeSequences: [ '""', ...typeof unquoteEscapeSequences] = [ '""', ...unquoteEscapeSequences ] as const;
 // #endregion Escape Sequences
 
 // #region [Operators](https://www.autohotkey.com/docs/v1/Variables.htm#Operators)
@@ -10,6 +10,7 @@ export const operators: [ ...typeof commonOperators, '<>' ] = [
   ...commonOperators,
   '<>', // e.g. `1 <> 1` Deprecated
 ] as const;
+export const continuationOperators: string[] = operators.filter((operator) => !(operator === '++' || operator == '--'));
 // #endregion Operators
 
 // #region [BuiltIn](https://www.autohotkey.com/docs/v1/Variables.htm#BuiltIn)

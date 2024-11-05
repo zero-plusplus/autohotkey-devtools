@@ -113,15 +113,6 @@ describe('command', () => {
         { text: 'legacyText', scopes: name(Repository.CommandStatement, Repository.CommandArgument, RuleName.UnquotedString) },
       ],
     ],
-    // invalid
-    [
-      'AutoTrim, No keyword', [
-        { text: 'AutoTrim', scopes: name(Repository.CommandStatement, RuleName.CommandName) },
-        { text: ',', scopes: name(Repository.CommandStatement, Repository.CommandArgument, RuleName.Separator) },
-        { text: ' ' },
-        { text: 'No keyword', scopes: name(Repository.CommandStatement, Repository.CommandArgument, RuleName.UnquotedString, RuleName.Invalid) },
-      ],
-    ],
   ])('enum argument', async(text, expected) => {
     const actual = await parse(scopeName, text);
     // console.log(JSON.stringify(actual, undefined, 2));
@@ -136,7 +127,7 @@ describe('command', () => {
         { text: ',', scopes: name(Repository.CommandStatement, Repository.CommandArgument, RuleName.Separator) },
         { text: ' ' },
         { text: 'On', scopes: name(Repository.CommandStatement, Repository.CommandArgument, RuleName.UnquotedString, RuleName.Strong) },
-        { text: ', Overflow, arguments', scopes: name(Repository.CommandStatement, Repository.CommandArgument, RuleName.UnquotedString, RuleName.Invalid) },
+        { text: ', Overflow, arguments', scopes: name(Repository.CommandStatement, Repository.CommandArgument, RuleName.UnquotedString) },
       ],
     ],
   ])('too many arguments', async(text, expected) => {

@@ -1,255 +1,193 @@
-import { HighlightType, Repository, RuleName } from '../../constants';
-import { alt, anyChars0, anyChars1, capture, char, escapeOnigurumaTexts, group, groupMany1, ignoreCase, inlineSpace, inlineSpaces0, inlineSpaces1, lookahead, lookbehind, many1, negativeLookahead, opt, ordalt, seq, startAnchor, wordBound } from '../../oniguruma';
-import type { BeginWhileRule, CommandDefinition, CommandSignature, MatchRule, PatternsRule, Rule, ScopeName } from '../../types';
+import { hasFlag } from '@zero-plusplus/utilities/src';
+import { CommandFlag, HighlightType, Repository, RuleName } from '../../constants';
+import { alt, anyChars0, capture, char, escapeOnigurumaTexts, group, groupMany0, ignoreCase, inlineSpaces0, inlineSpaces1, lookahead, lookbehind, negativeLookahead, optional, optseq, ordalt, seq, startAnchor, wordBound } from '../../oniguruma';
+import type { BeginWhileRule, Captures, CommandDefinition, CommandParameter, CommandSignature, MatchRule, NameRule, Rule, ScopeName } from '../../types';
 import { includeRule, name, nameRule, patternsRule } from '../../utils';
-import * as constants_v1 from '../constants';
-import * as patterns_v1 from '../patterns';
 
-export function createCommandRule(scopeName: ScopeName, definition: CommandDefinition, signature: CommandSignature): BeginWhileRule {
-  // #region helpers
-  const createArgsRegExpText = (shouldCapture = true): string => {
-    const captureOrGroup = shouldCapture ? capture : group;
-
-    const commaSeparator = captureOrGroup(char(','));
-    const firstSeparator = group(alt(
-      inlineSpaces1(),
-      seq(inlineSpaces0(), commaSeparator, inlineSpaces0()),
-    ));
-    const argsSeparator = group(seq(
-      inlineSpaces0(),
-      seq(negativeLookahead(char('`')), commaSeparator),
-      inlineSpaces0(),
-    ));
-
-    return signature.parameters.reduce<string>((prev, current, i) => {
-      const separator = i === 0 ? firstSeparator : argsSeparator;
-
-      const isSubCommand = current.type === HighlightType.SubCommand;
-      if (isSubCommand) {
-        const subCommandName = current.values![0]!;
-        prev += opt(seq(separator, captureOrGroup(subCommandName)));
-        return prev;
-      }
-
-      let commandArgument = patterns_v1.commandUnquotedStringArgument;
-      switch (current.type) {
-        case HighlightType.None:
-        case HighlightType.Expression: commandArgument = patterns_v1.commandExpressionArgument; break;
-      }
-      prev += opt(seq(separator, captureOrGroup(commandArgument)));
-      return prev;
-    }, ignoreCase());
-  };
-  const createKeywordMatchRule = (keywords: string[]): MatchRule => {
-    return {
-      match: ignoreCase(seq(
-        lookbehind(wordBound()),
-        capture(ordalt(...keywords)),
-        lookahead(wordBound()),
-      )),
-      captures: { 1: nameRule(scopeName, RuleName.UnquotedString, RuleName.Strong) },
-    };
-  };
-  const getArgumentRuleByType = (argType: HighlightType, keywords: string[]): PatternsRule => {
-    switch (argType) {
-      case HighlightType.None: return patternsRule();
-      case HighlightType.Blank: return patternsRule(nameRule(scopeName, RuleName.UnquotedString, RuleName.Invalid));
-      case HighlightType.UnquotedString: {
-        const commandArgumentRule = includeRule(Repository.CommandArgument);
-
-        return 0 < keywords.length
-          ? patternsRule(createKeywordMatchRule(keywords), commandArgumentRule)
-          : patternsRule(commandArgumentRule);
-      }
-      case HighlightType.Expression: return patternsRule(includeRule(Repository.Expression));
-      case HighlightType.Input:
-      case HighlightType.Output: return patternsRule(
-        includeRule(Repository.BuiltInVariable),
-        includeRule(Repository.Variable),
-      );
-      case HighlightType.ControlStyle: return patternsRule(includeRule(Repository.CommandArgumentControlStyleText));
-      case HighlightType.Enum: {
-        if (keywords.length === 0) {
-          throw Error('Must specify one or more keywords.');
-        }
-
-        return {
-          patterns: [
-            createKeywordMatchRule(keywords),
-            includeRule(Repository.PercentExpression),
-            includeRule(Repository.Dereference),
-            { name: name(scopeName, RuleName.UnquotedString, RuleName.Invalid), match: anyChars1() },
-          ],
-        };
-      }
-    }
-    throw Error(`Specified an unknown argument type.\nSpecified: "${String(argType)}"`);
-  };
-  // #endregion helpers
-
-  const argsWithCaptures = createArgsRegExpText();
-  const argsWithoutCaptures = createArgsRegExpText(false);
+interface PlaceHolder {
+  lineEndAnchor: string;
+  commandStatementBeginAnchor: string;
+  commandArgumentEndLineAnchor: string;
+  commandArgument: string;
+  commandLastArgument: string;
+  expressionArgument: string;
+  continuationOperators: string[];
+}
+export function createCommandStatementRule(scopeName: ScopeName, definitions: CommandDefinition[], placeholder: PlaceHolder): BeginWhileRule {
   return {
     name: name(scopeName, Repository.CommandStatement),
-    begin: ignoreCase(seq(
-      patterns_v1.statementBeginAnchor,
-      capture(definition.name),
-      opt(capture(argsWithoutCaptures)),
-      inlineSpaces0(),
-      capture(anyChars0()),
-      patterns_v1.commandArgumentEndLineAnchor,
+    begin: capture(seq(
+      placeholder.commandStatementBeginAnchor,
+      // command name
+      ignoreCase(ordalt(...definitions.map((definition) => definition.name))),
+      negativeLookahead(char('(')),
+      optseq(
+        capture(anyChars0()),
+        placeholder.commandArgumentEndLineAnchor,
+      ),
+      placeholder.lineEndAnchor,
     )),
     beginCaptures: {
-      1: nameRule(scopeName, RuleName.CommandName),
-      2: {
-        name: name(scopeName, Repository.CommandArgument),
-        patterns: [
-          {
-            match: argsWithCaptures,
-            captures: Object.fromEntries(signature.parameters.flatMap((parameter, i): Array<[ string, Rule ]> => {
-              const separatorKey = `${(i * 2) + 1}`;
-              const argKey = `${(i * 2) + 2}`;
-
-              return [
-                [ separatorKey, nameRule(scopeName, RuleName.Separator) ], ((): [ string, Rule ] => {
-                  const isSubCommand = parameter.type === HighlightType.SubCommand;
-                  if (isSubCommand) {
-                    return [ argKey, nameRule(scopeName, RuleName.SubCommandName) ];
-                  }
-
-                  return [ argKey, getArgumentRuleByType(parameter.type, parameter.values ?? []) ];
-                })(),
-              ];
-            })),
-          },
-        ],
-      },
-      3: {
-        patterns: [
-          includeRule(Repository.InLineComment),
-          {
-            name: name(scopeName, Repository.CommandArgument, RuleName.UnquotedString, RuleName.Invalid),
-            match: groupMany1(alt(
-              patterns_v1.unquotedStringChar,
-              char(','),
-            )),
-          },
-        ],
-      },
+      1: patternsRule(
+        includeRule(Repository.Comment),
+        ...definitions.flatMap((definition) => {
+          return definition.signatures.map((signature) => createCommandRule(scopeName, definition, signature, placeholder));
+        }),
+      ),
     },
-    ...createContinuationArgumentsRuleSnippet(scopeName),
-  };
-}
-export function createCommandCommonRule(scopeName: ScopeName, names: readonly string[]): BeginWhileRule {
-  const argumentsPatternsRule = createArgumentsPatternsRule(scopeName);
-  const continuationArgumentsRuleSnippet = createContinuationArgumentsRuleSnippet(scopeName);
-  const commandName = seq(ordalt(...names), lookahead(wordBound()));
-
-  return {
-    name: name(scopeName, Repository.CommandStatement),
-    begin: ignoreCase(seq(
-      patterns_v1.statementBeginAnchor,
-      capture(commandName),
-      opt(group(alt(
-        inlineSpace(),
-        capture(char(',')),
+    while: seq(
+      startAnchor(),
+      // continuation expression
+      optional(capture(seq(
+        inlineSpaces0(),
+        group(ordalt(...escapeOnigurumaTexts(placeholder.continuationOperators))),
+        inlineSpaces0(),
+        optional(placeholder.expressionArgument),
       ))),
-      inlineSpaces0(),
-      capture(anyChars0()),
-      patterns_v1.commandArgumentEndLineAnchor,
-    )),
-    beginCaptures: {
-      1: nameRule(scopeName, RuleName.CommandName),
-      2: nameRule(scopeName, Repository.CommandArgument, RuleName.Comma),
-      3: patternsRule(argumentsPatternsRule),
-      4: nameRule(scopeName, Repository.CommandArgument, RuleName.Comma),
-    },
-    ...continuationArgumentsRuleSnippet,
-  };
-}
-export function createArgumentsPatternsRule(scopeName: ScopeName): PatternsRule {
-  // In some cases, highlighting is not applied in a captures even if a repository with a complex patterns is specified?
-  // This problem is solved by specifying the rule directly
-  return patternsRule(
-    {
-      match: '(,)',
-      captures: {
-        1: nameRule(scopeName, Repository.CommandArgument, RuleName.Separator),
-      },
-    },
-    includeRule(Repository.CommandArgument),
-  );
-}
-export function createContinuationArgumentsRuleSnippet(scopeName: ScopeName): Pick<BeginWhileRule, 'while' | 'whileCaptures' | 'patterns'> {
-  const whileLegacyArgument = seq(
-    startAnchor(),
-    inlineSpaces0(),
-    capture(char(',')),
-    inlineSpaces0(),
-    capture(anyChars0()),
-    patterns_v1.commandArgumentEndLineAnchor,
-  );
-  const whileExpression = seq(
-    startAnchor(),
-    inlineSpaces0(),
-    capture(ordalt(...escapeOnigurumaTexts(constants_v1.operators))),
-    opt(group(seq(
-      inlineSpaces0(),
-      capture(patterns_v1.commandExpressionArgument),
-      inlineSpaces0(),
-      opt(capture(char(','))),
-      inlineSpaces0(),
-      capture(anyChars0()),
-    ))),
-    patterns_v1.commandArgumentEndLineAnchor,
-  );
-  const argumentsPatternsRule = createArgumentsPatternsRule(scopeName);
-
-  return {
-    while: alt(whileLegacyArgument, whileExpression),
+      // continuation unquoted arguments
+      groupMany0(seq(
+        inlineSpaces0(),
+        capture(char(',')),
+        inlineSpaces0(),
+        optional(capture(placeholder.commandArgument)),
+      )),
+      placeholder.commandArgumentEndLineAnchor,
+      placeholder.lineEndAnchor,
+    ),
     whileCaptures: {
-      1: nameRule(scopeName, Repository.CommandArgument, RuleName.Separator),
-      2: {
-        ...argumentsPatternsRule,
-        name: name(scopeName, Repository.CommandArgument),
-      },
-      3: nameRule(scopeName, Repository.CommandArgument, RuleName.Operator),
-      4: {
+      1: {
         name: name(scopeName, Repository.CommandArgument),
         patterns: [ includeRule(Repository.Expression) ],
       },
-      5: nameRule(scopeName, Repository.CommandArgument, RuleName.Separator),
-      6: {
-        ...argumentsPatternsRule,
+      2: {
         name: name(scopeName, Repository.CommandArgument),
+        patterns: [ includeRule(Repository.Comma) ],
       },
-    },
-    patterns: [
-      {
-        ...argumentsPatternsRule,
-        begin: seq(startAnchor(), inlineSpaces0(), capture(char(',')), inlineSpaces0()),
-        end: patterns_v1.commandArgumentEndLineAnchor,
-        captures: {
-          1: nameRule(scopeName, Repository.CommandArgument, RuleName.Separator),
-        },
-      },
-      {
-        begin: seq(startAnchor(), inlineSpaces0(), capture(ordalt(...escapeOnigurumaTexts(constants_v1.operators))), inlineSpaces0()),
-        end: patterns_v1.commandArgumentEndLineAnchor,
-        captures: {
-          1: nameRule(scopeName, RuleName.Operator),
-        },
+      3: {
+        name: name(scopeName, Repository.CommandArgument),
         patterns: [
-          includeRule(Repository.Expression),
-          ...argumentsPatternsRule.patterns,
+          includeRule(Repository.Comma),
+          includeRule(Repository.CommandArgument),
         ],
       },
-    ],
+    },
+    patterns: [ includeRule(Repository.Comment) ],
   };
 }
-export function createUnquotedString(scopeName: ScopeName, unquotedStringChar: string): MatchRule {
+export function createCommandRule(scopeName: ScopeName, definition: CommandDefinition, signature: CommandSignature, placeholder: PlaceHolder): Rule {
+  const capturedCommandNamePattern = seq(
+    placeholder.commandStatementBeginAnchor,
+    capture(ignoreCase(definition.name)),
+    negativeLookahead(char('(')),
+  );
+  const capturedParametersPattern = seq(...signature.parameters.map((parameter, i, parameters) => {
+    const commaSeparator = seq(inlineSpaces0(), char(','));
+    const firstSeparator = alt(inlineSpaces1(), char(','));
+    const separator = i === 0 ? capture(firstSeparator) : capture(commaSeparator);
+
+    const isLastParameter = parameters.length - 1 === i;
+    return optseq(
+      separator,
+      inlineSpaces0(),
+      optional(parameterToOniguruma(parameter, isLastParameter, placeholder)),
+      placeholder.lineEndAnchor,
+    );
+  }));
+
+  return {
+    begin: lookahead(seq(
+      placeholder.commandStatementBeginAnchor,
+      ignoreCase(definition.name),
+    )),
+    end: seq(capturedCommandNamePattern, capturedParametersPattern),
+    endCaptures: signatureToCaptures(scopeName, definition, signature),
+  };
+}
+export function createUnquotedString(scopeName: ScopeName, unquotedString: string): MatchRule {
   return {
     name: name(scopeName, RuleName.UnquotedString),
-    match: many1(unquotedStringChar),
+    match: unquotedString,
   };
 }
+
+// #region helpers
+function signatureToCaptures(scopeName: ScopeName, definition: CommandDefinition, signature: CommandSignature): Captures {
+  return Object.fromEntries([
+    definitionToCommandName(scopeName, definition),
+    ...parametersToRules(scopeName, signature),
+  ].map((rule, i) => {
+    const i_1base = i + 1;
+    return [ i_1base, rule ];
+  }));
+}
+function definitionToCommandName(scopeName: ScopeName, definition: CommandDefinition): NameRule {
+  if (hasFlag(definition.flags, CommandFlag.Deprecated)) {
+    return nameRule(scopeName, RuleName.CommandName, RuleName.Strikethrough);
+  }
+  return nameRule(scopeName, RuleName.CommandName);
+}
+function parameterToOniguruma(parameter: CommandParameter, isLastParameter: boolean, placeholder: PlaceHolder): string {
+  if (isLastParameter) {
+    if (parameter.type !== HighlightType.UnquotedStringShouldEscapeComma) {
+      return capture(placeholder.commandLastArgument);
+    }
+  }
+  return capture(placeholder.commandArgument);
+}
+function parameterToRule(scopeName: ScopeName, parameter: CommandParameter, isLastParameter: boolean): Rule {
+  const defaultArgumentRule = isLastParameter ? includeRule(Repository.CommandLastArgument) : includeRule(Repository.CommandArgument);
+
+  switch (parameter.type) {
+    case HighlightType.None:
+    case HighlightType.Blank: return nameRule(scopeName, RuleName.Invalid);
+    case HighlightType.UnquotedString: {
+      if (parameter.values) {
+        return patternsRule(keywordsToRule(scopeName, parameter.values), defaultArgumentRule);
+      }
+      return patternsRule(defaultArgumentRule);
+    }
+    case HighlightType.UnquotedStringShouldEscapeComma: return patternsRule(includeRule(Repository.CommandArgument));
+    case HighlightType.Enum: {
+      return patternsRule(keywordsToRule(scopeName, parameter.values!), defaultArgumentRule);
+    }
+    case HighlightType.Expression: return patternsRule(includeRule(Repository.Expression));
+    case HighlightType.CombiOptions:
+    case HighlightType.GuiOptions:
+    case HighlightType.GuiSubCommand:
+    case HighlightType.Input:
+    case HighlightType.Options:
+    case HighlightType.Output:
+    case HighlightType.Style:
+    case HighlightType.SubCommand:
+      return patternsRule(defaultArgumentRule);
+    default: break;
+  }
+  throw Error(`Specified an unknown highligh type.\nSpecified: "${String(parameter.type)}"`);
+}
+function parametersToRules(scopeName: ScopeName, signature: CommandSignature): Rule[] {
+  return signature.parameters.flatMap((parameter, i, parameters) => {
+    const isLastParameter = parameters.length - 1 === i;
+    return [
+      {
+        name: name(scopeName, Repository.CommandArgument),
+        patterns: [ patternsRule(includeRule(Repository.Comma)) ],
+      },
+      {
+        name: name(scopeName, Repository.CommandArgument),
+        patterns: [ parameterToRule(scopeName, parameter, isLastParameter) ],
+      },
+    ];
+  });
+}
+function keywordsToRule(scopeName: ScopeName, keywords: string[]): Rule {
+  return {
+    name: name(scopeName, RuleName.UnquotedString, RuleName.Strong),
+    match: seq(
+      lookbehind(wordBound()),
+      ignoreCase(ordalt(...keywords)),
+      lookahead(wordBound()),
+    ),
+  };
+}
+// #endregion helpers
+

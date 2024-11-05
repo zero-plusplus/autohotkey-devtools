@@ -119,7 +119,9 @@ export const enum Repository {
   Command = 'repository.command',
   CommonCommand = 'repository.common-command',
   CommandArgument = 'repository.command.argument',
+  CommandLastArgument = 'repository.command.argument.last',
   CommandArgumentText = 'repository.command.argument.text',
+  CommandLastArgumentText = 'repository.command.argument.last.text',
   CommandArgumentControlStyleText = 'repository.command.argument.text.control-style',
   // #endregion v1 syntax
 
@@ -191,6 +193,7 @@ export const enum RuleName {
   // #region extra rules
   Emphasis = 'emphasis',
   Strong = 'strong',
+  Strikethrough = 'markup.strikethrough',
   Invalid = 'invalid.illegal',
   // #endregion extra rules
 

@@ -1,5 +1,5 @@
 import { Repository, RuleName } from '../../constants';
-import { alt, capture, char, endAnchor, escapeOnigurumaTexts, group, groupMany0, inlineSpace, inlineSpaces0, inlineSpaces1, lookahead, many1, negativeLookahead, negativeLookbehind, negChar, ordalt, seq } from '../../oniguruma';
+import { alt, capture, char, endAnchor, escapeOnigurumaTexts, group, groupMany0, inlineSpaces0, inlineSpaces1, lookahead, many1, negativeLookahead, ordalt, seq } from '../../oniguruma';
 import type { MatchRule, ScopeName } from '../../types';
 import { includeRule, name, nameRule } from '../../utils';
 import * as constants_v1 from '../constants';
@@ -51,16 +51,12 @@ export function createLegacyAssignmentRule(scopeName: ScopeName): MatchRule {
     },
   };
 }
-export function createPercentExpressionRule(scopeName: ScopeName): MatchRule {
+export function createPercentExpressionRule(scopeName: ScopeName, expression: string): MatchRule {
   return {
     match: seq(
       capture(char('%')),
       inlineSpaces1(),
-      capture(groupMany0(alt(
-        patterns_v1.brackets,
-        negChar('\\r', '\\n', ',', ';'),
-        seq(negativeLookbehind(inlineSpace()), char(';')),
-      ))),
+      capture(expression),
     ),
     captures: {
       1: nameRule(scopeName, Repository.PercentExpression, RuleName.PercentBegin),

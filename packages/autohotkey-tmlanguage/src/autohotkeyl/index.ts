@@ -1,6 +1,6 @@
 import { Repository } from '../constants';
 import type { Repositories, ScopeName, TmLanguage } from '../types';
-import { includeRule, name, patternsRule } from '../utils';
+import { includeRule, patternsRule } from '../utils';
 import * as constants_v1 from './constants';
 import * as definition_v1 from './definition';
 import * as patterns_v1 from './patterns';
@@ -37,10 +37,15 @@ export function createRepositories(scopeName: ScopeName): Repositories {
       includeRule(Repository.ExpressionStatement),
     ),
     [Repository.LegacyStatement]: patternsRule(includeRule(Repository.Legacy)),
-    [Repository.CommandStatement]: {
-      name: name(scopeName, Repository.CommandStatement),
-      patterns: [ includeRule(Repository.Command) ],
-    },
+    [Repository.CommandStatement]: rule_v1.createCommandStatementRule(scopeName, definition_v1.commandDefinitions, {
+      lineEndAnchor: patterns_v1.lineEndAnchor,
+      commandStatementBeginAnchor: patterns_v1.statementBeginAnchor,
+      commandArgumentEndLineAnchor: patterns_v1.commandArgumentEndLineAnchor,
+      expressionArgument: patterns_v1.expressionArgument,
+      continuationOperators: constants_v1.continuationOperators,
+      commandArgument: patterns_v1.commandArgument,
+      commandLastArgument: patterns_v1.commandLastArgument,
+    }),
     [Repository.ExpressionStatement]: patternsRule(includeRule(Repository.Expression)),
     // #endregion statement
 
@@ -109,15 +114,6 @@ export function createRepositories(scopeName: ScopeName): Repositories {
     // #endregion expression
 
     // #region command
-    [Repository.Command]: patternsRule(
-      ...definition_v1.commandDefinitions.flatMap((commandDefinition) => {
-        return commandDefinition.signatures.map((signature) => {
-          return rule_v1.createCommandRule(scopeName, commandDefinition, signature);
-        });
-      }),
-      includeRule(Repository.CommonCommand),
-    ),
-    [Repository.CommonCommand]: rule_v1.createCommandCommonRule(scopeName, constants_v1.commandNames),
     [Repository.CommandArgument]: patternsRule(
       includeRule(Repository.PercentExpression),
       includeRule(Repository.Dereference),
@@ -125,13 +121,21 @@ export function createRepositories(scopeName: ScopeName): Repositories {
       includeRule(Repository.CommandArgumentText),
       includeRule(Repository.InLineComment),
     ),
-    [Repository.CommandArgumentText]: rule_v1.createUnquotedString(scopeName, patterns_v1.unquotedStringChar),
+    [Repository.CommandLastArgument]: patternsRule(
+      includeRule(Repository.PercentExpression),
+      includeRule(Repository.Dereference),
+      includeRule(Repository.LegacyTextEscapeSequence),
+      includeRule(Repository.CommandLastArgumentText),
+      includeRule(Repository.InLineComment),
+    ),
+    [Repository.CommandArgumentText]: rule_v1.createUnquotedString(scopeName, patterns_v1.commandArgument),
+    [Repository.CommandLastArgumentText]: rule_v1.createUnquotedString(scopeName, patterns_v1.commandLastArgument),
     // #endregion command
 
     // #region legacy
     [Repository.Legacy]: patternsRule(includeRule(Repository.LegacyAssignment)),
     [Repository.LegacyAssignment]: rule_v1.createLegacyAssignmentRule(scopeName),
-    [Repository.PercentExpression]: rule_v1.createPercentExpressionRule(scopeName),
+    [Repository.PercentExpression]: rule_v1.createPercentExpressionRule(scopeName, patterns_v1.expressionArgument),
     // #endregion legacy
   };
 }

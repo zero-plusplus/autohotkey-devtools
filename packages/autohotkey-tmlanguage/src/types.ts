@@ -44,7 +44,7 @@ export interface BeginWhileRule extends RuleBase {
   while?: string;
   whileCaptures?: Repositories;
 }
-export interface IncludeRule {
+export interface IncludeRule extends RuleBase {
   include: string;
 }
 
