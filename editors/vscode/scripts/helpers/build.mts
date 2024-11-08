@@ -1,8 +1,8 @@
-import * as path from 'path';
-import * as fs from 'fs/promises';
-import * as esbuild from 'esbuild';
 import * as tmLanguages from '@zero-plusplus/autohotkey-tmlanguage/src';
 import { ScopeName } from '@zero-plusplus/autohotkey-tmlanguage/src/types.js';
+import * as esbuild from 'esbuild';
+import * as fs from 'fs/promises';
+import * as path from 'path';
 import { buildDir } from '../config.mjs';
 
 export async function build(buildOptions: esbuild.BuildOptions): Promise<void> {
@@ -13,17 +13,17 @@ export async function build(buildOptions: esbuild.BuildOptions): Promise<void> {
     esbuild.build(buildOptions),
   ]);
 }
-export async function buildTmLanguageAll(): Promise<void> {
+export async function buildTmLanguageAll(debugMode = false): Promise<void> {
   await Promise.all([
-    buildTmLanguage('autohotkey'),
-    buildTmLanguage('autohotkeynext'),
-    buildTmLanguage('autohotkey2'),
-    buildTmLanguage('autohotkeyl'),
+    buildTmLanguage('autohotkey', debugMode),
+    buildTmLanguage('autohotkeynext', debugMode),
+    buildTmLanguage('autohotkey2', debugMode),
+    buildTmLanguage('autohotkeyl', debugMode),
   ]);
 }
-export async function buildTmLanguage(scopeName: ScopeName): Promise<void> {
+export async function buildTmLanguage(scopeName: ScopeName, debugMode = false): Promise<void> {
   const tmLanguage = tmLanguages[scopeName].createTmLanguage();
-  const tmLanguageText = JSON.stringify(tmLanguage, undefined, 2);
+  const tmLanguageText = JSON.stringify(tmLanguage, undefined, debugMode ? 1 : 0);
   const tmLanguagePath = path.resolve(buildDir, `${scopeName}.tmLanguage.json`);
 
   await fs.mkdir(buildDir, { recursive: true });
