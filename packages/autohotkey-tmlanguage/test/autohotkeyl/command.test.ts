@@ -53,11 +53,11 @@ describe('command', () => {
   test.each([
     // valid
     [
-      'AutoTrim, On', [
+      'AutoTrim, abc', [
         { text: 'AutoTrim', scopes: name(Repository.CommandStatement, RuleName.CommandName) },
         { text: ',', scopes: name(Repository.CommandStatement, Repository.CommandArgument, RuleName.Separator) },
         { text: ' ' },
-        { text: 'On', scopes: name(Repository.CommandStatement, Repository.CommandArgument, RuleName.UnquotedString, RuleName.Strong) },
+        { text: 'abc', scopes: name(Repository.CommandStatement, Repository.CommandArgument, RuleName.UnquotedString) },
       ],
     ],
     [
@@ -80,6 +80,15 @@ describe('command', () => {
         { text: 'true', scopes: name(Repository.CommandStatement, Repository.CommandArgument, Repository.PercentExpression, RuleName.BuiltInVariable) },
       ],
     ],
+  ])('unquoted argument', async(text, expected) => {
+    const actual = await parse(scopeName, text);
+    // console.log(JSON.stringify(actual, undefined, 2));
+
+    expect(actual).toStrictEqual(expected);
+  });
+
+  test.each([
+
     [
       dedent`
         AutoTrim
@@ -113,7 +122,7 @@ describe('command', () => {
         { text: 'legacyText', scopes: name(Repository.CommandStatement, Repository.CommandArgument, RuleName.UnquotedString) },
       ],
     ],
-  ])('enum argument', async(text, expected) => {
+  ])('continuation arguments', async(text, expected) => {
     const actual = await parse(scopeName, text);
     // console.log(JSON.stringify(actual, undefined, 2));
 
@@ -122,14 +131,14 @@ describe('command', () => {
 
   test.each([
     [
-      'AutoTrim, On, Overflow, arguments', [
+      'AutoTrim, On', [
         { text: 'AutoTrim', scopes: name(Repository.CommandStatement, RuleName.CommandName) },
         { text: ',', scopes: name(Repository.CommandStatement, Repository.CommandArgument, RuleName.Separator) },
         { text: ' ' },
-        { text: 'On, Overflow, arguments', scopes: name(Repository.CommandStatement, Repository.CommandArgument, RuleName.UnquotedString) },
+        { text: 'On', scopes: name(Repository.CommandStatement, Repository.CommandArgument, RuleName.UnquotedString, RuleName.Strong) },
       ],
     ],
-  ])('too many arguments', async(text, expected) => {
+  ])('arguments with special highlighting', async(text, expected) => {
     const actual = await parse(scopeName, text);
     // console.log(JSON.stringify(actual, undefined, 2));
 
