@@ -1,8 +1,8 @@
 import { hasFlag } from '@zero-plusplus/utilities/src';
 import { CommandFlag, HighlightType, Repository, RuleName } from '../../constants';
-import { alt, anyChars0, capture, char, escapeOnigurumaTexts, group, groupMany0, ignoreCase, inlineSpaces0, inlineSpaces1, lookahead, lookbehind, negativeLookahead, optional, optseq, ordalt, seq, startAnchor, wordBound } from '../../oniguruma';
-import type { BeginWhileRule, Captures, CommandDefinition, CommandParameter, CommandSignature, MatchRule, NameRule, Rule, ScopeName } from '../../types';
-import { includeRule, name, nameRule, patternsRule } from '../../utils';
+import { alt, anyChar, anyChars0, capture, char, escapeOnigurumaTexts, group, groupMany0, ignoreCase, inlineSpaces0, inlineSpaces1, lookahead, lookbehind, negativeLookahead, optional, optseq, ordalt, seq, startAnchor, wordBound } from '../../oniguruma';
+import type { BeginWhileRule, CommandDefinition, CommandParameter, CommandSignature, MatchRule, NameRule, Rule, ScopeName } from '../../types';
+import { includeRule, name, namedPatternsRule, nameRule, patternsRule } from '../../utils';
 
 interface PlaceHolder {
   lineEndAnchor: string;
@@ -10,7 +10,6 @@ interface PlaceHolder {
   commandArgumentEndLineAnchor: string;
   commandArgument: string;
   commandLastArgument: string;
-  expressionArgument: string;
   continuationOperators: string[];
 }
 export function createCommandStatementRule(scopeName: ScopeName, definitions: CommandDefinition[], placeholder: PlaceHolder): BeginWhileRule {
@@ -42,7 +41,7 @@ export function createCommandStatementRule(scopeName: ScopeName, definitions: Co
         inlineSpaces0(),
         group(ordalt(...escapeOnigurumaTexts(placeholder.continuationOperators))),
         inlineSpaces0(),
-        optional(placeholder.expressionArgument),
+        optional(placeholder.commandArgument),
       ))),
       // continuation unquoted arguments
       groupMany0(seq(
@@ -80,27 +79,33 @@ export function createCommandRule(scopeName: ScopeName, definition: CommandDefin
     capture(ignoreCase(definition.name)),
     negativeLookahead(char('(')),
   );
-  const capturedParametersPattern = seq(...signature.parameters.map((parameter, i, parameters) => {
-    const commaSeparator = seq(inlineSpaces0(), char(','));
-    const firstSeparator = alt(inlineSpaces1(), char(','));
-    const separator = i === 0 ? capture(firstSeparator) : capture(commaSeparator);
+  const capturedParametersPattern = signature.parameters.reduceRight<string>((prev, parameter, i, parameters) => {
+    const capturedCommaSeparator = seq(inlineSpaces0(), capture(char(',')));
+    const capturedFirstSeparator = group(alt(
+      capturedCommaSeparator,
+      inlineSpaces1(),
+    ));
+    const separator = i === 0 ? capturedFirstSeparator : capturedCommaSeparator;
 
     const isLastParameter = parameters.length - 1 === i;
-    return optseq(
+    return seq(
       separator,
       inlineSpaces0(),
-      optional(parameterToOniguruma(parameter, isLastParameter, placeholder)),
-      placeholder.lineEndAnchor,
+      optional(capture(parameterToOniguruma(parameter, isLastParameter, placeholder))),
+      prev !== '' ? optional(prev) : '',
     );
-  }));
+  }, '');
 
   return {
     begin: lookahead(seq(
       placeholder.commandStatementBeginAnchor,
       ignoreCase(definition.name),
     )),
-    end: seq(capturedCommandNamePattern, capturedParametersPattern),
-    endCaptures: signatureToCaptures(scopeName, definition, signature),
+    end: seq(capturedCommandNamePattern, optional(capturedParametersPattern)),
+    endCaptures: Object.fromEntries([
+      definitionToCommandName(scopeName, definition),
+      ...parametersToRules(scopeName, signature),
+    ].map((rule, i) => [ i + 1, rule ])),
   };
 }
 export function createUnquotedString(scopeName: ScopeName, unquotedString: string): MatchRule {
@@ -111,15 +116,6 @@ export function createUnquotedString(scopeName: ScopeName, unquotedString: strin
 }
 
 // #region helpers
-function signatureToCaptures(scopeName: ScopeName, definition: CommandDefinition, signature: CommandSignature): Captures {
-  return Object.fromEntries([
-    definitionToCommandName(scopeName, definition),
-    ...parametersToRules(scopeName, signature),
-  ].map((rule, i) => {
-    const i_1base = i + 1;
-    return [ i_1base, rule ];
-  }));
-}
 function definitionToCommandName(scopeName: ScopeName, definition: CommandDefinition): NameRule {
   if (hasFlag(definition.flags, CommandFlag.Deprecated)) {
     return nameRule(scopeName, RuleName.CommandName, RuleName.Strikethrough);
@@ -129,37 +125,42 @@ function definitionToCommandName(scopeName: ScopeName, definition: CommandDefini
 function parameterToOniguruma(parameter: CommandParameter, isLastParameter: boolean, placeholder: PlaceHolder): string {
   if (isLastParameter) {
     if (parameter.type !== HighlightType.UnquotedStringShouldEscapeComma) {
-      return capture(placeholder.commandLastArgument);
+      return placeholder.commandLastArgument;
     }
   }
-  return capture(placeholder.commandArgument);
+  return placeholder.commandArgument;
 }
 function parameterToRule(scopeName: ScopeName, parameter: CommandParameter, isLastParameter: boolean): Rule {
   const defaultArgumentRule = isLastParameter ? includeRule(Repository.CommandLastArgument) : includeRule(Repository.CommandArgument);
+  const argumentName = name(scopeName, Repository.CommandArgument);
+  const keywordName = name(scopeName, RuleName.UnquotedString, RuleName.Strong);
 
   switch (parameter.type) {
     case HighlightType.None:
     case HighlightType.Blank: return nameRule(scopeName, RuleName.Invalid);
     case HighlightType.UnquotedString: {
-      if (parameter.values) {
-        return patternsRule(keywordsToRule(scopeName, parameter.values), defaultArgumentRule);
+      if (parameter.values && 0 < parameter.values.length) {
+        return namedPatternsRule(argumentName, [ keywordsToRule(keywordName, parameter.values, isLastParameter), defaultArgumentRule ]);
       }
-      return patternsRule(defaultArgumentRule);
+      return namedPatternsRule(argumentName, [ defaultArgumentRule ]);
     }
-    case HighlightType.UnquotedStringShouldEscapeComma: return patternsRule(includeRule(Repository.CommandArgument));
-    case HighlightType.Enum: {
-      return patternsRule(keywordsToRule(scopeName, parameter.values!), defaultArgumentRule);
-    }
-    case HighlightType.Expression: return patternsRule(includeRule(Repository.Expression));
+    case HighlightType.UnquotedStringShouldEscapeComma: return namedPatternsRule(argumentName, [ includeRule(Repository.CommandArgument) ]);
+    case HighlightType.Enum: return namedPatternsRule(argumentName, [ keywordsToRule(keywordName, parameter.values!, isLastParameter), defaultArgumentRule ]);
+    case HighlightType.Input:
+    case HighlightType.Output:
+    case HighlightType.Expression: return namedPatternsRule(argumentName, [ includeRule(Repository.Expression) ]);
     case HighlightType.CombiOptions:
     case HighlightType.GuiOptions:
     case HighlightType.GuiSubCommand:
-    case HighlightType.Input:
     case HighlightType.Options:
-    case HighlightType.Output:
     case HighlightType.Style:
+      return namedPatternsRule(argumentName, [ defaultArgumentRule ]);
     case HighlightType.SubCommand:
-      return patternsRule(defaultArgumentRule);
+      const subcommandName = name(scopeName, RuleName.SubCommandName);
+      if (!parameter.values || parameter.values.length === 0) {
+        throw Error(`The definition does not include a subcommand name.`);
+      }
+      return namedPatternsRule(argumentName, [ keywordsToRule(subcommandName, parameter.values, isLastParameter), defaultArgumentRule ]);
     default: break;
   }
   throw Error(`Specified an unknown highligh type.\nSpecified: "${String(parameter.type)}"`);
@@ -168,24 +169,20 @@ function parametersToRules(scopeName: ScopeName, signature: CommandSignature): R
   return signature.parameters.flatMap((parameter, i, parameters) => {
     const isLastParameter = parameters.length - 1 === i;
     return [
-      {
-        name: name(scopeName, Repository.CommandArgument),
-        patterns: [ patternsRule(includeRule(Repository.Comma)) ],
-      },
-      {
-        name: name(scopeName, Repository.CommandArgument),
-        patterns: [ parameterToRule(scopeName, parameter, isLastParameter) ],
-      },
+      namedPatternsRule(name(scopeName, Repository.CommandArgument), [ includeRule(Repository.Comma) ]),
+      parameterToRule(scopeName, parameter, isLastParameter), 
     ];
   });
 }
-function keywordsToRule(scopeName: ScopeName, keywords: string[]): Rule {
+function keywordsToRule(name: string, keywords: string[], isLastParameter: boolean): Rule {
   return {
-    name: name(scopeName, RuleName.UnquotedString, RuleName.Strong),
+    name,
     match: seq(
       lookbehind(wordBound()),
       ignoreCase(ordalt(...keywords)),
-      lookahead(wordBound()),
+      isLastParameter
+        ? negativeLookahead(anyChar())
+        : wordBound(),
     ),
   };
 }

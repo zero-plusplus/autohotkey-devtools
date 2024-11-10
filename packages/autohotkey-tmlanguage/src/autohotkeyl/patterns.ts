@@ -1,4 +1,4 @@
-import { alt, anyChar, asciiChar, char, endAnchor, group, groupMany0, inlineSpace, inlineSpaces0, inlineSpaces1, lookahead, lookbehind, negativeLookahead, negativeLookbehind, negChar, negChars0, opt, seq, startAnchor } from '../oniguruma';
+import { alt, anyChar, anyChars0, asciiChar, char, endAnchor, group, groupMany0, inlineSpace, inlineSpaces0, inlineSpaces1, lookahead, lookbehind, negativeLookahead, negativeLookbehind, negChar, negChars0, opt, seq, startAnchor } from '../oniguruma';
 
 export const lineEndAnchor: string = lookahead(alt(
   seq(inlineSpaces1(), negativeLookahead(char('`'))),
@@ -46,18 +46,29 @@ export const expressionArgument: string = groupMany0(alt(
   brackets,
   negChar(','),
 ));
-export const percentExpression: string = seq(
+export const percentExpressionArgument: string = seq(
   char('%'),
   inlineSpaces1(),
   expressionArgument,
 );
 export const commandArgument: string = group(alt(
-  percentExpression,
-  groupMany0(unquotedChar),
-));
-export const commandLastArgument: string = group(alt(
-  percentExpression,
+  percentExpressionArgument,
   groupMany0(alt(
+    brackets,
+    unquotedChar,
+  )),
+));
+
+export const expressionLastArgument: string = group(anyChars0());
+export const percentExpressionLastArgument: string = seq(
+  char('%'),
+  inlineSpaces1(),
+  expressionLastArgument,
+);
+export const commandLastArgument: string = group(alt(
+  percentExpressionLastArgument,
+  groupMany0(alt(
+    brackets,
     char(','),
     unquotedChar,
   )),

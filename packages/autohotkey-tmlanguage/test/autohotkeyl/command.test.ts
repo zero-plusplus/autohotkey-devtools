@@ -126,8 +126,7 @@ describe('command', () => {
         { text: 'AutoTrim', scopes: name(Repository.CommandStatement, RuleName.CommandName) },
         { text: ',', scopes: name(Repository.CommandStatement, Repository.CommandArgument, RuleName.Separator) },
         { text: ' ' },
-        { text: 'On', scopes: name(Repository.CommandStatement, Repository.CommandArgument, RuleName.UnquotedString, RuleName.Strong) },
-        { text: ', Overflow, arguments', scopes: name(Repository.CommandStatement, Repository.CommandArgument, RuleName.UnquotedString) },
+        { text: 'On, Overflow, arguments', scopes: name(Repository.CommandStatement, Repository.CommandArgument, RuleName.UnquotedString) },
       ],
     ],
   ])('too many arguments', async(text, expected) => {

@@ -155,4 +155,7 @@ export function nameRule(scopeName: ScopeName, ...ruleNames: Array<Repository | 
 export function patternsRule(...rules: Rule[]): PatternsRule {
   return { patterns: rules };
 }
+export function namedPatternsRule(name: string, rules: Rule[]): PatternsRule {
+  return { name, patterns: rules };
+}
 // #endregion rule combinators

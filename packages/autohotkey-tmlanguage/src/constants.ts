@@ -201,7 +201,7 @@ export const enum RuleName {
   LegacyAssignment = 'expression.legacy.assignment',
   LegacyTextEscapeSequence = 'constant.character.escape.legacy.text',
   CommandName = 'support.function.command',
-  SubCommandName = 'strong string.legacy.subcommand',
+  SubCommandName = 'support.function.subcommand',
   // #endregion legacy
 }
 export const enum CommandArgsType {

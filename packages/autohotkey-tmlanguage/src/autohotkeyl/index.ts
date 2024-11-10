@@ -41,7 +41,6 @@ export function createRepositories(scopeName: ScopeName): Repositories {
       lineEndAnchor: patterns_v1.lineEndAnchor,
       commandStatementBeginAnchor: patterns_v1.statementBeginAnchor,
       commandArgumentEndLineAnchor: patterns_v1.commandArgumentEndLineAnchor,
-      expressionArgument: patterns_v1.expressionArgument,
       continuationOperators: constants_v1.continuationOperators,
       commandArgument: patterns_v1.commandArgument,
       commandLastArgument: patterns_v1.commandLastArgument,
