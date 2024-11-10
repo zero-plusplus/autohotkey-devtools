@@ -1,5 +1,5 @@
 import type { commandNames } from './autohotkeyl/constants';
-import { CommandArgsType, CommandParameterFlag, CommandSignatureFlag, HighlightType, Repository, RuleName, scopeNames, type CommandFlag } from './constants';
+import { CommandArgsType, CommandParameterFlag, CommandSignatureFlag, HighlightType, Repository, RuleName, scopeNames, type CommandFlag, type StyleName } from './constants';
 
 export type Repositories = { [key in Partial<Repository>[number]]: Rule | undefined };
 export type Captures = Record<string | number, Rule | undefined>;
@@ -64,8 +64,8 @@ export interface EscapeSequencesInfo {
   legacyText: string[];
 }
 export interface Utilities {
-  name: (...ruleNames: Array<Repository | RuleName>) => string;
-  nameRule: (...ruleNames: Array<Repository | RuleName>) => NameRule;
+  name: (...ruleNames: Array<Repository | RuleName | StyleName>) => string;
+  nameRule: (...ruleNames: Array<Repository | RuleName | StyleName>) => NameRule;
   includeRule: (repositoryName: Repository) => IncludeRule;
   includeScope: (scopeName: ScopeName) => IncludeRule;
 }

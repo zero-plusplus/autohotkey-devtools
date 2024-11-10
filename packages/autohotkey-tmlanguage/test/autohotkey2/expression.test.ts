@@ -1,4 +1,4 @@
-import { Repository, RuleName } from '../../src/constants';
+import { Repository, RuleName, StyleName } from '../../src/constants';
 import type { ScopeName } from '../../src/types';
 import { createUtilities, getEscapeSequencesInfo } from '../../src/utils';
 import { parse } from '../helpers/textmate-parser';
@@ -49,22 +49,22 @@ describe('expression', () => {
       test.each([
         [
           '%%', [
-            { text: '%', scopes: name(Repository.Dereference, RuleName.PercentBegin, RuleName.Invalid) },
-            { text: '%', scopes: name(Repository.Dereference, RuleName.PercentEnd, RuleName.Invalid) },
+            { text: '%', scopes: name(Repository.Dereference, RuleName.PercentBegin, StyleName.Invalid) },
+            { text: '%', scopes: name(Repository.Dereference, RuleName.PercentEnd, StyleName.Invalid) },
           ],
         ],
-        [ '%', [ { text: '%', scopes: name(Repository.Dereference, RuleName.PercentBegin, RuleName.Invalid) } ] ],
+        [ '%', [ { text: '%', scopes: name(Repository.Dereference, RuleName.PercentBegin, StyleName.Invalid) } ] ],
         [
           '%a', [
             { text: '%', scopes: name(Repository.Dereference, RuleName.PercentBegin) },
-            { text: 'a', scopes: name(Repository.Dereference, RuleName.Variable, RuleName.Invalid) },
+            { text: 'a', scopes: name(Repository.Dereference, RuleName.Variable, StyleName.Invalid) },
           ],
         ],
         [
           '%abc', [
             { text: '%', scopes: name(Repository.Dereference, RuleName.PercentBegin) },
             { text: 'ab', scopes: name(Repository.Dereference, RuleName.Variable) },
-            { text: 'c', scopes: name(Repository.Dereference, RuleName.Variable, RuleName.Invalid) },
+            { text: 'c', scopes: name(Repository.Dereference, RuleName.Variable, StyleName.Invalid) },
           ],
         ],
       ])(
@@ -121,9 +121,9 @@ describe('expression', () => {
           expect(actual).toStrictEqual([
             { text: `'`, scopes: name(RuleName.SingleString, RuleName.StringBegin) },
             { text: 'a', scopes: name(RuleName.SingleString) },
-            { text: 'b', scopes: name(RuleName.SingleString, RuleName.Invalid) },
+            { text: 'b', scopes: name(RuleName.SingleString, StyleName.Invalid) },
             { text: '\r\n' },
-            { text: 'c', scopes: name(RuleName.SingleString, RuleName.Invalid) },
+            { text: 'c', scopes: name(RuleName.SingleString, StyleName.Invalid) },
             { text: '\n' },
             { text: `'`, scopes: name(RuleName.SingleString, RuleName.StringEnd) },
           ]);

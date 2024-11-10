@@ -1,5 +1,5 @@
 import * as patterns_v1 from '../../../autohotkeyl/patterns';
-import { Repository, RuleName } from '../../../constants';
+import { Repository, RuleName, StyleName } from '../../../constants';
 import { alt, anyChars1, capture, char, endAnchor, lookahead, negativeLookahead, negChar, negChars0, negChars1, seq } from '../../../oniguruma';
 import type { MatchRule, PatternsRule, ScopeName } from '../../../types';
 import { includeRule, name, nameRule } from '../../../utils';
@@ -43,8 +43,8 @@ export function createInvalidDereferenceRule(scopeName: ScopeName): PatternsRule
           capture(char('%')),
         ),
         captures: {
-          1: nameRule(scopeName, Repository.Dereference, RuleName.PercentBegin, RuleName.Invalid),
-          2: nameRule(scopeName, Repository.Dereference, RuleName.PercentEnd, RuleName.Invalid),
+          1: nameRule(scopeName, Repository.Dereference, RuleName.PercentBegin, StyleName.Invalid),
+          2: nameRule(scopeName, Repository.Dereference, RuleName.PercentEnd, StyleName.Invalid),
         },
       },
       // %
@@ -59,7 +59,7 @@ export function createInvalidDereferenceRule(scopeName: ScopeName): PatternsRule
           )),
         ),
         captures: {
-          1: nameRule(scopeName, RuleName.PercentBegin, RuleName.Invalid),
+          1: nameRule(scopeName, RuleName.PercentBegin, StyleName.Invalid),
         },
       },
       // %abc
@@ -82,7 +82,7 @@ export function createInvalidDereferenceRule(scopeName: ScopeName): PatternsRule
               includeRule(Repository.Expression),
             ],
           },
-          3: nameRule(scopeName, Repository.Dereference, RuleName.Variable, RuleName.Invalid),
+          3: nameRule(scopeName, Repository.Dereference, RuleName.Variable, StyleName.Invalid),
         },
       },
     ],

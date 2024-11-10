@@ -1,5 +1,5 @@
 import { dedent } from '@zero-plusplus/utilities/src';
-import { Repository, RuleName } from '../../src/constants';
+import { Repository, RuleName, StyleName } from '../../src/constants';
 import type { ScopeName } from '../../src/types';
 import { createUtilities } from '../../src/utils';
 import { parse } from '../helpers/textmate-parser';
@@ -30,9 +30,9 @@ describe('autohotkey', () => {
     // console.log(JSON.stringify(actual, undefined, 2));
 
     expect(actual).toStrictEqual([
-      { text: `#Requires`, scopes: name(Repository.DirecitiveStatement, RuleName.DirectiveName, RuleName.Emphasis) },
+      { text: `#Requires`, scopes: name(Repository.DirecitiveStatement, RuleName.DirectiveName, StyleName.Emphasis) },
       { text: ` ` },
-      { text: `AutoHotkey v2.1`, scopes: name(Repository.DirecitiveStatement, RuleName.UnquotedString, RuleName.Emphasis) },
+      { text: `AutoHotkey v2.1`, scopes: name(Repository.DirecitiveStatement, RuleName.UnquotedString, StyleName.Emphasis) },
       { text: `\n` },
       { text: `"`, scopes: name_ahknext(RuleName.DoubleString, RuleName.StringBegin) },
       { text: 'string', scopes: name_ahknext(RuleName.DoubleString) },
@@ -48,9 +48,9 @@ describe('autohotkey', () => {
     // console.log(JSON.stringify(actual, undefined, 2));
 
     expect(actual).toStrictEqual([
-      { text: `#Requires`, scopes: name(Repository.DirecitiveStatement, RuleName.DirectiveName, RuleName.Emphasis) },
+      { text: `#Requires`, scopes: name(Repository.DirecitiveStatement, RuleName.DirectiveName, StyleName.Emphasis) },
       { text: ` ` },
-      { text: `AutoHotkey v2.0`, scopes: name(Repository.DirecitiveStatement, RuleName.UnquotedString, RuleName.Emphasis) },
+      { text: `AutoHotkey v2.0`, scopes: name(Repository.DirecitiveStatement, RuleName.UnquotedString, StyleName.Emphasis) },
       { text: `\n` },
       { text: `"`, scopes: name_ahk2(RuleName.DoubleString, RuleName.StringBegin) },
       { text: 'string', scopes: name_ahk2(RuleName.DoubleString) },
@@ -66,9 +66,9 @@ describe('autohotkey', () => {
     // console.log(JSON.stringify(actual, undefined, 2));
 
     expect(actual).toStrictEqual([
-      { text: `#Requires`, scopes: name(Repository.DirecitiveStatement, RuleName.DirectiveName, RuleName.Emphasis) },
+      { text: `#Requires`, scopes: name(Repository.DirecitiveStatement, RuleName.DirectiveName, StyleName.Emphasis) },
       { text: ` ` },
-      { text: `AutoHotkey v1.1`, scopes: name(Repository.DirecitiveStatement, RuleName.UnquotedString, RuleName.Emphasis) },
+      { text: `AutoHotkey v1.1`, scopes: name(Repository.DirecitiveStatement, RuleName.UnquotedString, StyleName.Emphasis) },
       { text: `\n` },
       { text: `"`, scopes: name_ahkl(RuleName.DoubleString, RuleName.StringBegin) },
       { text: 'string', scopes: name_ahkl(RuleName.DoubleString) },
@@ -88,27 +88,27 @@ describe('autohotkey', () => {
     // console.log(JSON.stringify(actual, undefined, 2));
 
     expect(actual).toStrictEqual([
-      { text: `#Requires`, scopes: name(Repository.DirecitiveStatement, RuleName.DirectiveName, RuleName.Emphasis) },
+      { text: `#Requires`, scopes: name(Repository.DirecitiveStatement, RuleName.DirectiveName, StyleName.Emphasis) },
       { text: ` ` },
-      { text: `AutoHotkey v2.1`, scopes: name(Repository.DirecitiveStatement, RuleName.UnquotedString, RuleName.Emphasis) },
+      { text: `AutoHotkey v2.1`, scopes: name(Repository.DirecitiveStatement, RuleName.UnquotedString, StyleName.Emphasis) },
       { text: `\n` },
       { text: `"`, scopes: name_ahknext(RuleName.DoubleString, RuleName.StringBegin) },
       { text: 'string', scopes: name_ahknext(RuleName.DoubleString) },
       { text: `"`, scopes: name_ahknext(RuleName.DoubleString, RuleName.StringEnd) },
       { text: `\n` },
 
-      { text: `#Requires`, scopes: name(Repository.DirecitiveStatement, RuleName.DirectiveName, RuleName.Emphasis) },
+      { text: `#Requires`, scopes: name(Repository.DirecitiveStatement, RuleName.DirectiveName, StyleName.Emphasis) },
       { text: ` ` },
-      { text: `AutoHotkey v2.0`, scopes: name(Repository.DirecitiveStatement, RuleName.UnquotedString, RuleName.Emphasis) },
+      { text: `AutoHotkey v2.0`, scopes: name(Repository.DirecitiveStatement, RuleName.UnquotedString, StyleName.Emphasis) },
       { text: `\n` },
       { text: `"`, scopes: name_ahk2(RuleName.DoubleString, RuleName.StringBegin) },
       { text: 'string', scopes: name_ahk2(RuleName.DoubleString) },
       { text: `"`, scopes: name_ahk2(RuleName.DoubleString, RuleName.StringEnd) },
       { text: `\n` },
 
-      { text: `#Requires`, scopes: name(Repository.DirecitiveStatement, RuleName.DirectiveName, RuleName.Emphasis) },
+      { text: `#Requires`, scopes: name(Repository.DirecitiveStatement, RuleName.DirectiveName, StyleName.Emphasis) },
       { text: ` ` },
-      { text: `AutoHotkey v1.1`, scopes: name(Repository.DirecitiveStatement, RuleName.UnquotedString, RuleName.Emphasis) },
+      { text: `AutoHotkey v1.1`, scopes: name(Repository.DirecitiveStatement, RuleName.UnquotedString, StyleName.Emphasis) },
       { text: `\n` },
       { text: `"`, scopes: name_ahkl(RuleName.DoubleString, RuleName.StringBegin) },
       { text: 'string', scopes: name_ahkl(RuleName.DoubleString) },

@@ -190,13 +190,6 @@ export const enum RuleName {
   CloseParen = 'meta.brace.round.end',
   // #region tokens
 
-  // #region extra rules
-  Emphasis = 'emphasis',
-  Strong = 'strong',
-  Strikethrough = 'markup.strikethrough',
-  Invalid = 'invalid.illegal',
-  // #endregion extra rules
-
   // #region legacy
   LegacyAssignment = 'expression.legacy.assignment',
   LegacyTextEscapeSequence = 'constant.character.escape.legacy.text',
@@ -204,6 +197,13 @@ export const enum RuleName {
   SubCommandName = 'support.function.subcommand',
   // #endregion legacy
 }
+export const enum StyleName {
+  Emphasis = 'emphasis',
+  Strong = 'strong',
+  Strikethrough = 'markup.strikethrough',
+  Invalid = 'invalid.illegal',
+}
+
 export const enum CommandArgsType {
   None = 0,
   Expression,

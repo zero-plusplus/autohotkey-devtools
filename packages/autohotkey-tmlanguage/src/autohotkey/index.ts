@@ -1,4 +1,4 @@
-import { Repository, RuleName } from '../constants';
+import { Repository, RuleName, StyleName } from '../constants';
 import { anyChars0, capture, char, charRange, endAnchor, ignoreCase, inlineSpaces0, inlineSpaces1, negativeLookahead, seq, startAnchor } from '../oniguruma';
 import type { BeginWhileRule, ScopeName, TmLanguage } from '../types';
 import { createUtilities } from '../utils';
@@ -55,8 +55,8 @@ export function createTmLanguage(): TmLanguage {
           endAnchor(),
         ),
         beginCaptures: {
-          1: nameRule(Repository.DirecitiveStatement, RuleName.DirectiveName, RuleName.Emphasis),
-          2: nameRule(Repository.DirecitiveStatement, RuleName.UnquotedString, RuleName.Emphasis),
+          1: nameRule(Repository.DirecitiveStatement, RuleName.DirectiveName, StyleName.Emphasis),
+          2: nameRule(Repository.DirecitiveStatement, RuleName.UnquotedString, StyleName.Emphasis),
         },
         while: seq(
           startAnchor(),
@@ -76,8 +76,8 @@ export function createTmLanguage(): TmLanguage {
           endAnchor(),
         ),
         beginCaptures: {
-          1: nameRule(Repository.DirecitiveStatement, RuleName.DirectiveName, RuleName.Emphasis),
-          2: nameRule(Repository.DirecitiveStatement, RuleName.UnquotedString, RuleName.Emphasis),
+          1: nameRule(Repository.DirecitiveStatement, RuleName.DirectiveName, StyleName.Emphasis),
+          2: nameRule(Repository.DirecitiveStatement, RuleName.UnquotedString, StyleName.Emphasis),
         },
         while: seq(
           startAnchor(),
@@ -114,8 +114,8 @@ export function createTmLanguage(): TmLanguage {
             endAnchor(),
           ),
           beginCaptures: {
-            1: nameRule(Repository.DirecitiveStatement, RuleName.DirectiveName, RuleName.Emphasis),
-            2: nameRule(Repository.DirecitiveStatement, RuleName.UnquotedString, RuleName.Emphasis),
+            1: nameRule(Repository.DirecitiveStatement, RuleName.DirectiveName, StyleName.Emphasis),
+            2: nameRule(Repository.DirecitiveStatement, RuleName.UnquotedString, StyleName.Emphasis),
           },
           while: seq(
             startAnchor(),

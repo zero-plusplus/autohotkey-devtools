@@ -1,4 +1,4 @@
-import { RuleName } from '../../../constants';
+import { RuleName, StyleName } from '../../../constants';
 import { alt, capture, char, charRange, group, groupMany1, ignoreCase, lookahead, lookbehind, negativeLookahead, number, numbers0, numbers1, opt, seq, wordBound } from '../../../oniguruma';
 import type { MatchRule, PatternsRule, ScopeName } from '../../../types';
 import { name, nameRule, patternsRule } from '../../../utils';
@@ -55,7 +55,7 @@ export function createInvalidFloatRule(scopeName: ScopeName): PatternsRule {
     ),
     captures: {
       1: nameRule(scopeName, RuleName.Integer),
-      2: nameRule(scopeName, RuleName.DecimalPoint, RuleName.Invalid),
+      2: nameRule(scopeName, RuleName.DecimalPoint, StyleName.Invalid),
     },
   });
 }
@@ -85,7 +85,7 @@ export function createInvalidHexRule(scopeName: ScopeName): PatternsRule {
         )),
       ),
       captures: {
-        1: nameRule(scopeName, RuleName.HexPrefix, RuleName.Invalid),
+        1: nameRule(scopeName, RuleName.HexPrefix, StyleName.Invalid),
         2: nameRule(scopeName, RuleName.Hex),
         3: nameRule(scopeName, RuleName.HexPrefix),
         4: nameRule(scopeName, RuleName.HexValue),
@@ -99,7 +99,7 @@ export function createInvalidHexRule(scopeName: ScopeName): PatternsRule {
       )),
       captures: {
         1: nameRule(scopeName, RuleName.Hex, RuleName.HexPrefix),
-        2: nameRule(scopeName, RuleName.Hex, RuleName.HexPrefix, RuleName.Invalid),
+        2: nameRule(scopeName, RuleName.Hex, RuleName.HexPrefix, StyleName.Invalid),
       },
     },
     {
@@ -111,7 +111,7 @@ export function createInvalidHexRule(scopeName: ScopeName): PatternsRule {
       captures: {
         1: nameRule(scopeName, RuleName.Hex, RuleName.HexPrefix),
         2: nameRule(scopeName, RuleName.Hex, RuleName.HexValue),
-        3: nameRule(scopeName, RuleName.DecimalPoint, RuleName.Invalid),
+        3: nameRule(scopeName, RuleName.DecimalPoint, StyleName.Invalid),
       },
     },
   );
@@ -164,7 +164,7 @@ export function createInvalidScientificNotationRule(scopeName: ScopeName): Patte
         5: nameRule(scopeName, RuleName.ScientificNotation, RuleName.ENotation),
         6: nameRule(scopeName, RuleName.ScientificNotation, RuleName.ExponentPlusMinusSign),
         7: nameRule(scopeName, RuleName.ScientificNotation, RuleName.Exponent),
-        8: nameRule(scopeName, RuleName.ScientificNotation, RuleName.DecimalPart, RuleName.Invalid),
+        8: nameRule(scopeName, RuleName.ScientificNotation, RuleName.DecimalPart, StyleName.Invalid),
       },
     },
     // 123.0e+
@@ -186,7 +186,7 @@ export function createInvalidScientificNotationRule(scopeName: ScopeName): Patte
         3: nameRule(scopeName, RuleName.ScientificNotation, RuleName.Float, RuleName.DecimalPart),
         4: nameRule(scopeName, RuleName.ScientificNotation, RuleName.Integer),
         5: nameRule(scopeName, RuleName.ScientificNotation, RuleName.ENotation),
-        6: nameRule(scopeName, RuleName.ScientificNotation, RuleName.ExponentPlusMinusSign, RuleName.Invalid),
+        6: nameRule(scopeName, RuleName.ScientificNotation, RuleName.ExponentPlusMinusSign, StyleName.Invalid),
       },
     },
     // 123.0e
@@ -206,7 +206,7 @@ export function createInvalidScientificNotationRule(scopeName: ScopeName): Patte
         2: nameRule(scopeName, RuleName.ScientificNotation, RuleName.Float, RuleName.DecimalPoint),
         3: nameRule(scopeName, RuleName.ScientificNotation, RuleName.Float, RuleName.DecimalPart),
         4: nameRule(scopeName, RuleName.ScientificNotation, RuleName.Integer),
-        5: nameRule(scopeName, RuleName.ScientificNotation, RuleName.ENotation, RuleName.Invalid),
+        5: nameRule(scopeName, RuleName.ScientificNotation, RuleName.ENotation, StyleName.Invalid),
       },
     },
   );

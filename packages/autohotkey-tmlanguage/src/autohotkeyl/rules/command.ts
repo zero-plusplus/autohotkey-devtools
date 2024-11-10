@@ -1,5 +1,5 @@
 import { hasFlag } from '@zero-plusplus/utilities/src';
-import { CommandFlag, HighlightType, Repository, RuleName } from '../../constants';
+import { CommandFlag, HighlightType, Repository, RuleName, StyleName } from '../../constants';
 import { alt, anyChar, anyChars0, capture, char, escapeOnigurumaTexts, group, groupMany0, ignoreCase, inlineSpaces0, inlineSpaces1, lookahead, lookbehind, negativeLookahead, optional, optseq, ordalt, seq, startAnchor, wordBound } from '../../oniguruma';
 import type { BeginWhileRule, CommandDefinition, CommandParameter, CommandSignature, MatchRule, NameRule, Rule, ScopeName } from '../../types';
 import { includeRule, name, namedPatternsRule, nameRule, patternsRule } from '../../utils';
@@ -118,7 +118,7 @@ export function createUnquotedString(scopeName: ScopeName, unquotedString: strin
 // #region helpers
 function definitionToCommandName(scopeName: ScopeName, definition: CommandDefinition): NameRule {
   if (hasFlag(definition.flags, CommandFlag.Deprecated)) {
-    return nameRule(scopeName, RuleName.CommandName, RuleName.Strikethrough);
+    return nameRule(scopeName, RuleName.CommandName, StyleName.Strikethrough);
   }
   return nameRule(scopeName, RuleName.CommandName);
 }
@@ -133,11 +133,11 @@ function parameterToOniguruma(parameter: CommandParameter, isLastParameter: bool
 function parameterToRule(scopeName: ScopeName, parameter: CommandParameter, isLastParameter: boolean): Rule {
   const defaultArgumentRule = isLastParameter ? includeRule(Repository.CommandLastArgument) : includeRule(Repository.CommandArgument);
   const argumentName = name(scopeName, Repository.CommandArgument);
-  const keywordName = name(scopeName, RuleName.UnquotedString, RuleName.Strong);
+  const keywordName = name(scopeName, RuleName.UnquotedString, StyleName.Strong);
 
   switch (parameter.type) {
     case HighlightType.None:
-    case HighlightType.Blank: return nameRule(scopeName, RuleName.Invalid);
+    case HighlightType.Blank: return nameRule(scopeName, StyleName.Invalid);
     case HighlightType.UnquotedString: {
       if (parameter.values && 0 < parameter.values.length) {
         return namedPatternsRule(argumentName, [ keywordsToRule(keywordName, parameter.values, isLastParameter), defaultArgumentRule ]);
@@ -170,7 +170,7 @@ function parametersToRules(scopeName: ScopeName, signature: CommandSignature): R
     const isLastParameter = parameters.length - 1 === i;
     return [
       namedPatternsRule(name(scopeName, Repository.CommandArgument), [ includeRule(Repository.Comma) ]),
-      parameterToRule(scopeName, parameter, isLastParameter), 
+      parameterToRule(scopeName, parameter, isLastParameter),
     ];
   });
 }

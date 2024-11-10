@@ -1,4 +1,4 @@
-import { Repository, RuleName } from '../../../constants';
+import { Repository, RuleName, StyleName } from '../../../constants';
 import { alt, capture, char, inlineSpaces1, lookahead, many0, many1, negChar, seq, whitespace } from '../../../oniguruma';
 import type { BeginEndRule, PatternsRule, ScopeName } from '../../../types';
 import { includeRule, name, nameRule, patternsRule } from '../../../utils';
@@ -36,7 +36,7 @@ export function createDereferenceRule(scopeName: ScopeName): BeginEndRule {
               includeRule(Repository.Variable),
             ],
           },
-          2: nameRule(scopeName, Repository.Dereference, RuleName.Variable, RuleName.Invalid),
+          2: nameRule(scopeName, Repository.Dereference, RuleName.Variable, StyleName.Invalid),
         },
       },
       // %abc%
@@ -68,8 +68,8 @@ export function createInvalidDereferenceRule(scopeName: ScopeName): PatternsRule
         capture(char('%')),
       ),
       captures: {
-        1: nameRule(scopeName, Repository.Dereference, RuleName.PercentBegin, RuleName.Invalid),
-        2: nameRule(scopeName, Repository.Dereference, RuleName.PercentEnd, RuleName.Invalid),
+        1: nameRule(scopeName, Repository.Dereference, RuleName.PercentBegin, StyleName.Invalid),
+        2: nameRule(scopeName, Repository.Dereference, RuleName.PercentEnd, StyleName.Invalid),
       },
     },
     // %
@@ -80,7 +80,7 @@ export function createInvalidDereferenceRule(scopeName: ScopeName): PatternsRule
         lookahead(patterns_v1.expressionEndLineAnchor),
       ),
       captures: {
-        1: nameRule(scopeName, Repository.Dereference, RuleName.PercentBegin, RuleName.Invalid),
+        1: nameRule(scopeName, Repository.Dereference, RuleName.PercentBegin, StyleName.Invalid),
       },
     },
     // %abc
@@ -101,7 +101,7 @@ export function createInvalidDereferenceRule(scopeName: ScopeName): PatternsRule
             includeRule(Repository.Variable),
           ],
         },
-        3: nameRule(scopeName, Repository.Dereference, RuleName.Variable, RuleName.Invalid),
+        3: nameRule(scopeName, Repository.Dereference, RuleName.Variable, StyleName.Invalid),
       },
     },
   );

@@ -1,4 +1,4 @@
-import { RuleName } from '../../../constants';
+import { RuleName, StyleName } from '../../../constants';
 import { anyChar, capture, char, endAnchor, escapeOnigurumaTexts, inlineSpaces0, lookahead, negativeLookahead, negativeLookbehind, ordalt, seq } from '../../../oniguruma';
 import type { BeginEndRule, ScopeName } from '../../../types';
 import { name, nameRule } from '../../../utils';
@@ -29,7 +29,7 @@ export function createStringRule(scopeName: ScopeName, quote: '"' | `'`, escapeS
           lookahead(endAnchor()),
         ),
         captures: {
-          1: nameRule(scopeName, RuleName.Invalid),
+          1: nameRule(scopeName, StyleName.Invalid),
         },
       },
       // escape sequences

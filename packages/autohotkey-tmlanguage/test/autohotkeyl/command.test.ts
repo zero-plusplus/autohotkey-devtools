@@ -1,5 +1,5 @@
 import { dedent } from '@zero-plusplus/utilities/src';
-import { Repository, RuleName } from '../../src/constants';
+import { Repository, RuleName, StyleName } from '../../src/constants';
 import { commandInfos } from '../../src/definition';
 import type { ScopeName } from '../../src/types';
 import { createUtilities } from '../../src/utils';
@@ -32,7 +32,7 @@ describe('command', () => {
         { text: 'AutoTrim', scopes: name(Repository.CommandStatement, RuleName.CommandName) },
         { text: ',', scopes: name(Repository.CommandStatement, Repository.CommandArgument, RuleName.Separator) },
         { text: ' ' },
-        { text: 'On', scopes: name(Repository.CommandStatement, Repository.CommandArgument, RuleName.UnquotedString, RuleName.Strong) },
+        { text: 'On', scopes: name(Repository.CommandStatement, Repository.CommandArgument, RuleName.UnquotedString, StyleName.Strong) },
       ],
     ],
     // space separator
@@ -40,7 +40,7 @@ describe('command', () => {
       'AutoTrim On', [
         { text: 'AutoTrim', scopes: name(Repository.CommandStatement, RuleName.CommandName) },
         { text: ' ' },
-        { text: 'On', scopes: name(Repository.CommandStatement, Repository.CommandArgument, RuleName.UnquotedString, RuleName.Strong) },
+        { text: 'On', scopes: name(Repository.CommandStatement, Repository.CommandArgument, RuleName.UnquotedString, StyleName.Strong) },
       ],
     ],
   ])('first separator', async(text, expected) => {
@@ -135,7 +135,7 @@ describe('command', () => {
         { text: 'AutoTrim', scopes: name(Repository.CommandStatement, RuleName.CommandName) },
         { text: ',', scopes: name(Repository.CommandStatement, Repository.CommandArgument, RuleName.Separator) },
         { text: ' ' },
-        { text: 'On', scopes: name(Repository.CommandStatement, Repository.CommandArgument, RuleName.UnquotedString, RuleName.Strong) },
+        { text: 'On', scopes: name(Repository.CommandStatement, Repository.CommandArgument, RuleName.UnquotedString, StyleName.Strong) },
       ],
     ],
   ])('arguments with special highlighting', async(text, expected) => {

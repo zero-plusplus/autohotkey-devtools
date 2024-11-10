@@ -1,6 +1,6 @@
 import * as constants_v2 from './autohotkey2/constants';
 import * as constants_v1 from './autohotkeyl/constants';
-import { Repository, RuleName } from './constants';
+import { Repository, RuleName, type StyleName } from './constants';
 import { alt, asciiChar, char, escapeOnigurumaText, group, inlineSpaces0, lookbehind, negChar, opt, ordalt, seq, startAnchor } from './oniguruma';
 import type { EscapeSequencesInfo, IncludeRule, NameRule, PatternsRule, Rule, ScopeName, Utilities, VariableParts } from './types';
 
@@ -132,8 +132,8 @@ export function getBuiltInVariableNames(scopeName: ScopeName): readonly string[]
 }
 export function createUtilities(scopeName: ScopeName): Utilities {
   return {
-    name: (...ruleNames: Array<Repository | RuleName>): string => name(scopeName, ...ruleNames),
-    nameRule: (...ruleNames: Array<Repository | RuleName>): NameRule => ({ name: name(scopeName, ...ruleNames) }),
+    name: (...ruleNames: Array<Repository | RuleName | StyleName>): string => name(scopeName, ...ruleNames),
+    nameRule: (...ruleNames: Array<Repository | RuleName | StyleName>): NameRule => ({ name: name(scopeName, ...ruleNames) }),
     includeRule: (repositoryName: Repository) => includeRule(repositoryName),
     includeScope: (scopeName: ScopeName) => includeScope(scopeName),
   };
@@ -146,10 +146,10 @@ export function includeRule(repositoryName: Repository): IncludeRule {
 export function includeScope(scopeName: ScopeName): IncludeRule {
   return { include: `source.${scopeName}` };
 }
-export function name(scopeName: ScopeName, ...ruleNames: Array<Repository | RuleName>): string {
+export function name(scopeName: ScopeName, ...ruleNames: Array<Repository | RuleName | StyleName>): string {
   return ruleNames.map((ruleName) => `${ruleName}.${scopeName}`).join(' ');
 }
-export function nameRule(scopeName: ScopeName, ...ruleNames: Array<Repository | RuleName>): NameRule {
+export function nameRule(scopeName: ScopeName, ...ruleNames: Array<Repository | RuleName | StyleName>): NameRule {
   return { name: name(scopeName, ...ruleNames) };
 }
 export function patternsRule(...rules: Rule[]): PatternsRule {

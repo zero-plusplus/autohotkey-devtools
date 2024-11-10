@@ -1,4 +1,4 @@
-import { RuleName } from '../../../constants';
+import { RuleName, StyleName } from '../../../constants';
 import { capture, escapeOnigurumaTexts, ignoreCase, lookahead, lookbehind, many1, manyRange, numbers1, ordalt, seq, wordBound } from '../../../oniguruma';
 import type { MatchRule, PatternsRule, ScopeName } from '../../../types';
 import { nameRule, patternsRule } from '../../../utils';
@@ -19,7 +19,7 @@ export function createInvalidVariableRule(scopeName: ScopeName, nameStart: strin
         capture(seq(nameStart, manyRange(nameBody, 0, 252))),
       ),
       captures: {
-        1: nameRule(scopeName, RuleName.Variable, RuleName.Integer, RuleName.Invalid),
+        1: nameRule(scopeName, RuleName.Variable, RuleName.Integer, StyleName.Invalid),
         2: nameRule(scopeName, RuleName.Variable),
       },
     },
@@ -30,7 +30,7 @@ export function createInvalidVariableRule(scopeName: ScopeName, nameStart: strin
       ),
       captures: {
         1: nameRule(scopeName, RuleName.Variable),
-        2: nameRule(scopeName, RuleName.Variable, RuleName.Invalid),
+        2: nameRule(scopeName, RuleName.Variable, StyleName.Invalid),
       },
     },
   );
