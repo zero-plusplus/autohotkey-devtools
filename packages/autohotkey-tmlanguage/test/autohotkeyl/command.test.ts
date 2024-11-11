@@ -1,6 +1,6 @@
 import { dedent } from '@zero-plusplus/utilities/src';
+import { commandDefinitions } from '../../src/autohotkeyl/definition';
 import { Repository, RuleName, StyleName } from '../../src/constants';
-import { commandInfos } from '../../src/definition';
 import type { ScopeName } from '../../src/types';
 import { createUtilities } from '../../src/utils';
 import { parse } from '../helpers/textmate-parser';
@@ -11,7 +11,7 @@ describe('command', () => {
   const { name } = createUtilities(scopeName);
 
   test('command name', async() => {
-    const commandNames = commandInfos.map(([ commandName ]) => commandName);
+    const commandNames = commandDefinitions.map((definition) => definition.name);
     const actual = await parse(scopeName, commandNames.join('\n'));
     // console.log(JSON.stringify(actual, undefined, 2));
 
