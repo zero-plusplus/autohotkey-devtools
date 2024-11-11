@@ -1,10 +1,11 @@
-import * as path from 'path';
-import { globSync } from 'fs';
 import * as esbuild from 'esbuild';
+import { globSync } from 'fs';
+import * as path from 'path';
 
 export const packageDir: string = path.resolve(import.meta.dirname, '..');
 export const projectRootDir: string = path.resolve(packageDir, '../../');
 export const buildDir: string = path.resolve(packageDir, 'build');
+export const buildSourceDir: string = path.resolve(buildDir, 'src');
 export const srcDir: string = path.resolve(packageDir, 'src');
 export const browserSrcDir: string = path.resolve(srcDir, 'browser');
 

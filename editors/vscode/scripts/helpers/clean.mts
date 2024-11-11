@@ -1,5 +1,5 @@
 import * as fs from 'fs/promises';
-import { buildDir } from '../config.mjs';
+import { buildDir, buildSourceDir } from '../config.mjs';
 
 export async function cleanBuild(): Promise<void> {
   try {
@@ -8,6 +8,17 @@ export async function cleanBuild(): Promise<void> {
       return;
     }
     await fs.rm(buildDir, { recursive: true });
+  }
+  catch {
+  }
+}
+export async function cleanBuildSource(): Promise<void> {
+  try {
+    const stat = await fs.stat(buildSourceDir);
+    if (!stat.isDirectory()) {
+      return;
+    }
+    await fs.rm(buildSourceDir, { recursive: true });
   }
   catch {
   }

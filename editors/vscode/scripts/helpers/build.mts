@@ -26,9 +26,26 @@ export async function buildTmLanguage(scopeName: ScopeName, debugMode = false): 
   const tmLanguageText = JSON.stringify(tmLanguage, undefined, debugMode ? 1 : 0);
   const tmLanguagePath = path.resolve(buildDir, `${scopeName}.tmLanguage.json`);
 
+  let isExists = false;
+  try {
+    const stat = await fs.stat(tmLanguagePath);
+    isExists = stat.isFile();
+  }
+  catch {
+  }
+
+  if (isExists) {
+    const existsTmLanguageText = await fs.readFile(tmLanguagePath, 'utf-8');
+    if (existsTmLanguageText === tmLanguageText) {
+      console.log(`Skip: "${tmLanguagePath}".`);
+      return;
+    }
+  }
+
   await fs.mkdir(buildDir, { recursive: true });
   await fs.writeFile(tmLanguagePath, tmLanguageText, { encoding: 'utf-8' });
-  return Promise.resolve();
+
+  console.log(`Overwrite: "${tmLanguagePath}".`);
 }
 
 export async function buildLanguageConfigurationAll(): Promise<void> {
