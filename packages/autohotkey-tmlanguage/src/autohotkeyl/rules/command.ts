@@ -13,12 +13,13 @@ interface PlaceHolder {
   continuationOperators: string[];
 }
 export function createCommandStatementRule(scopeName: ScopeName, definitions: CommandDefinition[], placeholder: PlaceHolder): BeginWhileRule {
+  const sortedDefinitions = definitions.sort((a, b) => b.name.length - a.name.length);
   return {
     name: name(scopeName, Repository.CommandStatement),
     begin: capture(seq(
       placeholder.commandStatementBeginAnchor,
       // command name
-      ignoreCase(ordalt(...definitions.map((definition) => definition.name))),
+      ignoreCase(alt(...sortedDefinitions.map((definition) => definition.name))),
       negativeLookahead(char('(')),
       optseq(
         capture(anyChars0()),
@@ -29,7 +30,7 @@ export function createCommandStatementRule(scopeName: ScopeName, definitions: Co
     beginCaptures: {
       1: patternsRule(
         includeRule(Repository.Comment),
-        ...definitions.flatMap((definition) => {
+        ...sortedDefinitions.flatMap((definition) => {
           return definition.signatures.map((signature) => createCommandRule(scopeName, definition, signature, placeholder));
         }),
       ),

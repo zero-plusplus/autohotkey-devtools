@@ -1,6 +1,6 @@
-import { dedent } from '@zero-plusplus/utilities/src';
+import { dedent, hasFlag } from '@zero-plusplus/utilities/src';
 import { commandDefinitions } from '../../src/autohotkeyl/definition';
-import { Repository, RuleName, StyleName } from '../../src/constants';
+import { CommandFlag, Repository, RuleName, StyleName } from '../../src/constants';
 import type { ScopeName } from '../../src/types';
 import { createUtilities } from '../../src/utils';
 import { parse } from '../helpers/textmate-parser';
@@ -11,16 +11,22 @@ describe('command', () => {
   const { name } = createUtilities(scopeName);
 
   test('command name', async() => {
-    const commandNames = commandDefinitions.map((definition) => definition.name);
-    const actual = await parse(scopeName, commandNames.join('\n'));
-    // console.log(JSON.stringify(actual, undefined, 2));
+    const commandNames: string[] = [];
+    const expected = commandDefinitions.flatMap((definition, i) => {
+      commandNames.push(definition.name);
 
-    const expected = commandNames.flatMap((commandName, i) => {
+      // eslint-disable-next-line jest/no-conditional-in-test
+      const scopes = hasFlag(definition.flags, CommandFlag.Deprecated)
+        ? name(Repository.CommandStatement, RuleName.CommandName, StyleName.Strikethrough)
+        : name(Repository.CommandStatement, RuleName.CommandName);
+
       // eslint-disable-next-line jest/no-conditional-in-test
       return i === 0
-        ? [ { text: commandName, scopes: name(Repository.CommandStatement, RuleName.CommandName) } ]
-        : [ { text: '\n' }, { text: commandName, scopes: name(Repository.CommandStatement, RuleName.CommandName) } ];
+        ? [ { text: definition.name, scopes: scopes } ]
+        : [ { text: '\n' }, { text: definition.name, scopes } ];
     });
+    const actual = await parse(scopeName, commandNames.join('\n'));
+    // console.log(JSON.stringify(actual, undefined, 2));
 
     expect(actual).toStrictEqual(expected);
   });
