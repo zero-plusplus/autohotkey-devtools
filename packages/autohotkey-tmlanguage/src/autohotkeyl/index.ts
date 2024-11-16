@@ -1,4 +1,4 @@
-import { Repository } from '../constants';
+import { Repository, RuleName } from '../constants';
 import type { Repositories, ScopeName, TmLanguage } from '../types';
 import { includeRule, patternsRule } from '../utils';
 import * as constants_v1 from './constants';
@@ -20,6 +20,16 @@ export function createTmLanguage(): TmLanguage {
 }
 
 export function createRepositories(scopeName: ScopeName): Repositories {
+  type Placeholder = Parameters<typeof rule_v1.createCommandLikeStatementRule>[2];
+  const commonCommandBuilderOptions: Partial<Placeholder> = {
+    lineEndAnchor: patterns_v1.lineEndAnchor,
+    commandStatementBeginAnchor: patterns_v1.statementBeginAnchor,
+    commandArgumentEndLineAnchor: patterns_v1.commandArgumentEndLineAnchor,
+    continuationOperators: constants_v1.continuationOperators,
+    commandArgument: patterns_v1.commandArgument,
+    commandLastArgument: patterns_v1.commandLastArgument,
+  };
+
   return {
     // #region trivia
     [Repository.Comment]: patternsRule(
@@ -32,19 +42,22 @@ export function createRepositories(scopeName: ScopeName): Repositories {
 
     // #region statement
     [Repository.Statement]: patternsRule(
+      includeRule(Repository.DirectiveStatement),
       includeRule(Repository.CommandStatement),
       includeRule(Repository.LegacyStatement),
       includeRule(Repository.ExpressionStatement),
     ),
     [Repository.LegacyStatement]: patternsRule(includeRule(Repository.Legacy)),
-    [Repository.CommandStatement]: rule_v1.createCommandStatementRule(scopeName, definition_v1.commandDefinitions, {
-      lineEndAnchor: patterns_v1.lineEndAnchor,
-      commandStatementBeginAnchor: patterns_v1.statementBeginAnchor,
-      commandArgumentEndLineAnchor: patterns_v1.commandArgumentEndLineAnchor,
-      continuationOperators: constants_v1.continuationOperators,
-      commandArgument: patterns_v1.commandArgument,
-      commandLastArgument: patterns_v1.commandLastArgument,
-    }),
+    [Repository.CommandStatement]: rule_v1.createCommandLikeStatementRule(scopeName, definition_v1.commandDefinitions, {
+      ...commonCommandBuilderOptions,
+      statementScopeName: Repository.CommandStatement,
+      commandScopeName: RuleName.CommandName,
+    } as Placeholder),
+    [Repository.DirectiveStatement]: rule_v1.createCommandLikeStatementRule(scopeName, definition_v1.directiveDefinitions, {
+      ...commonCommandBuilderOptions,
+      statementScopeName: Repository.DirectiveStatement,
+      commandScopeName: RuleName.DirectiveName,
+    } as Placeholder),
     [Repository.ExpressionStatement]: patternsRule(includeRule(Repository.Expression)),
     // #endregion statement
 

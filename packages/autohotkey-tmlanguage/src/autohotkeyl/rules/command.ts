@@ -4,15 +4,17 @@ import { alt, anyChar, anyChars0, capture, char, escapeOnigurumaTexts, group, gr
 import type { BeginWhileRule, CommandDefinition, CommandParameter, CommandSignature, MatchRule, NameRule, Rule, ScopeName } from '../../types';
 import { includeRule, name, namedPatternsRule, nameRule, patternsRule } from '../../utils';
 
-interface PlaceHolder {
+export interface Placeholder {
   lineEndAnchor: string;
+  statementScopeName: string;
+  commandScopeName: RuleName;
   commandStatementBeginAnchor: string;
   commandArgumentEndLineAnchor: string;
   commandArgument: string;
   commandLastArgument: string;
   continuationOperators: string[];
 }
-export function createCommandStatementRule(scopeName: ScopeName, definitions: CommandDefinition[], placeholder: PlaceHolder): BeginWhileRule {
+export function createCommandLikeStatementRule(scopeName: ScopeName, definitions: CommandDefinition[], placeholder: Placeholder): BeginWhileRule {
   const sortedDefinitions = definitions.sort((a, b) => b.name.length - a.name.length);
   return {
     name: name(scopeName, Repository.CommandStatement),
@@ -74,7 +76,7 @@ export function createCommandStatementRule(scopeName: ScopeName, definitions: Co
     patterns: [ includeRule(Repository.Comment) ],
   };
 }
-export function createCommandRule(scopeName: ScopeName, definition: CommandDefinition, signature: CommandSignature, placeholder: PlaceHolder): Rule {
+export function createCommandRule(scopeName: ScopeName, definition: CommandDefinition, signature: CommandSignature, placeholder: Placeholder): Rule {
   const capturedCommandNamePattern = seq(
     placeholder.commandStatementBeginAnchor,
     capture(ignoreCase(definition.name)),
@@ -104,7 +106,7 @@ export function createCommandRule(scopeName: ScopeName, definition: CommandDefin
     )),
     end: seq(capturedCommandNamePattern, optional(capturedParametersPattern)),
     endCaptures: Object.fromEntries([
-      definitionToCommandName(scopeName, definition),
+      definitionToCommandName(scopeName, definition, placeholder),
       ...parametersToRules(scopeName, signature),
     ].map((rule, i) => [ i + 1, rule ])),
   };
@@ -117,13 +119,13 @@ export function createUnquotedString(scopeName: ScopeName, unquotedString: strin
 }
 
 // #region helpers
-function definitionToCommandName(scopeName: ScopeName, definition: CommandDefinition): NameRule {
+function definitionToCommandName(scopeName: ScopeName, definition: CommandDefinition, placeholder: Placeholder): NameRule {
   if (hasFlag(definition.flags, CommandFlag.Deprecated)) {
-    return nameRule(scopeName, RuleName.CommandName, StyleName.Strikethrough);
+    return nameRule(scopeName, placeholder.commandScopeName, StyleName.Strikethrough);
   }
-  return nameRule(scopeName, RuleName.CommandName);
+  return nameRule(scopeName, placeholder.commandScopeName);
 }
-function parameterToOniguruma(parameter: CommandParameter, isLastParameter: boolean, placeholder: PlaceHolder): string {
+function parameterToOniguruma(parameter: CommandParameter, isLastParameter: boolean, placeholder: Placeholder): string {
   if (isLastParameter) {
     if (parameter.type !== HighlightType.UnquotedStringShouldEscapeComma) {
       return placeholder.commandLastArgument;

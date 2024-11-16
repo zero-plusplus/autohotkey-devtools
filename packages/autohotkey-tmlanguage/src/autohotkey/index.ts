@@ -55,8 +55,8 @@ export function createTmLanguage(): TmLanguage {
           endAnchor(),
         ),
         beginCaptures: {
-          1: nameRule(Repository.DirecitiveStatement, RuleName.DirectiveName, StyleName.Emphasis),
-          2: nameRule(Repository.DirecitiveStatement, RuleName.UnquotedString, StyleName.Emphasis),
+          1: nameRule(Repository.DirectiveStatement, RuleName.DirectiveName, StyleName.Emphasis),
+          2: nameRule(Repository.DirectiveStatement, RuleName.UnquotedString, StyleName.Emphasis),
         },
         while: seq(
           startAnchor(),
@@ -76,8 +76,8 @@ export function createTmLanguage(): TmLanguage {
           endAnchor(),
         ),
         beginCaptures: {
-          1: nameRule(Repository.DirecitiveStatement, RuleName.DirectiveName, StyleName.Emphasis),
-          2: nameRule(Repository.DirecitiveStatement, RuleName.UnquotedString, StyleName.Emphasis),
+          1: nameRule(Repository.DirectiveStatement, RuleName.DirectiveName, StyleName.Emphasis),
+          2: nameRule(Repository.DirectiveStatement, RuleName.UnquotedString, StyleName.Emphasis),
         },
         while: seq(
           startAnchor(),
@@ -114,8 +114,8 @@ export function createTmLanguage(): TmLanguage {
             endAnchor(),
           ),
           beginCaptures: {
-            1: nameRule(Repository.DirecitiveStatement, RuleName.DirectiveName, StyleName.Emphasis),
-            2: nameRule(Repository.DirecitiveStatement, RuleName.UnquotedString, StyleName.Emphasis),
+            1: nameRule(Repository.DirectiveStatement, RuleName.DirectiveName, StyleName.Emphasis),
+            2: nameRule(Repository.DirectiveStatement, RuleName.UnquotedString, StyleName.Emphasis),
           },
           while: seq(
             startAnchor(),

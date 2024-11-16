@@ -66,7 +66,7 @@ export const enum Repository {
   // #region statements
   Statement = 'repository.statement',
   ExpressionStatement = 'repository.statement.expression',
-  DirecitiveStatement = 'repository.statement.directive',
+  DirectiveStatement = 'repository.statement.directive',
   CommandStatement = 'repository.statement.command',
   LegacyStatement = 'repository.statement.legacy.expression',
   // #endregion statements

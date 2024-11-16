@@ -5,6 +5,7 @@ export type Repositories = { [key in Partial<Repository>[number]]: Rule | undefi
 export type Captures = Record<string | number, Rule | undefined>;
 
 export type ScopeName = typeof scopeNames[number];
+export type ElementName = Repository | RuleName | StyleName;
 export interface TmLanguage {
   scopeName: string;
   injectionSelector?: string;
@@ -63,9 +64,10 @@ export interface EscapeSequencesInfo {
   singleQuote: string[];
   legacyText: string[];
 }
+
 export interface Utilities {
-  name: (...ruleNames: Array<Repository | RuleName | StyleName>) => string;
-  nameRule: (...ruleNames: Array<Repository | RuleName | StyleName>) => NameRule;
+  name: (...ruleNames: ElementName[]) => string;
+  nameRule: (...ruleNames: ElementName[]) => NameRule;
   includeRule: (repositoryName: Repository) => IncludeRule;
   includeScope: (scopeName: ScopeName) => IncludeRule;
 }
