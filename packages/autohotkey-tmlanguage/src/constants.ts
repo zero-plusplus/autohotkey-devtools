@@ -67,6 +67,7 @@ export const enum Repository {
   Statement = 'repository.statement',
   ExpressionStatement = 'repository.statement.expression',
   DirectiveStatement = 'repository.statement.directive',
+  JumpStatement = 'repository.statement.jump',
   CommandStatement = 'repository.statement.command',
   LegacyStatement = 'repository.statement.legacy.expression',
   // #endregion statements
@@ -144,6 +145,7 @@ export const enum RuleName {
 
   // #region statement
   DirectiveName = 'meta.preprocessor.directive',
+  JumpLabelName = 'entity.name.label.jump',
   // #endregion statement
 
   // #region expressions
@@ -194,6 +196,7 @@ export const enum RuleName {
   LegacyAssignment = 'expression.legacy.assignment',
   LegacyTextEscapeSequence = 'constant.character.escape.legacy.text',
   CommandName = 'support.function.command',
+  JumpCommandName = 'keyword.control.jump',
   SubCommandName = 'support.function.subcommand',
   // #endregion legacy
 }
@@ -224,6 +227,7 @@ export const enum HighlightType {
   Enum,
   UnquotedString,
   UnquotedStringShouldEscapeComma,
+  LabelName,
   SubCommand,
   GuiSubCommand,
   Input,

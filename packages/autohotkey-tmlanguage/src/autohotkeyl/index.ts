@@ -44,6 +44,7 @@ export function createRepositories(scopeName: ScopeName): Repositories {
     [Repository.Statement]: patternsRule(
       includeRule(Repository.DirectiveStatement),
       includeRule(Repository.CommandStatement),
+      includeRule(Repository.JumpStatement),
       includeRule(Repository.LegacyStatement),
       includeRule(Repository.ExpressionStatement),
     ),
@@ -57,6 +58,11 @@ export function createRepositories(scopeName: ScopeName): Repositories {
       ...commonCommandBuilderOptions,
       statementScopeName: Repository.DirectiveStatement,
       commandScopeName: RuleName.DirectiveName,
+    } as Placeholder),
+    [Repository.JumpStatement]: rule_v1.createCommandLikeStatementRule(scopeName, definition_v1.jumpCommandDefenitions, {
+      ...commonCommandBuilderOptions,
+      statementScopeName: Repository.JumpStatement,
+      commandScopeName: RuleName.JumpCommandName,
     } as Placeholder),
     [Repository.ExpressionStatement]: patternsRule(includeRule(Repository.Expression)),
     // #endregion statement

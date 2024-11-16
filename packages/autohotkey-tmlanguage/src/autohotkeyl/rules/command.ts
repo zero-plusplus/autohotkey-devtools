@@ -148,6 +148,7 @@ function parameterToRule(scopeName: ScopeName, parameter: CommandParameter, isLa
       return namedPatternsRule(argumentName, [ defaultArgumentRule ]);
     }
     case HighlightType.UnquotedStringShouldEscapeComma: return namedPatternsRule(argumentName, [ includeRule(Repository.CommandArgument) ]);
+    case HighlightType.LabelName: return nameRule(scopeName, Repository.CommandArgument, RuleName.JumpLabelName);
     case HighlightType.Enum: return namedPatternsRule(argumentName, [ keywordsToRule(keywordName, parameter.values!, isLastParameter), defaultArgumentRule ]);
     case HighlightType.Input:
     case HighlightType.Output:

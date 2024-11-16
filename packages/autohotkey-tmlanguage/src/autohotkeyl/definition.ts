@@ -743,6 +743,28 @@ export const commandDefinitions: CommandDefinition[] = [
 ] as const;
 // #endregion commands
 
+// #region jump
+export const jumpCommandDefenitions: CommandDefinition[] = [
+  // https://www.autohotkey.com/docs/v1/lib/Break.htm
+  command('Break', signature([ labelName() ])),
+
+  // https://www.autohotkey.com/docs/v1/lib/Exit.htm
+  command('Exit', signature([ expression() ])),
+
+  // https://www.autohotkey.com/docs/v1/lib/ExitApp.htm
+  command('ExitApp', signature([ expression() ])),
+
+  // https://www.autohotkey.com/docs/v1/lib/Gosub.htm
+  command('Gosub', signature([ labelName() ])),
+
+  // https://www.autohotkey.com/docs/v1/lib/Goto.htm
+  command('Goto', signature([ labelName() ])),
+
+  // https://www.autohotkey.com/docs/v1/lib/Return.htm
+  command('Return', signature([ expression() ])),
+];
+// #endregion jump
+
 // #region helpers
 export function command(name: string, signatureOrSignatures: CommandSignature | CommandSignature[], flags: CommandFlag = CommandFlag.None): CommandDefinition {
   const signatures = Array.isArray(signatureOrSignatures) ? signatureOrSignatures : [ signatureOrSignatures ];
@@ -767,6 +789,9 @@ export function unquoted(values: string[] = [], flags: CommandParameterFlag = Co
 }
 export function unquotedShouldEscapeComma(values: string[] = [], flags: CommandParameterFlag = CommandParameterFlag.None): CommandParameter {
   return { type: HighlightType.UnquotedStringShouldEscapeComma, flags, values };
+}
+export function labelName(values: string[] = [], flags: CommandParameterFlag = CommandParameterFlag.None): CommandParameter {
+  return { type: HighlightType.LabelName, flags, values };
 }
 export function expression(flags: CommandParameterFlag = CommandParameterFlag.None): CommandParameter {
   return { type: HighlightType.Expression, flags };
