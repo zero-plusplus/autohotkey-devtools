@@ -5,6 +5,7 @@ import * as oniguruma from 'vscode-oniguruma';
 import * as vsctm from 'vscode-textmate';
 import * as grammars from '../../src';
 import type { ScopeName, TmLanguage } from '../../src/types';
+import type { ParsedResult } from '../types';
 
 const rootDirectory = path.resolve(__dirname, '../../../../');
 const nodeModulesDirectory = path.resolve(rootDirectory, 'node_modules');
@@ -44,15 +45,14 @@ const createTextMateRegistry = singleton(async(): Promise<vsctm.Registry> => {
   });
 });
 
-export type ParsedResults = Array<{ text: string; scopes?: string }>;
-export async function parse(scopeName: ScopeName, text: string): Promise<ParsedResults> {
+export async function parse(scopeName: ScopeName, text: string): Promise<ParsedResult[]> {
   const registry = await createTextMateRegistry();
   const grammar = await registry.loadGrammar(`source.${scopeName}`);
   if (!grammar) {
     throw Error(`Scope "source.${scopeName}" is not defined.`);
   }
 
-  const parsed: ParsedResults = [];
+  const parsed: ParsedResult[] = [];
 
   const linebreakRegExp = /(\r\n|\n)/;
   const lines = text.split(linebreakRegExp).filter((line) => line !== '');
@@ -73,19 +73,19 @@ export async function parse(scopeName: ScopeName, text: string): Promise<ParsedR
   for (const line of lines) {
     const match = line.match(/\r\n|\n/);
     if (match) {
-      parsed.push({ text: match[0] });
       continue;
     }
 
     const tokenized = grammar.tokenizeLine(line, ruleStack);
     parsed.push(...tokenized.tokens
-      .map((token) => {
+      .flatMap((token) => {
         const text = line.slice(token.startIndex, token.endIndex);
         const scopes = token.scopes.filter((scope) => scope !== `source.${scopeName}`).join(' '); // remove scope name. e.g. `source.autohotkey`
 
-        return (/^\s*$/).test(text)
-          ? { text }
-          : { text, scopes };
+        if ((/^\s*$/).test(text)) {
+          return [];
+        }
+        return [ { text, scopes } ];
       }));
 
     ruleStack = tokenized.ruleStack;

@@ -122,9 +122,7 @@ describe.each([
           { text: '"', scopes: name(RuleName.DoubleString, RuleName.StringBegin) },
           { text: 'a', scopes: name(RuleName.DoubleString) },
           { text: 'b', scopes: name(RuleName.DoubleString, StyleName.Invalid) },
-          { text: '\r\n' },
           { text: 'c', scopes: name(RuleName.DoubleString, StyleName.Invalid) },
-          { text: '\n' },
           { text: '"', scopes: name(RuleName.DoubleString, RuleName.StringEnd) },
         ]);
       });

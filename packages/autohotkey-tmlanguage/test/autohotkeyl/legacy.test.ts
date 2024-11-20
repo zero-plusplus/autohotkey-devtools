@@ -13,18 +13,14 @@ describe('legacy', () => {
       [
         'var = text', [
           { text: 'var', scopes: name(Repository.LegacyAssignment, RuleName.Variable) },
-          { text: ' ' },
           { text: '=', scopes: name(Repository.LegacyAssignment, RuleName.Operator) },
-          { text: ' ' },
           { text: 'text', scopes: name(Repository.LegacyAssignment, RuleName.UnquotedString) },
         ],
       ],
       [
         `var = ${escapeSequencesInfo.legacyText.join('')}`, [
           { text: 'var', scopes: name(Repository.LegacyAssignment, RuleName.Variable) },
-          { text: ' ' },
           { text: '=', scopes: name(Repository.LegacyAssignment, RuleName.Operator) },
-          { text: ' ' },
           ...escapeSequencesInfo.legacyText.map((escapeSequence) => {
             return { text: escapeSequence, scopes: name(Repository.LegacyAssignment, RuleName.EscapeSequence) };
           }),
@@ -33,21 +29,16 @@ describe('legacy', () => {
       [
         'var = a `; ; comment', [
           { text: 'var', scopes: name(Repository.LegacyAssignment, RuleName.Variable) },
-          { text: ' ' },
           { text: '=', scopes: name(Repository.LegacyAssignment, RuleName.Operator) },
-          { text: ' ' },
           { text: 'a ', scopes: name(Repository.LegacyAssignment, RuleName.UnquotedString) },
           { text: '`;', scopes: name(Repository.LegacyAssignment, RuleName.EscapeSequence) },
-          { text: ' ' },
           { text: '; comment', scopes: name(RuleName.InLineComment) },
         ],
       ],
       [
         'var = %var2%', [
           { text: 'var', scopes: name(Repository.LegacyAssignment, RuleName.Variable) },
-          { text: ' ' },
           { text: '=', scopes: name(Repository.LegacyAssignment, RuleName.Operator) },
-          { text: ' ' },
           { text: '%', scopes: name(Repository.LegacyAssignment, Repository.Dereference, RuleName.PercentBegin) },
           { text: 'var2', scopes: name(Repository.LegacyAssignment, Repository.Dereference, RuleName.Variable) },
           { text: '%', scopes: name(Repository.LegacyAssignment, Repository.Dereference, RuleName.PercentEnd) },
@@ -56,22 +47,16 @@ describe('legacy', () => {
       [
         'var = % abc', [
           { text: 'var', scopes: name(Repository.LegacyAssignment, RuleName.Variable) },
-          { text: ' ' },
           { text: '=', scopes: name(Repository.LegacyAssignment, RuleName.Operator) },
-          { text: ' ' },
           { text: '%', scopes: name(Repository.LegacyAssignment, Repository.PercentExpression, RuleName.PercentBegin) },
-          { text: ' ' },
           { text: 'abc', scopes: name(Repository.LegacyAssignment, Repository.PercentExpression, RuleName.Variable) },
         ],
       ],
       [
         'var = % (foo,bar)', [
           { text: 'var', scopes: name(Repository.LegacyAssignment, RuleName.Variable) },
-          { text: ' ' },
           { text: '=', scopes: name(Repository.LegacyAssignment, RuleName.Operator) },
-          { text: ' ' },
           { text: '%', scopes: name(Repository.LegacyAssignment, Repository.PercentExpression, RuleName.PercentBegin) },
-          { text: ' ' },
           { text: '(', scopes: name(Repository.LegacyAssignment, Repository.PercentExpression, Repository.ParenthesizedExpression, RuleName.OpenParen) },
           { text: 'foo', scopes: name(Repository.LegacyAssignment, Repository.PercentExpression, Repository.ParenthesizedExpression, RuleName.Variable) },
           { text: ',', scopes: name(Repository.LegacyAssignment, Repository.PercentExpression, Repository.ParenthesizedExpression, RuleName.Separator) },

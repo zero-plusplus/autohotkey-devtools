@@ -122,9 +122,7 @@ describe('expression', () => {
             { text: `'`, scopes: name(RuleName.SingleString, RuleName.StringBegin) },
             { text: 'a', scopes: name(RuleName.SingleString) },
             { text: 'b', scopes: name(RuleName.SingleString, StyleName.Invalid) },
-            { text: '\r\n' },
             { text: 'c', scopes: name(RuleName.SingleString, StyleName.Invalid) },
-            { text: '\n' },
             { text: `'`, scopes: name(RuleName.SingleString, RuleName.StringEnd) },
           ]);
         },
