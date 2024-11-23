@@ -1,6 +1,6 @@
 import { hasFlag } from '@zero-plusplus/utilities/src';
 import { CommandFlag, HighlightType, Repository, RuleName, StyleName } from '../../constants';
-import { alt, anyChar, anyChars0, capture, char, escapeOnigurumaTexts, group, groupMany0, ignoreCase, inlineSpaces0, inlineSpaces1, lookahead, lookbehind, negativeLookahead, optional, optseq, ordalt, seq, startAnchor, wordBound } from '../../oniguruma';
+import { alt, anyChar, anyChars0, capture, char, group, groupMany0, ignoreCase, inlineSpaces0, inlineSpaces1, lookahead, lookbehind, negativeLookahead, optional, optseq, ordalt, seq, startAnchor, wordBound } from '../../oniguruma';
 import type { BeginWhileRule, CommandDefinition, CommandParameter, CommandSignature, MatchRule, NameRule, Rule, ScopeName } from '../../types';
 import { includeRule, name, namedPatternsRule, nameRule, patternsRule } from '../../utils';
 
@@ -16,6 +16,7 @@ export interface Placeholder {
 }
 export function createCommandLikeStatementRule(scopeName: ScopeName, definitions: CommandDefinition[], placeholder: Placeholder): BeginWhileRule {
   const sortedDefinitions = definitions.sort((a, b) => b.name.length - a.name.length);
+
   return {
     name: name(scopeName, Repository.CommandStatement),
     begin: capture(seq(
@@ -39,14 +40,6 @@ export function createCommandLikeStatementRule(scopeName: ScopeName, definitions
     },
     while: seq(
       startAnchor(),
-      // continuation expression
-      optional(capture(seq(
-        inlineSpaces0(),
-        group(ordalt(...escapeOnigurumaTexts(placeholder.continuationOperators))),
-        inlineSpaces0(),
-        optional(placeholder.commandArgument),
-      ))),
-      // continuation unquoted arguments
       groupMany0(seq(
         inlineSpaces0(),
         capture(char(',')),
@@ -54,24 +47,10 @@ export function createCommandLikeStatementRule(scopeName: ScopeName, definitions
         optional(capture(placeholder.commandArgument)),
       )),
       placeholder.commandArgumentEndLineAnchor,
-      placeholder.lineEndAnchor,
     ),
     whileCaptures: {
-      1: {
-        name: name(scopeName, Repository.CommandArgument),
-        patterns: [ includeRule(Repository.Expression) ],
-      },
-      2: {
-        name: name(scopeName, Repository.CommandArgument),
-        patterns: [ includeRule(Repository.Comma) ],
-      },
-      3: {
-        name: name(scopeName, Repository.CommandArgument),
-        patterns: [
-          includeRule(Repository.Comma),
-          includeRule(Repository.CommandArgument),
-        ],
-      },
+      1: patternsRule(includeRule(Repository.Comma)),
+      2: namedPatternsRule(name(scopeName, Repository.CommandArgument), [ includeRule(Repository.CommandArgument) ]),
     },
     patterns: [ includeRule(Repository.Comment) ],
   };

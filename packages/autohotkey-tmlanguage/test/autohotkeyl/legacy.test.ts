@@ -59,7 +59,7 @@ describe('legacy', () => {
           { text: '%', scopes: name(Repository.LegacyAssignment, Repository.PercentExpression, RuleName.PercentBegin) },
           { text: '(', scopes: name(Repository.LegacyAssignment, Repository.PercentExpression, Repository.ParenthesizedExpression, RuleName.OpenParen) },
           { text: 'foo', scopes: name(Repository.LegacyAssignment, Repository.PercentExpression, Repository.ParenthesizedExpression, RuleName.Variable) },
-          { text: ',', scopes: name(Repository.LegacyAssignment, Repository.PercentExpression, Repository.ParenthesizedExpression, RuleName.Separator) },
+          { text: ',', scopes: name(Repository.LegacyAssignment, Repository.PercentExpression, Repository.ParenthesizedExpression, RuleName.Comma) },
           { text: 'bar', scopes: name(Repository.LegacyAssignment, Repository.PercentExpression, Repository.ParenthesizedExpression, RuleName.Variable) },
           { text: ')', scopes: name(Repository.LegacyAssignment, Repository.PercentExpression, Repository.ParenthesizedExpression, RuleName.CloseParen) },
         ],
