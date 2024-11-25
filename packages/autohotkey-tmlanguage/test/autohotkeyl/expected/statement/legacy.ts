@@ -45,20 +45,20 @@ export function createLegacyStatementExpectedData(scopeName: ScopeName): Expecte
       'var = % abc', [
         { text: 'var', scopes: name(scopeName, Repository.LegacyAssignment, RuleName.Variable) },
         { text: '=', scopes: name(scopeName, Repository.LegacyAssignment, RuleName.Operator) },
-        { text: '%', scopes: name(scopeName, Repository.LegacyAssignment, Repository.PercentExpression, RuleName.PercentBegin) },
-        { text: 'abc', scopes: name(scopeName, Repository.LegacyAssignment, Repository.PercentExpression, RuleName.Variable) },
+        { text: '% ', scopes: name(scopeName, Repository.LegacyAssignment, RuleName.PercentExpressionBegin) },
+        { text: 'abc', scopes: name(scopeName, Repository.LegacyAssignment, RuleName.Variable) },
       ],
     ],
     [
       'var = % (foo,bar)', [
         { text: 'var', scopes: name(scopeName, Repository.LegacyAssignment, RuleName.Variable) },
         { text: '=', scopes: name(scopeName, Repository.LegacyAssignment, RuleName.Operator) },
-        { text: '%', scopes: name(scopeName, Repository.LegacyAssignment, Repository.PercentExpression, RuleName.PercentBegin) },
-        { text: '(', scopes: name(scopeName, Repository.LegacyAssignment, Repository.PercentExpression, Repository.ParenthesizedExpression, RuleName.OpenParen) },
-        { text: 'foo', scopes: name(scopeName, Repository.LegacyAssignment, Repository.PercentExpression, Repository.ParenthesizedExpression, RuleName.Variable) },
-        { text: ',', scopes: name(scopeName, Repository.LegacyAssignment, Repository.PercentExpression, Repository.ParenthesizedExpression, RuleName.Comma) },
-        { text: 'bar', scopes: name(scopeName, Repository.LegacyAssignment, Repository.PercentExpression, Repository.ParenthesizedExpression, RuleName.Variable) },
-        { text: ')', scopes: name(scopeName, Repository.LegacyAssignment, Repository.PercentExpression, Repository.ParenthesizedExpression, RuleName.CloseParen) },
+        { text: '% ', scopes: name(scopeName, Repository.LegacyAssignment, RuleName.PercentExpressionBegin) },
+        { text: '(', scopes: name(scopeName, Repository.LegacyAssignment, RuleName.OpenParen) },
+        { text: 'foo', scopes: name(scopeName, Repository.LegacyAssignment, RuleName.Variable) },
+        { text: ',', scopes: name(scopeName, Repository.LegacyAssignment, RuleName.Comma) },
+        { text: 'bar', scopes: name(scopeName, Repository.LegacyAssignment, RuleName.Variable) },
+        { text: ')', scopes: name(scopeName, Repository.LegacyAssignment, RuleName.CloseParen) },
       ],
     ],
   ];

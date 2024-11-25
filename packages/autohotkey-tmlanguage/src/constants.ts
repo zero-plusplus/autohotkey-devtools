@@ -208,6 +208,7 @@ export const enum RuleName {
 
   // #region token
   ControlFlowKeyword = 'keyword.control.flow',
+  PercentExpressionBegin = 'meta.percent.expresion.begin',
   PercentBegin = 'meta.percent.begin',
   PercentEnd = 'meta.percent.end',
   OpenParen = 'meta.brace.round.begin',

@@ -2,7 +2,7 @@ import { hasFlag } from '@zero-plusplus/utilities/src';
 import { CommandFlag, HighlightType, Repository, RuleName, StyleName } from '../../constants';
 import { alt, anyChar, anyChars0, capture, char, group, groupMany0, ignoreCase, inlineSpaces0, inlineSpaces1, lookahead, lookbehind, negativeLookahead, optional, optseq, ordalt, seq, startAnchor, wordBound } from '../../oniguruma';
 import type { BeginWhileRule, CommandDefinition, CommandParameter, CommandSignature, MatchRule, NameRule, Rule, ScopeName } from '../../types';
-import { includeRule, name, namedPatternsRule, nameRule, patternsRule } from '../../utils';
+import { includeRule, name, nameRule, patternsRule } from '../../utils';
 
 export interface Placeholder {
   lineEndAnchor: string;
@@ -51,7 +51,7 @@ export function createCommandLikeStatementRule(scopeName: ScopeName, definitions
     ),
     whileCaptures: {
       1: patternsRule(includeRule(Repository.Comma)),
-      2: namedPatternsRule(name(scopeName, Repository.CommandArgument), [ includeRule(Repository.CommandArgument) ]),
+      2: patternsRule(includeRule(Repository.CommandArgument)),
     },
     patterns: [ includeRule(Repository.Comment) ],
   };
@@ -118,7 +118,6 @@ function parameterToOniguruma(parameter: CommandParameter, isLastParameter: bool
 }
 function parameterToRule(scopeName: ScopeName, parameter: CommandParameter, isLastParameter: boolean): Rule {
   const defaultArgumentRule = isLastParameter ? includeRule(Repository.CommandLastArgument) : includeRule(Repository.CommandArgument);
-  const argumentName = name(scopeName, Repository.CommandArgument);
   const keywordName = name(scopeName, RuleName.UnquotedString, StyleName.Strong);
 
   switch (parameter.type) {
@@ -126,28 +125,28 @@ function parameterToRule(scopeName: ScopeName, parameter: CommandParameter, isLa
     case HighlightType.Blank: return nameRule(scopeName, StyleName.Invalid);
     case HighlightType.UnquotedString: {
       if (parameter.values && 0 < parameter.values.length) {
-        return namedPatternsRule(argumentName, [ keywordsToRule(keywordName, parameter.values, isLastParameter), defaultArgumentRule ]);
+        return patternsRule(keywordsToRule(keywordName, parameter.values, isLastParameter), defaultArgumentRule);
       }
-      return namedPatternsRule(argumentName, [ defaultArgumentRule ]);
+      return patternsRule(defaultArgumentRule);
     }
-    case HighlightType.UnquotedStringShouldEscapeComma: return namedPatternsRule(argumentName, [ includeRule(Repository.CommandArgument) ]);
+    case HighlightType.UnquotedStringShouldEscapeComma: return patternsRule(includeRule(Repository.CommandArgument));
     case HighlightType.LabelName: return nameRule(scopeName, Repository.CommandArgument, RuleName.LabelName);
-    case HighlightType.Enum: return namedPatternsRule(argumentName, [ keywordsToRule(keywordName, parameter.values!, isLastParameter), defaultArgumentRule ]);
+    case HighlightType.Enum: return patternsRule(keywordsToRule(keywordName, parameter.values!, isLastParameter), defaultArgumentRule);
     case HighlightType.Input:
     case HighlightType.Output:
-    case HighlightType.Expression: return namedPatternsRule(argumentName, [ includeRule(Repository.Expression) ]);
+    case HighlightType.Expression: return patternsRule(includeRule(Repository.Expression));
     case HighlightType.CombiOptions:
     case HighlightType.GuiOptions:
     case HighlightType.GuiSubCommand:
     case HighlightType.Options:
     case HighlightType.Style:
-      return namedPatternsRule(argumentName, [ defaultArgumentRule ]);
+      return patternsRule(defaultArgumentRule);
     case HighlightType.SubCommand:
       const subcommandName = name(scopeName, RuleName.SubCommandName);
       if (!parameter.values || parameter.values.length === 0) {
         throw Error(`The definition does not include a subcommand name.`);
       }
-      return namedPatternsRule(argumentName, [ keywordsToRule(subcommandName, parameter.values, isLastParameter), defaultArgumentRule ]);
+      return patternsRule(keywordsToRule(subcommandName, parameter.values, isLastParameter), defaultArgumentRule);
     default: break;
   }
   throw Error(`Specified an unknown highligh type.\nSpecified: "${String(parameter.type)}"`);
@@ -156,7 +155,7 @@ function parametersToRules(scopeName: ScopeName, signature: CommandSignature): R
   return signature.parameters.flatMap((parameter, i, parameters) => {
     const isLastParameter = parameters.length - 1 === i;
     return [
-      namedPatternsRule(name(scopeName, Repository.CommandArgument), [ includeRule(Repository.Comma) ]),
+      patternsRule(includeRule(Repository.Comma)),
       parameterToRule(scopeName, parameter, isLastParameter),
     ];
   });

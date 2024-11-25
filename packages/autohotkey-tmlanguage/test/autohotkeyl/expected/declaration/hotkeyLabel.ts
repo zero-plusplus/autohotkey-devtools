@@ -11,8 +11,8 @@ export function createHotkeyLabelStatementExpectedData(scopeName: ScopeName): Ex
         { text: '^abc', scopes: name(scopeName, Repository.HotkeyLabelStatement, RuleName.HotkeyLabelName) },
         { text: '::', scopes: name(scopeName, Repository.HotkeyLabelStatement, RuleName.ColonColon) },
         { text: 'Send', scopes: name(scopeName, Repository.CommandStatement, RuleName.CommandName) },
-        { text: ',', scopes: name(scopeName, Repository.CommandStatement, Repository.CommandArgument, RuleName.Comma) },
-        { text: 'A', scopes: name(scopeName, Repository.CommandStatement, Repository.CommandArgument, RuleName.UnquotedString) },
+        { text: ',', scopes: name(scopeName, Repository.CommandStatement, RuleName.Comma) },
+        { text: 'A', scopes: name(scopeName, Repository.CommandStatement, RuleName.UnquotedString) },
       ],
     ],
   ];

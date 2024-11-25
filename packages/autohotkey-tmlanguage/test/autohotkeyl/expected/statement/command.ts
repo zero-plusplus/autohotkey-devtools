@@ -21,15 +21,15 @@ export function createCommandStatementExpectedData(scopeName: ScopeName): Expect
     [
       'AutoTrim, On', [
         { text: 'AutoTrim', scopes: name(scopeName, Repository.CommandStatement, RuleName.CommandName) },
-        { text: ',', scopes: name(scopeName, Repository.CommandStatement, Repository.CommandArgument, RuleName.Comma) },
-        { text: 'On', scopes: name(scopeName, Repository.CommandStatement, Repository.CommandArgument, RuleName.UnquotedString, StyleName.Strong) },
+        { text: ',', scopes: name(scopeName, Repository.CommandStatement, RuleName.Comma) },
+        { text: 'On', scopes: name(scopeName, Repository.CommandStatement, RuleName.UnquotedString, StyleName.Strong) },
       ],
     ],
     // space separator
     [
       'AutoTrim On', [
         { text: 'AutoTrim', scopes: name(scopeName, Repository.CommandStatement, RuleName.CommandName) },
-        { text: 'On', scopes: name(scopeName, Repository.CommandStatement, Repository.CommandArgument, RuleName.UnquotedString, StyleName.Strong) },
+        { text: 'On', scopes: name(scopeName, Repository.CommandStatement, RuleName.UnquotedString, StyleName.Strong) },
       ],
     ],
     // #endregion first separator
@@ -39,27 +39,27 @@ export function createCommandStatementExpectedData(scopeName: ScopeName): Expect
     [
       'AutoTrim, abc', [
         { text: 'AutoTrim', scopes: name(scopeName, Repository.CommandStatement, RuleName.CommandName) },
-        { text: ',', scopes: name(scopeName, Repository.CommandStatement, Repository.CommandArgument, RuleName.Comma) },
-        { text: 'abc', scopes: name(scopeName, Repository.CommandStatement, Repository.CommandArgument, RuleName.UnquotedString) },
+        { text: ',', scopes: name(scopeName, Repository.CommandStatement, RuleName.Comma) },
+        { text: 'abc', scopes: name(scopeName, Repository.CommandStatement, RuleName.UnquotedString) },
       ],
     ],
     // dereference argument
     [
       'AutoTrim, %true%', [
         { text: 'AutoTrim', scopes: name(scopeName, Repository.CommandStatement, RuleName.CommandName) },
-        { text: ',', scopes: name(scopeName, Repository.CommandStatement, Repository.CommandArgument, RuleName.Comma) },
-        { text: '%', scopes: name(scopeName, Repository.CommandStatement, Repository.CommandArgument, RuleName.PercentBegin) },
-        { text: 'true', scopes: name(scopeName, Repository.CommandStatement, Repository.CommandArgument, RuleName.BuiltInVariable) },
-        { text: '%', scopes: name(scopeName, Repository.CommandStatement, Repository.CommandArgument, RuleName.PercentEnd) },
+        { text: ',', scopes: name(scopeName, Repository.CommandStatement, RuleName.Comma) },
+        { text: '%', scopes: name(scopeName, Repository.CommandStatement, RuleName.PercentBegin) },
+        { text: 'true', scopes: name(scopeName, Repository.CommandStatement, RuleName.BuiltInVariable) },
+        { text: '%', scopes: name(scopeName, Repository.CommandStatement, RuleName.PercentEnd) },
       ],
     ],
     // percent expression argument
     [
       'AutoTrim, % true', [
         { text: 'AutoTrim', scopes: name(scopeName, Repository.CommandStatement, RuleName.CommandName) },
-        { text: ',', scopes: name(scopeName, Repository.CommandStatement, Repository.CommandArgument, RuleName.Comma) },
-        { text: '%', scopes: name(scopeName, Repository.CommandStatement, Repository.CommandArgument, Repository.PercentExpression, RuleName.PercentBegin) },
-        { text: 'true', scopes: name(scopeName, Repository.CommandStatement, Repository.CommandArgument, Repository.PercentExpression, RuleName.BuiltInVariable) },
+        { text: ',', scopes: name(scopeName, Repository.CommandStatement, RuleName.Comma) },
+        { text: '% ', scopes: name(scopeName, Repository.CommandStatement, RuleName.PercentExpressionBegin) },
+        { text: 'true', scopes: name(scopeName, Repository.CommandStatement, RuleName.BuiltInVariable) },
       ],
     ],
 
@@ -68,8 +68,8 @@ export function createCommandStatementExpectedData(scopeName: ScopeName): Expect
     [
       'AutoTrim, On', [
         { text: 'AutoTrim', scopes: name(scopeName, Repository.CommandStatement, RuleName.CommandName) },
-        { text: ',', scopes: name(scopeName, Repository.CommandStatement, Repository.CommandArgument, RuleName.Comma) },
-        { text: 'On', scopes: name(scopeName, Repository.CommandStatement, Repository.CommandArgument, RuleName.UnquotedString, StyleName.Strong) },
+        { text: ',', scopes: name(scopeName, Repository.CommandStatement, RuleName.Comma) },
+        { text: 'On', scopes: name(scopeName, Repository.CommandStatement, RuleName.UnquotedString, StyleName.Strong) },
       ],
     ],
     // #endregion extra highlights
@@ -82,7 +82,7 @@ export function createCommandStatementExpectedData(scopeName: ScopeName): Expect
       `, [
         { text: 'AutoTrim', scopes: name(scopeName, Repository.CommandStatement, RuleName.CommandName) },
         { text: ',', scopes: name(scopeName, Repository.CommandStatement, RuleName.Comma) },
-        { text: 'continuation argument', scopes: name(scopeName, Repository.CommandStatement, Repository.CommandArgument, RuleName.UnquotedString) },
+        { text: 'continuation argument', scopes: name(scopeName, Repository.CommandStatement, RuleName.UnquotedString) },
       ],
     ],
     // #endregion continuation arguments

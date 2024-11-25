@@ -1,4 +1,4 @@
-import { Repository, RuleName, StyleName } from '../../src/constants';
+import { RuleName, StyleName } from '../../src/constants';
 import type { ScopeName } from '../../src/types';
 import { createUtilities, getBuiltInVariableNames, getEscapeSequencesInfo } from '../../src/utils';
 import { parse } from '../helpers/textmate-parser';
@@ -16,9 +16,9 @@ describe.each([
     test.each([
       [
         '(var)', [
-          { text: '(', scopes: name(Repository.ParenthesizedExpression, RuleName.OpenParen) },
-          { text: 'var', scopes: name(Repository.ParenthesizedExpression, RuleName.Variable) },
-          { text: ')', scopes: name(Repository.ParenthesizedExpression, RuleName.CloseParen) },
+          { text: '(', scopes: name(RuleName.OpenParen) },
+          { text: 'var', scopes: name(RuleName.Variable) },
+          { text: ')', scopes: name(RuleName.CloseParen) },
         ],
       ],
     ])(

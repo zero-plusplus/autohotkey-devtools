@@ -12,7 +12,6 @@ export * from './variable';
 
 export function createParenthesizedExpressionRule(scopeName: ScopeName): BeginEndRule {
   return {
-    name: name(scopeName, Repository.ParenthesizedExpression),
     begin: capture(char('(')),
     beginCaptures: {
       1: nameRule(scopeName, RuleName.OpenParen),
