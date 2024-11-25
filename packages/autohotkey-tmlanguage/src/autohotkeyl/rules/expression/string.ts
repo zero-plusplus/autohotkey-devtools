@@ -34,7 +34,7 @@ export function createStringRule(scopeName: ScopeName, quote: '"' | `'`, escapeS
       },
       // escape sequences
       {
-        name: name(scopeName, RuleName.EscapeSequence),
+        name: name(scopeName, StyleName.Escape),
         match: seq(
           capture(ordalt(...escapeOnigurumaTexts(escapeSequences))),
           negativeLookahead(endAnchor()),

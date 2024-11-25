@@ -234,6 +234,7 @@ export const enum StyleName {
   Strong = 'strong',
   Strikethrough = 'markup.strikethrough',
   Invalid = 'invalid.illegal',
+  Escape = 'constant.character.escape',
 }
 
 export const enum CommandArgsType {
