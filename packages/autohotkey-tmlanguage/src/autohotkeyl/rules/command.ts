@@ -12,6 +12,7 @@ export interface Placeholder {
   commandArgumentEndLineAnchor: string;
   commandArgument: string;
   commandLastArgument: string;
+  commandExpressionArgumentWithOneTrueBrace: string;
   continuationOperators: string[];
 }
 export function createCommandLikeStatementRule(scopeName: ScopeName, definitions: CommandDefinition[], placeholder: Placeholder): BeginWhileRule {
@@ -106,6 +107,9 @@ function definitionToCommandName(scopeName: ScopeName, definition: CommandDefini
 }
 function parameterToOniguruma(parameter: CommandParameter, isLastParameter: boolean, placeholder: Placeholder): string {
   if (isLastParameter) {
+    if (parameter.type === HighlightType.ExpressionWithOneTrueBrace) {
+      return placeholder.commandExpressionArgumentWithOneTrueBrace;
+    }
     if (parameter.type !== HighlightType.UnquotedStringShouldEscapeComma) {
       return placeholder.commandLastArgument;
     }
@@ -127,7 +131,7 @@ function parameterToRule(scopeName: ScopeName, parameter: CommandParameter, isLa
       return namedPatternsRule(argumentName, [ defaultArgumentRule ]);
     }
     case HighlightType.UnquotedStringShouldEscapeComma: return namedPatternsRule(argumentName, [ includeRule(Repository.CommandArgument) ]);
-    case HighlightType.LabelName: return nameRule(scopeName, Repository.CommandArgument, RuleName.JumpLabelName);
+    case HighlightType.LabelName: return nameRule(scopeName, Repository.CommandArgument, RuleName.LabelName);
     case HighlightType.Enum: return namedPatternsRule(argumentName, [ keywordsToRule(keywordName, parameter.values!, isLastParameter), defaultArgumentRule ]);
     case HighlightType.Input:
     case HighlightType.Output:

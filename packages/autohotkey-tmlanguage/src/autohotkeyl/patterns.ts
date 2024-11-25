@@ -1,7 +1,8 @@
-import { alt, anyChar, anyChars0, asciiChar, char, endAnchor, group, groupMany0, inlineSpace, inlineSpaces0, inlineSpaces1, lookahead, lookbehind, negativeLookahead, negativeLookbehind, negChar, negChars0, opt, seq, startAnchor } from '../oniguruma';
+import { alt, anyChar, anyChars0, anyChars1, asciiChar, char, endAnchor, escapeOnigurumaTexts, group, groupMany0, inlineSpace, inlineSpaces0, inlineSpaces1, lookahead, lookbehind, manyLimit, negativeLookahead, negativeLookbehind, negChar, negChars0, opt, ordalt, seq, startAnchor } from '../oniguruma';
+import { operators } from './constants';
 
 export const lineEndAnchor: string = lookahead(alt(
-  seq(inlineSpaces1(), negativeLookahead(char('`'))),
+  seq(inlineSpaces1(), negativeLookahead(char('`')), char(';')),
   seq(inlineSpaces0(), endAnchor()),
 ));
 export const statementBeginAnchor: string = lookbehind(alt(
@@ -15,6 +16,11 @@ export const expressionBeginAnchor: string = lookbehind(alt(
 export const expressionEndLineAnchor: string = alt(
   seq(inlineSpaces1(), char(';')),
   seq(inlineSpaces0(), endAnchor()),
+);
+export const objectStartAnchor: string = seq(
+  lookbehind(ordalt(...escapeOnigurumaTexts(operators))),
+  inlineSpaces0(),
+  lookahead(char('{')),
 );
 export const commandArgumentEndLineAnchor: string = lookahead(alt(
   seq(inlineSpaces1(), negativeLookahead(char('`')), char(';')),
@@ -58,7 +64,6 @@ export const commandArgument: string = group(alt(
     unquotedChar,
   )),
 ));
-
 export const expressionLastArgument: string = group(anyChars0());
 export const percentExpressionLastArgument: string = seq(
   char('%'),
@@ -77,13 +82,23 @@ export const commandExpressionArgument: string = groupMany0(alt(
   brackets,
   negChar('\\r', '\\n', ','),
 ));
+export const commandExpressionWithOneTrueBraceArgument: string = groupMany0(alt(
+  brackets,
+  negChar('\\r', '\\n', ',', '{'),
+));
 // #endregion command
 
 // #region [Names](https://www.autohotkey.com/docs/v1/Concepts.htm#names)
+export const nameLimitLength = 253;
 const letter = '[a-zA-Z]';
 const numberChar = '\\d';
 const nonAsciiChar = negChar(asciiChar());
 const sign = char('_', '#', '@', '$');
 export const nameStart: string = group(alt(letter, nonAsciiChar, sign));
 export const nameBody: string = group(alt(letter, nonAsciiChar, sign, numberChar));
+export const name: string = group(seq(nameStart, manyLimit(nameBody, nameLimitLength - 1)));
+export const keyName: string = group(alt(
+  group(seq(char('%'), anyChars1(), char('%'))),
+  name,
+));
 // #endregion Names

@@ -2,7 +2,7 @@ import * as patterns_v1 from '../../../autohotkeyl/patterns';
 import { Repository, RuleName, StyleName } from '../../../constants';
 import { alt, anyChars1, capture, char, endAnchor, lookahead, negativeLookahead, negChar, negChars0, negChars1, seq } from '../../../oniguruma';
 import type { MatchRule, PatternsRule, ScopeName } from '../../../types';
-import { includeRule, name, nameRule } from '../../../utils';
+import { includeRule, nameRule } from '../../../utils';
 
 export function createDereferenceRule(scopeName: ScopeName): MatchRule {
   return {
@@ -12,13 +12,12 @@ export function createDereferenceRule(scopeName: ScopeName): MatchRule {
       capture(char('%')),
     ),
     captures: {
-      1: nameRule(scopeName, Repository.Dereference, RuleName.PercentBegin),
+      1: nameRule(scopeName, RuleName.PercentBegin),
       2: {
         patterns: [
           includeRule(Repository.InvalidDereference),
           includeRule(Repository.Dereference),
           {
-            name: name(scopeName, Repository.Dereference),
             match: capture(anyChars1()),
             captures: {
               1: {
@@ -28,7 +27,7 @@ export function createDereferenceRule(scopeName: ScopeName): MatchRule {
           },
         ],
       },
-      3: nameRule(scopeName, Repository.Dereference, RuleName.PercentEnd),
+      3: nameRule(scopeName, RuleName.PercentEnd),
     },
   };
 }
@@ -43,14 +42,13 @@ export function createInvalidDereferenceRule(scopeName: ScopeName): PatternsRule
           capture(char('%')),
         ),
         captures: {
-          1: nameRule(scopeName, Repository.Dereference, RuleName.PercentBegin, StyleName.Invalid),
-          2: nameRule(scopeName, Repository.Dereference, RuleName.PercentEnd, StyleName.Invalid),
+          1: nameRule(scopeName, RuleName.PercentBegin, StyleName.Invalid),
+          2: nameRule(scopeName, RuleName.PercentEnd, StyleName.Invalid),
         },
       },
       // %
       //  ^ missing
       {
-        name: name(scopeName, Repository.Dereference),
         match: seq(
           capture(char('%')),
           lookahead(alt(
@@ -73,16 +71,15 @@ export function createInvalidDereferenceRule(scopeName: ScopeName): PatternsRule
           lookahead(patterns_v1.expressionEndLineAnchor),
         ),
         captures: {
-          1: nameRule(scopeName, Repository.Dereference, RuleName.PercentBegin),
+          1: nameRule(scopeName, RuleName.PercentBegin),
           2: {
-            name: name(scopeName, Repository.Dereference),
             patterns: [
               includeRule(Repository.InvalidDereference),
               includeRule(Repository.Dereference),
               includeRule(Repository.Expression),
             ],
           },
-          3: nameRule(scopeName, Repository.Dereference, RuleName.Variable, StyleName.Invalid),
+          3: nameRule(scopeName, RuleName.Variable, StyleName.Invalid),
         },
       },
     ],

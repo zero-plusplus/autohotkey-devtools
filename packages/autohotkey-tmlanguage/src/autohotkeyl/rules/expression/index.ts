@@ -4,7 +4,9 @@ import type { BeginEndRule, MatchRule, ScopeName } from '../../../types';
 import { includeRule, name, nameRule } from '../../../utils';
 
 export * from './access';
+export * from './array';
 export * from './number';
+export * from './object';
 export * from './string';
 export * from './variable';
 
@@ -24,7 +26,7 @@ export function createParenthesizedExpressionRule(scopeName: ScopeName): BeginEn
 }
 export function createSeparatorRule(scopeName: ScopeName, separator: ','): MatchRule {
   return {
-    name: name(scopeName, RuleName.Separator),
+    name: name(scopeName, RuleName.Comma),
     match: seq(negativeLookbehind(char('`')), char(separator)),
   };
 }

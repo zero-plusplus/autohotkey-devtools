@@ -28,6 +28,7 @@ export function createRepositories(scopeName: ScopeName): Repositories {
     continuationOperators: constants_v1.continuationOperators,
     commandArgument: patterns_v1.commandArgument,
     commandLastArgument: patterns_v1.commandLastArgument,
+    commandExpressionArgumentWithOneTrueBrace: patterns_v1.commandExpressionWithOneTrueBraceArgument,
   };
 
   return {
@@ -45,6 +46,12 @@ export function createRepositories(scopeName: ScopeName): Repositories {
       includeRule(Repository.DirectiveStatement),
       includeRule(Repository.CommandStatement),
       includeRule(Repository.JumpStatement),
+      includeRule(Repository.HotstringLabelStatement),
+      includeRule(Repository.HotkeyLabelStatement),
+      includeRule(Repository.LabelStatement),
+      includeRule(Repository.IfStatement),
+      includeRule(Repository.Block),
+
       includeRule(Repository.LegacyStatement),
       includeRule(Repository.ExpressionStatement),
     ),
@@ -64,8 +71,22 @@ export function createRepositories(scopeName: ScopeName): Repositories {
       statementScopeName: Repository.JumpStatement,
       commandScopeName: RuleName.JumpCommandName,
     } as Placeholder),
+    [Repository.LabelStatement]: rule_v1.createLabelRule(scopeName, { startAnchor: patterns_v1.statementBeginAnchor }),
+    [Repository.HotkeyLabelStatement]: rule_v1.createHotkeyLabelRule(scopeName, { startAnchor: patterns_v1.statementBeginAnchor }),
+    [Repository.HotstringLabelStatement]: rule_v1.createHotstringLabelRule(scopeName, {
+      startAnchor: patterns_v1.statementBeginAnchor,
+      endAnchor: patterns_v1.lineEndAnchor,
+    }),
+
     [Repository.ExpressionStatement]: patternsRule(includeRule(Repository.Expression)),
+    [Repository.IfStatement]: rule_v1.createIfStatementRule(scopeName, {
+      statementBeginAnchor: patterns_v1.statementBeginAnchor,
+    }),
     // #endregion statement
+
+    // #region declaration
+    [Repository.Block]: rule_v1.createBlockRule(scopeName),
+    // #endregion declaration
 
     // #region expression
     [Repository.Expression]: patternsRule(
@@ -98,9 +119,17 @@ export function createRepositories(scopeName: ScopeName): Repositories {
     [Repository.Literal]: patternsRule(
       includeRule(Repository.DoubleString),
       includeRule(Repository.Number),
+      includeRule(Repository.Object),
+      includeRule(Repository.Array),
     ),
 
     // #region string
+    [Repository.Object]: rule_v1.createObjectRule(scopeName, {
+      startAnchor: patterns_v1.objectStartAnchor,
+      keyName: patterns_v1.keyName, 
+    }),
+    [Repository.Array]: rule_v1.createArrayRule(scopeName),
+
     [Repository.String]: patternsRule(includeRule(Repository.DoubleString)),
     [Repository.DoubleString]: rule_v1.createStringRule(scopeName, '"', constants_v1.doubleQuoteEscapeSequences),
     // #endregion string

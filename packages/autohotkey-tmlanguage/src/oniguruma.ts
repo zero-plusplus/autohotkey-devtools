@@ -17,6 +17,9 @@ export function numbers1(): string {
 export function wordBound(): string {
   return '\\b';
 }
+export function keyword(word: string): string {
+  return seq(lookbehind(wordBound()), ignoreCase(word), lookahead(wordBound()));
+}
 export function anyChar(): string {
   return '.';
 }
@@ -69,10 +72,13 @@ export function manyRange(onigurumaText: string, start?: number, end?: number): 
   if (typeof start === 'number') {
     return `${onigurumaText}{${start}}`;
   }
-  if (typeof start === 'number') {
+  if (typeof end === 'number') {
     return `${onigurumaText}{,${end}}`;
   }
   throw Error('The argument is not specified correctly.');
+}
+export function manyLimit(onigurumaText: string, limit: number): string {
+  return manyRange(onigurumaText, undefined, limit);
 }
 export function reluctant(onigurumaText: string): string {
   if ((/(?<!\\)[?+*}]/).test(onigurumaText)) {

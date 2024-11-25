@@ -70,7 +70,16 @@ export const enum Repository {
   JumpStatement = 'repository.statement.jump',
   CommandStatement = 'repository.statement.command',
   LegacyStatement = 'repository.statement.legacy.expression',
+  IfStatement = 'repository.statement.if',
+  LabelStatement = 'repository.statement.label',
+  HotkeyLabelStatement = 'repository.statement.hotkey',
+  HotstringLabelStatement = 'repository.statement.hotstring',
   // #endregion statements
+
+  // #region declaration
+  Block = 'repository.declaration.block',
+  // #endregion declaration
+
 
   // #region expressions
   Expression = 'repository.expression',
@@ -97,6 +106,11 @@ export const enum Repository {
   ScientificNotation = 'repository.expression.number.scientific-notation',
   InvalidScientificNotation = 'repository.expression.number.scientific-notation.invalid',
   // #endregion number
+
+  // #region object
+  Object = 'repository.expression.object',
+  Array = 'repository.expression.array',
+  // #endregion object
   // #endregion literal
 
   // #region variable
@@ -145,8 +159,16 @@ export const enum RuleName {
 
   // #region statement
   DirectiveName = 'meta.preprocessor.directive',
-  JumpLabelName = 'entity.name.label.jump',
+  LabelName = 'entity.name.label',
+  HotkeyLabelName = 'string.label.like.hotkey',
+  HotstringOption = 'string.label.like.hotkey.option',
+  HotstringLabelName = 'string.label.like.hotstring',
   // #endregion statement
+
+  // #region declaration
+  BlockBegin = 'punctuation.definition.block.begin',
+  BlockEnd = 'punctuation.definition.block.end',
+  // #endregion declaration
 
   // #region expressions
   // #region variable
@@ -178,7 +200,6 @@ export const enum RuleName {
   Exponent = 'constant.numeric.exponent',
   // #endregion number
   // #region operators
-  Separator = 'punctuation.separator',
   Operator = 'keyword.operator',
   Equals = 'keyword.operator.equals',
   Comma = 'punctuation.separator.comma',
@@ -186,10 +207,17 @@ export const enum RuleName {
   // #endregion expressions
 
   // #region token
+  ControlFlowKeyword = 'keyword.control.flow',
   PercentBegin = 'meta.percent.begin',
   PercentEnd = 'meta.percent.end',
   OpenParen = 'meta.brace.round.begin',
   CloseParen = 'meta.brace.round.end',
+  OpenBracket = 'meta.brace.square.begin',
+  CloseBracket = 'meta.brace.square.end',
+  OpenBrace = 'meta.brace.curly.begin',
+  CloseBrace = 'meta.brace.curly.end',
+  Colon = 'punctuation.separator.colon',
+  ColonColon = 'punctuation.separator.colon-colon',
   // #region tokens
 
   // #region legacy
@@ -224,6 +252,7 @@ export const enum HighlightType {
   None = 0,
   Blank,
   Expression,
+  ExpressionWithOneTrueBrace,
   Enum,
   UnquotedString,
   UnquotedStringShouldEscapeComma,
