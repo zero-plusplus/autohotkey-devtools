@@ -17,5 +17,6 @@ export * from './legacy/percentExpression';
 export * from './legacy/unquotedString';
 export * from './statement/if';
 export * from './statement/include';
+export * from './statement/throw';
 export * from './statement/try';
 export * from './trivia/comment';

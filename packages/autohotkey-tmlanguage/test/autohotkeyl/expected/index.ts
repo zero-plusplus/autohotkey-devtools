@@ -7,5 +7,6 @@ export * from './statement/expression';
 export * from './statement/if';
 export * from './statement/include';
 export * from './statement/legacy';
+export * from './statement/throw';
 export * from './statement/try';
 export * from './trivia/comment';

@@ -54,6 +54,7 @@ export function createRepositories(scopeName: ScopeName): Repositories {
       includeRule(Repository.LabelStatement),
       includeRule(Repository.IfStatement),
       includeRule(Repository.TryStatement),
+      includeRule(Repository.ThrowStatement),
       includeRule(Repository.Block),
 
       includeRule(Repository.LegacyStatement),
@@ -91,6 +92,9 @@ export function createRepositories(scopeName: ScopeName): Repositories {
       startAnchor: patterns_v1.statementBeginAnchor,
     }),
     [Repository.TryStatement]: rule_v1.createTryStatementRule(scopeName, {
+      startAnchor: patterns_v1.statementBeginAnchor,
+    }),
+    [Repository.ThrowStatement]: rule_v1.createThrowStatementRule(scopeName, {
       startAnchor: patterns_v1.statementBeginAnchor,
     }),
     // #endregion statement
