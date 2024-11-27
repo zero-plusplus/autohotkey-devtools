@@ -6,6 +6,7 @@ import type { ExpectedTestData } from '../../../types';
 
 export function createLoopStatementExpectedData(scopeName: ScopeName): ExpectedTestData[] {
   return [
+    // #region [loop until](https://www.autohotkey.com/docs/v1/lib/Until.htm)
     [
       dedent`
         Loop {
@@ -19,8 +20,9 @@ export function createLoopStatementExpectedData(scopeName: ScopeName): ExpectedT
         { text: 'true', scopes: name(scopeName, RuleName.BuiltInVariable) },
       ],
     ],
+    // #endregion loop until
 
-    // #region loop files
+    // #region [loop files](https://www.autohotkey.com/docs/v1/lib/LoopFile.htm)
     [
       dedent`
         Loop files
@@ -48,7 +50,7 @@ export function createLoopStatementExpectedData(scopeName: ScopeName): ExpectedT
         Loop Files
         Loop Files, C:\\test
         Loop Files, C:\\test, DFR
-        Loop Files, C:\\test, NotOption
+        Loop Files, C:\\test, U
       `,
       [
         { text: 'Loop', scopes: name(scopeName, RuleName.ControlFlowKeyword) },
@@ -64,19 +66,21 @@ export function createLoopStatementExpectedData(scopeName: ScopeName): ExpectedT
         { text: ',', scopes: name(scopeName, RuleName.Comma) },
         { text: 'C:\\test', scopes: name(scopeName, RuleName.UnquotedString) },
         { text: ',', scopes: name(scopeName, RuleName.Comma) },
-        { text: 'DFR', scopes: name(scopeName, RuleName.UnquotedString, StyleName.Strong) },
+        { text: 'D', scopes: name(scopeName, RuleName.UnquotedString, StyleName.Strong) },
+        { text: 'F', scopes: name(scopeName, RuleName.UnquotedString, StyleName.Strong) },
+        { text: 'R', scopes: name(scopeName, RuleName.UnquotedString, StyleName.Strong) },
 
         { text: 'Loop', scopes: name(scopeName, RuleName.ControlFlowKeyword) },
         { text: 'Files', scopes: name(scopeName, RuleName.ControlFlowKeyword) },
         { text: ',', scopes: name(scopeName, RuleName.Comma) },
         { text: 'C:\\test', scopes: name(scopeName, RuleName.UnquotedString) },
         { text: ',', scopes: name(scopeName, RuleName.Comma) },
-        { text: 'NotOption', scopes: name(scopeName, RuleName.UnquotedString, StyleName.Strong) },
+        { text: 'U', scopes: name(scopeName, RuleName.UnquotedString) },
       ],
     ],
     // #endregion loop files
 
-    // #region loop parse
+    // #region [loop parse](https://www.autohotkey.com/docs/v1/lib/LoopParse.htm)
     [
       dedent`
         Loop parse
@@ -161,7 +165,7 @@ export function createLoopStatementExpectedData(scopeName: ScopeName): ExpectedT
     ],
     // #endregion loop parse
 
-    // #region loop read
+    // #region [loop read](https://www.autohotkey.com/docs/v1/lib/LoopReadFile.htm)
     [
       dedent`
         Loop read
@@ -216,5 +220,63 @@ export function createLoopStatementExpectedData(scopeName: ScopeName): ExpectedT
       ],
     ],
     // #endregion loop read
+
+    // #region [loop reg](https://www.autohotkey.com/docs/v1/lib/LoopReg.htm#new)
+    [
+      dedent`
+        Loop reg
+        {
+        }
+        Loop, Reg
+        {
+        }
+      `,
+      [
+        { text: 'Loop', scopes: name(scopeName, RuleName.ControlFlowKeyword) },
+        { text: 'reg', scopes: name(scopeName, RuleName.ControlFlowKeyword) },
+        { text: '{', scopes: name(scopeName, RuleName.BlockBegin) },
+        { text: '}', scopes: name(scopeName, RuleName.BlockEnd) },
+
+        { text: 'Loop', scopes: name(scopeName, RuleName.ControlFlowKeyword) },
+        { text: ',', scopes: name(scopeName, RuleName.Comma) },
+        { text: 'Reg', scopes: name(scopeName, RuleName.ControlFlowKeyword) },
+        { text: '{', scopes: name(scopeName, RuleName.BlockBegin) },
+        { text: '}', scopes: name(scopeName, RuleName.BlockEnd) },
+      ],
+    ],
+    [
+      dedent`
+        Loop Reg
+        Loop Reg, HKLM\\path\\to
+        Loop Reg, HKLM\\path\\to, KVR
+        Loop Reg, HKLM\\path\\to, U
+      `,
+      [
+        { text: 'Loop', scopes: name(scopeName, RuleName.ControlFlowKeyword) },
+        { text: 'Reg', scopes: name(scopeName, RuleName.ControlFlowKeyword) },
+
+        { text: 'Loop', scopes: name(scopeName, RuleName.ControlFlowKeyword) },
+        { text: 'Reg', scopes: name(scopeName, RuleName.ControlFlowKeyword) },
+        { text: ',', scopes: name(scopeName, RuleName.Comma) },
+        { text: 'HKLM\\path\\to', scopes: name(scopeName, RuleName.UnquotedString) },
+
+        { text: 'Loop', scopes: name(scopeName, RuleName.ControlFlowKeyword) },
+        { text: 'Reg', scopes: name(scopeName, RuleName.ControlFlowKeyword) },
+        { text: ',', scopes: name(scopeName, RuleName.Comma) },
+        { text: 'HKLM\\path\\to', scopes: name(scopeName, RuleName.UnquotedString) },
+        { text: ',', scopes: name(scopeName, RuleName.Comma) },
+        { text: 'K', scopes: name(scopeName, RuleName.UnquotedString, StyleName.Strong) },
+        { text: 'V', scopes: name(scopeName, RuleName.UnquotedString, StyleName.Strong) },
+        { text: 'R', scopes: name(scopeName, RuleName.UnquotedString, StyleName.Strong) },
+
+        { text: 'Loop', scopes: name(scopeName, RuleName.ControlFlowKeyword) },
+        { text: 'Reg', scopes: name(scopeName, RuleName.ControlFlowKeyword) },
+        { text: ',', scopes: name(scopeName, RuleName.Comma) },
+        { text: 'HKLM\\path\\to', scopes: name(scopeName, RuleName.UnquotedString) },
+        { text: ',', scopes: name(scopeName, RuleName.Comma) },
+        { text: 'U', scopes: name(scopeName, RuleName.UnquotedString) },
+      ],
+    ],
+    // #endregion loop reg
   ];
 }

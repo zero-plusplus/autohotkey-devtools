@@ -175,7 +175,7 @@ function parameterToRule(scopeName: ScopeName, parameter: CommandParameter, isLa
 
       const optionsRule: MatchRule = {
         name: name(scopeName, RuleName.UnquotedString, StyleName.Strong),
-        match: keyword(...parameter.values), 
+        match: keyword(...parameter.values),
       };
       return patternsRule(
         optionsRule,
@@ -185,10 +185,14 @@ function parameterToRule(scopeName: ScopeName, parameter: CommandParameter, isLa
       if (!parameter.values || parameter.values.length === 0) {
         return defaultArgumentRule;
       }
-      return {
+      const combiOptionsRule: MatchRule = {
         name: name(scopeName, RuleName.UnquotedString, StyleName.Strong),
         match: ignoreCase(ordalt(...parameter.values)),
       };
+      return patternsRule(
+        combiOptionsRule,
+        defaultArgumentRule,
+      );
     case HighlightType.GuiOptions:
     case HighlightType.GuiSubCommand:
     case HighlightType.Style:
