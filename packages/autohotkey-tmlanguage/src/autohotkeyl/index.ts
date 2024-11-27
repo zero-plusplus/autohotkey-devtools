@@ -54,6 +54,7 @@ export function createRepositories(scopeName: ScopeName): Repositories {
       includeRule(Repository.LabelStatement),
       includeRule(Repository.IfStatement),
       includeRule(Repository.WhileStatement),
+      includeRule(Repository.UntilStatement),
       includeRule(Repository.TryStatement),
       includeRule(Repository.ThrowStatement),
       includeRule(Repository.Block),
@@ -93,6 +94,9 @@ export function createRepositories(scopeName: ScopeName): Repositories {
       startAnchor: patterns_v1.statementBeginAnchor,
     }),
     [Repository.WhileStatement]: rule_v1.createWhileStatementRule(scopeName, {
+      startAnchor: patterns_v1.statementBeginAnchor,
+    }),
+    [Repository.UntilStatement]: rule_v1.createUntilStatementRule(scopeName, {
       startAnchor: patterns_v1.statementBeginAnchor,
     }),
     [Repository.TryStatement]: rule_v1.createTryStatementRule(scopeName, {

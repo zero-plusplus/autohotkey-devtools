@@ -73,6 +73,7 @@ export const enum Repository {
   LegacyStatement = 'repository.statement.legacy.expression',
   IfStatement = 'repository.statement.if-else',
   WhileStatement = 'repository.statement.while',
+  UntilStatement = 'repository.statement.until',
   TryStatement = 'repository.statement.try-catch-finally',
   ThrowStatement = 'repository.statement.throw',
   LabelStatement = 'repository.statement.label',
