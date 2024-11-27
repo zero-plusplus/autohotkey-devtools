@@ -46,8 +46,27 @@ export function createTryStatementExpectedData(scopeName: ScopeName): ExpectedTe
     ],
     [
       dedent`
+        finally {
+        }
+        finally
+        {
+        }
+      `,
+      [
+        { text: 'finally', scopes: name(scopeName, RuleName.ControlFlowKeyword) },
+        { text: '{', scopes: name(scopeName, RuleName.BlockBegin) },
+        { text: '}', scopes: name(scopeName, RuleName.BlockEnd) },
+
+        { text: 'finally', scopes: name(scopeName, RuleName.ControlFlowKeyword) },
+        { text: '{', scopes: name(scopeName, RuleName.BlockBegin) },
+        { text: '}', scopes: name(scopeName, RuleName.BlockEnd) },
+      ],
+    ],
+    [
+      dedent`
         try {
         } catch error {
+        } finally {
         }
       `,
       [
@@ -57,6 +76,10 @@ export function createTryStatementExpectedData(scopeName: ScopeName): ExpectedTe
 
         { text: 'catch', scopes: name(scopeName, RuleName.ControlFlowKeyword) },
         { text: 'error', scopes: name(scopeName, RuleName.Variable) },
+        { text: '{', scopes: name(scopeName, RuleName.BlockBegin) },
+        { text: '}', scopes: name(scopeName, RuleName.BlockEnd) },
+
+        { text: 'finally', scopes: name(scopeName, RuleName.ControlFlowKeyword) },
         { text: '{', scopes: name(scopeName, RuleName.BlockBegin) },
         { text: '}', scopes: name(scopeName, RuleName.BlockEnd) },
       ],

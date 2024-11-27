@@ -14,6 +14,7 @@ export function createTryStatementRule(scopeName: ScopeName, placeholder: Placeh
       capture(alt(
         keyword('try'),
         keyword('catch'),
+        keyword('finally'),
       )),
       lookahead(alt(
         char('{'),
