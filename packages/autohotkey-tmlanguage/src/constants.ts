@@ -72,6 +72,7 @@ export const enum Repository {
   CommandStatement = 'repository.statement.command',
   LegacyStatement = 'repository.statement.legacy.expression',
   IfStatement = 'repository.statement.if',
+  TryStatement = 'repository.statement.try-catch',
   LabelStatement = 'repository.statement.label',
   HotkeyLabelStatement = 'repository.statement.hotkey',
   HotstringLabelStatement = 'repository.statement.hotstring',

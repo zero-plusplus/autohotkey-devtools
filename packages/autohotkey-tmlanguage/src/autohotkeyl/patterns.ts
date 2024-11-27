@@ -8,6 +8,7 @@ export const lineEndAnchor: string = lookahead(alt(
 export const statementBeginAnchor: string = lookbehind(alt(
   seq(startAnchor(), inlineSpaces0()),
   seq(char(':'), inlineSpaces0()),
+  seq(inlineSpaces0(), char('}')),
 ));
 export const expressionBeginAnchor: string = lookbehind(alt(
   seq(startAnchor(), inlineSpaces0(), opt(char(','))),

@@ -16,6 +16,7 @@ describe('autohotkeyl', () => {
     ...dataBuilder.createIncludeStatementExpectedData(scopeName),
     ...dataBuilder.createLabelStatementExpectedData(scopeName),
     ...dataBuilder.createLegacyStatementExpectedData(scopeName),
+    ...dataBuilder.createTryStatementExpectedData(scopeName),
   ];
   const testText = expectedDataList.map((dataList) => dataList[0]).join('\n');
   const expected = expectedDataList.flatMap((dataList) => dataList[1]);
