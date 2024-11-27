@@ -68,7 +68,7 @@ export function createInvalidDereferenceRule(scopeName: ScopeName): PatternsRule
           capture(negChars0('\\r', '\\n', '%')),
           negativeLookahead(char('%')),
           capture(negChar('\\r', '\\n')),
-          lookahead(patterns_v1.expressionEndLineAnchor),
+          lookahead(patterns_v1.expressionEndAnchor),
         ),
         captures: {
           1: nameRule(scopeName, RuleName.PercentBegin),

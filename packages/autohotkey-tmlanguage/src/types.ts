@@ -16,13 +16,13 @@ export interface TmLanguage {
 // https://macromates.com/manual/en/language_grammars#rule_keys
 export type Rule = NameRule | PatternsRule | MatchRule | BeginEndRule | BeginWhileRule | IncludeRule;
 export interface RuleBase {
-  name?: string;
+  name?: ElementName;
   comment?: string;
   disabled?: 1;
   patterns?: Rule[];
 }
 export interface NameRule extends RuleBase {
-  name: string;
+  name: ElementName;
 }
 export interface PatternsRule extends RuleBase {
   patterns: Rule[];

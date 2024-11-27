@@ -13,7 +13,7 @@ export function createLegacyAssignmentRule(scopeName: ScopeName): MatchRule {
 
   return {
     match: seq(
-      patterns_v1.expressionBeginAnchor,
+      patterns_v1.expressionStartAnchor,
       capture(seq(patterns_v1.nameStart, groupMany0(patterns_v1.nameBody))),
       inlineSpaces0(),
       capture(char('=')),

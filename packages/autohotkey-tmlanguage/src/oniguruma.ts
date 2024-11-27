@@ -19,7 +19,7 @@ export function wordBound(): string {
 }
 export function keyword(...words: string[]): string {
   if (1 < words.length) {
-    return seq(lookbehind(wordBound()), alt(...words.map((word) => ignoreCase(word))), lookahead(wordBound()));
+    return seq(lookbehind(wordBound()), ignoreCase(ordalt(...words)), lookahead(wordBound()));
   }
   return seq(lookbehind(wordBound()), ignoreCase(words[0]), lookahead(wordBound()));
 }

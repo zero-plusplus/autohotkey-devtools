@@ -1,32 +1,33 @@
 import { alt, anyChar, anyChars0, anyChars1, asciiChar, char, endAnchor, escapeOnigurumaTexts, group, groupMany0, inlineSpace, inlineSpaces0, inlineSpaces1, lookahead, lookbehind, manyLimit, negativeLookahead, negativeLookbehind, negChar, negChars0, opt, ordalt, seq, startAnchor } from '../oniguruma';
 import { operators } from './constants';
 
-export const lineEndAnchor: string = lookahead(alt(
-  seq(inlineSpaces1(), negativeLookahead(char('`')), char(';')),
-  seq(inlineSpaces0(), endAnchor()),
-));
-export const statementBeginAnchor: string = lookbehind(alt(
+export const statementStartAnchor: string = lookbehind(alt(
   seq(startAnchor(), inlineSpaces0()),
   seq(char(':'), inlineSpaces0()),
   seq(inlineSpaces0(), char('}')),
 ));
-export const expressionBeginAnchor: string = lookbehind(alt(
+export const expressionStartAnchor: string = lookbehind(alt(
   seq(startAnchor(), inlineSpaces0(), opt(char(','))),
   seq(char(':'), inlineSpaces0()),
 ));
-export const expressionEndLineAnchor: string = alt(
-  seq(inlineSpaces1(), char(';')),
-  seq(inlineSpaces0(), endAnchor()),
-);
 export const objectStartAnchor: string = seq(
   lookbehind(ordalt(...escapeOnigurumaTexts(operators))),
   inlineSpaces0(),
   lookahead(char('{')),
 );
-export const commandArgumentEndLineAnchor: string = lookahead(alt(
+export const lineEndAnchor: string = lookahead(alt(
   seq(inlineSpaces1(), negativeLookahead(char('`')), char(';')),
   seq(inlineSpaces0(), endAnchor()),
 ));
+export const controlFlowEndAnchor: string = lookahead(alt(
+  seq(inlineSpaces1(), negativeLookahead(char('`')), char(';')),
+  seq(inlineSpaces0(), char('{')),
+  seq(inlineSpaces0(), endAnchor()),
+));
+export const expressionEndAnchor: string = alt(
+  seq(inlineSpaces1(), char(';')),
+  seq(inlineSpaces0(), endAnchor()),
+);
 export const unquotedStringChar: string = group(alt(
   negChar('\\s', ',', '%', '`', ';', ':'),
   seq(negativeLookbehind(inlineSpace()), char(';')),
@@ -39,7 +40,7 @@ export const brackets: string = group(alt(
 ));
 
 // #region command
-export const unquotedChar: string = seq(
+export const unquotedCharPattern: string = seq(
   negativeLookahead(alt(
     seq(inlineSpaces1(), char(';')),
     seq(inlineSpaces0(), alt(
@@ -49,41 +50,37 @@ export const unquotedChar: string = seq(
   )),
   anyChar(),
 );
-export const expressionArgument: string = groupMany0(alt(
+export const expressionArgumentPattern: string = groupMany0(alt(
   brackets,
   negChar(','),
 ));
-export const percentExpressionArgument: string = seq(
+export const percentExpressionArgumentPattern: string = seq(
   char('%'),
   inlineSpaces1(),
-  expressionArgument,
+  expressionArgumentPattern,
 );
-export const commandArgument: string = group(alt(
-  percentExpressionArgument,
+export const commandArgumentPattern: string = group(alt(
+  percentExpressionArgumentPattern,
   groupMany0(alt(
     brackets,
-    unquotedChar,
+    unquotedCharPattern,
   )),
 ));
-export const expressionLastArgument: string = group(anyChars0());
-export const percentExpressionLastArgument: string = seq(
+export const expressionLastArgumentPattern: string = group(anyChars0());
+export const percentExpressionLastArgumentPattern: string = seq(
   char('%'),
   inlineSpaces1(),
-  expressionLastArgument,
+  expressionLastArgumentPattern,
 );
-export const commandLastArgument: string = group(alt(
-  percentExpressionLastArgument,
+export const lastArgumentPattern: string = group(alt(
+  percentExpressionLastArgumentPattern,
   groupMany0(alt(
     brackets,
     char(','),
-    unquotedChar,
+    unquotedCharPattern,
   )),
 ));
-export const commandExpressionArgument: string = groupMany0(alt(
-  brackets,
-  negChar('\\r', '\\n', ','),
-));
-export const commandExpressionWithOneTrueBraceArgument: string = groupMany0(alt(
+export const expressionWithOneTrueBraceArgumentPattern: string = groupMany0(alt(
   brackets,
   negChar('\\r', '\\n', ',', '{'),
 ));

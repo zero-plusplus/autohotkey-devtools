@@ -1,41 +1,40 @@
 import { hasFlag } from '@zero-plusplus/utilities/src';
+import type { SetOptional } from 'type-fest';
 import { CommandFlag, HighlightType, Repository, RuleName, StyleName } from '../../../constants';
-import { alt, anyChar, anyChars0, capture, char, group, groupMany0, ignoreCase, inlineSpaces0, inlineSpaces1, lookahead, lookbehind, negativeLookahead, optional, optseq, ordalt, seq, startAnchor, wordBound } from '../../../oniguruma';
-import type { BeginWhileRule, CommandDefinition, CommandParameter, CommandSignature, NameRule, Rule, ScopeName } from '../../../types';
+import { alt, anyChar, anyChars0, capture, char, group, groupMany0, ignoreCase, inlineSpace, inlineSpaces0, inlineSpaces1, keyword, lookahead, lookbehind, negativeLookahead, optional, ordalt, seq, startAnchor, wordBound } from '../../../oniguruma';
+import type { BeginWhileRule, CommandDefinition, CommandParameter, CommandSignature, ElementName, MatchRule, NameRule, PatternsRule, Rule, ScopeName } from '../../../types';
 import { includeRule, name, nameRule, patternsRule } from '../../../utils';
+import * as patterns_v1 from '../../patterns';
 
 export interface Placeholder {
-  lineEndAnchor: string;
-  statementScopeName: string;
-  commandScopeName: RuleName;
-  commandStatementBeginAnchor: string;
-  commandArgumentEndLineAnchor: string;
-  commandArgument: string;
-  commandLastArgument: string;
-  commandExpressionArgumentWithOneTrueBrace: string;
-  continuationOperators: string[];
+  startAnchor: string;
+  endAnchor: string;
+  statementElementName: ElementName;
+  commandElementName: ElementName;
 }
 export function createCommandLikeStatementRule(scopeName: ScopeName, definitions: CommandDefinition[], placeholder: Placeholder): BeginWhileRule {
   const sortedDefinitions = definitions.sort((a, b) => b.name.length - a.name.length);
 
   return {
-    name: name(scopeName, Repository.CommandStatement),
+    name: name(scopeName, placeholder.statementElementName),
     begin: capture(seq(
-      placeholder.commandStatementBeginAnchor,
+      placeholder.startAnchor,
       // command name
       ignoreCase(alt(...sortedDefinitions.map((definition) => definition.name))),
       negativeLookahead(char('(')),
-      optseq(
-        capture(anyChars0()),
-        placeholder.commandArgumentEndLineAnchor,
-      ),
-      placeholder.lineEndAnchor,
+      optional(capture(anyChars0())),
+      placeholder.endAnchor,
     )),
     beginCaptures: {
       1: patternsRule(
         includeRule(Repository.Comment),
         ...sortedDefinitions.flatMap((definition) => {
-          return definition.signatures.map((signature) => createCommandRule(scopeName, definition, signature, placeholder));
+          return definition.signatures.map((signature) => createCommandLikeRule(scopeName, definition, signature, placeholder));
+        }),
+        createCommandNames(scopeName, definitions, {
+          commandElementName: placeholder.commandElementName,
+          startAnchor: placeholder.startAnchor,
+          endAnchor: placeholder.endAnchor,
         }),
       ),
     },
@@ -45,9 +44,9 @@ export function createCommandLikeStatementRule(scopeName: ScopeName, definitions
         inlineSpaces0(),
         capture(char(',')),
         inlineSpaces0(),
-        optional(capture(placeholder.commandArgument)),
+        optional(capture(patterns_v1.commandArgumentPattern)),
       )),
-      placeholder.commandArgumentEndLineAnchor,
+      placeholder.endAnchor,
     ),
     whileCaptures: {
       1: patternsRule(includeRule(Repository.Comma)),
@@ -56,11 +55,9 @@ export function createCommandLikeStatementRule(scopeName: ScopeName, definitions
     patterns: [ includeRule(Repository.Comment) ],
   };
 }
-
-// #region helpers
-function createCommandRule(scopeName: ScopeName, definition: CommandDefinition, signature: CommandSignature, placeholder: Placeholder): Rule {
+export function createCommandLikeRule(scopeName: ScopeName, definition: CommandDefinition, signature: CommandSignature, placeholder: Placeholder): Rule {
   const capturedCommandNamePattern = seq(
-    placeholder.commandStatementBeginAnchor,
+    placeholder.startAnchor,
     capture(ignoreCase(definition.name)),
     negativeLookahead(char('(')),
   );
@@ -81,37 +78,70 @@ function createCommandRule(scopeName: ScopeName, definition: CommandDefinition, 
     );
   }, '');
 
+  const subcommands = signature.parameters.filter((parameter) => parameter.type === HighlightType.SubCommand);
   return {
     begin: lookahead(seq(
-      placeholder.commandStatementBeginAnchor,
+      placeholder.startAnchor,
       ignoreCase(definition.name),
+      ...1 <= subcommands.length
+        ? [ group(alt(inlineSpace(), char(','))), inlineSpaces0(), keyword(String(subcommands[0]?.values![0])) ]
+        : [],
     )),
     end: seq(capturedCommandNamePattern, optional(capturedParametersPattern)),
     endCaptures: Object.fromEntries([
       definitionToCommandName(scopeName, definition, placeholder),
-      ...parametersToRules(scopeName, signature),
+      ...parametersToRules(scopeName, signature, placeholder),
     ].map((rule, i) => [ i + 1, rule ])),
   };
 }
+export function createCommandNames(scopeName: ScopeName, definitions: CommandDefinition[], placeholder: SetOptional<Placeholder, 'statementElementName'>): PatternsRule {
+  const commandNames = definitions.filter((definition) => !hasFlag(definition.flags, CommandFlag.Deprecated)).map((definition) => definition.name);
+  const deprecatedCommandNames = definitions.filter((definition) => hasFlag(definition.flags, CommandFlag.Deprecated)).map((definition) => definition.name);
+
+  const targets: [ [ string[], boolean ], [ string[], boolean ] ] = [ [ commandNames, false ], [ deprecatedCommandNames, true ] ];
+  return patternsRule(...targets.map(([ names, isDeprecated ]): MatchRule => {
+    return {
+      ...placeholder.statementElementName ? nameRule(scopeName, placeholder.statementElementName) : {},
+      match: seq(
+        placeholder.startAnchor,
+        inlineSpaces0(),
+        capture(keyword(...names)),
+      ),
+      captures: {
+        1: isDeprecated
+          ? nameRule(scopeName, placeholder.commandElementName, StyleName.Strikethrough)
+          : nameRule(scopeName, placeholder.commandElementName),
+      },
+    };
+  }));
+}
+
+// #region helpers
 function definitionToCommandName(scopeName: ScopeName, definition: CommandDefinition, placeholder: Placeholder): NameRule {
   if (hasFlag(definition.flags, CommandFlag.Deprecated)) {
-    return nameRule(scopeName, placeholder.commandScopeName, StyleName.Strikethrough);
+    return nameRule(scopeName, placeholder.commandElementName, StyleName.Strikethrough);
   }
-  return nameRule(scopeName, placeholder.commandScopeName);
+  return nameRule(scopeName, placeholder.commandElementName);
 }
 function parameterToOniguruma(parameter: CommandParameter, isLastParameter: boolean, placeholder: Placeholder): string {
   if (isLastParameter) {
     if (parameter.type === HighlightType.ExpressionWithOneTrueBrace) {
-      return placeholder.commandExpressionArgumentWithOneTrueBrace;
+      return patterns_v1.expressionWithOneTrueBraceArgumentPattern;
     }
     if (parameter.type !== HighlightType.UnquotedStringShouldEscapeComma) {
-      return placeholder.commandLastArgument;
+      return patterns_v1.lastArgumentPattern;
     }
   }
-  return placeholder.commandArgument;
+
+  switch (parameter.type) {
+    case HighlightType.SubCommand: return keyword(parameter.values![0]!);
+    default: break;
+  }
+  return patterns_v1.commandArgumentPattern;
 }
-function parameterToRule(scopeName: ScopeName, parameter: CommandParameter, isLastParameter: boolean): Rule {
+function parameterToRule(scopeName: ScopeName, parameter: CommandParameter, isLastParameter: boolean, placeholder: Placeholder): Rule {
   const defaultArgumentRule = isLastParameter ? includeRule(Repository.CommandLastArgument) : includeRule(Repository.CommandArgument);
+  const invalidRule: MatchRule = { name: name(scopeName, StyleName.Invalid), match: anyChars0() };
   const keywordName = name(scopeName, RuleName.UnquotedString, StyleName.Strong);
 
   switch (parameter.type) {
@@ -136,25 +166,27 @@ function parameterToRule(scopeName: ScopeName, parameter: CommandParameter, isLa
     case HighlightType.Style:
       return patternsRule(defaultArgumentRule);
     case HighlightType.SubCommand:
-      const subcommandName = name(scopeName, RuleName.SubCommandName);
       if (!parameter.values || parameter.values.length === 0) {
         throw Error(`The definition does not include a subcommand name.`);
       }
-      return patternsRule(keywordsToRule(subcommandName, parameter.values, isLastParameter), defaultArgumentRule);
+      return patternsRule(
+        keywordsToRule(name(scopeName, placeholder.commandElementName), parameter.values, isLastParameter),
+        invalidRule,
+      );
     default: break;
   }
   throw Error(`Specified an unknown highligh type.\nSpecified: "${String(parameter.type)}"`);
 }
-function parametersToRules(scopeName: ScopeName, signature: CommandSignature): Rule[] {
+function parametersToRules(scopeName: ScopeName, signature: CommandSignature, placeholder: Placeholder): Rule[] {
   return signature.parameters.flatMap((parameter, i, parameters) => {
     const isLastParameter = parameters.length - 1 === i;
     return [
       patternsRule(includeRule(Repository.Comma)),
-      parameterToRule(scopeName, parameter, isLastParameter),
+      parameterToRule(scopeName, parameter, isLastParameter, placeholder),
     ];
   });
 }
-function keywordsToRule(name: string, keywords: string[], isLastParameter: boolean): Rule {
+function keywordsToRule(name: ElementName, keywords: string[], isLastParameter: boolean): Rule {
   return {
     name,
     match: seq(

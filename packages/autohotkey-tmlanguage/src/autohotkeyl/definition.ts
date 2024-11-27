@@ -110,6 +110,27 @@ export const directiveDefinitions: CommandDefinition[] = [
 ];
 // #endregion directives
 
+// #region loop
+export const loopCommandDefenitions: CommandDefinition[] = [
+  command('Loop', [
+    // https://www.autohotkey.com/docs/v1/lib/LoopFile.htm
+    signature([ subcommand('Files'), path(), combiOptions([ 'D', 'F', 'R' ]) ]),
+
+    // https://www.autohotkey.com/docs/v1/lib/LoopParse.htm
+    signature([ subcommand('Parse'), input(), unquoted(), unquoted() ]),
+
+    // https://www.autohotkey.com/docs/v1/lib/LoopReadFile.htm
+    signature([ subcommand('Read'), path(), path() ]),
+
+    // https://www.autohotkey.com/docs/v1/lib/LoopReg.htm#new
+    signature([ subcommand('Reg'), unquoted(), combiOptions([ 'K', 'V', 'R' ]) ]),
+
+    // https://www.autohotkey.com/docs/v1/lib/LoopReg.htm#old
+    signature([ subcommand('RootKey', CommandParameterFlag.Deprecated), unquoted(), unquoted(), keyword([ '0', '1' ]) ]),
+  ]),
+];
+// #endregion loop
+
 // #region commands
 export const commandDefinitions: CommandDefinition[] = [
   // https://www.autohotkey.com/docs/v1/lib/AutoTrim.htm

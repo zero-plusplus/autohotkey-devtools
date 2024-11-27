@@ -22,13 +22,8 @@ export function createTmLanguage(): TmLanguage {
 export function createRepositories(scopeName: ScopeName): Repositories {
   type Placeholder = Parameters<typeof rule_v1.createCommandLikeStatementRule>[2];
   const commonCommandBuilderOptions: Partial<Placeholder> = {
-    lineEndAnchor: patterns_v1.lineEndAnchor,
-    commandStatementBeginAnchor: patterns_v1.statementBeginAnchor,
-    commandArgumentEndLineAnchor: patterns_v1.commandArgumentEndLineAnchor,
-    continuationOperators: constants_v1.continuationOperators,
-    commandArgument: patterns_v1.commandArgument,
-    commandLastArgument: patterns_v1.commandLastArgument,
-    commandExpressionArgumentWithOneTrueBrace: patterns_v1.commandExpressionWithOneTrueBraceArgument,
+    startAnchor: patterns_v1.statementStartAnchor,
+    endAnchor: patterns_v1.lineEndAnchor,
   };
 
   return {
@@ -38,7 +33,7 @@ export function createRepositories(scopeName: ScopeName): Repositories {
       includeRule(Repository.InLineComment),
     ),
     [Repository.SingleLineComment]: rule_v1.createSingleLineCommentRule(scopeName, {
-      startAnchor: patterns_v1.statementBeginAnchor,
+      startAnchor: patterns_v1.statementStartAnchor,
     }),
     [Repository.InLineComment]: rule_v1.createInLineCommentRule(scopeName),
     // #endregion trivia
@@ -54,6 +49,7 @@ export function createRepositories(scopeName: ScopeName): Repositories {
       includeRule(Repository.LabelStatement),
       includeRule(Repository.IfStatement),
       includeRule(Repository.WhileStatement),
+      includeRule(Repository.LoopStatement),
       includeRule(Repository.UntilStatement),
       includeRule(Repository.Keyword),
       includeRule(Repository.ForStatement),
@@ -67,48 +63,52 @@ export function createRepositories(scopeName: ScopeName): Repositories {
     [Repository.LegacyStatement]: patternsRule(includeRule(Repository.Legacy)),
     [Repository.CommandStatement]: rule_v1.createCommandLikeStatementRule(scopeName, definition_v1.commandDefinitions, {
       ...commonCommandBuilderOptions,
-      statementScopeName: Repository.CommandStatement,
-      commandScopeName: RuleName.CommandName,
+      statementElementName: Repository.CommandStatement,
+      commandElementName: RuleName.CommandName,
     } as Placeholder),
     [Repository.IncludeStatement]: rule_v1.createIncludeStatementRule(scopeName, {
-      startAnchor: patterns_v1.statementBeginAnchor,
+      startAnchor: patterns_v1.statementStartAnchor,
       endAnchor: patterns_v1.lineEndAnchor,
     }),
     [Repository.DirectiveStatement]: rule_v1.createCommandLikeStatementRule(scopeName, definition_v1.directiveDefinitions, {
       ...commonCommandBuilderOptions,
-      statementScopeName: Repository.DirectiveStatement,
-      commandScopeName: RuleName.DirectiveName,
+      statementElementName: Repository.DirectiveStatement,
+      commandElementName: RuleName.DirectiveName,
     } as Placeholder),
     [Repository.JumpStatement]: rule_v1.createCommandLikeStatementRule(scopeName, definition_v1.jumpCommandDefenitions, {
       ...commonCommandBuilderOptions,
-      statementScopeName: Repository.JumpStatement,
-      commandScopeName: RuleName.JumpCommandName,
+      statementElementName: Repository.JumpStatement,
+      commandElementName: RuleName.JumpCommandName,
     } as Placeholder),
-    [Repository.LabelStatement]: rule_v1.createLabelRule(scopeName, { startAnchor: patterns_v1.statementBeginAnchor }),
-    [Repository.HotkeyLabelStatement]: rule_v1.createHotkeyLabelRule(scopeName, { startAnchor: patterns_v1.statementBeginAnchor }),
+    [Repository.LabelStatement]: rule_v1.createLabelRule(scopeName, { startAnchor: patterns_v1.statementStartAnchor }),
+    [Repository.HotkeyLabelStatement]: rule_v1.createHotkeyLabelRule(scopeName, { startAnchor: patterns_v1.statementStartAnchor }),
     [Repository.HotstringLabelStatement]: rule_v1.createHotstringLabelRule(scopeName, {
-      startAnchor: patterns_v1.statementBeginAnchor,
+      startAnchor: patterns_v1.statementStartAnchor,
       endAnchor: patterns_v1.lineEndAnchor,
     }),
 
     [Repository.ExpressionStatement]: patternsRule(includeRule(Repository.Expression)),
     [Repository.IfStatement]: rule_v1.createIfStatementRule(scopeName, {
-      startAnchor: patterns_v1.statementBeginAnchor,
+      startAnchor: patterns_v1.statementStartAnchor,
     }),
     [Repository.WhileStatement]: rule_v1.createWhileStatementRule(scopeName, {
-      startAnchor: patterns_v1.statementBeginAnchor,
+      startAnchor: patterns_v1.statementStartAnchor,
+    }),
+    [Repository.LoopStatement]: rule_v1.createLoopStatementRule(scopeName, {
+      startAnchor: patterns_v1.statementStartAnchor,
+      endAnchor: patterns_v1.controlFlowEndAnchor,
     }),
     [Repository.UntilStatement]: rule_v1.createUntilStatementRule(scopeName, {
-      startAnchor: patterns_v1.statementBeginAnchor,
+      startAnchor: patterns_v1.statementStartAnchor,
     }),
     [Repository.ForStatement]: rule_v1.createForStatementRule(scopeName, {
-      startAnchor: patterns_v1.statementBeginAnchor,
+      startAnchor: patterns_v1.statementStartAnchor,
     }),
     [Repository.TryStatement]: rule_v1.createTryStatementRule(scopeName, {
-      startAnchor: patterns_v1.statementBeginAnchor,
+      startAnchor: patterns_v1.statementStartAnchor,
     }),
     [Repository.ThrowStatement]: rule_v1.createThrowStatementRule(scopeName, {
-      startAnchor: patterns_v1.statementBeginAnchor,
+      startAnchor: patterns_v1.statementStartAnchor,
     }),
     // #endregion statement
 
@@ -207,8 +207,8 @@ export function createRepositories(scopeName: ScopeName): Repositories {
       includeRule(Repository.CommandLastArgumentText),
       includeRule(Repository.InLineComment),
     ),
-    [Repository.CommandArgumentText]: rule_v1.createUnquotedString(scopeName, patterns_v1.commandArgument),
-    [Repository.CommandLastArgumentText]: rule_v1.createUnquotedString(scopeName, patterns_v1.commandLastArgument),
+    [Repository.CommandArgumentText]: rule_v1.createUnquotedString(scopeName, patterns_v1.commandArgumentPattern),
+    [Repository.CommandLastArgumentText]: rule_v1.createUnquotedString(scopeName, patterns_v1.lastArgumentPattern),
     // #endregion command
 
     // #region legacy

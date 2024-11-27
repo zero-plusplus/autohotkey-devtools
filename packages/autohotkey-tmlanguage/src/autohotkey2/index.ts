@@ -28,7 +28,7 @@ export function createRepositories(scopeName: ScopeName): Repositories {
       includeRule(Repository.InLineComment),
     ),
     [Repository.SingleLineComment]: rule_v1.createSingleLineCommentRule(scopeName, {
-      startAnchor: patterns_v1.statementBeginAnchor,
+      startAnchor: patterns_v1.statementStartAnchor,
     }),
     [Repository.InLineComment]: rule_v1.createInLineCommentRule(scopeName),
     // #endregion trivia

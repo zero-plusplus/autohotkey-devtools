@@ -9,7 +9,7 @@ export function createPercentExpressionRule(scopeName: ScopeName): MatchRule {
     match: seq(
       capture(seq(char('%'), inlineSpace())),
       inlineSpaces0(),
-      capture(patterns_v1.expressionArgument),
+      capture(patterns_v1.expressionArgumentPattern),
     ),
     captures: {
       1: nameRule(scopeName, RuleName.PercentExpressionBegin),

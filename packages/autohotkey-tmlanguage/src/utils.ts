@@ -146,8 +146,8 @@ export function includeRule(repositoryName: Repository): IncludeRule {
 export function includeScope(scopeName: ScopeName): IncludeRule {
   return { include: `source.${scopeName}` };
 }
-export function name(scopeName: ScopeName, ...ruleNames: ElementName[]): string {
-  return ruleNames.map((ruleName) => `${ruleName}.${scopeName}`).join(' ');
+export function name(scopeName: ScopeName, ...ruleNames: ElementName[]): ElementName {
+  return ruleNames.map((ruleName) => `${ruleName}.${scopeName}`).join(' ') as ElementName;
 }
 export function nameRule(scopeName: ScopeName, ...ruleNames: ElementName[]): NameRule {
   return { name: name(scopeName, ...ruleNames) };
@@ -155,7 +155,7 @@ export function nameRule(scopeName: ScopeName, ...ruleNames: ElementName[]): Nam
 export function patternsRule(...rules: Rule[]): PatternsRule {
   return { patterns: rules };
 }
-export function namedPatternsRule(name: string, rules: Rule[]): PatternsRule {
+export function namedPatternsRule(name: ElementName, rules: Rule[]): PatternsRule {
   return { name, patterns: rules };
 }
 // #endregion rule combinators
