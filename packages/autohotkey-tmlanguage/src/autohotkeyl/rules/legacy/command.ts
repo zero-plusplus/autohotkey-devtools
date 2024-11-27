@@ -1,8 +1,8 @@
 import { hasFlag } from '@zero-plusplus/utilities/src';
-import { CommandFlag, HighlightType, Repository, RuleName, StyleName } from '../../constants';
-import { alt, anyChar, anyChars0, capture, char, group, groupMany0, ignoreCase, inlineSpaces0, inlineSpaces1, lookahead, lookbehind, negativeLookahead, optional, optseq, ordalt, seq, startAnchor, wordBound } from '../../oniguruma';
-import type { BeginWhileRule, CommandDefinition, CommandParameter, CommandSignature, MatchRule, NameRule, Rule, ScopeName } from '../../types';
-import { includeRule, name, nameRule, patternsRule } from '../../utils';
+import { CommandFlag, HighlightType, Repository, RuleName, StyleName } from '../../../constants';
+import { alt, anyChar, anyChars0, capture, char, group, groupMany0, ignoreCase, inlineSpaces0, inlineSpaces1, lookahead, lookbehind, negativeLookahead, optional, optseq, ordalt, seq, startAnchor, wordBound } from '../../../oniguruma';
+import type { BeginWhileRule, CommandDefinition, CommandParameter, CommandSignature, NameRule, Rule, ScopeName } from '../../../types';
+import { includeRule, name, nameRule, patternsRule } from '../../../utils';
 
 export interface Placeholder {
   lineEndAnchor: string;
@@ -56,7 +56,9 @@ export function createCommandLikeStatementRule(scopeName: ScopeName, definitions
     patterns: [ includeRule(Repository.Comment) ],
   };
 }
-export function createCommandRule(scopeName: ScopeName, definition: CommandDefinition, signature: CommandSignature, placeholder: Placeholder): Rule {
+
+// #region helpers
+function createCommandRule(scopeName: ScopeName, definition: CommandDefinition, signature: CommandSignature, placeholder: Placeholder): Rule {
   const capturedCommandNamePattern = seq(
     placeholder.commandStatementBeginAnchor,
     capture(ignoreCase(definition.name)),
@@ -91,14 +93,6 @@ export function createCommandRule(scopeName: ScopeName, definition: CommandDefin
     ].map((rule, i) => [ i + 1, rule ])),
   };
 }
-export function createUnquotedString(scopeName: ScopeName, unquotedString: string): MatchRule {
-  return {
-    name: name(scopeName, RuleName.UnquotedString),
-    match: unquotedString,
-  };
-}
-
-// #region helpers
 function definitionToCommandName(scopeName: ScopeName, definition: CommandDefinition, placeholder: Placeholder): NameRule {
   if (hasFlag(definition.flags, CommandFlag.Deprecated)) {
     return nameRule(scopeName, placeholder.commandScopeName, StyleName.Strikethrough);

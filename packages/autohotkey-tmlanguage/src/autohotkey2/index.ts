@@ -112,7 +112,7 @@ export function createRepositories(scopeName: ScopeName): Repositories {
     // #endregion literal
 
     // #region token
-    [Repository.Comma]: rule_v1.createSeparatorRule(scopeName, ','),
+    [Repository.Comma]: rule_v1.createCommaSeparatorRule(scopeName, ','),
     [Repository.Operator]: rule_v1.createOperatorRule(scopeName, constants_v2.operators),
     // #endregion token
     // #endregion expression

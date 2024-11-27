@@ -162,7 +162,7 @@ export function createRepositories(scopeName: ScopeName): Repositories {
     // #endregion literal
 
     // #region token
-    [Repository.Comma]: rule_v1.createSeparatorRule(scopeName, ','),
+    [Repository.Comma]: rule_v1.createCommaSeparatorRule(scopeName, ','),
     [Repository.Operator]: rule_v1.createOperatorRule(scopeName, constants_v1.operators),
     // #endregion token
     // #endregion expression
@@ -189,7 +189,7 @@ export function createRepositories(scopeName: ScopeName): Repositories {
     // #region legacy
     [Repository.Legacy]: patternsRule(includeRule(Repository.LegacyAssignment)),
     [Repository.LegacyAssignment]: rule_v1.createLegacyAssignmentRule(scopeName),
-    [Repository.PercentExpression]: rule_v1.createPercentExpressionRule(scopeName, patterns_v1.expressionArgument),
+    [Repository.PercentExpression]: rule_v1.createPercentExpressionRule(scopeName),
     // #endregion legacy
   };
 }
