@@ -15,6 +15,8 @@ export * from './legacy/assignment';
 export * from './legacy/command';
 export * from './legacy/percentExpression';
 export * from './legacy/unquotedString';
+export * from './misc/keyword';
+export * from './statement/for';
 export * from './statement/if';
 export * from './statement/include';
 export * from './statement/throw';

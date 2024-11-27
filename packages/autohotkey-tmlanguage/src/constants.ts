@@ -74,6 +74,7 @@ export const enum Repository {
   IfStatement = 'repository.statement.if-else',
   WhileStatement = 'repository.statement.while',
   UntilStatement = 'repository.statement.until',
+  ForStatement = 'repository.statement.for',
   TryStatement = 'repository.statement.try-catch-finally',
   ThrowStatement = 'repository.statement.throw',
   LabelStatement = 'repository.statement.label',
@@ -134,6 +135,10 @@ export const enum Repository {
   Operator = 'repository.operator.without-comma',
   Comma = 'repository.operator.comma',
   // #endregion operators
+
+  // #region keyword
+  Keyword = 'repository.keyword',
+  // #endregion keyword
 
   // #region v1 syntax
   Command = 'repository.command',
@@ -212,6 +217,7 @@ export const enum RuleName {
   // #endregion expressions
 
   // #region token
+  Keyword = 'keyword.control',
   ControlFlowKeyword = 'keyword.control.flow',
   PercentExpressionBegin = 'meta.percent.expresion.begin',
   PercentBegin = 'meta.percent.begin',

@@ -4,6 +4,7 @@ export * from './declaration/hotstringLabel';
 export * from './declaration/label';
 export * from './statement/command';
 export * from './statement/expression';
+export * from './statement/for';
 export * from './statement/if';
 export * from './statement/include';
 export * from './statement/legacy';

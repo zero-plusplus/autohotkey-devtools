@@ -10,6 +10,7 @@ describe('autohotkeyl', () => {
     ...dataBuilder.createCommandStatementExpectedData(scopeName),
     ...dataBuilder.createCommentExpectedData(scopeName),
     ...dataBuilder.createExpressionStatementExpectedData(scopeName),
+    ...dataBuilder.createForStatementExpectedData(scopeName),
     ...dataBuilder.createHotkeyLabelStatementExpectedData(scopeName),
     ...dataBuilder.createHotstringLabelStatementExpectedData(scopeName),
     ...dataBuilder.createIfStatementExpectedData(scopeName),

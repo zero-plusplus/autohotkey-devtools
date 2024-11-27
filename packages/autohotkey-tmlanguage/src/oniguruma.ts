@@ -17,8 +17,11 @@ export function numbers1(): string {
 export function wordBound(): string {
   return '\\b';
 }
-export function keyword(word: string): string {
-  return seq(lookbehind(wordBound()), ignoreCase(word), lookahead(wordBound()));
+export function keyword(...words: string[]): string {
+  if (1 < words.length) {
+    return seq(lookbehind(wordBound()), alt(...words.map((word) => ignoreCase(word))), lookahead(wordBound()));
+  }
+  return seq(lookbehind(wordBound()), ignoreCase(words[0]), lookahead(wordBound()));
 }
 export function anyChar(): string {
   return '.';
