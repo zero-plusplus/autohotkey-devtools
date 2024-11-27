@@ -117,7 +117,7 @@ export const loopCommandDefenitions: CommandDefinition[] = [
     signature([ subcommand('Files'), path(), combiOptions([ 'D', 'F', 'R' ]) ]),
 
     // https://www.autohotkey.com/docs/v1/lib/LoopParse.htm
-    signature([ subcommand('Parse'), input(), unquoted(), unquoted() ]),
+    signature([ subcommand('Parse'), input(), options([ 'CSV' ]), unquotedShouldEscapeComma() ]),
 
     // https://www.autohotkey.com/docs/v1/lib/LoopReadFile.htm
     signature([ subcommand('Read'), path(), path() ]),

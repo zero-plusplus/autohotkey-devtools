@@ -19,7 +19,7 @@ export function createLegacyAssignmentRule(scopeName: ScopeName): MatchRule {
       capture(char('=')),
       inlineSpaces0(),
       capture(groupMany0(alt(
-        patterns_v1.brackets,
+        patterns_v1.pairs,
         patterns_v1.unquotedStringChar,
         group(ordalt(...constants_v1.unquoteEscapeSequences)),
         char('%'),

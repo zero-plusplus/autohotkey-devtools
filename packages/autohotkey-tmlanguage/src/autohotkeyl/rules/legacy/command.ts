@@ -135,6 +135,9 @@ function parameterToOniguruma(parameter: CommandParameter, isLastParameter: bool
 
   switch (parameter.type) {
     case HighlightType.SubCommand: return keyword(parameter.values![0]!);
+    case HighlightType.Input:
+    case HighlightType.Output:
+    case HighlightType.Expression: return patterns_v1.expressionArgumentPattern;
     default: break;
   }
   return patterns_v1.commandArgumentPattern;
@@ -153,16 +156,41 @@ function parameterToRule(scopeName: ScopeName, parameter: CommandParameter, isLa
       }
       return patternsRule(defaultArgumentRule);
     }
-    case HighlightType.UnquotedStringShouldEscapeComma: return patternsRule(includeRule(Repository.CommandArgument));
+    case HighlightType.UnquotedStringShouldEscapeComma: return patternsRule(
+      { name: name(scopeName, RuleName.UnquotedString, StyleName.Escape), match: '`,' },
+      includeRule(Repository.CommandArgument),
+    );
     case HighlightType.LabelName: return nameRule(scopeName, Repository.CommandArgument, RuleName.LabelName);
     case HighlightType.Enum: return patternsRule(keywordsToRule(keywordName, parameter.values!, isLastParameter), defaultArgumentRule);
     case HighlightType.Input:
     case HighlightType.Output:
-    case HighlightType.Expression: return patternsRule(includeRule(Repository.Expression));
+    case HighlightType.Expression: return patternsRule(
+      includeRule(Repository.PercentExpression),
+      includeRule(Repository.Expression),
+    );
+    case HighlightType.Options:
+      if (!parameter.values || parameter.values.length === 0) {
+        return defaultArgumentRule;
+      }
+
+      const optionsRule: MatchRule = {
+        name: name(scopeName, RuleName.UnquotedString, StyleName.Strong),
+        match: keyword(...parameter.values), 
+      };
+      return patternsRule(
+        optionsRule,
+        defaultArgumentRule,
+      );
     case HighlightType.CombiOptions:
+      if (!parameter.values || parameter.values.length === 0) {
+        return defaultArgumentRule;
+      }
+      return {
+        name: name(scopeName, RuleName.UnquotedString, StyleName.Strong),
+        match: ignoreCase(ordalt(...parameter.values)),
+      };
     case HighlightType.GuiOptions:
     case HighlightType.GuiSubCommand:
-    case HighlightType.Options:
     case HighlightType.Style:
       return patternsRule(defaultArgumentRule);
     case HighlightType.SubCommand:
