@@ -95,9 +95,9 @@ const nonAsciiChar = negChar(asciiChar());
 const sign = char('_', '#', '@', '$');
 export const nameStart: string = group(alt(letter, nonAsciiChar, sign));
 export const nameBody: string = group(alt(letter, nonAsciiChar, sign, numberChar));
-export const name: string = group(seq(nameStart, manyLimit(nameBody, nameLimitLength - 1)));
+export const identifierName: string = group(seq(nameStart, manyLimit(nameBody, nameLimitLength - 1)));
 export const keyName: string = group(alt(
   group(seq(char('%'), anyChars1(), char('%'))),
-  name,
+  identifierName,
 ));
 // #endregion Names

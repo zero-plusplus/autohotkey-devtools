@@ -120,6 +120,7 @@ export function createRepositories(scopeName: ScopeName): Repositories {
     [Repository.Expression]: patternsRule(
       includeRule(Repository.Comma),
 
+      includeRule(Repository.CallExpression),
       includeRule(Repository.ParenthesizedExpression),
       includeRule(Repository.Literal),
       includeRule(Repository.BuiltInVariable),
@@ -181,6 +182,10 @@ export function createRepositories(scopeName: ScopeName): Repositories {
     [Repository.InvalidScientificNotation]: rule_v1.createInvalidScientificNotationRule(scopeName),
     // #endregion number
     // #endregion literal
+
+    [Repository.CallExpression]: rule_v1.createCallExpressionRule(scopeName, {
+      identifierPattern: patterns_v1.identifierName,
+    }),
 
     // #region token
     [Repository.Comma]: rule_v1.createCommaSeparatorRule(scopeName, ','),

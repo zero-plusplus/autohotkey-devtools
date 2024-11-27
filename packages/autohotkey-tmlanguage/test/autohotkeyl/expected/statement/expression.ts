@@ -287,6 +287,78 @@ export function createExpressionStatementExpectedData(scopeName: ScopeName): Exp
     ],
     // #endregion array
 
+    // #region call
+    [
+      dedent`
+        abc()
+        %abc%()
+        %abc%edf()
+      `, [
+        { text: 'abc', scopes: name(scopeName, RuleName.FunctionName) },
+        { text: '(', scopes: name(scopeName, RuleName.OpenParen) },
+        { text: ')', scopes: name(scopeName, RuleName.CloseParen) },
+
+        { text: '%abc%', scopes: name(scopeName, RuleName.FunctionName) },
+        { text: '(', scopes: name(scopeName, RuleName.OpenParen) },
+        { text: ')', scopes: name(scopeName, RuleName.CloseParen) },
+
+        { text: '%abc%edf', scopes: name(scopeName, RuleName.FunctionName) },
+        { text: '(', scopes: name(scopeName, RuleName.OpenParen) },
+        { text: ')', scopes: name(scopeName, RuleName.CloseParen) },
+      ],
+    ],
+    [
+      dedent`
+        abc(a, b, c)
+        abc(
+          a, ; comment
+          b, ; comment
+          c, ; comment
+        )
+        abc(
+          , a ; comment
+          , b ; comment
+          , c ; comment
+        )
+      `, [
+        { text: 'abc', scopes: name(scopeName, RuleName.FunctionName) },
+        { text: '(', scopes: name(scopeName, RuleName.OpenParen) },
+        { text: 'a', scopes: name(scopeName, RuleName.Variable) },
+        { text: ',', scopes: name(scopeName, RuleName.Comma) },
+        { text: 'b', scopes: name(scopeName, RuleName.Variable) },
+        { text: ',', scopes: name(scopeName, RuleName.Comma) },
+        { text: 'c', scopes: name(scopeName, RuleName.Variable) },
+        { text: ')', scopes: name(scopeName, RuleName.CloseParen) },
+
+        { text: 'abc', scopes: name(scopeName, RuleName.FunctionName) },
+        { text: '(', scopes: name(scopeName, RuleName.OpenParen) },
+        { text: 'a', scopes: name(scopeName, RuleName.Variable) },
+        { text: ',', scopes: name(scopeName, RuleName.Comma) },
+        { text: '; comment', scopes: name(scopeName, RuleName.InLineComment) },
+        { text: 'b', scopes: name(scopeName, RuleName.Variable) },
+        { text: ',', scopes: name(scopeName, RuleName.Comma) },
+        { text: '; comment', scopes: name(scopeName, RuleName.InLineComment) },
+        { text: 'c', scopes: name(scopeName, RuleName.Variable) },
+        { text: ',', scopes: name(scopeName, RuleName.Comma) },
+        { text: '; comment', scopes: name(scopeName, RuleName.InLineComment) },
+        { text: ')', scopes: name(scopeName, RuleName.CloseParen) },
+
+        { text: 'abc', scopes: name(scopeName, RuleName.FunctionName) },
+        { text: '(', scopes: name(scopeName, RuleName.OpenParen) },
+        { text: ',', scopes: name(scopeName, RuleName.Comma) },
+        { text: 'a', scopes: name(scopeName, RuleName.Variable) },
+        { text: '; comment', scopes: name(scopeName, RuleName.InLineComment) },
+        { text: ',', scopes: name(scopeName, RuleName.Comma) },
+        { text: 'b', scopes: name(scopeName, RuleName.Variable) },
+        { text: '; comment', scopes: name(scopeName, RuleName.InLineComment) },
+        { text: ',', scopes: name(scopeName, RuleName.Comma) },
+        { text: 'c', scopes: name(scopeName, RuleName.Variable) },
+        { text: '; comment', scopes: name(scopeName, RuleName.InLineComment) },
+        { text: ')', scopes: name(scopeName, RuleName.CloseParen) },
+      ],
+    ],
+    // #endregion call
+
     // #region parenthesized expression
     [
       '(var)', [

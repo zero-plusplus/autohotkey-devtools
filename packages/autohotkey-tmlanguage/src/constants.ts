@@ -120,6 +120,8 @@ export const enum Repository {
   // #endregion object
   // #endregion literal
 
+  CallExpression = 'repository.expression.call',
+
   // #region variable
   Variable = 'repository.expression.variable',
   BuiltInVariable = 'repository.expression.variable.built-in',
@@ -218,6 +220,7 @@ export const enum RuleName {
   // #endregion expressions
 
   // #region token
+  FunctionName = 'support.function',
   Keyword = 'keyword.control',
   ControlFlowKeyword = 'keyword.control.flow',
   PercentExpressionBegin = 'meta.percent.expresion.begin',
