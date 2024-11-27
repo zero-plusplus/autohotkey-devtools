@@ -37,12 +37,15 @@ export function createRepositories(scopeName: ScopeName): Repositories {
       includeRule(Repository.SingleLineComment),
       includeRule(Repository.InLineComment),
     ),
-    [Repository.SingleLineComment]: rule_v1.createSingleLineCommentRule(scopeName),
+    [Repository.SingleLineComment]: rule_v1.createSingleLineCommentRule(scopeName, {
+      startAnchor: patterns_v1.statementBeginAnchor,
+    }),
     [Repository.InLineComment]: rule_v1.createInLineCommentRule(scopeName),
     // #endregion trivia
 
     // #region statement
     [Repository.Statement]: patternsRule(
+      includeRule(Repository.IncludeStatement),
       includeRule(Repository.DirectiveStatement),
       includeRule(Repository.CommandStatement),
       includeRule(Repository.JumpStatement),
@@ -61,6 +64,10 @@ export function createRepositories(scopeName: ScopeName): Repositories {
       statementScopeName: Repository.CommandStatement,
       commandScopeName: RuleName.CommandName,
     } as Placeholder),
+    [Repository.IncludeStatement]: rule_v1.createIncludeStatementRule(scopeName, {
+      startAnchor: patterns_v1.statementBeginAnchor,
+      endAnchor: patterns_v1.lineEndAnchor,
+    }),
     [Repository.DirectiveStatement]: rule_v1.createCommandLikeStatementRule(scopeName, definition_v1.directiveDefinitions, {
       ...commonCommandBuilderOptions,
       statementScopeName: Repository.DirectiveStatement,
@@ -126,7 +133,7 @@ export function createRepositories(scopeName: ScopeName): Repositories {
     // #region string
     [Repository.Object]: rule_v1.createObjectRule(scopeName, {
       startAnchor: patterns_v1.objectStartAnchor,
-      keyName: patterns_v1.keyName, 
+      keyName: patterns_v1.keyName,
     }),
     [Repository.Array]: rule_v1.createArrayRule(scopeName),
 

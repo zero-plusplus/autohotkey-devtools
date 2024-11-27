@@ -13,6 +13,7 @@ describe('autohotkeyl', () => {
     ...dataBuilder.createHotkeyLabelStatementExpectedData(scopeName),
     ...dataBuilder.createHotstringLabelStatementExpectedData(scopeName),
     ...dataBuilder.createIfStatementExpectedData(scopeName),
+    ...dataBuilder.createIncludeStatementExpectedData(scopeName),
     ...dataBuilder.createLabelStatementExpectedData(scopeName),
     ...dataBuilder.createLegacyStatementExpectedData(scopeName),
   ];

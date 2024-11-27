@@ -66,6 +66,7 @@ export const enum Repository {
   // #region statements
   Statement = 'repository.statement',
   ExpressionStatement = 'repository.statement.expression',
+  IncludeStatement = 'repository.statement.include',
   DirectiveStatement = 'repository.statement.directive',
   JumpStatement = 'repository.statement.jump',
   CommandStatement = 'repository.statement.command',
@@ -217,6 +218,8 @@ export const enum RuleName {
   CloseBracket = 'meta.brace.square.end',
   OpenBrace = 'meta.brace.curly.begin',
   CloseBrace = 'meta.brace.curly.end',
+  OpenAngleBracket = 'meta.brace.angle.begin',
+  CloseAngleBracket = 'meta.brace.angle.end',
   Colon = 'punctuation.separator.colon',
   ColonColon = 'punctuation.separator.colon-colon',
   // #region tokens

@@ -1,12 +1,15 @@
 import { RuleName } from '../../../constants';
-import { anyChars0, capture, char, endAnchor, inlineSpace, inlineSpaces0, lookbehind, seq, startAnchor } from '../../../oniguruma';
+import { anyChars0, capture, char, endAnchor, inlineSpaces1, seq } from '../../../oniguruma';
 import type { MatchRule, ScopeName } from '../../../types';
 import { nameRule } from '../../../utils';
 
-export function createSingleLineCommentRule(scopeName: ScopeName): MatchRule {
+interface Placeholder {
+  startAnchor: string;
+}
+export function createSingleLineCommentRule(scopeName: ScopeName, placeholder: Placeholder): MatchRule {
   return {
     match: seq(
-      lookbehind(seq(startAnchor(), inlineSpaces0())),
+      placeholder.startAnchor,
       capture(seq(char(';'), anyChars0())),
       endAnchor(),
     ),
@@ -18,7 +21,7 @@ export function createSingleLineCommentRule(scopeName: ScopeName): MatchRule {
 export function createInLineCommentRule(scopeName: ScopeName): MatchRule {
   return {
     match: seq(
-      lookbehind(inlineSpace()),
+      inlineSpaces1(),
       capture(seq(char(';'), anyChars0())),
       endAnchor(),
     ),

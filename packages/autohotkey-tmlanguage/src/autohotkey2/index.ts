@@ -1,3 +1,4 @@
+import * as patterns_v1 from '../autohotkeyl/patterns';
 import * as rule_v1 from '../autohotkeyl/rules';
 import { Repository } from '../constants';
 import type { Repositories, ScopeName, TmLanguage } from '../types';
@@ -26,7 +27,9 @@ export function createRepositories(scopeName: ScopeName): Repositories {
       includeRule(Repository.SingleLineComment),
       includeRule(Repository.InLineComment),
     ),
-    [Repository.SingleLineComment]: rule_v1.createSingleLineCommentRule(scopeName),
+    [Repository.SingleLineComment]: rule_v1.createSingleLineCommentRule(scopeName, {
+      startAnchor: patterns_v1.statementBeginAnchor,
+    }),
     [Repository.InLineComment]: rule_v1.createInLineCommentRule(scopeName),
     // #endregion trivia
 
