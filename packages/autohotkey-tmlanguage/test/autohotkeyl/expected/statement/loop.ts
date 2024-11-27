@@ -160,5 +160,61 @@ export function createLoopStatementExpectedData(scopeName: ScopeName): ExpectedT
       ],
     ],
     // #endregion loop parse
+
+    // #region loop read
+    [
+      dedent`
+        Loop read
+        {
+        }
+        Loop, Read
+        {
+        }
+      `,
+      [
+        { text: 'Loop', scopes: name(scopeName, RuleName.ControlFlowKeyword) },
+        { text: 'read', scopes: name(scopeName, RuleName.ControlFlowKeyword) },
+        { text: '{', scopes: name(scopeName, RuleName.BlockBegin) },
+        { text: '}', scopes: name(scopeName, RuleName.BlockEnd) },
+
+        { text: 'Loop', scopes: name(scopeName, RuleName.ControlFlowKeyword) },
+        { text: ',', scopes: name(scopeName, RuleName.Comma) },
+        { text: 'Read', scopes: name(scopeName, RuleName.ControlFlowKeyword) },
+        { text: '{', scopes: name(scopeName, RuleName.BlockBegin) },
+        { text: '}', scopes: name(scopeName, RuleName.BlockEnd) },
+      ],
+    ],
+    [
+      dedent`
+        Loop Read
+        Loop Read, path\\to
+        Loop Read, path\\to, path\\to
+        Loop Read, path\\to, \`,
+      `,
+      [
+        { text: 'Loop', scopes: name(scopeName, RuleName.ControlFlowKeyword) },
+        { text: 'Read', scopes: name(scopeName, RuleName.ControlFlowKeyword) },
+
+        { text: 'Loop', scopes: name(scopeName, RuleName.ControlFlowKeyword) },
+        { text: 'Read', scopes: name(scopeName, RuleName.ControlFlowKeyword) },
+        { text: ',', scopes: name(scopeName, RuleName.Comma) },
+        { text: 'path\\to', scopes: name(scopeName, RuleName.UnquotedString) },
+
+        { text: 'Loop', scopes: name(scopeName, RuleName.ControlFlowKeyword) },
+        { text: 'Read', scopes: name(scopeName, RuleName.ControlFlowKeyword) },
+        { text: ',', scopes: name(scopeName, RuleName.Comma) },
+        { text: 'path\\to', scopes: name(scopeName, RuleName.UnquotedString) },
+        { text: ',', scopes: name(scopeName, RuleName.Comma) },
+        { text: 'path\\to', scopes: name(scopeName, RuleName.UnquotedString) },
+
+        { text: 'Loop', scopes: name(scopeName, RuleName.ControlFlowKeyword) },
+        { text: 'Read', scopes: name(scopeName, RuleName.ControlFlowKeyword) },
+        { text: ',', scopes: name(scopeName, RuleName.Comma) },
+        { text: 'path\\to', scopes: name(scopeName, RuleName.UnquotedString) },
+        { text: ',', scopes: name(scopeName, RuleName.Comma) },
+        { text: '`,', scopes: name(scopeName, RuleName.UnquotedString, StyleName.Escape) },
+      ],
+    ],
+    // #endregion loop read
   ];
 }

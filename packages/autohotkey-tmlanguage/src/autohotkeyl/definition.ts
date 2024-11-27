@@ -120,7 +120,7 @@ export const loopCommandDefenitions: CommandDefinition[] = [
     signature([ subcommand('Parse'), input(), options([ 'CSV' ]), unquotedShouldEscapeComma() ]),
 
     // https://www.autohotkey.com/docs/v1/lib/LoopReadFile.htm
-    signature([ subcommand('Read'), path(), path() ]),
+    signature([ subcommand('Read'), path(), unquotedShouldEscapeComma() ]),
 
     // https://www.autohotkey.com/docs/v1/lib/LoopReg.htm#new
     signature([ subcommand('Reg'), unquoted(), combiOptions([ 'K', 'V', 'R' ]) ]),
