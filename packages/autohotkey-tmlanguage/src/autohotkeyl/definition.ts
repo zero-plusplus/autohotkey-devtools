@@ -124,9 +124,6 @@ export const loopCommandDefenitions: CommandDefinition[] = [
 
     // https://www.autohotkey.com/docs/v1/lib/LoopReg.htm#new
     signature([ subcommand('Reg'), unquoted(), combiOptions([ 'K', 'V', 'R' ]) ]),
-
-    // https://www.autohotkey.com/docs/v1/lib/LoopReg.htm#old
-    signature([ subcommand('RootKey', CommandParameterFlag.Deprecated), unquoted(), unquoted(), keyword([ '0', '1' ]) ]),
   ]),
 ];
 // #endregion loop
