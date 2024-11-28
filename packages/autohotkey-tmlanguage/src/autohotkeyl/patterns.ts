@@ -10,7 +10,7 @@ export const expressionStartAnchor: string = lookbehind(alt(
   seq(startAnchor(), inlineSpaces0(), opt(char(','))),
   seq(char(':'), inlineSpaces0()),
 ));
-export const objectStartAnchor: string = seq(
+export const expressionContinuationStartAnchor: string = seq(
   lookbehind(ordalt(...escapeOnigurumaTexts(operators))),
   inlineSpaces0(),
   lookahead(char('{')),

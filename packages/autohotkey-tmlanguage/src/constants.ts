@@ -157,8 +157,9 @@ export const enum Repository {
   // #region legacy
   Legacy = 'repository.legacy',
   LegacyAssignment = 'repository.legacy.expression.assignment',
-  LegacyTextEscapeSequence = 'repository.legacy.expression.content.escape-sequence.unquote',
   PercentExpression = 'repository.legacy.expression.percent',
+  ContinuationSection = 'repository.legacy.continuation-section',
+  ContinuationSectionText = 'repository.legacy.continuation-section.text',
   // #endregion legacy
 }
 

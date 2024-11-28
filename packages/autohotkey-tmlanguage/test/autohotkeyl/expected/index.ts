@@ -2,6 +2,8 @@ export * from './declaration/block';
 export * from './declaration/hotkeyLabel';
 export * from './declaration/hotstringLabel';
 export * from './declaration/label';
+export * from './legacy/assignment';
+export * from './legacy/continuationSection';
 export * from './statement/command';
 export * from './statement/expression';
 export * from './statement/for';

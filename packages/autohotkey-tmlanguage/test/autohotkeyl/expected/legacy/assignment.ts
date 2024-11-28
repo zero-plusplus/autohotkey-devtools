@@ -3,7 +3,7 @@ import type { ScopeName } from '../../../../src/types';
 import { getEscapeSequencesInfo, name } from '../../../../src/utils';
 import type { ExpectedTestData } from '../../../types';
 
-export function createLegacyStatementExpectedData(scopeName: ScopeName): ExpectedTestData[] {
+export function createLegacyAssignmentStatementExpectedData(scopeName: ScopeName): ExpectedTestData[] {
   const escapeSequencesInfo = getEscapeSequencesInfo(scopeName);
 
   return [

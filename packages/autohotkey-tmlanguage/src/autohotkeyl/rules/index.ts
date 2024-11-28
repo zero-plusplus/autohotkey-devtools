@@ -14,6 +14,8 @@ export * from './expression/string';
 export * from './expression/variable';
 export * from './legacy/assignment';
 export * from './legacy/command';
+export * from './legacy/continuationSection';
+export * from './legacy/escape';
 export * from './legacy/percentExpression';
 export * from './legacy/unquotedString';
 export * from './misc/keyword';

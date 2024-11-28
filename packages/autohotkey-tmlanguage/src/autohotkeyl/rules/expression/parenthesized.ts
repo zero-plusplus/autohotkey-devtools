@@ -1,18 +1,34 @@
 import { Repository, RuleName } from '../../../constants';
-import { capture, char } from '../../../oniguruma';
+import { anyChars0, capture, char, seq } from '../../../oniguruma';
 import type { BeginEndRule, ScopeName } from '../../../types';
-import { includeRule, nameRule } from '../../../utils';
+import { includeRule, nameRule, patternsRule } from '../../../utils';
 
-export function createParenthesizedExpressionRule(scopeName: ScopeName): BeginEndRule {
-  return {
-    begin: capture(char('(')),
-    beginCaptures: {
-      1: nameRule(scopeName, RuleName.OpenParen),
+interface Placeholder {
+  startAnchor: string;
+}
+export function createParenthesizedExpressionRule(scopeName: ScopeName, placeholder: Placeholder): BeginEndRule {
+  return patternsRule(
+    {
+      match: seq(capture(char('(')), capture(anyChars0()), capture(char(')'))),
+      captures: {
+        1: nameRule(scopeName, RuleName.OpenParen),
+        2: patternsRule(includeRule(Repository.Expression)),
+        3: nameRule(scopeName, RuleName.CloseParen),
+      },
     },
-    end: capture(char(')')),
-    endCaptures: {
-      1: nameRule(scopeName, RuleName.CloseParen),
+    {
+      begin: seq(
+        placeholder.startAnchor,
+        capture(char('(')),
+      ),
+      beginCaptures: {
+        1: nameRule(scopeName, RuleName.OpenParen),
+      },
+      end: capture(char(')')),
+      endCaptures: {
+        1: nameRule(scopeName, RuleName.CloseParen),
+      },
+      patterns: [ includeRule(Repository.Expression) ],
     },
-    patterns: [ includeRule(Repository.Expression) ],
-  };
+  );
 }

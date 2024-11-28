@@ -1,4 +1,5 @@
 import { Repository, RuleName } from '../constants';
+import { anyChars1 } from '../oniguruma';
 import type { Repositories, ScopeName, TmLanguage } from '../types';
 import { includeRule, patternsRule } from '../utils';
 import * as constants_v1 from './constants';
@@ -60,6 +61,7 @@ export function createRepositories(scopeName: ScopeName): Repositories {
 
       includeRule(Repository.LegacyStatement),
       includeRule(Repository.ExpressionStatement),
+      includeRule(Repository.ContinuationSection),
     ),
     [Repository.LegacyStatement]: patternsRule(includeRule(Repository.Legacy)),
     [Repository.CommandStatement]: rule_v1.createCommandLikeStatementRule(scopeName, definition_v1.commandDefinitions, {
@@ -136,7 +138,9 @@ export function createRepositories(scopeName: ScopeName): Repositories {
 
       includeRule(Repository.Operator),
     ),
-    [Repository.ParenthesizedExpression]: rule_v1.createParenthesizedExpressionRule(scopeName),
+    [Repository.ParenthesizedExpression]: rule_v1.createParenthesizedExpressionRule(scopeName, {
+      startAnchor: patterns_v1.expressionContinuationStartAnchor,
+    }),
 
     // #region variable
     [Repository.Variable]: rule_v1.createVariableRule(scopeName, patterns_v1.nameStart, patterns_v1.nameBody),
@@ -159,7 +163,7 @@ export function createRepositories(scopeName: ScopeName): Repositories {
 
     // #region string
     [Repository.Object]: rule_v1.createObjectRule(scopeName, {
-      startAnchor: patterns_v1.objectStartAnchor,
+      startAnchor: patterns_v1.expressionContinuationStartAnchor,
       keyName: patterns_v1.keyName,
     }),
     [Repository.Array]: rule_v1.createArrayRule(scopeName),
@@ -206,25 +210,37 @@ export function createRepositories(scopeName: ScopeName): Repositories {
     [Repository.CommandArgument]: patternsRule(
       includeRule(Repository.PercentExpression),
       includeRule(Repository.Dereference),
-      includeRule(Repository.LegacyTextEscapeSequence),
       includeRule(Repository.CommandArgumentText),
       includeRule(Repository.InLineComment),
     ),
     [Repository.CommandLastArgument]: patternsRule(
       includeRule(Repository.PercentExpression),
       includeRule(Repository.Dereference),
-      includeRule(Repository.LegacyTextEscapeSequence),
       includeRule(Repository.CommandLastArgumentText),
       includeRule(Repository.InLineComment),
     ),
-    [Repository.CommandArgumentText]: rule_v1.createUnquotedString(scopeName, patterns_v1.commandArgumentPattern),
-    [Repository.CommandLastArgumentText]: rule_v1.createUnquotedString(scopeName, patterns_v1.lastArgumentPattern),
+    [Repository.CommandArgumentText]: rule_v1.createUnquotedString(scopeName, {
+      stringPattern: patterns_v1.commandArgumentPattern,
+      escapeSequences: constants_v1.unquoteEscapeSequences,
+    }),
+    [Repository.CommandLastArgumentText]: rule_v1.createUnquotedString(scopeName, {
+      stringPattern: patterns_v1.lastArgumentPattern,
+      escapeSequences: constants_v1.unquoteEscapeSequences,
+    }),
     // #endregion command
 
     // #region legacy
     [Repository.Legacy]: patternsRule(includeRule(Repository.LegacyAssignment)),
     [Repository.LegacyAssignment]: rule_v1.createLegacyAssignmentRule(scopeName),
     [Repository.PercentExpression]: rule_v1.createPercentExpressionRule(scopeName),
+    [Repository.ContinuationSection]: rule_v1.createContinuationSectionRule(scopeName, {
+      startAnchor: patterns_v1.statementStartAnchor,
+      lineEndAnchor: patterns_v1.lineEndAnchor,
+    }),
+    [Repository.ContinuationSectionText]: rule_v1.createUnquotedString(scopeName, {
+      stringPattern: anyChars1(),
+      escapeSequences: [ ...constants_v1.unquoteEscapeSequences, '`)' ],
+    }),
     // #endregion legacy
   };
 }

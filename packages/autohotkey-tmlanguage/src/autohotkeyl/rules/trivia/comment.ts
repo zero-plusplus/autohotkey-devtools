@@ -1,5 +1,5 @@
 import { RuleName } from '../../../constants';
-import { anyChars0, capture, char, endAnchor, inlineSpaces1, seq } from '../../../oniguruma';
+import { anyChars0, capture, char, endAnchor, inlineSpace, lookbehind, seq } from '../../../oniguruma';
 import type { MatchRule, ScopeName } from '../../../types';
 import { nameRule } from '../../../utils';
 
@@ -21,7 +21,7 @@ export function createSingleLineCommentRule(scopeName: ScopeName, placeholder: P
 export function createInLineCommentRule(scopeName: ScopeName): MatchRule {
   return {
     match: seq(
-      inlineSpaces1(),
+      lookbehind(inlineSpace()),
       capture(seq(char(';'), anyChars0())),
       endAnchor(),
     ),
