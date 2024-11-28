@@ -48,6 +48,7 @@ export function createRepositories(scopeName: ScopeName): Repositories {
       includeRule(Repository.HotkeyLabelStatement),
       includeRule(Repository.LabelStatement),
       includeRule(Repository.IfStatement),
+      includeRule(Repository.SwitchStatement),
       includeRule(Repository.WhileStatement),
       includeRule(Repository.LoopStatement),
       includeRule(Repository.UntilStatement),
@@ -90,6 +91,10 @@ export function createRepositories(scopeName: ScopeName): Repositories {
     [Repository.ExpressionStatement]: patternsRule(includeRule(Repository.Expression)),
     [Repository.IfStatement]: rule_v1.createIfStatementRule(scopeName, {
       startAnchor: patterns_v1.statementStartAnchor,
+    }),
+    [Repository.SwitchStatement]: rule_v1.createSwitchStatementRule(scopeName, {
+      startAnchor: patterns_v1.statementStartAnchor,
+      lineEndAnchor: patterns_v1.lineEndAnchor,
     }),
     [Repository.WhileStatement]: rule_v1.createWhileStatementRule(scopeName, {
       startAnchor: patterns_v1.statementStartAnchor,

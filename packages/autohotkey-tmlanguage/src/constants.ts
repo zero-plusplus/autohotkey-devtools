@@ -72,6 +72,7 @@ export const enum Repository {
   CommandStatement = 'repository.statement.command',
   LegacyStatement = 'repository.statement.legacy.expression',
   IfStatement = 'repository.statement.if-else',
+  SwitchStatement = 'repository.statement.switch-case',
   WhileStatement = 'repository.statement.while',
   LoopStatement = 'repository.statement.loop',
   UntilStatement = 'repository.statement.until',
@@ -223,6 +224,7 @@ export const enum RuleName {
   FunctionName = 'support.function',
   Keyword = 'keyword.control',
   ControlFlowKeyword = 'keyword.control.flow',
+  SwitchLabelKeyword = 'keyword.control.switch-case-default',
   PercentExpressionBegin = 'meta.percent.expresion.begin',
   PercentBegin = 'meta.percent.begin',
   PercentEnd = 'meta.percent.end',
@@ -236,6 +238,7 @@ export const enum RuleName {
   CloseAngleBracket = 'meta.brace.angle.end',
   Colon = 'punctuation.separator.colon',
   ColonColon = 'punctuation.separator.colon-colon',
+  SemiColon = 'punctuation.separator.semi-colon',
   // #region tokens
 
   // #region legacy
