@@ -1,9 +1,13 @@
-import { commonOperators } from '../constants';
+import { commonModifiers, commonOperators } from '../constants';
 
 // #region [Escape Sequences](https://www.autohotkey.com/docs/v1/misc/EscapeChar.htm)
 export const unquoteEscapeSequences = [ '`,', '`%', '``', '`;', '`::', '`r', '`n', '`b', '`t', '`v', '`a', '`f' ] as const;
 export const doubleQuoteEscapeSequences: [ '""', ...typeof unquoteEscapeSequences] = [ '""', ...unquoteEscapeSequences ] as const;
 // #endregion Escape Sequences
+
+// #region modifiers
+export const modifiers: [ ...typeof commonModifiers ] = [ ...commonModifiers ];
+// #endregion modifiers
 
 // #region [Operators](https://www.autohotkey.com/docs/v1/Variables.htm#Operators)
 export const operators: [ ...typeof commonOperators, '<>' ] = [

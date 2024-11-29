@@ -1,5 +1,5 @@
 import { alt, anyChar, anyChars0, anyChars1, asciiChar, char, endAnchor, escapeOnigurumaTexts, group, groupMany0, inlineSpace, inlineSpaces0, inlineSpaces1, lookahead, lookbehind, manyLimit, negativeLookahead, negativeLookbehind, negChar, negChars0, opt, ordalt, seq, startAnchor } from '../oniguruma';
-import { operators } from './constants';
+import * as constants_v1 from './constants';
 
 export const statementStartAnchor: string = lookbehind(alt(
   seq(startAnchor(), inlineSpaces0()),
@@ -11,7 +11,7 @@ export const expressionStartAnchor: string = lookbehind(alt(
   seq(char(':'), inlineSpaces0()),
 ));
 export const expressionContinuationStartAnchor: string = seq(
-  lookbehind(ordalt(...escapeOnigurumaTexts(operators))),
+  lookbehind(ordalt(...escapeOnigurumaTexts(constants_v1.operators))),
   inlineSpaces0(),
   lookahead(char('{')),
 );

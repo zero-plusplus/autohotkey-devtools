@@ -1,6 +1,10 @@
 // #region constants
 export const scopeNames = [ 'autohotkey', 'autohotkeynext', 'autohotkeyl', 'autohotkey2' ] as const;
 
+// #region modifiers
+export const commonModifiers = [ 'local', 'global', 'static' ] as const;
+// #endregion modifiers
+
 // #region operators
 // https://www.autohotkey.com/docs/v2/Variables.htm#Operators
 // https://www.autohotkey.com/docs/v1/Variables.htm#Operators
@@ -86,6 +90,7 @@ export const enum Repository {
 
   // #region declaration
   Block = 'repository.declaration.block',
+  Modifier = 'repository.declaration.modifier',
   Declaration = 'repository.declaration',
   ClassDeclaration = 'repository.declaration.class',
   // #endregion declaration
@@ -184,6 +189,7 @@ export const enum RuleName {
   // #endregion statement
 
   // #region declaration
+  Modifier = 'storage.modifier',
   BlockBegin = 'punctuation.definition.block.begin',
   ClassBlockBegin = 'punctuation.definition.class.block.begin',
   BlockEnd = 'punctuation.definition.block.end',
