@@ -13,6 +13,6 @@ export function createBlockRule(scopeName: ScopeName): BeginEndRule {
     endCaptures: {
       1: nameRule(scopeName, RuleName.BlockEnd),
     },
-    patterns: [ includeRule(Repository.Statement) ],
+    patterns: [ includeRule(Repository.Self) ],
   };
 }

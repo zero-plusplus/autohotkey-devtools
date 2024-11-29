@@ -57,7 +57,7 @@ export function createRepositories(scopeName: ScopeName): Repositories {
       includeRule(Repository.ForStatement),
       includeRule(Repository.TryStatement),
       includeRule(Repository.ThrowStatement),
-      includeRule(Repository.Block),
+      includeRule(Repository.Declaration),
 
       includeRule(Repository.LegacyStatement),
       includeRule(Repository.ExpressionStatement),
@@ -120,7 +120,16 @@ export function createRepositories(scopeName: ScopeName): Repositories {
     // #endregion statement
 
     // #region declaration
+    [Repository.Declaration]: patternsRule(
+      includeRule(Repository.ClassDeclaration),
+      includeRule(Repository.Block),
+    ),
     [Repository.Block]: rule_v1.createBlockRule(scopeName),
+    [Repository.ClassDeclaration]: rule_v1.createClassRule(scopeName, {
+      startAnchor: patterns_v1.statementStartAnchor,
+      identifierPattern: patterns_v1.identifierName,
+      lineEndAnchor: patterns_v1.lineEndAnchor,
+    }),
     // #endregion declaration
 
     // #region expression

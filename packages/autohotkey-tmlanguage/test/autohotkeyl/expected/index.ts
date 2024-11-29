@@ -1,4 +1,5 @@
 export * from './declaration/block';
+export * from './declaration/class';
 export * from './declaration/hotkeyLabel';
 export * from './declaration/hotstringLabel';
 export * from './declaration/label';

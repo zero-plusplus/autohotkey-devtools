@@ -86,6 +86,8 @@ export const enum Repository {
 
   // #region declaration
   Block = 'repository.declaration.block',
+  Declaration = 'repository.declaration',
+  ClassDeclaration = 'repository.declaration.class',
   // #endregion declaration
 
 
@@ -173,6 +175,7 @@ export const enum RuleName {
   // #endregion trivias
 
   // #region statement
+  ClassName = 'support.class.name',
   DirectiveName = 'meta.preprocessor.directive',
   LabelName = 'entity.name.label',
   HotkeyLabelName = 'string.label.like.hotkey',
@@ -182,7 +185,9 @@ export const enum RuleName {
 
   // #region declaration
   BlockBegin = 'punctuation.definition.block.begin',
+  ClassBlockBegin = 'punctuation.definition.class.block.begin',
   BlockEnd = 'punctuation.definition.block.end',
+  ClassBlockEnd = 'punctuation.definition.class.block.end',
   // #endregion declaration
 
   // #region expressions
@@ -216,10 +221,16 @@ export const enum RuleName {
   // #endregion number
   // #region operators
   Operator = 'keyword.operator',
+  Dot = 'keyword.operator.dot',
   Equals = 'keyword.operator.equals',
   Comma = 'punctuation.separator.comma',
   // #endregion operators
   // #endregion expressions
+
+  // #region keyword
+  ClassKeyword = 'storage.type.class',
+  ExtendsKeyword = 'storage.modifier.extends',
+  // #endregion keyword
 
   // #region token
   FunctionName = 'support.function',
