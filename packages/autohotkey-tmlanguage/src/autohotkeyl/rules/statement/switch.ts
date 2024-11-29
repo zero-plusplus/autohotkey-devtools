@@ -40,7 +40,7 @@ export function createSwitchStatementRule(scopeName: ScopeName, placeholder: Pla
           placeholder.lineEndAnchor,
           lookahead(char('{')),
         ),
-        patterns: [ includeRule(Repository.Expression) ],
+        patterns: [ includeRule(Repository.Expressions) ],
       },
 
       // switch body
@@ -69,7 +69,7 @@ export function createSwitchStatementRule(scopeName: ScopeName, placeholder: Pla
             ),
             beginCaptures: {
               1: nameRule(scopeName, RuleName.SwitchLabelKeyword),
-              2: patternsRule(includeRule(Repository.Expression)),
+              2: patternsRule(includeRule(Repository.Expressions)),
               3: nameRule(scopeName, RuleName.SemiColon),
               4: nameRule(scopeName, RuleName.BlockBegin),
             },

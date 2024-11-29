@@ -98,6 +98,7 @@ export const enum Repository {
 
   // #region expressions
   Expression = 'repository.expression',
+  Expressions = 'repository.expressions',
   ParenthesizedExpression = 'repository.expression.parenthesized',
 
   // #region literal
@@ -128,18 +129,17 @@ export const enum Repository {
   // #endregion object
   // #endregion literal
 
-  CallExpression = 'repository.expression.call',
-
   // #region variable
   Variable = 'repository.expression.variable',
   BuiltInVariable = 'repository.expression.variable.built-in',
   InvalidVariable = 'repository.expression.variable.invalid',
   // #endregion variable
 
-  // #region access
+  // #region misc
   Dereference = 'repository.expression.dereference',
   InvalidDereference = 'repository.expression.dereference.invalid',
-  // #endregion access
+  CallExpression_FunctionDeclarationHead = 'repository.expression.call repository.declaration.function-method.head',
+  // #endregion misc
   // #endregion expressions
 
   // #region operators
@@ -148,7 +148,7 @@ export const enum Repository {
   // #endregion operators
 
   // #region keyword
-  Keyword = 'repository.keyword',
+  KeywordInExpression = 'repository.keyword.expression',
   // #endregion keyword
 
   // #region v1 syntax
@@ -234,13 +234,14 @@ export const enum RuleName {
   // #endregion expressions
 
   // #region keyword
+  Keyword = 'keyword.control',
+  ByrefKeyword = 'keyword.control.byref',
   ClassKeyword = 'storage.type.class',
   ExtendsKeyword = 'storage.modifier.extends',
   // #endregion keyword
 
   // #region token
   FunctionName = 'support.function',
-  Keyword = 'keyword.control',
   ControlFlowKeyword = 'keyword.control.flow',
   SwitchLabelKeyword = 'keyword.control.switch-case-default',
   PercentExpressionBegin = 'meta.percent.expresion.begin',

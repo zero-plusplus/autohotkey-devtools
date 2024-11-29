@@ -166,7 +166,7 @@ function parameterToRule(scopeName: ScopeName, parameter: CommandParameter, isLa
     case HighlightType.Output:
     case HighlightType.Expression: return patternsRule(
       includeRule(Repository.PercentExpression),
-      includeRule(Repository.Expression),
+      includeRule(Repository.Expressions),
     );
     case HighlightType.Options:
       if (!parameter.values || parameter.values.length === 0) {

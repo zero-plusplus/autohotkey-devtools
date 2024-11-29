@@ -13,6 +13,6 @@ export function createArrayRule(scopeName: ScopeName): BeginEndRule {
     endCaptures: {
       1: nameRule(scopeName, RuleName.CloseBracket),
     },
-    patterns: [ includeRule(Repository.Expression) ],
+    patterns: [ includeRule(Repository.Expressions) ],
   };
 }

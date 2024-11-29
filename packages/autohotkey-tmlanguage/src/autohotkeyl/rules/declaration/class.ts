@@ -8,7 +8,7 @@ interface Placeholder {
   lineEndAnchor: string;
   identifierPattern: string;
 }
-export function createClassRule(scopeName: ScopeName, placeholder: Placeholder): BeginEndRule {
+export function createClassDeclarationRule(scopeName: ScopeName, placeholder: Placeholder): BeginEndRule {
   return {
     begin: lookahead(seq(
       placeholder.startAnchor,

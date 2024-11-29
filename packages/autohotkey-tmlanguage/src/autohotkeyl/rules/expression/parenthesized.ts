@@ -12,7 +12,7 @@ export function createParenthesizedExpressionRule(scopeName: ScopeName, placehol
       match: seq(capture(char('(')), capture(anyChars0()), capture(char(')'))),
       captures: {
         1: nameRule(scopeName, RuleName.OpenParen),
-        2: patternsRule(includeRule(Repository.Expression)),
+        2: patternsRule(includeRule(Repository.Expressions)),
         3: nameRule(scopeName, RuleName.CloseParen),
       },
     },
@@ -28,7 +28,7 @@ export function createParenthesizedExpressionRule(scopeName: ScopeName, placehol
       endCaptures: {
         1: nameRule(scopeName, RuleName.CloseParen),
       },
-      patterns: [ includeRule(Repository.Expression) ],
+      patterns: [ includeRule(Repository.Expressions) ],
     },
   );
 }

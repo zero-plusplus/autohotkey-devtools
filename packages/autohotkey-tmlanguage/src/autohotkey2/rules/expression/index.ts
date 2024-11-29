@@ -15,6 +15,6 @@ export function createParenthesizedExpressionRule(scopeName: ScopeName): BeginEn
     endCaptures: {
       1: nameRule(scopeName, RuleName.CloseParen),
     },
-    patterns: [ includeRule(Repository.Expression) ],
+    patterns: [ includeRule(Repository.Expressions) ],
   };
 }

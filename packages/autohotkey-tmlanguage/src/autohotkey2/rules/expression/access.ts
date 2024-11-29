@@ -21,7 +21,7 @@ export function createDereferenceRule(scopeName: ScopeName): MatchRule {
             match: capture(anyChars1()),
             captures: {
               1: {
-                patterns: [ includeRule(Repository.Expression) ],
+                patterns: [ includeRule(Repository.Expressions) ],
               },
             },
           },
@@ -76,7 +76,7 @@ export function createInvalidDereferenceRule(scopeName: ScopeName): PatternsRule
             patterns: [
               includeRule(Repository.InvalidDereference),
               includeRule(Repository.Dereference),
-              includeRule(Repository.Expression),
+              includeRule(Repository.Expressions),
             ],
           },
           3: nameRule(scopeName, RuleName.Variable, StyleName.Invalid),

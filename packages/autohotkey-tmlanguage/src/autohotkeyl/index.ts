@@ -53,7 +53,6 @@ export function createRepositories(scopeName: ScopeName): Repositories {
       includeRule(Repository.WhileStatement),
       includeRule(Repository.LoopStatement),
       includeRule(Repository.UntilStatement),
-      includeRule(Repository.Keyword),
       includeRule(Repository.ForStatement),
       includeRule(Repository.TryStatement),
       includeRule(Repository.ThrowStatement),
@@ -90,7 +89,7 @@ export function createRepositories(scopeName: ScopeName): Repositories {
       endAnchor: patterns_v1.lineEndAnchor,
     }),
 
-    [Repository.ExpressionStatement]: patternsRule(includeRule(Repository.Expression)),
+    [Repository.ExpressionStatement]: patternsRule(includeRule(Repository.Expressions)),
     [Repository.IfStatement]: rule_v1.createIfStatementRule(scopeName, {
       startAnchor: patterns_v1.statementStartAnchor,
     }),
@@ -122,6 +121,7 @@ export function createRepositories(scopeName: ScopeName): Repositories {
     // #region declaration
     [Repository.Declaration]: patternsRule(
       includeRule(Repository.Modifier),
+      includeRule(Repository.CallExpression_FunctionDeclarationHead),
       includeRule(Repository.ClassDeclaration),
       includeRule(Repository.Block),
     ),
@@ -130,18 +130,17 @@ export function createRepositories(scopeName: ScopeName): Repositories {
       modifiers: constants_v1.modifiers,
     }),
     [Repository.Block]: rule_v1.createBlockRule(scopeName),
-    [Repository.ClassDeclaration]: rule_v1.createClassRule(scopeName, {
+    [Repository.ClassDeclaration]: rule_v1.createClassDeclarationRule(scopeName, {
       startAnchor: patterns_v1.statementStartAnchor,
-      identifierPattern: patterns_v1.identifierName,
+      identifierPattern: patterns_v1.identifierPattern,
       lineEndAnchor: patterns_v1.lineEndAnchor,
     }),
     // #endregion declaration
 
     // #region expression
     [Repository.Expression]: patternsRule(
-      includeRule(Repository.Comma),
-
-      includeRule(Repository.CallExpression),
+      includeRule(Repository.KeywordInExpression),
+      includeRule(Repository.CallExpression_FunctionDeclarationHead),
       includeRule(Repository.ParenthesizedExpression),
       includeRule(Repository.Literal),
       includeRule(Repository.BuiltInVariable),
@@ -151,6 +150,10 @@ export function createRepositories(scopeName: ScopeName): Repositories {
       includeRule(Repository.Dereference),
 
       includeRule(Repository.Operator),
+    ),
+    [Repository.Expressions]: patternsRule(
+      includeRule(Repository.Comma),
+      includeRule(Repository.Expression),
     ),
     [Repository.ParenthesizedExpression]: rule_v1.createParenthesizedExpressionRule(scopeName, {
       startAnchor: patterns_v1.expressionContinuationStartAnchor,
@@ -206,19 +209,22 @@ export function createRepositories(scopeName: ScopeName): Repositories {
     // #endregion number
     // #endregion literal
 
-    [Repository.CallExpression]: rule_v1.createCallExpressionRule(scopeName, {
-      identifierPattern: patterns_v1.identifierName,
+    [Repository.CallExpression_FunctionDeclarationHead]: rule_v1.createCallExpressionRule(scopeName, {
+      identifierPattern: patterns_v1.identifierPattern,
+      keywordsInArgument: [ 'byref' ],
     }),
 
-    // #region token
+    // #region token, keyword
     [Repository.Comma]: rule_v1.createCommaSeparatorRule(scopeName, ','),
     [Repository.Operator]: rule_v1.createOperatorRule(scopeName, constants_v1.operators),
-    // #endregion token
+    [Repository.KeywordInExpression]: rule_v1.createKeywordRule(scopeName, {
+      keywords: [
+        // The following are not exactly keywords in the expression, but are defined here as keywords because it is more convenient for the TMLanguage mechanism
+        'in',
+      ],
+    }),
+    // #endregion token, keyword
     // #endregion expression
-
-    // #region keyword
-    [Repository.Keyword]: rule_v1.createKeywordRule(scopeName, { keywords: [ 'in' ] }),
-    // #endregion keyword
 
     // #region command
     [Repository.CommandArgument]: patternsRule(

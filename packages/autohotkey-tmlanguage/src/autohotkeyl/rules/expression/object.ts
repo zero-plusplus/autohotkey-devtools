@@ -35,7 +35,7 @@ export function createObjectRule(scopeName: ScopeName, placeholder: Placeholder)
           2: nameRule(scopeName, RuleName.Colon),
         },
       },
-      includeRule(Repository.Expression),
+      includeRule(Repository.Expressions),
       includeRule(Repository.Statement),
     ],
   };

@@ -52,8 +52,6 @@ export function createRepositories(scopeName: ScopeName): Repositories {
 
     // #region expression
     [Repository.Expression]: patternsRule(
-      includeRule(Repository.Comma),
-
       includeRule(Repository.ParenthesizedExpression),
       includeRule(Repository.Literal),
       includeRule(Repository.BuiltInVariable),
@@ -62,6 +60,10 @@ export function createRepositories(scopeName: ScopeName): Repositories {
       includeRule(Repository.InvalidDereference),
       includeRule(Repository.Dereference),
       includeRule(Repository.Operator),
+    ),
+    [Repository.Expressions]: patternsRule(
+      includeRule(Repository.Comma),
+      includeRule(Repository.Expression),
     ),
     [Repository.ParenthesizedExpression]: rule_v2.createParenthesizedExpressionRule(scopeName),
 

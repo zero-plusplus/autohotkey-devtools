@@ -13,7 +13,7 @@ export function createPercentExpressionRule(scopeName: ScopeName): MatchRule {
     ),
     captures: {
       1: nameRule(scopeName, RuleName.PercentExpressionBegin),
-      2: patternsRule(includeRule(Repository.Expression)),
+      2: patternsRule(includeRule(Repository.Expressions)),
     },
   };
 }
