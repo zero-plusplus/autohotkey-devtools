@@ -5,6 +5,7 @@ export * from './declaration/hotkeyLabel';
 export * from './declaration/hotstringLabel';
 export * from './declaration/label';
 export * from './declaration/modifier';
+export * from './declaration/property';
 export * from './legacy/assignment';
 export * from './legacy/continuationSection';
 export * from './statement/command';

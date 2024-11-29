@@ -1,9 +1,12 @@
-import { Repository, RuleName } from '../../../constants';
+import { RuleName } from '../../../constants';
 import { capture, char } from '../../../oniguruma';
-import type { BeginEndRule, ScopeName } from '../../../types';
-import { includeRule, nameRule } from '../../../utils';
+import type { BeginEndRule, Rule, ScopeName } from '../../../types';
+import { nameRule } from '../../../utils';
 
-export function createBlockRule(scopeName: ScopeName): BeginEndRule {
+interface Placeholder {
+  statementsInBlock: Rule[];
+}
+export function createBlockRule(scopeName: ScopeName, placeholder: Placeholder): BeginEndRule {
   return {
     begin: capture(char('{')),
     beginCaptures: {
@@ -13,6 +16,6 @@ export function createBlockRule(scopeName: ScopeName): BeginEndRule {
     endCaptures: {
       1: nameRule(scopeName, RuleName.BlockEnd),
     },
-    patterns: [ includeRule(Repository.Self) ],
+    patterns: placeholder.statementsInBlock,
   };
 }

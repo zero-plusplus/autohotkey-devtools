@@ -1,14 +1,13 @@
-import { RuleName } from '../../../constants';
 import { keyword } from '../../../oniguruma';
-import type { MatchRule, ScopeName } from '../../../types';
-import { name } from '../../../utils';
+import type { ElementName, MatchRule, ScopeName } from '../../../types';
 
 interface Placeholder {
+  elementName: ElementName;
   keywords: string[];
 }
 export function createKeywordRule(scopeName: ScopeName, placeholder: Placeholder): MatchRule {
   return {
-    name: name(scopeName, RuleName.Keyword),
+    name: placeholder.elementName,
     match: keyword(...placeholder.keywords),
   };
 }

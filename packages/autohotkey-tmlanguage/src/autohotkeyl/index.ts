@@ -1,7 +1,7 @@
 import { Repository, RuleName } from '../constants';
 import { anyChars1 } from '../oniguruma';
 import type { Repositories, ScopeName, TmLanguage } from '../types';
-import { includeRule, patternsRule } from '../utils';
+import { includeRule, name, patternsRule } from '../utils';
 import * as constants_v1 from './constants';
 import * as definition_v1 from './definition';
 import * as patterns_v1 from './patterns';
@@ -129,11 +129,18 @@ export function createRepositories(scopeName: ScopeName): Repositories {
       startAnchor: patterns_v1.statementStartAnchor,
       modifiers: constants_v1.modifiers,
     }),
-    [Repository.Block]: rule_v1.createBlockRule(scopeName),
+    [Repository.Block]: rule_v1.createBlockRule(scopeName, {
+      statementsInBlock: [ includeRule(Repository.Self) ],
+    }),
     [Repository.ClassDeclaration]: rule_v1.createClassDeclarationRule(scopeName, {
       startAnchor: patterns_v1.statementStartAnchor,
       identifierPattern: patterns_v1.identifierPattern,
       lineEndAnchor: patterns_v1.lineEndAnchor,
+    }),
+    [Repository.PropertyDeclaration]: rule_v1.createPropertyDeclarationRule(scopeName, {
+      startAnchor: patterns_v1.statementStartAnchor,
+      identifierPattern: patterns_v1.identifierPattern,
+      keywordsInArgument: [ 'byref' ],
     }),
     // #endregion declaration
 
@@ -209,21 +216,24 @@ export function createRepositories(scopeName: ScopeName): Repositories {
     // #endregion number
     // #endregion literal
 
-    [Repository.CallExpression_FunctionDeclarationHead]: rule_v1.createCallExpressionRule(scopeName, {
-      identifierPattern: patterns_v1.identifierPattern,
-      keywordsInArgument: [ 'byref' ],
-    }),
-
     // #region token, keyword
     [Repository.Comma]: rule_v1.createCommaSeparatorRule(scopeName, ','),
     [Repository.Operator]: rule_v1.createOperatorRule(scopeName, constants_v1.operators),
     [Repository.KeywordInExpression]: rule_v1.createKeywordRule(scopeName, {
+      elementName: name(scopeName, RuleName.KeywordInExpression),
       keywords: [
         // The following are not exactly keywords in the expression, but are defined here as keywords because it is more convenient for the TMLanguage mechanism
         'in',
       ],
     }),
     // #endregion token, keyword
+
+    // #region misc
+    [Repository.CallExpression_FunctionDeclarationHead]: rule_v1.createCallExpressionRule(scopeName, {
+      identifierPattern: patterns_v1.identifierPattern,
+      keywordsInArgument: [ 'byref' ],
+    }),
+    // #endregion misc
     // #endregion expression
 
     // #region command

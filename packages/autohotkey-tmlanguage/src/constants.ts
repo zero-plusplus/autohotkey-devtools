@@ -93,6 +93,7 @@ export const enum Repository {
   Modifier = 'repository.declaration.modifier',
   Declaration = 'repository.declaration',
   ClassDeclaration = 'repository.declaration.class',
+  PropertyDeclaration = 'repository.declaration.property',
   // #endregion declaration
 
 
@@ -234,7 +235,8 @@ export const enum RuleName {
   // #endregion expressions
 
   // #region keyword
-  Keyword = 'keyword.control',
+  KeywordInExpression = 'keyword.control.in-expression',
+  GetSetKeyword = 'storage.type.get-set',
   ByrefKeyword = 'keyword.control.byref',
   ClassKeyword = 'storage.type.class',
   ExtendsKeyword = 'storage.modifier.extends',
