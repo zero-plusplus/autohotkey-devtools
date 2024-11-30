@@ -9,6 +9,7 @@ export * from './expression/access';
 export * from './expression/array';
 export * from './expression/call';
 export * from './expression/commaSeparator';
+export * from './expression/dereference';
 export * from './expression/number';
 export * from './expression/object';
 export * from './expression/operator';

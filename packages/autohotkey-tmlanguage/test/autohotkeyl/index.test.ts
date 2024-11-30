@@ -6,11 +6,13 @@ import * as dataBuilder from './expected';
 describe('autohotkeyl', () => {
   const scopeName: ScopeName = 'autohotkeyl';
   const expectedDataList: ExpectedTestData[] = [
+    ...dataBuilder.createArrayLiteralExpectedData(scopeName),
     ...dataBuilder.createBlockDeclarationExpectedData(scopeName),
+    ...dataBuilder.createBuiltinVariableExpectedData(scopeName),
     ...dataBuilder.createClassDeclarationExpectedData(scopeName),
     ...dataBuilder.createCommandStatementExpectedData(scopeName),
     ...dataBuilder.createContinuationSectionExpectedData(scopeName),
-    ...dataBuilder.createExpressionStatementExpectedData(scopeName),
+    ...dataBuilder.createDereferenceExpressionExpectedData(scopeName),
     ...dataBuilder.createForStatementExpectedData(scopeName),
     ...dataBuilder.createFunctionDeclarationExpectedData(scopeName),
     ...dataBuilder.createHotkeyLabelStatementExpectedData(scopeName),
@@ -22,12 +24,17 @@ describe('autohotkeyl', () => {
     ...dataBuilder.createLoopStatementExpectedData(scopeName),
     ...dataBuilder.createModifierDeclarationExpectedData(scopeName),
     ...dataBuilder.createMultiLineCommentExpectedData(scopeName),
+    ...dataBuilder.createNumberLiteralExpectedData(scopeName),
+    ...dataBuilder.createObjectLiteralExpectedData(scopeName),
+    ...dataBuilder.createParenthesizedExpressionExpectedData(scopeName),
     ...dataBuilder.createPropertyDeclarationExpectedData(scopeName),
     ...dataBuilder.createSingleLineCommentExpectedData(scopeName),
+    ...dataBuilder.createStringLiteralExpectedData(scopeName),
     ...dataBuilder.createSwitchStatementExpectedData(scopeName),
     ...dataBuilder.createThrowStatementExpectedData(scopeName),
     ...dataBuilder.createTryStatementExpectedData(scopeName),
     ...dataBuilder.createUntilStatementExpectedData(scopeName),
+    ...dataBuilder.createVariableExpectedData(scopeName),
     ...dataBuilder.createWhileStatementExpectedData(scopeName),
   ];
   const testText = expectedDataList.map((dataList) => dataList[0]).join('\n');
