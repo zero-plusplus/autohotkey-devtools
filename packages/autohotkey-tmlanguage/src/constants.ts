@@ -65,6 +65,7 @@ export const enum Repository {
   Comment = 'repository.comment',
   SingleLineComment = 'repository.comment.single-line',
   InLineComment = 'repository.comment.in-line',
+  MultiLineComment = 'repository.comment.multi-line',
   // #endregion trivas
 
   // #region statements
@@ -178,6 +179,7 @@ export const enum RuleName {
   // #region trivias
   SingleLineComment = 'comment.single-line',
   InLineComment = 'comment.in-line',
+  MultiLineComment = 'comment.multi-line',
   // #endregion trivias
 
   // #region statement
