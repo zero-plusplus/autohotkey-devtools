@@ -9,6 +9,7 @@ describe('autohotkeyl', () => {
     ...dataBuilder.createArrayLiteralExpectedData(scopeName),
     ...dataBuilder.createBlockDeclarationExpectedData(scopeName),
     ...dataBuilder.createBuiltinVariableExpectedData(scopeName),
+    ...dataBuilder.createCallExpressionExpectedData(scopeName),
     ...dataBuilder.createClassDeclarationExpectedData(scopeName),
     ...dataBuilder.createCommandStatementExpectedData(scopeName),
     ...dataBuilder.createContinuationSectionExpectedData(scopeName),

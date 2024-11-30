@@ -8,6 +8,7 @@ export * from './declaration/modifier';
 export * from './declaration/property';
 export * from './expression/array';
 export * from './expression/builtinVariable';
+export * from './expression/call';
 export * from './expression/dereference';
 export * from './expression/number';
 export * from './expression/object';
