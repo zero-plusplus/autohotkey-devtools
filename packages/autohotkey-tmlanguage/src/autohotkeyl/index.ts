@@ -224,6 +224,8 @@ export function createRepositories(scopeName: ScopeName): Repositories {
     [Repository.KeywordInExpression]: rule_v1.createKeywordRule(scopeName, {
       elementName: name(scopeName, RuleName.KeywordInExpression),
       keywords: [
+        'new',
+
         // The following are not exactly keywords in the expression, but are defined here as keywords because it is more convenient for the TMLanguage mechanism
         'in',
       ],

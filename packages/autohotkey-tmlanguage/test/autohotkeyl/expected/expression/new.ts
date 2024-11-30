@@ -4,22 +4,25 @@ import type { ScopeName } from '../../../../src/types';
 import { name } from '../../../../src/utils';
 import type { ExpectedTestData } from '../../../types';
 
-export function createCallExpressionExpectedData(scopeName: ScopeName): ExpectedTestData[] {
+export function createNewExpressionExpectedData(scopeName: ScopeName): ExpectedTestData[] {
   return [
     [
       dedent`
-        abc()
-        %abc%()
-        %abc%edf()
+        new abc()
+        new %abc%()
+        new %abc%edf()
       `, [
+        { text: 'new', scopes: name(scopeName, RuleName.KeywordInExpression) },
         { text: 'abc', scopes: name(scopeName, RuleName.FunctionName) },
         { text: '(', scopes: name(scopeName, RuleName.OpenParen) },
         { text: ')', scopes: name(scopeName, RuleName.CloseParen) },
 
+        { text: 'new', scopes: name(scopeName, RuleName.KeywordInExpression) },
         { text: '%abc%', scopes: name(scopeName, RuleName.FunctionName) },
         { text: '(', scopes: name(scopeName, RuleName.OpenParen) },
         { text: ')', scopes: name(scopeName, RuleName.CloseParen) },
 
+        { text: 'new', scopes: name(scopeName, RuleName.KeywordInExpression) },
         { text: '%abc%edf', scopes: name(scopeName, RuleName.FunctionName) },
         { text: '(', scopes: name(scopeName, RuleName.OpenParen) },
         { text: ')', scopes: name(scopeName, RuleName.CloseParen) },
@@ -27,21 +30,23 @@ export function createCallExpressionExpectedData(scopeName: ScopeName): Expected
     ],
     [
       dedent`
-        abc(
+        new abc(
           1,
           2,
-          abc(
+          new abc(
             3,
             4,
           )
         )
       `, [
+        { text: 'new', scopes: name(scopeName, RuleName.KeywordInExpression) },
         { text: 'abc', scopes: name(scopeName, RuleName.FunctionName) },
         { text: '(', scopes: name(scopeName, RuleName.OpenParen) },
         { text: '1', scopes: name(scopeName, RuleName.Integer) },
         { text: ',', scopes: name(scopeName, RuleName.Comma) },
         { text: '2', scopes: name(scopeName, RuleName.Integer) },
         { text: ',', scopes: name(scopeName, RuleName.Comma) },
+        { text: 'new', scopes: name(scopeName, RuleName.KeywordInExpression) },
         { text: 'abc', scopes: name(scopeName, RuleName.FunctionName) },
         { text: '(', scopes: name(scopeName, RuleName.OpenParen) },
         { text: '3', scopes: name(scopeName, RuleName.Integer) },
@@ -56,13 +61,15 @@ export function createCallExpressionExpectedData(scopeName: ScopeName): Expected
     // Note: The following variable names should be errors, but were daringly allowed because they slow down the processing speed to the extent that it freezes when analyzing exactly
     [
       dedent`
-        %abc()
-        %abc%abc%()
+        new %abc()
+        new %abc%abc%()
       `, [
+        { text: 'new', scopes: name(scopeName, RuleName.KeywordInExpression) },
         { text: '%abc', scopes: name(scopeName, RuleName.FunctionName) },
         { text: '(', scopes: name(scopeName, RuleName.OpenParen) },
         { text: ')', scopes: name(scopeName, RuleName.CloseParen) },
 
+        { text: 'new', scopes: name(scopeName, RuleName.KeywordInExpression) },
         { text: '%abc%abc%', scopes: name(scopeName, RuleName.FunctionName) },
         { text: '(', scopes: name(scopeName, RuleName.OpenParen) },
         { text: ')', scopes: name(scopeName, RuleName.CloseParen) },
@@ -72,20 +79,21 @@ export function createCallExpressionExpectedData(scopeName: ScopeName): Expected
     // comment
     [
       dedent`
-        abc(a, b, c) ; comment
-        abc(
+        new abc(a, b, c) ; comment
+        new abc(
           ; comment
           a, ; comment
           b, ; comment
           c, ; comment
         ) ; comment
-        abc(
+        new abc(
           ; comment
           , a ; comment
           , b ; comment
           , c ; comment
         ) ; comment
       `, [
+        { text: 'new', scopes: name(scopeName, RuleName.KeywordInExpression) },
         { text: 'abc', scopes: name(scopeName, RuleName.FunctionName) },
         { text: '(', scopes: name(scopeName, RuleName.OpenParen) },
         { text: 'a', scopes: name(scopeName, RuleName.Variable) },
@@ -96,6 +104,7 @@ export function createCallExpressionExpectedData(scopeName: ScopeName): Expected
         { text: ')', scopes: name(scopeName, RuleName.CloseParen) },
         { text: '; comment', scopes: name(scopeName, RuleName.InLineComment) },
 
+        { text: 'new', scopes: name(scopeName, RuleName.KeywordInExpression) },
         { text: 'abc', scopes: name(scopeName, RuleName.FunctionName) },
         { text: '(', scopes: name(scopeName, RuleName.OpenParen) },
         { text: '; comment', scopes: name(scopeName, RuleName.SingleLineComment) },
@@ -111,6 +120,7 @@ export function createCallExpressionExpectedData(scopeName: ScopeName): Expected
         { text: ')', scopes: name(scopeName, RuleName.CloseParen) },
         { text: '; comment', scopes: name(scopeName, RuleName.InLineComment) },
 
+        { text: 'new', scopes: name(scopeName, RuleName.KeywordInExpression) },
         { text: 'abc', scopes: name(scopeName, RuleName.FunctionName) },
         { text: '(', scopes: name(scopeName, RuleName.OpenParen) },
         { text: '; comment', scopes: name(scopeName, RuleName.SingleLineComment) },
