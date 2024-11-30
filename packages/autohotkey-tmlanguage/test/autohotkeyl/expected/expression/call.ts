@@ -1,4 +1,4 @@
-import { dedent } from '@zero-plusplus/utilities/src';
+import { dedent, repeatArray } from '@zero-plusplus/utilities/src';
 import { RuleName } from '../../../../src/constants';
 import type { ScopeName } from '../../../../src/types';
 import { name } from '../../../../src/utils';
@@ -27,13 +27,52 @@ export function createCallExpressionExpectedData(scopeName: ScopeName): Expected
     ],
     [
       dedent`
-        abc(a, b, c)
+        abc()
+        %abc%()
+        %abc%edf()
+      `, [
+        { text: 'abc', scopes: name(scopeName, RuleName.FunctionName) },
+        { text: '(', scopes: name(scopeName, RuleName.OpenParen) },
+        { text: ')', scopes: name(scopeName, RuleName.CloseParen) },
+
+        { text: '%abc%', scopes: name(scopeName, RuleName.FunctionName) },
+        { text: '(', scopes: name(scopeName, RuleName.OpenParen) },
+        { text: ')', scopes: name(scopeName, RuleName.CloseParen) },
+
+        { text: '%abc%edf', scopes: name(scopeName, RuleName.FunctionName) },
+        { text: '(', scopes: name(scopeName, RuleName.OpenParen) },
+        { text: ')', scopes: name(scopeName, RuleName.CloseParen) },
+      ],
+    ],
+
+    // Note: The following variable names should be errors, but were daringly allowed because they slow down the processing speed to the extent that it freezes when analyzing exactly
+    [
+      dedent`
+        %abc()
+        %abc%abc%()
+      `, [
+        { text: '%abc', scopes: name(scopeName, RuleName.FunctionName) },
+        { text: '(', scopes: name(scopeName, RuleName.OpenParen) },
+        { text: ')', scopes: name(scopeName, RuleName.CloseParen) },
+
+        { text: '%abc%abc%', scopes: name(scopeName, RuleName.FunctionName) },
+        { text: '(', scopes: name(scopeName, RuleName.OpenParen) },
+        { text: ')', scopes: name(scopeName, RuleName.CloseParen) },
+      ],
+    ],
+
+    // comment
+    [
+      dedent`
+        abc(a, b, c) ; comment
         abc(
+          ; comment
           a, ; comment
           b, ; comment
           c, ; comment
         )
         abc(
+          ; comment
           , a ; comment
           , b ; comment
           , c ; comment
@@ -47,32 +86,23 @@ export function createCallExpressionExpectedData(scopeName: ScopeName): Expected
         { text: ',', scopes: name(scopeName, RuleName.Comma) },
         { text: 'c', scopes: name(scopeName, RuleName.Variable) },
         { text: ')', scopes: name(scopeName, RuleName.CloseParen) },
+        { text: '; comment', scopes: name(scopeName, RuleName.InLineComment) },
 
-        { text: 'abc', scopes: name(scopeName, RuleName.FunctionName) },
-        { text: '(', scopes: name(scopeName, RuleName.OpenParen) },
-        { text: 'a', scopes: name(scopeName, RuleName.Variable) },
-        { text: ',', scopes: name(scopeName, RuleName.Comma) },
-        { text: '; comment', scopes: name(scopeName, RuleName.InLineComment) },
-        { text: 'b', scopes: name(scopeName, RuleName.Variable) },
-        { text: ',', scopes: name(scopeName, RuleName.Comma) },
-        { text: '; comment', scopes: name(scopeName, RuleName.InLineComment) },
-        { text: 'c', scopes: name(scopeName, RuleName.Variable) },
-        { text: ',', scopes: name(scopeName, RuleName.Comma) },
-        { text: '; comment', scopes: name(scopeName, RuleName.InLineComment) },
-        { text: ')', scopes: name(scopeName, RuleName.CloseParen) },
-
-        { text: 'abc', scopes: name(scopeName, RuleName.FunctionName) },
-        { text: '(', scopes: name(scopeName, RuleName.OpenParen) },
-        { text: ',', scopes: name(scopeName, RuleName.Comma) },
-        { text: 'a', scopes: name(scopeName, RuleName.Variable) },
-        { text: '; comment', scopes: name(scopeName, RuleName.InLineComment) },
-        { text: ',', scopes: name(scopeName, RuleName.Comma) },
-        { text: 'b', scopes: name(scopeName, RuleName.Variable) },
-        { text: '; comment', scopes: name(scopeName, RuleName.InLineComment) },
-        { text: ',', scopes: name(scopeName, RuleName.Comma) },
-        { text: 'c', scopes: name(scopeName, RuleName.Variable) },
-        { text: '; comment', scopes: name(scopeName, RuleName.InLineComment) },
-        { text: ')', scopes: name(scopeName, RuleName.CloseParen) },
+        ...repeatArray(2, [
+          { text: 'abc', scopes: name(scopeName, RuleName.FunctionName) },
+          { text: '(', scopes: name(scopeName, RuleName.OpenParen) },
+          { text: '; comment', scopes: name(scopeName, RuleName.SingleLineComment) },
+          { text: 'a', scopes: name(scopeName, RuleName.Variable) },
+          { text: ',', scopes: name(scopeName, RuleName.Comma) },
+          { text: '; comment', scopes: name(scopeName, RuleName.InLineComment) },
+          { text: 'b', scopes: name(scopeName, RuleName.Variable) },
+          { text: ',', scopes: name(scopeName, RuleName.Comma) },
+          { text: '; comment', scopes: name(scopeName, RuleName.InLineComment) },
+          { text: 'c', scopes: name(scopeName, RuleName.Variable) },
+          { text: ',', scopes: name(scopeName, RuleName.Comma) },
+          { text: '; comment', scopes: name(scopeName, RuleName.InLineComment) },
+          { text: ')', scopes: name(scopeName, RuleName.CloseParen) },
+        ]),
       ],
     ],
   ];

@@ -232,7 +232,7 @@ export function createRepositories(scopeName: ScopeName): Repositories {
 
     // #region misc
     [Repository.CallExpression_FunctionDeclarationHead]: rule_v1.createCallExpressionRule(scopeName, {
-      identifierPattern: patterns_v1.identifierPattern,
+      callableNamePattern: patterns_v1.callableNamePattern,
       keywordsInArgument: [ 'byref' ],
     }),
     // #endregion misc

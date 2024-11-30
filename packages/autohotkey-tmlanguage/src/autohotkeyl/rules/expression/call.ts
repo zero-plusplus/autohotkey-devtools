@@ -1,18 +1,19 @@
 import { Repository, RuleName } from '../../../constants';
-import { alt, capture, char, group, groupMany1, inlineSpaces0, keyword, lookbehind, seq, startAnchor } from '../../../oniguruma';
+import { alt, capture, char, group, inlineSpaces0, keyword, lookbehind, seq, startAnchor } from '../../../oniguruma';
 import type { BeginEndRule, MatchRule, ScopeName } from '../../../types';
 import { includeRule, nameRule } from '../../../utils';
 
 interface Placeholder {
-  identifierPattern: string;
+  callableNamePattern: string;
   keywordsInArgument: string[];
 }
 export function createCallExpressionRule(scopeName: ScopeName, placeholder: Placeholder): BeginEndRule {
-  const dereferencePattern = seq(char('%'), placeholder.identifierPattern, char('%'));
-
   return {
     begin: seq(
-      capture(groupMany1(alt(placeholder.identifierPattern, dereferencePattern))),
+      group(alt(
+        lookbehind(char(']', '.')),
+        capture(placeholder.callableNamePattern),
+      )),
       capture(char('(')),
     ),
     beginCaptures: {
