@@ -14,6 +14,9 @@ export function numbers0(): string {
 export function numbers1(): string {
   return many1(number());
 }
+export function wordChar(): string {
+  return '\\w';
+}
 export function wordBound(): string {
   return '\\b';
 }

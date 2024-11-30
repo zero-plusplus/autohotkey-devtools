@@ -1,4 +1,4 @@
-import { alt, anyChar, anyChars0, anyChars1, asciiChar, char, endAnchor, escapeOnigurumaTexts, group, groupMany0, inlineSpace, inlineSpaces0, inlineSpaces1, lookahead, lookbehind, manyLimit, negativeLookahead, negativeLookbehind, negChar, negChars0, opt, ordalt, seq, startAnchor } from '../oniguruma';
+import { alt, anyChar, anyChars0, anyChars1, char, endAnchor, escapeOnigurumaTexts, group, groupMany0, inlineSpace, inlineSpaces0, inlineSpaces1, lookahead, lookbehind, manyLimit, negativeLookahead, negativeLookbehind, negChar, negChars0, opt, ordalt, seq, startAnchor, wordChar } from '../oniguruma';
 import * as constants_v1 from './constants';
 
 export const statementStartAnchor: string = lookbehind(alt(
@@ -89,12 +89,10 @@ export const expressionWithOneTrueBraceArgumentPattern: string = groupMany0(alt(
 
 // #region [Names](https://www.autohotkey.com/docs/v1/Concepts.htm#names)
 export const nameLimitLength = 253;
-const letter = '[a-zA-Z]';
 const numberChar = '\\d';
-const nonAsciiChar = negChar(asciiChar());
 const sign = char('_', '#', '@', '$');
-export const nameStart: string = group(alt(letter, nonAsciiChar, sign));
-export const nameBody: string = group(alt(letter, nonAsciiChar, sign, numberChar));
+export const nameStart: string = group(alt(wordChar(), sign));
+export const nameBody: string = group(alt(wordChar(), sign, numberChar));
 export const identifierPattern: string = group(seq(nameStart, manyLimit(nameBody, nameLimitLength - 1)));
 export const keyName: string = group(alt(
   group(seq(char('%'), anyChars1(), char('%'))),
