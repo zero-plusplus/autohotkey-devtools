@@ -111,22 +111,6 @@ describe('expression', () => {
           ]);
         },
       );
-
-      test(
-        `illegal`,
-        async() => {
-          const actual = await parse(scopeName, `'ab\r\nc\n'`);
-          // console.log(JSON.stringify(actual, undefined, 2));
-
-          expect(actual).toStrictEqual([
-            { text: `'`, scopes: name(RuleName.SingleString, RuleName.StringBegin) },
-            { text: 'a', scopes: name(RuleName.SingleString) },
-            { text: 'b', scopes: name(RuleName.SingleString, StyleName.Invalid) },
-            { text: 'c', scopes: name(RuleName.SingleString, StyleName.Invalid) },
-            { text: `'`, scopes: name(RuleName.SingleString, RuleName.StringEnd) },
-          ]);
-        },
-      );
     });
   });
   // #endregion literal

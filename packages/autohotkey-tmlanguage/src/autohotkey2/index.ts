@@ -1,6 +1,6 @@
 import * as patterns_v1 from '../autohotkeyl/patterns';
 import * as rule_v1 from '../autohotkeyl/rules';
-import { Repository } from '../constants';
+import { Repository, RuleName } from '../constants';
 import type { Repositories, ScopeName, TmLanguage } from '../types';
 import { includeRule, patternsRule } from '../utils';
 import * as constants_v2 from './constants';
@@ -89,8 +89,16 @@ export function createRepositories(scopeName: ScopeName): Repositories {
       includeRule(Repository.DoubleString),
       includeRule(Repository.SingleString),
     ),
-    [Repository.DoubleString]: rule_v1.createStringRule(scopeName, '"', constants_v2.doubleQuoteEscapeSequences),
-    [Repository.SingleString]: rule_v1.createStringRule(scopeName, `'`, constants_v2.singleQuoteEscapeSequences),
+    [Repository.DoubleString]: rule_v2.createStringRule(scopeName, {
+      quoteChar: '"',
+      escapeSequences: constants_v2.doubleQuoteEscapeSequences,
+      stringElementName: RuleName.DoubleString,
+    }),
+    [Repository.SingleString]: rule_v2.createStringRule(scopeName, {
+      quoteChar: `'`,
+      escapeSequences: constants_v2.singleQuoteEscapeSequences,
+      stringElementName: RuleName.SingleString,
+    }),
     // #endregion string
 
     // #region number

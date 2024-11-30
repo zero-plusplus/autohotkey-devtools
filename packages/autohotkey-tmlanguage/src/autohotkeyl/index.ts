@@ -195,7 +195,11 @@ export function createRepositories(scopeName: ScopeName): Repositories {
     [Repository.Array]: rule_v1.createArrayRule(scopeName),
 
     [Repository.String]: patternsRule(includeRule(Repository.DoubleString)),
-    [Repository.DoubleString]: rule_v1.createStringRule(scopeName, '"', constants_v1.doubleQuoteEscapeSequences),
+    [Repository.DoubleString]: rule_v1.createStringRule(scopeName, {
+      quoteChar: '"',
+      stringElementName: RuleName.DoubleString,
+      escapeSequences: constants_v1.doubleQuoteEscapeSequences,
+    }),
     // #endregion string
 
     // #region number

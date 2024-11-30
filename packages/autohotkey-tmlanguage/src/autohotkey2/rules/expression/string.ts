@@ -1,5 +1,5 @@
 import { RuleName, StyleName } from '../../../constants';
-import { anyChars0, capture, char, escapeOnigurumaTexts, negativeLookahead, ordalt, seq } from '../../../oniguruma';
+import { anyChars0, capture, char, escapeOnigurumaTexts, negativeLookbehind, ordalt, seq } from '../../../oniguruma';
 import type { ElementName, MatchRule, ScopeName } from '../../../types';
 import { name, nameRule, patternsRule } from '../../../utils';
 
@@ -13,11 +13,8 @@ export function createStringRule(scopeName: ScopeName, placeholder: Placeholder)
     name: name(scopeName, placeholder.stringElementName),
     match: seq(
       capture(char(placeholder.quoteChar)),
-      capture((anyChars0())),
-      capture(seq(
-        char(placeholder.quoteChar),
-        negativeLookahead(char(placeholder.quoteChar)),
-      )),
+      capture(anyChars0()),
+      capture(char(placeholder.quoteChar)),
     ),
     captures: {
       1: nameRule(scopeName, RuleName.StringBegin),
@@ -25,8 +22,8 @@ export function createStringRule(scopeName: ScopeName, placeholder: Placeholder)
         {
           name: name(scopeName, StyleName.Invalid),
           match: seq(
+            negativeLookbehind(char('`')),
             char(placeholder.quoteChar),
-            negativeLookahead(char(placeholder.quoteChar)),
           ),
         },
         {

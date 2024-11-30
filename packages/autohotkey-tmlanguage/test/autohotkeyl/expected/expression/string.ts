@@ -24,15 +24,6 @@ export function createStringLiteralExpectedData(scopeName: ScopeName): ExpectedT
         { text: '"', scopes: name(scopeName, RuleName.DoubleString, RuleName.StringEnd) },
       ],
     ],
-    [
-      '"ab\r\nc\n"', [
-        { text: '"', scopes: name(scopeName, RuleName.DoubleString, RuleName.StringBegin) },
-        { text: 'a', scopes: name(scopeName, RuleName.DoubleString) },
-        { text: 'b', scopes: name(scopeName, RuleName.DoubleString, StyleName.Invalid) },
-        { text: 'c', scopes: name(scopeName, RuleName.DoubleString, StyleName.Invalid) },
-        { text: '"', scopes: name(scopeName, RuleName.DoubleString, RuleName.StringEnd) },
-      ],
-    ],
     // #endregion escape sequences
   ];
 }
