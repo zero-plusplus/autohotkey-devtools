@@ -21,6 +21,9 @@ export function createObjectRule(scopeName: ScopeName, placeholder: Placeholder)
       1: nameRule(scopeName, RuleName.CloseBrace),
     },
     patterns: [
+      includeRule(Repository.Comment),
+      includeRule(Repository.DirectiveStatement),
+
       {
         match: seq(
           capture(placeholder.keyName),
@@ -35,8 +38,8 @@ export function createObjectRule(scopeName: ScopeName, placeholder: Placeholder)
           2: nameRule(scopeName, RuleName.Colon),
         },
       },
-      includeRule(Repository.Expressions),
-      includeRule(Repository.Statement),
+      includeRule(Repository.Comma),
+      includeRule(Repository.Expression),
     ],
   };
 }

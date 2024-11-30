@@ -1,3 +1,4 @@
+import { dedent, repeatArray } from '@zero-plusplus/utilities/src';
 import { RuleName } from '../../../../src/constants';
 import type { ScopeName } from '../../../../src/types';
 import { name } from '../../../../src/utils';
@@ -6,22 +7,158 @@ import type { ExpectedTestData } from '../../../types';
 export function createObjectLiteralExpectedData(scopeName: ScopeName): ExpectedTestData[] {
   return [
     [
-      'abc := { key: 1, key2: { %key3%: 2 } }', [
+      dedent`
+        abc := {}
+        abc := { }
+        abc := {
+        }
+      `, [
+        ...repeatArray(3, [
+          { text: 'abc', scopes: name(scopeName, RuleName.Variable) },
+          { text: ':=', scopes: name(scopeName, RuleName.Operator) },
+          { text: '{', scopes: name(scopeName, RuleName.OpenBrace) },
+          { text: '}', scopes: name(scopeName, RuleName.CloseBrace) },
+        ]),
+      ],
+    ],
+    [
+      dedent`
+        abc := { key: 1 }
+        abc := {
+          key: 1
+        }
+
+        abc := { %key%: 1 }
+        abc := {
+          %key%: 1
+        }
+
+        abc := { key: 1, %key2%: 2 }
+        abc := {
+          key: 1,
+          %key2%: 2
+        }
+      `, [
+        ...repeatArray(2, [
+          { text: 'abc', scopes: name(scopeName, RuleName.Variable) },
+          { text: ':=', scopes: name(scopeName, RuleName.Operator) },
+          { text: '{', scopes: name(scopeName, RuleName.OpenBrace) },
+          { text: 'key', scopes: name(scopeName, RuleName.Variable) },
+          { text: ':', scopes: name(scopeName, RuleName.Colon) },
+          { text: '1', scopes: name(scopeName, RuleName.Integer) },
+          { text: '}', scopes: name(scopeName, RuleName.CloseBrace) },
+        ]),
+
+        ...repeatArray(2, [
+          { text: 'abc', scopes: name(scopeName, RuleName.Variable) },
+          { text: ':=', scopes: name(scopeName, RuleName.Operator) },
+          { text: '{', scopes: name(scopeName, RuleName.OpenBrace) },
+          { text: '%', scopes: name(scopeName, RuleName.PercentBegin) },
+          { text: 'key', scopes: name(scopeName, RuleName.Variable) },
+          { text: '%', scopes: name(scopeName, RuleName.PercentEnd) },
+          { text: ':', scopes: name(scopeName, RuleName.Colon) },
+          { text: '1', scopes: name(scopeName, RuleName.Integer) },
+          { text: '}', scopes: name(scopeName, RuleName.CloseBrace) },
+        ]),
+
+        ...repeatArray(2, [
+          { text: 'abc', scopes: name(scopeName, RuleName.Variable) },
+          { text: ':=', scopes: name(scopeName, RuleName.Operator) },
+          { text: '{', scopes: name(scopeName, RuleName.OpenBrace) },
+          { text: 'key', scopes: name(scopeName, RuleName.Variable) },
+          { text: ':', scopes: name(scopeName, RuleName.Colon) },
+          { text: '1', scopes: name(scopeName, RuleName.Integer) },
+          { text: ',', scopes: name(scopeName, RuleName.Comma) },
+          { text: '%', scopes: name(scopeName, RuleName.PercentBegin) },
+          { text: 'key2', scopes: name(scopeName, RuleName.Variable) },
+          { text: '%', scopes: name(scopeName, RuleName.PercentEnd) },
+          { text: ':', scopes: name(scopeName, RuleName.Colon) },
+          { text: '2', scopes: name(scopeName, RuleName.Integer) },
+          { text: '}', scopes: name(scopeName, RuleName.CloseBrace) },
+        ]),
+      ],
+    ],
+    [
+      dedent`
+        abc := { key: { %key2%: 2 } }
+        abc := {
+          key: {
+            %key2%: 2
+          }
+        }
+      `, [
+        ...repeatArray(2, [
+          { text: 'abc', scopes: name(scopeName, RuleName.Variable) },
+          { text: ':=', scopes: name(scopeName, RuleName.Operator) },
+          { text: '{', scopes: name(scopeName, RuleName.OpenBrace) },
+          { text: 'key', scopes: name(scopeName, RuleName.Variable) },
+          { text: ':', scopes: name(scopeName, RuleName.Colon) },
+          { text: '{', scopes: name(scopeName, RuleName.OpenBrace) },
+          { text: '%', scopes: name(scopeName, RuleName.PercentBegin) },
+          { text: 'key2', scopes: name(scopeName, RuleName.Variable) },
+          { text: '%', scopes: name(scopeName, RuleName.PercentEnd) },
+          { text: ':', scopes: name(scopeName, RuleName.Colon) },
+          { text: '2', scopes: name(scopeName, RuleName.Integer) },
+          { text: '}', scopes: name(scopeName, RuleName.CloseBrace) },
+          { text: '}', scopes: name(scopeName, RuleName.CloseBrace) },
+        ]),
+      ],
+    ],
+
+    // comment
+    [
+      dedent`
+        abc := { key: { %key2%: 2 } } ; comment
+        abc := { ; comment
+          ; comment
+          /* comment
+           */
+          key: { ; comment
+            ; comment
+            /* comment
+             */
+            %key2%: 2, ; comment
+          }
+        }
+      `, [
         { text: 'abc', scopes: name(scopeName, RuleName.Variable) },
         { text: ':=', scopes: name(scopeName, RuleName.Operator) },
         { text: '{', scopes: name(scopeName, RuleName.OpenBrace) },
         { text: 'key', scopes: name(scopeName, RuleName.Variable) },
         { text: ':', scopes: name(scopeName, RuleName.Colon) },
-        { text: '1', scopes: name(scopeName, RuleName.Integer) },
-        { text: ',', scopes: name(scopeName, RuleName.Comma) },
-        { text: 'key2', scopes: name(scopeName, RuleName.Variable) },
-        { text: ':', scopes: name(scopeName, RuleName.Colon) },
         { text: '{', scopes: name(scopeName, RuleName.OpenBrace) },
         { text: '%', scopes: name(scopeName, RuleName.PercentBegin) },
-        { text: 'key3', scopes: name(scopeName, RuleName.Variable) },
+        { text: 'key2', scopes: name(scopeName, RuleName.Variable) },
         { text: '%', scopes: name(scopeName, RuleName.PercentEnd) },
         { text: ':', scopes: name(scopeName, RuleName.Colon) },
         { text: '2', scopes: name(scopeName, RuleName.Integer) },
+        { text: '}', scopes: name(scopeName, RuleName.CloseBrace) },
+        { text: '}', scopes: name(scopeName, RuleName.CloseBrace) },
+        { text: '; comment', scopes: name(scopeName, RuleName.InLineComment) },
+
+        { text: 'abc', scopes: name(scopeName, RuleName.Variable) },
+        { text: ':=', scopes: name(scopeName, RuleName.Operator) },
+        { text: '{', scopes: name(scopeName, RuleName.OpenBrace) },
+        { text: '; comment', scopes: name(scopeName, RuleName.InLineComment) },
+        { text: '; comment', scopes: name(scopeName, RuleName.SingleLineComment) },
+        { text: '/*', scopes: name(scopeName, RuleName.MultiLineComment) },
+        { text: ' comment', scopes: name(scopeName, RuleName.MultiLineComment) },
+        { text: '*/', scopes: name(scopeName, RuleName.MultiLineComment) },
+        { text: 'key', scopes: name(scopeName, RuleName.Variable) },
+        { text: ':', scopes: name(scopeName, RuleName.Colon) },
+        { text: '{', scopes: name(scopeName, RuleName.OpenBrace) },
+        { text: '; comment', scopes: name(scopeName, RuleName.InLineComment) },
+        { text: '; comment', scopes: name(scopeName, RuleName.SingleLineComment) },
+        { text: '/*', scopes: name(scopeName, RuleName.MultiLineComment) },
+        { text: ' comment', scopes: name(scopeName, RuleName.MultiLineComment) },
+        { text: '*/', scopes: name(scopeName, RuleName.MultiLineComment) },
+        { text: '%', scopes: name(scopeName, RuleName.PercentBegin) },
+        { text: 'key2', scopes: name(scopeName, RuleName.Variable) },
+        { text: '%', scopes: name(scopeName, RuleName.PercentEnd) },
+        { text: ':', scopes: name(scopeName, RuleName.Colon) },
+        { text: '2', scopes: name(scopeName, RuleName.Integer) },
+        { text: ',', scopes: name(scopeName, RuleName.Comma) },
+        { text: '; comment', scopes: name(scopeName, RuleName.InLineComment) },
         { text: '}', scopes: name(scopeName, RuleName.CloseBrace) },
         { text: '}', scopes: name(scopeName, RuleName.CloseBrace) },
       ],
