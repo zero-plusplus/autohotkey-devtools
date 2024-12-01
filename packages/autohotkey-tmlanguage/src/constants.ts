@@ -139,6 +139,7 @@ export const enum Repository {
   // #region variable
   Variable = 'repository.expression.variable',
   BuiltInVariable = 'repository.expression.variable.built-in',
+  KeywordLikeBuiltInVariable = 'repository.expression.variable.built-in.keyword-like',
   InvalidVariable = 'repository.expression.variable.invalid',
   // #endregion variable
 
@@ -208,6 +209,7 @@ export const enum RuleName {
   // #region variable
   Variable = 'variable.other',
   BuiltInVariable = 'support.variable',
+  KeywordLikeBuiltInVariable = 'constant.language.varible',
   // #endregion variable
   // #region string
   ContinuationOption = 'continuation.option keyword.operator.quantifier.regexp',

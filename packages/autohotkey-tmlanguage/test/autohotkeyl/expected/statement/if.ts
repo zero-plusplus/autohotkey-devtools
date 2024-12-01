@@ -17,14 +17,14 @@ export function createIfStatementExpectedData(scopeName: ScopeName): ExpectedTes
       [
         { text: 'if', scopes: name(scopeName, RuleName.ControlFlowKeyword) },
         { text: '(', scopes: name(scopeName, RuleName.OpenParen) },
-        { text: 'true', scopes: name(scopeName, RuleName.BuiltInVariable) },
+        { text: 'true', scopes: name(scopeName, RuleName.KeywordLikeBuiltInVariable) },
         { text: ')', scopes: name(scopeName, RuleName.CloseParen) },
         { text: '{', scopes: name(scopeName, RuleName.BlockBegin) },
         { text: '}', scopes: name(scopeName, RuleName.BlockEnd) },
 
         { text: 'if', scopes: name(scopeName, RuleName.ControlFlowKeyword) },
         { text: '(', scopes: name(scopeName, RuleName.OpenParen) },
-        { text: 'true', scopes: name(scopeName, RuleName.BuiltInVariable) },
+        { text: 'true', scopes: name(scopeName, RuleName.KeywordLikeBuiltInVariable) },
         { text: ')', scopes: name(scopeName, RuleName.CloseParen) },
         { text: '{', scopes: name(scopeName, RuleName.BlockBegin) },
         { text: '}', scopes: name(scopeName, RuleName.BlockEnd) },
@@ -59,14 +59,14 @@ export function createIfStatementExpectedData(scopeName: ScopeName): ExpectedTes
       [
         { text: 'else if', scopes: name(scopeName, RuleName.ControlFlowKeyword) },
         { text: '(', scopes: name(scopeName, RuleName.OpenParen) },
-        { text: 'true', scopes: name(scopeName, RuleName.BuiltInVariable) },
+        { text: 'true', scopes: name(scopeName, RuleName.KeywordLikeBuiltInVariable) },
         { text: ')', scopes: name(scopeName, RuleName.CloseParen) },
         { text: '{', scopes: name(scopeName, RuleName.BlockBegin) },
         { text: '}', scopes: name(scopeName, RuleName.BlockEnd) },
 
         { text: 'else if', scopes: name(scopeName, RuleName.ControlFlowKeyword) },
         { text: '(', scopes: name(scopeName, RuleName.OpenParen) },
-        { text: 'true', scopes: name(scopeName, RuleName.BuiltInVariable) },
+        { text: 'true', scopes: name(scopeName, RuleName.KeywordLikeBuiltInVariable) },
         { text: ')', scopes: name(scopeName, RuleName.CloseParen) },
         { text: '{', scopes: name(scopeName, RuleName.BlockBegin) },
         { text: '}', scopes: name(scopeName, RuleName.BlockEnd) },
@@ -81,12 +81,12 @@ export function createIfStatementExpectedData(scopeName: ScopeName): ExpectedTes
       `,
       [
         { text: 'if', scopes: name(scopeName, RuleName.ControlFlowKeyword) },
-        { text: 'true', scopes: name(scopeName, RuleName.BuiltInVariable) },
+        { text: 'true', scopes: name(scopeName, RuleName.KeywordLikeBuiltInVariable) },
         { text: '{', scopes: name(scopeName, RuleName.BlockBegin) },
         { text: '}', scopes: name(scopeName, RuleName.BlockEnd) },
 
         { text: 'else if', scopes: name(scopeName, RuleName.ControlFlowKeyword) },
-        { text: 'true', scopes: name(scopeName, RuleName.BuiltInVariable) },
+        { text: 'true', scopes: name(scopeName, RuleName.KeywordLikeBuiltInVariable) },
         { text: '{', scopes: name(scopeName, RuleName.BlockBegin) },
         { text: '}', scopes: name(scopeName, RuleName.BlockEnd) },
 

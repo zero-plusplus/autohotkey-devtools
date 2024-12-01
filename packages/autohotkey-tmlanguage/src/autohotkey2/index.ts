@@ -70,7 +70,10 @@ export function createRepositories(scopeName: ScopeName): Repositories {
     // #region variable
     [Repository.Variable]: rule_v1.createVariableRule(scopeName, patterns_v2.nameStart, patterns_v2.nameBody),
     [Repository.InvalidVariable]: rule_v1.createInvalidVariableRule(scopeName, patterns_v2.nameStart, patterns_v2.nameBody),
-    [Repository.BuiltInVariable]: rule_v1.createBuiltinVariableRule(scopeName, constants_v2.builtinVaribles),
+    [Repository.BuiltInVariable]: rule_v1.createBuiltinVariableRule(scopeName, {
+      variableRuleName: RuleName.BuiltInVariable,
+      builtinVariables: constants_v2.builtinVaribles,
+    }),
     // #endregion variable
 
     // #region access

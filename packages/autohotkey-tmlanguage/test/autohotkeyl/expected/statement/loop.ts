@@ -17,7 +17,7 @@ export function createLoopStatementExpectedData(scopeName: ScopeName): ExpectedT
         { text: '{', scopes: name(scopeName, RuleName.BlockBegin) },
         { text: '}', scopes: name(scopeName, RuleName.BlockEnd) },
         { text: 'Until', scopes: name(scopeName, RuleName.ControlFlowKeyword) },
-        { text: 'true', scopes: name(scopeName, RuleName.BuiltInVariable) },
+        { text: 'true', scopes: name(scopeName, RuleName.KeywordLikeBuiltInVariable) },
       ],
     ],
     // #endregion loop until

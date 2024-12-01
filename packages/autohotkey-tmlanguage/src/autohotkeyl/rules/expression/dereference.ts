@@ -43,6 +43,7 @@ export function createDereferenceRule(scopeName: ScopeName): BeginEndRule {
         captures: {
           1: {
             patterns: [
+              includeRule(Repository.KeywordLikeBuiltInVariable),
               includeRule(Repository.BuiltInVariable),
               includeRule(Repository.Variable),
             ],

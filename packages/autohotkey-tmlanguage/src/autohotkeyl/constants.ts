@@ -18,6 +18,12 @@ export const continuationOperators: string[] = operators.filter((operator) => !(
 // #endregion Operators
 
 // #region [BuiltIn](https://www.autohotkey.com/docs/v1/Variables.htm#BuiltIn)
+export const keywordLikeBuiltinVariables = [
+  'This',
+  'Base',
+  'True',
+  'False',
+] as const;
 export const builtinVaribles = [
   // #region [Special Characters](https://www.autohotkey.com/docs/v1/Variables.htm#Special_Characters)
   'A_Space',
@@ -180,8 +186,8 @@ export const builtinVaribles = [
   'ClipboardAll',
   'ErrorLevel',
   'A_LastError',
-  'True',
-  'False',
+  // 'True',
+  // 'False',
   // #endregion Misc.
 
   // #region [Loop](https://www.autohotkey.com/docs/v1/Variables.htm#loop)

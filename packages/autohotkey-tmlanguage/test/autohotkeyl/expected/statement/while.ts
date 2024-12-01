@@ -35,14 +35,14 @@ export function createWhileStatementExpectedData(scopeName: ScopeName): Expected
       [
         { text: 'while', scopes: name(scopeName, RuleName.ControlFlowKeyword) },
         { text: '(', scopes: name(scopeName, RuleName.OpenParen) },
-        { text: 'true', scopes: name(scopeName, RuleName.BuiltInVariable) },
+        { text: 'true', scopes: name(scopeName, RuleName.KeywordLikeBuiltInVariable) },
         { text: ')', scopes: name(scopeName, RuleName.CloseParen) },
         { text: '{', scopes: name(scopeName, RuleName.BlockBegin) },
         { text: '}', scopes: name(scopeName, RuleName.BlockEnd) },
 
         { text: 'While', scopes: name(scopeName, RuleName.ControlFlowKeyword) },
         { text: '(', scopes: name(scopeName, RuleName.OpenParen) },
-        { text: 'true', scopes: name(scopeName, RuleName.BuiltInVariable) },
+        { text: 'true', scopes: name(scopeName, RuleName.KeywordLikeBuiltInVariable) },
         { text: ')', scopes: name(scopeName, RuleName.CloseParen) },
         { text: '{', scopes: name(scopeName, RuleName.BlockBegin) },
         { text: '}', scopes: name(scopeName, RuleName.BlockEnd) },

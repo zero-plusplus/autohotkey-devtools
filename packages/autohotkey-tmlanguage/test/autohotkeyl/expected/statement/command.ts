@@ -49,7 +49,7 @@ export function createCommandStatementExpectedData(scopeName: ScopeName): Expect
         { text: 'AutoTrim', scopes: name(scopeName, Repository.CommandStatement, RuleName.CommandName) },
         { text: ',', scopes: name(scopeName, Repository.CommandStatement, RuleName.Comma) },
         { text: '%', scopes: name(scopeName, Repository.CommandStatement, RuleName.PercentBegin) },
-        { text: 'true', scopes: name(scopeName, Repository.CommandStatement, RuleName.BuiltInVariable) },
+        { text: 'true', scopes: name(scopeName, Repository.CommandStatement, RuleName.KeywordLikeBuiltInVariable) },
         { text: '%', scopes: name(scopeName, Repository.CommandStatement, RuleName.PercentEnd) },
       ],
     ],
@@ -59,7 +59,7 @@ export function createCommandStatementExpectedData(scopeName: ScopeName): Expect
         { text: 'AutoTrim', scopes: name(scopeName, Repository.CommandStatement, RuleName.CommandName) },
         { text: ',', scopes: name(scopeName, Repository.CommandStatement, RuleName.Comma) },
         { text: '% ', scopes: name(scopeName, Repository.CommandStatement, RuleName.PercentExpressionBegin) },
-        { text: 'true', scopes: name(scopeName, Repository.CommandStatement, RuleName.BuiltInVariable) },
+        { text: 'true', scopes: name(scopeName, Repository.CommandStatement, RuleName.KeywordLikeBuiltInVariable) },
       ],
     ],
 

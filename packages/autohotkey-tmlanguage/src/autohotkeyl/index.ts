@@ -152,6 +152,7 @@ export function createRepositories(scopeName: ScopeName): Repositories {
       includeRule(Repository.CallExpression_FunctionDeclarationHead),
       includeRule(Repository.ParenthesizedExpression),
       includeRule(Repository.Literal),
+      includeRule(Repository.KeywordLikeBuiltInVariable),
       includeRule(Repository.BuiltInVariable),
       includeRule(Repository.InvalidVariable),
       includeRule(Repository.Variable),
@@ -171,7 +172,14 @@ export function createRepositories(scopeName: ScopeName): Repositories {
     // #region variable
     [Repository.Variable]: rule_v1.createVariableRule(scopeName, patterns_v1.nameStart, patterns_v1.nameBody),
     [Repository.InvalidVariable]: rule_v1.createInvalidVariableRule(scopeName, patterns_v1.nameStart, patterns_v1.nameBody),
-    [Repository.BuiltInVariable]: rule_v1.createBuiltinVariableRule(scopeName, constants_v1.builtinVaribles),
+    [Repository.KeywordLikeBuiltInVariable]: rule_v1.createBuiltinVariableRule(scopeName, {
+      variableRuleName: RuleName.KeywordLikeBuiltInVariable,
+      builtinVariables: constants_v1.keywordLikeBuiltinVariables,
+    }),
+    [Repository.BuiltInVariable]: rule_v1.createBuiltinVariableRule(scopeName, {
+      variableRuleName: RuleName.BuiltInVariable,
+      builtinVariables: constants_v1.builtinVaribles,
+    }),
     // #endregion variable
 
     // #region access

@@ -35,15 +35,20 @@ export function createInvalidVariableRule(scopeName: ScopeName, nameStart: strin
     },
   );
 }
-export function createBuiltinVariableRule(scopeName: ScopeName, builtinVariables: readonly string[]): MatchRule {
+
+interface Placeholder {
+  variableRuleName: RuleName;
+  builtinVariables: readonly string[];
+}
+export function createBuiltinVariableRule(scopeName: ScopeName, placeholder: Placeholder): MatchRule {
   return {
     match: ignoreCase(seq(
       lookbehind(wordBound()),
-      capture(ordalt(...escapeOnigurumaTexts(builtinVariables))),
+      capture(ordalt(...escapeOnigurumaTexts(placeholder.builtinVariables))),
       lookahead(wordBound()),
     )),
     captures: {
-      1: nameRule(scopeName, RuleName.BuiltInVariable),
+      1: nameRule(scopeName, placeholder.variableRuleName),
     },
   };
 }
