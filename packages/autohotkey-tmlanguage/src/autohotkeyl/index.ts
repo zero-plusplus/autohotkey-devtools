@@ -43,6 +43,7 @@ export function createRepositories(scopeName: ScopeName): Repositories {
 
     // #region statement
     [Repository.Statement]: patternsRule(
+      includeRule(Repository.Declaration),
       includeRule(Repository.IncludeStatement),
       includeRule(Repository.DirectiveStatement),
       includeRule(Repository.CommandStatement),
@@ -58,7 +59,6 @@ export function createRepositories(scopeName: ScopeName): Repositories {
       includeRule(Repository.ForStatement),
       includeRule(Repository.TryStatement),
       includeRule(Repository.ThrowStatement),
-      includeRule(Repository.Declaration),
 
       includeRule(Repository.LegacyStatement),
       includeRule(Repository.ExpressionStatement),
