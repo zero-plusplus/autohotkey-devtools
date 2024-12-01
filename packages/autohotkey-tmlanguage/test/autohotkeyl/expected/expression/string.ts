@@ -14,7 +14,7 @@ export function createStringLiteralExpectedData(scopeName: ScopeName): ExpectedT
       ],
     ],
 
-    // #region escape sequences
+    // escape sequences
     [
       `"${constants_v1.doubleQuoteEscapeSequences.join('')}"`, [
         { text: '"', scopes: name(scopeName, RuleName.DoubleString, RuleName.StringBegin) },
@@ -24,6 +24,5 @@ export function createStringLiteralExpectedData(scopeName: ScopeName): ExpectedT
         { text: '"', scopes: name(scopeName, RuleName.DoubleString, RuleName.StringEnd) },
       ],
     ],
-    // #endregion escape sequences
   ];
 }

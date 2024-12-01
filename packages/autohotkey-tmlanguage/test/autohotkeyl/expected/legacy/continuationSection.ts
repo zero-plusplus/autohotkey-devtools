@@ -1,5 +1,5 @@
 import { dedent } from '@zero-plusplus/utilities/src';
-import { Repository, RuleName, StyleName } from '../../../../src/constants';
+import { RuleName, StyleName } from '../../../../src/constants';
 import type { ScopeName } from '../../../../src/types';
 import { name } from '../../../../src/utils';
 import type { ExpectedTestData } from '../../../types';
@@ -12,9 +12,9 @@ export function createContinuationSectionExpectedData(scopeName: ScopeName): Exp
           text
         )
       `, [
-        { text: '(', scopes: name(scopeName, Repository.ContinuationSection, RuleName.OpenParen) },
-        { text: 'text', scopes: name(scopeName, Repository.ContinuationSection, RuleName.UnquotedString) },
-        { text: ')', scopes: name(scopeName, Repository.ContinuationSection, RuleName.CloseParen) },
+        { text: '(', scopes: name(scopeName, RuleName.OpenParen) },
+        { text: 'text', scopes: name(scopeName, RuleName.UnquotedString) },
+        { text: ')', scopes: name(scopeName, RuleName.CloseParen) },
       ],
     ],
     [
@@ -24,16 +24,13 @@ export function createContinuationSectionExpectedData(scopeName: ScopeName): Exp
         (Join|
         )
       `, [
-        { text: '(', scopes: name(scopeName, Repository.ContinuationSection, RuleName.OpenParen) },
-        { text: 'Join', scopes: name(scopeName, Repository.ContinuationSection, RuleName.UnquotedString, StyleName.Strong) },
-        { text: '`r', scopes: name(scopeName, Repository.ContinuationSection, RuleName.UnquotedString, StyleName.Escape) },
-        { text: '`n', scopes: name(scopeName, Repository.ContinuationSection, RuleName.UnquotedString, StyleName.Escape) },
-        { text: ')', scopes: name(scopeName, Repository.ContinuationSection, RuleName.CloseParen) },
+        { text: '(', scopes: name(scopeName, RuleName.OpenParen) },
+        { text: 'Join`r`n', scopes: name(scopeName, RuleName.ContinuationOption, StyleName.Strong) },
+        { text: ')', scopes: name(scopeName, RuleName.CloseParen) },
 
-        { text: '(', scopes: name(scopeName, Repository.ContinuationSection, RuleName.OpenParen) },
-        { text: 'Join', scopes: name(scopeName, Repository.ContinuationSection, RuleName.UnquotedString, StyleName.Strong) },
-        { text: '|', scopes: name(scopeName, Repository.ContinuationSection, RuleName.UnquotedString) },
-        { text: ')', scopes: name(scopeName, Repository.ContinuationSection, RuleName.CloseParen) },
+        { text: '(', scopes: name(scopeName, RuleName.OpenParen) },
+        { text: 'Join|', scopes: name(scopeName, RuleName.ContinuationOption, StyleName.Strong) },
+        { text: ')', scopes: name(scopeName, RuleName.CloseParen) },
       ],
     ],
   ];

@@ -13,6 +13,7 @@ describe('autohotkeyl', () => {
     ...dataBuilder.createClassDeclarationExpectedData(scopeName),
     ...dataBuilder.createCommandStatementExpectedData(scopeName),
     ...dataBuilder.createContinuationSectionExpectedData(scopeName),
+    ...dataBuilder.createContinuationStringLiteralExpectedData(scopeName),
     ...dataBuilder.createDereferenceExpressionExpectedData(scopeName),
     ...dataBuilder.createForStatementExpectedData(scopeName),
     ...dataBuilder.createFunctionDeclarationExpectedData(scopeName),

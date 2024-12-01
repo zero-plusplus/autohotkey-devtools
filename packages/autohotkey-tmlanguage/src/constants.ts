@@ -110,9 +110,14 @@ export const enum Repository {
   String = 'repository.expression.string',
   InvalidStringContent = 'repository.expression.string.content.invalid',
   DoubleString = 'repository.expression.string.double-quote',
+  DoubleStringContent = 'repository.expression.string.double-quote.content',
   DoubleStringEscapeSequence = 'repository.expression.string.content.escape-sequence.double-quote',
   SingleString = 'repository.expression.string.single-quote',
   SingleStringEscapeSequence = 'repository.expression.string.content.escape-sequence.single-quote',
+
+  ContinuationStringOptions = 'repository.expression.continuation-string.options',
+  ContinuationDoubleString = 'repository.expression.continuation-string.double-quote',
+  ContinuationSingleString = 'repository.expression.continuation-string.single-quote',
   // #endregion string
   // #region number
   Number = 'repository.expression.number',
@@ -205,6 +210,7 @@ export const enum RuleName {
   BuiltInVariable = 'support.variable',
   // #endregion variable
   // #region string
+  ContinuationOption = 'string.continuation.option',
   UnquotedString = 'string.unquoted',
   DoubleString = 'string.quoted.double',
   DoubleStringEscapeSequence = 'constant.character.escape.double',

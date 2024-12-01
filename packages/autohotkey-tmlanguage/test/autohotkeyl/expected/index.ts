@@ -9,6 +9,7 @@ export * from './declaration/property';
 export * from './expression/array';
 export * from './expression/builtinVariable';
 export * from './expression/call';
+export * from './expression/continuationString';
 export * from './expression/dereference';
 export * from './expression/new';
 export * from './expression/number';

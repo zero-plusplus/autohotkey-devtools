@@ -5,6 +5,7 @@ import { includeRule, name, patternsRule } from '../../../utils';
 import { createLegacyTextEscapeSequencesRule } from './escape';
 
 interface Placeholder {
+  stringRuleName: RuleName;
   stringPattern: string;
   escapeSequences: readonly string[];
 }
@@ -16,7 +17,7 @@ export function createUnquotedString(scopeName: ScopeName, placeholder: Placehol
         createLegacyTextEscapeSequencesRule(scopeName, placeholder.escapeSequences),
         includeRule(Repository.Dereference),
         {
-          name: name(scopeName, RuleName.UnquotedString),
+          name: name(scopeName, placeholder.stringRuleName),
           match: negChars1('`'),
         },
       ),

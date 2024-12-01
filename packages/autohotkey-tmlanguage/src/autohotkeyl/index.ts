@@ -181,7 +181,7 @@ export function createRepositories(scopeName: ScopeName): Repositories {
 
     // #region literal
     [Repository.Literal]: patternsRule(
-      includeRule(Repository.DoubleString),
+      includeRule(Repository.String),
       includeRule(Repository.Number),
       includeRule(Repository.Object),
       includeRule(Repository.Array),
@@ -194,8 +194,24 @@ export function createRepositories(scopeName: ScopeName): Repositories {
     }),
     [Repository.Array]: rule_v1.createArrayRule(scopeName),
 
-    [Repository.String]: patternsRule(includeRule(Repository.DoubleString)),
+    [Repository.String]: patternsRule(
+      includeRule(Repository.DoubleString),
+      includeRule(Repository.ContinuationDoubleString),
+    ),
     [Repository.DoubleString]: rule_v1.createStringRule(scopeName, {
+      stringContentRepository: Repository.DoubleStringContent,
+      quoteChar: '"',
+      stringElementName: RuleName.DoubleString,
+      escapeSequences: constants_v1.doubleQuoteEscapeSequences,
+    }),
+    [Repository.ContinuationStringOptions]: rule_v1.createContinuationStringOptionsRule(scopeName),
+    [Repository.ContinuationDoubleString]: rule_v1.createContinuationString(scopeName, {
+      lineEndAnchor: patterns_v1.lineEndAnchor,
+      quoteChar: '"',
+      stringElementName: RuleName.DoubleString,
+      stringContentRepository: Repository.DoubleStringContent,
+    }),
+    [Repository.DoubleStringContent]: rule_v1.createStringContentRule(scopeName, {
       quoteChar: '"',
       stringElementName: RuleName.DoubleString,
       escapeSequences: constants_v1.doubleQuoteEscapeSequences,
@@ -258,10 +274,12 @@ export function createRepositories(scopeName: ScopeName): Repositories {
       includeRule(Repository.InLineComment),
     ),
     [Repository.CommandArgumentText]: rule_v1.createUnquotedString(scopeName, {
+      stringRuleName: RuleName.UnquotedString,
       stringPattern: patterns_v1.commandArgumentPattern,
       escapeSequences: constants_v1.unquoteEscapeSequences,
     }),
     [Repository.CommandLastArgumentText]: rule_v1.createUnquotedString(scopeName, {
+      stringRuleName: RuleName.UnquotedString,
       stringPattern: patterns_v1.lastArgumentPattern,
       escapeSequences: constants_v1.unquoteEscapeSequences,
     }),
@@ -276,6 +294,7 @@ export function createRepositories(scopeName: ScopeName): Repositories {
       lineEndAnchor: patterns_v1.lineEndAnchor,
     }),
     [Repository.ContinuationSectionText]: rule_v1.createUnquotedString(scopeName, {
+      stringRuleName: RuleName.UnquotedString,
       stringPattern: anyChars1(),
       escapeSequences: [ ...constants_v1.unquoteEscapeSequences, '`)' ],
     }),
