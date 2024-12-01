@@ -19,8 +19,7 @@ export function createCommandLikeStatementRule(scopeName: ScopeName, definitions
     name: name(scopeName, placeholder.statementElementName),
     begin: capture(seq(
       placeholder.startAnchor,
-      // command name
-      ignoreCase(alt(...sortedDefinitions.map((definition) => definition.name))),
+      keyword(...sortedDefinitions.map((definition) => definition.name)),
       negativeLookahead(char('(')),
       optional(capture(anyChars0())),
       placeholder.endAnchor,

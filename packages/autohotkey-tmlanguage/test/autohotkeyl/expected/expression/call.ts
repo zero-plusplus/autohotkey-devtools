@@ -53,6 +53,18 @@ export function createCallExpressionExpectedData(scopeName: ScopeName): Expected
       ],
     ],
 
+
+    // Same name as command name
+    [
+      dedent`
+        thread()
+      `, [
+        { text: 'thread', scopes: name(scopeName, RuleName.FunctionName) },
+        { text: '(', scopes: name(scopeName, RuleName.OpenParen) },
+        { text: ')', scopes: name(scopeName, RuleName.CloseParen) },
+      ],
+    ],
+
     // Note: The following variable names should be errors, but were daringly allowed because they slow down the processing speed to the extent that it freezes when analyzing exactly
     [
       dedent`
