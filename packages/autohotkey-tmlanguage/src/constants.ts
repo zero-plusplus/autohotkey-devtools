@@ -210,7 +210,7 @@ export const enum RuleName {
   BuiltInVariable = 'support.variable',
   // #endregion variable
   // #region string
-  ContinuationOption = 'string.continuation.option',
+  ContinuationOption = 'continuation.option keyword.operator.quantifier.regexp',
   UnquotedString = 'string.unquoted',
   DoubleString = 'string.quoted.double',
   DoubleStringEscapeSequence = 'constant.character.escape.double',
