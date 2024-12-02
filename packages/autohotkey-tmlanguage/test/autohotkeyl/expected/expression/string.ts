@@ -38,5 +38,15 @@ export function createStringLiteralExpectedData(scopeName: ScopeName): ExpectedT
         { text: '"', scopes: name(scopeName, RuleName.DoubleString, RuleName.StringEnd) },
       ],
     ],
+
+    [
+      dedent`
+        ":"
+      `, [
+        { text: '"', scopes: name(scopeName, RuleName.DoubleString, RuleName.StringBegin) },
+        { text: ':', scopes: name(scopeName, RuleName.DoubleString) },
+        { text: '"', scopes: name(scopeName, RuleName.DoubleString, RuleName.StringEnd) },
+      ],
+    ],
   ];
 }

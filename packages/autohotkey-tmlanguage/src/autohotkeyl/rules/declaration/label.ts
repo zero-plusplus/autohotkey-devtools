@@ -1,10 +1,11 @@
 import { Repository, RuleName } from '../../../constants';
-import { capture, char, inlineSpaces0, negativeLookahead, negChars0, seq } from '../../../oniguruma';
+import { capture, char, inlineSpaces0, negativeLookahead, seq } from '../../../oniguruma';
 import type { MatchRule, ScopeName } from '../../../types';
 import { name, nameRule } from '../../../utils';
 
 interface Placeholder {
   startAnchor: string;
+  labelPattern: string;
 }
 export function createLabelRule(scopeName: ScopeName, placeholder: Placeholder): MatchRule {
   return {
@@ -12,7 +13,7 @@ export function createLabelRule(scopeName: ScopeName, placeholder: Placeholder):
     match: seq(
       placeholder.startAnchor,
       inlineSpaces0(),
-      capture(negChars0('\\s', ',', '`')),
+      capture(placeholder.labelPattern),
       capture(seq(char(':'), negativeLookahead(char(':', '=')))),
     ),
     captures: {
