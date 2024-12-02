@@ -7,6 +7,7 @@ describe('autohotkeyl', () => {
   const scopeName: ScopeName = 'autohotkeyl';
   const expectedDataList: ExpectedTestData[] = [
     ...dataBuilder.createArrayLiteralExpectedData(scopeName),
+    ...dataBuilder.createAssignmentDeclarationExpectedData(scopeName),
     ...dataBuilder.createBlockDeclarationExpectedData(scopeName),
     ...dataBuilder.createBuiltinVariableExpectedData(scopeName),
     ...dataBuilder.createCallExpressionExpectedData(scopeName),

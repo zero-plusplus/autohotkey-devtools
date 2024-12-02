@@ -1,3 +1,4 @@
+export * from './declaration/assignment';
 export * from './declaration/block';
 export * from './declaration/class';
 export * from './declaration/function';

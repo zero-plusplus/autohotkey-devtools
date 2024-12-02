@@ -123,6 +123,7 @@ export function createRepositories(scopeName: ScopeName): Repositories {
     // #region declaration
     [Repository.Declaration]: patternsRule(
       includeRule(Repository.Modifier),
+      includeRule(Repository.AssignmentDeclaration),
       includeRule(Repository.CallExpression_FunctionDeclarationHead),
       includeRule(Repository.ClassDeclaration),
       includeRule(Repository.Block),
@@ -130,6 +131,11 @@ export function createRepositories(scopeName: ScopeName): Repositories {
     [Repository.Modifier]: rule_v1.createModifierRule(scopeName, {
       startAnchor: patterns_v1.statementStartAnchor,
       modifiers: constants_v1.modifiers,
+    }),
+    [Repository.AssignmentDeclaration]: rule_v1.createAssignmentDeclarationRule(scopeName, {
+      startAnchor: patterns_v1.statementStartAnchor,
+      namePattern: patterns_v1.looseNamePattern,
+      operators: constants_v1.assignmentOperators,
     }),
     [Repository.Block]: rule_v1.createBlockRule(scopeName, {
       statementsInBlock: [ includeRule(Repository.Self) ],
@@ -248,7 +254,7 @@ export function createRepositories(scopeName: ScopeName): Repositories {
 
     // #region token, keyword
     [Repository.Comma]: rule_v1.createCommaSeparatorRule(scopeName, ','),
-    [Repository.Operator]: rule_v1.createOperatorRule(scopeName, constants_v1.operators),
+    [Repository.Operator]: rule_v1.createOperatorRule(scopeName, constants_v1.expressionOperators),
     [Repository.KeywordInExpression]: rule_v1.createKeywordRule(scopeName, {
       elementName: name(scopeName, RuleName.KeywordInExpression),
       keywords: [
@@ -262,7 +268,7 @@ export function createRepositories(scopeName: ScopeName): Repositories {
 
     // #region misc
     [Repository.CallExpression_FunctionDeclarationHead]: rule_v1.createCallExpressionRule(scopeName, {
-      callableNamePattern: patterns_v1.callableNamePattern,
+      callableNamePattern: patterns_v1.looseNamePattern,
       keywordsInArgument: [ 'byref' ],
     }),
     // #endregion misc

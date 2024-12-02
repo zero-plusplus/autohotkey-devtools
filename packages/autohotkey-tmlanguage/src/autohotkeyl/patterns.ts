@@ -11,7 +11,7 @@ export const expressionStartAnchor: string = lookbehind(alt(
   seq(char(':'), inlineSpaces0()),
 ));
 export const expressionContinuationStartAnchor: string = seq(
-  lookbehind(ordalt(...escapeOnigurumaTexts(constants_v1.operators))),
+  lookbehind(ordalt(...escapeOnigurumaTexts(constants_v1.expressionOperators))),
   inlineSpaces0(),
   lookahead(char('{')),
 );
@@ -100,7 +100,7 @@ export const keyName: string = group(alt(
 ));
 
 // Note: Analyze roughly, as accurate analysis slows down the speed of analysis to a great extent
-export const callableNamePattern: string = group(manyRange(group(alt(
+export const looseNamePattern: string = group(manyRange(group(alt(
   nameBody,
   char('%'),
 )), 1, nameLimitLength));

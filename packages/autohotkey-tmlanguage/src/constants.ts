@@ -8,7 +8,22 @@ export const commonModifiers = [ 'local', 'global', 'static' ] as const;
 // #region operators
 // https://www.autohotkey.com/docs/v2/Variables.htm#Operators
 // https://www.autohotkey.com/docs/v1/Variables.htm#Operators
-export const commonOperators = [
+export const commonAssignmentOperators = [
+  ':=',   // e.g. `a := 1`
+  '+=',   // e.g. `a += 1`
+  '-=',   // e.g. `a -= 1`
+  '*=',   // e.g. `a *= 1`
+  '/=',   // e.g. `a /= 1`
+  '//=',  // e.g. `a //= 1`
+  '.=',   // e.g. `a .= 1`
+  '|=',   // e.g. `a |= 1`
+  '&=',   // e.g. `a &= 1`
+  '^=',   // e.g. `a ^= 1`
+  '>>=',  // e.g. `a >>= 1`
+  '<<=',  // e.g. `a <<= 1`
+  '>>>=', // e.g. `a >>>= 1`
+] as const;
+export const commonExpressionOperatorsWithoutAssignment = [
   '+',    // e.g. `+1`, `1 + 1`
   '++',   // e.g. `++1`, `1++`
   '-',    // e.g. `-1`, `1 - 1`
@@ -40,19 +55,6 @@ export const commonOperators = [
   '==',   // e.g. `1 == 1`
   '?',    // e.g. `a ? b : c`, `a?.b`
   ':',    // e.g. `a ? b : c`
-  ':=',   // e.g. `a := 1`
-  '+=',   // e.g. `a += 1`
-  '-=',   // e.g. `a -= 1`
-  '*=',   // e.g. `a *= 1`
-  '/=',   // e.g. `a /= 1`
-  '//=',  // e.g. `a //= 1`
-  '.=',   // e.g. `a .= 1`
-  '|=',   // e.g. `a |= 1`
-  '&=',   // e.g. `a &= 1`
-  '^=',   // e.g. `a ^= 1`
-  '>>=',  // e.g. `a >>= 1`
-  '<<=',  // e.g. `a <<= 1`
-  '>>>=', // e.g. `a >>>= 1`
 ] as const;
 // #endregion operators
 // #endregion constants
@@ -93,6 +95,7 @@ export const enum Repository {
   Block = 'repository.declaration.block',
   Modifier = 'repository.declaration.modifier',
   Declaration = 'repository.declaration',
+  AssignmentDeclaration = 'repository.declaration.assignment',
   ClassDeclaration = 'repository.declaration.class',
   PropertyDeclaration = 'repository.declaration.property',
   // #endregion declaration

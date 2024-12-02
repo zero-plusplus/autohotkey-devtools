@@ -1,4 +1,4 @@
-import { commonOperators } from '../constants';
+import { commonAssignmentOperators, commonExpressionOperatorsWithoutAssignment } from '../constants';
 
 // #region [Escape Sequences](https://www.autohotkey.com/docs/v2/misc/EscapeChar.htm)
 export const unquoteEscapeSequences = [ '``', '`;', '`:', '`{', '`n', '`r', '`b', '`t', '`s', '`v', '`a', '`f' ] as const;
@@ -7,8 +7,10 @@ export const singleQuoteEscapeSequences: [ ...typeof unquoteEscapeSequences, '`\
 // #endregion Escape Sequences
 
 // #region [Operators](https://www.autohotkey.com/docs/v2/Variables.htm#Operators)
-export const operators: readonly [ ...typeof commonOperators, '=>', '??' ] = [
-  ...commonOperators,
+export const assignmentOperators: readonly [ ...typeof commonAssignmentOperators ] = [ ...commonAssignmentOperators ] as const;
+export const expressionOperators: readonly [ ...typeof commonExpressionOperatorsWithoutAssignment, ... typeof commonAssignmentOperators, '=>', '??' ] = [
+  ...commonExpressionOperatorsWithoutAssignment,
+  ...commonAssignmentOperators,
   '=>', // `(args*) => expression`
   '??', // `a ?? b`
 ] as const;

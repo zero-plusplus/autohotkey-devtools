@@ -73,10 +73,10 @@ export function getOperators(scopeName: ScopeName): readonly string[] {
   switch (scopeName) {
     case 'autohotkeynext':
     case 'autohotkey2': {
-      return constants_v2.operators;
+      return constants_v2.expressionOperators;
     }
     case 'autohotkeyl': {
-      return constants_v1.operators;
+      return constants_v1.expressionOperators;
     }
   }
   throw Error(`Scope "${scopeName}" not found`);
