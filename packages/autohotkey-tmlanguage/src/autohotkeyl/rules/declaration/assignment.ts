@@ -20,12 +20,7 @@ export function createAssignmentDeclarationRule(scopeName: ScopeName, placeholde
     ),
     captures: {
       1: patternsRule(includeRule(Repository.Modifier)),
-      2: patternsRule(
-        includeRule(Repository.Dereference),
-        includeRule(Repository.KeywordLikeBuiltInVariable),
-        includeRule(Repository.BuiltInVariable),
-        includeRule(Repository.Variable),
-      ),
+      2: patternsRule(includeRule(Repository.Expressions)),
       3: nameRule(scopeName, RuleName.Operator),
     },
   };

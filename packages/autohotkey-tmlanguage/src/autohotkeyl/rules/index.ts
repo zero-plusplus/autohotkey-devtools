@@ -8,7 +8,6 @@ export * from './declaration/modifier';
 export * from './declaration/property';
 export * from './expression/array';
 export * from './expression/call';
-export * from './expression/commaSeparator';
 export * from './expression/continuationString';
 export * from './expression/dereference';
 export * from './expression/number';

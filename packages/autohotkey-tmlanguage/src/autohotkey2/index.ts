@@ -35,19 +35,7 @@ export function createRepositories(scopeName: ScopeName): Repositories {
 
     // #region statement
     [Repository.Statement]: patternsRule(includeRule(Repository.ExpressionStatement)),
-    [Repository.ExpressionStatement]: patternsRule(
-      includeRule(Repository.Comma),
-
-      includeRule(Repository.ParenthesizedExpression),
-      includeRule(Repository.Literal),
-      includeRule(Repository.BuiltInVariable),
-      includeRule(Repository.InvalidVariable),
-      includeRule(Repository.Variable),
-      includeRule(Repository.InvalidDereference),
-      includeRule(Repository.Dereference),
-
-      includeRule(Repository.Operator),
-    ),
+    [Repository.ExpressionStatement]: patternsRule(includeRule(Repository.Expressions)),
     // #endregion statement
 
     // #region expression
@@ -59,6 +47,7 @@ export function createRepositories(scopeName: ScopeName): Repositories {
       includeRule(Repository.Variable),
       includeRule(Repository.InvalidDereference),
       includeRule(Repository.Dereference),
+      includeRule(Repository.Dot),
       includeRule(Repository.Operator),
     ),
     [Repository.Expressions]: patternsRule(
@@ -125,8 +114,18 @@ export function createRepositories(scopeName: ScopeName): Repositories {
     // #endregion literal
 
     // #region token
-    [Repository.Comma]: rule_v1.createCommaSeparatorRule(scopeName, ','),
-    [Repository.Operator]: rule_v1.createOperatorRule(scopeName, constants_v2.expressionOperators),
+    [Repository.Comma]: rule_v1.createOperatorRule(scopeName, {
+      operatorRuleName: RuleName.Comma,
+      operators: [ ',' ],
+    }),
+    [Repository.Dot]: rule_v1.createOperatorRule(scopeName, {
+      operatorRuleName: RuleName.Comma,
+      operators: [ '.' ],
+    }),
+    [Repository.Operator]: rule_v1.createOperatorRule(scopeName, {
+      operatorRuleName: RuleName.Operator,
+      operators: constants_v2.expressionOperators,
+    }),
     // #endregion token
     // #endregion expression
   };

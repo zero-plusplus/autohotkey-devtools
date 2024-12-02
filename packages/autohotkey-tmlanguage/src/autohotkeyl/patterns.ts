@@ -100,7 +100,12 @@ export const keyName: string = group(alt(
 ));
 
 // Note: Analyze roughly, as accurate analysis slows down the speed of analysis to a great extent
-export const looseNamePattern: string = group(manyRange(group(alt(
+export const looseLeftHandPattern: string = group(manyRange(group(alt(
+  nameBody,
+  char('%', '[', ']', '.'),
+  // group(seq(char('['), anyChars1(), char(']'))),
+)), 1, nameLimitLength));
+export const looseCallableNamePattern: string = group(manyRange(group(alt(
   nameBody,
   char('%'),
 )), 1, nameLimitLength));

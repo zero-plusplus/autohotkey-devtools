@@ -5,7 +5,11 @@ import { includeRule, name, nameRule } from '../../../utils';
 import * as constants_v1 from '../../constants';
 import * as patterns_v1 from '../../patterns';
 
-export function createLegacyAssignmentRule(scopeName: ScopeName): MatchRule {
+interface Placeholder {
+  startAnchor: string;
+  leftHandPattern: string;
+}
+export function createLegacyAssignmentRule(scopeName: ScopeName, placeholder: Placeholder): MatchRule {
   const endLine = lookahead(alt(
     seq(inlineSpaces1(), negativeLookahead(char('`'))),
     seq(inlineSpaces0(), endAnchor()),
@@ -14,7 +18,7 @@ export function createLegacyAssignmentRule(scopeName: ScopeName): MatchRule {
   return {
     match: seq(
       patterns_v1.expressionStartAnchor,
-      capture(seq(patterns_v1.nameStart, groupMany0(patterns_v1.nameBody))),
+      capture(placeholder.leftHandPattern),
       inlineSpaces0(),
       capture(char('=')),
       inlineSpaces0(),
@@ -28,12 +32,12 @@ export function createLegacyAssignmentRule(scopeName: ScopeName): MatchRule {
     ),
     captures: {
       1: {
-        name: name(scopeName, Repository.LegacyAssignment),
-        patterns: [ includeRule(Repository.Variable) ],
+        name: name(scopeName, Repository.LegacyAssignmentDeclaration),
+        patterns: [ includeRule(Repository.Expressions) ],
       },
-      2: nameRule(scopeName, Repository.LegacyAssignment, RuleName.Operator),
+      2: nameRule(scopeName, Repository.LegacyAssignmentDeclaration, RuleName.Operator),
       3: {
-        name: name(scopeName, Repository.LegacyAssignment),
+        name: name(scopeName, Repository.LegacyAssignmentDeclaration),
         patterns: [
           includeRule(Repository.PercentExpression),
           includeRule(Repository.Dereference),

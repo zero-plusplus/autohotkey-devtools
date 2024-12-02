@@ -6,7 +6,7 @@ import type { BeginWhileRule, CommandDefinition, CommandParameter, CommandSignat
 import { includeRule, name, nameRule, patternsRule } from '../../../utils';
 import * as patterns_v1 from '../../patterns';
 
-export interface Placeholder {
+interface Placeholder {
   startAnchor: string;
   endAnchor: string;
   statementElementName: ElementName;
@@ -20,6 +20,10 @@ export function createCommandLikeStatementRule(scopeName: ScopeName, definitions
     begin: capture(seq(
       placeholder.startAnchor,
       ignoreCase(alt(...sortedDefinitions.map((definition) => definition.name))),
+      lookahead(alt(
+        seq(inlineSpaces1()),
+        seq(inlineSpaces0(), char(',')),
+      )),
       optional(capture(anyChars0())),
       placeholder.endAnchor,
     )),

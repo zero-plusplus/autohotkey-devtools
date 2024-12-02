@@ -156,6 +156,7 @@ export const enum Repository {
   // #region operators
   Operator = 'repository.operator.without-comma',
   Comma = 'repository.operator.comma',
+  Dot = 'repository.operator.dot',
   // #endregion operators
 
   // #region keyword
@@ -174,7 +175,7 @@ export const enum Repository {
 
   // #region legacy
   Legacy = 'repository.legacy',
-  LegacyAssignment = 'repository.legacy.expression.assignment',
+  LegacyAssignmentDeclaration = 'repository.legacy.declaration.assignment',
   PercentExpression = 'repository.legacy.expression.percent',
   ContinuationSection = 'repository.legacy.continuation-section',
   ContinuationSectionText = 'repository.legacy.continuation-section.text',

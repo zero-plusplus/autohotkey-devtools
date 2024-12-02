@@ -123,6 +123,7 @@ export function createRepositories(scopeName: ScopeName): Repositories {
     // #region declaration
     [Repository.Declaration]: patternsRule(
       includeRule(Repository.Modifier),
+      includeRule(Repository.LegacyAssignmentDeclaration),
       includeRule(Repository.AssignmentDeclaration),
       includeRule(Repository.CallExpression_FunctionDeclarationHead),
       includeRule(Repository.ClassDeclaration),
@@ -134,7 +135,7 @@ export function createRepositories(scopeName: ScopeName): Repositories {
     }),
     [Repository.AssignmentDeclaration]: rule_v1.createAssignmentDeclarationRule(scopeName, {
       startAnchor: patterns_v1.statementStartAnchor,
-      namePattern: patterns_v1.looseNamePattern,
+      namePattern: patterns_v1.looseLeftHandPattern,
       operators: constants_v1.assignmentOperators,
     }),
     [Repository.Block]: rule_v1.createBlockRule(scopeName, {
@@ -165,6 +166,7 @@ export function createRepositories(scopeName: ScopeName): Repositories {
       includeRule(Repository.InvalidDereference),
       includeRule(Repository.Dereference),
 
+      includeRule(Repository.Dot),
       includeRule(Repository.Operator),
     ),
     [Repository.Expressions]: patternsRule(
@@ -253,8 +255,18 @@ export function createRepositories(scopeName: ScopeName): Repositories {
     // #endregion literal
 
     // #region token, keyword
-    [Repository.Comma]: rule_v1.createCommaSeparatorRule(scopeName, ','),
-    [Repository.Operator]: rule_v1.createOperatorRule(scopeName, constants_v1.expressionOperators),
+    [Repository.Comma]: rule_v1.createOperatorRule(scopeName, {
+      operatorRuleName: RuleName.Comma,
+      operators: [ ',' ],
+    }),
+    [Repository.Dot]: rule_v1.createOperatorRule(scopeName, {
+      operatorRuleName: RuleName.Dot,
+      operators: [ '.' ],
+    }),
+    [Repository.Operator]: rule_v1.createOperatorRule(scopeName, {
+      operatorRuleName: RuleName.Operator,
+      operators: constants_v1.expressionOperators,
+    }),
     [Repository.KeywordInExpression]: rule_v1.createKeywordRule(scopeName, {
       elementName: name(scopeName, RuleName.KeywordInExpression),
       keywords: [
@@ -268,7 +280,7 @@ export function createRepositories(scopeName: ScopeName): Repositories {
 
     // #region misc
     [Repository.CallExpression_FunctionDeclarationHead]: rule_v1.createCallExpressionRule(scopeName, {
-      callableNamePattern: patterns_v1.looseNamePattern,
+      callableNamePattern: patterns_v1.looseCallableNamePattern,
       keywordsInArgument: [ 'byref' ],
     }),
     // #endregion misc
@@ -300,8 +312,11 @@ export function createRepositories(scopeName: ScopeName): Repositories {
     // #endregion command
 
     // #region legacy
-    [Repository.Legacy]: patternsRule(includeRule(Repository.LegacyAssignment)),
-    [Repository.LegacyAssignment]: rule_v1.createLegacyAssignmentRule(scopeName),
+    [Repository.Legacy]: patternsRule(includeRule(Repository.LegacyAssignmentDeclaration)),
+    [Repository.LegacyAssignmentDeclaration]: rule_v1.createLegacyAssignmentRule(scopeName, {
+      startAnchor: patterns_v1.statementStartAnchor,
+      leftHandPattern: patterns_v1.looseLeftHandPattern,
+    }),
     [Repository.PercentExpression]: rule_v1.createPercentExpressionRule(scopeName),
     [Repository.ContinuationSection]: rule_v1.createContinuationSectionRule(scopeName, {
       startAnchor: patterns_v1.statementStartAnchor,
