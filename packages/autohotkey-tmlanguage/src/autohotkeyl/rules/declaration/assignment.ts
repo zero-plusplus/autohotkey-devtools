@@ -1,5 +1,5 @@
 import { Repository, RuleName } from '../../../constants';
-import { capture, escapeOnigurumaTexts, inlineSpaces0, keyword, optional, ordalt, seq } from '../../../oniguruma';
+import { capture, escapeOnigurumaTexts, inlineSpaces0, keyword, lookbehind, optional, ordalt, seq } from '../../../oniguruma';
 import type { MatchRule, ScopeName } from '../../../types';
 import { includeRule, nameRule, patternsRule } from '../../../utils';
 
@@ -11,7 +11,7 @@ interface Placeholder {
 export function createAssignmentDeclarationRule(scopeName: ScopeName, placeholder: Placeholder): MatchRule {
   return {
     match: seq(
-      placeholder.startAnchor,
+      lookbehind(placeholder.startAnchor),
       optional(capture(keyword('global', 'local', 'static'))),
       inlineSpaces0(),
       capture(seq(placeholder.namePattern)),

@@ -1,5 +1,5 @@
 import { Repository, RuleName } from '../../../constants';
-import { alt, anyChars0, capture, char, ignoreCase, inlineSpace, inlineSpaces0, keyword, lookahead, lookbehind, negativeLookahead, seq } from '../../../oniguruma';
+import { alt, anyChars0, capture, char, ignoreCase, inlineSpace, inlineSpaces0, keyword, lookahead, lookbehind, negativeLookahead, seq, startAnchor } from '../../../oniguruma';
 import type { BeginEndRule, ScopeName } from '../../../types';
 import { includeRule, name, nameRule, patternsRule } from '../../../utils';
 
@@ -10,7 +10,7 @@ interface Placeholder {
 export function createSwitchStatementRule(scopeName: ScopeName, placeholder: Placeholder): BeginEndRule {
   return {
     begin: seq(
-      placeholder.startAnchor,
+      lookbehind(placeholder.startAnchor),
       inlineSpaces0(),
       capture(keyword('switch')),
       lookahead(alt(
@@ -57,7 +57,7 @@ export function createSwitchStatementRule(scopeName: ScopeName, placeholder: Pla
           // #region one true brace style
           {
             begin: seq(
-              placeholder.startAnchor,
+              startAnchor(),
               inlineSpaces0(),
               capture(keyword('case')),
               inlineSpaces0(),
@@ -82,7 +82,7 @@ export function createSwitchStatementRule(scopeName: ScopeName, placeholder: Pla
           {
             name: name(scopeName, Repository.SwitchStatement),
             begin: seq(
-              placeholder.startAnchor,
+              startAnchor(),
               inlineSpaces0(),
               capture(keyword('default')),
               inlineSpaces0(),
@@ -106,7 +106,7 @@ export function createSwitchStatementRule(scopeName: ScopeName, placeholder: Pla
           // #region k&r style
           {
             match: seq(
-              placeholder.startAnchor,
+              startAnchor(),
               inlineSpaces0(),
               capture(keyword('case')),
               lookahead(inlineSpace()),
@@ -123,7 +123,7 @@ export function createSwitchStatementRule(scopeName: ScopeName, placeholder: Pla
           },
           {
             match: seq(
-              placeholder.startAnchor,
+              startAnchor(),
               inlineSpaces0(),
               capture(keyword('default')),
               inlineSpaces0(),

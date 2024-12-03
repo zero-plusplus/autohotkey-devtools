@@ -1,5 +1,5 @@
 import { RuleName } from '../../../constants';
-import { alt, capture, char, inlineSpace, inlineSpaces0, keyword, lookahead, seq } from '../../../oniguruma';
+import { alt, capture, char, inlineSpace, inlineSpaces0, keyword, lookahead, lookbehind, seq } from '../../../oniguruma';
 import type { MatchRule, ScopeName } from '../../../types';
 import { nameRule } from '../../../utils';
 
@@ -9,7 +9,7 @@ interface Placeholder {
 export function createTryStatementRule(scopeName: ScopeName, placeholder: Placeholder): MatchRule {
   return {
     match: seq(
-      placeholder.startAnchor,
+      lookbehind(placeholder.startAnchor),
       inlineSpaces0(),
       capture(alt(
         keyword('try'),

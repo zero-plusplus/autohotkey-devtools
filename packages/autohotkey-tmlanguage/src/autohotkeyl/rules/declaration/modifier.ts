@@ -1,5 +1,5 @@
 import { RuleName } from '../../../constants';
-import { capture, inlineSpaces0, keyword, seq } from '../../../oniguruma';
+import { capture, inlineSpaces0, keyword, lookbehind, seq } from '../../../oniguruma';
 import type { MatchRule, ScopeName } from '../../../types';
 import { nameRule } from '../../../utils';
 
@@ -10,7 +10,7 @@ interface Placeholder {
 export function createModifierRule(scopeName: ScopeName, placeholder: Placeholder): MatchRule {
   return {
     match: seq(
-      placeholder.startAnchor,
+      lookbehind(placeholder.startAnchor),
       inlineSpaces0(),
       capture(keyword(...placeholder.modifiers)),
     ),

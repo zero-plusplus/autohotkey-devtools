@@ -12,7 +12,7 @@ interface Placeholder {
 export function createClassDeclarationRule(scopeName: ScopeName, placeholder: Placeholder): BeginEndRule {
   return {
     begin: lookahead(seq(
-      placeholder.startAnchor,
+      lookbehind(placeholder.startAnchor),
       inlineSpaces0(),
       keyword('class'),
     )),
@@ -23,7 +23,7 @@ export function createClassDeclarationRule(scopeName: ScopeName, placeholder: Pl
       // class head
       {
         begin: seq(
-          placeholder.startAnchor,
+          lookahead(placeholder.startAnchor),
           inlineSpaces0(),
           capture(keyword('class')),
         ),

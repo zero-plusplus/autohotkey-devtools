@@ -1,5 +1,5 @@
 import { Repository, RuleName } from '../../../constants';
-import { alt, capture, char, inlineSpace, inlineSpaces0, keyword, lookahead, seq } from '../../../oniguruma';
+import { alt, capture, char, inlineSpace, inlineSpaces0, keyword, lookahead, lookbehind, seq } from '../../../oniguruma';
 import type { PatternsRule, ScopeName } from '../../../types';
 import { nameRule, patternsRule } from '../../../utils';
 import * as definition_v1 from '../../definition';
@@ -23,7 +23,7 @@ export function createLoopStatementRule(scopeName: ScopeName, placeholder: Place
     }),
     {
       match: seq(
-        placeholder.startAnchor,
+        lookbehind(placeholder.startAnchor),
         inlineSpaces0(),
         capture(keyword('loop')),
         lookahead(alt(

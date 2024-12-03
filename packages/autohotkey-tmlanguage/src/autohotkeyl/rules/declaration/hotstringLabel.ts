@@ -1,5 +1,5 @@
 import { Repository, RuleName, StyleName } from '../../../constants';
-import { alt, anyChars0, anyChars1, capture, char, ignoreCase, numbers1, optional, seq } from '../../../oniguruma';
+import { alt, anyChars0, anyChars1, capture, char, ignoreCase, lookbehind, numbers1, optional, seq } from '../../../oniguruma';
 import type { MatchRule, ScopeName } from '../../../types';
 import { name, nameRule, patternsRule } from '../../../utils';
 
@@ -11,7 +11,7 @@ export function createHotstringLabelRule(scopeName: ScopeName, placeholder: Plac
   return {
     name: name(scopeName, Repository.HotstringLabelStatement),
     match: seq(
-      placeholder.startAnchor,
+      lookbehind(placeholder.startAnchor),
       capture(char(':')),
       capture(anyChars0()),
       capture(char(':')),

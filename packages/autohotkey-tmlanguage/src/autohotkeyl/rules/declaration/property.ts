@@ -11,7 +11,7 @@ interface Placeholder {
 export function createPropertyDeclarationRule(scopeName: ScopeName, placeholder: Placeholder): BeginEndRule {
   return {
     begin: seq(
-      placeholder.startAnchor,
+      lookbehind(placeholder.startAnchor),
       inlineSpaces0(),
       capture(placeholder.identifierPattern),
       capture(char('[')),

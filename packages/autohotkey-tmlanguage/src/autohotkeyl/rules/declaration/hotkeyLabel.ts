@@ -1,5 +1,5 @@
 import { Repository, RuleName } from '../../../constants';
-import { anyChars1, capture, char, negativeLookahead, negativeLookbehind, seq } from '../../../oniguruma';
+import { anyChars1, capture, char, lookbehind, negativeLookahead, negativeLookbehind, seq } from '../../../oniguruma';
 import type { MatchRule, ScopeName } from '../../../types';
 import { name, nameRule } from '../../../utils';
 
@@ -10,7 +10,7 @@ export function createHotkeyLabelRule(scopeName: ScopeName, placeholder: Placeho
   return {
     name: name(scopeName, Repository.HotkeyLabelStatement),
     match: seq(
-      placeholder.startAnchor,
+      lookbehind(placeholder.startAnchor),
       negativeLookahead(char(':')),
       capture(anyChars1()),
       capture(seq(negativeLookbehind('`'), char(':'), negativeLookahead('='), char(':'))),

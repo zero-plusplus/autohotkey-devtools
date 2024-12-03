@@ -1,11 +1,11 @@
 import { alt, anyChar, anyChars0, anyChars1, char, endAnchor, escapeOnigurumaTexts, group, groupMany0, inlineSpace, inlineSpaces0, inlineSpaces1, lookahead, lookbehind, manyLimit, manyRange, negativeLookahead, negativeLookbehind, negChar, negChars0, opt, ordalt, seq, startAnchor, wordChar } from '../oniguruma';
 import * as constants_v1 from './constants';
 
-export const statementStartAnchor: string = lookbehind(alt(
+export const statementStartAnchor: string = alt(
   seq(startAnchor(), inlineSpaces0()),
   seq(char(':'), inlineSpaces0()),
   seq(inlineSpaces0(), char('}')),
-));
+);
 export const expressionStartAnchor: string = lookbehind(alt(
   seq(startAnchor(), inlineSpaces0(), opt(char(','))),
   seq(char(':'), inlineSpaces0()),

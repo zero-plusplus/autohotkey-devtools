@@ -9,7 +9,7 @@ interface Placeholder {
 export function createSingleLineCommentRule(scopeName: ScopeName, placeholder: Placeholder): MatchRule {
   return {
     match: seq(
-      placeholder.startAnchor,
+      lookbehind(placeholder.startAnchor),
       capture(seq(char(';'), anyChars0())),
       endAnchor(),
     ),

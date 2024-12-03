@@ -1,5 +1,5 @@
 import { Repository, RuleName } from '../../../constants';
-import { capture, char, inlineSpaces0, negativeLookahead, seq } from '../../../oniguruma';
+import { capture, char, inlineSpaces0, lookbehind, negativeLookahead, seq } from '../../../oniguruma';
 import type { MatchRule, ScopeName } from '../../../types';
 import { name, nameRule } from '../../../utils';
 
@@ -11,7 +11,7 @@ export function createLabelRule(scopeName: ScopeName, placeholder: Placeholder):
   return {
     name: name(scopeName, Repository.LabelStatement),
     match: seq(
-      placeholder.startAnchor,
+      lookbehind(placeholder.startAnchor),
       inlineSpaces0(),
       capture(placeholder.labelPattern),
       capture(seq(char(':'), negativeLookahead(char(':', '=')))),

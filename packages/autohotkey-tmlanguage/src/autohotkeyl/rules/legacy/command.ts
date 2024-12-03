@@ -18,7 +18,7 @@ export function createCommandLikeStatementRule(scopeName: ScopeName, definitions
   return {
     name: name(scopeName, placeholder.statementElementName),
     begin: capture(seq(
-      placeholder.startAnchor,
+      lookbehind(placeholder.startAnchor),
       ignoreCase(alt(...sortedDefinitions.map((definition) => definition.name))),
       lookahead(alt(
         seq(inlineSpaces1()),
@@ -59,7 +59,7 @@ export function createCommandLikeStatementRule(scopeName: ScopeName, definitions
 }
 export function createCommandLikeRule(scopeName: ScopeName, definition: CommandDefinition, signature: CommandSignature, placeholder: Placeholder): Rule {
   const capturedCommandNamePattern = seq(
-    placeholder.startAnchor,
+    lookbehind(placeholder.startAnchor),
     capture(ignoreCase(definition.name)),
     negativeLookahead(char('(')),
   );
@@ -83,7 +83,7 @@ export function createCommandLikeRule(scopeName: ScopeName, definition: CommandD
   const subcommands = signature.parameters.filter((parameter) => parameter.type === HighlightType.SubCommand);
   return {
     begin: lookahead(seq(
-      placeholder.startAnchor,
+      lookbehind(placeholder.startAnchor),
       ignoreCase(definition.name),
       ...1 <= subcommands.length
         ? [ group(alt(inlineSpace(), char(','))), inlineSpaces0(), keyword(String(subcommands[0]?.values![0])) ]
@@ -105,7 +105,7 @@ export function createCommandNames(scopeName: ScopeName, definitions: CommandDef
     return {
       ...placeholder.statementElementName ? nameRule(scopeName, placeholder.statementElementName) : {},
       match: seq(
-        placeholder.startAnchor,
+        lookbehind(placeholder.startAnchor),
         inlineSpaces0(),
         capture(keyword(...names)),
       ),

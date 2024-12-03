@@ -1,5 +1,5 @@
 import { Repository, RuleName } from '../../../constants';
-import { anyChars0, capture, char, ignoreCase, inlineSpaces0, inlineSpaces1, lookahead, optseq, ordalt, reluctant, seq } from '../../../oniguruma';
+import { anyChars0, capture, char, ignoreCase, inlineSpaces0, inlineSpaces1, lookahead, lookbehind, optseq, ordalt, reluctant, seq } from '../../../oniguruma';
 import type { BeginEndRule, ScopeName } from '../../../types';
 import { includeRule, name, nameRule, patternsRule } from '../../../utils';
 
@@ -13,7 +13,7 @@ export function createIncludeStatementRule(scopeName: ScopeName, placeholder: Pl
   return {
     name: name(scopeName, Repository.IncludeStatement),
     begin: seq(
-      placeholder.startAnchor,
+      lookbehind(placeholder.startAnchor),
       lookahead(seq(
         inlineSpaces0(),
         includeKeyword,
@@ -23,7 +23,7 @@ export function createIncludeStatementRule(scopeName: ScopeName, placeholder: Pl
     patterns: [
       {
         match: seq(
-          placeholder.startAnchor,
+          lookbehind(placeholder.startAnchor),
           inlineSpaces0(),
           capture(includeKeyword),
           inlineSpaces0(),
@@ -40,7 +40,7 @@ export function createIncludeStatementRule(scopeName: ScopeName, placeholder: Pl
       },
       {
         match: seq(
-          placeholder.startAnchor,
+          lookbehind(placeholder.startAnchor),
           inlineSpaces0(),
           capture(includeKeyword),
           optseq(
