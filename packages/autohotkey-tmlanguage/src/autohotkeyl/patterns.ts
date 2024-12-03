@@ -15,11 +15,11 @@ export const lineEndAnchor: string = alt(
   seq(inlineSpaces1(), negativeLookahead(char('`')), char(';')),
   seq(inlineSpaces0(), endAnchor()),
 );
-export const controlFlowEndAnchor: string = lookahead(alt(
+export const controlFlowEndAnchor: string = alt(
   seq(inlineSpaces1(), negativeLookahead(char('`')), char(';')),
   seq(inlineSpaces0(), char('{')),
   seq(inlineSpaces0(), endAnchor()),
-));
+);
 export const expressionEndAnchor: string = alt(
   seq(inlineSpaces1(), char(';')),
   seq(inlineSpaces0(), endAnchor()),
