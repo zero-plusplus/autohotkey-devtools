@@ -4,7 +4,7 @@ import type { BeginEndRule, ElementName, ScopeName } from '../../../types';
 import { includeRule, name, nameRule, patternsRule } from '../../../utils';
 
 interface Placeholder {
-  lineEndAnchor: string;
+  endAnchor: string;
   quoteChar: string;
   stringElementName: ElementName;
   stringContentRepository: Repository;
@@ -22,7 +22,7 @@ export function createContinuationString(scopeName: ScopeName, placeholder: Plac
         char(';'),
         anyChars0(),
       )),
-      placeholder.lineEndAnchor,
+      lookahead(placeholder.endAnchor),
     ),
     beginCaptures: {
       1: nameRule(scopeName, placeholder.stringElementName, RuleName.StringBegin),

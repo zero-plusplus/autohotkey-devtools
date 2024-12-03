@@ -6,7 +6,7 @@ import { createBlockRule } from './block';
 
 interface Placeholder {
   startAnchor: string;
-  lineEndAnchor: string;
+  endAnchor: string;
   identifierPattern: string;
 }
 export function createClassDeclarationRule(scopeName: ScopeName, placeholder: Placeholder): BeginEndRule {
@@ -32,7 +32,7 @@ export function createClassDeclarationRule(scopeName: ScopeName, placeholder: Pl
         },
         end: lookahead(alt(
           seq(inlineSpaces0(), char('{')),
-          placeholder.lineEndAnchor,
+          placeholder.endAnchor,
         )),
         patterns: [
           {

@@ -19,7 +19,7 @@ export function createIncludeStatementRule(scopeName: ScopeName, placeholder: Pl
         includeKeyword,
       )),
     ),
-    end: placeholder.endAnchor,
+    end: lookahead(placeholder.endAnchor),
     patterns: [
       {
         match: seq(
@@ -47,7 +47,7 @@ export function createIncludeStatementRule(scopeName: ScopeName, placeholder: Pl
             inlineSpaces1(),
             capture(reluctant(anyChars0())),
           ),
-          placeholder.endAnchor,
+          lookahead(placeholder.endAnchor),
         ),
         captures: {
           1: nameRule(scopeName, RuleName.DirectiveName),

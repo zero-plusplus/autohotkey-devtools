@@ -102,7 +102,7 @@ export function createRepositories(scopeName: ScopeName): Repositories {
     }),
     [Repository.SwitchStatement]: rule_v1.createSwitchStatementRule(scopeName, {
       startAnchor: patterns_v1.statementStartAnchor,
-      lineEndAnchor: patterns_v1.lineEndAnchor,
+      endAnchor: patterns_v1.lineEndAnchor,
     }),
     [Repository.WhileStatement]: rule_v1.createWhileStatementRule(scopeName, {
       startAnchor: patterns_v1.statementStartAnchor,
@@ -148,8 +148,8 @@ export function createRepositories(scopeName: ScopeName): Repositories {
     }),
     [Repository.ClassDeclaration]: rule_v1.createClassDeclarationRule(scopeName, {
       startAnchor: patterns_v1.statementStartAnchor,
+      endAnchor: patterns_v1.lineEndAnchor,
       identifierPattern: patterns_v1.identifierPattern,
-      lineEndAnchor: patterns_v1.lineEndAnchor,
     }),
     [Repository.PropertyDeclaration]: rule_v1.createPropertyDeclarationRule(scopeName, {
       startAnchor: patterns_v1.statementStartAnchor,
@@ -227,7 +227,7 @@ export function createRepositories(scopeName: ScopeName): Repositories {
     }),
     [Repository.ContinuationStringOptions]: rule_v1.createContinuationStringOptionsRule(scopeName),
     [Repository.ContinuationDoubleString]: rule_v1.createContinuationString(scopeName, {
-      lineEndAnchor: patterns_v1.lineEndAnchor,
+      endAnchor: patterns_v1.lineEndAnchor,
       quoteChar: '"',
       stringElementName: RuleName.DoubleString,
       stringContentRepository: Repository.DoubleStringContent,
@@ -325,7 +325,7 @@ export function createRepositories(scopeName: ScopeName): Repositories {
     [Repository.PercentExpression]: rule_v1.createPercentExpressionRule(scopeName),
     [Repository.ContinuationSection]: rule_v1.createContinuationSectionRule(scopeName, {
       startAnchor: patterns_v1.statementStartAnchor,
-      lineEndAnchor: patterns_v1.lineEndAnchor,
+      endAnchor: patterns_v1.lineEndAnchor,
     }),
     [Repository.ContinuationSectionText]: rule_v1.createUnquotedString(scopeName, {
       stringRuleName: RuleName.UnquotedString,

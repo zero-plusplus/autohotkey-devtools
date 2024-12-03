@@ -5,7 +5,7 @@ import { includeRule, name, nameRule, patternsRule } from '../../../utils';
 
 interface Placeholder {
   startAnchor: string;
-  lineEndAnchor: string;
+  endAnchor: string;
 }
 export function createSwitchStatementRule(scopeName: ScopeName, placeholder: Placeholder): BeginEndRule {
   return {
@@ -36,10 +36,10 @@ export function createSwitchStatementRule(scopeName: ScopeName, placeholder: Pla
             negativeLookahead(char('{')),
           ),
         ),
-        end: alt(
-          placeholder.lineEndAnchor,
-          lookahead(char('{')),
-        ),
+        end: lookahead(alt(
+          placeholder.endAnchor,
+          char('{'),
+        )),
         patterns: [ includeRule(Repository.Expressions) ],
       },
 
