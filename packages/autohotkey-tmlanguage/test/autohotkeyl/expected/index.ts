@@ -15,6 +15,7 @@ export * from './expression/dereference';
 export * from './expression/new';
 export * from './expression/number';
 export * from './expression/object';
+export * from './expression/operator';
 export * from './expression/parenthesized';
 export * from './expression/string';
 export * from './expression/variable';

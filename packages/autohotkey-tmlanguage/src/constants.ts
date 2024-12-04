@@ -40,13 +40,9 @@ export const commonExpressionOperatorsWithoutAssignment = [
   '<<',   // e.g. `1 << 1`
   '>>',   // e.g. `1 >> 1`
   '>>>',  // e.g. `1 >>> 1`
-  '%',    // e.g. `%var%`, `a%b%c`
   '!',    // e.g. `!expression`
-  'NOT',  // e.g. `not expression`
   '&&',   // e.g. `1 && 1`
-  'AND',  // e.g. `1 and 1`
   '||',   // e.g. `1 || 1`
-  'OR',   // e.g. `1 or 1`
   '>',    // e.g. `1 > 1`
   '>=',   // e.g. `1 >= 1`
   '<',    // e.g. `1 < 1`
@@ -55,6 +51,11 @@ export const commonExpressionOperatorsWithoutAssignment = [
   '==',   // e.g. `1 == 1`
   '?',    // e.g. `a ? b : c`, `a?.b`
   ':',    // e.g. `a ? b : c`
+] as const;
+export const commonExpressionKeywords = [
+  'NOT',  // e.g. `not expression`
+  'AND',  // e.g. `1 and 1`
+  'OR',   // e.g. `1 or 1`
 ] as const;
 // #endregion operators
 // #endregion constants

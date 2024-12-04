@@ -266,10 +266,7 @@ export function createRepositories(scopeName: ScopeName): Repositories {
       operatorRuleName: RuleName.Comma,
       operators: [ ',' ],
     }),
-    [Repository.Dot]: rule_v1.createOperatorRule(scopeName, {
-      operatorRuleName: RuleName.Dot,
-      operators: [ '.' ],
-    }),
+    [Repository.Dot]: rule_v1.createDotOperatorRule(scopeName),
     [Repository.Operator]: rule_v1.createOperatorRule(scopeName, {
       operatorRuleName: RuleName.Operator,
       operators: constants_v1.expressionOperators,
@@ -278,8 +275,7 @@ export function createRepositories(scopeName: ScopeName): Repositories {
       keywordRuleName: RuleName.KeywordInExpression,
       keywords: [
         'new',
-        'not',
-        'and',
+        ...constants_v1.expressionKeywords,
 
         // The following are not exactly keywords in the expression, but are defined here as keywords because it is more convenient for the TMLanguage mechanism
         'in',

@@ -118,10 +118,7 @@ export function createRepositories(scopeName: ScopeName): Repositories {
       operatorRuleName: RuleName.Comma,
       operators: [ ',' ],
     }),
-    [Repository.Dot]: rule_v1.createOperatorRule(scopeName, {
-      operatorRuleName: RuleName.Comma,
-      operators: [ '.' ],
-    }),
+    [Repository.Dot]: rule_v1.createDotOperatorRule(scopeName),
     [Repository.Operator]: rule_v1.createOperatorRule(scopeName, {
       operatorRuleName: RuleName.Operator,
       operators: constants_v2.expressionOperators,

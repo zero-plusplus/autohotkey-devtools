@@ -32,6 +32,7 @@ describe('autohotkeyl', () => {
     ...dataBuilder.createNewExpressionExpectedData(scopeName),
     ...dataBuilder.createNumberLiteralExpectedData(scopeName),
     ...dataBuilder.createObjectLiteralExpectedData(scopeName),
+    ...dataBuilder.createOperatorInExpressionExpectedData(scopeName),
     ...dataBuilder.createParenthesizedExpressionExpectedData(scopeName),
     ...dataBuilder.createPropertyDeclarationExpectedData(scopeName),
     ...dataBuilder.createSingleLineCommentExpectedData(scopeName),
