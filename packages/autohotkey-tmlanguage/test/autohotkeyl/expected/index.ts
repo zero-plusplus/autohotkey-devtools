@@ -20,6 +20,7 @@ export * from './expression/string';
 export * from './expression/variable';
 export * from './legacy/assignment';
 export * from './legacy/continuationSection';
+export * from './legacy/if';
 export * from './statement/command';
 export * from './statement/directive';
 export * from './statement/for';

@@ -161,6 +161,7 @@ export const enum Repository {
 
   // #region keyword
   KeywordInExpression = 'repository.keyword.expression',
+  KeywordOperatorInExpression = 'repository.expression.keyword-operator',
   // #endregion keyword
 
   // #region v1 syntax
@@ -176,6 +177,7 @@ export const enum Repository {
   // #region legacy
   Legacy = 'repository.legacy',
   LegacyAssignmentDeclaration = 'repository.legacy.declaration.assignment',
+  LegacyIfStatement = 'repository.legacy.statement.if',
   PercentExpression = 'repository.legacy.expression.percent',
   ContinuationSection = 'repository.legacy.continuation-section',
   ContinuationSectionText = 'repository.legacy.continuation-section.text',

@@ -1,7 +1,7 @@
 import { Repository, RuleName } from '../constants';
 import { anyChars1 } from '../oniguruma';
 import type { Repositories, ScopeName, TmLanguage } from '../types';
-import { includeRule, name, patternsRule } from '../utils';
+import { includeRule, patternsRule } from '../utils';
 import * as constants_v1 from './constants';
 import * as definition_v1 from './definition';
 import * as patterns_v1 from './patterns';
@@ -51,6 +51,7 @@ export function createRepositories(scopeName: ScopeName): Repositories {
       includeRule(Repository.HotstringLabelStatement),
       includeRule(Repository.HotkeyLabelStatement),
       includeRule(Repository.LabelStatement),
+      includeRule(Repository.LegacyIfStatement),
       includeRule(Repository.IfStatement),
       includeRule(Repository.SwitchStatement),
       includeRule(Repository.WhileStatement),
@@ -160,6 +161,7 @@ export function createRepositories(scopeName: ScopeName): Repositories {
 
     // #region expression
     [Repository.Expression]: patternsRule(
+      includeRule(Repository.KeywordOperatorInExpression),
       includeRule(Repository.KeywordInExpression),
       includeRule(Repository.CallExpression_FunctionDeclarationHead),
       includeRule(Repository.ParenthesizedExpression),
@@ -273,9 +275,11 @@ export function createRepositories(scopeName: ScopeName): Repositories {
       operators: constants_v1.expressionOperators,
     }),
     [Repository.KeywordInExpression]: rule_v1.createKeywordRule(scopeName, {
-      elementName: name(scopeName, RuleName.KeywordInExpression),
+      keywordRuleName: RuleName.KeywordInExpression,
       keywords: [
         'new',
+        'not',
+        'and',
 
         // The following are not exactly keywords in the expression, but are defined here as keywords because it is more convenient for the TMLanguage mechanism
         'in',
@@ -318,6 +322,11 @@ export function createRepositories(scopeName: ScopeName): Repositories {
 
     // #region legacy
     [Repository.Legacy]: patternsRule(includeRule(Repository.LegacyAssignmentDeclaration)),
+    [Repository.LegacyIfStatement]: rule_v1.createLegacyIfStatementRule(scopeName, {
+      startAnchor: patterns_v1.statementStartAnchor,
+      endAnchor: patterns_v1.lineEndAnchor,
+      identifierPattern: patterns_v1.identifierPattern,
+    }),
     [Repository.LegacyAssignmentDeclaration]: rule_v1.createLegacyAssignmentRule(scopeName, {
       startAnchor: patterns_v1.statementStartAnchor,
       leftHandPattern: patterns_v1.looseLeftHandPattern,

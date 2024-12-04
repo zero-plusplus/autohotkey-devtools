@@ -25,6 +25,7 @@ describe('autohotkeyl', () => {
     ...dataBuilder.createIncludeStatementExpectedData(scopeName),
     ...dataBuilder.createLabelStatementExpectedData(scopeName),
     ...dataBuilder.createLegacyAssignmentStatementExpectedData(scopeName),
+    ...dataBuilder.createLegacyIfStatementExpectedData(scopeName),
     ...dataBuilder.createLoopStatementExpectedData(scopeName),
     ...dataBuilder.createModifierDeclarationExpectedData(scopeName),
     ...dataBuilder.createMultiLineCommentExpectedData(scopeName),
