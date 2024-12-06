@@ -1,4 +1,4 @@
-import * as tmLanguages from '@zero-plusplus/autohotkey-tmlanguage/src';
+import tmLanguages from '@zero-plusplus/autohotkey-tmlanguage/src';
 import { ScopeName } from '@zero-plusplus/autohotkey-tmlanguage/src/types.js';
 import * as esbuild from 'esbuild';
 import * as fs from 'fs/promises';
