@@ -12,8 +12,8 @@ const nodeModulesDirectory = path.resolve(rootDirectory, 'node_modules');
 const onigurumaWasmPath = path.resolve(nodeModulesDirectory, 'vscode-oniguruma', 'release', 'onig.wasm');
 
 const createTextMateRegistry = singleton(async(): Promise<vsctm.Registry> => {
-  const wasmBinary = fs.readFileSync(onigurumaWasmPath).buffer;
-  await oniguruma.loadWASM(wasmBinary);
+  const wasmBinary = fs.readFileSync(onigurumaWasmPath);
+  await oniguruma.loadWASM(wasmBinary as unknown as oniguruma.IOptions);
 
   const grammarsByScopeName: Record<`source.${ScopeName}`, TmLanguage> = {
     'source.autohotkey': grammars.autohotkey.createTmLanguage(),
