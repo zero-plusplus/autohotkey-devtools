@@ -1,0 +1,260 @@
+import { dedent } from '@zero-plusplus/utilities/src';
+import * as constants_v1 from '../../../../src/autohotkeyl/constants';
+import { RuleDescriptor, RuleName, StyleName } from '../../../../src/constants';
+import type { ScopeName } from '../../../../src/types';
+import { name } from '../../../../src/utils';
+import type { ExpectedTestData, ParsedResult } from '../../../types';
+
+export function createRegExpExpectedData(scopeName: ScopeName): ExpectedTestData[] {
+  return [
+    // #region shothund regexp match
+    [
+      dedent`
+        var ~= ""
+        var ~= "text"
+        var ~= "im)text"
+        var ~= "(*UCP)text"
+        var ~= "i)(*UCP)text"
+      `, [
+        { text: 'var', scopes: name(scopeName, RuleName.Variable) },
+        { text: '~=', scopes: name(scopeName, RuleName.Operator) },
+        { text: '"', scopes: name(scopeName, RuleName.RegExpString, RuleDescriptor.Begin) },
+        { text: '"', scopes: name(scopeName, RuleName.RegExpString, RuleDescriptor.End) },
+
+        { text: 'var', scopes: name(scopeName, RuleName.Variable) },
+        { text: '~=', scopes: name(scopeName, RuleName.Operator) },
+        { text: '"', scopes: name(scopeName, RuleName.RegExpString, RuleDescriptor.Begin) },
+        { text: 'text', scopes: name(scopeName, RuleName.RegExpString) },
+        { text: '"', scopes: name(scopeName, RuleName.RegExpString, RuleDescriptor.End) },
+
+        { text: 'var', scopes: name(scopeName, RuleName.Variable) },
+        { text: '~=', scopes: name(scopeName, RuleName.Operator) },
+        { text: '"', scopes: name(scopeName, RuleName.RegExpString, RuleDescriptor.Begin) },
+        { text: 'im)', scopes: name(scopeName, RuleName.RegExpString, RuleName.RegExpOption) },
+        { text: 'text', scopes: name(scopeName, RuleName.RegExpString) },
+        { text: '"', scopes: name(scopeName, RuleName.RegExpString, RuleDescriptor.End) },
+
+        { text: 'var', scopes: name(scopeName, RuleName.Variable) },
+        { text: '~=', scopes: name(scopeName, RuleName.Operator) },
+        { text: '"', scopes: name(scopeName, RuleName.RegExpString, RuleDescriptor.Begin) },
+        { text: '(*UCP)', scopes: name(scopeName, RuleName.RegExpString, RuleName.RegExpOption) },
+        { text: 'text', scopes: name(scopeName, RuleName.RegExpString) },
+        { text: '"', scopes: name(scopeName, RuleName.RegExpString, RuleDescriptor.End) },
+
+        { text: 'var', scopes: name(scopeName, RuleName.Variable) },
+        { text: '~=', scopes: name(scopeName, RuleName.Operator) },
+        { text: '"', scopes: name(scopeName, RuleName.RegExpString, RuleDescriptor.Begin) },
+        { text: 'i)(*UCP)', scopes: name(scopeName, RuleName.RegExpString, RuleName.RegExpOption) },
+        { text: 'text', scopes: name(scopeName, RuleName.RegExpString) },
+        { text: '"', scopes: name(scopeName, RuleName.RegExpString, RuleDescriptor.End) },
+      ],
+    ],
+    // callout
+    [
+      dedent`
+        var ~= "(?C123)"
+        var ~= "(?C123:func)"
+      `, [
+        { text: 'var', scopes: name(scopeName, RuleName.Variable) },
+        { text: '~=', scopes: name(scopeName, RuleName.Operator) },
+        { text: '"', scopes: name(scopeName, RuleName.RegExpString, RuleDescriptor.Begin) },
+        { text: '(?C123', scopes: name(scopeName, RuleName.RegExpString, RuleName.RegExpGroup, RuleDescriptor.Begin) },
+        { text: ')', scopes: name(scopeName, RuleName.RegExpString, RuleName.RegExpGroup, RuleDescriptor.End) },
+        { text: '"', scopes: name(scopeName, RuleName.RegExpString, RuleDescriptor.End) },
+
+        { text: 'var', scopes: name(scopeName, RuleName.Variable) },
+        { text: '~=', scopes: name(scopeName, RuleName.Operator) },
+        { text: '"', scopes: name(scopeName, RuleName.RegExpString, RuleDescriptor.Begin) },
+        { text: '(?C123', scopes: name(scopeName, RuleName.RegExpString, RuleName.RegExpGroup, RuleDescriptor.Begin) },
+        { text: ':', scopes: name(scopeName, RuleName.RegExpString, RuleName.RegExpGroup) },
+        { text: 'func', scopes: name(scopeName, RuleName.RegExpString, RuleName.FunctionName) },
+        { text: ')', scopes: name(scopeName, RuleName.RegExpString, RuleName.RegExpGroup, RuleDescriptor.End) },
+        { text: '"', scopes: name(scopeName, RuleName.RegExpString, RuleDescriptor.End) },
+      ],
+    ],
+    // group and assertions
+    [
+      dedent`
+        var ~= "(text)"
+        var ~= "(?:text)"
+        var ~= "(?=text)"
+        var ~= "(?!text)"
+        var ~= "(?<=text)"
+        var ~= "(?<!text)"
+      `, [
+        ...[ '(', '(?:', '(?=', '(?!', '(?<=', '(?<!' ].flatMap((groupStart): ParsedResult[] => {
+          return [
+            { text: 'var', scopes: name(scopeName, RuleName.Variable) },
+            { text: '~=', scopes: name(scopeName, RuleName.Operator) },
+            { text: '"', scopes: name(scopeName, RuleName.RegExpString, RuleDescriptor.Begin) },
+            { text: groupStart, scopes: name(scopeName, RuleName.RegExpString, RuleName.RegExpGroup, RuleDescriptor.Begin) },
+            { text: 'text', scopes: name(scopeName, RuleName.RegExpString) },
+            { text: ')', scopes: name(scopeName, RuleName.RegExpString, RuleName.RegExpGroup, RuleDescriptor.End) },
+            { text: '"', scopes: name(scopeName, RuleName.RegExpString, RuleDescriptor.End) },
+          ];
+        }),
+      ],
+    ],
+    // group and assertions
+    [
+      dedent`
+        var ~= "\\Q(text)\\E"
+      `, [
+        { text: 'var', scopes: name(scopeName, RuleName.Variable) },
+        { text: '~=', scopes: name(scopeName, RuleName.Operator) },
+        { text: '"', scopes: name(scopeName, RuleName.RegExpString, RuleDescriptor.Begin) },
+        { text: '\\Q', scopes: name(scopeName, RuleName.RegExpString, RuleName.RegExpGroup, RuleDescriptor.Begin) },
+        { text: '(text)', scopes: name(scopeName, RuleName.RegExpString) },
+        { text: '\\E', scopes: name(scopeName, RuleName.RegExpString, RuleName.RegExpGroup, RuleDescriptor.End) },
+        { text: '"', scopes: name(scopeName, RuleName.RegExpString, RuleDescriptor.End) },
+      ],
+    ],
+    // character class
+    [
+      dedent`
+        var ~= "[abc]"
+        var ~= "[^abc]"
+        var ~= "[\\]]"
+      `, [
+        { text: 'var', scopes: name(scopeName, RuleName.Variable) },
+        { text: '~=', scopes: name(scopeName, RuleName.Operator) },
+        { text: '"', scopes: name(scopeName, RuleName.RegExpString, RuleDescriptor.Begin) },
+        { text: '[', scopes: name(scopeName, RuleName.RegExpString, RuleName.RegExpCharacterClassSet, RuleName.RegExpCharacterClass, RuleDescriptor.Begin) },
+        { text: 'abc', scopes: name(scopeName, RuleName.RegExpString, RuleName.RegExpCharacterClassSet) },
+        { text: ']', scopes: name(scopeName, RuleName.RegExpString, RuleName.RegExpCharacterClassSet, RuleName.RegExpCharacterClass, RuleDescriptor.End) },
+        { text: '"', scopes: name(scopeName, RuleName.RegExpString, RuleDescriptor.End) },
+
+        { text: 'var', scopes: name(scopeName, RuleName.Variable) },
+        { text: '~=', scopes: name(scopeName, RuleName.Operator) },
+        { text: '"', scopes: name(scopeName, RuleName.RegExpString, RuleDescriptor.Begin) },
+        { text: '[^', scopes: name(scopeName, RuleName.RegExpString, RuleName.RegExpCharacterClassSet, RuleName.RegExpCharacterClass, RuleDescriptor.Begin) },
+        { text: 'abc', scopes: name(scopeName, RuleName.RegExpString, RuleName.RegExpCharacterClassSet) },
+        { text: ']', scopes: name(scopeName, RuleName.RegExpString, RuleName.RegExpCharacterClassSet, RuleName.RegExpCharacterClass, RuleDescriptor.End) },
+        { text: '"', scopes: name(scopeName, RuleName.RegExpString, RuleDescriptor.End) },
+
+        { text: 'var', scopes: name(scopeName, RuleName.Variable) },
+        { text: '~=', scopes: name(scopeName, RuleName.Operator) },
+        { text: '"', scopes: name(scopeName, RuleName.RegExpString, RuleDescriptor.Begin) },
+        { text: '[', scopes: name(scopeName, RuleName.RegExpString, RuleName.RegExpCharacterClassSet, RuleName.RegExpCharacterClass, RuleDescriptor.Begin) },
+        { text: '\\]', scopes: name(scopeName, RuleName.RegExpString, RuleName.RegExpCharacterClassSet, StyleName.Escape) },
+        { text: ']', scopes: name(scopeName, RuleName.RegExpString, RuleName.RegExpCharacterClassSet, RuleName.RegExpCharacterClass, RuleDescriptor.End) },
+        { text: '"', scopes: name(scopeName, RuleName.RegExpString, RuleDescriptor.End) },
+      ],
+    ],
+    // anchor
+    [
+      dedent`
+        var ~= "^$"
+      `, [
+        { text: 'var', scopes: name(scopeName, RuleName.Variable) },
+        { text: '~=', scopes: name(scopeName, RuleName.Operator) },
+        { text: '"', scopes: name(scopeName, RuleName.RegExpString, RuleDescriptor.Begin) },
+        { text: '^', scopes: name(scopeName, RuleName.RegExpString, RuleName.RegExpAnchor) },
+        { text: '$', scopes: name(scopeName, RuleName.RegExpString, RuleName.RegExpAnchor) },
+        { text: '"', scopes: name(scopeName, RuleName.RegExpString, RuleDescriptor.End) },
+      ],
+    ],
+    // quantifier
+    [
+      dedent`
+        var ~= ".?"
+        var ~= ".*"
+        var ~= ".+"
+      `, [
+        ...[ '?', '*', '+' ].flatMap((quantifier): ParsedResult[] => {
+          return [
+            { text: 'var', scopes: name(scopeName, RuleName.Variable) },
+            { text: '~=', scopes: name(scopeName, RuleName.Operator) },
+            { text: '"', scopes: name(scopeName, RuleName.RegExpString, RuleDescriptor.Begin) },
+            { text: '.', scopes: name(scopeName, RuleName.RegExpString, RuleName.RegExpCharacterClass) },
+            { text: quantifier, scopes: name(scopeName, RuleName.RegExpString, RuleName.RegExpQuantifier) },
+            { text: '"', scopes: name(scopeName, RuleName.RegExpString, RuleDescriptor.End) },
+          ];
+        }),
+      ],
+    ],
+    [
+      dedent`
+        var ~= ".{1}"
+        var ~= ".{1,}"
+        var ~= ".{1,2}"
+        var ~= ".{,}"
+        var ~= ".{,2}"
+      `, [
+        ...[ '{1}', '{1,}', '{1,2}', '{,}', '{,2}' ].flatMap((quantifier): ParsedResult[] => {
+          return [
+            { text: 'var', scopes: name(scopeName, RuleName.Variable) },
+            { text: '~=', scopes: name(scopeName, RuleName.Operator) },
+            { text: '"', scopes: name(scopeName, RuleName.RegExpString, RuleDescriptor.Begin) },
+            { text: '.', scopes: name(scopeName, RuleName.RegExpString, RuleName.RegExpCharacterClass) },
+            { text: quantifier, scopes: name(scopeName, RuleName.RegExpString, RuleName.RegExpQuantifier) },
+            { text: '"', scopes: name(scopeName, RuleName.RegExpString, RuleDescriptor.End) },
+          ];
+        }),
+      ],
+    ],
+    // escape sequence
+    [
+      dedent`
+        var ~= "\\."
+        var ~= "\\*"
+        var ~= "\\?"
+        var ~= "\\+"
+        var ~= "\\["
+        var ~= "\\{"
+        var ~= "\\|"
+        var ~= "\\("
+        var ~= "\\)"
+        var ~= "\\^"
+        var ~= "\\$"
+      `, [
+        ...[ '.', '*', '?', '+', '[', '{', '|', '(', ')', '^', '$' ].flatMap((char): ParsedResult[] => {
+          return [
+            { text: 'var', scopes: name(scopeName, RuleName.Variable) },
+            { text: '~=', scopes: name(scopeName, RuleName.Operator) },
+            { text: '"', scopes: name(scopeName, RuleName.RegExpString, RuleDescriptor.Begin) },
+            { text: `\\${char}`, scopes: name(scopeName, RuleName.RegExpString, StyleName.Escape) },
+            { text: '"', scopes: name(scopeName, RuleName.RegExpString, RuleDescriptor.End) },
+          ];
+        }),
+      ],
+    ],
+    [
+      `var ~= "${constants_v1.doubleQuoteEscapeSequences.join('')}"`, [
+        { text: 'var', scopes: name(scopeName, RuleName.Variable) },
+        { text: '~=', scopes: name(scopeName, RuleName.Operator) },
+        { text: '"', scopes: name(scopeName, RuleName.RegExpString, RuleDescriptor.Begin) },
+        ...constants_v1.doubleQuoteEscapeSequences.map((escapeSequence) => {
+          return { text: escapeSequence, scopes: name(scopeName, RuleName.RegExpString, StyleName.Escape) };
+        }),
+        { text: '"', scopes: name(scopeName, RuleName.RegExpString, RuleDescriptor.End) },
+      ],
+    ],
+    // #endregion shothund regexp match
+
+    // #region string as regexp
+    [
+      dedent`
+        "\`)text"
+        ")text"
+        "im)text"
+      `, [
+        { text: '"', scopes: name(scopeName, RuleName.DoubleString, RuleName.StringBegin) },
+        { text: '`)', scopes: name(scopeName, RuleName.DoubleString, StyleName.Escape) },
+        { text: 'text', scopes: name(scopeName, RuleName.DoubleString) },
+        { text: '"', scopes: name(scopeName, RuleName.DoubleString, RuleName.StringEnd) },
+
+        { text: '"', scopes: name(scopeName, RuleName.RegExpString, RuleDescriptor.Begin) },
+        { text: ')', scopes: name(scopeName, RuleName.RegExpString, RuleName.RegExpOption) },
+        { text: 'text', scopes: name(scopeName, RuleName.RegExpString) },
+        { text: '"', scopes: name(scopeName, RuleName.RegExpString, RuleDescriptor.End) },
+
+        { text: '"', scopes: name(scopeName, RuleName.RegExpString, RuleDescriptor.Begin) },
+        { text: 'im)', scopes: name(scopeName, RuleName.RegExpString, RuleName.RegExpOption) },
+        { text: 'text', scopes: name(scopeName, RuleName.RegExpString) },
+        { text: '"', scopes: name(scopeName, RuleName.RegExpString, RuleDescriptor.End) },
+      ],
+    ],
+    // #endregion string as regexp
+  ];
+}

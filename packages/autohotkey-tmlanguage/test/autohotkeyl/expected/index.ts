@@ -17,6 +17,7 @@ export * from './expression/number';
 export * from './expression/object';
 export * from './expression/operator';
 export * from './expression/parenthesized';
+export * from './expression/regexp';
 export * from './expression/string';
 export * from './expression/variable';
 export * from './legacy/assignment';

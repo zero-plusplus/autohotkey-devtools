@@ -35,6 +35,7 @@ describe('autohotkeyl', () => {
     ...dataBuilder.createOperatorInExpressionExpectedData(scopeName),
     ...dataBuilder.createParenthesizedExpressionExpectedData(scopeName),
     ...dataBuilder.createPropertyDeclarationExpectedData(scopeName),
+    ...dataBuilder.createRegExpExpectedData(scopeName),
     ...dataBuilder.createSingleLineCommentExpectedData(scopeName),
     ...dataBuilder.createStringLiteralExpectedData(scopeName),
     ...dataBuilder.createSwitchStatementExpectedData(scopeName),

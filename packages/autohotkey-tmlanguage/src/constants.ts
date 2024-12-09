@@ -51,6 +51,7 @@ export const commonExpressionOperatorsWithoutAssignment = [
   '==',   // e.g. `1 == 1`
   '?',    // e.g. `a ? b : c`, `a?.b`
   ':',    // e.g. `a ? b : c`
+  '~=',   // e.g. value ~= "i)abc"
 ] as const;
 export const commonExpressionKeywords = [
   'NOT',  // e.g. `not expression`
@@ -58,6 +59,10 @@ export const commonExpressionKeywords = [
   'OR',   // e.g. `1 or 1`
 ] as const;
 // #endregion operators
+
+// #region regexp
+export const commonRegExpOptions = [] as const;
+// #endregion regexp
 // #endregion constants
 
 // #region enum
@@ -106,6 +111,7 @@ export const enum Repository {
   Expression = 'repository.expression',
   Expressions = 'repository.expressions',
   ParenthesizedExpression = 'repository.expression.parenthesized',
+  ShorthundRegexpMatch = 'repository.expression.regexp.shorthund',
 
   // #region literal
   Literal = 'repository.expression.literal',
@@ -117,6 +123,7 @@ export const enum Repository {
   DoubleStringContent = 'repository.expression.string.double-quote.content',
   DoubleStringEscapeSequence = 'repository.expression.string.content.escape-sequence.double-quote',
   SingleString = 'repository.expression.string.single-quote',
+  SingleStringContent = 'repository.expression.string.single-quote.content',
   SingleStringEscapeSequence = 'repository.expression.string.content.escape-sequence.single-quote',
 
   ContinuationStringOptions = 'repository.expression.continuation-string.options',
@@ -146,6 +153,13 @@ export const enum Repository {
   KeywordLikeBuiltInVariable = 'repository.expression.variable.built-in.keyword-like',
   InvalidVariable = 'repository.expression.variable.invalid',
   // #endregion variable
+
+  // #region regexp
+  StringAsRegExp = 'repository.regexp',
+  DoubleStringAsRegexp = 'repository.regexp.double-quote',
+  SingleStringAsRegexp = 'repository.regexp.single-quote',
+  DoubleStringAsRegExpContent = 'repository.regexp.double-quote.content',
+  // #endregion regexp
 
   // #region misc
   Dereference = 'repository.expression.dereference',
@@ -249,6 +263,20 @@ export const enum RuleName {
   Equals = 'keyword.operator.equals',
   Comma = 'punctuation.separator.comma',
   // #endregion operators
+
+  // #region regexp
+  RegExpOption = 'string.regexp keyword.other.regexp.option',
+  RegExpBegin = 'string.regexp.begin',
+  RegExpEnd = 'string.regexp.end',
+  RegExpString = 'string.regexp',
+  DoubleStringAsRegExp = 'string.regexp.double-quote',
+  RegExpAnchor = 'keyword.control.anchor.regexp',
+  RegExpOr = 'keyword.operator.or.regexp',
+  RegExpGroup = 'punctuation.definition.group.regexp',
+  RegExpCharacterClassSet = 'constant.other.character-class.set.regexp',
+  RegExpCharacterClass = 'punctuation.definition.character-class.regexp',
+  RegExpQuantifier = 'keyword.operator.quantifier.regexp',
+  // #endregion regexp
   // #endregion expressions
 
   // #region keyword
@@ -286,6 +314,10 @@ export const enum RuleName {
   JumpCommandName = 'keyword.control.jump',
   SubCommandName = 'support.function.subcommand',
   // #endregion legacy
+}
+export const enum RuleDescriptor {
+  Begin = 'description.begin',
+  End = 'description.end',
 }
 export const enum StyleName {
   Emphasis = 'emphasis',

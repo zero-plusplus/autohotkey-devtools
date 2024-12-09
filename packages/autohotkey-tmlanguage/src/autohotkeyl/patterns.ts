@@ -1,4 +1,4 @@
-import { alt, anyChar, anyChars0, anyChars1, char, endAnchor, escapeOnigurumaTexts, group, groupMany0, inlineSpace, inlineSpaces0, inlineSpaces1, lookahead, lookbehind, manyLimit, manyRange, negativeLookahead, negativeLookbehind, negChar, negChars0, ordalt, seq, startAnchor, wordChar } from '../oniguruma';
+import { alt, anyChar, anyChars0, anyChars1, char, endAnchor, escapeOnigurumaTexts, group, groupMany0, inlineSpace, inlineSpaces0, inlineSpaces1, lookahead, lookbehind, manyLimit, manyRange, negativeLookahead, negativeLookbehind, negChar, negChars0, negChars1, ordalt, seq, startAnchor, wordChar } from '../oniguruma';
 import * as constants_v1 from './constants';
 
 export const statementStartAnchor: string = alt(
@@ -35,6 +35,26 @@ export const pairs: string = group(alt(
   seq(char('['), negChars0('\\r', '\\n', ']'), char(']')),
   seq(char('{'), negChars0('\\r', '\\n', '}'), char('}')),
 ));
+export const doubleQuoteRawTextPattern: string = negChars1('"', '`');
+export const doubleQuoteContentsPattern: string = groupMany0(alt(
+  group(seq(char('"'), char('"'))),
+  negChar('"'),
+));
+export const doubleQuoteStringEndPattern: string = seq(
+  char('"'),
+  negativeLookahead(char('"')),
+);
+
+// https://www.autohotkey.com/docs/v1/misc/RegEx-QuickRef.htm#Options
+export const regexpOptionsPattern: string = seq(
+  groupMany0(alt(
+    char('i', 'm', 's', 'x', 'A', 'D', 'J', 'U', 'X', 'S', 'C'),
+    seq(char('`'), char('a', 'n', 'r')),
+    inlineSpace(),
+  )),
+  negativeLookahead(char('`')),
+  char(')'),
+);
 
 // #region command
 export const unquotedCharPattern: string = seq(

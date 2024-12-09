@@ -81,15 +81,25 @@ export function createRepositories(scopeName: ScopeName): Repositories {
       includeRule(Repository.DoubleString),
       includeRule(Repository.SingleString),
     ),
-    [Repository.DoubleString]: rule_v2.createStringRule(scopeName, {
+    [Repository.DoubleString]: rule_v1.createStringRule(scopeName, {
       quoteChar: '"',
-      escapeSequences: constants_v2.doubleQuoteEscapeSequences,
+      stringContentsPattern: patterns_v2.doubleQuoteContentsPattern,
+      stringEndPattern: patterns_v2.doubleQuoteStringEndPattern,
+      stringContentRepository: Repository.DoubleStringContent,
       stringElementName: RuleName.DoubleString,
     }),
-    [Repository.SingleString]: rule_v2.createStringRule(scopeName, {
+    [Repository.DoubleStringContent]: rule_v1.createStringContentRule(scopeName, {
+      escapeSequences: constants_v2.doubleQuoteEscapeSequences,
+    }),
+    [Repository.SingleString]: rule_v1.createStringRule(scopeName, {
       quoteChar: `'`,
-      escapeSequences: constants_v2.singleQuoteEscapeSequences,
+      stringContentsPattern: patterns_v2.singleQuoteContentsPattern,
+      stringEndPattern: patterns_v2.singleQuoteStringEndPattern,
+      stringContentRepository: Repository.SingleStringContent,
       stringElementName: RuleName.SingleString,
+    }),
+    [Repository.SingleStringContent]: rule_v1.createStringContentRule(scopeName, {
+      escapeSequences: constants_v2.singleQuoteEscapeSequences,
     }),
     // #endregion string
 

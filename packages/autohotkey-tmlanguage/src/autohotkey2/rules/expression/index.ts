@@ -4,7 +4,6 @@ import type { BeginEndRule, ScopeName } from '../../../types';
 import { includeRule, nameRule } from '../../../utils';
 
 export * from './access';
-export * from './string';
 
 export function createParenthesizedExpressionRule(scopeName: ScopeName): BeginEndRule {
   return {

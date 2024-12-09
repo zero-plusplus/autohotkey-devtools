@@ -5,6 +5,9 @@ export function startAnchor(): string {
 export function endAnchor(): string {
   return '$';
 }
+export function backslash(): string {
+  return '\\\\';
+}
 export function number(): string {
   return '\\d';
 }
@@ -136,6 +139,9 @@ export function chars0(...characters: string[]): string {
 export function chars1(...characters: string[]): string {
   return many1(char(...characters));
 }
+export function text(rawText: string): string {
+  return escapeOnigurumaText(rawText);
+}
 export function negChar(...characters: string[]): string {
   return `[^${[ ...characters ].map((character) => escapeCharClass(character)).join('')}]`;
 }
@@ -170,10 +176,10 @@ export function negativeLookbehind(onigurumaText: string): string {
 
 // #region helpers
 export function escapeCharClass(text: string): string {
-  return text.replaceAll(/(?<!:)([\[\]])/gu, '\\$1');
+  return text.replaceAll(/(?<!:)([\[\]\^\$])/gu, '\\$1');
 }
 export function escapeOnigurumaText(text: string): string {
-  return text.replaceAll(/([.*?+{}|()[\]^/])/gu, '\\$1');
+  return text.replaceAll(/([.*?+{}|()[\]^\\/])/gu, '\\$1');
 }
 export function escapeOnigurumaTexts(onigurumaTexts: readonly string[]): string[] {
   return onigurumaTexts.map((onigurumaText) => escapeOnigurumaText(onigurumaText));

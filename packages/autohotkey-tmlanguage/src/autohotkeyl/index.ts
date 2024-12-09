@@ -161,6 +161,7 @@ export function createRepositories(scopeName: ScopeName): Repositories {
 
     // #region expression
     [Repository.Expression]: patternsRule(
+      includeRule(Repository.ShorthundRegexpMatch),
       includeRule(Repository.KeywordOperatorInExpression),
       includeRule(Repository.KeywordInExpression),
       includeRule(Repository.CallExpression_FunctionDeclarationHead),
@@ -204,6 +205,7 @@ export function createRepositories(scopeName: ScopeName): Repositories {
 
     // #region literal
     [Repository.Literal]: patternsRule(
+      includeRule(Repository.StringAsRegExp),
       includeRule(Repository.String),
       includeRule(Repository.Number),
       includeRule(Repository.Object),
@@ -224,8 +226,24 @@ export function createRepositories(scopeName: ScopeName): Repositories {
     [Repository.DoubleString]: rule_v1.createStringRule(scopeName, {
       stringContentRepository: Repository.DoubleStringContent,
       quoteChar: '"',
+      stringContentsPattern: patterns_v1.doubleQuoteContentsPattern,
+      stringEndPattern: patterns_v1.doubleQuoteStringEndPattern,
       stringElementName: RuleName.DoubleString,
+    }),
+    [Repository.DoubleStringContent]: rule_v1.createStringContentRule(scopeName, {
       escapeSequences: constants_v1.doubleQuoteEscapeSequences,
+    }),
+    [Repository.StringAsRegExp]: patternsRule(includeRule(Repository.DoubleStringAsRegexp)),
+    [Repository.DoubleStringAsRegexp]: rule_v1.createStringAsRegExpRule(scopeName, {
+      quoteChar: '"',
+      regexpEndPattern: patterns_v1.doubleQuoteStringEndPattern,
+      optionsPattern: patterns_v1.regexpOptionsPattern,
+      contentRuleName: RuleName.RegExpString,
+    }),
+    [Repository.DoubleStringAsRegExpContent]: rule_v1.createStringAsRegExpRuleContentRule(scopeName, {
+      quoteChar: '"',
+      stringEscapeSequences: constants_v1.doubleQuoteEscapeSequences,
+      contentRepository: Repository.DoubleStringAsRegExpContent,
     }),
     [Repository.ContinuationStringOptions]: rule_v1.createContinuationStringOptionsRule(scopeName),
     [Repository.ContinuationDoubleString]: rule_v1.createContinuationString(scopeName, {
@@ -233,11 +251,6 @@ export function createRepositories(scopeName: ScopeName): Repositories {
       quoteChar: '"',
       stringElementName: RuleName.DoubleString,
       stringContentRepository: Repository.DoubleStringContent,
-    }),
-    [Repository.DoubleStringContent]: rule_v1.createStringContentRule(scopeName, {
-      quoteChar: '"',
-      stringElementName: RuleName.DoubleString,
-      escapeSequences: constants_v1.doubleQuoteEscapeSequences,
     }),
     // #endregion string
 
@@ -282,6 +295,15 @@ export function createRepositories(scopeName: ScopeName): Repositories {
       ],
     }),
     // #endregion token, keyword
+
+    // #region regexp
+    [Repository.ShorthundRegexpMatch]: rule_v1.createShorthundRegExpMatchRule(scopeName, {
+      quoteChar: '"',
+      regexpEndPattern: patterns_v1.doubleQuoteStringEndPattern,
+      optionsPattern: patterns_v1.regexpOptionsPattern,
+      contentRuleName: RuleName.RegExpString,
+    }),
+    // #endregion regexp
 
     // #region misc
     [Repository.CallExpression_FunctionDeclarationHead]: rule_v1.createCallExpressionRule(scopeName, {
