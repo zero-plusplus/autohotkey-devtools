@@ -242,7 +242,10 @@ export function createRepositories(scopeName: ScopeName): Repositories {
     }),
     [Repository.DoubleStringAsRegExpContent]: rule_v1.createStringAsRegExpRuleContentRule(scopeName, {
       quoteChar: '"',
+      regexpEscapeSequences: constants_v1.regexpEscapeSequences,
       stringEscapeSequences: constants_v1.doubleQuoteEscapeSequences,
+      pcreUnicodePropertyCodes: constants_v1.pcreUnicodePropertyCodes,
+      pcreUnicodePropertyScripts: constants_v1.pcreUnicodePropertyScripts,
       contentRepository: Repository.DoubleStringAsRegExpContent,
     }),
     [Repository.ContinuationStringOptions]: rule_v1.createContinuationStringOptionsRule(scopeName),

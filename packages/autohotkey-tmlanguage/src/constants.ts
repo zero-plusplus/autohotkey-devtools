@@ -61,7 +61,178 @@ export const commonExpressionKeywords = [
 // #endregion operators
 
 // #region regexp
-export const commonRegExpOptions = [] as const;
+export const commonRegExpOptions = [ '.', '*', '?', '+', '[', '{', '|', '(', ')', '^', '$' ] as const;
+export const commonPcreUnicodeProperyCodes = [
+  // https://www.autohotkey.com/docs/v1/misc/RegEx-QuickRef.htm#slashP
+  // https://www.autohotkey.com/docs/v2/misc/RegEx-QuickRef.htm#slashP
+  // https://www.pcre.org/pcre.txt
+  'C',            // Other
+  'Cc',           // Control
+  'Cf',           // Format
+  'Cn',           // Unassigned
+  'Co',           // Private use
+  'Cs',           // Surrogate
+  'L',            // Letter
+  'Ll',           // Lower case letter
+  'Lm',           // Modifier letter
+  'Lo',           // Other letter
+  'Lt',           // Title case letter
+  'Lu',           // Upper case letter
+  'M',            // Mark
+  'Mc',           // Spacing mark
+  'Me',           // Enclosing mark
+  'Mn',           // Non-spacing mark
+  'N',            // Number
+  'Nd',           // Decimal number
+  'Nl',           // Letter number
+  'No',           // Other number
+  'P',            // Punctuation
+  'Pc',           // Connector punctuation
+  'Pd',           // Dash punctuation
+  'Pe',           // Close punctuation
+  'Pf',           // Final punctuation
+  'Pi',           // Initial punctuation
+  'Po',           // Other punctuation
+  'Ps',           // Open punctuation
+  'S',            // Symbol
+  'Sc',           // Currency symbol
+  'Sk',           // Modifier symbol
+  'Sm',           // Mathematical symbol
+  'So',           // Other symbol
+  'Z',            // Separator
+  'Zl',           // Line separator
+  'Zp',           // Paragraph separator
+  'Zs',           // Space separator
+] as const;
+export const commonPcreUnicodeProperyScripts = [
+  'Common',
+
+  'Arabic',
+  'Armenian',
+  'Avestan',
+  'Balinese',
+  'Bamum',
+  'Bassa_Vah',
+  'Batak',
+  'Bengali',
+  'Bopomofo',
+  'Brahmi',
+  'Braille',
+  'Buginese',
+  'Buhid',
+  'Canadian_Aboriginal',
+  'Car-ian',
+  'Caucasian_Albanian',
+  'Chakma',
+  'Cham',
+  'Cherokee',
+  'Common',
+  'Coptic',
+  'Cunei-form',
+  'Cypriot',
+  'Cyrillic',
+  'Deseret',
+  'Devanagari',
+  'Duployan',
+  'Egyptian_Hiero-glyphs',
+  'Elbasan',
+  'Ethiopic',
+  'Georgian',
+  'Glagolitic',
+  'Gothic',
+  'Grantha',
+  'Greek',
+  'Gujarati',
+  'Gurmukhi',
+  'Han',
+  'Hangul',
+  'Hanunoo',
+  'Hebrew',
+  'Hiragana',
+  'Im-perial_Aramaic',
+  'Inherited',
+  'Inscriptional_Pahlavi',
+  'Inscrip-tional_Parthian',
+  'Javanese',
+  'Kaithi',
+  'Kannada',
+  'Katakana',
+  'Kayah_Li',
+  'Kharoshthi',
+  'Khmer',
+  'Khojki',
+  'Khudawadi',
+  'Lao',
+  'Latin',
+  'Lepcha',
+  'Limbu',
+  'Lin-ear_A',
+  'Linear_B',
+  'Lisu',
+  'Lycian',
+  'Lydian',
+  'Mahajani',
+  'Malayalam',
+  'Mandaic',
+  'Manichaean',
+  'Meetei_Mayek',
+  'Mende_Kikakui',
+  'Meroitic_Cursive',
+  'Meroitic_Hi-eroglyphs',
+  'Miao',
+  'Modi',
+  'Mongolian',
+  'Mro',
+  'Myanmar',
+  'Nabataean',
+  'New_Tai_Lue',
+  'Nko',
+  'Ogham',
+  'Ol_Chiki',
+  'Old_Italic',
+  'Old_North_Arabian',
+  'Old_Permic',
+  'Old_Persian',
+  'Old_South_Arabian',
+  'Old_Turkic',
+  'Oriya',
+  'Osmanya',
+  'Pa-hawh_Hmong',
+  'Palmyrene',
+  'Pau_Cin_Hau',
+  'Phags_Pa',
+  'Phoenician',
+  'Psalter_Pahlavi',
+  'Rejang',
+  'Runic',
+  'Samaritan',
+  'Saurashtra',
+  'Sharada',
+  'Sha-vian',
+  'Siddham',
+  'Sinhala',
+  'Sora_Sompeng',
+  'Sundanese',
+  'Syloti_Nagri',
+  'Syriac',
+  'Tagalog',
+  'Tagbanwa',
+  'Tai_Le',
+  'Tai_Tham',
+  'Tai_Viet',
+  'Takri',
+  'Tamil',
+  'Telugu',
+  'Thaana',
+  'Thai',
+  'Tibetan',
+  'Tifinagh',
+  'Tirhuta',
+  'Ugaritic',
+  'Vai',
+  'Warang_Citi',
+  'Yi',
+] as const;
 // #endregion regexp
 // #endregion constants
 

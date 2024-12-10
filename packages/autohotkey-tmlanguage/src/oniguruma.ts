@@ -20,6 +20,12 @@ export function numbers1(): string {
 export function wordChar(): string {
   return '\\w';
 }
+export function wordChars0(): string {
+  return many0(wordChar());
+}
+export function wordChars1(): string {
+  return many1(wordChar());
+}
 export function wordBound(): string {
   return '\\b';
 }
@@ -176,7 +182,7 @@ export function negativeLookbehind(onigurumaText: string): string {
 
 // #region helpers
 export function escapeCharClass(text: string): string {
-  return text.replaceAll(/(?<!:)([\[\]\^\$])/gu, '\\$1');
+  return text.replaceAll(/(?<!:)([\-\[\]\^\$])/gu, '\\$1');
 }
 export function escapeOnigurumaText(text: string): string {
   return text.replaceAll(/([.*?+{}|()[\]^\\/])/gu, '\\$1');

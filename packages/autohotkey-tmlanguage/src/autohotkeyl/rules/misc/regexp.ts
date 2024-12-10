@@ -1,5 +1,5 @@
 import { Repository, RuleDescriptor, RuleName, StyleName } from '../../../constants';
-import { alt, backslash, capture, char, escapeOnigurumaTexts, ignoreCase, inlineSpaces0, lookbehind, negativeLookahead, negChars1, numbers1, optional, optseq, ordalt, seq, text } from '../../../oniguruma';
+import { alt, backslash, capture, char, escapeOnigurumaTexts, group, ignoreCase, inlineSpaces0, lookbehind, negativeLookahead, negChars1, numbers1, optional, optseq, ordalt, seq, text, wordChars0 } from '../../../oniguruma';
 import type { BeginEndRule, PatternsRule, ScopeName } from '../../../types';
 import { includeRule, name, nameRule, patternsRule } from '../../../utils';
 
@@ -54,6 +54,9 @@ export function createStringAsRegExpRule(scopeName: ScopeName, placeholder: Plac
 
 interface Placeholder2 {
   quoteChar: string;
+  regexpEscapeSequences: readonly string[];
+  pcreUnicodePropertyCodes: readonly string[];
+  pcreUnicodePropertyScripts: readonly string[];
   stringEscapeSequences: string[];
   contentRepository: Repository;
 }
@@ -134,13 +137,44 @@ export function createStringAsRegExpRuleContentRule(scopeName: ScopeName, placeh
       patterns: [
         {
           name: name(scopeName, StyleName.Escape),
-          match: seq(backslash(), char(']')),
+          match: seq(backslash(), char('^', '-', ']', backslash())),
+        },
+        {
+          name: name(scopeName, StyleName.Invalid),
+          match: seq(backslash(), negativeLookahead(backslash())),
         },
       ],
     },
     {
       name: name(scopeName, RuleName.RegExpCharacterClass),
       match: char('.'),
+    },
+    {
+      // unicode character properties
+      match: seq(
+        capture(seq(
+          backslash(),
+          char('p', 'P'),
+          char('{'),
+        )),
+        group(alt(
+          capture(ordalt(...escapeOnigurumaTexts([
+            ...placeholder.pcreUnicodePropertyCodes,
+            ...placeholder.pcreUnicodePropertyScripts,
+          ]))),
+          wordChars0(),
+        )),
+        capture(char('}')),
+      ),
+      captures: {
+        1: nameRule(scopeName, RuleName.RegExpCharacterClass, RuleDescriptor.Begin),
+        2: nameRule(scopeName, RuleName.RegExpCharacterClass, StyleName.Strong),
+        3: nameRule(scopeName, RuleName.RegExpCharacterClass, RuleDescriptor.End),
+      },
+    },
+    {
+      name: name(scopeName, RuleName.RegExpCharacterClass),
+      match: text('\\X'),
     },
 
     // anchor
@@ -170,14 +204,14 @@ export function createStringAsRegExpRuleContentRule(scopeName: ScopeName, placeh
       match: char('?', '*', '+'),
     },
 
-    // regexp escape sequences
+    // escape sequences
     {
+      // regexp escape sequences
       name: name(scopeName, StyleName.Escape),
-      match: seq(backslash(), char(backslash(), '.', '*', '?', '+', '[', '{', '|', '(', ')', '^', '$')),
+      match: seq(backslash(), char(backslash(), ...placeholder.regexpEscapeSequences)),
     },
-
-    // string escape sequences
     {
+      // string escape sequences
       name: name(scopeName, StyleName.Escape),
       match: ordalt(...escapeOnigurumaTexts(placeholder.stringEscapeSequences)),
     },

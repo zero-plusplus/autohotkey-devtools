@@ -141,6 +141,22 @@ export function createRegExpExpectedData(scopeName: ScopeName): ExpectedTestData
         { text: '"', scopes: name(scopeName, RuleName.RegExpString, RuleDescriptor.End) },
       ],
     ],
+    ...[ ...constants_v1.pcreUnicodePropertyCodes, ...constants_v1.pcreUnicodePropertyScripts ].map((code): ExpectedTestData => {
+      return [
+        dedent`
+          var ~= "\\p{${code}}"
+        `, [
+          { text: 'var', scopes: name(scopeName, RuleName.Variable) },
+          { text: '~=', scopes: name(scopeName, RuleName.Operator) },
+          { text: '"', scopes: name(scopeName, RuleName.RegExpString, RuleDescriptor.Begin) },
+          { text: `\\p{`, scopes: name(scopeName, RuleName.RegExpString, RuleName.RegExpCharacterClass, RuleDescriptor.Begin) },
+          { text: code, scopes: name(scopeName, RuleName.RegExpString, RuleName.RegExpCharacterClass, StyleName.Strong) },
+          { text: `}`, scopes: name(scopeName, RuleName.RegExpString, RuleName.RegExpCharacterClass, RuleDescriptor.End) },
+          { text: '"', scopes: name(scopeName, RuleName.RegExpString, RuleDescriptor.End) },
+        ],
+      ];
+    }),
+
     // anchor
     [
       dedent`
