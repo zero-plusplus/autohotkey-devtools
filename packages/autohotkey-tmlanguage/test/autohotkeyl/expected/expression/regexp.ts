@@ -156,6 +156,19 @@ export function createRegExpExpectedData(scopeName: ScopeName): ExpectedTestData
         ],
       ];
     }),
+    ...constants_v1.pcreUnicodePropertyCodes.filter((code) => code.length === 1).map((letterCode): ExpectedTestData => {
+      return [
+        dedent`
+          var ~= "\\p${letterCode}"
+        `, [
+          { text: 'var', scopes: name(scopeName, RuleName.Variable) },
+          { text: '~=', scopes: name(scopeName, RuleName.Operator) },
+          { text: '"', scopes: name(scopeName, RuleName.RegExpString, RuleDescriptor.Begin) },
+          { text: `\\p${letterCode}`, scopes: name(scopeName, RuleName.RegExpString, RuleName.RegExpCharacterClass) },
+          { text: '"', scopes: name(scopeName, RuleName.RegExpString, RuleDescriptor.End) },
+        ],
+      ];
+    }),
 
     // anchor
     [

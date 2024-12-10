@@ -161,7 +161,7 @@ export function createRepositories(scopeName: ScopeName): Repositories {
 
     // #region expression
     [Repository.Expression]: patternsRule(
-      includeRule(Repository.ShorthundRegexpMatch),
+      includeRule(Repository.ShorthandRegexpMatch),
       includeRule(Repository.KeywordOperatorInExpression),
       includeRule(Repository.KeywordInExpression),
       includeRule(Repository.CallExpression_FunctionDeclarationHead),
@@ -300,7 +300,7 @@ export function createRepositories(scopeName: ScopeName): Repositories {
     // #endregion token, keyword
 
     // #region regexp
-    [Repository.ShorthundRegexpMatch]: rule_v1.createShorthundRegExpMatchRule(scopeName, {
+    [Repository.ShorthandRegexpMatch]: rule_v1.createShorthandRegExpMatchRule(scopeName, {
       quoteChar: '"',
       regexpEndPattern: patterns_v1.doubleQuoteStringEndPattern,
       optionsPattern: patterns_v1.regexpOptionsPattern,

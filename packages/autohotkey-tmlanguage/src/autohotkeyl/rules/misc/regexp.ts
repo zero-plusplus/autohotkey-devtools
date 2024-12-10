@@ -1,5 +1,5 @@
 import { Repository, RuleDescriptor, RuleName, StyleName } from '../../../constants';
-import { alt, backslash, capture, char, escapeOnigurumaTexts, group, ignoreCase, inlineSpaces0, lookbehind, negativeLookahead, negChars1, numbers1, optional, optseq, ordalt, seq, text, wordChars0 } from '../../../oniguruma';
+import { alt, backslash, capture, char, escapeOnigurumaTexts, group, ignoreCase, inlineSpaces0, lookahead, lookbehind, negativeLookahead, negChars1, numbers1, optional, optseq, ordalt, seq, text, wordBound, wordChars0 } from '../../../oniguruma';
 import type { BeginEndRule, PatternsRule, ScopeName } from '../../../types';
 import { includeRule, name, nameRule, patternsRule } from '../../../utils';
 
@@ -9,7 +9,7 @@ interface Placeholder {
   contentRuleName: RuleName;
   optionsPattern: string;
 }
-export function createShorthundRegExpMatchRule(scopeName: ScopeName, placeholder: Placeholder): BeginEndRule {
+export function createShorthandRegExpMatchRule(scopeName: ScopeName, placeholder: Placeholder): BeginEndRule {
   return {
     name: name(scopeName, placeholder.contentRuleName),
     begin: seq(
@@ -150,7 +150,17 @@ export function createStringAsRegExpRuleContentRule(scopeName: ScopeName, placeh
       match: char('.'),
     },
     {
-      // unicode character properties
+      // shorthand unicode character properties e.g. `\pL`
+      name: name(scopeName, RuleName.RegExpCharacterClass),
+      match: capture(seq(
+        backslash(),
+        char('p', 'P'),
+        group(ordalt(...escapeOnigurumaTexts(placeholder.pcreUnicodePropertyCodes.filter((code) => code.length === 1)))),
+        lookahead(wordBound()),
+      )),
+    },
+    {
+      // unicode character properties e.g. `\p{Cc}`
       match: seq(
         capture(seq(
           backslash(),
@@ -211,12 +221,16 @@ export function createStringAsRegExpRuleContentRule(scopeName: ScopeName, placeh
       match: seq(backslash(), char(backslash(), ...placeholder.regexpEscapeSequences)),
     },
     {
+      name: name(scopeName, StyleName.Escape),
+      match: backslash(),
+    },
+    {
       // string escape sequences
       name: name(scopeName, StyleName.Escape),
       match: ordalt(...escapeOnigurumaTexts(placeholder.stringEscapeSequences)),
     },
     {
-      name: name(scopeName, StyleName.Invalid),
+      name: name(scopeName, StyleName.Escape),
       match: char('`'),
     },
   );

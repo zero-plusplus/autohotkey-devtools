@@ -282,7 +282,7 @@ export const enum Repository {
   Expression = 'repository.expression',
   Expressions = 'repository.expressions',
   ParenthesizedExpression = 'repository.expression.parenthesized',
-  ShorthundRegexpMatch = 'repository.expression.regexp.shorthund',
+  ShorthandRegexpMatch = 'repository.expression.regexp.shorthand',
 
   // #region literal
   Literal = 'repository.expression.literal',
