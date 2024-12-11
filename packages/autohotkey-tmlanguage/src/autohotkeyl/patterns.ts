@@ -48,8 +48,7 @@ export const doubleQuoteStringEndPattern: string = seq(
 // https://www.autohotkey.com/docs/v1/misc/RegEx-QuickRef.htm#Options
 export const regexpOptionsPattern: string = seq(
   groupMany0(alt(
-    char('i', 'm', 's', 'x', 'A', 'D', 'J', 'U', 'X', 'S', 'C'),
-    seq(char('`'), char('a', 'n', 'r')),
+    ordalt(...escapeOnigurumaTexts(constants_v1.regexpOptions)),
     inlineSpace(),
   )),
   negativeLookahead(char('`')),

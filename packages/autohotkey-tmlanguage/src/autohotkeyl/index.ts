@@ -237,16 +237,21 @@ export function createRepositories(scopeName: ScopeName): Repositories {
     [Repository.DoubleStringAsRegexp]: rule_v1.createStringAsRegExpRule(scopeName, {
       quoteChar: '"',
       regexpEndPattern: patterns_v1.doubleQuoteStringEndPattern,
-      optionsPattern: patterns_v1.regexpOptionsPattern,
+      regexpOptionsPattern: patterns_v1.regexpOptionsPattern,
       contentRuleName: RuleName.RegExpString,
+      contentRepository: Repository.DoubleStringAsRegExpContent,
     }),
-    [Repository.DoubleStringAsRegExpContent]: rule_v1.createStringAsRegExpRuleContentRule(scopeName, {
-      quoteChar: '"',
+    [Repository.DoubleStringAsRegExpContent]: rule_v1.createStringAsRegExpContentRule(scopeName, {
+      regexpOptions: constants_v1.regexpOptions,
+      regexpEndPattern: patterns_v1.doubleQuoteStringEndPattern,
+      contentRepository: Repository.DoubleStringAsRegExpContent,
+      commonContentRepository: Repository.DoubleStringAsRegExpCommonContent,
+    }),
+    [Repository.DoubleStringAsRegExpCommonContent]: rule_v1.createRegExpCommonContentRule(scopeName, {
       regexpEscapeSequences: constants_v1.regexpEscapeSequences,
       stringEscapeSequences: constants_v1.doubleQuoteEscapeSequences,
       pcreUnicodePropertyCodes: constants_v1.pcreUnicodePropertyCodes,
       pcreUnicodePropertyScripts: constants_v1.pcreUnicodePropertyScripts,
-      contentRepository: Repository.DoubleStringAsRegExpContent,
     }),
     [Repository.ContinuationStringOptions]: rule_v1.createContinuationStringOptionsRule(scopeName),
     [Repository.ContinuationDoubleString]: rule_v1.createContinuationString(scopeName, {
@@ -303,8 +308,9 @@ export function createRepositories(scopeName: ScopeName): Repositories {
     [Repository.ShorthandRegexpMatch]: rule_v1.createShorthandRegExpMatchRule(scopeName, {
       quoteChar: '"',
       regexpEndPattern: patterns_v1.doubleQuoteStringEndPattern,
-      optionsPattern: patterns_v1.regexpOptionsPattern,
+      regexpOptionsPattern: patterns_v1.regexpOptionsPattern,
       contentRuleName: RuleName.RegExpString,
+      contentRepository: Repository.DoubleStringAsRegExpContent,
     }),
     // #endregion regexp
 

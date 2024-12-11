@@ -72,7 +72,7 @@ export function createRegExpExpectedData(scopeName: ScopeName): ExpectedTestData
         { text: '"', scopes: name(scopeName, RuleName.RegExpString, RuleDescriptor.End) },
       ],
     ],
-    // group and assertions
+    // #region sub expression
     [
       dedent`
         var ~= "(text)"
@@ -95,7 +95,53 @@ export function createRegExpExpectedData(scopeName: ScopeName): ExpectedTestData
         }),
       ],
     ],
-    // group and assertions
+    [
+      dedent`
+        var ~= "(?<name>text)"
+      `, [
+        { text: 'var', scopes: name(scopeName, RuleName.Variable) },
+        { text: '~=', scopes: name(scopeName, RuleName.Operator) },
+        { text: '"', scopes: name(scopeName, RuleName.RegExpString, RuleDescriptor.Begin) },
+        { text: '(?<', scopes: name(scopeName, RuleName.RegExpString, RuleName.RegExpGroup, RuleDescriptor.Begin) },
+        { text: 'name', scopes: name(scopeName, RuleName.RegExpString, RuleName.RegExpGroup, RuleName.Variable, RuleDescriptor.Begin) },
+        { text: '>', scopes: name(scopeName, RuleName.RegExpString, RuleName.RegExpGroup, RuleDescriptor.Begin) },
+        { text: 'text', scopes: name(scopeName, RuleName.RegExpString) },
+        { text: ')', scopes: name(scopeName, RuleName.RegExpString, RuleName.RegExpGroup, RuleDescriptor.End) },
+        { text: '"', scopes: name(scopeName, RuleName.RegExpString, RuleDescriptor.End) },
+      ],
+    ],
+    [
+      dedent`
+        var ~= "(?im:text)"
+        var ~= "(?-im:text)"
+      `, [
+        { text: 'var', scopes: name(scopeName, RuleName.Variable) },
+        { text: '~=', scopes: name(scopeName, RuleName.Operator) },
+        { text: '"', scopes: name(scopeName, RuleName.RegExpString, RuleDescriptor.Begin) },
+        { text: '(?', scopes: name(scopeName, RuleName.RegExpString, RuleName.RegExpGroup, RuleDescriptor.Begin) },
+        { text: 'i', scopes: name(scopeName, RuleName.RegExpString, RuleName.RegExpGroup, RuleName.RegExpOption, RuleDescriptor.Begin) },
+        { text: 'm', scopes: name(scopeName, RuleName.RegExpString, RuleName.RegExpGroup, RuleName.RegExpOption, RuleDescriptor.Begin) },
+        { text: ':', scopes: name(scopeName, RuleName.RegExpString, RuleName.RegExpGroup, RuleDescriptor.Begin) },
+        { text: 'text', scopes: name(scopeName, RuleName.RegExpString) },
+        { text: ')', scopes: name(scopeName, RuleName.RegExpString, RuleName.RegExpGroup, RuleDescriptor.End) },
+        { text: '"', scopes: name(scopeName, RuleName.RegExpString, RuleDescriptor.End) },
+
+        { text: 'var', scopes: name(scopeName, RuleName.Variable) },
+        { text: '~=', scopes: name(scopeName, RuleName.Operator) },
+        { text: '"', scopes: name(scopeName, RuleName.RegExpString, RuleDescriptor.Begin) },
+        { text: '(?', scopes: name(scopeName, RuleName.RegExpString, RuleName.RegExpGroup, RuleDescriptor.Begin) },
+        { text: '-', scopes: name(scopeName, RuleName.RegExpString, RuleName.RegExpGroup, RuleName.RegExpOption, RuleDescriptor.Begin) },
+        { text: 'i', scopes: name(scopeName, RuleName.RegExpString, RuleName.RegExpGroup, RuleName.RegExpOption, RuleDescriptor.Begin) },
+        { text: 'm', scopes: name(scopeName, RuleName.RegExpString, RuleName.RegExpGroup, RuleName.RegExpOption, RuleDescriptor.Begin) },
+        { text: ':', scopes: name(scopeName, RuleName.RegExpString, RuleName.RegExpGroup, RuleDescriptor.Begin) },
+        { text: 'text', scopes: name(scopeName, RuleName.RegExpString) },
+        { text: ')', scopes: name(scopeName, RuleName.RegExpString, RuleName.RegExpGroup, RuleDescriptor.End) },
+        { text: '"', scopes: name(scopeName, RuleName.RegExpString, RuleDescriptor.End) },
+      ],
+    ],
+    // #endregion sub expression
+
+    // #region literal sequence
     [
       dedent`
         var ~= "\\Q(text)\\E"
@@ -109,7 +155,9 @@ export function createRegExpExpectedData(scopeName: ScopeName): ExpectedTestData
         { text: '"', scopes: name(scopeName, RuleName.RegExpString, RuleDescriptor.End) },
       ],
     ],
-    // character class
+    // #endregion literal sequence
+
+    // #region character classes
     [
       dedent`
         var ~= "[abc]"
@@ -169,8 +217,9 @@ export function createRegExpExpectedData(scopeName: ScopeName): ExpectedTestData
         ],
       ];
     }),
+    // #endregion character classes
 
-    // anchor
+    // #region anchor
     [
       dedent`
         var ~= "^$"
@@ -183,7 +232,9 @@ export function createRegExpExpectedData(scopeName: ScopeName): ExpectedTestData
         { text: '"', scopes: name(scopeName, RuleName.RegExpString, RuleDescriptor.End) },
       ],
     ],
-    // quantifier
+    // #endregion anchor
+
+    // #region quantifier
     [
       dedent`
         var ~= ".?"
@@ -222,27 +273,33 @@ export function createRegExpExpectedData(scopeName: ScopeName): ExpectedTestData
         }),
       ],
     ],
-    // escape sequence
+    // #endregion quantifier
+
+    // #region escape sequence
     [
       dedent`
-        var ~= "\\."
-        var ~= "\\*"
-        var ~= "\\?"
-        var ~= "\\+"
-        var ~= "\\["
-        var ~= "\\{"
-        var ~= "\\|"
-        var ~= "\\("
-        var ~= "\\)"
-        var ~= "\\^"
-        var ~= "\\$"
+        var ~= "\\.[\\.]"
+        var ~= "\\*[\\*]"
+        var ~= "\\?[\\?]"
+        var ~= "\\+[\\+]"
+        var ~= "\\[[\\[]"
+        var ~= "\\{[\\{]"
+        var ~= "\\|[\\|]"
+        var ~= "\\([\\(]"
+        var ~= "\\)[\\)]"
+        var ~= "\\^[\\^]"
+        var ~= "\\$[\\$]"
+        var ~= "\\\\[\\\\]"
       `, [
-        ...[ '.', '*', '?', '+', '[', '{', '|', '(', ')', '^', '$' ].flatMap((char): ParsedResult[] => {
+        ...constants_v1.regexpEscapeSequences.flatMap((escapeSequence): ParsedResult[] => {
           return [
             { text: 'var', scopes: name(scopeName, RuleName.Variable) },
             { text: '~=', scopes: name(scopeName, RuleName.Operator) },
             { text: '"', scopes: name(scopeName, RuleName.RegExpString, RuleDescriptor.Begin) },
-            { text: `\\${char}`, scopes: name(scopeName, RuleName.RegExpString, StyleName.Escape) },
+            { text: escapeSequence, scopes: name(scopeName, RuleName.RegExpString, StyleName.Escape) },
+            { text: `[`, scopes: name(scopeName, RuleName.RegExpString, RuleName.RegExpCharacterClassSet, RuleName.RegExpCharacterClass, RuleDescriptor.Begin) },
+            { text: escapeSequence, scopes: name(scopeName, RuleName.RegExpString, RuleName.RegExpCharacterClassSet, StyleName.Escape) },
+            { text: `]`, scopes: name(scopeName, RuleName.RegExpString, RuleName.RegExpCharacterClassSet, RuleName.RegExpCharacterClass, RuleDescriptor.End) },
             { text: '"', scopes: name(scopeName, RuleName.RegExpString, RuleDescriptor.End) },
           ];
         }),
@@ -259,6 +316,7 @@ export function createRegExpExpectedData(scopeName: ScopeName): ExpectedTestData
         { text: '"', scopes: name(scopeName, RuleName.RegExpString, RuleDescriptor.End) },
       ],
     ],
+    // #endregion escape sequence
     // #endregion shothund regexp match
 
     // #region string as regexp

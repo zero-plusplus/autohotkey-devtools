@@ -61,7 +61,8 @@ export const commonExpressionKeywords = [
 // #endregion operators
 
 // #region regexp
-export const commonRegExpOptions = [ '.', '*', '?', '+', '[', '{', '|', '(', ')', '^', '$' ] as const;
+export const commonRegexpOptions = [ 'i', 'm', 's', 'x', 'A', 'D', 'J', 'U', 'X', 'S', 'C', '`a', '`n', '`r' ] as const;
+export const commonRegexpEscapeSequences = [ '\\.', '\\*', '\\?', '\\+', '\\[', '\\{', '\\|', '\\(', '\\)', '\\^', '\\$', '\\\\' ] as const;
 export const commonPcreUnicodeProperyCodes = [
   // https://www.autohotkey.com/docs/v1/misc/RegEx-QuickRef.htm#slashP
   // https://www.autohotkey.com/docs/v2/misc/RegEx-QuickRef.htm#slashP
@@ -330,6 +331,7 @@ export const enum Repository {
   DoubleStringAsRegexp = 'repository.regexp.double-quote',
   SingleStringAsRegexp = 'repository.regexp.single-quote',
   DoubleStringAsRegExpContent = 'repository.regexp.double-quote.content',
+  DoubleStringAsRegExpCommonContent = 'repository.regexp.double-quote.common',
   // #endregion regexp
 
   // #region misc
