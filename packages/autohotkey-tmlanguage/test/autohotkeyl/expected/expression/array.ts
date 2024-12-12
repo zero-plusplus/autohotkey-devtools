@@ -1,5 +1,5 @@
 import { dedent, repeatArray } from '@zero-plusplus/utilities/src';
-import { RuleName } from '../../../../src/constants';
+import { RuleDescriptor, RuleName } from '../../../../src/constants';
 import type { ScopeName } from '../../../../src/types';
 import { name } from '../../../../src/utils';
 import type { ExpectedTestData } from '../../../types';
@@ -73,33 +73,33 @@ export function createArrayLiteralExpectedData(scopeName: ScopeName): ExpectedTe
     // comment
     [
       dedent`
-        abc := [] ; comment
-        abc := [ ; comment
-          ; comment
-          1, ; comment
-          /* comment
+        abc := [] ; inline comment
+        abc := [ ; inline comment
+          ; line comment
+          1, ; inline comment
+          /* block comment
            */
-        ] ; comment
+        ] ; inline comment
       `, [
         { text: 'abc', scopes: name(scopeName, RuleName.Variable) },
         { text: ':=', scopes: name(scopeName, RuleName.Operator) },
         { text: '[', scopes: name(scopeName, RuleName.OpenBracket) },
         { text: ']', scopes: name(scopeName, RuleName.CloseBracket) },
-        { text: '; comment', scopes: name(scopeName, RuleName.InLineComment) },
+        { text: '; inline comment', scopes: name(scopeName, RuleName.InLineComment) },
 
         { text: 'abc', scopes: name(scopeName, RuleName.Variable) },
         { text: ':=', scopes: name(scopeName, RuleName.Operator) },
         { text: '[', scopes: name(scopeName, RuleName.OpenBracket) },
-        { text: '; comment', scopes: name(scopeName, RuleName.InLineComment) },
-        { text: '; comment', scopes: name(scopeName, RuleName.SingleLineComment) },
+        { text: '; inline comment', scopes: name(scopeName, RuleName.InLineComment) },
+        { text: '; line comment', scopes: name(scopeName, RuleName.SingleLineComment) },
         { text: '1', scopes: name(scopeName, RuleName.Integer) },
         { text: ',', scopes: name(scopeName, RuleName.Comma) },
-        { text: '; comment', scopes: name(scopeName, RuleName.InLineComment) },
-        { text: '/*', scopes: name(scopeName, RuleName.MultiLineComment) },
-        { text: ' comment', scopes: name(scopeName, RuleName.MultiLineComment) },
-        { text: '*/', scopes: name(scopeName, RuleName.MultiLineComment) },
+        { text: '; inline comment', scopes: name(scopeName, RuleName.InLineComment) },
+        { text: '/*', scopes: name(scopeName, RuleName.MultiLineComment, RuleDescriptor.Begin) },
+        { text: ' block comment', scopes: name(scopeName, RuleName.MultiLineComment) },
+        { text: '*/', scopes: name(scopeName, RuleName.MultiLineComment, RuleDescriptor.End) },
         { text: ']', scopes: name(scopeName, RuleName.CloseBracket) },
-        { text: '; comment', scopes: name(scopeName, RuleName.InLineComment) },
+        { text: '; inline comment', scopes: name(scopeName, RuleName.InLineComment) },
       ],
     ],
   ];
