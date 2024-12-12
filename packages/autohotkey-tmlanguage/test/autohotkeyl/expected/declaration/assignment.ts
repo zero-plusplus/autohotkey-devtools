@@ -1,5 +1,5 @@
 import { dedent } from '@zero-plusplus/utilities/src';
-import { RuleName } from '../../../../src/constants';
+import { RuleDescriptor, RuleName } from '../../../../src/constants';
 import type { ScopeName } from '../../../../src/types';
 import { name } from '../../../../src/utils';
 import type { ExpectedTestData } from '../../../types';
@@ -28,9 +28,9 @@ export function createAssignmentDeclarationExpectedData(scopeName: ScopeName): E
 
         { text: 'input', scopes: name(scopeName, RuleName.Variable) },
         { text: '[', scopes: name(scopeName, RuleName.OpenBracket) },
-        { text: '"', scopes: name(scopeName, RuleName.DoubleString, RuleName.StringBegin) },
+        { text: '"', scopes: name(scopeName, RuleName.DoubleString, RuleDescriptor.Begin) },
         { text: 'abc', scopes: name(scopeName, RuleName.DoubleString) },
-        { text: '"', scopes: name(scopeName, RuleName.DoubleString, RuleName.StringEnd) },
+        { text: '"', scopes: name(scopeName, RuleName.DoubleString, RuleDescriptor.End) },
         { text: ',', scopes: name(scopeName, RuleName.Comma) },
         { text: '2', scopes: name(scopeName, RuleName.Integer) },
         { text: ']', scopes: name(scopeName, RuleName.CloseBracket) },
@@ -38,9 +38,9 @@ export function createAssignmentDeclarationExpectedData(scopeName: ScopeName): E
         { text: '1', scopes: name(scopeName, RuleName.Integer) },
         { text: 'inputABC', scopes: name(scopeName, RuleName.Variable) },
         { text: '[', scopes: name(scopeName, RuleName.OpenBracket) },
-        { text: '"', scopes: name(scopeName, RuleName.DoubleString, RuleName.StringBegin) },
+        { text: '"', scopes: name(scopeName, RuleName.DoubleString, RuleDescriptor.Begin) },
         { text: 'abc', scopes: name(scopeName, RuleName.DoubleString) },
-        { text: '"', scopes: name(scopeName, RuleName.DoubleString, RuleName.StringEnd) },
+        { text: '"', scopes: name(scopeName, RuleName.DoubleString, RuleDescriptor.End) },
         { text: ',', scopes: name(scopeName, RuleName.Comma) },
         { text: '2', scopes: name(scopeName, RuleName.Integer) },
         { text: ']', scopes: name(scopeName, RuleName.CloseBracket) },

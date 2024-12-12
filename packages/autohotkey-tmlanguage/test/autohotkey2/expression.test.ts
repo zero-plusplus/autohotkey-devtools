@@ -1,4 +1,4 @@
-import { RuleName, StyleName } from '../../src/constants';
+import { RuleDescriptor, RuleName, StyleName } from '../../src/constants';
 import type { ScopeName } from '../../src/types';
 import { createUtilities, getEscapeSequencesInfo } from '../../src/utils';
 import { parse } from '../helpers/textmate-parser';
@@ -30,9 +30,9 @@ describe('expression', () => {
           '%"abc"%',
           [
             { text: '%', scopes: name(RuleName.PercentBegin) },
-            { text: '"', scopes: name(RuleName.DoubleString, RuleName.StringBegin) },
+            { text: '"', scopes: name(RuleName.DoubleString, RuleDescriptor.Begin) },
             { text: 'abc', scopes: name(RuleName.DoubleString) },
-            { text: '"', scopes: name(RuleName.DoubleString, RuleName.StringEnd) },
+            { text: '"', scopes: name(RuleName.DoubleString, RuleDescriptor.End) },
             { text: '%', scopes: name(RuleName.PercentEnd) },
           ],
         ],
@@ -89,9 +89,9 @@ describe('expression', () => {
           // console.log(JSON.stringify(actual, undefined, 2));
 
           expect(actual).toStrictEqual([
-            { text: `'`, scopes: name(RuleName.SingleString, RuleName.StringBegin) },
+            { text: `'`, scopes: name(RuleName.SingleString, RuleDescriptor.Begin) },
             { text: 'string', scopes: name(RuleName.SingleString) },
-            { text: `'`, scopes: name(RuleName.SingleString, RuleName.StringEnd) },
+            { text: `'`, scopes: name(RuleName.SingleString, RuleDescriptor.End) },
           ]);
         },
       );
@@ -103,11 +103,11 @@ describe('expression', () => {
           // console.log(JSON.stringify(actual, undefined, 2));
 
           expect(actual).toStrictEqual([
-            { text: `'`, scopes: name(RuleName.SingleString, RuleName.StringBegin) },
+            { text: `'`, scopes: name(RuleName.SingleString, RuleDescriptor.Begin) },
             ...escapeSequencesInfo.singleQuote.map((escapeSequence) => {
               return { text: escapeSequence, scopes: name(RuleName.SingleString, RuleName.EscapeSequence) };
             }),
-            { text: `'`, scopes: name(RuleName.SingleString, RuleName.StringEnd) },
+            { text: `'`, scopes: name(RuleName.SingleString, RuleDescriptor.End) },
           ]);
         },
       );

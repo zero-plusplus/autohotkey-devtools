@@ -413,8 +413,6 @@ export const enum RuleName {
   SingleStringEscapeSequence = 'constant.character.escape.single',
   SingleString = 'string.quoted.single',
   MultiLineString = 'string.quoted.unquoted',
-  StringBegin = 'punctuation.definition.string.begin',
-  StringEnd = 'punctuation.definition.string.end',
   EscapeSequence = 'constant.character.escape',
   // #endregion string
   // #region number
@@ -439,8 +437,6 @@ export const enum RuleName {
 
   // #region regexp
   RegExpOption = 'string.regexp keyword.other.regexp.option',
-  RegExpBegin = 'string.regexp.begin',
-  RegExpEnd = 'string.regexp.end',
   RegExpString = 'string.regexp',
   DoubleStringAsRegExp = 'string.regexp.double-quote',
   RegExpAnchor = 'keyword.control.anchor.regexp',

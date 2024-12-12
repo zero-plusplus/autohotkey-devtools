@@ -1,4 +1,4 @@
-import { RuleName, StyleName, type Repository } from '../../../constants';
+import { RuleDescriptor, StyleName, type Repository } from '../../../constants';
 import { capture, char, escapeOnigurumaTexts, ordalt, seq } from '../../../oniguruma';
 import type { ElementName, MatchRule, PatternsRule, ScopeName } from '../../../types';
 import { includeRule, name, nameRule, patternsRule } from '../../../utils';
@@ -19,9 +19,9 @@ export function createStringRule(scopeName: ScopeName, placeholder: Placeholder)
       capture(placeholder.stringEndPattern),
     ),
     captures: {
-      1: nameRule(scopeName, RuleName.StringBegin),
+      1: nameRule(scopeName, RuleDescriptor.Begin),
       2: patternsRule(includeRule(placeholder.stringContentRepository)),
-      3: nameRule(scopeName, RuleName.StringEnd),
+      3: nameRule(scopeName, RuleDescriptor.End),
     },
   };
 }

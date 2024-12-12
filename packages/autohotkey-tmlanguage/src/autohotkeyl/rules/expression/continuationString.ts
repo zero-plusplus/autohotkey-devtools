@@ -1,4 +1,4 @@
-import { Repository, RuleName, StyleName } from '../../../constants';
+import { Repository, RuleDescriptor, RuleName, StyleName } from '../../../constants';
 import { alt, anyChars0, anyChars1, capture, char, endAnchor, group, ignoreCase, inlineSpace, inlineSpaces0, inlineSpaces1, lookahead, lookbehind, many0, negativeLookahead, negChar, negChars0, optseq, ordalt, seq, startAnchor, whitespace } from '../../../oniguruma';
 import type { BeginEndRule, ElementName, ScopeName } from '../../../types';
 import { includeRule, name, nameRule, patternsRule } from '../../../utils';
@@ -25,7 +25,7 @@ export function createContinuationString(scopeName: ScopeName, placeholder: Plac
       lookahead(placeholder.endAnchor),
     ),
     beginCaptures: {
-      1: nameRule(scopeName, placeholder.stringElementName, RuleName.StringBegin),
+      1: nameRule(scopeName, placeholder.stringElementName, RuleDescriptor.Begin),
       2: patternsRule(includeRule(placeholder.stringContentRepository)),
       3: patternsRule(includeRule(Repository.InLineComment)),
     },
@@ -37,7 +37,7 @@ export function createContinuationString(scopeName: ScopeName, placeholder: Plac
     ),
     endCaptures: {
       1: nameRule(scopeName, RuleName.CloseParen),
-      2: nameRule(scopeName, placeholder.stringElementName, RuleName.StringEnd),
+      2: nameRule(scopeName, placeholder.stringElementName, RuleDescriptor.End),
     },
     patterns: [
       {

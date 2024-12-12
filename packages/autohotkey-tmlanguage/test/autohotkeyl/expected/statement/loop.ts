@@ -1,5 +1,5 @@
 import { dedent } from '@zero-plusplus/utilities/src';
-import { RuleName, StyleName } from '../../../../src/constants';
+import { RuleDescriptor, RuleName, StyleName } from '../../../../src/constants';
 import type { ScopeName } from '../../../../src/types';
 import { name } from '../../../../src/utils';
 import type { ExpectedTestData } from '../../../types';
@@ -126,9 +126,9 @@ export function createLoopStatementExpectedData(scopeName: ScopeName): ExpectedT
         { text: 'Parse', scopes: name(scopeName, RuleName.ControlFlowKeyword) },
         { text: ',', scopes: name(scopeName, RuleName.Comma) },
         { text: '% ', scopes: name(scopeName, RuleName.PercentExpressionBegin) },
-        { text: '"', scopes: name(scopeName, RuleName.DoubleString, RuleName.StringBegin) },
+        { text: '"', scopes: name(scopeName, RuleName.DoubleString, RuleDescriptor.Begin) },
         { text: 'a,b,c', scopes: name(scopeName, RuleName.DoubleString) },
-        { text: '"', scopes: name(scopeName, RuleName.DoubleString, RuleName.StringEnd) },
+        { text: '"', scopes: name(scopeName, RuleName.DoubleString, RuleDescriptor.End) },
 
         { text: 'Loop', scopes: name(scopeName, RuleName.ControlFlowKeyword) },
         { text: 'Parse', scopes: name(scopeName, RuleName.ControlFlowKeyword) },

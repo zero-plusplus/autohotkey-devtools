@@ -326,10 +326,10 @@ export function createRegExpExpectedData(scopeName: ScopeName): ExpectedTestData
         ")text"
         "im)text"
       `, [
-        { text: '"', scopes: name(scopeName, RuleName.DoubleString, RuleName.StringBegin) },
+        { text: '"', scopes: name(scopeName, RuleName.DoubleString, RuleDescriptor.Begin) },
         { text: '`)', scopes: name(scopeName, RuleName.DoubleString, StyleName.Escape) },
         { text: 'text', scopes: name(scopeName, RuleName.DoubleString) },
-        { text: '"', scopes: name(scopeName, RuleName.DoubleString, RuleName.StringEnd) },
+        { text: '"', scopes: name(scopeName, RuleName.DoubleString, RuleDescriptor.End) },
 
         { text: '"', scopes: name(scopeName, RuleName.RegExpString, RuleDescriptor.Begin) },
         { text: ')', scopes: name(scopeName, RuleName.RegExpString, RuleName.RegExpOption) },
