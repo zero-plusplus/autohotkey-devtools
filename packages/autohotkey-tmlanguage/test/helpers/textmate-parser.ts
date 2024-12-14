@@ -16,10 +16,10 @@ const createTextMateRegistry = singleton(async(): Promise<vsctm.Registry> => {
   await oniguruma.loadWASM(wasmBinary as unknown as oniguruma.IOptions);
 
   const grammarsByScopeName: Record<`source.${ScopeName}`, TmLanguage> = {
-    'source.autohotkey': grammars.autohotkey.createTmLanguage(),
-    'source.autohotkeynext': grammars.autohotkeynext.createTmLanguage(),
-    'source.autohotkey2': grammars.autohotkey2.createTmLanguage(),
-    'source.autohotkeyl': grammars.autohotkeyl.createTmLanguage(),
+    'source.autohotkey': createTmLanguage(grammars.autohotkey.createTmLanguage),
+    'source.autohotkeynext': createTmLanguage(grammars.autohotkeynext.createTmLanguage),
+    'source.autohotkey2': createTmLanguage(grammars.autohotkey2.createTmLanguage),
+    'source.autohotkeyl': createTmLanguage(grammars.autohotkeyl.createTmLanguage),
   };
 
   return new vsctm.Registry({
@@ -51,24 +51,10 @@ export async function parse(scopeName: ScopeName, text: string): Promise<ParsedR
   if (!grammar) {
     throw Error(`Scope "source.${scopeName}" is not defined.`);
   }
-
-  const parsed: ParsedResult[] = [];
-
   const linebreakRegExp = /(\r\n|\n)/;
   const lines = text.split(linebreakRegExp).filter((line) => line !== '');
-  // Convert 'line1\r\nline2\nline3' to [ 'line\r\n', 'line2\n', 'line3' ]
-  // .reduce<string[]>((prev, current, i) => {
-  //   if (0 < i && (linebreakRegExp).test(current)) {
-  //     const prevLine = prev[prev.length - 1];
-  //     if (prevLine && !linebreakRegExp.test(prevLine)) {
-  //       prev[prev.length - 1] = `${prev[prev.length - 1]}${current}`;
-  //       return prev;
-  //     }
-  //   }
-  //   prev.push(current);
-  //   return prev;
-  // }, []);
 
+  const parsed: ParsedResult[] = [];
   let ruleStack = vsctm.INITIAL;
   for (const line of lines) {
     const match = line.match(/\r\n|\n/);
@@ -92,4 +78,10 @@ export async function parse(scopeName: ScopeName, text: string): Promise<ParsedR
   }
 
   return parsed;
+}
+
+function createTmLanguage(builder: () => TmLanguage): TmLanguage {
+  return JSON.parse(JSON.stringify(builder(), undefined, 1)
+    // markdown is not included in the test
+    .replaceAll('"text.html.markdown"', '""')) as TmLanguage;
 }

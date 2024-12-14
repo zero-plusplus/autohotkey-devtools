@@ -17,6 +17,7 @@ describe('autohotkeyl', () => {
     ...dataBuilder.createContinuationStringLiteralExpectedData(scopeName),
     ...dataBuilder.createDereferenceExpressionExpectedData(scopeName),
     ...dataBuilder.createDirectiveStatementExpectedData(scopeName),
+    ...dataBuilder.createDocumentCommentExpectedData(scopeName),
     ...dataBuilder.createForStatementExpectedData(scopeName),
     ...dataBuilder.createFunctionDeclarationExpectedData(scopeName),
     ...dataBuilder.createHotkeyLabelStatementExpectedData(scopeName),

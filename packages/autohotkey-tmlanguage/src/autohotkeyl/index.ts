@@ -30,6 +30,7 @@ export function createRepositories(scopeName: ScopeName): Repositories {
   return {
     // #region trivia
     [Repository.Comment]: patternsRule(
+      includeRule(Repository.DocumentComment),
       includeRule(Repository.MultiLineComment),
       includeRule(Repository.SingleLineComment),
       includeRule(Repository.InLineComment),
@@ -39,6 +40,7 @@ export function createRepositories(scopeName: ScopeName): Repositories {
       startAnchor: patterns_v1.statementStartAnchor,
     }),
     [Repository.InLineComment]: rule_v1.createInLineCommentRule(scopeName),
+    [Repository.DocumentComment]: rule_v1.createDocumentCommentRule(scopeName),
     // #endregion trivia
 
     // #region statement
