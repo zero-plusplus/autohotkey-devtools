@@ -56,7 +56,7 @@ export function createDocumentCommentExpectedData(scopeName: ScopeName): Expecte
           return [
             { text: ' *', scopes: name(scopeName, RuleName.DocumentComment) },
             { text: '@access', scopes: name(scopeName, RuleName.DocumentComment, RuleName.DocumentTag) },
-            { text: accessLevel, scopes: name(scopeName, RuleName.DocumentComment, RuleName.DocumentKeyword) },
+            { text: accessLevel, scopes: name(scopeName, RuleName.DocumentComment, RuleName.KeywordInDocument) },
           ];
         }),
 
@@ -65,11 +65,60 @@ export function createDocumentCommentExpectedData(scopeName: ScopeName): Expecte
         // Note: The access level that jsdoc does not have. In v2, modules can be defined, so they are added as aliases of package
         { text: ' *', scopes: name(scopeName, RuleName.DocumentComment) },
         { text: '@access', scopes: name(scopeName, RuleName.DocumentComment, RuleName.DocumentTag) },
-        { text: 'module', scopes: name(scopeName, RuleName.DocumentComment, RuleName.DocumentKeyword) },
+        { text: 'module', scopes: name(scopeName, RuleName.DocumentComment, RuleName.KeywordInDocument) },
 
         { text: ' *', scopes: name(scopeName, RuleName.DocumentComment) },
         { text: '@access', scopes: name(scopeName, RuleName.DocumentComment, RuleName.DocumentTag) },
         { text: 'unknown', scopes: name(scopeName, RuleName.DocumentComment) },
+        { text: '*/', scopes: name(scopeName, RuleName.DocumentComment, RuleDescriptor.End) },
+      ],
+    ],
+    // https://jsdoc.app/tags-async
+    [
+      dedent`
+        /**
+         * @async
+         */
+      `,
+      [
+        { text: '/**', scopes: name(scopeName, RuleName.DocumentComment, RuleDescriptor.Begin) },
+        { text: ' *', scopes: name(scopeName, RuleName.DocumentComment) },
+        { text: '@async', scopes: name(scopeName, RuleName.DocumentComment, RuleName.DocumentTag) },
+        { text: '*/', scopes: name(scopeName, RuleName.DocumentComment, RuleDescriptor.End) },
+      ],
+    ],
+    // https://jsdoc.app/tags-augments
+    [
+      dedent`
+        /**
+         * @augments Foo.Bar
+         * @extends Foo.Bar
+         */
+      `,
+      [
+        { text: '/**', scopes: name(scopeName, RuleName.DocumentComment, RuleDescriptor.Begin) },
+        ...[ '@augments', '@extends' ].flatMap((tag) => {
+          return [
+            { text: ' *', scopes: name(scopeName, RuleName.DocumentComment) },
+            { text: tag, scopes: name(scopeName, RuleName.DocumentComment, RuleName.DocumentTag) },
+            { text: 'Foo.Bar', scopes: name(scopeName, RuleName.DocumentComment, RuleName.NamePathInDocument) },
+          ];
+        }),
+        { text: '*/', scopes: name(scopeName, RuleName.DocumentComment, RuleDescriptor.End) },
+      ],
+    ],
+    // https://jsdoc.app/tags-author
+    [
+      dedent`
+        /**
+         * @author name <mail-address>
+         */
+      `,
+      [
+        { text: '/**', scopes: name(scopeName, RuleName.DocumentComment, RuleDescriptor.Begin) },
+        { text: ' *', scopes: name(scopeName, RuleName.DocumentComment) },
+        { text: '@author', scopes: name(scopeName, RuleName.DocumentComment, RuleName.DocumentTag) },
+        { text: 'name <mail-address>', scopes: name(scopeName, RuleName.DocumentComment, RuleName.NamePathInDocument) },
         { text: '*/', scopes: name(scopeName, RuleName.DocumentComment, RuleDescriptor.End) },
       ],
     ],

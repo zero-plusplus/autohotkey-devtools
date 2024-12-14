@@ -1,5 +1,5 @@
 import { Repository, RuleDescriptor, RuleName } from '../../../constants';
-import { alt, anyChars0, capture, char, endAnchor, group, ignoreCase, inlineSpaces0, lookahead, lookbehind, negativeLookahead, ordalt, seq, startAnchor, text } from '../../../oniguruma';
+import { alt, anyChars0, anyChars1, capture, char, endAnchor, group, ignoreCase, inlineSpaces0, lookahead, lookbehind, negativeLookahead, negChars1, ordalt, seq, startAnchor, text } from '../../../oniguruma';
 import type { BeginEndRule, MatchRule, PatternsRule, Rule, ScopeName } from '../../../types';
 import { includeRule, includeScope, name, nameRule, patternsRule } from '../../../utils';
 
@@ -65,10 +65,6 @@ function createTagAnnotationRule(scopeName: ScopeName, placeholder: Placeholder)
 
         // https://jsdoc.app/tags-async
         '@async',
-
-        // https://jsdoc.app/tags-augments
-        '@augments',
-        '@extends',
       ],
     }),
     createAttributeAnnotationTagRule(scopeName, {
@@ -79,7 +75,7 @@ function createTagAnnotationRule(scopeName: ScopeName, placeholder: Placeholder)
       ],
       rules: [
         {
-          name: name(scopeName, RuleName.DocumentKeyword),
+          name: name(scopeName, RuleName.KeywordInDocument),
           match: ignoreCase(ordalt('package', 'private', 'protected', 'public', 'module')),
         },
       ],
@@ -90,10 +86,32 @@ function createTagAnnotationRule(scopeName: ScopeName, placeholder: Placeholder)
         // https://jsdoc.app/tags-alias
         '@alias',
 
+        // https://jsdoc.app/tags-augments
+        '@augments',
+        '@extends',
+
         // https://jsdoc.app/tags-name
         '@name',
       ],
-      rules: [],
+      rules: [
+        {
+          name: name(scopeName, RuleName.NamePathInDocument),
+          match: negChars1('\\s'),
+        },
+      ],
+    }),
+    createAttributeAnnotationTagRule(scopeName, {
+      startPattern: placeholder.startPattern,
+      tagNames: [
+        // https://jsdoc.app/tags-author
+        '@author',
+      ],
+      rules: [
+        {
+          name: name(scopeName, RuleName.NamePathInDocument),
+          match: anyChars1(),
+        },
+      ],
     }),
   );
 }
