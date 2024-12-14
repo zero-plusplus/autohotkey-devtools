@@ -39,12 +39,18 @@ export function createStringLiteralExpectedData(scopeName: ScopeName): ExpectedT
       ],
     ],
 
+    // Do not conflict with labels
     [
       dedent`
         ":"
+        "::"
       `, [
         { text: '"', scopes: name(scopeName, RuleName.DoubleString, RuleDescriptor.Begin) },
         { text: ':', scopes: name(scopeName, RuleName.DoubleString) },
+        { text: '"', scopes: name(scopeName, RuleName.DoubleString, RuleDescriptor.End) },
+
+        { text: '"', scopes: name(scopeName, RuleName.DoubleString, RuleDescriptor.Begin) },
+        { text: '::', scopes: name(scopeName, RuleName.DoubleString) },
         { text: '"', scopes: name(scopeName, RuleName.DoubleString, RuleDescriptor.End) },
       ],
     ],
