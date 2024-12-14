@@ -1,26 +1,27 @@
 import { Repository, RuleName } from '../../../constants';
 import { anyChars0, capture, char, seq } from '../../../oniguruma';
-import type { BeginEndRule, ScopeName } from '../../../types';
+import type { PatternsRule, ScopeName } from '../../../types';
 import { includeRule, nameRule, patternsRule } from '../../../utils';
 
-interface Placeholder {
-  startAnchor: string;
-}
-export function createParenthesizedExpressionRule(scopeName: ScopeName, placeholder: Placeholder): BeginEndRule {
+export function createParenthesizedExpressionRule(scopeName: ScopeName): PatternsRule {
   return patternsRule(
     {
-      match: seq(capture(char('(')), capture(anyChars0()), capture(char(')'))),
+      match: seq(
+        capture(char('(')),
+        capture(anyChars0()),
+        capture(char(')')),
+      ),
       captures: {
         1: nameRule(scopeName, RuleName.OpenParen),
-        2: patternsRule(includeRule(Repository.Expressions)),
+        2: patternsRule(
+          includeRule(Repository.Comma),
+          includeRule(Repository.Expression),
+        ),
         3: nameRule(scopeName, RuleName.CloseParen),
       },
     },
     {
-      begin: seq(
-        placeholder.startAnchor,
-        capture(char('(')),
-      ),
+      begin: capture(char('(')),
       beginCaptures: {
         1: nameRule(scopeName, RuleName.OpenParen),
       },
@@ -28,7 +29,12 @@ export function createParenthesizedExpressionRule(scopeName: ScopeName, placehol
       endCaptures: {
         1: nameRule(scopeName, RuleName.CloseParen),
       },
-      patterns: [ includeRule(Repository.Expressions) ],
+      patterns: [
+        includeRule(Repository.DirectiveStatement),
+        includeRule(Repository.Comment),
+        includeRule(Repository.Comma),
+        includeRule(Repository.Expression),
+      ],
     },
   );
 }

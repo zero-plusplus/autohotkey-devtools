@@ -101,6 +101,31 @@ export function createCallExpressionExpectedData(scopeName: ScopeName): Expected
       ],
     ],
 
+    [
+      dedent`
+        abc(a)
+        abc(a, (b * c), d)
+      `, [
+        { text: 'abc', scopes: name(scopeName, RuleName.FunctionName) },
+        { text: '(', scopes: name(scopeName, RuleName.OpenParen) },
+        { text: 'a', scopes: name(scopeName, RuleName.Variable) },
+        { text: ')', scopes: name(scopeName, RuleName.CloseParen) },
+
+        { text: 'abc', scopes: name(scopeName, RuleName.FunctionName) },
+        { text: '(', scopes: name(scopeName, RuleName.OpenParen) },
+        { text: 'a', scopes: name(scopeName, RuleName.Variable) },
+        { text: ',', scopes: name(scopeName, RuleName.Comma) },
+        { text: '(', scopes: name(scopeName, RuleName.OpenParen) },
+        { text: 'b', scopes: name(scopeName, RuleName.Variable) },
+        { text: '*', scopes: name(scopeName, RuleName.Operator) },
+        { text: 'c', scopes: name(scopeName, RuleName.Variable) },
+        { text: ')', scopes: name(scopeName, RuleName.CloseParen) },
+        { text: ',', scopes: name(scopeName, RuleName.Comma) },
+        { text: 'd', scopes: name(scopeName, RuleName.Variable) },
+        { text: ')', scopes: name(scopeName, RuleName.CloseParen) },
+      ],
+    ],
+
     // comment
     [
       dedent`

@@ -1,6 +1,6 @@
 import { Repository, RuleName } from '../../../constants';
-import { capture, char, inlineSpaces0, seq } from '../../../oniguruma';
-import type { BeginEndRule, ScopeName } from '../../../types';
+import { capture, char, inlineSpaces0, lookbehind, seq } from '../../../oniguruma';
+import type { BeginEndRule, MatchRule, ScopeName } from '../../../types';
 import { includeRule, nameRule, patternsRule } from '../../../utils';
 
 interface Placeholder {
@@ -10,7 +10,8 @@ interface Placeholder {
 export function createObjectRule(scopeName: ScopeName, placeholder: Placeholder): BeginEndRule {
   return {
     begin: seq(
-      placeholder.startAnchor,
+      lookbehind(placeholder.startAnchor),
+      inlineSpaces0(),
       capture(char('{')),
     ),
     beginCaptures: {
@@ -23,23 +24,26 @@ export function createObjectRule(scopeName: ScopeName, placeholder: Placeholder)
     patterns: [
       includeRule(Repository.Comment),
       includeRule(Repository.DirectiveStatement),
-
-      {
-        match: seq(
-          capture(placeholder.keyName),
-          inlineSpaces0(),
-          capture(char(':')),
-        ),
-        captures: {
-          1: patternsRule(
-            includeRule(Repository.Dereference),
-            includeRule(Repository.Variable),
-          ),
-          2: nameRule(scopeName, RuleName.Colon),
-        },
-      },
+      createObjectKeyRule(scopeName, placeholder),
       includeRule(Repository.Comma),
       includeRule(Repository.Expression),
     ],
+  };
+}
+
+function createObjectKeyRule(scopeName: ScopeName, placeholder: Placeholder): MatchRule {
+  return {
+    match: seq(
+      capture(placeholder.keyName),
+      inlineSpaces0(),
+      capture(char(':')),
+    ),
+    captures: {
+      1: patternsRule(
+        includeRule(Repository.Dereference),
+        includeRule(Repository.Variable),
+      ),
+      2: nameRule(scopeName, RuleName.Colon),
+    },
   };
 }

@@ -45,6 +45,8 @@ export function createRepositories(scopeName: ScopeName): Repositories {
 
     // #region statement
     [Repository.Statement]: patternsRule(
+      includeRule(Repository.ContinuationSection),
+
       includeRule(Repository.Declaration),
       includeRule(Repository.IncludeStatement),
       includeRule(Repository.DirectiveStatement),
@@ -65,7 +67,6 @@ export function createRepositories(scopeName: ScopeName): Repositories {
 
       includeRule(Repository.LegacyStatement),
       includeRule(Repository.ExpressionStatement),
-      includeRule(Repository.ContinuationSection),
     ),
     [Repository.LegacyStatement]: patternsRule(includeRule(Repository.Legacy)),
     [Repository.CommandStatement]: rule_v1.createCommandLikeStatementRule(scopeName, definition_v1.commandDefinitions, {
@@ -183,9 +184,7 @@ export function createRepositories(scopeName: ScopeName): Repositories {
       includeRule(Repository.Comma),
       includeRule(Repository.Expression),
     ),
-    [Repository.ParenthesizedExpression]: rule_v1.createParenthesizedExpressionRule(scopeName, {
-      startAnchor: patterns_v1.expressionContinuationStartAnchor,
-    }),
+    [Repository.ParenthesizedExpression]: rule_v1.createParenthesizedExpressionRule(scopeName),
 
     // #region variable
     [Repository.Variable]: rule_v1.createVariableRule(scopeName, patterns_v1.nameStart, patterns_v1.nameBody),
@@ -362,7 +361,6 @@ export function createRepositories(scopeName: ScopeName): Repositories {
     }),
     [Repository.PercentExpression]: rule_v1.createPercentExpressionRule(scopeName),
     [Repository.ContinuationSection]: rule_v1.createContinuationSectionRule(scopeName, {
-      startAnchor: patterns_v1.statementStartAnchor,
       endAnchor: patterns_v1.lineEndAnchor,
     }),
     [Repository.ContinuationSectionText]: rule_v1.createUnquotedString(scopeName, {

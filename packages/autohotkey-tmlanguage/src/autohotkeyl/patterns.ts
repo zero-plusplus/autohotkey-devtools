@@ -1,4 +1,4 @@
-import { alt, anyChar, anyChars0, anyChars1, char, endAnchor, escapeOnigurumaTexts, group, groupMany0, inlineSpace, inlineSpaces0, inlineSpaces1, lookahead, lookbehind, manyLimit, manyRange, negativeLookahead, negativeLookbehind, negChar, negChars0, negChars1, ordalt, seq, startAnchor, wordChar } from '../oniguruma';
+import { alt, anyChar, anyChars0, anyChars1, char, endAnchor, escapeOnigurumaTexts, group, groupMany0, inlineSpace, inlineSpaces0, inlineSpaces1, lookahead, manyLimit, manyRange, negativeLookahead, negativeLookbehind, negChar, negChars0, negChars1, ordalt, seq, startAnchor, wordChar } from '../oniguruma';
 import * as constants_v1 from './constants';
 
 export const statementStartAnchor: string = alt(
@@ -6,11 +6,7 @@ export const statementStartAnchor: string = alt(
   seq(char(':'), inlineSpaces0()),
   seq(inlineSpaces0(), char('}')),
 );
-export const expressionContinuationStartAnchor: string = seq(
-  lookbehind(ordalt(...escapeOnigurumaTexts(constants_v1.expressionOperators))),
-  inlineSpaces0(),
-  lookahead(char('{')),
-);
+export const expressionContinuationStartAnchor: string = group(ordalt(...escapeOnigurumaTexts(constants_v1.expressionOperators)));
 export const lineEndAnchor: string = alt(
   seq(inlineSpaces1(), negativeLookahead(char('`')), char(';')),
   seq(inlineSpaces0(), endAnchor()),
@@ -118,10 +114,12 @@ export const keyName: string = group(alt(
 export const looseLeftHandPattern: string = group(manyRange(group(alt(
   nameBody,
   char('%', '[', ']', '.'),
-  // group(seq(char('['), anyChars1(), char(']'))),
 )), 1, nameLimitLength));
-export const looseCallableNamePattern: string = group(manyRange(group(alt(
-  nameBody,
-  char('%'),
-)), 1, nameLimitLength));
+export const looseCallableNamePattern: string = seq(
+  manyLimit(group(alt(
+    nameBody,
+    char('%'),
+  )), nameLimitLength),
+  lookahead(char('(')),
+);
 // #endregion Names
