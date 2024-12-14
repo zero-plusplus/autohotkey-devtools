@@ -21,12 +21,6 @@ export function createTmLanguage(): TmLanguage {
 }
 
 export function createRepositories(scopeName: ScopeName): Repositories {
-  type Placeholder = Parameters<typeof rule_v1.createCommandLikeStatementRule>[2];
-  const commonCommandBuilderOptions: Partial<Placeholder> = {
-    startAnchor: patterns_v1.statementStartAnchor,
-    endAnchor: patterns_v1.lineEndAnchor,
-  };
-
   return {
     // #region trivia
     [Repository.Comment]: patternsRule(
@@ -52,6 +46,7 @@ export function createRepositories(scopeName: ScopeName): Repositories {
       includeRule(Repository.DirectiveStatement),
       includeRule(Repository.CommandStatement),
       includeRule(Repository.JumpStatement),
+      includeRule(Repository.JumpToLabelStatement),
       includeRule(Repository.HotstringLabelStatement),
       includeRule(Repository.HotkeyLabelStatement),
       includeRule(Repository.LabelStatement),
@@ -70,24 +65,40 @@ export function createRepositories(scopeName: ScopeName): Repositories {
     ),
     [Repository.LegacyStatement]: patternsRule(includeRule(Repository.Legacy)),
     [Repository.CommandStatement]: rule_v1.createCommandLikeStatementRule(scopeName, definition_v1.commandDefinitions, {
-      ...commonCommandBuilderOptions,
+      startAnchor: patterns_v1.statementStartAnchor,
+      endAnchor: patterns_v1.lineEndAnchor,
       statementElementName: Repository.CommandStatement,
       commandElementName: RuleName.CommandName,
-    } as Placeholder),
+    }),
     [Repository.IncludeStatement]: rule_v1.createIncludeStatementRule(scopeName, {
       startAnchor: patterns_v1.statementStartAnchor,
       endAnchor: patterns_v1.lineEndAnchor,
     }),
     [Repository.DirectiveStatement]: rule_v1.createCommandLikeStatementRule(scopeName, definition_v1.directiveDefinitions, {
-      ...commonCommandBuilderOptions,
+      startAnchor: patterns_v1.statementStartAnchor,
+      endAnchor: patterns_v1.lineEndAnchor,
       statementElementName: Repository.DirectiveStatement,
       commandElementName: RuleName.DirectiveName,
-    } as Placeholder),
-    [Repository.JumpStatement]: rule_v1.createCommandLikeStatementRule(scopeName, definition_v1.jumpCommandDefenitions, {
-      ...commonCommandBuilderOptions,
-      statementElementName: Repository.JumpStatement,
-      commandElementName: RuleName.JumpCommandName,
-    } as Placeholder),
+    }),
+    [Repository.JumpStatement]: rule_v1.createJumpStatement(scopeName, {
+      startAnchor: patterns_v1.statementStartAnchor,
+      endAnchor: patterns_v1.lineEndAnchor,
+      names: [
+        'Exit',
+        'ExitApp',
+        'Return',
+      ],
+    }),
+    [Repository.JumpToLabelStatement]: rule_v1.createJumpToLabelStatement(scopeName, {
+      startAnchor: patterns_v1.statementStartAnchor,
+      endAnchor: patterns_v1.lineEndAnchor,
+      names: [
+        'Break',
+        'Gosub',
+        'Goto',
+      ],
+      labelPattern: patterns_v1.identifierPattern,
+    }),
     [Repository.LabelStatement]: rule_v1.createLabelRule(scopeName, {
       startAnchor: patterns_v1.statementStartAnchor,
       labelPattern: patterns_v1.identifierPattern,

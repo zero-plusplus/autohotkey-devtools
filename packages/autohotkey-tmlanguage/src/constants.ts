@@ -255,6 +255,7 @@ export const enum Repository {
   IncludeStatement = 'repository.statement.include',
   DirectiveStatement = 'repository.statement.directive',
   JumpStatement = 'repository.statement.jump',
+  JumpToLabelStatement = 'repository.statement.jump.to-label',
   CommandStatement = 'repository.statement.command',
   LegacyStatement = 'repository.statement.legacy.expression',
   IfStatement = 'repository.statement.if-else',

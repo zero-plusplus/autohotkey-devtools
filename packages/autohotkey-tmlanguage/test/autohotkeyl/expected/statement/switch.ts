@@ -1,5 +1,5 @@
 import { dedent } from '@zero-plusplus/utilities/src';
-import { Repository, RuleName } from '../../../../src/constants';
+import { RuleName } from '../../../../src/constants';
 import type { ScopeName } from '../../../../src/types';
 import { name } from '../../../../src/utils';
 import type { ExpectedTestData } from '../../../types';
@@ -71,10 +71,10 @@ export function createSwitchStatementExpectedData(scopeName: ScopeName): Expecte
         { text: 'case', scopes: name(scopeName, RuleName.SwitchLabelKeyword) },
         { text: 'true', scopes: name(scopeName, RuleName.KeywordLikeBuiltInVariable) },
         { text: ':', scopes: name(scopeName, RuleName.SemiColon) },
-        { text: 'break', scopes: name(scopeName, Repository.JumpStatement, RuleName.JumpCommandName) },
+        { text: 'break', scopes: name(scopeName, RuleName.JumpCommandName) },
         { text: 'default', scopes: name(scopeName, RuleName.SwitchLabelKeyword) },
         { text: ':', scopes: name(scopeName, RuleName.SemiColon) },
-        { text: 'break', scopes: name(scopeName, Repository.JumpStatement, RuleName.JumpCommandName) },
+        { text: 'break', scopes: name(scopeName, RuleName.JumpCommandName) },
         { text: '}', scopes: name(scopeName, RuleName.BlockEnd) },
 
         { text: 'switch', scopes: name(scopeName, RuleName.ControlFlowKeyword) },
@@ -84,12 +84,12 @@ export function createSwitchStatementExpectedData(scopeName: ScopeName): Expecte
         { text: 'true', scopes: name(scopeName, RuleName.KeywordLikeBuiltInVariable) },
         { text: ':', scopes: name(scopeName, RuleName.SemiColon) },
         { text: '{', scopes: name(scopeName, RuleName.BlockBegin) },
-        { text: 'break', scopes: name(scopeName, Repository.JumpStatement, RuleName.JumpCommandName) },
+        { text: 'break', scopes: name(scopeName, RuleName.JumpCommandName) },
         { text: '}', scopes: name(scopeName, RuleName.BlockEnd) },
         { text: 'default', scopes: name(scopeName, RuleName.SwitchLabelKeyword) },
         { text: ':', scopes: name(scopeName, RuleName.SemiColon) },
         { text: '{', scopes: name(scopeName, RuleName.BlockBegin) },
-        { text: 'break', scopes: name(scopeName, Repository.JumpStatement, RuleName.JumpCommandName) },
+        { text: 'break', scopes: name(scopeName, RuleName.JumpCommandName) },
         { text: '}', scopes: name(scopeName, RuleName.BlockEnd) },
         { text: '}', scopes: name(scopeName, RuleName.BlockEnd) },
       ],

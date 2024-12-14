@@ -24,6 +24,7 @@ describe('autohotkeyl', () => {
     ...dataBuilder.createHotstringLabelStatementExpectedData(scopeName),
     ...dataBuilder.createIfStatementExpectedData(scopeName),
     ...dataBuilder.createIncludeStatementExpectedData(scopeName),
+    ...dataBuilder.createJumpStatementExpectedData(scopeName),
     ...dataBuilder.createLabelStatementExpectedData(scopeName),
     ...dataBuilder.createLegacyAssignmentStatementExpectedData(scopeName),
     ...dataBuilder.createLegacyIfStatementExpectedData(scopeName),

@@ -28,6 +28,7 @@ export * from './misc/regexp';
 export * from './statement/for';
 export * from './statement/if';
 export * from './statement/include';
+export * from './statement/jump';
 export * from './statement/loop';
 export * from './statement/switch';
 export * from './statement/throw';
