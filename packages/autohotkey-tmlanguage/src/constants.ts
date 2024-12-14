@@ -384,6 +384,7 @@ export const enum RuleName {
   MultiLineComment = 'comment.multi-line',
   DocumentComment = 'comment.multi-line.document',
   DocumentTag = 'storage.type.class.document',
+  DocumentKeyword = 'constant.language.document.keyword',
   // #endregion trivias
 
   // #region statement

@@ -18,6 +18,62 @@ export function createDocumentCommentExpectedData(scopeName: ScopeName): Expecte
         { text: '*/', scopes: name(scopeName, RuleName.DocumentComment, RuleDescriptor.End) },
       ],
     ],
+    // https://jsdoc.app/tags-abstract
+    [
+      dedent`
+        /**
+         * @abstract
+         * @virtual
+         */
+      `,
+      [
+        { text: '/**', scopes: name(scopeName, RuleName.DocumentComment, RuleDescriptor.Begin) },
+        ...[ '@abstract', '@virtual' ].flatMap((tag) => {
+          return [
+            { text: ' *', scopes: name(scopeName, RuleName.DocumentComment) },
+            { text: tag, scopes: name(scopeName, RuleName.DocumentComment, RuleName.DocumentTag) },
+          ];
+        }),
+        { text: '*/', scopes: name(scopeName, RuleName.DocumentComment, RuleDescriptor.End) },
+      ],
+    ],
+    // https://jsdoc.app/tags-access
+    [
+      dedent`
+        /**
+         * @access package
+         * @access private
+         * @access protected
+         * @access public
+         *
+         * @access module
+         * @access unknown
+         */
+      `,
+      [
+        { text: '/**', scopes: name(scopeName, RuleName.DocumentComment, RuleDescriptor.Begin) },
+        ...[ 'package', 'private', 'protected', 'public' ].flatMap((accessLevel) => {
+          return [
+            { text: ' *', scopes: name(scopeName, RuleName.DocumentComment) },
+            { text: '@access', scopes: name(scopeName, RuleName.DocumentComment, RuleName.DocumentTag) },
+            { text: accessLevel, scopes: name(scopeName, RuleName.DocumentComment, RuleName.DocumentKeyword) },
+          ];
+        }),
+
+        { text: ' *', scopes: name(scopeName, RuleName.DocumentComment) },
+
+        // Note: The access level that jsdoc does not have. In v2, modules can be defined, so they are added as aliases of package
+        { text: ' *', scopes: name(scopeName, RuleName.DocumentComment) },
+        { text: '@access', scopes: name(scopeName, RuleName.DocumentComment, RuleName.DocumentTag) },
+        { text: 'module', scopes: name(scopeName, RuleName.DocumentComment, RuleName.DocumentKeyword) },
+
+        { text: ' *', scopes: name(scopeName, RuleName.DocumentComment) },
+        { text: '@access', scopes: name(scopeName, RuleName.DocumentComment, RuleName.DocumentTag) },
+        { text: 'unknown', scopes: name(scopeName, RuleName.DocumentComment) },
+        { text: '*/', scopes: name(scopeName, RuleName.DocumentComment, RuleDescriptor.End) },
+      ],
+    ],
+    // https://jsdoc.app/tags-example
     [
       dedent`
         /**

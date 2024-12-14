@@ -1,6 +1,6 @@
 import { Repository, RuleDescriptor, RuleName } from '../../../constants';
-import { alt, capture, char, group, ignoreCase, inlineSpaces0, lookahead, lookbehind, negativeLookahead, ordalt, seq, startAnchor, text } from '../../../oniguruma';
-import type { BeginEndRule, PatternsRule, ScopeName } from '../../../types';
+import { alt, anyChars0, capture, char, endAnchor, group, ignoreCase, inlineSpaces0, lookahead, lookbehind, negativeLookahead, ordalt, seq, startAnchor, text } from '../../../oniguruma';
+import type { BeginEndRule, MatchRule, PatternsRule, Rule, ScopeName } from '../../../types';
 import { includeRule, includeScope, name, nameRule, patternsRule } from '../../../utils';
 
 const startPattern = group(alt(startAnchor(), '\\G'));
@@ -53,7 +53,88 @@ interface Placeholder {
   startPattern: string;
 }
 function createTagAnnotationRule(scopeName: ScopeName, placeholder: Placeholder): PatternsRule {
-  return patternsRule(createExampleAnnotationTagRule(scopeName, placeholder));
+  return patternsRule(
+    createExampleAnnotationTagRule(scopeName, placeholder),
+
+    createFlagAnnotationTagRule(scopeName, {
+      startPattern: placeholder.startPattern,
+      tagNames: [
+        // https://jsdoc.app/tags-abstract
+        '@abstract',
+        '@virtual',
+
+        // https://jsdoc.app/tags-async
+        '@async',
+
+        // https://jsdoc.app/tags-augments
+        '@augments',
+        '@extends',
+      ],
+    }),
+    createAttributeAnnotationTagRule(scopeName, {
+      startPattern: placeholder.startPattern,
+      tagNames: [
+        // https://jsdoc.app/tags-access
+        '@access',
+      ],
+      rules: [
+        {
+          name: name(scopeName, RuleName.DocumentKeyword),
+          match: ignoreCase(ordalt('package', 'private', 'protected', 'public', 'module')),
+        },
+      ],
+    }),
+    createAttributeAnnotationTagRule(scopeName, {
+      startPattern: placeholder.startPattern,
+      tagNames: [
+        // https://jsdoc.app/tags-alias
+        '@alias',
+
+        // https://jsdoc.app/tags-name
+        '@name',
+      ],
+      rules: [],
+    }),
+  );
+}
+
+interface Placeholder2 {
+  startPattern: string;
+  tagNames: readonly string[];
+}
+function createFlagAnnotationTagRule(scopeName: ScopeName, placeholder: Placeholder2): MatchRule {
+  return {
+    match: seq(
+      lookbehind(placeholder.startPattern),
+      inlineSpaces0(),
+      capture(ordalt(...placeholder.tagNames)),
+    ),
+    captures: {
+      1: nameRule(scopeName, RuleName.DocumentTag),
+    },
+  };
+}
+
+interface Placeholder3 {
+  tagNames: readonly string[];
+  startPattern: string;
+  rules: Rule[];
+}
+function createAttributeAnnotationTagRule(scopeName: ScopeName, placeholder: Placeholder3): MatchRule {
+  return {
+    match: seq(
+      lookbehind(placeholder.startPattern),
+      inlineSpaces0(),
+      capture(ordalt(...placeholder.tagNames)),
+      inlineSpaces0(),
+      capture(anyChars0()),
+      endAnchor(),
+    ),
+    captures: {
+      1: nameRule(scopeName, RuleName.DocumentTag),
+      2: patternsRule(...placeholder.rules),
+    },
+  };
 }
 function createExampleAnnotationTagRule(scopeName: ScopeName, placeholder: Placeholder): BeginEndRule {
   return {
