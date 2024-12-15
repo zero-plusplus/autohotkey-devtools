@@ -107,6 +107,29 @@ export function createDocumentCommentExpectedData(scopeName: ScopeName): Expecte
         { text: '*/', scopes: name(scopeName, RuleName.DocumentComment, RuleDescriptor.End) },
       ],
     ],
+    // https://jsdoc.app/tags-borrows
+    [
+      dedent`
+        /**
+         * @borrows a as b
+         * @borrows a.b as b.c
+         */
+      `,
+      [
+        { text: '/**', scopes: name(scopeName, RuleName.DocumentComment, RuleDescriptor.Begin) },
+        { text: ' *', scopes: name(scopeName, RuleName.DocumentComment) },
+        { text: '@borrows', scopes: name(scopeName, RuleName.DocumentComment, RuleName.DocumentTag) },
+        { text: 'a', scopes: name(scopeName, RuleName.DocumentComment, RuleName.NamePathInDocument) },
+        { text: 'as', scopes: name(scopeName, RuleName.DocumentComment, RuleName.ReservedWordInDocument) },
+        { text: 'b', scopes: name(scopeName, RuleName.DocumentComment, RuleName.NamePathInDocument) },
+        { text: ' *', scopes: name(scopeName, RuleName.DocumentComment) },
+        { text: '@borrows', scopes: name(scopeName, RuleName.DocumentComment, RuleName.DocumentTag) },
+        { text: 'a.b', scopes: name(scopeName, RuleName.DocumentComment, RuleName.NamePathInDocument) },
+        { text: 'as', scopes: name(scopeName, RuleName.DocumentComment, RuleName.ReservedWordInDocument) },
+        { text: 'b.c', scopes: name(scopeName, RuleName.DocumentComment, RuleName.NamePathInDocument) },
+        { text: '*/', scopes: name(scopeName, RuleName.DocumentComment, RuleDescriptor.End) },
+      ],
+    ],
     // https://jsdoc.app/tags-author
     [
       dedent`

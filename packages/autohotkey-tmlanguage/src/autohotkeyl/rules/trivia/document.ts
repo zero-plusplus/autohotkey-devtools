@@ -1,5 +1,5 @@
 import { Repository, RuleDescriptor, RuleName } from '../../../constants';
-import { alt, anyChars0, anyChars1, capture, char, endAnchor, group, ignoreCase, inlineSpaces0, lookahead, lookbehind, negativeLookahead, negChars1, ordalt, seq, startAnchor, text } from '../../../oniguruma';
+import { alt, anyChars0, anyChars1, capture, char, endAnchor, group, ignoreCase, inlineSpaces0, keyword, lookahead, lookbehind, negativeLookahead, negChars1, ordalt, seq, startAnchor, text } from '../../../oniguruma';
 import type { BeginEndRule, MatchRule, PatternsRule, Rule, ScopeName } from '../../../types';
 import { includeRule, includeScope, name, nameRule, patternsRule } from '../../../utils';
 
@@ -110,6 +110,23 @@ function createTagAnnotationRule(scopeName: ScopeName, placeholder: Placeholder)
         {
           name: name(scopeName, RuleName.NamePathInDocument),
           match: anyChars1(),
+        },
+      ],
+    }),
+    createAttributeAnnotationTagRule(scopeName, {
+      startPattern: placeholder.startPattern,
+      tagNames: [
+        // https://jsdoc.app/tags-borrows
+        '@borrows',
+      ],
+      rules: [
+        {
+          name: name(scopeName, RuleName.ReservedWordInDocument),
+          match: keyword('as'),
+        },
+        {
+          name: name(scopeName, RuleName.NamePathInDocument),
+          match: negChars1('\\s'),
         },
       ],
     }),
