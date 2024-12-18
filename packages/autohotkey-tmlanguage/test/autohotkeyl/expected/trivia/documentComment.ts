@@ -1,5 +1,5 @@
 import { dedent } from '@zero-plusplus/utilities/src';
-import { RuleDescriptor, RuleName } from '../../../../src/constants';
+import { RuleDescriptor, RuleName, TokenType } from '../../../../src/constants';
 import type { ScopeName } from '../../../../src/types';
 import { name } from '../../../../src/utils';
 import type { ExpectedTestData } from '../../../types';
@@ -107,6 +107,21 @@ export function createDocumentCommentExpectedData(scopeName: ScopeName): Expecte
         { text: '*/', scopes: name(scopeName, RuleName.DocumentComment, RuleDescriptor.End) },
       ],
     ],
+    // https://jsdoc.app/tags-author
+    [
+      dedent`
+        /**
+         * @author name <mail-address>
+         */
+      `,
+      [
+        { text: '/**', scopes: name(scopeName, RuleName.DocumentComment, RuleDescriptor.Begin) },
+        { text: ' *', scopes: name(scopeName, RuleName.DocumentComment) },
+        { text: '@author', scopes: name(scopeName, RuleName.DocumentComment, RuleName.DocumentTag) },
+        { text: 'name <mail-address>', scopes: name(scopeName, RuleName.DocumentComment, RuleName.NamePathInDocument) },
+        { text: '*/', scopes: name(scopeName, RuleName.DocumentComment, RuleDescriptor.End) },
+      ],
+    ],
     // https://jsdoc.app/tags-borrows
     [
       dedent`
@@ -130,19 +145,50 @@ export function createDocumentCommentExpectedData(scopeName: ScopeName): Expecte
         { text: '*/', scopes: name(scopeName, RuleName.DocumentComment, RuleDescriptor.End) },
       ],
     ],
-    // https://jsdoc.app/tags-author
+    // https://jsdoc.app/tags-class
     [
       dedent`
         /**
-         * @author name <mail-address>
+         * @class
+         * @class {type}
+         * @class {type} name
+         * @class name
+         */
+        /**
+         * @constructor
+         * @constructor {type}
+         * @constructor {type} name
+         * @constructor name
          */
       `,
       [
-        { text: '/**', scopes: name(scopeName, RuleName.DocumentComment, RuleDescriptor.Begin) },
-        { text: ' *', scopes: name(scopeName, RuleName.DocumentComment) },
-        { text: '@author', scopes: name(scopeName, RuleName.DocumentComment, RuleName.DocumentTag) },
-        { text: 'name <mail-address>', scopes: name(scopeName, RuleName.DocumentComment, RuleName.NamePathInDocument) },
-        { text: '*/', scopes: name(scopeName, RuleName.DocumentComment, RuleDescriptor.End) },
+        ...[ '@class', '@constructor' ].flatMap((tag) => {
+          return [
+            { text: '/**', scopes: name(scopeName, RuleName.DocumentComment, RuleDescriptor.Begin) },
+
+            { text: ' *', scopes: name(scopeName, RuleName.DocumentComment) },
+            { text: tag, scopes: name(scopeName, RuleName.DocumentComment, RuleName.DocumentTag) },
+
+            { text: ' *', scopes: name(scopeName, RuleName.DocumentComment) },
+            { text: tag, scopes: name(scopeName, RuleName.DocumentComment, RuleName.DocumentTag) },
+            { text: '{', scopes: name(scopeName, RuleName.DocumentComment, TokenType.Other, RuleName.TypeInDocument, RuleName.OpenBrace) },
+            { text: 'type', scopes: name(scopeName, RuleName.DocumentComment, TokenType.Other, RuleName.TypeInDocument) },
+            { text: '}', scopes: name(scopeName, RuleName.DocumentComment, TokenType.Other, RuleName.TypeInDocument, RuleName.CloseBrace) },
+
+            { text: ' *', scopes: name(scopeName, RuleName.DocumentComment) },
+            { text: tag, scopes: name(scopeName, RuleName.DocumentComment, RuleName.DocumentTag) },
+            { text: '{', scopes: name(scopeName, RuleName.DocumentComment, TokenType.Other, RuleName.TypeInDocument, RuleName.OpenBrace) },
+            { text: 'type', scopes: name(scopeName, RuleName.DocumentComment, TokenType.Other, RuleName.TypeInDocument) },
+            { text: '}', scopes: name(scopeName, RuleName.DocumentComment, TokenType.Other, RuleName.TypeInDocument, RuleName.CloseBrace) },
+            { text: 'name', scopes: name(scopeName, RuleName.DocumentComment, RuleName.Variable) },
+
+            { text: ' *', scopes: name(scopeName, RuleName.DocumentComment) },
+            { text: tag, scopes: name(scopeName, RuleName.DocumentComment, RuleName.DocumentTag) },
+            { text: 'name', scopes: name(scopeName, RuleName.DocumentComment, RuleName.Variable) },
+
+            { text: '*/', scopes: name(scopeName, RuleName.DocumentComment, RuleDescriptor.End) },
+          ];
+        }),
       ],
     ],
     // https://jsdoc.app/tags-example
@@ -157,6 +203,11 @@ export function createDocumentCommentExpectedData(scopeName: ScopeName): Expecte
          *  test := 123
          * @example
          */
+
+        /**
+         * @example
+         *:  test := 123
+         */
       `,
       [
         { text: '/**', scopes: name(scopeName, RuleName.DocumentComment, RuleDescriptor.Begin) },
@@ -177,6 +228,16 @@ export function createDocumentCommentExpectedData(scopeName: ScopeName): Expecte
         { text: '123', scopes: name(scopeName, RuleName.DocumentComment, RuleName.Integer) },
         { text: ' *', scopes: name(scopeName, RuleName.DocumentComment) },
         { text: '@example', scopes: name(scopeName, RuleName.DocumentComment, RuleName.DocumentTag) },
+        { text: '*/', scopes: name(scopeName, RuleName.DocumentComment, RuleDescriptor.End) },
+
+        { text: '/**', scopes: name(scopeName, RuleName.DocumentComment, RuleDescriptor.Begin) },
+        { text: ' *', scopes: name(scopeName, RuleName.DocumentComment) },
+        { text: '@example', scopes: name(scopeName, RuleName.DocumentComment, RuleName.DocumentTag) },
+        { text: ' *', scopes: name(scopeName, RuleName.DocumentComment) },
+        { text: ':', scopes: name(scopeName, RuleName.DocumentComment) },
+        { text: 'test', scopes: name(scopeName, RuleName.DocumentComment, RuleName.Variable) },
+        { text: ':=', scopes: name(scopeName, RuleName.DocumentComment, RuleName.Operator) },
+        { text: '123', scopes: name(scopeName, RuleName.DocumentComment, RuleName.Integer) },
         { text: '*/', scopes: name(scopeName, RuleName.DocumentComment, RuleDescriptor.End) },
       ],
     ],
@@ -191,26 +252,46 @@ export function createDocumentCommentExpectedData(scopeName: ScopeName): Expecte
          * \`\`\`autohotkeyl
          *  test := 123
          */
+        /**
+         * \`\`\`autohotkeyl
+         *:  test := 123
+         * \`\`\`
+         */
       `,
       [
         { text: '/**', scopes: name(scopeName, RuleName.DocumentComment, RuleDescriptor.Begin) },
         { text: ' *', scopes: name(scopeName, RuleName.DocumentComment) },
-        { text: '```autohotkeyl', scopes: name(scopeName, RuleName.DocumentComment, RuleDescriptor.Begin) },
+        { text: '```', scopes: `${RuleName.DocumentComment}.${scopeName} ${RuleName.FencedCodeBlock}.markdown ${RuleName.CodeFence}.markdown` },
+        { text: 'autohotkeyl', scopes: `${RuleName.DocumentComment}.${scopeName} ${RuleName.FencedCodeBlock}.markdown ${RuleName.LanguageName}.markdown` },
         { text: ' *', scopes: name(scopeName, RuleName.DocumentComment) },
-        { text: 'test', scopes: name(scopeName, RuleName.DocumentComment, RuleName.Variable) },
-        { text: ':=', scopes: name(scopeName, RuleName.DocumentComment, RuleName.Operator) },
-        { text: '123', scopes: name(scopeName, RuleName.DocumentComment, RuleName.Integer) },
+        { text: 'test', scopes: `${RuleName.DocumentComment}.${scopeName} ${RuleName.FencedCodeBlock}.markdown ${RuleName.EmbeddedLanguage}.${scopeName} ${RuleName.Variable}.${scopeName}` },
+        { text: ':=', scopes: `${RuleName.DocumentComment}.${scopeName} ${RuleName.FencedCodeBlock}.markdown ${RuleName.EmbeddedLanguage}.${scopeName} ${RuleName.Operator}.${scopeName}` },
+        { text: '123', scopes: `${RuleName.DocumentComment}.${scopeName} ${RuleName.FencedCodeBlock}.markdown ${RuleName.EmbeddedLanguage}.${scopeName} ${RuleName.Integer}.${scopeName}` },
         { text: ' *', scopes: name(scopeName, RuleName.DocumentComment) },
-        { text: '```', scopes: name(scopeName, RuleName.DocumentComment, RuleDescriptor.End) },
+        { text: '```', scopes: `${RuleName.DocumentComment}.${scopeName} ${RuleName.FencedCodeBlock}.markdown ${RuleName.CodeFence}.markdown` },
         { text: '*/', scopes: name(scopeName, RuleName.DocumentComment, RuleDescriptor.End) },
 
         { text: '/**', scopes: name(scopeName, RuleName.DocumentComment, RuleDescriptor.Begin) },
         { text: ' *', scopes: name(scopeName, RuleName.DocumentComment) },
-        { text: '```autohotkeyl', scopes: name(scopeName, RuleName.DocumentComment, RuleDescriptor.Begin) },
+        { text: '```', scopes: `${RuleName.DocumentComment}.${scopeName} ${RuleName.FencedCodeBlock}.markdown ${RuleName.CodeFence}.markdown` },
+        { text: 'autohotkeyl', scopes: `${RuleName.DocumentComment}.${scopeName} ${RuleName.FencedCodeBlock}.markdown ${RuleName.LanguageName}.markdown` },
         { text: ' *', scopes: name(scopeName, RuleName.DocumentComment) },
-        { text: 'test', scopes: name(scopeName, RuleName.DocumentComment, RuleName.Variable) },
-        { text: ':=', scopes: name(scopeName, RuleName.DocumentComment, RuleName.Operator) },
-        { text: '123', scopes: name(scopeName, RuleName.DocumentComment, RuleName.Integer) },
+        { text: 'test', scopes: `${RuleName.DocumentComment}.${scopeName} ${RuleName.FencedCodeBlock}.markdown ${RuleName.EmbeddedLanguage}.${scopeName} ${RuleName.Variable}.${scopeName}` },
+        { text: ':=', scopes: `${RuleName.DocumentComment}.${scopeName} ${RuleName.FencedCodeBlock}.markdown ${RuleName.EmbeddedLanguage}.${scopeName} ${RuleName.Operator}.${scopeName}` },
+        { text: '123', scopes: `${RuleName.DocumentComment}.${scopeName} ${RuleName.FencedCodeBlock}.markdown ${RuleName.EmbeddedLanguage}.${scopeName} ${RuleName.Integer}.${scopeName}` },
+        { text: '*/', scopes: name(scopeName, RuleName.DocumentComment, RuleDescriptor.End) },
+
+        { text: '/**', scopes: name(scopeName, RuleName.DocumentComment, RuleDescriptor.Begin) },
+        { text: ' *', scopes: name(scopeName, RuleName.DocumentComment) },
+        { text: '```', scopes: `${RuleName.DocumentComment}.${scopeName} ${RuleName.FencedCodeBlock}.markdown ${RuleName.CodeFence}.markdown` },
+        { text: 'autohotkeyl', scopes: `${RuleName.DocumentComment}.${scopeName} ${RuleName.FencedCodeBlock}.markdown ${RuleName.LanguageName}.markdown` },
+        { text: ' *', scopes: name(scopeName, RuleName.DocumentComment) },
+        { text: ':', scopes: `${RuleName.DocumentComment}.${scopeName} ${RuleName.FencedCodeBlock}.markdown ${RuleName.EmbeddedLanguage}.${scopeName}` },
+        { text: 'test', scopes: `${RuleName.DocumentComment}.${scopeName} ${RuleName.FencedCodeBlock}.markdown ${RuleName.EmbeddedLanguage}.${scopeName} ${RuleName.Variable}.${scopeName}` },
+        { text: ':=', scopes: `${RuleName.DocumentComment}.${scopeName} ${RuleName.FencedCodeBlock}.markdown ${RuleName.EmbeddedLanguage}.${scopeName} ${RuleName.Operator}.${scopeName}` },
+        { text: '123', scopes: `${RuleName.DocumentComment}.${scopeName} ${RuleName.FencedCodeBlock}.markdown ${RuleName.EmbeddedLanguage}.${scopeName} ${RuleName.Integer}.${scopeName}` },
+        { text: ' *', scopes: name(scopeName, RuleName.DocumentComment) },
+        { text: '```', scopes: `${RuleName.DocumentComment}.${scopeName} ${RuleName.FencedCodeBlock}.markdown ${RuleName.CodeFence}.markdown` },
         { text: '*/', scopes: name(scopeName, RuleName.DocumentComment, RuleDescriptor.End) },
       ],
     ],

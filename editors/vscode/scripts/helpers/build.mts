@@ -19,9 +19,10 @@ export async function buildTmLanguageAll(debugMode = false): Promise<void> {
     buildTmLanguage('autohotkeynext', debugMode),
     buildTmLanguage('autohotkey2', debugMode),
     buildTmLanguage('autohotkeyl', debugMode),
+    buildTmLanguage('markdown', debugMode),
   ]);
 }
-export async function buildTmLanguage(scopeName: ScopeName, debugMode = false): Promise<void> {
+export async function buildTmLanguage(scopeName: ScopeName | 'markdown', debugMode = false): Promise<void> {
   const tmLanguage = tmLanguages[scopeName].createTmLanguage();
   const tmLanguageText = JSON.stringify(tmLanguage, undefined, debugMode ? 1 : 0);
   const tmLanguagePath = path.resolve(buildDir, `${scopeName}.tmLanguage.json`);

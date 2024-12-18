@@ -1,11 +1,11 @@
 import type { commandNames } from './autohotkeyl/constants';
-import { CommandArgsType, CommandParameterFlag, CommandSignatureFlag, HighlightType, Repository, RuleName, scopeNames, type CommandFlag, type RuleDescriptor, type StyleName } from './constants';
+import { CommandArgsType, CommandParameterFlag, CommandSignatureFlag, HighlightType, Repository, RuleName, scopeNames, type CommandFlag, type RuleDescriptor, type StyleName, type TokenType } from './constants';
 
 export type Repositories = { [key in Partial<Repository>[number]]: Rule | undefined };
 export type Captures = Record<string | number, Rule | undefined>;
 
 export type ScopeName = typeof scopeNames[number];
-export type ElementName = Repository | RuleName | RuleDescriptor | StyleName;
+export type ElementName = Repository | RuleName | RuleDescriptor | StyleName | TokenType;
 export interface TmLanguage {
   scopeName: string;
   injectionSelector?: string;

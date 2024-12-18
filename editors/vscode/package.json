@@ -67,22 +67,55 @@
       {
         "language": "autohotkey",
         "scopeName": "source.autohotkey",
-        "path": "build/autohotkey.tmLanguage.json"
+        "path": "build/autohotkey.tmLanguage.json",
+        "tokenTypes": {
+          "token.comment.autohotkey": "comment",
+          "token.other.autohotkey": "other",
+          "token.string.autohotkey": "string"
+        }
       },
       {
         "language": "autohotkeynext",
         "scopeName": "source.autohotkeynext",
-        "path": "build/autohotkeynext.tmLanguage.json"
+        "path": "build/autohotkeynext.tmLanguage.json",
+        "tokenTypes": {
+          "token.comment.autohotkeynext": "comment",
+          "token.other.autohotkeynext": "other",
+          "token.string.autohotkeynext": "string"
+        }
       },
       {
         "language": "autohotkey2",
         "scopeName": "source.autohotkey2",
-        "path": "build/autohotkey2.tmLanguage.json"
+        "path": "build/autohotkey2.tmLanguage.json",
+        "tokenTypes": {
+          "token.comment.autohotkey2": "comment",
+          "token.other.autohotkey2": "other",
+          "token.string.autohotkey2": "string"
+        }
       },
       {
         "language": "autohotkeyl",
         "scopeName": "source.autohotkeyl",
-        "path": "build/autohotkeyl.tmLanguage.json"
+        "path": "build/autohotkeyl.tmLanguage.json",
+        "tokenTypes": {
+          "token.comment.autohotkeyl": "comment",
+          "token.other.autohotkeyl": "other",
+          "token.string.autohotkeyl": "string"
+        }
+      },
+      {
+        "scopeName": "injection.to-markdown",
+        "path": "build/markdown.tmLanguage.json",
+        "injectTo": [
+          "text.html.markdown"
+        ],
+        "embeddedLanguages": {
+          "meta.embedded.block.autohotkeynext": "autohotkeynext",
+          "meta.embedded.block.autohotkey2": "autohotkey2",
+          "meta.embedded.block.autohotkeyl": "autohotkeyl",
+          "meta.embedded.block.autohotkey": "autohotkey"
+        }
       }
     ]
   },

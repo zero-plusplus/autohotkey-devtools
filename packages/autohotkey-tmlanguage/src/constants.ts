@@ -246,7 +246,11 @@ export const enum Repository {
   SingleLineComment = 'repository.comment.single-line',
   InLineComment = 'repository.comment.in-line',
   MultiLineComment = 'repository.comment.multi-line',
+
+  // #region document
   DocumentComment = 'repository.comment.document',
+  FencedCodeBlockInDocument = 'repository.markdown.fenced_code',
+  // #endregion document
   // #endregion trivas
 
   // #region statements
@@ -323,6 +327,7 @@ export const enum Repository {
 
   // #region variable
   Variable = 'repository.expression.variable',
+  UserDefinedVariable = 'repository.expression.variable.user-defined',
   BuiltInVariable = 'repository.expression.variable.built-in',
   KeywordLikeBuiltInVariable = 'repository.expression.variable.built-in.keyword-like',
   InvalidVariable = 'repository.expression.variable.invalid',
@@ -382,11 +387,20 @@ export const enum RuleName {
   SingleLineComment = 'comment.single-line',
   InLineComment = 'comment.in-line',
   MultiLineComment = 'comment.multi-line',
+
+  // #region document
   DocumentComment = 'comment.multi-line.document',
   DocumentTag = 'storage.type.class.document',
   KeywordInDocument = 'constant.language.document.keyword',
   ReservedWordInDocument = 'keyword.control.document.reserved-word',
   NamePathInDocument = 'support.class.document.name-path',
+  TypeInDocument = 'support.class.document.type',
+  FencedCodeBlock = 'markup.fenced_code.block',
+  CodeFence = 'punctuation.definition',
+  LanguageName = 'fenced_code.block.language',
+  LanguageAttribute = 'fenced_code.block.language.attributes',
+  EmbeddedLanguage = 'meta.embedded.block',
+  // #endregion document
   // #endregion trivias
 
   // #region statement
@@ -414,12 +428,12 @@ export const enum RuleName {
   // #endregion variable
   // #region string
   ContinuationOption = 'continuation.option keyword.operator.quantifier.regexp',
-  UnquotedString = 'string.unquoted',
-  DoubleString = 'string.quoted.double',
+  UnquotedString = 'token.string string.unquoted',
+  DoubleString = 'token.string string.quoted.double',
   DoubleStringEscapeSequence = 'constant.character.escape.double',
   SingleStringEscapeSequence = 'constant.character.escape.single',
-  SingleString = 'string.quoted.single',
-  MultiLineString = 'string.quoted.unquoted',
+  SingleString = 'token.string string.quoted.single',
+  MultiLineString = 'token.string string.quoted.unquoted',
   EscapeSequence = 'constant.character.escape',
   // #endregion string
   // #region number
@@ -439,7 +453,7 @@ export const enum RuleName {
   Operator = 'keyword.operator',
   Dot = 'keyword.operator.dot',
   Equals = 'keyword.operator.equals',
-  Comma = 'punctuation.separator.comma',
+  Comma = 'keyword.operator.comma',
   // #endregion operators
 
   // #region regexp
@@ -501,6 +515,11 @@ export const enum StyleName {
   Strikethrough = 'markup.strikethrough',
   Invalid = 'invalid.illegal',
   Escape = 'constant.character.escape',
+}
+export const enum TokenType {
+  Comment = 'token.comment',
+  Other = 'token.other',
+  String = 'token.string',
 }
 
 export const enum CommandArgsType {

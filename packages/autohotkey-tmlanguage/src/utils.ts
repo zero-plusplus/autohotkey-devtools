@@ -1,3 +1,4 @@
+import type { LiteralUnion } from 'type-fest';
 import * as constants_v2 from './autohotkey2/constants';
 import * as constants_v1 from './autohotkeyl/constants';
 import { Repository } from './constants';
@@ -146,10 +147,10 @@ export function includeRule(repositoryName: Repository): IncludeRule {
 export function includeScope(scopeName: ScopeName): IncludeRule {
   return { include: `source.${scopeName}` };
 }
-export function name(scopeName: ScopeName, ...ruleNames: ElementName[]): ElementName {
+export function name(scopeName: LiteralUnion<ScopeName, string>, ...ruleNames: ElementName[]): ElementName {
   return ruleNames.map((ruleName) => `${ruleName}.${scopeName}`).join(' ') as ElementName;
 }
-export function nameRule(scopeName: ScopeName, ...ruleNames: ElementName[]): NameRule {
+export function nameRule(scopeName: LiteralUnion<ScopeName, string>, ...ruleNames: ElementName[]): NameRule {
   return { name: name(scopeName, ...ruleNames) };
 }
 export function patternsRule(...rules: Rule[]): PatternsRule {

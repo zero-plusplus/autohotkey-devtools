@@ -1,3 +1,4 @@
+import * as markdown from '../__injection__/markdown';
 import { Repository, RuleName } from '../constants';
 import { anyChars1 } from '../oniguruma';
 import type { Repositories, ScopeName, TmLanguage } from '../types';
@@ -22,6 +23,8 @@ export function createTmLanguage(): TmLanguage {
 
 export function createRepositories(scopeName: ScopeName): Repositories {
   return {
+    [Repository.FencedCodeBlockInDocument]: markdown.createCodeFenceInDocumentRule(),
+
     // #region trivia
     [Repository.Comment]: patternsRule(
       includeRule(Repository.DocumentComment),
@@ -34,7 +37,9 @@ export function createRepositories(scopeName: ScopeName): Repositories {
       startAnchor: patterns_v1.statementStartAnchor,
     }),
     [Repository.InLineComment]: rule_v1.createInLineCommentRule(scopeName),
-    [Repository.DocumentComment]: rule_v1.createDocumentCommentRule(scopeName),
+    [Repository.DocumentComment]: rule_v1.createDocumentCommentRule(scopeName, {
+      identifierPattern: patterns_v1.identifierPattern,
+    }),
     // #endregion trivia
 
     // #region statement
@@ -198,7 +203,13 @@ export function createRepositories(scopeName: ScopeName): Repositories {
     [Repository.ParenthesizedExpression]: rule_v1.createParenthesizedExpressionRule(scopeName),
 
     // #region variable
-    [Repository.Variable]: rule_v1.createVariableRule(scopeName, patterns_v1.nameStart, patterns_v1.nameBody),
+    [Repository.Variable]: patternsRule(
+      includeRule(Repository.KeywordLikeBuiltInVariable),
+      includeRule(Repository.BuiltInVariable),
+      includeRule(Repository.UserDefinedVariable),
+      includeRule(Repository.InvalidVariable),
+    ),
+    [Repository.UserDefinedVariable]: rule_v1.createVariableRule(scopeName, patterns_v1.nameStart, patterns_v1.nameBody),
     [Repository.InvalidVariable]: rule_v1.createInvalidVariableRule(scopeName, patterns_v1.nameStart, patterns_v1.nameBody),
     [Repository.KeywordLikeBuiltInVariable]: rule_v1.createBuiltinVariableRule(scopeName, {
       variableRuleName: RuleName.KeywordLikeBuiltInVariable,

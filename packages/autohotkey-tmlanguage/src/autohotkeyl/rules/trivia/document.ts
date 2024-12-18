@@ -1,10 +1,14 @@
-import { Repository, RuleDescriptor, RuleName } from '../../../constants';
-import { alt, anyChars0, anyChars1, capture, char, endAnchor, group, ignoreCase, inlineSpaces0, keyword, lookahead, lookbehind, negativeLookahead, negChars1, ordalt, seq, startAnchor, text } from '../../../oniguruma';
+import { Repository, RuleDescriptor, RuleName, StyleName, TokenType } from '../../../constants';
+import { alt, anyChars0, anyChars1, capture, char, endAnchor, group, ignoreCase, inlineSpaces0, keyword, lookahead, lookbehind, negativeLookahead, negChars1, optional, optseq, ordalt, seq, startAnchor, text } from '../../../oniguruma';
 import type { BeginEndRule, MatchRule, PatternsRule, Rule, ScopeName } from '../../../types';
-import { includeRule, includeScope, name, nameRule, patternsRule } from '../../../utils';
+import { includeRule, name, nameRule, patternsRule } from '../../../utils';
 
-const startPattern = group(alt(startAnchor(), '\\G'));
-export function createDocumentCommentRule(scopeName: ScopeName): BeginEndRule {
+interface Placeholder {
+  identifierPattern: string;
+}
+export function createDocumentCommentRule(scopeName: ScopeName, placeholder: Placeholder): BeginEndRule {
+  const contentStartPattern = seq(startAnchor(), inlineSpaces0(), char('*'));
+
   return {
     name: name(scopeName, RuleName.DocumentComment),
     begin: capture(text('/**')),
@@ -19,27 +23,20 @@ export function createDocumentCommentRule(scopeName: ScopeName): BeginEndRule {
       {
         begin: lookbehind(text('/**')),
         while: seq(
-          startPattern,
+          group(alt(startAnchor(), '\\G')),
           inlineSpaces0(),
           capture(char('*')),
           negativeLookahead(char('/')),
         ),
         patterns: [
-          // #region tag
           createTagAnnotationRule(scopeName, {
-            startPattern: seq(
-              startPattern,
-              inlineSpaces0(),
-              char('*'),
-            ),
+            startPattern: contentStartPattern,
+            identifierPattern: placeholder.identifierPattern,
           }),
           // #endregion tag
 
           // #region markdown
-          createCodefenceRule('autohotkeynext', [ 'ahknext' ]),
-          createCodefenceRule('autohotkey2', [ 'ahk2' ]),
-          createCodefenceRule('autohotkeyl', [ 'ahkl' ]),
-          createCodefenceRule('autohotkey', [ 'ahk' ]),
+          includeRule(Repository.FencedCodeBlockInDocument),
           { include: 'text.html.markdown' },
           // #endregion markdown
         ],
@@ -49,15 +46,14 @@ export function createDocumentCommentRule(scopeName: ScopeName): BeginEndRule {
 }
 
 // #region tag
-interface Placeholder {
+interface Placeholder_TagAnnotation {
   startPattern: string;
+  identifierPattern: string;
 }
-function createTagAnnotationRule(scopeName: ScopeName, placeholder: Placeholder): PatternsRule {
+function createTagAnnotationRule(scopeName: ScopeName, placeholder: Placeholder_TagAnnotation): PatternsRule {
   return patternsRule(
-    createExampleAnnotationTagRule(scopeName, placeholder),
-
     createFlagAnnotationTagRule(scopeName, {
-      startPattern: placeholder.startPattern,
+      ...placeholder,
       tagNames: [
         // https://jsdoc.app/tags-abstract
         '@abstract',
@@ -68,7 +64,7 @@ function createTagAnnotationRule(scopeName: ScopeName, placeholder: Placeholder)
       ],
     }),
     createAttributeAnnotationTagRule(scopeName, {
-      startPattern: placeholder.startPattern,
+      ...placeholder,
       tagNames: [
         // https://jsdoc.app/tags-access
         '@access',
@@ -81,7 +77,7 @@ function createTagAnnotationRule(scopeName: ScopeName, placeholder: Placeholder)
       ],
     }),
     createAttributeAnnotationTagRule(scopeName, {
-      startPattern: placeholder.startPattern,
+      ...placeholder,
       tagNames: [
         // https://jsdoc.app/tags-alias
         '@alias',
@@ -101,7 +97,7 @@ function createTagAnnotationRule(scopeName: ScopeName, placeholder: Placeholder)
       ],
     }),
     createAttributeAnnotationTagRule(scopeName, {
-      startPattern: placeholder.startPattern,
+      ...placeholder,
       tagNames: [
         // https://jsdoc.app/tags-author
         '@author',
@@ -114,7 +110,7 @@ function createTagAnnotationRule(scopeName: ScopeName, placeholder: Placeholder)
       ],
     }),
     createAttributeAnnotationTagRule(scopeName, {
-      startPattern: placeholder.startPattern,
+      ...placeholder,
       tagNames: [
         // https://jsdoc.app/tags-borrows
         '@borrows',
@@ -130,14 +126,44 @@ function createTagAnnotationRule(scopeName: ScopeName, placeholder: Placeholder)
         },
       ],
     }),
+    createDeclarationTagRule(scopeName, {
+      ...placeholder,
+      tagNames: [
+        // https://jsdoc.app/tags-class
+        '@class',
+        '@constructor',
+      ],
+      rules: [],
+    }),
+
+    createBlockTagRule(scopeName, {
+      ...placeholder,
+      tagNames: [
+        // https://jsdoc.app/tags-example
+        '@example',
+      ],
+      rules: [
+        {
+          match: seq(
+            lookbehind(seq(
+              startAnchor(),
+              inlineSpaces0(),
+              char('*'),
+            )),
+            char(':'),
+          ),
+        },
+        includeRule(Repository.Self),
+      ],
+    }),
   );
 }
 
-interface Placeholder2 {
+interface Placeholder_FlagAnnotationTag {
   startPattern: string;
   tagNames: readonly string[];
 }
-function createFlagAnnotationTagRule(scopeName: ScopeName, placeholder: Placeholder2): MatchRule {
+function createFlagAnnotationTagRule(scopeName: ScopeName, placeholder: Placeholder_FlagAnnotationTag): MatchRule {
   return {
     match: seq(
       lookbehind(placeholder.startPattern),
@@ -150,12 +176,12 @@ function createFlagAnnotationTagRule(scopeName: ScopeName, placeholder: Placehol
   };
 }
 
-interface Placeholder3 {
-  tagNames: readonly string[];
+interface Placeholder_AttributeAnnotationTag {
   startPattern: string;
+  tagNames: readonly string[];
   rules: Rule[];
 }
-function createAttributeAnnotationTagRule(scopeName: ScopeName, placeholder: Placeholder3): MatchRule {
+function createAttributeAnnotationTagRule(scopeName: ScopeName, placeholder: Placeholder_AttributeAnnotationTag): MatchRule {
   return {
     match: seq(
       lookbehind(placeholder.startPattern),
@@ -171,52 +197,131 @@ function createAttributeAnnotationTagRule(scopeName: ScopeName, placeholder: Pla
     },
   };
 }
-function createExampleAnnotationTagRule(scopeName: ScopeName, placeholder: Placeholder): BeginEndRule {
+
+interface Placeholder_BlockTag {
+  startPattern: string;
+  identifierPattern: string;
+  tagNames: readonly string[];
+  rules: Rule[];
+}
+function createBlockTagRule(scopeName: ScopeName, placeholder: Placeholder_BlockTag): BeginEndRule {
   return {
     begin: seq(
       lookbehind(placeholder.startPattern),
       inlineSpaces0(),
-      capture(ignoreCase(text('@example'))),
+      capture(ignoreCase(ordalt(...placeholder.tagNames))),
     ),
     beginCaptures: {
       1: nameRule(scopeName, RuleName.DocumentTag),
     },
     end: lookahead(seq(
-      lookbehind(startPattern),
+      lookbehind(placeholder.startPattern),
       inlineSpaces0(),
       group(alt(
         char('@'),
         text('*/'),
       )),
     )),
-    patterns: [ includeRule(Repository.Self) ],
+    patterns: placeholder.rules,
   };
 }
-// #endregion tag
+function createDeclarationTagRule(scopeName: ScopeName, placeholder: Placeholder_BlockTag): BeginEndRule {
+  const assignmentRulePatterns: Rule[] = [
+    {
+      name: name(scopeName, RuleName.ReservedWordInDocument, StyleName.Strong),
+      match: seq(
+        lookbehind(seq(
+          char('['),
+          inlineSpaces0(),
+        )),
+        char('*'),
+        lookahead(seq(
+          inlineSpaces0(),
+          char(']'),
+        )),
+      ),
+    },
+    includeRule(Repository.Comma),
+    includeRule(Repository.Expression),
+  ];
 
-// #region markdown
-function createCodefenceRule(scopeName: ScopeName, aliases: string[]): BeginEndRule {
-  return {
-    begin: seq(
-      lookbehind(startPattern),
-      inlineSpaces0(),
-      capture(seq(
-        text('```'),
-        group(ordalt(scopeName, ...aliases)),
-      )),
-    ),
-    beginCaptures: {
-      1: nameRule(scopeName, RuleDescriptor.Begin),
-    },
-    end: seq(
-      lookbehind(startPattern),
-      inlineSpaces0(),
-      capture(text('```')),
-    ),
-    endCaptures: {
-      1: nameRule(scopeName, RuleDescriptor.End),
-    },
-    patterns: [ includeScope(scopeName) ],
-  };
+  return createBlockTagRule(scopeName, {
+    ...placeholder,
+    tagNames: placeholder.tagNames,
+    rules: [
+      // e.g. `@xxx name`
+      {
+        match: seq(
+          lookbehind(seq(
+            char('*'),
+            inlineSpaces0(),
+            ignoreCase(ordalt(...placeholder.tagNames)),
+            inlineSpaces0(),
+          )),
+          capture(placeholder.identifierPattern),
+        ),
+        captures: {
+          1: patternsRule(includeRule(Repository.Variable)),
+        },
+      },
+      // e.g. `@xxx {type}`, `@xxx {type} name`
+      {
+        contentName: name(scopeName, TokenType.Other, RuleName.TypeInDocument),
+        begin: seq(
+          lookbehind(seq(
+            placeholder.startPattern,
+            inlineSpaces0(),
+            ignoreCase(ordalt(...placeholder.tagNames)),
+            inlineSpaces0(),
+          )),
+          capture(char('{')),
+        ),
+        beginCaptures: {
+          1: nameRule(scopeName, TokenType.Other, RuleName.TypeInDocument, RuleName.OpenBrace),
+        },
+        end: seq(
+          capture(char('}')),
+          inlineSpaces0(),
+          optional(capture(placeholder.identifierPattern)),
+        ),
+        endCaptures: {
+          1: nameRule(scopeName, TokenType.Other, RuleName.TypeInDocument, RuleName.CloseBrace),
+          2: patternsRule(includeRule(Repository.Variable)),
+        },
+      },
+      // e.g. `@xxx {type} [name := "abc"]`, `@xxx [name := "abc"]`
+      {
+        name: name(scopeName, TokenType.Other),
+        begin: seq(
+          lookbehind(seq(
+            placeholder.startPattern,
+            inlineSpaces0(),
+            group(alt(
+              group(char('}')),
+              group(seq(
+                ignoreCase(ordalt(...placeholder.tagNames)),
+                inlineSpaces0(),
+                optseq(
+                  char('{'),
+                  anyChars0(),
+                  char('}'),
+                ),
+              )),
+            )),
+          )),
+          inlineSpaces0(),
+          capture(char('[')),
+        ),
+        beginCaptures: {
+          1: nameRule(scopeName, RuleName.OpenBrace, RuleDescriptor.Begin),
+        },
+        end: capture(char(']')),
+        endCaptures: {
+          1: nameRule(scopeName, RuleName.CloseBrace, RuleDescriptor.End),
+        },
+        patterns: assignmentRulePatterns,
+      },
+      ...placeholder.rules,
+    ],
+  });
 }
-// #endregion markdown

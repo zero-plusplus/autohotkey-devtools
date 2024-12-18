@@ -80,6 +80,12 @@ export function groupMany0(onigurumaText: string): string {
 export function groupMany1(onigurumaText: string): string {
   return `${group(onigurumaText)}+`;
 }
+export function manyX(min: number): (onigurumaText: string) => string {
+  return (onigurumaText: string) => `${onigurumaText}{${min}}`;
+}
+export function manyXtoY(min: number, max: number): (onigurumaText: string) => string {
+  return (onigurumaText: string) => `${onigurumaText}{${min},${max}}`;
+}
 export function manyRange(onigurumaText: string, start?: number, end?: number): string {
   if (typeof start === 'number' && typeof end === 'number') {
     return `${onigurumaText}{${start},${end}}`;
