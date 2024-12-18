@@ -1,4 +1,4 @@
-import { Repository, RuleDescriptor, RuleName, StyleName } from '../../../constants';
+import { Repository, RuleDescriptor, RuleName, StyleName, TokenType } from '../../../constants';
 import { alt, anyChar, backslash, capture, char, escapeOnigurumaTexts, group, ignoreCase, inlineSpaces0, lookahead, lookbehind, negativeLookahead, negChars1, numbers1, optional, optseq, ordalt, seq, text, wordBound, wordChars0 } from '../../../oniguruma';
 import type { BeginEndRule, PatternsRule, ScopeName } from '../../../types';
 import { includeRule, name, nameRule, patternsRule } from '../../../utils';
@@ -108,28 +108,28 @@ export function createStringAsRegExpContentRule(scopeName: ScopeName, placeholde
         )),
       ),
       beginCaptures: {
-        1: nameRule(scopeName, RuleName.RegExpGroup, RuleDescriptor.Begin),
-        2: nameRule(scopeName, RuleName.RegExpGroup, RuleName.Variable, RuleDescriptor.Begin),
-        3: nameRule(scopeName, RuleName.RegExpGroup, RuleDescriptor.Begin),
-        4: nameRule(scopeName, RuleName.RegExpGroup, RuleDescriptor.Begin),
+        1: nameRule(scopeName, TokenType.Other, RuleName.RegExpGroup, RuleDescriptor.Begin),
+        2: nameRule(scopeName, TokenType.Other, RuleName.RegExpGroup, RuleName.Variable, RuleDescriptor.Begin),
+        3: nameRule(scopeName, TokenType.Other, RuleName.RegExpGroup, RuleDescriptor.Begin),
+        4: nameRule(scopeName, TokenType.Other, RuleName.RegExpGroup, RuleDescriptor.Begin),
         5: patternsRule(
           {
-            name: name(scopeName, RuleName.RegExpGroup, RuleName.RegExpOption, RuleDescriptor.Begin),
+            name: name(scopeName, TokenType.Other, RuleName.RegExpGroup, RuleName.RegExpOption, RuleDescriptor.Begin),
             match: ordalt(...escapeOnigurumaTexts(placeholder.regexpOptions)),
           },
           {
-            name: name(scopeName, RuleName.RegExpGroup, RuleName.RegExpOption, RuleDescriptor.Begin),
+            name: name(scopeName, TokenType.Other, RuleName.RegExpGroup, RuleName.RegExpOption, RuleDescriptor.Begin),
             match: char('-'),
           },
           {
-            name: name(scopeName, StyleName.Invalid),
+            name: name(scopeName, TokenType.Other, StyleName.Invalid),
             match: anyChar(),
           },
         ),
       },
       end: capture(char(')')),
       endCaptures: {
-        1: nameRule(scopeName, RuleName.RegExpGroup, RuleDescriptor.End),
+        1: nameRule(scopeName, TokenType.Other, RuleName.RegExpGroup, RuleDescriptor.End),
       },
       patterns: [ includeRule(placeholder.contentRepository) ],
     },
