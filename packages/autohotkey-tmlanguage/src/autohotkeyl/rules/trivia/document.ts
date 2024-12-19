@@ -181,6 +181,9 @@ function createTagAnnotationRule(scopeName: ScopeName, placeholder: Placeholder_
         '@function',
         '@func',
         '@method',
+
+        // https://jsdoc.app/tags-implements
+        '@implements',
       ],
       rules: [],
     }),
