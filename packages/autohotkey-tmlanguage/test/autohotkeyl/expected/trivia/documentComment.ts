@@ -522,6 +522,46 @@ export function createDocumentCommentExpectedData(scopeName: ScopeName): Expecte
         }),
       ],
     ],
+    // https://jsdoc.app/tags-function
+    [
+      dedent`
+        /**
+         * @function
+         * @function name
+         * @function name description
+         */
+        /**
+         * @func
+         * @func name
+         * @func name description
+         */
+        /**
+         * @method
+         * @method name
+         * @method name description
+         */
+      `, [
+        ...[ '@function', '@func', '@method' ].flatMap((tag) => {
+          return [
+            { text: '/**', scopes: name(scopeName, RuleName.DocumentComment, RuleDescriptor.Begin) },
+
+            { text: ' *', scopes: name(scopeName, RuleName.DocumentComment) },
+            { text: tag, scopes: name(scopeName, RuleName.DocumentComment, RuleName.DocumentTag) },
+
+            { text: ' *', scopes: name(scopeName, RuleName.DocumentComment) },
+            { text: tag, scopes: name(scopeName, RuleName.DocumentComment, RuleName.DocumentTag) },
+            { text: 'name', scopes: name(scopeName, RuleName.DocumentComment, RuleName.Variable) },
+
+            { text: ' *', scopes: name(scopeName, RuleName.DocumentComment) },
+            { text: tag, scopes: name(scopeName, RuleName.DocumentComment, RuleName.DocumentTag) },
+            { text: 'name', scopes: name(scopeName, RuleName.DocumentComment, RuleName.Variable) },
+            { text: 'description', scopes: name(scopeName, RuleName.DocumentComment) },
+
+            { text: '*/', scopes: name(scopeName, RuleName.DocumentComment, RuleDescriptor.End) },
+          ];
+        }),
+      ],
+    ],
     // fenced code block
     [
       dedent`

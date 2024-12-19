@@ -170,6 +170,11 @@ function createTagAnnotationRule(scopeName: ScopeName, placeholder: Placeholder_
 
         // https://jsdoc.app/tags-enum
         '@enum',
+
+        // https://jsdoc.app/tags-function
+        '@function',
+        '@func',
+        '@method',
       ],
       rules: [],
     }),
