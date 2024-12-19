@@ -117,6 +117,9 @@ function createTagAnnotationRule(scopeName: ScopeName, placeholder: Placeholder_
 
         // https://jsdoc.app/tags-static
         '@static',
+
+        // https://jsdoc.app/tags-summary
+        '@summary',
       ],
     }),
     createAttributeAnnotationTagRule(scopeName, {
