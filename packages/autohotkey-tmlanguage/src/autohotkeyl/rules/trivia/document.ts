@@ -195,6 +195,10 @@ function createTagAnnotationRule(scopeName: ScopeName, placeholder: Placeholder_
         '@param',
         '@arg',
         '@argument',
+
+        // https://jsdoc.app/tags-property
+        '@property',
+        '@prop',
       ],
       rules: [],
     }),

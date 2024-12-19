@@ -740,6 +740,69 @@ export function createDocumentCommentExpectedData(scopeName: ScopeName): Expecte
         { text: '*/', scopes: name(scopeName, RuleName.DocumentComment, RuleDescriptor.End) },
       ],
     ],
+    // https://jsdoc.app/tags-property
+    [
+      dedent`
+        /**
+         * @property
+         * @property {type}
+         * @property {type} name
+         * @property {type} name description
+         * @property name
+         * @property name description
+         */
+        /**
+         * @prop
+         * @prop {type}
+         * @prop {type} name
+         * @prop {type} name description
+         * @prop name
+         * @prop name description
+         */
+      `,
+      [
+        ...[ '@property', '@prop' ].flatMap((tag) => {
+          return [
+            { text: '/**', scopes: name(scopeName, RuleName.DocumentComment, RuleDescriptor.Begin) },
+
+            { text: ' *', scopes: name(scopeName, RuleName.DocumentComment) },
+            { text: tag, scopes: name(scopeName, RuleName.DocumentComment, RuleName.DocumentTag) },
+
+            { text: ' *', scopes: name(scopeName, RuleName.DocumentComment) },
+            { text: tag, scopes: name(scopeName, RuleName.DocumentComment, RuleName.DocumentTag) },
+            { text: '{', scopes: name(scopeName, RuleName.DocumentComment, TokenType.Other, RuleName.TypeInDocument, RuleName.OpenBrace) },
+            { text: 'type', scopes: name(scopeName, RuleName.DocumentComment, TokenType.Other, RuleName.TypeInDocument) },
+            { text: '}', scopes: name(scopeName, RuleName.DocumentComment, TokenType.Other, RuleName.TypeInDocument, RuleName.CloseBrace) },
+
+            { text: ' *', scopes: name(scopeName, RuleName.DocumentComment) },
+            { text: tag, scopes: name(scopeName, RuleName.DocumentComment, RuleName.DocumentTag) },
+            { text: '{', scopes: name(scopeName, RuleName.DocumentComment, TokenType.Other, RuleName.TypeInDocument, RuleName.OpenBrace) },
+            { text: 'type', scopes: name(scopeName, RuleName.DocumentComment, TokenType.Other, RuleName.TypeInDocument) },
+            { text: '}', scopes: name(scopeName, RuleName.DocumentComment, TokenType.Other, RuleName.TypeInDocument, RuleName.CloseBrace) },
+            { text: 'name', scopes: name(scopeName, RuleName.DocumentComment, RuleName.Variable) },
+
+            { text: ' *', scopes: name(scopeName, RuleName.DocumentComment) },
+            { text: tag, scopes: name(scopeName, RuleName.DocumentComment, RuleName.DocumentTag) },
+            { text: '{', scopes: name(scopeName, RuleName.DocumentComment, TokenType.Other, RuleName.TypeInDocument, RuleName.OpenBrace) },
+            { text: 'type', scopes: name(scopeName, RuleName.DocumentComment, TokenType.Other, RuleName.TypeInDocument) },
+            { text: '}', scopes: name(scopeName, RuleName.DocumentComment, TokenType.Other, RuleName.TypeInDocument, RuleName.CloseBrace) },
+            { text: 'name', scopes: name(scopeName, RuleName.DocumentComment, RuleName.Variable) },
+            { text: 'description', scopes: name(scopeName, RuleName.DocumentComment) },
+
+            { text: ' *', scopes: name(scopeName, RuleName.DocumentComment) },
+            { text: tag, scopes: name(scopeName, RuleName.DocumentComment, RuleName.DocumentTag) },
+            { text: 'name', scopes: name(scopeName, RuleName.DocumentComment, RuleName.Variable) },
+
+            { text: ' *', scopes: name(scopeName, RuleName.DocumentComment) },
+            { text: tag, scopes: name(scopeName, RuleName.DocumentComment, RuleName.DocumentTag) },
+            { text: 'name', scopes: name(scopeName, RuleName.DocumentComment, RuleName.Variable) },
+            { text: 'description', scopes: name(scopeName, RuleName.DocumentComment) },
+
+            { text: '*/', scopes: name(scopeName, RuleName.DocumentComment, RuleDescriptor.End) },
+          ];
+        }),
+      ],
+    ],
     // fenced code block
     [
       dedent`
