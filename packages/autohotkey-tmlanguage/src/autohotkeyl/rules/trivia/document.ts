@@ -254,6 +254,15 @@ function createTagAnnotationRule(scopeName: ScopeName, placeholder: Placeholder_
       ],
       rules: [],
     }),
+    createTypeDeclarationTagRule(scopeName, {
+      ...placeholder,
+      tagNames: [
+        // https://jsdoc.app/tags-throws
+        '@throws',
+        '@exception',
+      ],
+      rules: [],
+    }),
 
     // https://jsdoc.app/tags-example
     createExampleTagRule(scopeName, placeholder),
@@ -446,6 +455,57 @@ function createDeclarationTagRule(scopeName: ScopeName, placeholder: Placeholder
         patterns: assignmentRulePatterns,
       },
       ...placeholder.rules,
+    ],
+  });
+}
+function createTypeDeclarationTagRule(scopeName: ScopeName, placeholder: Placeholder_BlockTag): Rule {
+  return createBlockTagRule(scopeName, {
+    ...placeholder,
+    rules: [
+      // e.g. `@xxx {type} description`
+      {
+        contentName: name(scopeName, TokenType.Other, RuleName.TypeInDocument),
+        begin: seq(
+          lookbehind(seq(
+            placeholder.startPattern,
+            inlineSpaces0(),
+            ignoreCase(ordalt(...placeholder.tagNames)),
+            inlineSpaces0(),
+          )),
+          capture(char('{')),
+        ),
+        beginCaptures: {
+          1: nameRule(scopeName, TokenType.Other, RuleName.TypeInDocument, RuleName.OpenBrace),
+        },
+        end: seq(
+          capture(char('}')),
+          inlineSpaces0(),
+          capture(anyChars0()),
+          endAnchor(),
+        ),
+        endCaptures: {
+          1: nameRule(scopeName, TokenType.Other, RuleName.TypeInDocument, RuleName.CloseBrace),
+          2: patternsRule(includeRule(Repository.InlineTextInDocument)),
+        },
+      },
+      // e.g. `@xxx description`
+      {
+        match: seq(
+          lookbehind(seq(
+            placeholder.startPattern,
+            inlineSpaces0(),
+            ignoreCase(ordalt(...placeholder.tagNames)),
+          )),
+          inlineSpaces0(),
+          capture(seq(
+            negChar('{', '\\s'),
+            anyChars0(),
+          )),
+        ),
+        captures: {
+          1: patternsRule(includeRule(Repository.InlineTextInDocument)),
+        },
+      },
     ],
   });
 }
