@@ -74,6 +74,11 @@ function createTagAnnotationRule(scopeName: ScopeName, placeholder: Placeholder_
         // https://jsdoc.app/tags-description
         '@description',
         '@desc',
+
+        // https://jsdoc.app/tags-file
+        '@file',
+        '@fileoverview',
+        '@overview',
       ],
     }),
     createAttributeAnnotationTagRule(scopeName, {

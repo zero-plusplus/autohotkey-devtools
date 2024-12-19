@@ -392,11 +392,11 @@ export function createDocumentCommentExpectedData(scopeName: ScopeName): Expecte
       dedent`
         /**
          * @description
-         * @description text
+         * @description description
          */
         /**
          * @desc
-         * @desc text
+         * @desc description
          */
       `,
       [
@@ -409,7 +409,7 @@ export function createDocumentCommentExpectedData(scopeName: ScopeName): Expecte
 
             { text: ' *', scopes: name(scopeName, RuleName.DocumentComment) },
             { text: tag, scopes: name(scopeName, RuleName.DocumentComment, RuleName.DocumentTag) },
-            { text: 'text', scopes: name(scopeName, RuleName.DocumentComment) },
+            { text: 'description', scopes: name(scopeName, RuleName.DocumentComment) },
 
             { text: '*/', scopes: name(scopeName, RuleName.DocumentComment, RuleDescriptor.End) },
           ];
@@ -489,6 +489,40 @@ export function createDocumentCommentExpectedData(scopeName: ScopeName): Expecte
         { text: '*/', scopes: name(scopeName, RuleName.DocumentComment, RuleDescriptor.End) },
       ],
     ],
+    // https://jsdoc.app/tags-file
+    [
+      dedent`
+        /**
+         * @file
+         * @file description
+         */
+        /**
+         * @fileoverview
+         * @fileoverview description
+         */
+        /**
+         * @overview
+         * @overview description
+         */
+      `,
+      [
+        ...[ '@file', '@fileoverview', '@overview' ].flatMap((tag) => {
+          return [
+            { text: '/**', scopes: name(scopeName, RuleName.DocumentComment, RuleDescriptor.Begin) },
+
+            { text: ' *', scopes: name(scopeName, RuleName.DocumentComment) },
+            { text: tag, scopes: name(scopeName, RuleName.DocumentComment, RuleName.DocumentTag) },
+
+            { text: ' *', scopes: name(scopeName, RuleName.DocumentComment) },
+            { text: tag, scopes: name(scopeName, RuleName.DocumentComment, RuleName.DocumentTag) },
+            { text: 'description', scopes: name(scopeName, RuleName.DocumentComment) },
+
+            { text: '*/', scopes: name(scopeName, RuleName.DocumentComment, RuleDescriptor.End) },
+          ];
+        }),
+      ],
+    ],
+    // fenced code block
     [
       dedent`
         /**
