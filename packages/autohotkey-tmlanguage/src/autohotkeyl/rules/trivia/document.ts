@@ -175,6 +175,36 @@ function createTagAnnotationRule(scopeName: ScopeName, placeholder: Placeholder_
       ],
       rules: [ includeRule(Repository.Expressions) ],
     }),
+    createAttributeAnnotationTagRule(scopeName, {
+      ...placeholder,
+      contentName: name(scopeName, RuleName.NamePathInDocument),
+      tagNames: [
+        // https://jsdoc.app/tags-see
+        '@see',
+      ],
+      rules: [
+        {
+          match: seq(
+            lookbehind(seq(
+              placeholder.startPattern,
+              inlineSpaces0(),
+              ignoreCase(text('@see')),
+              inlineSpace(),
+            )),
+            inlineSpaces0(),
+            capture(seq(
+              group(ordalt(text('http'), text('https'))),
+              text('://'),
+              anyChars0(),
+            )),
+            endAnchor(),
+          ),
+          captures: {
+            1: nameRule(scopeName, StyleName.Underline),
+          },
+        },
+      ],
+    }),
     createDeclarationTagRule(scopeName, {
       ...placeholder,
       tagNames: [

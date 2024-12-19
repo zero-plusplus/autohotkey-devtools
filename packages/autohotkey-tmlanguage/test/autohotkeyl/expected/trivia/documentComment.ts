@@ -1,5 +1,5 @@
 import { dedent } from '@zero-plusplus/utilities/src';
-import { RuleDescriptor, RuleName, TokenType } from '../../../../src/constants';
+import { RuleDescriptor, RuleName, StyleName, TokenType } from '../../../../src/constants';
 import type { ScopeName } from '../../../../src/types';
 import { name } from '../../../../src/utils';
 import type { ExpectedTestData } from '../../../types';
@@ -927,6 +927,28 @@ export function createDocumentCommentExpectedData(scopeName: ScopeName): Expecte
             { text: '*/', scopes: name(scopeName, RuleName.DocumentComment, RuleDescriptor.End) },
           ];
         }),
+      ],
+    ],
+    // https://jsdoc.app/tags-see
+    [
+      dedent`
+        /**
+         * @see url
+         * @see https://
+         */
+      `,
+      [
+        { text: '/**', scopes: name(scopeName, RuleName.DocumentComment, RuleDescriptor.Begin) },
+
+        { text: ' *', scopes: name(scopeName, RuleName.DocumentComment) },
+        { text: '@see', scopes: name(scopeName, RuleName.DocumentComment, RuleName.DocumentTag) },
+        { text: 'url', scopes: name(scopeName, RuleName.DocumentComment, RuleName.NamePathInDocument) },
+
+        { text: ' *', scopes: name(scopeName, RuleName.DocumentComment) },
+        { text: '@see', scopes: name(scopeName, RuleName.DocumentComment, RuleName.DocumentTag) },
+        { text: 'https://', scopes: name(scopeName, RuleName.DocumentComment, RuleName.NamePathInDocument, StyleName.Underline) },
+
+        { text: '*/', scopes: name(scopeName, RuleName.DocumentComment, RuleDescriptor.End) },
       ],
     ],
     // fenced code block

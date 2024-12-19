@@ -516,6 +516,7 @@ export const enum StyleName {
   Strikethrough = 'markup.strikethrough',
   Invalid = 'invalid.illegal',
   Escape = 'constant.character.escape',
+  Underline = 'markup.underline',
 }
 export const enum TokenType {
   Comment = 'token.comment',
