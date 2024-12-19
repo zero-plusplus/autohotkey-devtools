@@ -397,6 +397,7 @@ export const enum RuleName {
   TypeInDocument = 'support.class.document.type',
   FencedCodeBlock = 'markup.fenced_code.block',
   CodeFence = 'punctuation.definition',
+  CodeBegin = 'comment.multi-line.document.code.begin',
   LanguageName = 'fenced_code.block.language',
   LanguageAttribute = 'fenced_code.block.language.attributes',
   EmbeddedLanguage = 'meta.embedded.block',

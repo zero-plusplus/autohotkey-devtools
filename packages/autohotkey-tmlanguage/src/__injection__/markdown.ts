@@ -89,6 +89,7 @@ export function createCodeFenceRule(scopeName: ScopeName, aliases: readonly stri
           ...(inDocument
             ? [
               {
+                name: name(scopeName, RuleName.CodeBegin),
                 match: seq(
                   lookbehind(seq(
                     startAnchor(),

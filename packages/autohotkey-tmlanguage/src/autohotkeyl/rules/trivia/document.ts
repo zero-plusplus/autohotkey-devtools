@@ -144,6 +144,7 @@ function createTagAnnotationRule(scopeName: ScopeName, placeholder: Placeholder_
       ],
       rules: [
         {
+          name: name(scopeName, RuleName.CodeBegin),
           match: seq(
             lookbehind(seq(
               startAnchor(),
