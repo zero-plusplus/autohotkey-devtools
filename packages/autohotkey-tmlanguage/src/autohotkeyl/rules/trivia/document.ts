@@ -52,7 +52,7 @@ interface Placeholder_TagAnnotation {
 }
 function createTagAnnotationRule(scopeName: ScopeName, placeholder: Placeholder_TagAnnotation): PatternsRule {
   return patternsRule(
-    createFlagAnnotationTagRule(scopeName, {
+    createFlagAnnotationOrDescriptorTagRule(scopeName, {
       ...placeholder,
       tagNames: [
         // https://jsdoc.app/tags-abstract
@@ -61,6 +61,9 @@ function createTagAnnotationRule(scopeName: ScopeName, placeholder: Placeholder_
 
         // https://jsdoc.app/tags-async
         '@async',
+
+        // https://jsdoc.app/tags-classdesc
+        '@classdesc',
       ],
     }),
     createAttributeAnnotationTagRule(scopeName, {
@@ -146,12 +149,13 @@ interface Placeholder_FlagAnnotationTag {
   tagNames: readonly string[];
 }
 // e.g. `@xxx`
-function createFlagAnnotationTagRule(scopeName: ScopeName, placeholder: Placeholder_FlagAnnotationTag): BeginEndRule {
+function createFlagAnnotationOrDescriptorTagRule(scopeName: ScopeName, placeholder: Placeholder_FlagAnnotationTag): BeginEndRule {
   return {
     begin: seq(
       lookbehind(placeholder.startPattern),
       inlineSpaces0(),
       capture(ordalt(...placeholder.tagNames)),
+      inlineSpaces0(),
     ),
     beginCaptures: {
       1: nameRule(scopeName, RuleName.DocumentTag),

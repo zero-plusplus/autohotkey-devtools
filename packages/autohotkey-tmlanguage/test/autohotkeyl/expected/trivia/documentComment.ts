@@ -191,6 +191,21 @@ export function createDocumentCommentExpectedData(scopeName: ScopeName): Expecte
         }),
       ],
     ],
+    // https://jsdoc.app/tags-classdesc
+    [
+      dedent`
+        /**
+         * @classdesc descripton
+         */
+      `,
+      [
+        { text: '/**', scopes: name(scopeName, RuleName.DocumentComment, RuleDescriptor.Begin) },
+        { text: ' *', scopes: name(scopeName, RuleName.DocumentComment) },
+        { text: '@classdesc', scopes: name(scopeName, RuleName.DocumentComment, RuleName.DocumentTag) },
+        { text: 'descripton', scopes: name(scopeName, RuleName.DocumentComment) },
+        { text: '*/', scopes: name(scopeName, RuleName.DocumentComment, RuleDescriptor.End) },
+      ],
+    ],
     // https://jsdoc.app/tags-example
     [
       dedent`
