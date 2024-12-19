@@ -154,6 +154,9 @@ function createTagAnnotationRule(scopeName: ScopeName, placeholder: Placeholder_
       tagNames: [
         // https://jsdoc.app/tags-author
         '@author',
+
+        // https://jsdoc.app/tags-since
+        '@since',
       ],
       rules: [
         {

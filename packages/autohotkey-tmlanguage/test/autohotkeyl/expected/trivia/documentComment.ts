@@ -968,6 +968,27 @@ export function createDocumentCommentExpectedData(scopeName: ScopeName): Expecte
         { text: '*/', scopes: name(scopeName, RuleName.DocumentComment, RuleDescriptor.End) },
       ],
     ],
+    // https://jsdoc.app/tags-since
+    [
+      dedent`
+        /**
+         * @since
+         * @since 1.0.0
+         */
+      `,
+      [
+        { text: '/**', scopes: name(scopeName, RuleName.DocumentComment, RuleDescriptor.Begin) },
+
+        { text: ' *', scopes: name(scopeName, RuleName.DocumentComment) },
+        { text: '@since', scopes: name(scopeName, RuleName.DocumentComment, RuleName.DocumentTag) },
+
+        { text: ' *', scopes: name(scopeName, RuleName.DocumentComment) },
+        { text: '@since', scopes: name(scopeName, RuleName.DocumentComment, RuleName.DocumentTag) },
+        { text: '1.0.0', scopes: name(scopeName, RuleName.DocumentComment, RuleName.NamePathInDocument) },
+
+        { text: '*/', scopes: name(scopeName, RuleName.DocumentComment, RuleDescriptor.End) },
+      ],
+    ],
     // fenced code block
     [
       dedent`
