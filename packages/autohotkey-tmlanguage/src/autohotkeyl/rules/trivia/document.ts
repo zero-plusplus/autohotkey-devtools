@@ -114,6 +114,9 @@ function createTagAnnotationRule(scopeName: ScopeName, placeholder: Placeholder_
 
         // https://jsdoc.app/tags-readonly
         '@readonly',
+
+        // https://jsdoc.app/tags-static
+        '@static',
       ],
     }),
     createAttributeAnnotationTagRule(scopeName, {
