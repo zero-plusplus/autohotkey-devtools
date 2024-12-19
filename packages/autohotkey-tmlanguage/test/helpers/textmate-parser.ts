@@ -83,5 +83,5 @@ export async function parse(scopeName: ScopeName, text: string): Promise<ParsedR
 function createTmLanguage(builder: () => TmLanguage): TmLanguage {
   return JSON.parse(JSON.stringify(builder(), undefined, 1)
     // markdown is not included in the test
-    .replaceAll('"text.html.markdown"', '""')) as TmLanguage;
+    .replaceAll(/"text.html.markdown(#.*)?"/gu, '""')) as TmLanguage;
 }

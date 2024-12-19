@@ -1,6 +1,6 @@
 import { Repository, RuleDescriptor, RuleName, StyleName, TokenType } from '../../../constants';
 import { alt, anyChars0, anyChars1, capture, char, endAnchor, group, ignoreCase, inlineSpaces0, keyword, lookahead, lookbehind, negativeLookahead, negChars1, optional, optseq, ordalt, seq, startAnchor, text } from '../../../oniguruma';
-import type { BeginEndRule, MatchRule, PatternsRule, Rule, ScopeName } from '../../../types';
+import type { BeginEndRule, PatternsRule, Rule, ScopeName } from '../../../types';
 import { includeRule, name, nameRule, patternsRule } from '../../../utils';
 
 interface Placeholder {
@@ -136,27 +136,8 @@ function createTagAnnotationRule(scopeName: ScopeName, placeholder: Placeholder_
       rules: [],
     }),
 
-    createBlockTagRule(scopeName, {
-      ...placeholder,
-      tagNames: [
-        // https://jsdoc.app/tags-example
-        '@example',
-      ],
-      rules: [
-        {
-          name: name(scopeName, RuleName.CodeBegin),
-          match: seq(
-            lookbehind(seq(
-              startAnchor(),
-              inlineSpaces0(),
-              char('*'),
-            )),
-            char(':'),
-          ),
-        },
-        includeRule(Repository.Self),
-      ],
-    }),
+    // https://jsdoc.app/tags-example
+    createExampleTagRule(scopeName, placeholder),
   );
 }
 
@@ -164,16 +145,26 @@ interface Placeholder_FlagAnnotationTag {
   startPattern: string;
   tagNames: readonly string[];
 }
-function createFlagAnnotationTagRule(scopeName: ScopeName, placeholder: Placeholder_FlagAnnotationTag): MatchRule {
+// e.g. `@xxx`
+function createFlagAnnotationTagRule(scopeName: ScopeName, placeholder: Placeholder_FlagAnnotationTag): BeginEndRule {
   return {
-    match: seq(
+    begin: seq(
       lookbehind(placeholder.startPattern),
       inlineSpaces0(),
       capture(ordalt(...placeholder.tagNames)),
     ),
-    captures: {
+    beginCaptures: {
       1: nameRule(scopeName, RuleName.DocumentTag),
     },
+    end: endAnchor(),
+    patterns: [
+      {
+        begin: char('-'),
+        end: endAnchor(),
+        patterns: [ { include: 'text.html.markdown#inline' } ],
+      },
+      { include: 'text.html.markdown#inline' },
+    ],
   };
 }
 
@@ -182,9 +173,10 @@ interface Placeholder_AttributeAnnotationTag {
   tagNames: readonly string[];
   rules: Rule[];
 }
-function createAttributeAnnotationTagRule(scopeName: ScopeName, placeholder: Placeholder_AttributeAnnotationTag): MatchRule {
+// e.g. `@xxx yyyy`
+function createAttributeAnnotationTagRule(scopeName: ScopeName, placeholder: Placeholder_AttributeAnnotationTag): BeginEndRule {
   return {
-    match: seq(
+    begin: seq(
       lookbehind(placeholder.startPattern),
       inlineSpaces0(),
       capture(ordalt(...placeholder.tagNames)),
@@ -192,10 +184,19 @@ function createAttributeAnnotationTagRule(scopeName: ScopeName, placeholder: Pla
       capture(anyChars0()),
       endAnchor(),
     ),
-    captures: {
+    beginCaptures: {
       1: nameRule(scopeName, RuleName.DocumentTag),
       2: patternsRule(...placeholder.rules),
     },
+    end: endAnchor(),
+    patterns: [
+      {
+        begin: char('-'),
+        end: endAnchor(),
+        patterns: [ { include: 'text.html.markdown#inline' } ],
+      },
+      { include: 'text.html.markdown#inline' },
+    ],
   };
 }
 
@@ -223,7 +224,15 @@ function createBlockTagRule(scopeName: ScopeName, placeholder: Placeholder_Block
         text('*/'),
       )),
     )),
-    patterns: placeholder.rules,
+    patterns: [
+      ...placeholder.rules,
+      {
+        begin: char('-'),
+        end: endAnchor(),
+        patterns: [ { include: 'text.html.markdown#inline' } ],
+      },
+      { include: 'text.html.markdown#inline' },
+    ],
   };
 }
 function createDeclarationTagRule(scopeName: ScopeName, placeholder: Placeholder_BlockTag): BeginEndRule {
@@ -325,4 +334,35 @@ function createDeclarationTagRule(scopeName: ScopeName, placeholder: Placeholder
       ...placeholder.rules,
     ],
   });
+}
+
+interface Placeholder_ExampleTag {
+  startPattern: string;
+  identifierPattern: string;
+}
+function createExampleTagRule(scopeName: ScopeName, placeholder: Placeholder_ExampleTag): BeginEndRule {
+  return {
+    contentName: name(scopeName, RuleName.EmbeddedLanguage),
+    ...createBlockTagRule(scopeName, {
+      ...placeholder,
+      tagNames: [
+        // https://jsdoc.app/tags-example
+        '@example',
+      ],
+      rules: [
+        {
+          name: name(scopeName, RuleName.CodeBegin),
+          match: seq(
+            lookbehind(seq(
+              startAnchor(),
+              inlineSpaces0(),
+              char('*'),
+            )),
+            char(':'),
+          ),
+        },
+        includeRule(Repository.Self),
+      ],
+    }),
+  };
 }
