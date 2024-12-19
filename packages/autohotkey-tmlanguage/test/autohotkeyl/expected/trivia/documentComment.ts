@@ -312,6 +312,26 @@ export function createDocumentCommentExpectedData(scopeName: ScopeName): Expecte
         { text: '*/', scopes: name(scopeName, RuleName.DocumentComment, RuleDescriptor.End) },
       ],
     ],
+    // https://jsdoc.app/tags-copyright
+    [
+      dedent`
+        /**
+         * @copyright
+         * @copyright description
+         */
+      `, [
+        { text: '/**', scopes: name(scopeName, RuleName.DocumentComment, RuleDescriptor.Begin) },
+
+        { text: ' *', scopes: name(scopeName, RuleName.DocumentComment) },
+        { text: '@copyright', scopes: name(scopeName, RuleName.DocumentComment, RuleName.DocumentTag) },
+
+        { text: ' *', scopes: name(scopeName, RuleName.DocumentComment) },
+        { text: '@copyright', scopes: name(scopeName, RuleName.DocumentComment, RuleName.DocumentTag) },
+        { text: 'description', scopes: name(scopeName, RuleName.DocumentComment) },
+
+        { text: '*/', scopes: name(scopeName, RuleName.DocumentComment, RuleDescriptor.End) },
+      ],
+    ],
     // https://jsdoc.app/tags-example
     [
       dedent`
