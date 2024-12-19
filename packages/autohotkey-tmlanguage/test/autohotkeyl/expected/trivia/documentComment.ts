@@ -750,6 +750,8 @@ export function createDocumentCommentExpectedData(scopeName: ScopeName): Expecte
          * @property {type} name description
          * @property name
          * @property name description
+         * @property {type} a.b.c description
+         * @property a.b.c description
          */
         /**
          * @prop
@@ -758,6 +760,8 @@ export function createDocumentCommentExpectedData(scopeName: ScopeName): Expecte
          * @prop {type} name description
          * @prop name
          * @prop name description
+         * @prop {type} a.b.c description
+         * @prop a.b.c description
          */
       `,
       [
@@ -796,6 +800,19 @@ export function createDocumentCommentExpectedData(scopeName: ScopeName): Expecte
             { text: ' *', scopes: name(scopeName, RuleName.DocumentComment) },
             { text: tag, scopes: name(scopeName, RuleName.DocumentComment, RuleName.DocumentTag) },
             { text: 'name', scopes: name(scopeName, RuleName.DocumentComment, RuleName.Variable) },
+            { text: 'description', scopes: name(scopeName, RuleName.DocumentComment) },
+
+            { text: ' *', scopes: name(scopeName, RuleName.DocumentComment) },
+            { text: tag, scopes: name(scopeName, RuleName.DocumentComment, RuleName.DocumentTag) },
+            { text: '{', scopes: name(scopeName, RuleName.DocumentComment, TokenType.Other, RuleName.TypeInDocument, RuleName.OpenBrace) },
+            { text: 'type', scopes: name(scopeName, RuleName.DocumentComment, TokenType.Other, RuleName.TypeInDocument) },
+            { text: '}', scopes: name(scopeName, RuleName.DocumentComment, TokenType.Other, RuleName.TypeInDocument, RuleName.CloseBrace) },
+            { text: 'a.b.c', scopes: name(scopeName, RuleName.DocumentComment, RuleName.Variable) },
+            { text: 'description', scopes: name(scopeName, RuleName.DocumentComment) },
+
+            { text: ' *', scopes: name(scopeName, RuleName.DocumentComment) },
+            { text: tag, scopes: name(scopeName, RuleName.DocumentComment, RuleName.DocumentTag) },
+            { text: 'a.b.c', scopes: name(scopeName, RuleName.DocumentComment, RuleName.Variable) },
             { text: 'description', scopes: name(scopeName, RuleName.DocumentComment) },
 
             { text: '*/', scopes: name(scopeName, RuleName.DocumentComment, RuleDescriptor.End) },

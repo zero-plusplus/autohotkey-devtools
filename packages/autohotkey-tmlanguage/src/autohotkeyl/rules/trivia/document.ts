@@ -388,7 +388,7 @@ function createDeclarationTagRule(scopeName: ScopeName, placeholder: Placeholder
           inlineSpaces0(),
         ),
         captures: {
-          1: patternsRule(includeRule(Repository.Variable)),
+          1: nameRule(scopeName, RuleName.Variable),
         },
       },
       // e.g. `@xxx {type}`, `@xxx {type} name`
@@ -415,7 +415,7 @@ function createDeclarationTagRule(scopeName: ScopeName, placeholder: Placeholder
         ),
         endCaptures: {
           1: nameRule(scopeName, TokenType.Other, RuleName.TypeInDocument, RuleName.CloseBrace),
-          2: patternsRule(includeRule(Repository.Variable)),
+          2: nameRule(scopeName, RuleName.Variable),
         },
       },
       // e.g. `@xxx {type} [name := "abc"]`, `@xxx [name := "abc"]`
