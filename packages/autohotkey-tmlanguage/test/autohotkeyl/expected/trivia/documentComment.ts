@@ -366,6 +366,27 @@ export function createDocumentCommentExpectedData(scopeName: ScopeName): Expecte
         }),
       ],
     ],
+    // https://jsdoc.app/tags-deprecated
+    [
+      dedent`
+        /**
+         * @deprecated
+         * @deprecated text
+         */
+      `,
+      [
+        { text: '/**', scopes: name(scopeName, RuleName.DocumentComment, RuleDescriptor.Begin) },
+
+        { text: ' *', scopes: name(scopeName, RuleName.DocumentComment) },
+        { text: '@deprecated', scopes: name(scopeName, RuleName.DocumentComment, RuleName.DocumentTag) },
+
+        { text: ' *', scopes: name(scopeName, RuleName.DocumentComment) },
+        { text: '@deprecated', scopes: name(scopeName, RuleName.DocumentComment, RuleName.DocumentTag) },
+        { text: 'text', scopes: name(scopeName, RuleName.DocumentComment) },
+
+        { text: '*/', scopes: name(scopeName, RuleName.DocumentComment, RuleDescriptor.End) },
+      ],
+    ],
     // https://jsdoc.app/tags-example
     [
       dedent`

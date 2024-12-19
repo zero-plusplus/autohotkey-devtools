@@ -67,6 +67,9 @@ function createTagAnnotationRule(scopeName: ScopeName, placeholder: Placeholder_
 
         // https://jsdoc.app/tags-copyright
         '@copyright',
+
+        // https://jsdoc.app/tags-deprecated
+        '@deprecated',
       ],
     }),
     createAttributeAnnotationTagRule(scopeName, {
