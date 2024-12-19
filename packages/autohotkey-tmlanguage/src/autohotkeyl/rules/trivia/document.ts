@@ -85,6 +85,9 @@ function createTagAnnotationRule(scopeName: ScopeName, placeholder: Placeholder_
 
         // https://jsdoc.app/tags-ignore
         '@ignore',
+
+        // https://jsdoc.app/tags-override
+        '@override',
       ],
     }),
     createAttributeAnnotationTagRule(scopeName, {
