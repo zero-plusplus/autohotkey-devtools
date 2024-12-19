@@ -70,6 +70,10 @@ function createTagAnnotationRule(scopeName: ScopeName, placeholder: Placeholder_
 
         // https://jsdoc.app/tags-deprecated
         '@deprecated',
+
+        // https://jsdoc.app/tags-description
+        '@description',
+        '@desc',
       ],
     }),
     createAttributeAnnotationTagRule(scopeName, {
