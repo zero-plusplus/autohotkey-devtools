@@ -97,6 +97,9 @@ function createTagAnnotationRule(scopeName: ScopeName, placeholder: Placeholder_
 
         // https://jsdoc.app/tags-public
         '@public',
+
+        // https://jsdoc.app/tags-readonly
+        '@readonly',
       ],
     }),
     createAttributeAnnotationTagRule(scopeName, {
