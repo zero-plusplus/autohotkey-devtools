@@ -247,16 +247,16 @@ function createTagAnnotationRule(scopeName: ScopeName, placeholder: Placeholder_
         // https://jsdoc.app/tags-property
         '@property',
         '@prop',
-
-        // https://jsdoc.app/tags-returns
-        '@returns',
-        '@return',
       ],
       rules: [],
     }),
     createTypeDeclarationTagRule(scopeName, {
       ...placeholder,
       tagNames: [
+        // https://jsdoc.app/tags-returns
+        '@returns',
+        '@return',
+
         // https://jsdoc.app/tags-throws
         '@throws',
         '@exception',
