@@ -82,6 +82,9 @@ function createTagAnnotationRule(scopeName: ScopeName, placeholder: Placeholder_
 
         // https://jsdoc.app/tags-global
         '@global',
+
+        // https://jsdoc.app/tags-ignore
+        '@ignore',
       ],
     }),
     createAttributeAnnotationTagRule(scopeName, {
