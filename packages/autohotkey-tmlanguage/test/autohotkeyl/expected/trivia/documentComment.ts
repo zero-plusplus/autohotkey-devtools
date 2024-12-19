@@ -332,6 +332,40 @@ export function createDocumentCommentExpectedData(scopeName: ScopeName): Expecte
         { text: '*/', scopes: name(scopeName, RuleName.DocumentComment, RuleDescriptor.End) },
       ],
     ],
+    // https://jsdoc.app/tags-default
+    [
+      dedent`
+        /**
+         * @default
+         * @default true
+         * @default 123
+         */
+        /**
+         * @defaultvalue
+         * @defaultvalue true
+         * @defaultvalue 123
+         */
+      `, [
+        ...[ '@default', '@defaultvalue' ].flatMap((tag) => {
+          return [
+            { text: '/**', scopes: name(scopeName, RuleName.DocumentComment, RuleDescriptor.Begin) },
+
+            { text: ' *', scopes: name(scopeName, RuleName.DocumentComment) },
+            { text: tag, scopes: name(scopeName, RuleName.DocumentComment, RuleName.DocumentTag) },
+
+            { text: ' *', scopes: name(scopeName, RuleName.DocumentComment) },
+            { text: tag, scopes: name(scopeName, RuleName.DocumentComment, RuleName.DocumentTag) },
+            { text: 'true', scopes: name(scopeName, RuleName.DocumentComment, RuleName.EmbeddedLanguage, RuleName.KeywordLikeBuiltInVariable) },
+
+            { text: ' *', scopes: name(scopeName, RuleName.DocumentComment) },
+            { text: tag, scopes: name(scopeName, RuleName.DocumentComment, RuleName.DocumentTag) },
+            { text: '123', scopes: name(scopeName, RuleName.DocumentComment, RuleName.EmbeddedLanguage, RuleName.Integer) },
+
+            { text: '*/', scopes: name(scopeName, RuleName.DocumentComment, RuleDescriptor.End) },
+          ];
+        }),
+      ],
+    ],
     // https://jsdoc.app/tags-example
     [
       dedent`

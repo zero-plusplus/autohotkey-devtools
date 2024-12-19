@@ -1,5 +1,5 @@
 import { Repository, RuleDescriptor, RuleName, StyleName, TokenType } from '../../../constants';
-import { alt, anyChars0, anyChars1, capture, char, endAnchor, group, ignoreCase, inlineSpace, inlineSpaces0, inlineSpaces1, keyword, lookahead, lookbehind, negativeLookahead, negChars1, optional, optseq, ordalt, seq, startAnchor, text } from '../../../oniguruma';
+import { alt, anyChars0, anyChars1, capture, char, endAnchor, group, ignoreCase, inlineSpace, inlineSpaces0, keyword, lookahead, lookbehind, negativeLookahead, negChars1, optional, optseq, ordalt, seq, startAnchor, text } from '../../../oniguruma';
 import type { BeginEndRule, PatternsRule, Rule, ScopeName } from '../../../types';
 import { includeRule, name, nameRule, patternsRule } from '../../../utils';
 
@@ -132,6 +132,16 @@ function createTagAnnotationRule(scopeName: ScopeName, placeholder: Placeholder_
         },
       ],
     }),
+    createAttributeAnnotationTagRule(scopeName, {
+      ...placeholder,
+      contentName: name(scopeName, RuleName.EmbeddedLanguage),
+      tagNames: [
+        // https://jsdoc.app/tags-default
+        '@default',
+        '@defaultvalue',
+      ],
+      rules: [ includeRule(Repository.Expressions) ],
+    }),
     createDeclarationTagRule(scopeName, {
       ...placeholder,
       tagNames: [
@@ -185,26 +195,27 @@ function createFlagAnnotationOrDescriptorTagRule(scopeName: ScopeName, placehold
 
 interface Placeholder_AttributeAnnotationTag {
   startPattern: string;
+  contentName?: string;
   tagNames: readonly string[];
   rules: Rule[];
 }
 // e.g. `@xxx yyyy`
 function createAttributeAnnotationTagRule(scopeName: ScopeName, placeholder: Placeholder_AttributeAnnotationTag): BeginEndRule {
   return {
+    ...(placeholder.contentName ? { contentName: placeholder.contentName } : {}),
     begin: seq(
       lookbehind(placeholder.startPattern),
       inlineSpaces0(),
       capture(ordalt(...placeholder.tagNames)),
-      inlineSpaces1(),
-      capture(anyChars0()),
-      endAnchor(),
+      group(alt(inlineSpace(), endAnchor())),
+      inlineSpaces0(),
     ),
     beginCaptures: {
       1: nameRule(scopeName, RuleName.DocumentTag),
-      2: patternsRule(...placeholder.rules),
     },
     end: endAnchor(),
     patterns: [
+      ...placeholder.rules,
       {
         begin: char('-'),
         end: endAnchor(),
