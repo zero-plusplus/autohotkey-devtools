@@ -17,6 +17,7 @@ export interface TmLanguage {
 export type Rule = NameRule | PatternsRule | MatchRule | BeginEndRule | BeginWhileRule | IncludeRule;
 export interface RuleBase {
   name?: ElementName;
+  contentName?: ElementName;
   comment?: string;
   disabled?: 1;
   patterns?: Rule[];
@@ -34,14 +35,12 @@ export interface MatchRule extends RuleBase {
 export interface BeginEndRule extends RuleBase {
   begin?: string;
   beginCaptures?: Repositories;
-  contentName?: string;
   end?: string;
   endCaptures?: Repositories;
 }
 export interface BeginWhileRule extends RuleBase {
   begin?: string;
   beginCaptures?: Repositories;
-  contentName?: string;
   while?: string;
   whileCaptures?: Repositories;
 }

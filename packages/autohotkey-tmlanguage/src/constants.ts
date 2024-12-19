@@ -249,7 +249,8 @@ export const enum Repository {
 
   // #region document
   DocumentComment = 'repository.comment.document',
-  FencedCodeBlockInDocument = 'repository.markdown.fenced_code',
+  FencedCodeBlockInDocument = 'repository.comment.document.fenced_code',
+  InlineTextInDocument = 'repository.comment.document.inline-text',
   // #endregion document
   // #endregion trivas
 
@@ -401,6 +402,7 @@ export const enum RuleName {
   LanguageName = 'fenced_code.block.language',
   LanguageAttribute = 'fenced_code.block.language.attributes',
   EmbeddedLanguage = 'meta.embedded.block',
+  NameOrUrlInDocument = 'variable.other.in-document',
   // #endregion document
   // #endregion trivias
 

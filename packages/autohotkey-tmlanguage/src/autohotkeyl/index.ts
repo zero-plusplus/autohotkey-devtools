@@ -40,6 +40,7 @@ export function createRepositories(scopeName: ScopeName): Repositories {
     [Repository.DocumentComment]: rule_v1.createDocumentCommentRule(scopeName, {
       identifierPattern: patterns_v1.identifierPattern,
     }),
+    [Repository.InlineTextInDocument]: rule_v1.createInlineTextInDocumentRule(scopeName),
     // #endregion trivia
 
     // #region statement

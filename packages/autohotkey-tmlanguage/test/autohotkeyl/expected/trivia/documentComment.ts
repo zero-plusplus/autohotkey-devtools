@@ -1,5 +1,5 @@
 import { dedent } from '@zero-plusplus/utilities/src';
-import { RuleDescriptor, RuleName, StyleName, TokenType } from '../../../../src/constants';
+import { RuleDescriptor, RuleName, TokenType } from '../../../../src/constants';
 import type { ScopeName } from '../../../../src/types';
 import { name } from '../../../../src/utils';
 import type { ExpectedTestData } from '../../../types';
@@ -935,6 +935,8 @@ export function createDocumentCommentExpectedData(scopeName: ScopeName): Expecte
         /**
          * @see url
          * @see https://
+         * @see {@link url}
+         * @see [text]{@link url}
          */
       `,
       [
@@ -942,11 +944,26 @@ export function createDocumentCommentExpectedData(scopeName: ScopeName): Expecte
 
         { text: ' *', scopes: name(scopeName, RuleName.DocumentComment) },
         { text: '@see', scopes: name(scopeName, RuleName.DocumentComment, RuleName.DocumentTag) },
-        { text: 'url', scopes: name(scopeName, RuleName.DocumentComment, RuleName.NamePathInDocument) },
+        { text: 'url', scopes: name(scopeName, RuleName.DocumentComment, RuleName.NameOrUrlInDocument) },
 
         { text: ' *', scopes: name(scopeName, RuleName.DocumentComment) },
         { text: '@see', scopes: name(scopeName, RuleName.DocumentComment, RuleName.DocumentTag) },
-        { text: 'https://', scopes: name(scopeName, RuleName.DocumentComment, RuleName.NamePathInDocument, StyleName.Underline) },
+        { text: 'https://', scopes: name(scopeName, RuleName.DocumentComment, RuleName.NameOrUrlInDocument) },
+
+        { text: ' *', scopes: name(scopeName, RuleName.DocumentComment) },
+        { text: '@see', scopes: name(scopeName, RuleName.DocumentComment, RuleName.DocumentTag) },
+        { text: '{@link', scopes: name(scopeName, RuleName.DocumentComment, RuleName.DocumentTag, RuleDescriptor.Begin) },
+        { text: 'url', scopes: name(scopeName, RuleName.DocumentComment, RuleName.NameOrUrlInDocument) },
+        { text: '}', scopes: name(scopeName, RuleName.DocumentComment, RuleName.DocumentTag, RuleDescriptor.End) },
+
+        { text: ' *', scopes: name(scopeName, RuleName.DocumentComment) },
+        { text: '@see', scopes: name(scopeName, RuleName.DocumentComment, RuleName.DocumentTag) },
+        { text: '[', scopes: name(scopeName, RuleName.DocumentComment, RuleName.DocumentTag, RuleDescriptor.Begin) },
+        { text: 'text', scopes: name(scopeName, RuleName.DocumentComment, RuleName.UnquotedString) },
+        { text: ']', scopes: name(scopeName, RuleName.DocumentComment, RuleName.DocumentTag, RuleDescriptor.End) },
+        { text: '{@link', scopes: name(scopeName, RuleName.DocumentComment, RuleName.DocumentTag, RuleDescriptor.Begin) },
+        { text: 'url', scopes: name(scopeName, RuleName.DocumentComment, RuleName.NameOrUrlInDocument) },
+        { text: '}', scopes: name(scopeName, RuleName.DocumentComment, RuleName.DocumentTag, RuleDescriptor.End) },
 
         { text: '*/', scopes: name(scopeName, RuleName.DocumentComment, RuleDescriptor.End) },
       ],

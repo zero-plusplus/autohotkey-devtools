@@ -1,6 +1,6 @@
 import { Repository, RuleDescriptor, RuleName, StyleName, TokenType } from '../../../constants';
-import { alt, anyChars0, anyChars1, capture, char, endAnchor, group, ignoreCase, inlineSpace, inlineSpaces0, keyword, lookahead, lookbehind, negativeLookahead, negChars1, optional, optseq, ordalt, seq, startAnchor, text } from '../../../oniguruma';
-import type { BeginEndRule, PatternsRule, Rule, ScopeName } from '../../../types';
+import { alt, anyChars0, anyChars1, capture, char, endAnchor, group, ignoreCase, inlineSpace, inlineSpaces0, inlineSpaces1, keyword, lookahead, lookbehind, many0, negativeLookahead, negChar, negChars1, optional, optseq, ordalt, seq, startAnchor, text } from '../../../oniguruma';
+import type { BeginEndRule, ElementName, MatchRule, PatternsRule, Rule, ScopeName } from '../../../types';
 import { includeRule, name, nameRule, patternsRule } from '../../../utils';
 
 interface Placeholder {
@@ -37,10 +37,24 @@ export function createDocumentCommentRule(scopeName: ScopeName, placeholder: Pla
 
           // #region markdown
           includeRule(Repository.FencedCodeBlockInDocument),
-          { include: 'text.html.markdown' },
+          includeRule(Repository.InlineTextInDocument),
+          { include: 'text.html.markdown#block' },
           // #endregion markdown
         ],
       },
+    ],
+  };
+}
+export function createInlineTextInDocumentRule(scopeName: ScopeName): PatternsRule {
+  return {
+    patterns: [
+      createInlineLinkTagRule(scopeName),
+      {
+        begin: char('-'),
+        end: endAnchor(),
+        patterns: [ { include: 'text.html.markdown#inline' } ],
+      },
+      { include: 'text.html.markdown#inline' },
     ],
   };
 }
@@ -177,31 +191,17 @@ function createTagAnnotationRule(scopeName: ScopeName, placeholder: Placeholder_
     }),
     createAttributeAnnotationTagRule(scopeName, {
       ...placeholder,
-      contentName: name(scopeName, RuleName.NamePathInDocument),
       tagNames: [
         // https://jsdoc.app/tags-see
         '@see',
       ],
       rules: [
         {
+          name: name(scopeName, RuleName.NameOrUrlInDocument),
           match: seq(
-            lookbehind(seq(
-              placeholder.startPattern,
-              inlineSpaces0(),
-              ignoreCase(text('@see')),
-              inlineSpace(),
-            )),
-            inlineSpaces0(),
-            capture(seq(
-              group(ordalt(text('http'), text('https'))),
-              text('://'),
-              anyChars0(),
-            )),
-            endAnchor(),
+            negChar('[', '{', '\\s'),
+            anyChars0(),
           ),
-          captures: {
-            1: nameRule(scopeName, StyleName.Underline),
-          },
         },
       ],
     }),
@@ -269,20 +269,13 @@ function createFlagAnnotationOrDescriptorTagRule(scopeName: ScopeName, placehold
       1: nameRule(scopeName, RuleName.DocumentTag),
     },
     end: endAnchor(),
-    patterns: [
-      {
-        begin: char('-'),
-        end: endAnchor(),
-        patterns: [ { include: 'text.html.markdown#inline' } ],
-      },
-      { include: 'text.html.markdown#inline' },
-    ],
+    patterns: [ includeRule(Repository.InlineTextInDocument) ],
   };
 }
 
 interface Placeholder_AttributeAnnotationTag {
   startPattern: string;
-  contentName?: string;
+  contentName?: ElementName;
   tagNames: readonly string[];
   rules: Rule[];
 }
@@ -303,12 +296,7 @@ function createAttributeAnnotationTagRule(scopeName: ScopeName, placeholder: Pla
     end: endAnchor(),
     patterns: [
       ...placeholder.rules,
-      {
-        begin: char('-'),
-        end: endAnchor(),
-        patterns: [ { include: 'text.html.markdown#inline' } ],
-      },
-      { include: 'text.html.markdown#inline' },
+      includeRule(Repository.InlineTextInDocument),
     ],
   };
 }
@@ -340,12 +328,7 @@ function createBlockTagRule(scopeName: ScopeName, placeholder: Placeholder_Block
     )),
     patterns: [
       ...placeholder.rules,
-      {
-        begin: char('-'),
-        end: endAnchor(),
-        patterns: [ { include: 'text.html.markdown#inline' } ],
-      },
-      { include: 'text.html.markdown#inline' },
+      includeRule(Repository.InlineTextInDocument),
     ],
   };
 }
@@ -486,5 +469,33 @@ function createExampleTagRule(scopeName: ScopeName, placeholder: Placeholder_Exa
         includeRule(Repository.Self),
       ],
     }),
+  };
+}
+function createInlineLinkTagRule(scopeName: ScopeName): MatchRule {
+  return {
+    match: seq(
+      optseq(
+        capture(char('[')),
+        capture(many0(group(alt(
+          negChar(']'),
+          text('\\]'),
+        )))),
+        capture(char(']')),
+      ),
+      capture(ignoreCase(text('{@link'))),
+      optseq(
+        inlineSpaces1(),
+        capture(anyChars0()),
+      ),
+      capture(seq('}')),
+    ),
+    captures: {
+      1: nameRule(scopeName, RuleName.DocumentTag, RuleDescriptor.Begin),
+      2: nameRule(scopeName, RuleName.UnquotedString),
+      3: nameRule(scopeName, RuleName.DocumentTag, RuleDescriptor.End),
+      4: nameRule(scopeName, RuleName.DocumentTag, RuleDescriptor.Begin),
+      5: nameRule(scopeName, RuleName.NameOrUrlInDocument),
+      6: nameRule(scopeName, RuleName.DocumentTag, RuleDescriptor.End),
+    },
   };
 }
