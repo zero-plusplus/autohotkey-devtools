@@ -1,5 +1,5 @@
 import { Repository, RuleDescriptor, RuleName, StyleName, TokenType } from '../../../constants';
-import { alt, anyChars0, anyChars1, capture, char, endAnchor, group, ignoreCase, inlineSpaces0, keyword, lookahead, lookbehind, negativeLookahead, negChars1, optional, optseq, ordalt, seq, startAnchor, text } from '../../../oniguruma';
+import { alt, anyChars0, anyChars1, capture, char, endAnchor, group, ignoreCase, inlineSpace, inlineSpaces0, inlineSpaces1, keyword, lookahead, lookbehind, negativeLookahead, negChars1, optional, optseq, ordalt, seq, startAnchor, text } from '../../../oniguruma';
 import type { BeginEndRule, PatternsRule, Rule, ScopeName } from '../../../types';
 import { includeRule, name, nameRule, patternsRule } from '../../../utils';
 
@@ -135,6 +135,10 @@ function createTagAnnotationRule(scopeName: ScopeName, placeholder: Placeholder_
         // https://jsdoc.app/tags-class
         '@class',
         '@constructor',
+
+        // https://jsdoc.app/tags-constant
+        '@constant',
+        '@const',
       ],
       rules: [],
     }),
@@ -155,6 +159,7 @@ function createFlagAnnotationOrDescriptorTagRule(scopeName: ScopeName, placehold
       lookbehind(placeholder.startPattern),
       inlineSpaces0(),
       capture(ordalt(...placeholder.tagNames)),
+      lookahead(alt(inlineSpace(), endAnchor())),
       inlineSpaces0(),
     ),
     beginCaptures: {
@@ -184,7 +189,7 @@ function createAttributeAnnotationTagRule(scopeName: ScopeName, placeholder: Pla
       lookbehind(placeholder.startPattern),
       inlineSpaces0(),
       capture(ordalt(...placeholder.tagNames)),
-      inlineSpaces0(),
+      inlineSpaces1(),
       capture(anyChars0()),
       endAnchor(),
     ),
@@ -216,6 +221,7 @@ function createBlockTagRule(scopeName: ScopeName, placeholder: Placeholder_Block
       lookbehind(placeholder.startPattern),
       inlineSpaces0(),
       capture(ignoreCase(ordalt(...placeholder.tagNames))),
+      lookahead(alt(inlineSpace(), endAnchor())),
     ),
     beginCaptures: {
       1: nameRule(scopeName, RuleName.DocumentTag),
@@ -273,6 +279,8 @@ function createDeclarationTagRule(scopeName: ScopeName, placeholder: Placeholder
             inlineSpaces0(),
           )),
           capture(placeholder.identifierPattern),
+          lookahead(alt(inlineSpace(), endAnchor())),
+          inlineSpaces0(),
         ),
         captures: {
           1: patternsRule(includeRule(Repository.Variable)),
@@ -297,6 +305,8 @@ function createDeclarationTagRule(scopeName: ScopeName, placeholder: Placeholder
           capture(char('}')),
           inlineSpaces0(),
           optional(capture(placeholder.identifierPattern)),
+          lookahead(alt(inlineSpace(), endAnchor())),
+          inlineSpaces0(),
         ),
         endCaptures: {
           1: nameRule(scopeName, TokenType.Other, RuleName.TypeInDocument, RuleName.CloseBrace),
@@ -329,7 +339,11 @@ function createDeclarationTagRule(scopeName: ScopeName, placeholder: Placeholder
         beginCaptures: {
           1: nameRule(scopeName, RuleName.OpenBrace, RuleDescriptor.Begin),
         },
-        end: capture(char(']')),
+        end: seq(
+          capture(char(']')),
+          lookahead(alt(inlineSpace(), endAnchor())),
+          inlineSpaces0(),
+        ),
         endCaptures: {
           1: nameRule(scopeName, RuleName.CloseBrace, RuleDescriptor.End),
         },
