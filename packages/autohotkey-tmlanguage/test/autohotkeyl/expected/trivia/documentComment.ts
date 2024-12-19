@@ -286,6 +286,32 @@ export function createDocumentCommentExpectedData(scopeName: ScopeName): Expecte
         }),
       ],
     ],
+    // https://jsdoc.app/tags-constructs
+    [
+      dedent`
+        /**
+         * @constructs
+         * @constructs name
+         * @constructs name description
+         */
+      `, [
+        { text: '/**', scopes: name(scopeName, RuleName.DocumentComment, RuleDescriptor.Begin) },
+
+        { text: ' *', scopes: name(scopeName, RuleName.DocumentComment) },
+        { text: '@constructs', scopes: name(scopeName, RuleName.DocumentComment, RuleName.DocumentTag) },
+
+        { text: ' *', scopes: name(scopeName, RuleName.DocumentComment) },
+        { text: '@constructs', scopes: name(scopeName, RuleName.DocumentComment, RuleName.DocumentTag) },
+        { text: 'name', scopes: name(scopeName, RuleName.DocumentComment, RuleName.Variable) },
+
+        { text: ' *', scopes: name(scopeName, RuleName.DocumentComment) },
+        { text: '@constructs', scopes: name(scopeName, RuleName.DocumentComment, RuleName.DocumentTag) },
+        { text: 'name', scopes: name(scopeName, RuleName.DocumentComment, RuleName.Variable) },
+        { text: 'description', scopes: name(scopeName, RuleName.DocumentComment) },
+
+        { text: '*/', scopes: name(scopeName, RuleName.DocumentComment, RuleDescriptor.End) },
+      ],
+    ],
     // https://jsdoc.app/tags-example
     [
       dedent`

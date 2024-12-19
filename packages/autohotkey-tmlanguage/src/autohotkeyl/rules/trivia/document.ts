@@ -139,6 +139,9 @@ function createTagAnnotationRule(scopeName: ScopeName, placeholder: Placeholder_
         // https://jsdoc.app/tags-constant
         '@constant',
         '@const',
+
+        // https://jsdoc.app/tags-constructs
+        '@constructs',
       ],
       rules: [],
     }),
