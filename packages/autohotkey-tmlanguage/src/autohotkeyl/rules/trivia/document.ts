@@ -263,6 +263,9 @@ function createTagAnnotationRule(scopeName: ScopeName, placeholder: Placeholder_
         // https://jsdoc.app/tags-throws
         '@throws',
         '@exception',
+
+        // https://jsdoc.app/tags-type
+        '@type',
       ],
       rules: [],
     }),
