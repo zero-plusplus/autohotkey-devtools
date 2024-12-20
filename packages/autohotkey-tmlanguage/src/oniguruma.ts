@@ -65,6 +65,9 @@ export function whitespaces1(): string {
 export function asciiChar(): string {
   return '[:ascii:]';
 }
+export function alphaChar(): string {
+  return '[a-zA-Z]';
+}
 // #endregion char classes
 
 // #region combinator

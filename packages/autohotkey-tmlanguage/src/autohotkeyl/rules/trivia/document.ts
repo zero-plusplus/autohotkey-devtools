@@ -1,5 +1,5 @@
 import { Repository, RuleDescriptor, RuleName, StyleName, TokenType } from '../../../constants';
-import { alt, anyChars0, anyChars1, capture, char, endAnchor, group, ignoreCase, inlineSpace, inlineSpaces0, inlineSpaces1, keyword, lookahead, lookbehind, many0, negativeLookahead, negChar, negChars1, optional, optseq, ordalt, seq, startAnchor, text } from '../../../oniguruma';
+import { alphaChar, alt, anyChars0, anyChars1, capture, char, endAnchor, group, groupMany0, ignoreCase, inlineSpace, inlineSpaces0, inlineSpaces1, keyword, lookahead, lookbehind, negativeLookahead, negChar, negChars1, optional, optseq, ordalt, seq, startAnchor, text } from '../../../oniguruma';
 import type { BeginEndRule, ElementName, MatchRule, PatternsRule, Rule, ScopeName } from '../../../types';
 import { includeRule, name, nameRule, patternsRule } from '../../../utils';
 
@@ -46,17 +46,10 @@ export function createDocumentCommentRule(scopeName: ScopeName, placeholder: Pla
   };
 }
 export function createInlineTextInDocumentRule(scopeName: ScopeName): PatternsRule {
-  return {
-    patterns: [
-      createInlineLinkTagRule(scopeName),
-      {
-        begin: char('-'),
-        end: endAnchor(),
-        patterns: [ { include: 'text.html.markdown#inline' } ],
-      },
-      { include: 'text.html.markdown#inline' },
-    ],
-  };
+  return patternsRule(
+    createInlineLinkTagRule(scopeName),
+    { include: 'text.html.markdown#inline' },
+  );
 }
 
 // #region tag
@@ -278,6 +271,23 @@ function createTagAnnotationRule(scopeName: ScopeName, placeholder: Placeholder_
 
     // https://jsdoc.app/tags-example
     createExampleTagRule(scopeName, placeholder),
+
+    // unknown tag
+    {
+      match: seq(
+        lookbehind(placeholder.startPattern),
+        inlineSpaces0(),
+        capture(seq(
+          char('@'),
+          groupMany0(alphaChar()),
+        )),
+        lookahead(alt(inlineSpace(), endAnchor())),
+        inlineSpaces0(),
+      ),
+      captures: {
+        1: nameRule(scopeName, RuleName.DocumentTag),
+      },
+    },
   );
 }
 
@@ -555,18 +565,22 @@ function createExampleTagRule(scopeName: ScopeName, placeholder: Placeholder_Exa
 function createInlineLinkTagRule(scopeName: ScopeName): MatchRule {
   return {
     match: seq(
+      inlineSpaces0(),
       optseq(
         capture(char('[')),
-        capture(many0(group(alt(
+        capture(groupMany0(alt(
           negChar(']'),
           text('\\]'),
-        )))),
+        ))),
         capture(char(']')),
       ),
       capture(ignoreCase(text('{@link'))),
       optseq(
         inlineSpaces1(),
-        capture(anyChars0()),
+        capture(groupMany0(alt(
+          negChar('}'),
+          text('\\}'),
+        ))),
       ),
       capture(seq('}')),
     ),

@@ -1199,6 +1199,53 @@ export function createDocumentCommentExpectedData(scopeName: ScopeName): Expecte
         { text: '*/', scopes: name(scopeName, RuleName.DocumentComment, RuleDescriptor.End) },
       ],
     ],
+    [
+      dedent`
+        /**
+         * {@link url}
+         * [text]{@link url}
+         */
+      `,
+      [
+        { text: '/**', scopes: name(scopeName, RuleName.DocumentComment, RuleDescriptor.Begin) },
+
+        { text: ' *', scopes: name(scopeName, RuleName.DocumentComment) },
+        { text: '{@link', scopes: name(scopeName, RuleName.DocumentComment, RuleName.DocumentTag, RuleDescriptor.Begin) },
+        { text: 'url', scopes: name(scopeName, RuleName.DocumentComment, RuleName.NameOrUrlInDocument) },
+        { text: '}', scopes: name(scopeName, RuleName.DocumentComment, RuleName.DocumentTag, RuleDescriptor.End) },
+
+        { text: ' *', scopes: name(scopeName, RuleName.DocumentComment) },
+        { text: '[', scopes: name(scopeName, RuleName.DocumentComment, RuleName.DocumentTag, RuleDescriptor.Begin) },
+        { text: 'text', scopes: name(scopeName, RuleName.DocumentComment, RuleName.UnquotedString) },
+        { text: ']', scopes: name(scopeName, RuleName.DocumentComment, RuleName.DocumentTag, RuleDescriptor.End) },
+        { text: '{@link', scopes: name(scopeName, RuleName.DocumentComment, RuleName.DocumentTag, RuleDescriptor.Begin) },
+        { text: 'url', scopes: name(scopeName, RuleName.DocumentComment, RuleName.NameOrUrlInDocument) },
+        { text: '}', scopes: name(scopeName, RuleName.DocumentComment, RuleName.DocumentTag, RuleDescriptor.End) },
+
+        { text: '*/', scopes: name(scopeName, RuleName.DocumentComment, RuleDescriptor.End) },
+      ],
+    ],
+    // unknown tag name
+    [
+      dedent`
+        /**
+         * @unknown
+         * @unknown description
+         */
+      `,
+      [
+        { text: '/**', scopes: name(scopeName, RuleName.DocumentComment, RuleDescriptor.Begin) },
+
+        { text: ' *', scopes: name(scopeName, RuleName.DocumentComment) },
+        { text: '@unknown', scopes: name(scopeName, RuleName.DocumentComment, RuleName.DocumentTag) },
+
+        { text: ' *', scopes: name(scopeName, RuleName.DocumentComment) },
+        { text: '@unknown', scopes: name(scopeName, RuleName.DocumentComment, RuleName.DocumentTag) },
+        { text: 'description', scopes: name(scopeName, RuleName.DocumentComment) },
+
+        { text: '*/', scopes: name(scopeName, RuleName.DocumentComment, RuleDescriptor.End) },
+      ],
+    ],
     // fenced code block
     [
       dedent`
