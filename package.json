@@ -40,7 +40,7 @@
   "private": true,
   "workspaces": {
     "packages": [
-      "editors/vscode",
+      "editors/vscode/vscode-autohotkey-devtools",
       "packages/autohotkey-tmlanguage",
       "packages/autohotkey-utilities",
       "packages/eslint-style-rules",

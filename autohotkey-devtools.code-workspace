@@ -1,8 +1,8 @@
 {
 	"folders": [
 		{
-			"path": "editors/vscode",
-			"name": "🖊️ VSCode",
+			"path": "editors/vscode/vscode-autohotkey-devtools",
+			"name": "🖊️ VSCode AutoHotkey DevTools",
 		},
 		{
 			"path": "packages/autohotkey-tmlanguage",
