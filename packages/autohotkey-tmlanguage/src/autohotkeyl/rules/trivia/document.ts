@@ -120,6 +120,9 @@ function createTagAnnotationRule(scopeName: ScopeName, placeholder: Placeholder_
 
         // https://jsdoc.app/tags-summary
         '@summary',
+
+        // https://jsdoc.app/tags-todo
+        '@todo',
       ],
     }),
     createAttributeAnnotationTagRule(scopeName, {
