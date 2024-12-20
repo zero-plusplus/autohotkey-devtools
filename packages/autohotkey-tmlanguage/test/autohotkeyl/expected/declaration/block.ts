@@ -1,5 +1,5 @@
 import { dedent } from '@zero-plusplus/utilities/src';
-import { Repository, RuleName } from '../../../../src/constants';
+import { RuleName } from '../../../../src/constants';
 import type { ScopeName } from '../../../../src/types';
 import { name } from '../../../../src/utils';
 import type { ExpectedTestData } from '../../../types';
@@ -9,12 +9,16 @@ export function createBlockDeclarationExpectedData(scopeName: ScopeName): Expect
     [
       dedent`
         {
-          AutoTrim
+          if true {
+          }
         }
       `,
       [
         { text: '{', scopes: name(scopeName, RuleName.BlockBegin) },
-        { text: 'AutoTrim', scopes: name(scopeName, Repository.CommandStatement, RuleName.CommandName) },
+        { text: 'if', scopes: name(scopeName, RuleName.ControlFlowKeyword) },
+        { text: 'true', scopes: name(scopeName, RuleName.KeywordLikeBuiltInVariable) },
+        { text: '{', scopes: name(scopeName, RuleName.BlockBegin) },
+        { text: '}', scopes: name(scopeName, RuleName.BlockEnd) },
         { text: '}', scopes: name(scopeName, RuleName.BlockEnd) },
       ],
     ],

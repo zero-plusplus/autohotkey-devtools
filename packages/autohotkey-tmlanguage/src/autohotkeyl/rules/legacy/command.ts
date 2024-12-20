@@ -1,5 +1,4 @@
 import { hasFlag } from '@zero-plusplus/utilities/src';
-import type { SetOptional } from 'type-fest';
 import { CommandFlag, HighlightType, Repository, RuleName, StyleName } from '../../../constants';
 import { alt, anyChar, anyChars0, capture, char, group, groupMany0, ignoreCase, inlineSpace, inlineSpaces0, inlineSpaces1, keyword, lookahead, lookbehind, negativeLookahead, optional, ordalt, seq, startAnchor, wordBound } from '../../../oniguruma';
 import type { BeginWhileRule, CommandDefinition, CommandParameter, CommandSignature, ElementName, MatchRule, NameRule, PatternsRule, Rule, ScopeName } from '../../../types';
@@ -9,14 +8,12 @@ import * as patterns_v1 from '../../patterns';
 interface Placeholder {
   startAnchor: string;
   endAnchor: string;
-  statementElementName: ElementName;
   commandElementName: ElementName;
 }
 export function createCommandLikeStatementRule(scopeName: ScopeName, definitions: CommandDefinition[], placeholder: Placeholder): BeginWhileRule {
   const sortedDefinitions = definitions.sort((a, b) => b.name.length - a.name.length);
 
   return {
-    name: name(scopeName, placeholder.statementElementName),
     begin: capture(seq(
       lookbehind(placeholder.startAnchor),
       ignoreCase(alt(...sortedDefinitions.map((definition) => definition.name))),
@@ -96,14 +93,13 @@ export function createCommandLikeRule(scopeName: ScopeName, definition: CommandD
     ].map((rule, i) => [ i + 1, rule ])),
   };
 }
-export function createCommandNames(scopeName: ScopeName, definitions: CommandDefinition[], placeholder: SetOptional<Placeholder, 'statementElementName'>): PatternsRule {
+export function createCommandNames(scopeName: ScopeName, definitions: CommandDefinition[], placeholder: Placeholder): PatternsRule {
   const commandNames = definitions.filter((definition) => !hasFlag(definition.flags, CommandFlag.Deprecated)).map((definition) => definition.name);
   const deprecatedCommandNames = definitions.filter((definition) => hasFlag(definition.flags, CommandFlag.Deprecated)).map((definition) => definition.name);
 
   const targets: [ [ string[], boolean ], [ string[], boolean ] ] = [ [ commandNames, false ], [ deprecatedCommandNames, true ] ];
   return patternsRule(...targets.map(([ names, isDeprecated ]): MatchRule => {
     return {
-      ...placeholder.statementElementName ? nameRule(scopeName, placeholder.statementElementName) : {},
       match: seq(
         lookbehind(placeholder.startAnchor),
         inlineSpaces0(),

@@ -1,4 +1,4 @@
-import { Repository, RuleName } from '../../../constants';
+import { RuleName } from '../../../constants';
 import { alt, capture, char, inlineSpace, inlineSpaces0, keyword, lookahead, lookbehind, seq } from '../../../oniguruma';
 import type { PatternsRule, ScopeName } from '../../../types';
 import { nameRule, patternsRule } from '../../../utils';
@@ -16,7 +16,6 @@ export function createLoopStatementRule(scopeName: ScopeName, placeholder: Place
         return createCommandLikeRule(scopeName, definition, signature, {
           startAnchor: placeholder.startAnchor,
           endAnchor: placeholder.endAnchor,
-          statementElementName: Repository.LoopStatement,
           commandElementName: RuleName.ControlFlowKeyword,
         });
       });

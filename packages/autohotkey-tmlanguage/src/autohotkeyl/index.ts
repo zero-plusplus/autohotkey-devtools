@@ -73,7 +73,6 @@ export function createRepositories(scopeName: ScopeName): Repositories {
     [Repository.CommandStatement]: rule_v1.createCommandLikeStatementRule(scopeName, definition_v1.commandDefinitions, {
       startAnchor: patterns_v1.statementStartAnchor,
       endAnchor: patterns_v1.lineEndAnchor,
-      statementElementName: Repository.CommandStatement,
       commandElementName: RuleName.CommandName,
     }),
     [Repository.IncludeStatement]: rule_v1.createIncludeStatementRule(scopeName, {
@@ -83,7 +82,6 @@ export function createRepositories(scopeName: ScopeName): Repositories {
     [Repository.DirectiveStatement]: rule_v1.createCommandLikeStatementRule(scopeName, definition_v1.directiveDefinitions, {
       startAnchor: patterns_v1.statementStartAnchor,
       endAnchor: patterns_v1.lineEndAnchor,
-      statementElementName: Repository.DirectiveStatement,
       commandElementName: RuleName.DirectiveName,
     }),
     [Repository.JumpStatement]: rule_v1.createJumpStatement(scopeName, {
