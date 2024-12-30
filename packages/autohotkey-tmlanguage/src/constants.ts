@@ -506,6 +506,7 @@ export const enum RuleName {
   CommandName = 'support.function.command',
   JumpCommandName = 'keyword.control.jump',
   SubCommandName = 'support.function.subcommand',
+  FlowSubCommandName = 'keyword.control.flow.subcommand',
   // #endregion legacy
 }
 export const enum RuleDescriptor {
@@ -540,23 +541,25 @@ export const enum CommandArgsType {
 }
 
 export const enum HighlightType {
-  None = 0,
-  Blank,
-  Expression,
-  ExpressionWithOneTrueBrace,
-  Enum,
-  UnquotedString,
-  UnquotedStringShouldEscapeComma,
-  LabelName,
-  SubCommand,
-  GuiSubCommand,
-  Input,
-  Output,
+  None = 'none',
+  Blank = 'blank',
+  Expression = 'expression',
+  ExpressionWithOneTrueBrace = 'expressionwithonetruebrace',
+  Enum = 'enum',
+  UnquotedString = 'unquotedstring',
+  UnquotedStringShouldEscapeComma = 'unquotedstringshouldescapecomma',
+  LabelName = 'labelname',
+  SubCommand = 'subcommand',
+  FlowSubCommand = 'flowsubcommand',
+  GuiSubCommand = 'guisubcommand',
+  Input = 'input',
+  Output = 'output',
+  Invalid = 'invalid',
 
-  Options, // e.g. `ControlClick x123 y123`, `Click, 100 100 LButton`
-  CombiOptions, // e.g. `FileSetAttributes, +HA-R`
-  GuiOptions, // e.g. `Gui, +Resize -MaximizeBox`
-  Style, // e.g. `Control, Style, ^0x800000`, `WinSet, Style, -0xC00000`
+  Options = 'options', // e.g. `ControlClick x123 y123`, `Click, 100 100 LButton`
+  CombiOptions = 'combioptions', // e.g. `FileSetAttributes, +HA-R`
+  GuiOptions = 'guioptions', // e.g. `Gui, +Resize -MaximizeBox`
+  Style = 'style', // e.g. `Control, Style, ^0x800000`, `WinSet, Style, -0xC00000`
 }
 export const enum CommandSignatureFlag {
   None = 0,

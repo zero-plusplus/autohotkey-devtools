@@ -1,29 +1,130 @@
-import { dedent, hasFlag } from '@zero-plusplus/utilities/src';
-import * as definition_v1 from '../../../../src/autohotkeyl/definition';
-import { CommandFlag, RuleName, StyleName } from '../../../../src/constants';
+import { dedent } from '@zero-plusplus/utilities/src';
+import { RuleName, StyleName } from '../../../../src/constants';
 import type { ScopeName } from '../../../../src/types';
 import { name } from '../../../../src/utils';
 import type { ExpectedTestData, ParsedResult } from '../../../types';
 
 export function createCommandStatementExpectedData(scopeName: ScopeName): ExpectedTestData[] {
   return [
+    // https://www.autohotkey.com/docs/v1/lib/Control.htm
     [
       dedent`
-        ${definition_v1.commandDefinitions.flatMap((definition): string[] => {
-          return definition.signatures.map(() => {
-            return definition.name;
-          });
-        }).join('\n')}
+        Control, Check, blank, control id         ; comment
+        Control, UnCheck, blank, control id       ; comment
+        Control, Enable, blank, control id        ; comment
+        Control, Disable, blank, control id       ; comment
+        Control, Show, blank, control id          ; comment
+        Control, Hide, blank, control id          ; comment
+        Control, ShowDropDown, blank, control id  ; comment
+        Control, HideDropDown, blank, control id  ; comment
+
+        Control, Style, abc, control id           ; comment
+        Control, ExStyle, abc, control id         ; comment
+
+        Control, TabLeft, abc, control id         ; comment
+        Control, TabRight, abc, control id        ; comment
+        Control, Add, abc, control id             ; comment
+        Control, Delete, abc, control id          ; comment
+        Control, Choose, abc, control id          ; comment
+        Control, ChooseString, abc, control id    ; comment
+        Control, EditPaste, abc, control id       ; comment
+
+        Control, XXX, blank, control id           ; comment
       `,
       [
-        ...definition_v1.commandDefinitions.flatMap((definition): ParsedResult[] => {
-          return definition.signatures.flatMap(() => {
-            return [
-              hasFlag(definition.flags, CommandFlag.Deprecated)
-                ? { text: definition.name, scopes: name(scopeName, RuleName.CommandName, StyleName.Strikethrough) }
-                : { text: definition.name, scopes: name(scopeName, RuleName.CommandName) },
-            ];
-          });
+        ...[ 'Check', 'UnCheck', 'Enable', 'Disable', 'Show', 'Hide', 'ShowDropDown', 'HideDropDown' ].flatMap((subcommand): ParsedResult[] => {
+          return [
+            { text: 'Control', scopes: name(scopeName, RuleName.CommandName) },
+            { text: ',', scopes: name(scopeName, RuleName.Comma) },
+            { text: subcommand, scopes: name(scopeName, RuleName.SubCommandName) },
+            { text: ',', scopes: name(scopeName, RuleName.Comma) },
+            { text: 'blank', scopes: name(scopeName, RuleName.UnquotedString, StyleName.Invalid) },
+            { text: ',', scopes: name(scopeName, RuleName.Comma) },
+            { text: 'control id', scopes: name(scopeName, RuleName.UnquotedString) },
+            { text: '; comment', scopes: name(scopeName, RuleName.InLineComment) },
+          ];
+        }),
+
+        ...[ 'Style', 'ExStyle' ].flatMap((subcommand) => {
+          return [
+            { text: 'Control', scopes: name(scopeName, RuleName.CommandName) },
+            { text: ',', scopes: name(scopeName, RuleName.Comma) },
+            { text: subcommand, scopes: name(scopeName, RuleName.SubCommandName) },
+            { text: ',', scopes: name(scopeName, RuleName.Comma) },
+            { text: 'abc', scopes: name(scopeName, RuleName.UnquotedString) },
+            { text: ',', scopes: name(scopeName, RuleName.Comma) },
+            { text: 'control id', scopes: name(scopeName, RuleName.UnquotedString) },
+            { text: '; comment', scopes: name(scopeName, RuleName.InLineComment) },
+          ];
+        }),
+
+        ...[ 'TabLeft', 'TabRight', 'Add', 'Delete', 'Choose', 'ChooseString', 'EditPaste' ].flatMap((subcommand) => {
+          return [
+            { text: 'Control', scopes: name(scopeName, RuleName.CommandName) },
+            { text: ',', scopes: name(scopeName, RuleName.Comma) },
+            { text: subcommand, scopes: name(scopeName, RuleName.SubCommandName) },
+            { text: ',', scopes: name(scopeName, RuleName.Comma) },
+            { text: 'abc', scopes: name(scopeName, RuleName.UnquotedString) },
+            { text: ',', scopes: name(scopeName, RuleName.Comma) },
+            { text: 'control id', scopes: name(scopeName, RuleName.UnquotedString) },
+            { text: '; comment', scopes: name(scopeName, RuleName.InLineComment) },
+          ];
+        }),
+
+        { text: 'Control', scopes: name(scopeName, RuleName.CommandName) },
+        { text: ',', scopes: name(scopeName, RuleName.Comma) },
+        { text: 'XXX', scopes: name(scopeName, RuleName.UnquotedString) },
+        { text: ',', scopes: name(scopeName, RuleName.Comma) },
+        { text: 'blank', scopes: name(scopeName, RuleName.UnquotedString) },
+        { text: ',', scopes: name(scopeName, RuleName.Comma) },
+        { text: 'control id', scopes: name(scopeName, RuleName.UnquotedString) },
+        { text: '; comment', scopes: name(scopeName, RuleName.InLineComment) },
+      ],
+    ],
+
+    // https://www.autohotkey.com/docs/v1/lib/ControlGet.htm
+    [
+      dedent`
+        ControlGet, output, List, Selected, control id ; comment
+
+        ControlGet, output, Checked, blank, control id      ; comment
+        ControlGet, output, Enabled, blank, control id      ; comment
+        ControlGet, output, Visible, blank, control id      ; comment
+        ControlGet, output, Tab, blank, control id          ; comment
+        ControlGet, output, Choice, blank, control id       ; comment
+        ControlGet, output, LineCount, blank, control id    ; comment
+        ControlGet, output, CurrentLine, blank, control id  ; comment
+        ControlGet, output, CurrentCol, blank, control id   ; comment
+        ControlGet, output, Selected, blank, control id     ; comment
+        ControlGet, output, Style, blank, control id        ; comment
+        ControlGet, output, ExStyle, blank, control id      ; comment
+        ControlGet, output, Hwnd, blank, control id         ; comment
+      `,
+      [
+        { text: 'ControlGet', scopes: name(scopeName, RuleName.CommandName) },
+        { text: ',', scopes: name(scopeName, RuleName.Comma) },
+        { text: 'output', scopes: name(scopeName, RuleName.Variable) },
+        { text: ',', scopes: name(scopeName, RuleName.Comma) },
+        { text: 'List', scopes: name(scopeName, RuleName.SubCommandName) },
+        { text: ',', scopes: name(scopeName, RuleName.Comma) },
+        { text: 'Selected', scopes: name(scopeName, RuleName.UnquotedString, StyleName.Strong) },
+        { text: ',', scopes: name(scopeName, RuleName.Comma) },
+        { text: 'control id', scopes: name(scopeName, RuleName.UnquotedString) },
+        { text: '; comment', scopes: name(scopeName, RuleName.InLineComment) },
+
+        ...[ 'Checked', 'Enabled', 'Visible', 'Tab', 'Choice', 'LineCount', 'CurrentLine', 'CurrentCol', 'Selected', 'Style', 'ExStyle', 'Hwnd' ].flatMap((subcommand) => {
+          return [
+            { text: 'ControlGet', scopes: name(scopeName, RuleName.CommandName) },
+            { text: ',', scopes: name(scopeName, RuleName.Comma) },
+            { text: 'output', scopes: name(scopeName, RuleName.Variable) },
+            { text: ',', scopes: name(scopeName, RuleName.Comma) },
+            { text: subcommand, scopes: name(scopeName, RuleName.SubCommandName) },
+            { text: ',', scopes: name(scopeName, RuleName.Comma) },
+            { text: 'blank', scopes: name(scopeName, RuleName.UnquotedString, StyleName.Invalid) },
+            { text: ',', scopes: name(scopeName, RuleName.Comma) },
+            { text: 'control id', scopes: name(scopeName, RuleName.UnquotedString) },
+            { text: '; comment', scopes: name(scopeName, RuleName.InLineComment) },
+          ];
         }),
       ],
     ],

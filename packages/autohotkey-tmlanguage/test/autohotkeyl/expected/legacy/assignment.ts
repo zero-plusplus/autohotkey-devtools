@@ -45,7 +45,7 @@ export function createLegacyAssignmentStatementExpectedData(scopeName: ScopeName
       'var = % abc', [
         { text: 'var', scopes: name(scopeName, Repository.LegacyAssignmentDeclaration, RuleName.Variable) },
         { text: '=', scopes: name(scopeName, Repository.LegacyAssignmentDeclaration, RuleName.Operator) },
-        { text: '% ', scopes: name(scopeName, Repository.LegacyAssignmentDeclaration, RuleName.PercentExpressionBegin) },
+        { text: '%', scopes: name(scopeName, Repository.LegacyAssignmentDeclaration, RuleName.PercentExpressionBegin) },
         { text: 'abc', scopes: name(scopeName, Repository.LegacyAssignmentDeclaration, RuleName.Variable) },
       ],
     ],
@@ -53,7 +53,7 @@ export function createLegacyAssignmentStatementExpectedData(scopeName: ScopeName
       'var = % (foo,bar)', [
         { text: 'var', scopes: name(scopeName, Repository.LegacyAssignmentDeclaration, RuleName.Variable) },
         { text: '=', scopes: name(scopeName, Repository.LegacyAssignmentDeclaration, RuleName.Operator) },
-        { text: '% ', scopes: name(scopeName, Repository.LegacyAssignmentDeclaration, RuleName.PercentExpressionBegin) },
+        { text: '%', scopes: name(scopeName, Repository.LegacyAssignmentDeclaration, RuleName.PercentExpressionBegin) },
         { text: '(', scopes: name(scopeName, Repository.LegacyAssignmentDeclaration, RuleName.OpenParen) },
         { text: 'foo', scopes: name(scopeName, Repository.LegacyAssignmentDeclaration, RuleName.Variable) },
         { text: ',', scopes: name(scopeName, Repository.LegacyAssignmentDeclaration, RuleName.Comma) },

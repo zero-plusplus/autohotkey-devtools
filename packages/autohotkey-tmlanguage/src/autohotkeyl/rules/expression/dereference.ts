@@ -1,5 +1,5 @@
 import { Repository, RuleName, StyleName } from '../../../constants';
-import { alt, capture, char, inlineSpaces1, lookahead, many0, many1, negChar, seq, whitespace } from '../../../oniguruma';
+import { alt, capture, char, inlineSpace, inlineSpaces1, lookahead, many0, many1, negativeLookahead, negChar, seq, whitespace } from '../../../oniguruma';
 import type { BeginEndRule, PatternsRule, ScopeName } from '../../../types';
 import { includeRule, nameRule, patternsRule } from '../../../utils';
 import * as patterns_v1 from '../../patterns';
@@ -8,7 +8,10 @@ export function createDereferenceRule(scopeName: ScopeName): BeginEndRule {
   const dereferenceContent = negChar('%', whitespace());
 
   return {
-    begin: capture(char('%')),
+    begin: seq(
+      capture(char('%')),
+      negativeLookahead(inlineSpace()),
+    ),
     beginCaptures: {
       1: nameRule(scopeName, RuleName.PercentBegin),
     },
