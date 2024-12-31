@@ -509,6 +509,15 @@ function createTypeDeclarationTagRule(scopeName: ScopeName, placeholder: Placeho
           1: nameRule(scopeName, TokenType.Other, RuleName.TypeInDocument, RuleName.CloseBrace),
           2: patternsRule(includeRule(Repository.InlineTextInDocument)),
         },
+        patterns: [
+          {
+            begin: char('{'),
+            end: char('}'),
+          },
+          {
+            match: negChars1('{', '}'),
+          },
+        ],
       },
       // e.g. `@xxx description`
       {
