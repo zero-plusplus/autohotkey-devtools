@@ -127,7 +127,21 @@ export function createLanguageConfiguration(scopeName: ScopeName): Record<string
         },
       },
       {
-        beforeText: '^\\s*\\*\\s*$',
+        beforeText: '^\\s*\\*(?!/)\\s*((?i:@example)|```(?i:autohotkey|ahk))',
+        action: {
+          appendText: '*: ',
+          indent: 'none',
+        },
+      },
+      {
+        beforeText: '^\\s*\\*:\\s*',
+        action: {
+          appendText: '*: ',
+          indent: 'none',
+        },
+      },
+      {
+        beforeText: '^\\s*\\*(?!/)\\s*',
         action: {
           appendText: '* ',
           indent: 'none',
