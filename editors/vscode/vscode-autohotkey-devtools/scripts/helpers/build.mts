@@ -159,20 +159,6 @@ export function createLanguageConfiguration(scopeName: ScopeName): Record<string
           indent: 'none',
         },
       },
-      {
-        beforeText: '^\\s*;#region\\s*$',
-        action: {
-          appendText: ';#endregion',
-          indent: 'indentOutdent',
-        },
-      },
-      {
-        beforeText: '^\\s*; #region\\s*$',
-        action: {
-          appendText: '; #endregion',
-          indent: 'indentOutdent',
-        },
-      },
     ],
     colorizedBracketPairs: [
       [ '(', ')' ],
