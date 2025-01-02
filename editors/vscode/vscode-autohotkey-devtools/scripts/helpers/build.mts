@@ -65,6 +65,8 @@ export async function buildLanguageConfiguration(scopeName: ScopeName): Promise<
   await fs.writeFile(tmLanguagePath, tmLanguageText, { encoding: 'utf-8' });
   return Promise.resolve();
 }
+
+// https://code.visualstudio.com/api/language-extensions/language-configuration-guide
 export function createLanguageConfiguration(scopeName: ScopeName): Record<string, any> {
   const languageConfig: Record<string, any> = {
     comments: {
@@ -99,8 +101,8 @@ export function createLanguageConfiguration(scopeName: ScopeName): Record<string
     ],
     folding: {
       markers: {
-        start: '^\\s*;\\s*(\\{|#region\\b)',
-        end: '^\\s*;\\s*(\\}|#endregion\\b)',
+        start: '^\\s*;\\s*(?i:#region)\\b',
+        end: '^\\s*;\\s*(?i:#endregion)\\b',
       },
     },
     wordPattern: scopeName === 'autohotkeyl'
