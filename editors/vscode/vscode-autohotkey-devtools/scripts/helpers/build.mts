@@ -148,15 +148,14 @@ export function createLanguageConfiguration(scopeName: ScopeName): Record<string
         },
       },
       {
-        beforeText: '^\\s*\\*/*$',
+        beforeText: '^\\s*\\*/$',
         action: {
           indent: 'outdent',
         },
       },
       {
-        beforeText: '^\\s*;\\{\\s*$',
+        beforeText: '^\\s*$',
         action: {
-          appendText: ';',
           indent: 'none',
         },
       },
