@@ -99,6 +99,8 @@ export function createCommandStatementExpectedData(scopeName: ScopeName): Expect
         ControlGet, output, Style, blank, control id        ; comment
         ControlGet, output, ExStyle, blank, control id      ; comment
         ControlGet, output, Hwnd, blank, control id         ; comment
+
+        ControlGet, output, XXX, blank, control id          ; comment
       `,
       [
         { text: 'ControlGet', scopes: name(scopeName, RuleName.CommandName) },
@@ -126,6 +128,17 @@ export function createCommandStatementExpectedData(scopeName: ScopeName): Expect
             { text: '; comment', scopes: name(scopeName, RuleName.InLineComment) },
           ];
         }),
+
+        { text: 'ControlGet', scopes: name(scopeName, RuleName.CommandName) },
+        { text: ',', scopes: name(scopeName, RuleName.Comma) },
+        { text: 'output', scopes: name(scopeName, RuleName.Variable) },
+        { text: ',', scopes: name(scopeName, RuleName.Comma) },
+        { text: 'XXX', scopes: name(scopeName, RuleName.UnquotedString) },
+        { text: ',', scopes: name(scopeName, RuleName.Comma) },
+        { text: 'blank', scopes: name(scopeName, RuleName.UnquotedString) },
+        { text: ',', scopes: name(scopeName, RuleName.Comma) },
+        { text: 'control id', scopes: name(scopeName, RuleName.UnquotedString) },
+        { text: '; comment', scopes: name(scopeName, RuleName.InLineComment) },
       ],
     ],
 
@@ -136,6 +149,8 @@ export function createCommandStatementExpectedData(scopeName: ScopeName): Expect
         Drive, Lock, C:       ; comment
         Drive, UnLock, C:     ; comment
         Drive, Eject, C:, 1   ; comment
+
+        Drive, XXX, C:        ; comment
       `,
       [
         { text: 'Drive', scopes: name(scopeName, RuleName.CommandName) },
@@ -169,6 +184,13 @@ export function createCommandStatementExpectedData(scopeName: ScopeName): Expect
         { text: ',', scopes: name(scopeName, RuleName.Comma) },
         { text: '1', scopes: name(scopeName, RuleName.UnquotedString, StyleName.Strong) },
         { text: '; comment', scopes: name(scopeName, RuleName.InLineComment) },
+
+        { text: 'Drive', scopes: name(scopeName, RuleName.CommandName) },
+        { text: ',', scopes: name(scopeName, RuleName.Comma) },
+        { text: 'XXX', scopes: name(scopeName, RuleName.UnquotedString) },
+        { text: ',', scopes: name(scopeName, RuleName.Comma) },
+        { text: 'C:', scopes: name(scopeName, RuleName.UnquotedString) },
+        { text: '; comment', scopes: name(scopeName, RuleName.InLineComment) },
       ],
     ],
 
@@ -185,6 +207,8 @@ export function createCommandStatementExpectedData(scopeName: ScopeName): Expect
         DriveGet, output, Type, \\path\\to      ; comment
         DriveGet, output, Status, \\path\\to    ; comment
         DriveGet, output, StatusCD, C:          ; comment
+
+        DriveGet, output, XXX, C:               ; comment
       `,
       [
         { text: 'DriveGet', scopes: name(scopeName, RuleName.CommandName) },
@@ -262,6 +286,15 @@ export function createCommandStatementExpectedData(scopeName: ScopeName): Expect
         { text: 'output', scopes: name(scopeName, RuleName.Variable) },
         { text: ',', scopes: name(scopeName, RuleName.Comma) },
         { text: 'StatusCD', scopes: name(scopeName, RuleName.SubCommandName) },
+        { text: ',', scopes: name(scopeName, RuleName.Comma) },
+        { text: 'C:', scopes: name(scopeName, RuleName.UnquotedString) },
+        { text: '; comment', scopes: name(scopeName, RuleName.InLineComment) },
+
+        { text: 'DriveGet', scopes: name(scopeName, RuleName.CommandName) },
+        { text: ',', scopes: name(scopeName, RuleName.Comma) },
+        { text: 'output', scopes: name(scopeName, RuleName.Variable) },
+        { text: ',', scopes: name(scopeName, RuleName.Comma) },
+        { text: 'XXX', scopes: name(scopeName, RuleName.UnquotedString) },
         { text: ',', scopes: name(scopeName, RuleName.Comma) },
         { text: 'C:', scopes: name(scopeName, RuleName.UnquotedString) },
         { text: '; comment', scopes: name(scopeName, RuleName.InLineComment) },
