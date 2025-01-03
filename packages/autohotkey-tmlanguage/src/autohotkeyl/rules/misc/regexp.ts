@@ -1,6 +1,6 @@
 import { Repository, RuleDescriptor, RuleName, StyleName, TokenType } from '../../../constants';
-import { alt, anyChar, backslash, capture, char, escapeOnigurumaTexts, group, ignoreCase, inlineSpaces0, lookahead, lookbehind, negativeLookahead, negChars1, numbers1, optional, optseq, ordalt, seq, text, wordBound, wordChars0 } from '../../../oniguruma';
-import type { BeginEndRule, PatternsRule, ScopeName } from '../../../types';
+import { alt, anyChar, anyChars0, backslash, capture, char, escapeOnigurumaTexts, group, ignoreCase, inlineSpaces0, lookahead, lookbehind, negativeLookahead, negChars1, numbers1, optional, optseq, ordalt, reluctant, seq, text, wordBound, wordChars0 } from '../../../oniguruma';
+import type { BeginEndRule, MatchRule, PatternsRule, ScopeName } from '../../../types';
 import { includeRule, name, nameRule, patternsRule } from '../../../utils';
 
 interface Placeholder {
@@ -10,10 +10,10 @@ interface Placeholder {
   contentRuleName: RuleName;
   contentRepository: Repository;
 }
-export function createShorthandRegExpMatchRule(scopeName: ScopeName, placeholder: Placeholder): BeginEndRule {
+export function createShorthandRegExpMatchRule(scopeName: ScopeName, placeholder: Placeholder): MatchRule {
   return {
     name: name(scopeName, placeholder.contentRuleName),
-    begin: seq(
+    match: seq(
       lookbehind('~='),
       inlineSpaces0(),
       capture(char(placeholder.quoteChar)),
@@ -28,16 +28,15 @@ export function createShorthandRegExpMatchRule(scopeName: ScopeName, placeholder
         )),
         ignoreCase(text('(*UCP)')),
       ))),
+      capture(reluctant(anyChars0())),
+      capture(placeholder.regexpEndPattern),
     ),
-    beginCaptures: {
+    captures: {
       1: nameRule(scopeName, RuleDescriptor.Begin),
       2: nameRule(scopeName, RuleName.RegExpOption),
+      3: patternsRule(includeRule(placeholder.contentRepository)),
+      4: nameRule(scopeName, RuleDescriptor.End),
     },
-    end: capture(placeholder.regexpEndPattern),
-    endCaptures: {
-      1: nameRule(scopeName, RuleDescriptor.End),
-    },
-    patterns: [ includeRule(placeholder.contentRepository) ],
   };
 }
 export function createStringAsRegExpRule(scopeName: ScopeName, placeholder: Placeholder): BeginEndRule {
@@ -47,6 +46,7 @@ export function createStringAsRegExpRule(scopeName: ScopeName, placeholder: Plac
       capture(char(placeholder.quoteChar)),
       inlineSpaces0(),
       capture(placeholder.regexpOptionsPattern),
+      negativeLookahead(placeholder.quoteChar),
     ),
     beginCaptures: {
       1: nameRule(scopeName, RuleDescriptor.Begin),

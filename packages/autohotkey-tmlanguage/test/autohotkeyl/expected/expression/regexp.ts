@@ -306,14 +306,31 @@ export function createRegExpExpectedData(scopeName: ScopeName): ExpectedTestData
       ],
     ],
     [
-      `var ~= "${constants_v1.doubleQuoteEscapeSequences.join('')}"`, [
-        { text: 'var', scopes: name(scopeName, RuleName.Variable) },
-        { text: '~=', scopes: name(scopeName, RuleName.Operator) },
-        { text: '"', scopes: name(scopeName, RuleName.RegExpString, RuleDescriptor.Begin) },
-        ...constants_v1.doubleQuoteEscapeSequences.map((escapeSequence) => {
-          return { text: escapeSequence, scopes: name(scopeName, RuleName.RegExpString, StyleName.Escape) };
+      dedent`
+        var ~= """"
+        var ~= "\`,"
+        var ~= "\`%"
+        var ~= "\`\`"
+        var ~= "\`;"
+        var ~= "\`::"
+        var ~= "\`r"
+        var ~= "\`n"
+        var ~= "\`b"
+        var ~= "\`t"
+        var ~= "\`v"
+        var ~= "\`a"
+        var ~= "\`f"
+      `,
+      [
+        ...[ '""', '`,', '`%', '``', '`;', '`::', '`r', '`n', '`b', '`t', '`v', '`a', '`f' ].flatMap((escapeSequence): ParsedResult[] => {
+          return [
+            { text: 'var', scopes: name(scopeName, RuleName.Variable) },
+            { text: '~=', scopes: name(scopeName, RuleName.Operator) },
+            { text: '"', scopes: name(scopeName, RuleName.RegExpString, RuleDescriptor.Begin) },
+            { text: escapeSequence, scopes: name(scopeName, RuleName.RegExpString, StyleName.Escape) },
+            { text: '"', scopes: name(scopeName, RuleName.RegExpString, RuleDescriptor.End) },
+          ];
         }),
-        { text: '"', scopes: name(scopeName, RuleName.RegExpString, RuleDescriptor.End) },
       ],
     ],
     // #endregion escape sequence
@@ -322,11 +339,19 @@ export function createRegExpExpectedData(scopeName: ScopeName): ExpectedTestData
     // #region string as regexp
     [
       dedent`
-        "\`)text"
+        "i)"
+        "i\`)text"
         ")text"
         "im)text"
       `, [
+        // If only the regexp options, it is highlighted as a string
         { text: '"', scopes: name(scopeName, RuleName.DoubleString, RuleDescriptor.Begin) },
+        { text: 'i)', scopes: name(scopeName, RuleName.DoubleString) },
+        { text: '"', scopes: name(scopeName, RuleName.DoubleString, RuleDescriptor.End) },
+
+        // If the closing character of the regexp options is escaped, it is highlighted as a string
+        { text: '"', scopes: name(scopeName, RuleName.DoubleString, RuleDescriptor.Begin) },
+        { text: 'i', scopes: name(scopeName, RuleName.DoubleString) },
         { text: '`)', scopes: name(scopeName, RuleName.DoubleString, StyleName.Escape) },
         { text: 'text', scopes: name(scopeName, RuleName.DoubleString) },
         { text: '"', scopes: name(scopeName, RuleName.DoubleString, RuleDescriptor.End) },
