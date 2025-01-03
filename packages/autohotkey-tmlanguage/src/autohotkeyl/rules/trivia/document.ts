@@ -1,10 +1,10 @@
-import { Repository, RuleDescriptor, RuleName, StyleName, TokenType } from '../../../constants';
-import { alphaChar, alt, anyChars0, anyChars1, capture, char, endAnchor, group, groupMany0, ignoreCase, inlineSpace, inlineSpaces0, inlineSpaces1, keyword, lookahead, lookbehind, negativeLookahead, negChar, negChars1, optional, optseq, ordalt, seq, startAnchor, text } from '../../../oniguruma';
+import { Repository, RuleDescriptor, RuleName, TokenType } from '../../../constants';
+import { alphaChar, alt, anyChars0, anyChars1, capture, char, endAnchor, group, groupMany0, groupMany1, ignoreCase, inlineSpace, inlineSpaces0, inlineSpaces1, keyword, lookahead, lookbehind, negativeLookahead, negChar, negChars1, optional, optseq, ordalt, seq, startAnchor, text } from '../../../oniguruma';
 import type { BeginEndRule, ElementName, MatchRule, PatternsRule, Rule, ScopeName } from '../../../types';
 import { includeRule, name, nameRule, patternsRule } from '../../../utils';
 
 interface Placeholder {
-  identifierPattern: string;
+  leftHandPattern: string;
 }
 export function createDocumentCommentRule(scopeName: ScopeName, placeholder: Placeholder): BeginEndRule {
   const contentStartPattern = seq(startAnchor(), inlineSpaces0(), char('*'));
@@ -31,7 +31,7 @@ export function createDocumentCommentRule(scopeName: ScopeName, placeholder: Pla
         patterns: [
           createTagAnnotationRule(scopeName, {
             startPattern: contentStartPattern,
-            identifierPattern: placeholder.identifierPattern,
+            leftHandPattern: placeholder.leftHandPattern,
           }),
           // #endregion tag
 
@@ -51,11 +51,24 @@ export function createInlineTextInDocumentRule(scopeName: ScopeName): PatternsRu
     { include: 'text.html.markdown#inline' },
   );
 }
+export function createDocumentTypeRule(scopeName: ScopeName): BeginEndRule {
+  return {
+    begin: lookbehind(char('{')),
+    end: lookahead(char('}')),
+    patterns: [
+      {
+        begin: char('{'),
+        end: char('}'),
+        patterns: [ includeRule(Repository.TypeInDocument) ],
+      },
+    ],
+  };
+}
 
 // #region tag
 interface Placeholder_TagAnnotation {
   startPattern: string;
-  identifierPattern: string;
+  leftHandPattern: string;
 }
 function createTagAnnotationRule(scopeName: ScopeName, placeholder: Placeholder_TagAnnotation): PatternsRule {
   return patternsRule(
@@ -343,7 +356,7 @@ function createAttributeAnnotationTagRule(scopeName: ScopeName, placeholder: Pla
 
 interface Placeholder_BlockTag {
   startPattern: string;
-  identifierPattern: string;
+  leftHandPattern: string;
   tagNames: readonly string[];
   rules: Rule[];
 }
@@ -373,30 +386,12 @@ function createBlockTagRule(scopeName: ScopeName, placeholder: Placeholder_Block
   };
 }
 function createDeclarationTagRule(scopeName: ScopeName, placeholder: Placeholder_BlockTag): BeginEndRule {
-  const assignmentRulePatterns: Rule[] = [
-    {
-      name: name(scopeName, RuleName.ReservedWordInDocument, StyleName.Strong),
-      match: seq(
-        lookbehind(seq(
-          char('['),
-          inlineSpaces0(),
-        )),
-        char('*'),
-        lookahead(seq(
-          inlineSpaces0(),
-          char(']'),
-        )),
-      ),
-    },
-    includeRule(Repository.Comma),
-    includeRule(Repository.Expression),
-  ];
-
   return createBlockTagRule(scopeName, {
     ...placeholder,
     tagNames: placeholder.tagNames,
     rules: [
-      // e.g. `@xxx name`
+      // e.g. `@param name`
+      //              ^^^^
       {
         match: seq(
           lookbehind(seq(
@@ -405,15 +400,19 @@ function createDeclarationTagRule(scopeName: ScopeName, placeholder: Placeholder
             ignoreCase(ordalt(...placeholder.tagNames)),
             inlineSpaces0(),
           )),
-          capture(placeholder.identifierPattern),
+          capture(seq(
+            placeholder.leftHandPattern,
+            optional(char('*')),
+          )),
           lookahead(alt(inlineSpace(), endAnchor())),
           inlineSpaces0(),
         ),
         captures: {
-          1: nameRule(scopeName, RuleName.Variable),
+          1: patternsRule(includeRule(Repository.Expression)),
         },
       },
-      // e.g. `@xxx {type}`, `@xxx {type} name`
+      // e.g. `@param {type}`
+      //              ^^^^^^
       {
         contentName: name(scopeName, TokenType.Other, RuleName.TypeInDocument),
         begin: seq(
@@ -428,19 +427,14 @@ function createDeclarationTagRule(scopeName: ScopeName, placeholder: Placeholder
         beginCaptures: {
           1: nameRule(scopeName, TokenType.Other, RuleName.TypeInDocument, RuleName.OpenBrace),
         },
-        end: seq(
-          capture(char('}')),
-          inlineSpaces0(),
-          optional(capture(placeholder.identifierPattern)),
-          lookahead(alt(inlineSpace(), endAnchor())),
-          inlineSpaces0(),
-        ),
+        end: capture(char('}')),
         endCaptures: {
           1: nameRule(scopeName, TokenType.Other, RuleName.TypeInDocument, RuleName.CloseBrace),
-          2: nameRule(scopeName, RuleName.Variable),
         },
+        patterns: [ includeRule(Repository.TypeInDocument) ],
       },
-      // e.g. `@xxx {type} [name := "abc"]`, `@xxx [name := "abc"]`
+      // e.g. `@param {type} [name := "abc"]`, `@param [name := "abc"]`
+      //                     ^^^^^^^^^^^^^^^           ^^^^^^^^^^^^^^^
       {
         name: name(scopeName, TokenType.Other),
         begin: seq(
@@ -448,7 +442,10 @@ function createDeclarationTagRule(scopeName: ScopeName, placeholder: Placeholder
             placeholder.startPattern,
             inlineSpaces0(),
             group(alt(
-              group(char('}')),
+              groupMany1(seq(
+                inlineSpaces0(),
+                char('}'),
+              )),
               group(seq(
                 ignoreCase(ordalt(...placeholder.tagNames)),
                 inlineSpaces0(),
@@ -468,13 +465,56 @@ function createDeclarationTagRule(scopeName: ScopeName, placeholder: Placeholder
         },
         end: seq(
           capture(char(']')),
-          lookahead(alt(inlineSpace(), endAnchor())),
           inlineSpaces0(),
         ),
         endCaptures: {
           1: nameRule(scopeName, RuleName.CloseBrace, RuleDescriptor.End),
         },
-        patterns: assignmentRulePatterns,
+        patterns: [
+          {
+            begin: char('['),
+            end: char(']'),
+            patterns: [
+              includeRule(Repository.Comma),
+              includeRule(Repository.Expression),
+            ],
+          },
+        ],
+      },
+      // e.g. `@param {type} name`
+      //                     ^^^^
+      {
+        name: name(scopeName, TokenType.Other),
+        match: seq(
+          lookbehind(seq(
+            placeholder.startPattern,
+            inlineSpaces0(),
+            group(alt(
+              groupMany1(seq(
+                inlineSpaces0(),
+                char('}'),
+              )),
+              group(seq(
+                ignoreCase(ordalt(...placeholder.tagNames)),
+                inlineSpaces0(),
+                optseq(
+                  char('{'),
+                  anyChars0(),
+                  char('}'),
+                ),
+              )),
+            )),
+          )),
+          inlineSpaces0(),
+          capture(seq(
+            placeholder.leftHandPattern,
+            optional(char('*')),
+          )),
+          inlineSpaces0(),
+        ),
+        captures: {
+          1: patternsRule(includeRule(Repository.Expression)),
+        },
       },
       ...placeholder.rules,
     ],
@@ -509,15 +549,7 @@ function createTypeDeclarationTagRule(scopeName: ScopeName, placeholder: Placeho
           1: nameRule(scopeName, TokenType.Other, RuleName.TypeInDocument, RuleName.CloseBrace),
           2: patternsRule(includeRule(Repository.InlineTextInDocument)),
         },
-        patterns: [
-          {
-            begin: char('{'),
-            end: char('}'),
-          },
-          {
-            match: negChars1('{', '}'),
-          },
-        ],
+        patterns: [ includeRule(Repository.TypeInDocument) ],
       },
       // e.g. `@xxx description`
       {
@@ -543,7 +575,7 @@ function createTypeDeclarationTagRule(scopeName: ScopeName, placeholder: Placeho
 
 interface Placeholder_ExampleTag {
   startPattern: string;
-  identifierPattern: string;
+  leftHandPattern: string;
 }
 function createExampleTagRule(scopeName: ScopeName, placeholder: Placeholder_ExampleTag): BeginEndRule {
   return {

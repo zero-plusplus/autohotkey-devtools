@@ -38,8 +38,9 @@ export function createRepositories(scopeName: ScopeName): Repositories {
     }),
     [Repository.InLineComment]: rule_v1.createInLineCommentRule(scopeName),
     [Repository.DocumentComment]: rule_v1.createDocumentCommentRule(scopeName, {
-      identifierPattern: patterns_v1.looseLeftHandPattern,
+      leftHandPattern: patterns_v1.looseLeftHandPattern,
     }),
+    [Repository.TypeInDocument]: rule_v1.createDocumentTypeRule(scopeName),
     [Repository.InlineTextInDocument]: rule_v1.createInlineTextInDocumentRule(scopeName),
     // #endregion trivia
 

@@ -251,6 +251,7 @@ export const enum Repository {
   DocumentComment = 'repository.comment.document',
   FencedCodeBlockInDocument = 'repository.comment.document.fenced_code',
   InlineTextInDocument = 'repository.comment.document.inline-text',
+  TypeInDocument = 'repository.comment.document.type',
   // #endregion document
   // #endregion trivas
 
