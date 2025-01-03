@@ -202,7 +202,8 @@ export const commandDefinitions: CommandDefinition[] = [
 
   // https://www.autohotkey.com/docs/v1/lib/Drive.htm
   command('Drive', [
-    signature([ subcommand([ 'Label', 'Eject' ]), unquoted(), unquoted() ]),
+    signature([ subcommand('Eject'), unquoted(), keyword([ optionItem('1') ]) ]),
+    signature([ subcommand('Label'), unquoted(), unquoted() ]),
     signature([ subcommand([ 'Lock', 'Unlock' ]), unquoted() ]),
     signature([ unquotedShouldEscapeComma() ]),
   ]),

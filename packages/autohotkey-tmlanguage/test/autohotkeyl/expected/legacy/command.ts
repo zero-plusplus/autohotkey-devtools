@@ -128,5 +128,48 @@ export function createCommandStatementExpectedData(scopeName: ScopeName): Expect
         }),
       ],
     ],
+
+    // https://www.autohotkey.com/docs/v1/lib/Drive.htm
+    [
+      dedent`
+        Drive, Label, C:, Z:  ; comment
+        Drive, Lock, C:       ; comment
+        Drive, UnLock, C:     ; comment
+        Drive, Eject, C:, 1   ; comment
+      `,
+      [
+        { text: 'Drive', scopes: name(scopeName, RuleName.CommandName) },
+        { text: ',', scopes: name(scopeName, RuleName.Comma) },
+        { text: 'Label', scopes: name(scopeName, RuleName.SubCommandName) },
+        { text: ',', scopes: name(scopeName, RuleName.Comma) },
+        { text: 'C:', scopes: name(scopeName, RuleName.UnquotedString) },
+        { text: ',', scopes: name(scopeName, RuleName.Comma) },
+        { text: 'Z:', scopes: name(scopeName, RuleName.UnquotedString) },
+        { text: '; comment', scopes: name(scopeName, RuleName.InLineComment) },
+
+        { text: 'Drive', scopes: name(scopeName, RuleName.CommandName) },
+        { text: ',', scopes: name(scopeName, RuleName.Comma) },
+        { text: 'Lock', scopes: name(scopeName, RuleName.SubCommandName) },
+        { text: ',', scopes: name(scopeName, RuleName.Comma) },
+        { text: 'C:', scopes: name(scopeName, RuleName.UnquotedString) },
+        { text: '; comment', scopes: name(scopeName, RuleName.InLineComment) },
+
+        { text: 'Drive', scopes: name(scopeName, RuleName.CommandName) },
+        { text: ',', scopes: name(scopeName, RuleName.Comma) },
+        { text: 'UnLock', scopes: name(scopeName, RuleName.SubCommandName) },
+        { text: ',', scopes: name(scopeName, RuleName.Comma) },
+        { text: 'C:', scopes: name(scopeName, RuleName.UnquotedString) },
+        { text: '; comment', scopes: name(scopeName, RuleName.InLineComment) },
+
+        { text: 'Drive', scopes: name(scopeName, RuleName.CommandName) },
+        { text: ',', scopes: name(scopeName, RuleName.Comma) },
+        { text: 'Eject', scopes: name(scopeName, RuleName.SubCommandName) },
+        { text: ',', scopes: name(scopeName, RuleName.Comma) },
+        { text: 'C:', scopes: name(scopeName, RuleName.UnquotedString) },
+        { text: ',', scopes: name(scopeName, RuleName.Comma) },
+        { text: '1', scopes: name(scopeName, RuleName.UnquotedString, StyleName.Strong) },
+        { text: '; comment', scopes: name(scopeName, RuleName.InLineComment) },
+      ],
+    ],
   ];
 }
