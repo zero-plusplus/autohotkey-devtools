@@ -211,7 +211,7 @@ export const commandDefinitions: CommandDefinition[] = [
   // https://www.autohotkey.com/docs/v1/lib/DriveGet.htm
   command('DriveGet', [
     signature([ output(), subcommand('List'), keyword([ optionItem('CDROM'), optionItem('REMOVABLE'), optionItem('FIXED'), optionItem('NETWORK'), optionItem('RAMDISK'), optionItem('UNKNOWN') ]) ]),
-    signature([ output(), subcommand([ 'Capacity', 'Cap', 'FileSystem', 'Label', 'Serial', 'Type', 'Status', 'StatusCD' ]), unquoted() ]),
+    signature([ output(), subcommand([ 'Capacity', 'Cap', 'FileSystem', 'FS', 'Label', 'Serial', 'Type', 'Status', 'StatusCD' ]), unquoted() ]),
     signature([ output(), unquotedShouldEscapeComma() ]),
   ]),
 

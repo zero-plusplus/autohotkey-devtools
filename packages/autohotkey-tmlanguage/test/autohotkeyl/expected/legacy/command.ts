@@ -171,5 +171,101 @@ export function createCommandStatementExpectedData(scopeName: ScopeName): Expect
         { text: '; comment', scopes: name(scopeName, RuleName.InLineComment) },
       ],
     ],
+
+    // https://www.autohotkey.com/docs/v1/lib/DriveGet.htm
+    [
+      dedent`
+        DriveGet, output, List, CDROM           ; comment
+        DriveGet, output, Capacity, \\path\\to  ; comment
+        DriveGet, output, Cap, \\path\\to       ; comment
+        DriveGet, output, FileSystem, C:        ; comment
+        DriveGet, output, FS, C:                ; comment
+        DriveGet, output, Label, C:             ; comment
+        DriveGet, output, Serial, C:            ; comment
+        DriveGet, output, Type, \\path\\to      ; comment
+        DriveGet, output, Status, \\path\\to    ; comment
+        DriveGet, output, StatusCD, C:          ; comment
+      `,
+      [
+        { text: 'DriveGet', scopes: name(scopeName, RuleName.CommandName) },
+        { text: ',', scopes: name(scopeName, RuleName.Comma) },
+        { text: 'output', scopes: name(scopeName, RuleName.Variable) },
+        { text: ',', scopes: name(scopeName, RuleName.Comma) },
+        { text: 'List', scopes: name(scopeName, RuleName.SubCommandName) },
+        { text: ',', scopes: name(scopeName, RuleName.Comma) },
+        { text: 'CDROM', scopes: name(scopeName, RuleName.UnquotedString, StyleName.Strong) },
+        { text: '; comment', scopes: name(scopeName, RuleName.InLineComment) },
+
+        ...[ 'Capacity', 'Cap' ].flatMap((subcommand) => {
+          return [
+            { text: 'DriveGet', scopes: name(scopeName, RuleName.CommandName) },
+            { text: ',', scopes: name(scopeName, RuleName.Comma) },
+            { text: 'output', scopes: name(scopeName, RuleName.Variable) },
+            { text: ',', scopes: name(scopeName, RuleName.Comma) },
+            { text: subcommand, scopes: name(scopeName, RuleName.SubCommandName) },
+            { text: ',', scopes: name(scopeName, RuleName.Comma) },
+            { text: '\\path\\to', scopes: name(scopeName, RuleName.UnquotedString) },
+            { text: '; comment', scopes: name(scopeName, RuleName.InLineComment) },
+          ];
+        }),
+        ...[ 'FileSystem', 'FS' ].flatMap((subcommand) => {
+          return [
+            { text: 'DriveGet', scopes: name(scopeName, RuleName.CommandName) },
+            { text: ',', scopes: name(scopeName, RuleName.Comma) },
+            { text: 'output', scopes: name(scopeName, RuleName.Variable) },
+            { text: ',', scopes: name(scopeName, RuleName.Comma) },
+            { text: subcommand, scopes: name(scopeName, RuleName.SubCommandName) },
+            { text: ',', scopes: name(scopeName, RuleName.Comma) },
+            { text: 'C:', scopes: name(scopeName, RuleName.UnquotedString) },
+            { text: '; comment', scopes: name(scopeName, RuleName.InLineComment) },
+          ];
+        }),
+
+        { text: 'DriveGet', scopes: name(scopeName, RuleName.CommandName) },
+        { text: ',', scopes: name(scopeName, RuleName.Comma) },
+        { text: 'output', scopes: name(scopeName, RuleName.Variable) },
+        { text: ',', scopes: name(scopeName, RuleName.Comma) },
+        { text: 'Label', scopes: name(scopeName, RuleName.SubCommandName) },
+        { text: ',', scopes: name(scopeName, RuleName.Comma) },
+        { text: 'C:', scopes: name(scopeName, RuleName.UnquotedString) },
+        { text: '; comment', scopes: name(scopeName, RuleName.InLineComment) },
+
+        { text: 'DriveGet', scopes: name(scopeName, RuleName.CommandName) },
+        { text: ',', scopes: name(scopeName, RuleName.Comma) },
+        { text: 'output', scopes: name(scopeName, RuleName.Variable) },
+        { text: ',', scopes: name(scopeName, RuleName.Comma) },
+        { text: 'Serial', scopes: name(scopeName, RuleName.SubCommandName) },
+        { text: ',', scopes: name(scopeName, RuleName.Comma) },
+        { text: 'C:', scopes: name(scopeName, RuleName.UnquotedString) },
+        { text: '; comment', scopes: name(scopeName, RuleName.InLineComment) },
+
+        { text: 'DriveGet', scopes: name(scopeName, RuleName.CommandName) },
+        { text: ',', scopes: name(scopeName, RuleName.Comma) },
+        { text: 'output', scopes: name(scopeName, RuleName.Variable) },
+        { text: ',', scopes: name(scopeName, RuleName.Comma) },
+        { text: 'Type', scopes: name(scopeName, RuleName.SubCommandName) },
+        { text: ',', scopes: name(scopeName, RuleName.Comma) },
+        { text: '\\path\\to', scopes: name(scopeName, RuleName.UnquotedString) },
+        { text: '; comment', scopes: name(scopeName, RuleName.InLineComment) },
+
+        { text: 'DriveGet', scopes: name(scopeName, RuleName.CommandName) },
+        { text: ',', scopes: name(scopeName, RuleName.Comma) },
+        { text: 'output', scopes: name(scopeName, RuleName.Variable) },
+        { text: ',', scopes: name(scopeName, RuleName.Comma) },
+        { text: 'Status', scopes: name(scopeName, RuleName.SubCommandName) },
+        { text: ',', scopes: name(scopeName, RuleName.Comma) },
+        { text: '\\path\\to', scopes: name(scopeName, RuleName.UnquotedString) },
+        { text: '; comment', scopes: name(scopeName, RuleName.InLineComment) },
+
+        { text: 'DriveGet', scopes: name(scopeName, RuleName.CommandName) },
+        { text: ',', scopes: name(scopeName, RuleName.Comma) },
+        { text: 'output', scopes: name(scopeName, RuleName.Variable) },
+        { text: ',', scopes: name(scopeName, RuleName.Comma) },
+        { text: 'StatusCD', scopes: name(scopeName, RuleName.SubCommandName) },
+        { text: ',', scopes: name(scopeName, RuleName.Comma) },
+        { text: 'C:', scopes: name(scopeName, RuleName.UnquotedString) },
+        { text: '; comment', scopes: name(scopeName, RuleName.InLineComment) },
+      ],
+    ],
   ];
 }
