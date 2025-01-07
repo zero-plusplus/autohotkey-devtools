@@ -111,6 +111,9 @@ export function reluctant(onigurumaText: string): string {
   throw Error('The specified text is not a quantity specifier(e.g. `.*`, `.+`, `.{1,2}`).');
 }
 export function optional(onigurumaText: string): string {
+  if (onigurumaText === '') {
+    return '';
+  }
   if (onigurumaText.startsWith('(') && onigurumaText.startsWith(')')) {
     return `${onigurumaText}?`;
   }

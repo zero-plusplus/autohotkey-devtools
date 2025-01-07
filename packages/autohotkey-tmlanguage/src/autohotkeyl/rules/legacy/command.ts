@@ -1,7 +1,7 @@
 import { hasFlag } from '@zero-plusplus/utilities/src';
 import { CommandFlag, HighlightType, Repository, RuleName, StyleName } from '../../../constants';
-import { alt, anyChars0, anyChars1, capture, char, endAnchor, group, groupMany0, groupMany1, ignoreCase, inlineSpace, inlineSpaces0, inlineSpaces1, keyword, lookahead, lookbehind, negativeLookahead, negChars0, numbers0, numbers1, optional, optseq, ordalt, seq, startAnchor, text, wordBound, wordChars0 } from '../../../oniguruma';
-import type { BeginWhileRule, CommandDefinition, CommandParameter, CommandSignature, ElementName, MatchRule, NameRule, PatternsRule, Rule, ScopeName } from '../../../types';
+import { alt, anyChars0, capture, char, endAnchor, group, groupMany0, groupMany1, ignoreCase, inlineSpace, inlineSpaces0, inlineSpaces1, keyword, lookahead, lookbehind, negativeLookahead, negChar, negChars0, negChars1, numbers0, numbers1, optional, optseq, ordalt, seq, startAnchor, text, wordBound, wordChars0, wordChars1 } from '../../../oniguruma';
+import type { BeginWhileRule, CommandDefinition, CommandParameter, CommandSignature, ElementName, MatchRule, PatternsRule, Rule, ScopeName } from '../../../types';
 import { includeRule, name, nameRule, patternsRule } from '../../../utils';
 import * as patterns_v1 from '../../patterns';
 
@@ -76,8 +76,19 @@ export function createCommandLikeRule(scopeName: ScopeName, definition: CommandD
       optional(parametersToOniguruma(signature.parameters, placeholder)),
     ),
     endCaptures: Object.fromEntries([
-      definitionToCommandName(scopeName, definition, placeholder),
-      ...parametersToRules(scopeName, signature, placeholder),
+      // command name
+      hasFlag(definition.flags, CommandFlag.Deprecated)
+        ? nameRule(scopeName, placeholder.commandElementName, StyleName.Strikethrough)
+        : nameRule(scopeName, placeholder.commandElementName),
+
+      // parameters
+      ...signature.parameters.flatMap((parameter, i, parameters) => {
+        const isLastParameter = parameters.length - 1 === i;
+        return [
+          patternsRule(includeRule(Repository.Comma)),
+          parameterToPatternsRule(scopeName, definition, parameter, isLastParameter, placeholder),
+        ];
+      }),
     ].map((rule, i) => [ i + 1, rule ])),
   };
 }
@@ -108,19 +119,18 @@ export function createCommandNames(scopeName: ScopeName, definitions: CommandDef
 }
 
 // #region helpers
-export function parseParameterValue(value: string): { type: string; value: string } {
-  const match = value.match(/<(?<type>[a-zA-Z_]+)>(?<value>.*)/);
-  if (match?.groups?.['type'] === undefined || match.groups['value'] === undefined) {
-    return { type: '', value };
-  }
-  return { type: match.groups['type'], value: match.groups['value'] };
+interface ParameterValue {
+  prefix: string | undefined;
+  suffix: string | undefined;
+  value: string;
 }
-
-function definitionToCommandName(scopeName: ScopeName, definition: CommandDefinition, placeholder: Placeholder): NameRule {
-  if (hasFlag(definition.flags, CommandFlag.Deprecated)) {
-    return nameRule(scopeName, placeholder.commandElementName, StyleName.Strikethrough);
-  }
-  return nameRule(scopeName, placeholder.commandElementName);
+function parseParameterValue(value: string): ParameterValue {
+  const match = value.match(/(<(?<prefix>[a-zA-Z_-]+)>)?(?<value>[^<]*)(<(?<suffix>[a-zA-Z_-]+)>)?/);
+  return {
+    prefix: match?.groups?.['prefix'],
+    suffix: match?.groups?.['suffix'],
+    value: String(match!.groups!['value']),
+  };
 }
 function lookaheadOnigurumaByParameters(parameters: CommandParameter[], placeholder: Placeholder): string {
   const subcommandArgumentIndex = parameters.findLastIndex((parameter) => {
@@ -150,10 +160,21 @@ function lookaheadOnigurumaByParameters(parameters: CommandParameter[], placehol
     const parameterText = ((): string => {
       switch (parameter.type) {
         case HighlightType.SubCommand:
-        case HighlightType.FlowSubCommand:
-        case HighlightType.GuiSubCommand: {
+        case HighlightType.FlowSubCommand: {
           if (parameter.values && 0 < parameter.values.length) {
             return ignoreCase(ordalt(...parameter.values));
+          }
+          break;
+        }
+        case HighlightType.GuiSubCommand: {
+          if (parameter.values && 0 < parameter.values.length) {
+            return seq(
+              group(optseq(
+                wordChars0(),
+                char(':'),
+              )),
+              ignoreCase(ordalt(...parameter.values)),
+            );
           }
           break;
         }
@@ -191,10 +212,23 @@ function parametersToOniguruma(parameters: CommandParameter[], placeholder: Plac
 function parameterToOniguruma(parameter: CommandParameter, isLastParameter: boolean, placeholder: Placeholder): string {
   switch (parameter.type) {
     case HighlightType.SubCommand:
-    case HighlightType.FlowSubCommand:
-    case HighlightType.GuiSubCommand: {
+    case HighlightType.FlowSubCommand: {
       if (parameter.values && 0 < parameter.values.length) {
         return ignoreCase(ordalt(...parameter.values));
+      }
+      break;
+    }
+    case HighlightType.GuiSubCommand: {
+      if (parameter.values && 0 < parameter.values.length) {
+        return seq(
+          group(optseq(
+            wordChars0(),
+            char(':'),
+          )),
+          ignoreCase(ordalt(...parameter.values)),
+          inlineSpaces0(),
+          patterns_v1.commandArgumentPattern,
+        );
       }
       break;
     }
@@ -225,49 +259,39 @@ function parameterToOniguruma(parameter: CommandParameter, isLastParameter: bool
   }
   return patterns_v1.commandArgumentPattern;
 }
-function parametersToRules(scopeName: ScopeName, signature: CommandSignature, placeholder: Placeholder): PatternsRule[] {
-  return signature.parameters.flatMap((parameter, i, parameters) => {
-    const isLastParameter = parameters.length - 1 === i;
-    return [ patternsRule(includeRule(Repository.Comma)), parameterToRule(scopeName, parameter, isLastParameter, placeholder) ];
-  });
-}
-function parameterToRule(scopeName: ScopeName, parameter: CommandParameter, isLastParameter: boolean, placeholder: Placeholder): PatternsRule {
+function parameterToPatternsRule(scopeName: ScopeName, defenition: CommandDefinition, parameter: CommandParameter, isLastParameter: boolean, placeholder: Placeholder): PatternsRule {
   const defaultArgumentRule = isLastParameter ? includeRule(Repository.CommandLastArgument) : includeRule(Repository.CommandArgument);
-  const invalidRule: MatchRule = { name: name(scopeName, StyleName.Invalid), match: anyChars1() };
 
   switch (parameter.type) {
     case HighlightType.None:
-    case HighlightType.Invalid: return patternsRule(invalidRule);
-    case HighlightType.Blank: return patternsRule({
-      name: name(scopeName, RuleName.UnquotedString, StyleName.Invalid),
-      match: anyChars1(),
-    });
-    case HighlightType.SubCommand:
-    case HighlightType.FlowSubCommand:
-    case HighlightType.GuiSubCommand: {
+    case HighlightType.Invalid:
+    case HighlightType.Blank: {
+      return patternsRule({
+        name: name(scopeName, RuleName.UnquotedString, StyleName.Invalid),
+        match: negChars1('\\s'),
+      });
+    }
+    case HighlightType.SubCommand: {
       if (!parameter.values || parameter.values.length === 0) {
         return patternsRule(defaultArgumentRule);
       }
-
-      if (parameter.type === HighlightType.SubCommand) {
-        return patternsRule(
-          {
-            name: name(scopeName, RuleName.SubCommandName),
-            match: ignoreCase(ordalt(...parameter.values)),
-          },
-
-          defaultArgumentRule,
-        );
+      return patternsRule({
+        name: name(scopeName, RuleName.SubCommandName),
+        match: ignoreCase(ordalt(...parameter.values)),
+      });
+    }
+    case HighlightType.FlowSubCommand: {
+      if (!parameter.values || parameter.values.length === 0) {
+        return patternsRule(defaultArgumentRule);
       }
-      if (parameter.type === HighlightType.FlowSubCommand) {
-        return patternsRule(
-          {
-            name: name(scopeName, RuleName.FlowSubCommandName),
-            match: ignoreCase(ordalt(...parameter.values)),
-          },
-
-          defaultArgumentRule,
-        );
+      return patternsRule({
+        name: name(scopeName, RuleName.FlowSubCommandName),
+        match: ignoreCase(ordalt(...parameter.values)),
+      });
+    }
+    case HighlightType.GuiSubCommand: {
+      if (!parameter.values || parameter.values.length === 0) {
+        return patternsRule(defaultArgumentRule);
       }
       return patternsRule(
         {
@@ -280,28 +304,104 @@ function parameterToRule(scopeName: ScopeName, parameter: CommandParameter, isLa
           ),
           captures: {
             1: nameRule(scopeName, RuleName.LabelName),
-            2: nameRule(scopeName, RuleName.SemiColon),
-            3: nameRule(scopeName, placeholder.commandElementName),
+            2: nameRule(scopeName, RuleName.Colon),
+            3: nameRule(scopeName, RuleName.SubCommandName),
           },
         },
-        defaultArgumentRule,
-      );
-    }
-    case HighlightType.UnquotedString:
-    case HighlightType.Enum:
-    case HighlightType.Options: {
-      return patternsRule(
-        ...parameterValuesToRule(scopeName, parameter.values),
-        defaultArgumentRule,
+        {
+          name: name(scopeName, RuleName.SubCommandName),
+          match: ignoreCase(ordalt(...parameter.values)),
+        },
       );
     }
     case HighlightType.CombiOptions:
-    case HighlightType.GuiOptions:
     case HighlightType.Style:
+    case HighlightType.UnquotedString: {
+      return patternsRule(defaultArgumentRule);
+    }
+    case HighlightType.UnquotedOrKeywords: {
       return patternsRule(
-        ...parameterValuesToRule(scopeName, parameter.values),
-        defaultArgumentRule,
+        includeRule(Repository.PercentExpression),
+        includeRule(Repository.Dereference),
+        {
+          name: name(scopeName, RuleName.UnquotedString),
+          match: capture(seq(
+            negChar('%', '\\s'),
+            negChars0('\\s'),
+          )),
+          captures: {
+            1: patternsRule(...optionItemsToRules(scopeName, parameter.values)),
+          },
+        },
       );
+    }
+    case HighlightType.KeywordOnly:
+    case HighlightType.KeywordsOnly: {
+      return patternsRule(
+        includeRule(Repository.PercentExpression),
+        includeRule(Repository.Dereference),
+        {
+          name: name(scopeName, RuleName.UnquotedString),
+          match: capture(seq(
+            negChar('%', '\\s'),
+            negChars0('\\s'),
+          )),
+          captures: {
+            1: patternsRule(
+              ...optionItemsToRules(scopeName, parameter.values),
+              {
+                name: name(scopeName, StyleName.Invalid),
+                match: negChars1('\\s'),
+              },
+            ),
+          },
+        },
+      );
+    }
+    case HighlightType.GuiOptions: {
+      return patternsRule(
+        includeRule(Repository.PercentExpression),
+        includeRule(Repository.Dereference),
+
+        // e.g. `Gui, GuiName:+Resize`
+        //            ^^^^^^^^
+        {
+          match: seq(
+            lookbehind(group(seq(
+              lookbehind(placeholder.startAnchor),
+              inlineSpaces0(),
+              ignoreCase(defenition.name),
+              alt(inlineSpace(), seq(inlineSpaces0(), char(','))),
+              inlineSpaces0(),
+            ))),
+            capture(wordChars1()),
+            capture(char(':')),
+          ),
+          captures: {
+            1: patternsRule(
+              includeRule(Repository.Dereference),
+              {
+                name: name(scopeName, RuleName.LabelName),
+                match: wordChars1(),
+              },
+            ),
+            2: nameRule(scopeName, RuleName.Colon),
+          },
+        },
+        // e.g. `Gui, GuiName:+Resize`
+        //                    ^^^^^^^
+        {
+          name: name(scopeName, RuleName.UnquotedString),
+          match: capture(seq(
+            negChar('%', '\\s'),
+            negChars0('\\s'),
+          )),
+          captures: {
+            1: patternsRule(...optionItemsToRules(scopeName, parameter.values)),
+          },
+        },
+      );
+    }
     case HighlightType.UnquotedStringShouldEscapeComma: return patternsRule(
       includeRule(Repository.Comma),
       includeRule(Repository.CommandArgument),
@@ -317,91 +417,85 @@ function parameterToRule(scopeName: ScopeName, parameter: CommandParameter, isLa
   }
   throw Error(`Specified an unknown highligh type.\nSpecified: "${String(parameter.type)}"`);
 }
-function parameterValuesToRule(scopeName: ScopeName, values: string[] | undefined): Rule[] {
-  if (!values) {
-    return [];
-  }
+function optionItemsToRules(scopeName: ScopeName, optionItems: string[] | undefined): Rule[] {
+  return (optionItems ?? [])
+    .map((value) => parseParameterValue(value))
+    .sort((a, b) => b.value.length - a.value.length)
+    .flatMap((parsedValues) => {
+      return parameterValuesToRuleByType(scopeName, parsedValues);
+    });
+}
+function parameterValuesToRuleByType(scopeName: ScopeName, parameterValue: ParameterValue): Rule[] {
+  const { prefix, suffix } = parameterValue;
+  const valuesPattern = ignoreCase(text(parameterValue.value));
+  const prefixPattern = prefixToPattern(prefix);
+  const suffixPattern = suffixToPattern(suffix);
+
   return [
-    ...Object.entries(Object.groupBy(values, (value): string => {
-      const parsedValue = parseParameterValue(value);
-      return parsedValue.type;
-    })).flatMap(([ type, values ]) => {
-      if (!values) {
-        return [];
-      }
-      return parameterValuesToRuleByType(scopeName, type, values.map((value) => parseParameterValue(value).value));
-    }),
+    {
+      name: name(scopeName, StyleName.Strong),
+      match: seq(
+        prefixPattern,
+        valuesPattern,
+        optional(suffixPattern),
+      ),
+    },
   ];
 }
-function parameterValuesToRuleByType(scopeName: ScopeName, type: string, values: string[]): Rule[] {
+function prefixToPattern(prefix?: string): string {
+  switch (prefix) {
+    case 'flag': return char('+', '-');
+    default: break;
+  }
+  return '';
+}
+function suffixToPattern(suffix?: string): string {
+  const decimalPattern = numbers1();
   const numberPattern = seq(
-    numbers1(),
+    decimalPattern,
     optseq(
       char('.'),
       numbers0(),
     ),
   );
 
-  const valuesPattern = ignoreCase(ordalt(...values.map((value) => text(value))));
-  switch (type) {
-    case 'option': return [
-      {
-        name: name(scopeName, RuleName.UnquotedString, StyleName.Strong),
-        match: valuesPattern,
-      },
-    ];
-    case 'flag': return [
-      {
-        name: name(scopeName, StyleName.Strong),
-        match: seq(
-          optional(capture(char('+', '-'))),
-          valuesPattern,
+  switch (suffix) {
+    case 'keyword': return '';
+    case 'word': return wordChars1();
+    case 'string': return negChars0('\\s');
+    case 'number': return numberPattern;
+    case 'decimal': return decimalPattern;
+    case 'signed-number': return seq(
+      optional(char('+', '-')),
+      numberPattern,
+    );
+    case 'hex': return seq(
+      optseq(
+        char('0'),
+        char('x', 'X'),
+      ),
+      groupMany1('[0-9a-fA-F]'),
+    );
+    case 'range': return seq(
+      numbers0(),
+      optseq(
+        numberPattern,
+        optseq(
+          char('-'),
+          optional(numberPattern),
         ),
-      },
-    ];
-    case 'string': return [
-      {
-        name: name(scopeName, StyleName.Strong),
-        match: seq(
-          valuesPattern,
-          negChars0('\\s'),
-        ),
-      },
-    ];
-    case 'range': return [
-      {
-        name: name(scopeName, StyleName.Strong),
-        match: seq(
-          numbers0(),
-          optseq(
-            numberPattern,
-            optseq(
-              char('-'),
-              optional(numberPattern),
-            ),
-          ),
-        ),
-      },
-    ];
-    case 'size': return [
-      {
-        name: name(scopeName, StyleName.Strong),
-        match: seq(
-          char('+', '-'),
-          valuesPattern,
-          seq(
-            numberPattern,
-            optseq(
-              char('x'),
-              optional(numberPattern),
-            ),
-          ),
-        ),
-      },
-    ];
+      ),
+    );
+    case 'size': return seq(
+      numberPattern,
+      optseq(
+        char('x'),
+        optional(numberPattern),
+      ),
+    );
     default: break;
   }
-  return [];
+  return suffix ?? '';
 }
 // #endregion helpers
 

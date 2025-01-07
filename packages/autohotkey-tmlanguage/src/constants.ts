@@ -546,18 +546,19 @@ export const enum HighlightType {
   Blank = 'blank',
   Expression = 'expression',
   ExpressionWithOneTrueBrace = 'expressionwithonetruebrace',
-  Enum = 'enum',
   UnquotedString = 'unquotedstring',
-  UnquotedStringShouldEscapeComma = 'unquotedstringshouldescapecomma',
+  UnquotedStringShouldEscapeComma = 'unquoted_string_should_escapecomma',
   LabelName = 'labelname',
   SubCommand = 'subcommand',
-  FlowSubCommand = 'flowsubcommand',
-  GuiSubCommand = 'guisubcommand',
+  FlowSubCommand = 'flow_subcommand',
+  GuiSubCommand = 'gui_subcommand',
   Input = 'input',
   Output = 'output',
   Invalid = 'invalid',
 
-  Options = 'options', // e.g. `ControlClick x123 y123`, `Click, 100 100 LButton`
+  KeywordOnly = 'keyword_only',
+  KeywordsOnly = 'keywords_only',
+  UnquotedOrKeywords = 'unquoted_or_keywords', // e.g. `ControlClick x123 y123`, `Click, 100 100 LButton`
   CombiOptions = 'combioptions', // e.g. `FileSetAttributes, +HA-R`
   GuiOptions = 'guioptions', // e.g. `Gui, +Resize -MaximizeBox`
   Style = 'style', // e.g. `Control, Style, ^0x800000`, `WinSet, Style, -0xC00000`

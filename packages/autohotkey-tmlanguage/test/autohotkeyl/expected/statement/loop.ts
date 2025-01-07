@@ -50,7 +50,7 @@ export function createLoopStatementExpectedData(scopeName: ScopeName): ExpectedT
         Loop Files
         Loop Files, C:\\test
         Loop Files, C:\\test, DFR
-        Loop Files, C:\\test, U
+        Loop Files, C:\\test, _
       `,
       [
         { text: 'Loop', scopes: name(scopeName, RuleName.ControlFlowKeyword) },
@@ -75,7 +75,7 @@ export function createLoopStatementExpectedData(scopeName: ScopeName): ExpectedT
         { text: ',', scopes: name(scopeName, RuleName.Comma) },
         { text: 'C:\\test', scopes: name(scopeName, RuleName.UnquotedString) },
         { text: ',', scopes: name(scopeName, RuleName.Comma) },
-        { text: 'U', scopes: name(scopeName, RuleName.UnquotedString) },
+        { text: '_', scopes: name(scopeName, RuleName.UnquotedString, StyleName.Invalid) },
       ],
     ],
     // #endregion loop files
@@ -249,7 +249,7 @@ export function createLoopStatementExpectedData(scopeName: ScopeName): ExpectedT
         Loop Reg
         Loop Reg, HKLM\\path\\to
         Loop Reg, HKLM\\path\\to, KVR
-        Loop Reg, HKLM\\path\\to, U
+        Loop Reg, HKLM\\path\\to, _
       `,
       [
         { text: 'Loop', scopes: name(scopeName, RuleName.ControlFlowKeyword) },
@@ -274,7 +274,7 @@ export function createLoopStatementExpectedData(scopeName: ScopeName): ExpectedT
         { text: ',', scopes: name(scopeName, RuleName.Comma) },
         { text: 'HKLM\\path\\to', scopes: name(scopeName, RuleName.UnquotedString) },
         { text: ',', scopes: name(scopeName, RuleName.Comma) },
-        { text: 'U', scopes: name(scopeName, RuleName.UnquotedString) },
+        { text: '_', scopes: name(scopeName, RuleName.UnquotedString, StyleName.Invalid) },
       ],
     ],
     // #endregion loop reg

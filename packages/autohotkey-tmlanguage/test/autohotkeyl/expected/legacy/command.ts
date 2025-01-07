@@ -18,16 +18,16 @@ export function createCommandStatementExpectedData(scopeName: ScopeName): Expect
         Control, ShowDropDown, blank, control id  ; comment
         Control, HideDropDown, blank, control id  ; comment
 
-        Control, Style, abc, control id           ; comment
-        Control, ExStyle, abc, control id         ; comment
+        Control, Style, xxx, control id           ; comment
+        Control, ExStyle, xxx, control id         ; comment
 
-        Control, TabLeft, abc, control id         ; comment
-        Control, TabRight, abc, control id        ; comment
-        Control, Add, abc, control id             ; comment
-        Control, Delete, abc, control id          ; comment
-        Control, Choose, abc, control id          ; comment
-        Control, ChooseString, abc, control id    ; comment
-        Control, EditPaste, abc, control id       ; comment
+        Control, TabLeft, xxx, control id         ; comment
+        Control, TabRight, xxx, control id        ; comment
+        Control, Add, xxx, control id             ; comment
+        Control, Delete, xxx, control id          ; comment
+        Control, Choose, xxx, control id          ; comment
+        Control, ChooseString, xxx, control id    ; comment
+        Control, EditPaste, xxx, control id       ; comment
 
         Control, XXX, blank, control id           ; comment
       `,
@@ -51,7 +51,7 @@ export function createCommandStatementExpectedData(scopeName: ScopeName): Expect
             { text: ',', scopes: name(scopeName, RuleName.Comma) },
             { text: subcommand, scopes: name(scopeName, RuleName.SubCommandName) },
             { text: ',', scopes: name(scopeName, RuleName.Comma) },
-            { text: 'abc', scopes: name(scopeName, RuleName.UnquotedString) },
+            { text: 'xxx', scopes: name(scopeName, RuleName.UnquotedString) },
             { text: ',', scopes: name(scopeName, RuleName.Comma) },
             { text: 'control id', scopes: name(scopeName, RuleName.UnquotedString) },
             { text: '; comment', scopes: name(scopeName, RuleName.InLineComment) },
@@ -64,7 +64,7 @@ export function createCommandStatementExpectedData(scopeName: ScopeName): Expect
             { text: ',', scopes: name(scopeName, RuleName.Comma) },
             { text: subcommand, scopes: name(scopeName, RuleName.SubCommandName) },
             { text: ',', scopes: name(scopeName, RuleName.Comma) },
-            { text: 'abc', scopes: name(scopeName, RuleName.UnquotedString) },
+            { text: 'xxx', scopes: name(scopeName, RuleName.UnquotedString) },
             { text: ',', scopes: name(scopeName, RuleName.Comma) },
             { text: 'control id', scopes: name(scopeName, RuleName.UnquotedString) },
             { text: '; comment', scopes: name(scopeName, RuleName.InLineComment) },
@@ -297,6 +297,45 @@ export function createCommandStatementExpectedData(scopeName: ScopeName): Expect
         { text: 'XXX', scopes: name(scopeName, RuleName.UnquotedString) },
         { text: ',', scopes: name(scopeName, RuleName.Comma) },
         { text: 'C:', scopes: name(scopeName, RuleName.UnquotedString) },
+        { text: '; comment', scopes: name(scopeName, RuleName.InLineComment) },
+      ],
+    ],
+
+    // https://www.autohotkey.com/docs/v1/lib/Gui.htm
+    [
+      dedent`
+        Gui, New, +Resize -MaximizeBox, unquoted            ; comment
+        Gui, GuiName:New, unquoted, unquoted                ; comment
+        Gui, GuiName: +Resize -MaximizeBox                  ; comment
+      `,
+      [
+        { text: 'Gui', scopes: name(scopeName, RuleName.CommandName) },
+        { text: ',', scopes: name(scopeName, RuleName.Comma) },
+        { text: 'New', scopes: name(scopeName, RuleName.SubCommandName) },
+        { text: ',', scopes: name(scopeName, RuleName.Comma) },
+        { text: '+Resize', scopes: name(scopeName, RuleName.UnquotedString, StyleName.Strong) },
+        { text: '-MaximizeBox', scopes: name(scopeName, RuleName.UnquotedString, StyleName.Strong) },
+        { text: ',', scopes: name(scopeName, RuleName.Comma) },
+        { text: 'unquoted', scopes: name(scopeName, RuleName.UnquotedString) },
+        { text: '; comment', scopes: name(scopeName, RuleName.InLineComment) },
+
+        { text: 'Gui', scopes: name(scopeName, RuleName.CommandName) },
+        { text: ',', scopes: name(scopeName, RuleName.Comma) },
+        { text: 'GuiName', scopes: name(scopeName, RuleName.LabelName) },
+        { text: ':', scopes: name(scopeName, RuleName.Colon) },
+        { text: 'New', scopes: name(scopeName, RuleName.SubCommandName) },
+        { text: ',', scopes: name(scopeName, RuleName.Comma) },
+        { text: 'unquoted', scopes: name(scopeName, RuleName.UnquotedString) },
+        { text: ',', scopes: name(scopeName, RuleName.Comma) },
+        { text: 'unquoted', scopes: name(scopeName, RuleName.UnquotedString) },
+        { text: '; comment', scopes: name(scopeName, RuleName.InLineComment) },
+
+        { text: 'Gui', scopes: name(scopeName, RuleName.CommandName) },
+        { text: ',', scopes: name(scopeName, RuleName.Comma) },
+        { text: 'GuiName', scopes: name(scopeName, RuleName.LabelName) },
+        { text: ':', scopes: name(scopeName, RuleName.Colon) },
+        { text: '+Resize', scopes: name(scopeName, RuleName.UnquotedString, StyleName.Strong) },
+        { text: '-MaximizeBox', scopes: name(scopeName, RuleName.UnquotedString, StyleName.Strong) },
         { text: '; comment', scopes: name(scopeName, RuleName.InLineComment) },
       ],
     ],
