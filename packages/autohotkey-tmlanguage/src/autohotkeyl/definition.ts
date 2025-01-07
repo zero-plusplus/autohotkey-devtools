@@ -358,9 +358,8 @@ export const commandDefinitions: CommandDefinition[] = [
 
   // https://www.autohotkey.com/docs/v1/lib/GuiControlGet.htm
   command('GuiControlGet', [
+    signature([ output(), guiSubcommand([ 'Pos', 'Focus', 'FocusV', 'Visible', 'Hwnd', 'Name' ]), control() ]),
     signature([ output(), blank(), control(), unquoted() ]),
-    signature([ output(), subcommand([ 'Pos', 'Focus', 'FocusV', 'Visible', 'Hwnd', 'Name' ]), control() ]),
-    signature([ output(), unquotedShouldEscapeComma() ]),
   ]),
 
   // https://www.autohotkey.com/docs/v1/lib/Hotkey.htm

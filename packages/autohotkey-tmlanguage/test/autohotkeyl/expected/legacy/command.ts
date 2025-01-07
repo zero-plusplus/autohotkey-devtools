@@ -507,5 +507,64 @@ export function createCommandStatementExpectedData(scopeName: ScopeName): Expect
         { text: '; comment', scopes: name(scopeName, RuleName.InLineComment) },
       ],
     ],
+
+    // https://www.autohotkey.com/docs/v1/lib/GuiControlGet.htm
+    [
+      dedent`
+        GuiControlGet, output,, unquoted, unquoted                  ; comment
+        GuiControlGet, output, GuiName:Pos, unquoted                ; comment
+        GuiControlGet, output, Pos, unquoted                        ; comment
+        GuiControlGet, output, Focus, unquoted                      ; comment
+        GuiControlGet, output, FocusV, unquoted                     ; comment
+        GuiControlGet, output, Visible, unquoted                    ; comment
+        GuiControlGet, output, Hwnd, unquoted                       ; comment
+        GuiControlGet, output, Name, unquoted                       ; comment
+        GuiControlGet, output, XXX, unquoted                        ; comment
+      `,
+      [
+        { text: 'GuiControlGet', scopes: name(scopeName, RuleName.CommandName) },
+        { text: ',', scopes: name(scopeName, RuleName.Comma) },
+        { text: 'output', scopes: name(scopeName, RuleName.Variable) },
+        { text: ',', scopes: name(scopeName, RuleName.Comma) },
+        { text: ',', scopes: name(scopeName, RuleName.Comma) },
+        { text: 'unquoted', scopes: name(scopeName, RuleName.UnquotedString) },
+        { text: ',', scopes: name(scopeName, RuleName.Comma) },
+        { text: 'unquoted', scopes: name(scopeName, RuleName.UnquotedString) },
+        { text: '; comment', scopes: name(scopeName, RuleName.InLineComment) },
+
+        { text: 'GuiControlGet', scopes: name(scopeName, RuleName.CommandName) },
+        { text: ',', scopes: name(scopeName, RuleName.Comma) },
+        { text: 'output', scopes: name(scopeName, RuleName.Variable) },
+        { text: ',', scopes: name(scopeName, RuleName.Comma) },
+        { text: 'GuiName', scopes: name(scopeName, RuleName.LabelName) },
+        { text: ':', scopes: name(scopeName, RuleName.Colon) },
+        { text: 'Pos', scopes: name(scopeName, RuleName.SubCommandName) },
+        { text: ',', scopes: name(scopeName, RuleName.Comma) },
+        { text: 'unquoted', scopes: name(scopeName, RuleName.UnquotedString) },
+        { text: '; comment', scopes: name(scopeName, RuleName.InLineComment) },
+
+        ...[ 'Pos', 'Focus', 'FocusV', 'Visible', 'Hwnd', 'Name' ].flatMap((subcommand) => {
+          return [
+            { text: 'GuiControlGet', scopes: name(scopeName, RuleName.CommandName) },
+            { text: ',', scopes: name(scopeName, RuleName.Comma) },
+            { text: 'output', scopes: name(scopeName, RuleName.Variable) },
+            { text: ',', scopes: name(scopeName, RuleName.Comma) },
+            { text: subcommand, scopes: name(scopeName, RuleName.SubCommandName) },
+            { text: ',', scopes: name(scopeName, RuleName.Comma) },
+            { text: 'unquoted', scopes: name(scopeName, RuleName.UnquotedString) },
+            { text: '; comment', scopes: name(scopeName, RuleName.InLineComment) },
+          ];
+        }),
+
+        { text: 'GuiControlGet', scopes: name(scopeName, RuleName.CommandName) },
+        { text: ',', scopes: name(scopeName, RuleName.Comma) },
+        { text: 'output', scopes: name(scopeName, RuleName.Variable) },
+        { text: ',', scopes: name(scopeName, RuleName.Comma) },
+        { text: 'XXX', scopes: name(scopeName, RuleName.UnquotedString, StyleName.Invalid) },
+        { text: ',', scopes: name(scopeName, RuleName.Comma) },
+        { text: 'unquoted', scopes: name(scopeName, RuleName.UnquotedString) },
+        { text: '; comment', scopes: name(scopeName, RuleName.InLineComment) },
+      ],
+    ],
   ];
 }
