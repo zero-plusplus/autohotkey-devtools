@@ -226,8 +226,6 @@ function parameterToOniguruma(parameter: CommandParameter, isLastParameter: bool
             char(':'),
           )),
           ignoreCase(ordalt(...parameter.values)),
-          inlineSpaces0(),
-          patterns_v1.commandArgumentPattern,
         );
       }
       break;
@@ -458,6 +456,7 @@ function suffixToPattern(suffix?: string): string {
       numbers0(),
     ),
   );
+  const hexPattern = groupMany1('[0-9a-fA-F]');
 
   switch (suffix) {
     case 'keyword': return '';
@@ -469,13 +468,7 @@ function suffixToPattern(suffix?: string): string {
       optional(char('+', '-')),
       numberPattern,
     );
-    case 'hex': return seq(
-      optseq(
-        char('0'),
-        char('x', 'X'),
-      ),
-      groupMany1('[0-9a-fA-F]'),
-    );
+    case 'hex': return hexPattern;
     case 'range': return seq(
       numbers0(),
       optseq(
@@ -492,6 +485,29 @@ function suffixToPattern(suffix?: string): string {
         char('x'),
         optional(numberPattern),
       ),
+    );
+    case 'color': return alt(
+      // https://www.autohotkey.com/docs/v1/lib/Progress.htm#colors
+      ignoreCase(ordalt(
+        'Black',
+        'Silver',
+        'Gray',
+        'White',
+        'Maroon',
+        'Red',
+        'Purple',
+        'Fuchsia',
+        'Green',
+        'Lime',
+        'Olive',
+        'Yellow',
+        'Navy',
+        'Blue',
+        'Teal',
+        'Aqua',
+      )),
+      ignoreCase('Default'),
+      hexPattern,
     );
     default: break;
   }

@@ -341,13 +341,12 @@ export const commandDefinitions: CommandDefinition[] = [
     signature([ guiSubcommand('Add'), guiControlType(), guiControlOptions(), unquoted() ]),
     signature([ guiSubcommand('Show'), unquotedOrKeywords([ numberOptionItem('W'), numberOptionItem('H'), numberOptionItem('X'), numberOptionItem('Y'), optionItem('Center'), optionItem('xCenter'), optionItem('yCenter'), optionItem('AutoSize'), optionItem('Minimize'), optionItem('Maximize'), optionItem('Restore'), optionItem('NoActivate'), optionItem('NA'), optionItem('Hide') ]), unquoted() ]),
     signature([ guiSubcommand('Submit'), keywordsOnly([ optionItem('NoHide') ]) ]),
-    signature([ guiSubcommand([ 'Cancel', 'Hide', 'Destroy', 'Minimize', 'Maximize', 'Restore' ]), restParams() ]),
-    signature([ guiSubcommand('Font'), unquotedOrKeywords([ colorOptionItem('C'), numberOptionItem('S'), numberOptionItem('W'), numberOptionItem('Q') ]) ]),
+    signature([ guiSubcommand([ 'Cancel', 'Hide', 'Destroy', 'Minimize', 'Maximize', 'Restore', 'Default' ]), restParams() ]),
+    signature([ guiSubcommand('Font'), unquotedOrKeywords([ colorOptionItem('C'), numberOptionItem('S'), numberOptionItem('W'), numberOptionItem('Q') ]), unquoted() ]),
     signature([ guiSubcommand('Color'), color(), color() ]),
     signature([ guiSubcommand('Margin'), unquoted(), unquoted() ]),
     signature([ guiSubcommand('Menu'), unquoted() ]),
-    signature([ guiSubcommand('Flash'), keywordsOnly([ 'Off' ]) ]),
-    signature([ guiSubcommand('Default') ]),
+    signature([ guiSubcommand('Flash'), keywordOnly([ 'Off' ]) ]),
     signature([ guiOptions() ]),
   ]),
 
@@ -1130,7 +1129,25 @@ export function formatTime(flags: CommandParameterFlag = CommandParameterFlag.No
   ], CommandParameterFlag.IgnoreCase | flags);
 }
 export function color(flags: CommandParameterFlag = CommandParameterFlag.None): CommandParameter {
-  return unquoted([], flags);
+  return unquotedOrKeywords([
+    optionItem('Default'),
+    optionItem('Black'),
+    optionItem('Silver'),
+    optionItem('Gray'),
+    optionItem('White'),
+    optionItem('Maroon'),
+    optionItem('Red'),
+    optionItem('Purple'),
+    optionItem('Fuchsia'),
+    optionItem('Green'),
+    optionItem('Lime'),
+    optionItem('Olive'),
+    optionItem('Yellow'),
+    optionItem('Navy'),
+    optionItem('Blue'),
+    optionItem('Teal'),
+    optionItem('Aqua'),
+  ], flags);
 }
 export function soundComponent(): CommandParameter {
   return unquotedOrKeywords([
