@@ -338,7 +338,7 @@ export const commandDefinitions: CommandDefinition[] = [
   // https://www.autohotkey.com/docs/v1/lib/Gui.htm
   command('Gui', [
     signature([ guiSubcommand('New'), guiOptions(), unquoted() ]),
-    signature([ guiSubcommand('Add'), controlType(), guiControlOptions(), unquoted() ]),
+    signature([ guiSubcommand('Add'), guiControlType(), guiControlOptions(), unquoted() ]),
     signature([ guiSubcommand('Show'), unquotedOrKeywords([ numberOptionItem('W'), numberOptionItem('H'), numberOptionItem('X'), numberOptionItem('Y'), optionItem('Center'), optionItem('xCenter'), optionItem('yCenter'), optionItem('AutoSize'), optionItem('Minimize'), optionItem('Maximize'), optionItem('Restore'), optionItem('NoActivate'), optionItem('NA'), optionItem('Hide') ]), unquoted() ]),
     signature([ guiSubcommand('Submit'), keywordsOnly([ optionItem('NoHide') ]) ]),
     signature([ guiSubcommand([ 'Cancel', 'Hide', 'Destroy', 'Minimize', 'Maximize', 'Restore' ]), restParams() ]),
@@ -945,7 +945,7 @@ export function controlOrPos(flags: CommandParameterFlag = CommandParameterFlag.
     decimalOptionItem(optionItem('Y')),
   ], flags);
 }
-export function controlType(): CommandParameter {
+export function guiControlType(): CommandParameter {
   return keywordOnly([
     optionItem('ActiveX'),
     optionItem('Button'),
