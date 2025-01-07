@@ -556,12 +556,46 @@ export const enum HighlightType {
   Output = 'output',
   Invalid = 'invalid',
 
+  // Accepts blank or Gui name. **Probably used only for GuiControl**
+  // e.g. `GuiControl, ,`, `GuiControl, GuiName:`
+  //                  ^                 ^^^^^^^^
+  BlankOrGuiName = 'blank_or_guiname',
+
+  // Accepts one arbitrary keyword, otherwise not accepted
+  // e.g. `Gui, Flash, Off`
+  //                   ^^^
   KeywordOnly = 'keyword_only',
   KeywordsOnly = 'keywords_only',
-  UnquotedOrKeywords = 'unquoted_or_keywords', // e.g. `ControlClick x123 y123`, `Click, 100 100 LButton`
-  CombiOptions = 'combioptions', // e.g. `FileSetAttributes, +HA-R`
-  GuiOptions = 'guioptions', // e.g. `Gui, +Resize -MaximizeBox`
-  Style = 'style', // e.g. `Control, Style, ^0x800000`, `WinSet, Style, -0xC00000`
+
+  // Accepts zero or more unquoted strings or keywords. Must have a space between each
+  // e.g. `ControlClick x123 y123`, `Click, 100 100 LButton`
+  //                    ^^^^ ^^^^           ^^^ ^^^ ^^^^^^^
+  UnquotedOrKeywords = 'unquoted_or_keywords',
+
+  // Accepts one or more arbitrary keywords. No space is needed between each
+  // e.g. `Loop, Files, \path\to, DFR
+  //                              ^^^
+  CombiOptions = 'combi_options',
+
+  // Accepts entries beginning with `+`, `-` or `^` followed by one or more keywords. No space is needed between each
+  // e.g. `FileSetAttrib, +HA-R`
+  //                      ^^^^^
+  FileAttributeCombiOptions = 'file_attribute_combi_options',
+
+  // Accepts zero or more keywords. Each keyword must be preceded by `+` or `-` and each must have a space
+  // It also accepts an optional gui name for the first argument
+  // e.g. `Gui, GuiName: +Resize`, `Gui, New, +Resize`
+  //            ^^^^^^^^^^^^^^^^              ^^^^^^^
+  GuiOptions = 'gui_options',
+
+  // Accepts zero or more keywords. Each keyword must be preceded by `+` or `-` and each must have a space
+  // e.g. `GuiControl, +Default`
+  //                   ^^^^^^^^
+  GuiControlOptions = 'gui_control_options',
+
+  // e.g. `Control, Style, ^0x800000`, `WinSet, Style, -0xC00000`
+  //                       ^^^^^^^^^                   ^^^^^^^^^
+  Style = 'style',
 }
 export const enum CommandSignatureFlag {
   None = 0,

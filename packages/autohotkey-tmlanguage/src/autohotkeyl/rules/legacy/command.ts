@@ -178,6 +178,24 @@ function lookaheadOnigurumaByParameters(parameters: CommandParameter[], placehol
           }
           break;
         }
+        case HighlightType.GuiOptions:
+        case HighlightType.GuiControlOptions: {
+          if (i === 0 && parameter.type === HighlightType.GuiOptions) {
+            return seq(
+              inlineSpaces0(),
+              optseq(
+                wordChars1(),
+                char(':'),
+              ),
+              inlineSpaces0(),
+              char('+', '-'),
+            );
+          }
+          return seq(
+            inlineSpaces0(),
+            char('+', '-'),
+          );
+        }
         default: break;
       }
       return optional(parameterToOniguruma(parameter, false, placeholder));
@@ -312,7 +330,29 @@ function parameterToPatternsRule(scopeName: ScopeName, defenition: CommandDefini
         },
       );
     }
+    case HighlightType.BlankOrGuiName: {
+      return patternsRule(
+        {
+          match: seq(
+            capture(wordChars0()),
+            capture(char(':')),
+          ),
+          captures: {
+            1: nameRule(scopeName, RuleName.LabelName),
+            2: nameRule(scopeName, RuleName.Colon),
+          },
+        },
+        {
+          name: name(scopeName, RuleName.UnquotedString, StyleName.Invalid),
+          match: seq(
+            negChars1('\\s'),
+            negativeLookahead(':'),
+          ),
+        },
+      );
+    }
     case HighlightType.CombiOptions:
+    case HighlightType.FileAttributeCombiOptions:
     case HighlightType.Style:
     case HighlightType.UnquotedString: {
       return patternsRule(defaultArgumentRule);
@@ -334,7 +374,8 @@ function parameterToPatternsRule(scopeName: ScopeName, defenition: CommandDefini
       );
     }
     case HighlightType.KeywordOnly:
-    case HighlightType.KeywordsOnly: {
+    case HighlightType.KeywordsOnly:
+    case HighlightType.GuiControlOptions: {
       return patternsRule(
         includeRule(Repository.PercentExpression),
         includeRule(Repository.Dereference),

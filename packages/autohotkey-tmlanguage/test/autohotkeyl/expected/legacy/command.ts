@@ -432,5 +432,80 @@ export function createCommandStatementExpectedData(scopeName: ScopeName): Expect
         { text: '; comment', scopes: name(scopeName, RuleName.InLineComment) },
       ],
     ],
+
+    // https://www.autohotkey.com/docs/v1/lib/GuiControl.htm
+    [
+      dedent`
+        GuiControl,, unquoted, unquoted                     ; comment
+        GuiControl, Text, unquoted, unquoted                ; comment
+        GuiControl, Choose, unquoted, unquoted              ; comment
+        GuiControl, ChooseString, unquoted, unquoted        ; comment
+        GuiControl, Move, unquoted, w10                     ; comment
+        GuiControl, MoveDraw, unquoted, w10                 ; comment
+        GuiControl, Focus, unquoted                         ; comment
+        GuiControl, Disable, unquoted                       ; comment
+        GuiControl, Enable, unquoted                        ; comment
+        GuiControl, Hide, unquoted                          ; comment
+        GuiControl, Show, unquoted                          ; comment
+        GuiControl, Font, unquoted                          ; comment
+        GuiControl, GuiName:, unquoted, unquoted            ; comment
+      `,
+      [
+        { text: 'GuiControl', scopes: name(scopeName, RuleName.CommandName) },
+        { text: ',', scopes: name(scopeName, RuleName.Comma) },
+        { text: ',', scopes: name(scopeName, RuleName.Comma) },
+        { text: 'unquoted', scopes: name(scopeName, RuleName.UnquotedString) },
+        { text: ',', scopes: name(scopeName, RuleName.Comma) },
+        { text: 'unquoted', scopes: name(scopeName, RuleName.UnquotedString) },
+        { text: '; comment', scopes: name(scopeName, RuleName.InLineComment) },
+
+        ...[ 'Text', 'Choose', 'ChooseString' ].flatMap((subcommand) => {
+          return [
+            { text: 'GuiControl', scopes: name(scopeName, RuleName.CommandName) },
+            { text: ',', scopes: name(scopeName, RuleName.Comma) },
+            { text: subcommand, scopes: name(scopeName, RuleName.SubCommandName) },
+            { text: ',', scopes: name(scopeName, RuleName.Comma) },
+            { text: 'unquoted', scopes: name(scopeName, RuleName.UnquotedString) },
+            { text: ',', scopes: name(scopeName, RuleName.Comma) },
+            { text: 'unquoted', scopes: name(scopeName, RuleName.UnquotedString) },
+            { text: '; comment', scopes: name(scopeName, RuleName.InLineComment) },
+          ];
+        }),
+
+        ...[ 'Move', 'MoveDraw' ].flatMap((subcommand) => {
+          return [
+            { text: 'GuiControl', scopes: name(scopeName, RuleName.CommandName) },
+            { text: ',', scopes: name(scopeName, RuleName.Comma) },
+            { text: subcommand, scopes: name(scopeName, RuleName.SubCommandName) },
+            { text: ',', scopes: name(scopeName, RuleName.Comma) },
+            { text: 'unquoted', scopes: name(scopeName, RuleName.UnquotedString) },
+            { text: ',', scopes: name(scopeName, RuleName.Comma) },
+            { text: 'w10', scopes: name(scopeName, RuleName.UnquotedString, StyleName.Strong) },
+            { text: '; comment', scopes: name(scopeName, RuleName.InLineComment) },
+          ];
+        }),
+
+        ...[ 'Focus', 'Disable', 'Enable', 'Hide', 'Show', 'Font' ].flatMap((subcommand) => {
+          return [
+            { text: 'GuiControl', scopes: name(scopeName, RuleName.CommandName) },
+            { text: ',', scopes: name(scopeName, RuleName.Comma) },
+            { text: subcommand, scopes: name(scopeName, RuleName.SubCommandName) },
+            { text: ',', scopes: name(scopeName, RuleName.Comma) },
+            { text: 'unquoted', scopes: name(scopeName, RuleName.UnquotedString) },
+            { text: '; comment', scopes: name(scopeName, RuleName.InLineComment) },
+          ];
+        }),
+
+        { text: 'GuiControl', scopes: name(scopeName, RuleName.CommandName) },
+        { text: ',', scopes: name(scopeName, RuleName.Comma) },
+        { text: 'GuiName', scopes: name(scopeName, RuleName.LabelName) },
+        { text: ':', scopes: name(scopeName, RuleName.Colon) },
+        { text: ',', scopes: name(scopeName, RuleName.Comma) },
+        { text: 'unquoted', scopes: name(scopeName, RuleName.UnquotedString) },
+        { text: ',', scopes: name(scopeName, RuleName.Comma) },
+        { text: 'unquoted', scopes: name(scopeName, RuleName.UnquotedString) },
+        { text: '; comment', scopes: name(scopeName, RuleName.InLineComment) },
+      ],
+    ],
   ];
 }
