@@ -64,11 +64,13 @@ export const unquotedCharPattern: string = seq(
 );
 export const expressionArgumentPattern: string = groupMany0(alt(
   pairs,
-  negChar(','),
+  seq(inlineSpaces1(), negativeLookahead(char(';'))),
+  negChar(',', '\\s'),
 ));
 export const percentExpressionArgumentPattern: string = seq(
   char('%'),
   inlineSpaces1(),
+  negativeLookahead(char(';')),
   expressionArgumentPattern,
 );
 export const commandArgumentPattern: string = group(alt(

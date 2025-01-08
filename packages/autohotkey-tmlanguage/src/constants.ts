@@ -596,6 +596,10 @@ export const enum HighlightType {
   // e.g. `Control, Style, ^0x800000`, `WinSet, Style, -0xC00000`
   //                       ^^^^^^^^^                   ^^^^^^^^^
   Style = 'style',
+
+  // e.g. `WinGet, output,ID, abc ahk_exe abc.exe ahk_class abc
+  //                          ^^^ ^^^^^^^^^^^^^^^ ^^^^^^^^^^^^^
+  WinTitle = 'window_title',
 }
 export const enum CommandSignatureFlag {
   None = 0,

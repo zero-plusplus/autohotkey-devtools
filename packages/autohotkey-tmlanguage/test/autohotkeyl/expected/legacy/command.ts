@@ -566,5 +566,60 @@ export function createCommandStatementExpectedData(scopeName: ScopeName): Expect
         { text: '; comment', scopes: name(scopeName, RuleName.InLineComment) },
       ],
     ],
+
+    // https://www.autohotkey.com/docs/v1/lib/Hotkey.htm
+    [
+      dedent`
+        Hotkey, ^a, Off, UseErrorLevel                                                  ; comment
+        Hotkey, IfWinActive, abc ahk_exe abc.exe ahk_class abc, unquoted                ; comment
+        Hotkey, IfWinExist, abc ahk_exe abc.exe ahk_class abc, unquoted                 ; comment
+        Hotkey, If, a + b                                                               ; comment
+        Hotkey, If, % a                                                                 ; comment
+      `,
+      [
+        { text: 'Hotkey', scopes: name(scopeName, RuleName.CommandName) },
+        { text: ',', scopes: name(scopeName, RuleName.Comma) },
+        { text: '^a', scopes: name(scopeName, RuleName.UnquotedString) },
+        { text: ',', scopes: name(scopeName, RuleName.Comma) },
+        { text: 'Off', scopes: name(scopeName, RuleName.UnquotedString, StyleName.Strong) },
+        { text: ',', scopes: name(scopeName, RuleName.Comma) },
+        { text: 'UseErrorLevel', scopes: name(scopeName, RuleName.UnquotedString, StyleName.Strong) },
+        { text: '; comment', scopes: name(scopeName, RuleName.InLineComment) },
+
+        ...[ 'IfWinActive', 'IfWinExist' ].flatMap((subcommand) => {
+          return [
+            { text: 'Hotkey', scopes: name(scopeName, RuleName.CommandName) },
+            { text: ',', scopes: name(scopeName, RuleName.Comma) },
+            { text: subcommand, scopes: name(scopeName, RuleName.SubCommandName) },
+            { text: ',', scopes: name(scopeName, RuleName.Comma) },
+            { text: 'abc', scopes: name(scopeName, RuleName.UnquotedString) },
+            { text: 'ahk_exe', scopes: name(scopeName, RuleName.UnquotedString, StyleName.Strong) },
+            { text: 'abc.exe', scopes: name(scopeName, RuleName.UnquotedString) },
+            { text: 'ahk_class', scopes: name(scopeName, RuleName.UnquotedString, StyleName.Strong) },
+            { text: 'abc', scopes: name(scopeName, RuleName.UnquotedString) },
+            { text: ',', scopes: name(scopeName, RuleName.Comma) },
+            { text: 'unquoted', scopes: name(scopeName, RuleName.UnquotedString) },
+            { text: '; comment', scopes: name(scopeName, RuleName.InLineComment) },
+          ];
+        }),
+
+        { text: 'Hotkey', scopes: name(scopeName, RuleName.CommandName) },
+        { text: ',', scopes: name(scopeName, RuleName.Comma) },
+        { text: 'If', scopes: name(scopeName, RuleName.SubCommandName) },
+        { text: ',', scopes: name(scopeName, RuleName.Comma) },
+        { text: 'a', scopes: name(scopeName, RuleName.Variable) },
+        { text: '+', scopes: name(scopeName, RuleName.Operator) },
+        { text: 'b', scopes: name(scopeName, RuleName.Variable) },
+        { text: '; comment', scopes: name(scopeName, RuleName.InLineComment) },
+
+        { text: 'Hotkey', scopes: name(scopeName, RuleName.CommandName) },
+        { text: ',', scopes: name(scopeName, RuleName.Comma) },
+        { text: 'If', scopes: name(scopeName, RuleName.SubCommandName) },
+        { text: ',', scopes: name(scopeName, RuleName.Comma) },
+        { text: '%', scopes: name(scopeName, RuleName.PercentExpressionBegin) },
+        { text: 'a', scopes: name(scopeName, RuleName.Variable) },
+        { text: '; comment', scopes: name(scopeName, RuleName.InLineComment) },
+      ],
+    ],
   ];
 }

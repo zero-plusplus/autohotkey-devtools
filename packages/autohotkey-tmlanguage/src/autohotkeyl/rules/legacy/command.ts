@@ -221,6 +221,7 @@ function parametersToOniguruma(parameters: CommandParameter[], placeholder: Plac
     const isLastParameter = parameters.length - 1 === i;
     return seq(
       separator,
+      negativeLookahead(seq(inlineSpaces1(), char(';'))),
       inlineSpaces0(),
       capture(parameterToOniguruma(parameter, isLastParameter, placeholder)),
       prev !== '' ? optional(prev) : '',
@@ -265,6 +266,7 @@ function parameterToOniguruma(parameter: CommandParameter, isLastParameter: bool
           inlineSpaces0(),
           char(','),
           optseq(
+            negativeLookahead(seq(inlineSpaces1(), char(';'))),
             inlineSpaces0(),
             patterns_v1.commandArgumentPattern,
           ),
@@ -441,10 +443,70 @@ function parameterToPatternsRule(scopeName: ScopeName, defenition: CommandDefini
         },
       );
     }
-    case HighlightType.UnquotedStringShouldEscapeComma: return patternsRule(
-      includeRule(Repository.Comma),
-      includeRule(Repository.CommandArgument),
-    );
+    // Make each definition group easily distinguishable by underlining. However, if the underline is applied in TMLanguage, its color cannot be controlled. This should be implemented with semantic highlighting
+    // For example, three groups are underlined in the following cases
+    // e.g. `WinActivate abc ahk_exe abc.exe ahk_class abc`
+    //                   ^^^ ^^^^^^^^^^^^^^^ ^^^^^^^^^^^^^
+    // case HighlightType.WinTitle: {
+    //   return patternsRule(
+    //     includeRule(Repository.PercentExpression),
+    //     {
+    //       match: seq(
+    //         lookbehind(group(seq(
+    //           char(','),
+    //           inlineSpaces0(),
+    //         ))),
+    //         capture(seq(
+    //           char('%'),
+    //           negChars0('%'),
+    //           char('%'),
+    //         )),
+    //         lookahead(seq(
+    //           inlineSpaces0(),
+    //           alt(char(','), placeholder.endAnchor),
+    //         )),
+    //       ),
+    //       captures: {
+    //         1: patternsRule(includeRule(Repository.Dereference)),
+    //       },
+    //     },
+    //     {
+    //       name: name(scopeName, StyleName.Underline),
+    //       match: capture(seq(
+    //         char('%'),
+    //         negChars0('%'),
+    //         char('%'),
+    //       )),
+    //       captures: {
+    //         1: patternsRule(includeRule(Repository.Dereference)),
+    //       },
+    //     },
+    //     {
+    //       match: capture(groupMany1(capture(seq(
+    //         negChar('%'),
+    //         negativeLookahead(ignoreCase(seq(
+    //           text('ahk_'),
+    //           group(alt(ordalt(
+    //             'class',
+    //             'id',
+    //             'pid',
+    //             'exe',
+    //             'group',
+    //           ))),
+    //         ))),
+    //       )))),
+    //       captures: {
+    //         1: nameRule(scopeName, RuleName.UnquotedString, StyleName.Underline),
+    //       },
+    //     },
+    //   );
+    // }
+    case HighlightType.UnquotedStringShouldEscapeComma: {
+      return patternsRule(
+        includeRule(Repository.Comma),
+        includeRule(Repository.CommandArgument),
+      );
+    }
     case HighlightType.LabelName: return patternsRule(nameRule(scopeName, Repository.CommandArgument, RuleName.LabelName));
     case HighlightType.Input:
     case HighlightType.Output:
