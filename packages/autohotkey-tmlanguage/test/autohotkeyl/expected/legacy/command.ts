@@ -929,5 +929,49 @@ export function createCommandStatementExpectedData(scopeName: ScopeName): Expect
         { text: '; comment', scopes: name(scopeName, RuleName.InLineComment) },
       ],
     ],
+
+    // https://www.autohotkey.com/docs/v1/lib/SysGet.htm
+    [
+      dedent`
+        SysGet, output, MonitorCount                                                   ; comment
+        SysGet, output, MonitorPrimary                                                 ; comment
+        SysGet, output, Monitor, unquoted                                              ; comment
+        SysGet, output, MonitorWorkArea, unquoted                                      ; comment
+        SysGet, output, MonitorName, unquoted                                          ; comment
+        SysGet, output, 80                                                             ; comment
+      `,
+      [
+        ...[ 'MonitorCount', 'MonitorPrimary' ].flatMap(((subcommand) => {
+          return [
+            { text: 'SysGet', scopes: name(scopeName, RuleName.CommandName) },
+            { text: ',', scopes: name(scopeName, RuleName.Comma) },
+            { text: 'output', scopes: name(scopeName, RuleName.Variable) },
+            { text: ',', scopes: name(scopeName, RuleName.Comma) },
+            { text: subcommand, scopes: name(scopeName, RuleName.SubCommandName) },
+            { text: '; comment', scopes: name(scopeName, RuleName.InLineComment) },
+          ];
+        })),
+
+        ...[ 'Monitor', 'MonitorWorkArea', 'MonitorName' ].flatMap(((subcommand) => {
+          return [
+            { text: 'SysGet', scopes: name(scopeName, RuleName.CommandName) },
+            { text: ',', scopes: name(scopeName, RuleName.Comma) },
+            { text: 'output', scopes: name(scopeName, RuleName.Variable) },
+            { text: ',', scopes: name(scopeName, RuleName.Comma) },
+            { text: subcommand, scopes: name(scopeName, RuleName.SubCommandName) },
+            { text: ',', scopes: name(scopeName, RuleName.Comma) },
+            { text: 'unquoted', scopes: name(scopeName, RuleName.UnquotedString) },
+            { text: '; comment', scopes: name(scopeName, RuleName.InLineComment) },
+          ];
+        })),
+
+        { text: 'SysGet', scopes: name(scopeName, RuleName.CommandName) },
+        { text: ',', scopes: name(scopeName, RuleName.Comma) },
+        { text: 'output', scopes: name(scopeName, RuleName.Variable) },
+        { text: ',', scopes: name(scopeName, RuleName.Comma) },
+        { text: '80', scopes: name(scopeName, RuleName.UnquotedString) },
+        { text: '; comment', scopes: name(scopeName, RuleName.InLineComment) },
+      ],
+    ],
   ];
 }

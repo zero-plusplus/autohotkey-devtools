@@ -666,9 +666,9 @@ export const commandDefinitions: CommandDefinition[] = [
 
   // https://www.autohotkey.com/docs/v1/lib/SysGet.htm
   command('SysGet', [
-    signature([ output(), subcommand([ 'MonitorCount', 'MonitorPrimary' ]) ]),
+    signature([ output(), subcommand([ 'MonitorCount', 'MonitorPrimary' ]), restParams() ]),
     signature([ output(), subcommand([ 'Monitor', 'MonitorWorkArea', 'MonitorName' ]), unquoted() ]),
-    signature([ output(), unquotedShouldEscapeComma() ]),
+    signature([ output(), restParams() ]),
   ]),
 
   // https://www.autohotkey.com/docs/v1/lib/Thread.htm
