@@ -457,15 +457,12 @@ export const commandDefinitions: CommandDefinition[] = [
   command('Process', [
     signature([ subcommand([ 'Exist', 'Close' ]), unquoted() ]),
     signature([ subcommand([ 'Wait', 'WaitClose' ]), unquoted(), unquoted() ]),
-    signature([ subcommand([ 'Priority' ]), unquoted(), keywordsOnly([ optionItem('Low'), optionItem('L'), optionItem('BelowNormal'), optionItem('B'), optionItem('Normal'), optionItem('N'), optionItem('AboveNormal'), optionItem('A'), optionItem('High'), optionItem('H'), optionItem('Realtime'), optionItem('R') ]) ]),
-    signature([ subcommand([ 'List' ]) ]),
+    signature([ subcommand([ 'Priority' ]), unquoted(), keywordOnly([ optionItem('Low'), optionItem('L'), optionItem('BelowNormal'), optionItem('B'), optionItem('Normal'), optionItem('N'), optionItem('AboveNormal'), optionItem('A'), optionItem('High'), optionItem('H'), optionItem('Realtime'), optionItem('R') ]) ]),
+    signature([ subcommand([ 'List' ]), restParams() ]),
   ]),
 
   // https://www.autohotkey.com/docs/v1/lib/Progress.htm
-  command('Progress', [
-    signature([ keywordsOnly([ optionItem('Off') ]) ]),
-    signature([ unquoted(), unquoted(), unquoted(), winTitle(), unquoted() ]),
-  ], CommandFlag.Deprecated),
+  command('Progress', signature([ unquotedOrKeywords([ optionItem('Off') ]), unquoted(), unquoted(), winTitle(), unquoted() ]), CommandFlag.Deprecated),
 
   // https://www.autohotkey.com/docs/v1/lib/Random.htm
   command('Random', signature([ output(), expression(), expression() ])),
