@@ -92,6 +92,29 @@ export function createCommandLikeRule(scopeName: ScopeName, definition: CommandD
     ].map((rule, i) => [ i + 1, rule ])),
   };
 }
+export function createMenuNameCommandArgumentRule(scopeName: ScopeName): PatternsRule {
+  return patternsRule(
+    // e.g. `Menu, MenuName, Add, &test`
+    //                            ^^
+    {
+      name: name(scopeName, RuleName.UnquotedString, StyleName.Underline),
+      match: seq(char('&'), alt(negChar('&', '\\s'))),
+    },
+    {
+      name: name(scopeName, RuleName.UnquotedString, StyleName.Escape),
+      match: text('&&'),
+    },
+    {
+      name: name(scopeName, RuleName.UnquotedString),
+      match: seq(char('&'), negativeLookahead(char('&'))),
+    },
+    includeRule(Repository.UnquotedStringEscapeSequence),
+    {
+      name: name(scopeName, RuleName.UnquotedString),
+      match: negChars1('`', '&', '\\s'),
+    },
+  );
+}
 
 interface Placeholder_CommandNames {
   startAnchor: string;
@@ -356,9 +379,8 @@ function parameterToPatternsRule(scopeName: ScopeName, defenition: CommandDefini
     case HighlightType.CombiOptions:
     case HighlightType.FileAttributeCombiOptions:
     case HighlightType.Style:
-    case HighlightType.UnquotedString: {
-      return patternsRule(defaultArgumentRule);
-    }
+    case HighlightType.UnquotedString: return patternsRule(defaultArgumentRule);
+    case HighlightType.MenuItemName: return patternsRule(includeRule(Repository.MenuItemNameCommandArgument));
     case HighlightType.UnquotedOrKeywords: {
       return patternsRule(
         includeRule(Repository.PercentExpression),

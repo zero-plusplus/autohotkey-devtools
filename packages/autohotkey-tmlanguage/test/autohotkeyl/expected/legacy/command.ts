@@ -621,5 +621,205 @@ export function createCommandStatementExpectedData(scopeName: ScopeName): Expect
         { text: '; comment', scopes: name(scopeName, RuleName.InLineComment) },
       ],
     ],
+
+    // https://www.autohotkey.com/docs/v1/lib/Menu.htm
+    [
+      dedent`
+        Menu, Tray, Icon, HBITMAP:*\\path\\to, unquoted, unquoted                 ; comment
+        Menu, Tray, Tip, unquoted                                                 ; comment
+        Menu, Tray, Click, unquoted                                               ; comment
+        Menu, Tray, MainWindow                                                    ; comment
+        Menu, Tray, NoMainWindow                                                  ; comment
+        Menu, Tray, NoIcon                                                        ; comment
+        Menu, Tray, unquoted, unquoted, unquoted                                  ; comment
+        Menu, unquoted, Add, a&b && c, unquoted, P1                               ; comment
+        Menu, unquoted, Insert, a&b && c, unquoted, unquoted, P1                  ; comment
+        Menu, unquoted, Delete, a&b && c                                          ; comment
+        Menu, unquoted, Check, a&b && c                                           ; comment
+        Menu, unquoted, Uncheck, a&b && c                                         ; comment
+        Menu, unquoted, ToggleCheck, a&b && c                                     ; comment
+        Menu, unquoted, Enable, a&b && c                                          ; comment
+        Menu, unquoted, Disable, a&b && c                                         ; comment
+        Menu, unquoted, ToggleEnable, a&b && c                                    ; comment
+        Menu, unquoted, Default, a&b && c                                         ; comment
+        Menu, unquoted, NoIcon, a&b && c                                          ; comment
+        Menu, unquoted, DeleteAll                                                 ; comment
+        Menu, unquoted, NoDefault                                                 ; comment
+        Menu, unquoted, Standard                                                  ; comment
+        Menu, unquoted, NoStandard                                                ; comment
+        Menu, unquoted, Rename, a&b && c, a&b && c                                ; comment
+        Menu, unquoted, Icon, unquoted, unquoted, unquoted, HBITMAP:*\\path\\to   ; comment
+        Menu, unquoted, UseErrorLevel, Off                                        ; comment
+        Menu, unquoted, Show, unquoted, unquoted                                  ; comment
+        Menu, unquoted, Color, unquoted, unquoted                                 ; comment
+      `,
+      [
+        { text: 'Menu', scopes: name(scopeName, RuleName.CommandName) },
+        { text: ',', scopes: name(scopeName, RuleName.Comma) },
+        { text: 'Tray', scopes: name(scopeName, RuleName.SubCommandName) },
+        { text: ',', scopes: name(scopeName, RuleName.Comma) },
+        { text: 'Icon', scopes: name(scopeName, RuleName.SubCommandName) },
+        { text: ',', scopes: name(scopeName, RuleName.Comma) },
+        { text: 'HBITMAP:*\\path\\to', scopes: name(scopeName, RuleName.UnquotedString, StyleName.Strong) },
+        { text: ',', scopes: name(scopeName, RuleName.Comma) },
+        { text: 'unquoted', scopes: name(scopeName, RuleName.UnquotedString) },
+        { text: ',', scopes: name(scopeName, RuleName.Comma) },
+        { text: 'unquoted', scopes: name(scopeName, RuleName.UnquotedString) },
+        { text: '; comment', scopes: name(scopeName, RuleName.InLineComment) },
+
+        ...[ 'Tip', 'Click' ].flatMap((subcommand) => {
+          return [
+            { text: 'Menu', scopes: name(scopeName, RuleName.CommandName) },
+            { text: ',', scopes: name(scopeName, RuleName.Comma) },
+            { text: 'Tray', scopes: name(scopeName, RuleName.SubCommandName) },
+            { text: ',', scopes: name(scopeName, RuleName.Comma) },
+            { text: subcommand, scopes: name(scopeName, RuleName.SubCommandName) },
+            { text: ',', scopes: name(scopeName, RuleName.Comma) },
+            { text: 'unquoted', scopes: name(scopeName, RuleName.UnquotedString) },
+            { text: '; comment', scopes: name(scopeName, RuleName.InLineComment) },
+          ];
+        }),
+
+        ...[ 'MainWindow', 'NoMainWindow', 'NoIcon' ].flatMap((subcommand) => {
+          return [
+            { text: 'Menu', scopes: name(scopeName, RuleName.CommandName) },
+            { text: ',', scopes: name(scopeName, RuleName.Comma) },
+            { text: 'Tray', scopes: name(scopeName, RuleName.SubCommandName) },
+            { text: ',', scopes: name(scopeName, RuleName.Comma) },
+            { text: subcommand, scopes: name(scopeName, RuleName.SubCommandName) },
+            { text: '; comment', scopes: name(scopeName, RuleName.InLineComment) },
+          ];
+        }),
+
+        { text: 'Menu', scopes: name(scopeName, RuleName.CommandName) },
+        { text: ',', scopes: name(scopeName, RuleName.Comma) },
+        { text: 'Tray', scopes: name(scopeName, RuleName.SubCommandName) },
+        { text: ',', scopes: name(scopeName, RuleName.Comma) },
+        { text: 'unquoted', scopes: name(scopeName, RuleName.UnquotedString) },
+        { text: ',', scopes: name(scopeName, RuleName.Comma) },
+        { text: 'unquoted', scopes: name(scopeName, RuleName.UnquotedString) },
+        { text: ',', scopes: name(scopeName, RuleName.Comma) },
+        { text: 'unquoted', scopes: name(scopeName, RuleName.UnquotedString) },
+        { text: '; comment', scopes: name(scopeName, RuleName.InLineComment) },
+
+        { text: 'Menu', scopes: name(scopeName, RuleName.CommandName) },
+        { text: ',', scopes: name(scopeName, RuleName.Comma) },
+        { text: 'unquoted', scopes: name(scopeName, RuleName.UnquotedString) },
+        { text: ',', scopes: name(scopeName, RuleName.Comma) },
+        { text: 'Add', scopes: name(scopeName, RuleName.SubCommandName) },
+        { text: ',', scopes: name(scopeName, RuleName.Comma) },
+        { text: 'a', scopes: name(scopeName, RuleName.UnquotedString) },
+        { text: '&b', scopes: name(scopeName, RuleName.UnquotedString, StyleName.Underline) },
+        { text: '&&', scopes: name(scopeName, RuleName.UnquotedString, StyleName.Escape) },
+        { text: 'c', scopes: name(scopeName, RuleName.UnquotedString) },
+        { text: ',', scopes: name(scopeName, RuleName.Comma) },
+        { text: 'unquoted', scopes: name(scopeName, RuleName.UnquotedString) },
+        { text: ',', scopes: name(scopeName, RuleName.Comma) },
+        { text: 'P1', scopes: name(scopeName, RuleName.UnquotedString, StyleName.Strong) },
+        { text: '; comment', scopes: name(scopeName, RuleName.InLineComment) },
+
+        { text: 'Menu', scopes: name(scopeName, RuleName.CommandName) },
+        { text: ',', scopes: name(scopeName, RuleName.Comma) },
+        { text: 'unquoted', scopes: name(scopeName, RuleName.UnquotedString) },
+        { text: ',', scopes: name(scopeName, RuleName.Comma) },
+        { text: 'Insert', scopes: name(scopeName, RuleName.SubCommandName) },
+        { text: ',', scopes: name(scopeName, RuleName.Comma) },
+        { text: 'a', scopes: name(scopeName, RuleName.UnquotedString) },
+        { text: '&b', scopes: name(scopeName, RuleName.UnquotedString, StyleName.Underline) },
+        { text: '&&', scopes: name(scopeName, RuleName.UnquotedString, StyleName.Escape) },
+        { text: 'c', scopes: name(scopeName, RuleName.UnquotedString) },
+        { text: ',', scopes: name(scopeName, RuleName.Comma) },
+        { text: 'unquoted', scopes: name(scopeName, RuleName.UnquotedString) },
+        { text: ',', scopes: name(scopeName, RuleName.Comma) },
+        { text: 'unquoted', scopes: name(scopeName, RuleName.UnquotedString) },
+        { text: ',', scopes: name(scopeName, RuleName.Comma) },
+        { text: 'P1', scopes: name(scopeName, RuleName.UnquotedString, StyleName.Strong) },
+        { text: '; comment', scopes: name(scopeName, RuleName.InLineComment) },
+
+
+        ...[ 'Delete', 'Check', 'Uncheck', 'ToggleCheck', 'Enable', 'Disable', 'ToggleEnable', 'Default', 'NoIcon' ].flatMap((subcommand) => {
+          return [
+            { text: 'Menu', scopes: name(scopeName, RuleName.CommandName) },
+            { text: ',', scopes: name(scopeName, RuleName.Comma) },
+            { text: 'unquoted', scopes: name(scopeName, RuleName.UnquotedString) },
+            { text: ',', scopes: name(scopeName, RuleName.Comma) },
+            { text: subcommand, scopes: name(scopeName, RuleName.SubCommandName) },
+            { text: ',', scopes: name(scopeName, RuleName.Comma) },
+            { text: 'a', scopes: name(scopeName, RuleName.UnquotedString) },
+            { text: '&b', scopes: name(scopeName, RuleName.UnquotedString, StyleName.Underline) },
+            { text: '&&', scopes: name(scopeName, RuleName.UnquotedString, StyleName.Escape) },
+            { text: 'c', scopes: name(scopeName, RuleName.UnquotedString) },
+            { text: '; comment', scopes: name(scopeName, RuleName.InLineComment) },
+          ];
+        }),
+
+        ...[ 'DeleteAll', 'NoDefault', 'Standard', 'NoStandard' ].flatMap((subcommand) => {
+          return [
+            { text: 'Menu', scopes: name(scopeName, RuleName.CommandName) },
+            { text: ',', scopes: name(scopeName, RuleName.Comma) },
+            { text: 'unquoted', scopes: name(scopeName, RuleName.UnquotedString) },
+            { text: ',', scopes: name(scopeName, RuleName.Comma) },
+            { text: subcommand, scopes: name(scopeName, RuleName.SubCommandName) },
+            { text: '; comment', scopes: name(scopeName, RuleName.InLineComment) },
+          ];
+        }),
+
+        { text: 'Menu', scopes: name(scopeName, RuleName.CommandName) },
+        { text: ',', scopes: name(scopeName, RuleName.Comma) },
+        { text: 'unquoted', scopes: name(scopeName, RuleName.UnquotedString) },
+        { text: ',', scopes: name(scopeName, RuleName.Comma) },
+        { text: 'Rename', scopes: name(scopeName, RuleName.SubCommandName) },
+        { text: ',', scopes: name(scopeName, RuleName.Comma) },
+        { text: 'a', scopes: name(scopeName, RuleName.UnquotedString) },
+        { text: '&b', scopes: name(scopeName, RuleName.UnquotedString, StyleName.Underline) },
+        { text: '&&', scopes: name(scopeName, RuleName.UnquotedString, StyleName.Escape) },
+        { text: 'c', scopes: name(scopeName, RuleName.UnquotedString) },
+        { text: ',', scopes: name(scopeName, RuleName.Comma) },
+        { text: 'a', scopes: name(scopeName, RuleName.UnquotedString) },
+        { text: '&b', scopes: name(scopeName, RuleName.UnquotedString, StyleName.Underline) },
+        { text: '&&', scopes: name(scopeName, RuleName.UnquotedString, StyleName.Escape) },
+        { text: 'c', scopes: name(scopeName, RuleName.UnquotedString) },
+        { text: '; comment', scopes: name(scopeName, RuleName.InLineComment) },
+
+        { text: 'Menu', scopes: name(scopeName, RuleName.CommandName) },
+        { text: ',', scopes: name(scopeName, RuleName.Comma) },
+        { text: 'unquoted', scopes: name(scopeName, RuleName.UnquotedString) },
+        { text: ',', scopes: name(scopeName, RuleName.Comma) },
+        { text: 'Icon', scopes: name(scopeName, RuleName.SubCommandName) },
+        { text: ',', scopes: name(scopeName, RuleName.Comma) },
+        { text: 'unquoted', scopes: name(scopeName, RuleName.UnquotedString) },
+        { text: ',', scopes: name(scopeName, RuleName.Comma) },
+        { text: 'unquoted', scopes: name(scopeName, RuleName.UnquotedString) },
+        { text: ',', scopes: name(scopeName, RuleName.Comma) },
+        { text: 'unquoted', scopes: name(scopeName, RuleName.UnquotedString) },
+        { text: ',', scopes: name(scopeName, RuleName.Comma) },
+        { text: 'HBITMAP:*\\path\\to', scopes: name(scopeName, RuleName.UnquotedString, StyleName.Strong) },
+        { text: '; comment', scopes: name(scopeName, RuleName.InLineComment) },
+
+        { text: 'Menu', scopes: name(scopeName, RuleName.CommandName) },
+        { text: ',', scopes: name(scopeName, RuleName.Comma) },
+        { text: 'unquoted', scopes: name(scopeName, RuleName.UnquotedString) },
+        { text: ',', scopes: name(scopeName, RuleName.Comma) },
+        { text: 'UseErrorLevel', scopes: name(scopeName, RuleName.SubCommandName) },
+        { text: ',', scopes: name(scopeName, RuleName.Comma) },
+        { text: 'Off', scopes: name(scopeName, RuleName.UnquotedString, StyleName.Strong) },
+        { text: '; comment', scopes: name(scopeName, RuleName.InLineComment) },
+
+        ...[ 'Show', 'Color' ].flatMap((subcommand) => {
+          return [
+            { text: 'Menu', scopes: name(scopeName, RuleName.CommandName) },
+            { text: ',', scopes: name(scopeName, RuleName.Comma) },
+            { text: 'unquoted', scopes: name(scopeName, RuleName.SubCommandName) },
+            { text: ',', scopes: name(scopeName, RuleName.Comma) },
+            { text: subcommand, scopes: name(scopeName, RuleName.SubCommandName) },
+            { text: ',', scopes: name(scopeName, RuleName.Comma) },
+            { text: 'unquoted', scopes: name(scopeName, RuleName.UnquotedString) },
+            { text: ',', scopes: name(scopeName, RuleName.Comma) },
+            { text: 'unquoted', scopes: name(scopeName, RuleName.UnquotedString) },
+            { text: '; comment', scopes: name(scopeName, RuleName.InLineComment) },
+          ];
+        }),
+      ],
+    ],
   ];
 }

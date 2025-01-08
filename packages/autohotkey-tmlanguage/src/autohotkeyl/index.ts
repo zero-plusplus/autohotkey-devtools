@@ -356,6 +356,7 @@ export function createRepositories(scopeName: ScopeName): Repositories {
       includeRule(Repository.CommandLastArgumentText),
       includeRule(Repository.InLineComment),
     ),
+    [Repository.MenuItemNameCommandArgument]: rule_v1.createMenuNameCommandArgumentRule(scopeName),
     [Repository.UnquotedStringEscapeSequence]: rule_v1.createUnquotedEscapeSequencesRule(scopeName, constants_v1.unquoteEscapeSequences),
     [Repository.CommandArgumentText]: rule_v1.createUnquotedString(scopeName, {
       stringRuleName: RuleName.UnquotedString,

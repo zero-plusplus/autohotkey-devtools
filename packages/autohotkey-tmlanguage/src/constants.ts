@@ -369,6 +369,7 @@ export const enum Repository {
   Command = 'repository.command',
   CommonCommand = 'repository.common-command',
   CommandArgument = 'repository.command.argument',
+  MenuItemNameCommandArgument = 'repository.command.argument.menu-item-name',
   CommandLastArgument = 'repository.command.argument.last',
   CommandArgumentText = 'repository.command.argument.text',
   CommandLastArgumentText = 'repository.command.argument.last.text',
@@ -597,6 +598,11 @@ export const enum HighlightType {
   // e.g. `GuiControl, +Default`
   //                   ^^^^^^^^
   GuiControlOptions = 'gui_control_options',
+
+  // https://www.autohotkey.com/docs/v1/lib/Menu.htm#MenuItemName
+  // In the following example, `&O` needs to be emphasized and `&&` needs to be escaped
+  // e.g. `Menu, MenuName, Add, &Open`, `Menu, MenuName, Add, Save && Exit`
+  MenuItemName = 'menu_item_name',
 
   // e.g. `Control, Style, ^0x800000`, `WinSet, Style, -0xC00000`
   //                       ^^^^^^^^^                   ^^^^^^^^^

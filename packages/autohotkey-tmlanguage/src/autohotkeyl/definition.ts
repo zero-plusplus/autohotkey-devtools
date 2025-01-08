@@ -404,21 +404,19 @@ export const commandDefinitions: CommandDefinition[] = [
 
   // https://www.autohotkey.com/docs/v1/lib/Menu.htm
   command('Menu', [
-    signature([ subcommand('Tray'), subcommand('Icon'), path(), unquoted(), unquoted() ]),
-    signature([ subcommand('Tray'), subcommand('NoIcon') ]),
+    signature([ subcommand('Tray'), subcommand('Icon'), imagePath(), unquoted(), unquoted() ]),
     signature([ subcommand('Tray'), subcommand([ 'Tip', 'Click' ]), unquoted() ]),
-    signature([ subcommand('Tray'), subcommand([ 'Show', 'Color' ]), unquoted(), unquoted() ]),
-    signature([ subcommand('Tray'), subcommand([ 'MainWindow', 'NoMainWindow' ]) ]),
+    signature([ subcommand('Tray'), subcommand([ 'MainWindow', 'NoMainWindow', 'NoIcon' ]), restParams() ]),
     signature([ subcommand('Tray'), unquoted(), path(), unquoted(), unquoted() ]),
-    signature([ unquoted(), subcommand('Add'), unquoted(), unquoted(), menuOptions() ]),
-    signature([ unquoted(), subcommand('Insert'), unquoted(), unquoted(), unquoted(), menuOptions() ]),
-    signature([ unquoted(), subcommand([ 'Delete', 'Check', 'Uncheck', 'ToggleCheck', 'Enable', 'Disable', 'ToggleEnable', 'Default', 'NoIcon' ]), unquoted() ]),
-    signature([ unquoted(), subcommand([ 'DeleteAll', 'Standard', 'NoStandard' ]) ]),
-    signature([ unquoted(), subcommand('Rename'), unquoted(), unquoted() ]),
-    signature([ unquoted(), subcommand('Icon'), unquoted(), path(), unquoted(), unquoted() ]),
-    signature([ unquoted(), subcommand('UseErrorLevel '), keywordsOnly([ 'Off' ]) ]),
-    signature([ unquoted(), subcommand([ 'NoDefault', 'Standard', 'NoStandard' ]) ]),
-    signature([ unquotedShouldEscapeComma() ]),
+    signature([ unquoted(), subcommand('Add'), menuItemName(), unquoted(), menuOptions() ]),
+    signature([ unquoted(), subcommand('Insert'), menuItemName(), unquoted(), unquoted(), menuOptions() ]),
+    signature([ unquoted(), subcommand([ 'DeleteAll', 'NoDefault', 'Standard', 'NoStandard' ]), restParams() ]),
+    signature([ unquoted(), subcommand([ 'Delete', 'Check', 'Uncheck', 'ToggleCheck', 'Enable', 'Disable', 'ToggleEnable', 'Default', 'NoIcon' ]), menuItemName() ]),
+    signature([ unquoted(), subcommand('Rename'), menuItemName(), menuItemName() ]),
+    signature([ unquoted(), subcommand('Icon'), unquoted(), path(), unquoted(), imagePath() ]),
+    signature([ unquoted(), subcommand('UseErrorLevel'), keywordOnly([ 'Off' ]) ]),
+    signature([ unquoted(), subcommand([ 'Show', 'Color' ]), unquoted(), unquoted() ]),
+    signature([ restParams() ]),
   ]),
 
   // https://www.autohotkey.com/docs/v1/lib/MouseClick.htm
@@ -914,9 +912,12 @@ export function input(flags: CommandParameterFlag = CommandParameterFlag.None): 
 export function output(flags: CommandParameterFlag = CommandParameterFlag.None): CommandParameter {
   return { type: HighlightType.Output, flags };
 }
+export function menuItemName(flags: CommandParameterFlag = CommandParameterFlag.None): CommandParameter {
+  return { type: HighlightType.MenuItemName, flags };
+}
 export function menuOptions(values: string[] = [], flags: CommandParameterFlag = CommandParameterFlag.None): CommandParameter {
   return unquotedOrKeywords([
-    decimalOptionItem(optionItem('P')),
+    decimalOptionItem('P'),
     flagOptionItem('Radio'),
     flagOptionItem('Right'),
     flagOptionItem('Break'),
@@ -1064,10 +1065,13 @@ export function whichButton(flags: CommandParameterFlag = CommandParameterFlag.N
   ], flags);
 }
 export function path(values: string[] = [], flags: CommandParameterFlag = CommandParameterFlag.None): CommandParameter {
-  return { type: HighlightType.UnquotedString, flags, values };
+  return unquotedOrKeywords(values, flags);
 }
 export function imagePath(flags: CommandParameterFlag = CommandParameterFlag.None): CommandParameter {
-  return path([ stringOptionItem('HBITMAP:') ], flags);
+  return path([
+    stringOptionItem('HICON:'),
+    stringOptionItem('HBITMAP:'),
+  ], flags);
 }
 export function glob(flags: CommandParameterFlag = CommandParameterFlag.None): CommandParameter {
   return { type: HighlightType.UnquotedString, flags, values: [] };
