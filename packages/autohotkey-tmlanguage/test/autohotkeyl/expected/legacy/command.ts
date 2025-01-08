@@ -973,5 +973,43 @@ export function createCommandStatementExpectedData(scopeName: ScopeName): Expect
         { text: '; comment', scopes: name(scopeName, RuleName.InLineComment) },
       ],
     ],
+
+    // https://www.autohotkey.com/docs/v1/lib/Thread.htm
+    [
+      dedent`
+        Thread, NoTimers, a + b                       ; comment
+        Thread, Priority, a + b                       ; comment
+        Thread, Interrupt, unquoted, unquoted         ; comment
+        Thread, unquoted                              ; comment
+      `,
+      [
+        ...[ 'NoTimers', 'Priority' ].flatMap((subcommand) => {
+          return [
+            { text: 'Thread', scopes: name(scopeName, RuleName.CommandName) },
+            { text: ',', scopes: name(scopeName, RuleName.Comma) },
+            { text: subcommand, scopes: name(scopeName, RuleName.SubCommandName) },
+            { text: ',', scopes: name(scopeName, RuleName.Comma) },
+            { text: 'a', scopes: name(scopeName, RuleName.Variable) },
+            { text: '+', scopes: name(scopeName, RuleName.Operator) },
+            { text: 'b', scopes: name(scopeName, RuleName.Variable) },
+            { text: '; comment', scopes: name(scopeName, RuleName.InLineComment) },
+          ];
+        }),
+
+        { text: 'Thread', scopes: name(scopeName, RuleName.CommandName) },
+        { text: ',', scopes: name(scopeName, RuleName.Comma) },
+        { text: 'Interrupt', scopes: name(scopeName, RuleName.SubCommandName) },
+        { text: ',', scopes: name(scopeName, RuleName.Comma) },
+        { text: 'unquoted', scopes: name(scopeName, RuleName.UnquotedString) },
+        { text: ',', scopes: name(scopeName, RuleName.Comma) },
+        { text: 'unquoted', scopes: name(scopeName, RuleName.UnquotedString) },
+        { text: '; comment', scopes: name(scopeName, RuleName.InLineComment) },
+
+        { text: 'Thread', scopes: name(scopeName, RuleName.CommandName) },
+        { text: ',', scopes: name(scopeName, RuleName.Comma) },
+        { text: 'unquoted', scopes: name(scopeName, RuleName.UnquotedString) },
+        { text: '; comment', scopes: name(scopeName, RuleName.InLineComment) },
+      ],
+    ],
   ];
 }

@@ -675,7 +675,7 @@ export const commandDefinitions: CommandDefinition[] = [
   command('Thread', [
     signature([ subcommand([ 'NoTimers', 'Priority' ]), expression() ]),
     signature([ subcommand('Interrupt'), unquoted(), unquoted() ]),
-    signature([ unquotedShouldEscapeComma() ]),
+    signature([ restParams() ]),
   ]),
 
   // https://www.autohotkey.com/docs/v1/lib/ToolTip.htm
