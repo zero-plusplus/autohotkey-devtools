@@ -872,5 +872,62 @@ export function createCommandStatementExpectedData(scopeName: ScopeName): Expect
         { text: '; comment', scopes: name(scopeName, RuleName.InLineComment) },
       ],
     ],
+
+    // https://www.autohotkey.com/docs/v1/lib/Progress.htm
+    [
+      dedent`
+        Progress, Off                                               ; comment
+        Progress, unquoted, unquoted, unquoted, ahk_id, unquoted    ; comment
+      `,
+      [
+        { text: 'Progress', scopes: name(scopeName, RuleName.CommandName, StyleName.Strikethrough) },
+        { text: ',', scopes: name(scopeName, RuleName.Comma) },
+        { text: 'Off', scopes: name(scopeName, RuleName.SubCommandName) },
+        { text: '; comment', scopes: name(scopeName, RuleName.InLineComment) },
+
+        { text: 'Progress', scopes: name(scopeName, RuleName.CommandName, StyleName.Strikethrough) },
+        { text: ',', scopes: name(scopeName, RuleName.Comma) },
+        { text: 'unquoted', scopes: name(scopeName, RuleName.UnquotedString) },
+        { text: ',', scopes: name(scopeName, RuleName.Comma) },
+        { text: 'unquoted', scopes: name(scopeName, RuleName.UnquotedString) },
+        { text: ',', scopes: name(scopeName, RuleName.Comma) },
+        { text: 'unquoted', scopes: name(scopeName, RuleName.UnquotedString) },
+        { text: ',', scopes: name(scopeName, RuleName.Comma) },
+        { text: 'ahk_id', scopes: name(scopeName, RuleName.UnquotedString, StyleName.Strong) },
+        { text: ',', scopes: name(scopeName, RuleName.Comma) },
+        { text: 'unquoted', scopes: name(scopeName, RuleName.UnquotedString) },
+        { text: '; comment', scopes: name(scopeName, RuleName.InLineComment) },
+      ],
+    ],
+
+    // https://www.autohotkey.com/docs/v1/lib/SplashImage.htm
+    [
+      dedent`
+        SplashImage, Off                                                               ; comment
+        SplashImage, HBITMAP:*\\path\\to, x1 y1, unquoted, unquoted, ahk_id, unquoted  ; comment
+      `,
+      [
+        { text: 'SplashImage', scopes: name(scopeName, RuleName.CommandName, StyleName.Strikethrough) },
+        { text: ',', scopes: name(scopeName, RuleName.Comma) },
+        { text: 'Off', scopes: name(scopeName, RuleName.SubCommandName) },
+        { text: '; comment', scopes: name(scopeName, RuleName.InLineComment) },
+
+        { text: 'SplashImage', scopes: name(scopeName, RuleName.CommandName, StyleName.Strikethrough) },
+        { text: ',', scopes: name(scopeName, RuleName.Comma) },
+        { text: 'HBITMAP:*\\path\\to', scopes: name(scopeName, RuleName.UnquotedString, StyleName.Strong) },
+        { text: ',', scopes: name(scopeName, RuleName.Comma) },
+        { text: 'x1', scopes: name(scopeName, RuleName.UnquotedString, StyleName.Strong) },
+        { text: 'y1', scopes: name(scopeName, RuleName.UnquotedString, StyleName.Strong) },
+        { text: ',', scopes: name(scopeName, RuleName.Comma) },
+        { text: 'unquoted', scopes: name(scopeName, RuleName.UnquotedString) },
+        { text: ',', scopes: name(scopeName, RuleName.Comma) },
+        { text: 'unquoted', scopes: name(scopeName, RuleName.UnquotedString) },
+        { text: ',', scopes: name(scopeName, RuleName.Comma) },
+        { text: 'ahk_id', scopes: name(scopeName, RuleName.UnquotedString, StyleName.Strong) },
+        { text: ',', scopes: name(scopeName, RuleName.Comma) },
+        { text: 'unquoted', scopes: name(scopeName, RuleName.UnquotedString) },
+        { text: '; comment', scopes: name(scopeName, RuleName.InLineComment) },
+      ],
+    ],
   ];
 }

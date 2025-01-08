@@ -462,7 +462,10 @@ export const commandDefinitions: CommandDefinition[] = [
   ]),
 
   // https://www.autohotkey.com/docs/v1/lib/Progress.htm
-  command('Progress', signature([ unquotedOrKeywords([ optionItem('Off') ]), unquoted(), unquoted(), winTitle(), unquoted() ]), CommandFlag.Deprecated),
+  command('Progress', [
+    signature([ subcommand('Off') ]),
+    signature([ unquotedOrKeywords([ optionItem('Off') ]), unquoted(), unquoted(), winTitle(), unquoted() ]),
+  ], CommandFlag.Deprecated),
 
   // https://www.autohotkey.com/docs/v1/lib/Random.htm
   command('Random', signature([ output(), expression(), expression() ])),
@@ -580,8 +583,34 @@ export const commandDefinitions: CommandDefinition[] = [
 
   // https://www.autohotkey.com/docs/v1/lib/SplashImage.htm
   command('SplashImage', [
-    signature([ keywordsOnly([ 'Off' ]) ]),
-    signature([ imagePath(), unquotedOrKeywords([ numberOptionItem('C'), numberOptionItem('ZH'), numberOptionItem('ZW'), numberOptionItem('ZX'), numberOptionItem('ZY'), numberOptionItem('FM'), numberOptionItem('FS'), numberOptionItem('WM'), numberOptionItem('WS'), numberOptionItem('CB'), numberOptionItem('CT'), colorOptionItem('CW') ]), unquoted(), unquoted(), winTitle(), unquoted() ]),
+    signature([ subcommand([ 'Off' ]) ]),
+    signature([
+      imagePath(), unquotedOrKeywords([
+        optionItem('A'),
+        numberOptionItem('B'),
+        numberOptionItem('M'),
+        numberOptionItem('P'),
+        sizeOptionItem('R'),
+        optionItem('T'),
+        numberOptionItem('H'),
+        numberOptionItem('W'),
+        numberOptionItem('X'),
+        numberOptionItem('Y'),
+        optionItem('Hide'),
+        numberOptionItem('C'),
+        numberOptionItem('ZH'),
+        numberOptionItem('ZW'),
+        numberOptionItem('ZX'),
+        numberOptionItem('ZY'),
+        numberOptionItem('FM'),
+        numberOptionItem('FS'),
+        numberOptionItem('WM'),
+        numberOptionItem('WS'),
+        colorOptionItem('CB'),
+        colorOptionItem('CT'),
+        colorOptionItem('CW'),
+      ]), unquoted(), unquoted(), winTitle(), unquoted(),
+    ]),
   ], CommandFlag.Deprecated),
 
   // https://www.autohotkey.com/docs/v1/lib/SplashTextOn.htm
