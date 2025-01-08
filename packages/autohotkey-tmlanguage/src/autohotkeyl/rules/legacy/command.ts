@@ -148,6 +148,11 @@ interface ParameterValue {
   value: string;
 }
 function parseParameterValue(value: string): ParameterValue {
+  if (value.startsWith('<') && value.endsWith('>')) {
+    // e.g. `'<range>' -> 10-10`
+    return { prefix: undefined, value: '', suffix: value.slice(1, -1) };
+  }
+
   const match = value.match(/(<(?<prefix>[a-zA-Z_-]+)>)?(?<value>[^<]*)(<(?<suffix>[a-zA-Z_-]+)>)?/);
   return {
     prefix: match?.groups?.['prefix'],
@@ -557,10 +562,22 @@ function optionItemsToRules(scopeName: ScopeName, optionItems: string[] | undefi
 }
 function parameterValuesToRuleByType(scopeName: ScopeName, parameterValue: ParameterValue): Rule[] {
   const { prefix, suffix } = parameterValue;
-  const valuesPattern = ignoreCase(text(parameterValue.value));
   const prefixPattern = prefixToPattern(prefix);
   const suffixPattern = suffixToPattern(suffix);
 
+  if (!parameterValue.value) {
+    return [
+      {
+        name: name(scopeName, StyleName.Strong),
+        match: seq(
+          prefixPattern,
+          suffixPattern,
+        ),
+      },
+    ];
+  }
+
+  const valuesPattern = ignoreCase(text(parameterValue.value));
   return [
     {
       name: name(scopeName, StyleName.Strong),
@@ -602,13 +619,10 @@ function suffixToPattern(suffix?: string): string {
     );
     case 'hex': return hexPattern;
     case 'range': return seq(
-      numbers0(),
-      optseq(
+      numberPattern,
+      seq(
+        char('-'),
         numberPattern,
-        optseq(
-          char('-'),
-          optional(numberPattern),
-        ),
       ),
     );
     case 'size': return seq(

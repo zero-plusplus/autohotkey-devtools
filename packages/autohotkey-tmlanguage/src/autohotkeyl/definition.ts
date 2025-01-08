@@ -756,7 +756,15 @@ export const commandDefinitions: CommandDefinition[] = [
     signature([ subcommand([ 'Transparent', 'TransColor' ]), unquoted(), ...winParams ]),
     signature([ subcommand([ 'Style', 'ExStyle' ]), style(), ...winParams ]),
     signature([ subcommand([ 'Bottom', 'Top', 'Disable', 'Enable', 'Redraw' ]), blank(), ...winParams ]),
-    signature([ subcommand('Region'), unquotedOrKeywords([ numberOptionItem('W'), numberOptionItem('H'), rangeOptionItem(), optionItem('E'), rangeOptionItem('R') ]), ...winParams ]),
+    signature([
+      subcommand('Region'), unquotedOrKeywords([
+        numberOptionItem('W'),
+        numberOptionItem('H'),
+        rangeOptionItem(),
+        optionItem('E'),
+        rangeOptionItem('R'),
+      ]), ...winParams,
+    ]),
   ]),
 
   // https://www.autohotkey.com/docs/v1/lib/WinSetTitle.htm
@@ -814,7 +822,7 @@ export function toggleOptionItem(optionText: string): string {
   return `${optionText}<toggle>`;
 }
 export function rangeOptionItem(optionText?: string): string {
-  return `${optionText}<range>`;
+  return `${optionText ?? ''}<range>`;
 }
 export function sizeOptionItem(optionText: string): string {
   return `${optionText}<size>`;
