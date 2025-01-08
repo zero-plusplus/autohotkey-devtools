@@ -361,6 +361,10 @@ export const enum Repository {
   KeywordOperatorInExpression = 'repository.expression.keyword-operator',
   // #endregion keyword
 
+  // #region misc
+  UnquotedStringEscapeSequence = 'repository.misc.string.unquoted.escaped',
+  // #endregion misc
+
   // #region v1 syntax
   Command = 'repository.command',
   CommonCommand = 'repository.common-command',
@@ -433,6 +437,7 @@ export const enum RuleName {
   // #region string
   ContinuationOption = 'continuation.option keyword.operator.quantifier.regexp',
   UnquotedString = 'token.string string.unquoted',
+  UnquotedStringEscapeSequence = 'token.string string.escape.unquoted',
   DoubleString = 'token.string string.quoted.double',
   DoubleStringEscapeSequence = 'constant.character.escape.double',
   SingleStringEscapeSequence = 'constant.character.escape.single',

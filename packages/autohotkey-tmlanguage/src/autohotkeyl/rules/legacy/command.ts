@@ -370,7 +370,10 @@ function parameterToPatternsRule(scopeName: ScopeName, defenition: CommandDefini
             negChars0('\\s'),
           )),
           captures: {
-            1: patternsRule(...optionItemsToRules(scopeName, parameter.values)),
+            1: patternsRule(
+              includeRule(Repository.UnquotedStringEscapeSequence),
+              ...optionItemsToRules(scopeName, parameter.values),
+            ),
           },
         },
       );
@@ -389,6 +392,7 @@ function parameterToPatternsRule(scopeName: ScopeName, defenition: CommandDefini
           )),
           captures: {
             1: patternsRule(
+              includeRule(Repository.UnquotedStringEscapeSequence),
               ...optionItemsToRules(scopeName, parameter.values),
               {
                 name: name(scopeName, StyleName.Invalid),
@@ -438,7 +442,10 @@ function parameterToPatternsRule(scopeName: ScopeName, defenition: CommandDefini
             negChars0('\\s'),
           )),
           captures: {
-            1: patternsRule(...optionItemsToRules(scopeName, parameter.values)),
+            1: patternsRule(
+              includeRule(Repository.UnquotedStringEscapeSequence),
+              ...optionItemsToRules(scopeName, parameter.values),
+            ),
           },
         },
       );

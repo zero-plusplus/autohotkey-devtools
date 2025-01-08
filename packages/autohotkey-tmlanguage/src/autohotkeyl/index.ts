@@ -356,15 +356,14 @@ export function createRepositories(scopeName: ScopeName): Repositories {
       includeRule(Repository.CommandLastArgumentText),
       includeRule(Repository.InLineComment),
     ),
+    [Repository.UnquotedStringEscapeSequence]: rule_v1.createUnquotedEscapeSequencesRule(scopeName, constants_v1.unquoteEscapeSequences),
     [Repository.CommandArgumentText]: rule_v1.createUnquotedString(scopeName, {
       stringRuleName: RuleName.UnquotedString,
       stringPattern: patterns_v1.commandArgumentPattern,
-      escapeSequences: constants_v1.unquoteEscapeSequences,
     }),
     [Repository.CommandLastArgumentText]: rule_v1.createUnquotedString(scopeName, {
       stringRuleName: RuleName.UnquotedString,
       stringPattern: patterns_v1.lastArgumentPattern,
-      escapeSequences: constants_v1.unquoteEscapeSequences,
     }),
     // #endregion command
 
@@ -386,7 +385,7 @@ export function createRepositories(scopeName: ScopeName): Repositories {
     [Repository.ContinuationSectionText]: rule_v1.createUnquotedString(scopeName, {
       stringRuleName: RuleName.UnquotedString,
       stringPattern: anyChars1(),
-      escapeSequences: [ ...constants_v1.unquoteEscapeSequences, '`)' ],
+      additionalEscapeSequences: [ '`)' ],
     }),
     // #endregion legacy
   };
