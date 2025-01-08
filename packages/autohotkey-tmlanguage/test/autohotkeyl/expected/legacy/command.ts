@@ -809,7 +809,7 @@ export function createCommandStatementExpectedData(scopeName: ScopeName): Expect
           return [
             { text: 'Menu', scopes: name(scopeName, RuleName.CommandName) },
             { text: ',', scopes: name(scopeName, RuleName.Comma) },
-            { text: 'unquoted', scopes: name(scopeName, RuleName.SubCommandName) },
+            { text: 'unquoted', scopes: name(scopeName, RuleName.UnquotedString) },
             { text: ',', scopes: name(scopeName, RuleName.Comma) },
             { text: subcommand, scopes: name(scopeName, RuleName.SubCommandName) },
             { text: ',', scopes: name(scopeName, RuleName.Comma) },
