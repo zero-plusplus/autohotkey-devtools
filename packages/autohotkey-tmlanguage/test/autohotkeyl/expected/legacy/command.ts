@@ -1011,5 +1011,67 @@ export function createCommandStatementExpectedData(scopeName: ScopeName): Expect
         { text: '; comment', scopes: name(scopeName, RuleName.InLineComment) },
       ],
     ],
+
+    // https://www.autohotkey.com/docs/v1/lib/Transform.htm
+    [
+      dedent`
+        Transform, output, Unicode, unquoted                                    ; comment
+        Transform, output, Deref, unquoted                                      ; comment
+        Transform, output, Asc, unquoted                                        ; comment
+        Transform, output, Chr, unquoted                                        ; comment
+        Transform, output, Exp, unquoted                                        ; comment
+        Transform, output, Sqrt, unquoted                                       ; comment
+        Transform, output, Log, unquoted                                        ; comment
+        Transform, output, Ln, unquoted                                         ; comment
+        Transform, output, Ceil, unquoted                                       ; comment
+        Transform, output, Floor, unquoted                                      ; comment
+        Transform, output, Abs, unquoted                                        ; comment
+        Transform, output, Sin, unquoted                                        ; comment
+        Transform, output, Cos, unquoted                                        ; comment
+        Transform, output, Tan, unquoted                                        ; comment
+        Transform, output, ASin, unquoted                                       ; comment
+        Transform, output, ACos, unquoted                                       ; comment
+        Transform, output, ATan, unquoted                                       ; comment
+        Transform, output, BitNot, unquoted                                     ; comment
+        Transform, output, HTML, unquoted, unquoted                             ; comment
+        Transform, output, Mod, unquoted, unquoted                              ; comment
+        Transform, output, Round, unquoted, unquoted                            ; comment
+        Transform, output, Pow, unquoted, unquoted                              ; comment
+        Transform, output, BitAnd, unquoted, unquoted                           ; comment
+        Transform, output, BitOr, unquoted, unquoted                            ; comment
+        Transform, output, BitXOr, unquoted, unquoted                           ; comment
+        Transform, output, BitShiftLeft, unquoted, unquoted                     ; comment
+        Transform, output, BitShiftRight, unquoted, unquoted                    ; comment
+      `,
+      [
+        ...[ 'Unicode', 'Deref', 'Asc', 'Chr', 'Exp', 'Sqrt', 'Log', 'Ln', 'Ceil', 'Floor', 'Abs', 'Sin', 'Cos', 'Tan', 'ASin', 'ACos', 'ATan', 'BitNot' ].flatMap((subcommand) => {
+          return [
+            { text: 'Transform', scopes: name(scopeName, RuleName.CommandName, StyleName.Strikethrough) },
+            { text: ',', scopes: name(scopeName, RuleName.Comma) },
+            { text: 'output', scopes: name(scopeName, RuleName.Variable) },
+            { text: ',', scopes: name(scopeName, RuleName.Comma) },
+            { text: subcommand, scopes: name(scopeName, RuleName.SubCommandName) },
+            { text: ',', scopes: name(scopeName, RuleName.Comma) },
+            { text: 'unquoted', scopes: name(scopeName, RuleName.UnquotedString) },
+            { text: '; comment', scopes: name(scopeName, RuleName.InLineComment) },
+          ];
+        }),
+
+        ...[ 'HTML', 'Mod', 'Round', 'Pow', 'BitAnd', 'BitOr', 'BitXOr', 'BitShiftLeft', 'BitShiftRight' ].flatMap((subcommand) => {
+          return [
+            { text: 'Transform', scopes: name(scopeName, RuleName.CommandName, StyleName.Strikethrough) },
+            { text: ',', scopes: name(scopeName, RuleName.Comma) },
+            { text: 'output', scopes: name(scopeName, RuleName.Variable) },
+            { text: ',', scopes: name(scopeName, RuleName.Comma) },
+            { text: subcommand, scopes: name(scopeName, RuleName.SubCommandName) },
+            { text: ',', scopes: name(scopeName, RuleName.Comma) },
+            { text: 'unquoted', scopes: name(scopeName, RuleName.UnquotedString) },
+            { text: ',', scopes: name(scopeName, RuleName.Comma) },
+            { text: 'unquoted', scopes: name(scopeName, RuleName.UnquotedString) },
+            { text: '; comment', scopes: name(scopeName, RuleName.InLineComment) },
+          ];
+        }),
+      ],
+    ],
   ];
 }
