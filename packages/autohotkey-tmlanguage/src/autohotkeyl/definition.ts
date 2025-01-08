@@ -468,22 +468,13 @@ export const commandDefinitions: CommandDefinition[] = [
   command('Random', signature([ output(), expression(), expression() ])),
 
   // https://www.autohotkey.com/docs/v1/lib/RegDelete.htm
-  command('RegDelete', [
-    signature([ unquoted(), unquoted() ]),
-    signature([ subcommand('RootKey'), unquoted(), unquoted() ], CommandSignatureFlag.Deprecated),
-  ]),
+  command('RegDelete', signature([ unquoted(), unquoted(), unquoted() ])),
 
   // https://www.autohotkey.com/docs/v1/lib/RegRead.htm
-  command('RegRead', [
-    signature([ output(), unquoted(), unquoted() ]),
-    signature([ output(), subcommand('RootKey'), unquoted(), unquoted() ], CommandSignatureFlag.Deprecated),
-  ]),
+  command('RegRead', signature([ output(), unquoted(), unquoted(), unquoted() ])),
 
   // https://www.autohotkey.com/docs/v1/lib/RegWrite.htm
-  command('RegWrite', [
-    signature([ keywordsOnly([ optionItem('REG_SZ'), optionItem('REG_EXPAND_SZ'), optionItem('REG_MULTI_SZ'), optionItem('REG_DWORD'), optionItem('REG_BINARY') ]), unquoted(), unquoted(), unquoted() ]),
-    signature([ keywordsOnly([ optionItem('REG_SZ'), optionItem('REG_EXPAND_SZ'), optionItem('REG_MULTI_SZ'), optionItem('REG_DWORD'), optionItem('REG_BINARY') ]), subcommand('RootKey'), unquoted(), unquoted(), unquoted() ], CommandSignatureFlag.Deprecated),
-  ]),
+  command('RegWrite', signature([ keywordOnly([ optionItem('REG_SZ'), optionItem('REG_EXPAND_SZ'), optionItem('REG_MULTI_SZ'), optionItem('REG_DWORD'), optionItem('REG_BINARY') ]), unquoted(), unquoted(), unquoted() ])),
 
   // https://www.autohotkey.com/docs/v1/lib/Reload.htm
   command('Reload', signature([])),
