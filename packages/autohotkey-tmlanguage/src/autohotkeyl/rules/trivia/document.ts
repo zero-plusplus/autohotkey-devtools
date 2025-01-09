@@ -1,6 +1,6 @@
 import { Repository, RuleDescriptor, RuleName, TokenType } from '../../../constants';
 import { alphaChar, alt, anyChars0, anyChars1, capture, char, endAnchor, group, groupMany0, groupMany1, ignoreCase, inlineSpace, inlineSpaces0, inlineSpaces1, keyword, lookahead, lookbehind, negativeLookahead, negChar, negChars0, negChars1, optional, optseq, ordalt, seq, startAnchor, text } from '../../../oniguruma';
-import type { BeginEndRule, ElementName, MatchRule, PatternsRule, Rule, ScopeName } from '../../../types';
+import type { BeginEndRule, BeginWhileRule, ElementName, MatchRule, PatternsRule, Rule, ScopeName } from '../../../types';
 import { includeRule, name, nameRule, patternsRule } from '../../../utils';
 
 interface Placeholder {
@@ -33,13 +33,35 @@ export function createDocumentCommentRule(scopeName: ScopeName, placeholder: Pla
             startPattern: contentStartPattern,
             leftHandPattern: placeholder.leftHandPattern,
           }),
-          // #endregion tag
 
-          // #region markdown
           includeRule(Repository.FencedCodeBlockInDocument),
           includeRule(Repository.InlineTextInDocument),
           { include: 'text.html.markdown#block' },
-          // #endregion markdown
+        ],
+      },
+    ],
+  };
+}
+export function createInlineDocumentCommentRule(scopeName: ScopeName, placeholder: Placeholder): BeginWhileRule {
+  const capturedContentStartPattern = seq(startAnchor(), inlineSpaces0(), capture(text(';;')));
+  const contentStartPattern = seq(startAnchor(), inlineSpaces0(), text(';;'));
+
+  return {
+    name: name(scopeName, RuleName.DocumentComment),
+    begin: capturedContentStartPattern,
+    while: capturedContentStartPattern,
+    patterns: [
+      {
+        begin: lookbehind(text(';;')),
+        while: alt(startAnchor(), '\\G'),
+        patterns: [
+          createTagAnnotationRule(scopeName, {
+            startPattern: contentStartPattern,
+            leftHandPattern: placeholder.leftHandPattern,
+          }),
+          includeRule(Repository.FencedCodeBlockInDocument),
+          includeRule(Repository.InlineTextInDocument),
+          { include: 'text.html.markdown#block' },
         ],
       },
     ],
@@ -395,7 +417,7 @@ function createDeclarationTagRule(scopeName: ScopeName, placeholder: Placeholder
       {
         match: seq(
           lookbehind(seq(
-            char('*'),
+            placeholder.startPattern,
             inlineSpaces0(),
             ignoreCase(ordalt(...placeholder.tagNames)),
             inlineSpaces0(),
@@ -591,11 +613,7 @@ function createExampleTagRule(scopeName: ScopeName, placeholder: Placeholder_Exa
         {
           name: name(scopeName, RuleName.CodeBegin),
           match: seq(
-            lookbehind(seq(
-              startAnchor(),
-              inlineSpaces0(),
-              char('*'),
-            )),
+            lookbehind(placeholder.startPattern),
             char(':'),
           ),
         },

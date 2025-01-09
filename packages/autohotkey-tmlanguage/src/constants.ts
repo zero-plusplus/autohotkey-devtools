@@ -248,7 +248,8 @@ export const enum Repository {
   MultiLineComment = 'repository.comment.multi-line',
 
   // #region document
-  DocumentComment = 'repository.comment.document',
+  DocumentComment = 'repository.comment.document.block',
+  InlineDocumentComment = 'repository.comment.document.inline',
   FencedCodeBlockInDocument = 'repository.comment.document.fenced_code',
   InlineTextInDocument = 'repository.comment.document.inline-text',
   TypeInDocument = 'repository.comment.document.type',
