@@ -461,14 +461,14 @@ function createDeclarationTagRule(scopeName: ScopeName, placeholder: Placeholder
           capture(char('[')),
         ),
         beginCaptures: {
-          1: nameRule(scopeName, RuleName.OpenBrace, RuleDescriptor.Begin),
+          1: nameRule(scopeName, RuleName.OpenBracket),
         },
         end: seq(
           capture(char(']')),
           inlineSpaces0(),
         ),
         endCaptures: {
-          1: nameRule(scopeName, RuleName.CloseBrace, RuleDescriptor.End),
+          1: nameRule(scopeName, RuleName.CloseBracket),
         },
         patterns: [
           {
@@ -479,6 +479,7 @@ function createDeclarationTagRule(scopeName: ScopeName, placeholder: Placeholder
               includeRule(Repository.Expression),
             ],
           },
+          includeRule(Repository.Expression),
         ],
       },
       // e.g. `@param {type} name`
