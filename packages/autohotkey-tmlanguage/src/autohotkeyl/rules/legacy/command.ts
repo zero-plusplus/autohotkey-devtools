@@ -190,7 +190,11 @@ function lookaheadOnigurumaByParameters(parameters: CommandParameter[], placehol
         case HighlightType.SubCommand:
         case HighlightType.FlowSubCommand: {
           if (parameter.values && 0 < parameter.values.length) {
-            return ignoreCase(ordalt(...parameter.values));
+            return seq(
+              wordBound(),
+              ignoreCase(ordalt(...parameter.values)),
+              wordBound(),
+            );
           }
           break;
         }
@@ -201,7 +205,9 @@ function lookaheadOnigurumaByParameters(parameters: CommandParameter[], placehol
                 wordChars0(),
                 char(':'),
               )),
+              wordBound(),
               ignoreCase(ordalt(...parameter.values)),
+              wordBound(),
             );
           }
           break;
