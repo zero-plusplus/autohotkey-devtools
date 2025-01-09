@@ -945,6 +945,7 @@ export function createDocumentCommentExpectedData(scopeName: ScopeName): Expecte
          * @see https://
          * @see {@link url}
          * @see [text]{@link url}
+         * @see {@link url|text}
          */
       `,
       [
@@ -971,6 +972,13 @@ export function createDocumentCommentExpectedData(scopeName: ScopeName): Expecte
         { text: ']', scopes: name(scopeName, RuleName.DocumentComment, RuleName.DocumentTag, RuleDescriptor.End) },
         { text: '{@link', scopes: name(scopeName, RuleName.DocumentComment, RuleName.DocumentTag, RuleDescriptor.Begin) },
         { text: 'url', scopes: name(scopeName, RuleName.DocumentComment, RuleName.NameOrUrlInDocument) },
+        { text: '}', scopes: name(scopeName, RuleName.DocumentComment, RuleName.DocumentTag, RuleDescriptor.End) },
+
+        { text: ' *', scopes: name(scopeName, RuleName.DocumentComment) },
+        { text: '@see', scopes: name(scopeName, RuleName.DocumentComment, RuleName.DocumentTag) },
+        { text: '{@link', scopes: name(scopeName, RuleName.DocumentComment, RuleName.DocumentTag, RuleDescriptor.Begin) },
+        { text: 'url', scopes: name(scopeName, RuleName.DocumentComment, RuleName.NameOrUrlInDocument) },
+        { text: '|text', scopes: name(scopeName, RuleName.DocumentComment, RuleName.NamePathInDocument) },
         { text: '}', scopes: name(scopeName, RuleName.DocumentComment, RuleName.DocumentTag, RuleDescriptor.End) },
 
         { text: '*/', scopes: name(scopeName, RuleName.DocumentComment, RuleDescriptor.End) },

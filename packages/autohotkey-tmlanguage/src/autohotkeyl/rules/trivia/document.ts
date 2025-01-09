@@ -1,5 +1,5 @@
 import { Repository, RuleDescriptor, RuleName, TokenType } from '../../../constants';
-import { alphaChar, alt, anyChars0, anyChars1, capture, char, endAnchor, group, groupMany0, groupMany1, ignoreCase, inlineSpace, inlineSpaces0, inlineSpaces1, keyword, lookahead, lookbehind, negativeLookahead, negChar, negChars1, optional, optseq, ordalt, seq, startAnchor, text } from '../../../oniguruma';
+import { alphaChar, alt, anyChars0, anyChars1, capture, char, endAnchor, group, groupMany0, groupMany1, ignoreCase, inlineSpace, inlineSpaces0, inlineSpaces1, keyword, lookahead, lookbehind, negativeLookahead, negChar, negChars0, negChars1, optional, optseq, ordalt, seq, startAnchor, text } from '../../../oniguruma';
 import type { BeginEndRule, ElementName, MatchRule, PatternsRule, Rule, ScopeName } from '../../../types';
 import { includeRule, name, nameRule, patternsRule } from '../../../utils';
 
@@ -604,6 +604,7 @@ function createExampleTagRule(scopeName: ScopeName, placeholder: Placeholder_Exa
   };
 }
 function createInlineLinkTagRule(scopeName: ScopeName): MatchRule {
+  // e.g. `[text]{@link url}`, `{@link url|text}`
   return {
     match: seq(
       inlineSpaces0(),
@@ -618,9 +619,10 @@ function createInlineLinkTagRule(scopeName: ScopeName): MatchRule {
       capture(ignoreCase(text('{@link'))),
       optseq(
         inlineSpaces1(),
-        capture(groupMany0(alt(
-          negChar('}'),
-          text('\\}'),
+        capture(negChars0('}', '|')),
+        optional(capture(seq(
+          char('|'),
+          negChars0('}'),
         ))),
       ),
       capture(seq('}')),
@@ -631,7 +633,8 @@ function createInlineLinkTagRule(scopeName: ScopeName): MatchRule {
       3: nameRule(scopeName, RuleName.DocumentTag, RuleDescriptor.End),
       4: nameRule(scopeName, RuleName.DocumentTag, RuleDescriptor.Begin),
       5: nameRule(scopeName, RuleName.NameOrUrlInDocument),
-      6: nameRule(scopeName, RuleName.DocumentTag, RuleDescriptor.End),
+      6: nameRule(scopeName, RuleName.NamePathInDocument),
+      7: nameRule(scopeName, RuleName.DocumentTag, RuleDescriptor.End),
     },
   };
 }
