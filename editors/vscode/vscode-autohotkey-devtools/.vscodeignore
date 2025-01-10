@@ -5,6 +5,7 @@
 build/demo
 scripts/
 src/
-eslint.config.js
+.gitignore
+*.config.js
 tsconfig.json
 *.vsix
