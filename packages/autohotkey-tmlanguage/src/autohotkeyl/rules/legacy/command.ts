@@ -162,10 +162,17 @@ function parseParameterValue(value: string): ParameterValue {
 }
 function lookaheadOnigurumaByParameters(parameters: CommandParameter[], placeholder: Placeholder): string {
   const subcommandArgumentIndex = parameters.findLastIndex((parameter) => {
-    if (parameter.type === HighlightType.SubCommand || parameter.type === HighlightType.FlowSubCommand || parameter.type === HighlightType.GuiSubCommand) {
-      if (parameter.values && 0 < parameter.values.length) {
-        return true;
+    switch (parameter.type) {
+      case HighlightType.SubCommand:
+      case HighlightType.SubCommandLike:
+      case HighlightType.FlowSubCommand:
+      case HighlightType.GuiSubCommand: {
+        if (parameter.values && 0 < parameter.values.length) {
+          return true;
+        }
+        break;
       }
+      default: break;
     }
     return false;
   });
@@ -188,6 +195,7 @@ function lookaheadOnigurumaByParameters(parameters: CommandParameter[], placehol
     const parameterText = ((): string => {
       switch (parameter.type) {
         case HighlightType.SubCommand:
+        case HighlightType.SubCommandLike:
         case HighlightType.FlowSubCommand: {
           if (parameter.values && 0 < parameter.values.length) {
             return seq(
@@ -265,6 +273,7 @@ function parametersToOniguruma(parameters: CommandParameter[], placeholder: Plac
 function parameterToOniguruma(parameter: CommandParameter, isLastParameter: boolean, placeholder: Placeholder): string {
   switch (parameter.type) {
     case HighlightType.SubCommand:
+    case HighlightType.SubCommandLike:
     case HighlightType.FlowSubCommand: {
       if (parameter.values && 0 < parameter.values.length) {
         return ignoreCase(ordalt(...parameter.values));
@@ -329,6 +338,15 @@ function parameterToPatternsRule(scopeName: ScopeName, defenition: CommandDefini
       }
       return patternsRule({
         name: name(scopeName, RuleName.SubCommandName),
+        match: ignoreCase(ordalt(...parameter.values)),
+      });
+    }
+    case HighlightType.SubCommandLike: {
+      if (!parameter.values || parameter.values.length === 0) {
+        return patternsRule(defaultArgumentRule);
+      }
+      return patternsRule({
+        name: name(scopeName, RuleName.UnquotedString, StyleName.Strong),
         match: ignoreCase(ordalt(...parameter.values)),
       });
     }

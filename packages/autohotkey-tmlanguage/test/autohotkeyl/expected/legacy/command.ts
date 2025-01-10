@@ -882,7 +882,7 @@ export function createCommandStatementExpectedData(scopeName: ScopeName): Expect
       [
         { text: 'Progress', scopes: name(scopeName, RuleName.CommandName, StyleName.Strikethrough) },
         { text: ',', scopes: name(scopeName, RuleName.Comma) },
-        { text: 'Off', scopes: name(scopeName, RuleName.SubCommandName) },
+        { text: 'Off', scopes: name(scopeName, RuleName.UnquotedString, StyleName.Strong) },
         { text: '; comment', scopes: name(scopeName, RuleName.InLineComment) },
 
         { text: 'Progress', scopes: name(scopeName, RuleName.CommandName, StyleName.Strikethrough) },
@@ -909,7 +909,7 @@ export function createCommandStatementExpectedData(scopeName: ScopeName): Expect
       [
         { text: 'SplashImage', scopes: name(scopeName, RuleName.CommandName, StyleName.Strikethrough) },
         { text: ',', scopes: name(scopeName, RuleName.Comma) },
-        { text: 'Off', scopes: name(scopeName, RuleName.SubCommandName) },
+        { text: 'Off', scopes: name(scopeName, RuleName.UnquotedString, StyleName.Strong) },
         { text: '; comment', scopes: name(scopeName, RuleName.InLineComment) },
 
         { text: 'SplashImage', scopes: name(scopeName, RuleName.CommandName, StyleName.Strikethrough) },

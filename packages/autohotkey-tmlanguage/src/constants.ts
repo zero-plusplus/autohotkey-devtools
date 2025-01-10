@@ -556,8 +556,24 @@ export const enum HighlightType {
   UnquotedString = 'unquotedstring',
   UnquotedStringShouldEscapeComma = 'unquoted_string_should_escapecomma',
   LabelName = 'labelname',
+  // Keywords to distinguish between signatures
+  // e.g. `Control, Check`, `Control, UnCheck`
+  //                ^^^^^             ^^^^^^^
   SubCommand = 'subcommand',
+  // Applies only to the first argument of the following two commands
+  // Not originally necessary. However, added to distinguish between strict signatures
+  // https://www.autohotkey.com/docs/v1/lib/Progress.htm
+  // https://www.autohotkey.com/docs/v1/lib/SplashImage.htm
+  // e.g. `Progress, Off`, `SplashImage, Off`
+  //                 ^^^                 ^^^
+  SubCommandLike = 'subcommand_like',
+  // Basically the same as SubCommand, but the highlighted color is the same as the control flow keyword
+  // e.g. `Loop Files`, `Loop Parse`
+  //            ^^^^^         ^^^^^
   FlowSubCommand = 'flow_subcommand',
+  // In addition to SubCommand, a label-like syntax is added. Mainly used in commands that deal with Gui
+  // e.g. `Gui, Add`, `Gui, GuiName:Add`
+  //            ^^^         ^^^^^^^^^^^
   GuiSubCommand = 'gui_subcommand',
   Input = 'input',
   Output = 'output',

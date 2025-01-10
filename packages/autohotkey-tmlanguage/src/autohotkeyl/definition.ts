@@ -463,8 +463,8 @@ export const commandDefinitions: CommandDefinition[] = [
 
   // https://www.autohotkey.com/docs/v1/lib/Progress.htm
   command('Progress', [
-    signature([ subcommand('Off') ]),
-    signature([ unquotedOrKeywords([ optionItem('Off') ]), unquoted(), unquoted(), winTitle(), unquoted() ]),
+    signature([ subcommandlike('Off'), restParams() ]),
+    signature([ unquoted(), unquoted(), unquoted(), winTitle(), unquoted() ]),
   ], CommandFlag.Deprecated),
 
   // https://www.autohotkey.com/docs/v1/lib/Random.htm
@@ -583,7 +583,7 @@ export const commandDefinitions: CommandDefinition[] = [
 
   // https://www.autohotkey.com/docs/v1/lib/SplashImage.htm
   command('SplashImage', [
-    signature([ subcommand([ 'Off' ]) ]),
+    signature([ subcommandlike('Off'), restParams() ]),
     signature([
       imagePath(), unquotedOrKeywords([
         optionItem('A'),
@@ -857,6 +857,9 @@ export function signature(parameters: CommandParameter[], flags: CommandSignatur
 }
 export function subcommand(values: string | string[] = [], flags: CommandParameterFlag = CommandParameterFlag.None): CommandParameter {
   return { type: HighlightType.SubCommand, flags, values: Array.isArray(values) ? values : [ values ] };
+}
+export function subcommandlike(values: string | string[] = [], flags: CommandParameterFlag = CommandParameterFlag.None): CommandParameter {
+  return { type: HighlightType.SubCommandLike, flags, values: Array.isArray(values) ? values : [ values ] };
 }
 export function flowSubcommand(values: string | string[] = [], flags: CommandParameterFlag = CommandParameterFlag.None): CommandParameter {
   return { type: HighlightType.FlowSubCommand, flags, values: Array.isArray(values) ? values : [ values ] };
