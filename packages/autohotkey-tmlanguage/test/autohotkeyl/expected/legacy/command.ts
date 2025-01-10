@@ -1,11 +1,28 @@
-import { dedent } from '@zero-plusplus/utilities/src';
-import { RuleName, StyleName } from '../../../../src/constants';
+import { dedent, hasFlag } from '@zero-plusplus/utilities/src';
+import * as definition_v1 from '../../../../src/autohotkeyl/definition';
+import { CommandFlag, RuleName, StyleName } from '../../../../src/constants';
 import type { ScopeName } from '../../../../src/types';
 import { name } from '../../../../src/utils';
 import type { ExpectedTestData, ParsedResult } from '../../../types';
 
 export function createCommandStatementExpectedData(scopeName: ScopeName): ExpectedTestData[] {
   return [
+    ((): ExpectedTestData => {
+      const textLines: string[] = [];
+      const expected: ParsedResult[] = [];
+      definition_v1.commandDefinitions.forEach((commandDefinition) => {
+        textLines.push(commandDefinition.name);
+        expected.push({
+          text: commandDefinition.name,
+          scopes: hasFlag(commandDefinition.flags, CommandFlag.Deprecated)
+            ? name(scopeName, RuleName.CommandName, StyleName.Strikethrough)
+            : name(scopeName, RuleName.CommandName),
+        });
+      });
+
+      return [ textLines.join('\n'), expected ];
+    })(),
+
     // https://www.autohotkey.com/docs/v1/lib/Control.htm
     [
       dedent`
