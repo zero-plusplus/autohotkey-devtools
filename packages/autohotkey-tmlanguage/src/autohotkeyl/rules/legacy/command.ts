@@ -3,6 +3,7 @@ import { CommandFlag, HighlightType, Repository, RuleName, StyleName } from '../
 import { alt, anyChars0, capture, char, endAnchor, group, groupMany0, groupMany1, ignoreCase, inlineSpace, inlineSpaces0, inlineSpaces1, keyword, lookahead, lookbehind, negativeLookahead, negChar, negChars0, negChars1, numbers0, numbers1, optional, optseq, ordalt, seq, startAnchor, text, wordBound, wordChars0, wordChars1 } from '../../../oniguruma';
 import type { BeginWhileRule, CommandDefinition, CommandParameter, CommandSignature, ElementName, MatchRule, PatternsRule, Rule, ScopeName } from '../../../types';
 import { includeRule, name, nameRule, patternsRule } from '../../../utils';
+import { isSubCommandParameter } from '../../definition';
 import * as patterns_v1 from '../../patterns';
 
 interface Placeholder {
@@ -161,21 +162,7 @@ function parseParameterValue(value: string): ParameterValue {
   };
 }
 function lookaheadOnigurumaByParameters(parameters: CommandParameter[], placeholder: Placeholder): string {
-  const subcommandArgumentIndex = parameters.findLastIndex((parameter) => {
-    switch (parameter.type) {
-      case HighlightType.SubCommand:
-      case HighlightType.SubCommandLike:
-      case HighlightType.FlowSubCommand:
-      case HighlightType.GuiSubCommand: {
-        if (parameter.values && 0 < parameter.values.length) {
-          return true;
-        }
-        break;
-      }
-      default: break;
-    }
-    return false;
-  });
+  const subcommandArgumentIndex = parameters.findLastIndex((parameter) => isSubCommandParameter(parameter));
   if (subcommandArgumentIndex === -1) {
     return group(alt(
       inlineSpace(),

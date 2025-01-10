@@ -76,6 +76,10 @@ export interface CommandParameter {
   readonly flags: CommandParameterFlag;
   readonly values?: string[];
 }
+export interface SubCommandParameter extends CommandParameter {
+  readonly type: HighlightType.SubCommand | HighlightType.SubCommandLike | HighlightType.FlowSubCommand | HighlightType.GuiSubCommand;
+  readonly values: string[];
+}
 export interface CommandSignature {
   readonly flags: CommandSignatureFlag;
   readonly parameters: CommandParameter[];

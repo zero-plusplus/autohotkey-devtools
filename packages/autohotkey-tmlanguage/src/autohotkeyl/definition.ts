@@ -1,5 +1,5 @@
 import { CommandFlag, CommandParameterFlag, CommandSignatureFlag, HighlightType } from '../constants';
-import type { CommandDefinition, CommandParameter, CommandSignature } from '../types';
+import type { CommandDefinition, CommandParameter, CommandSignature, SubCommandParameter } from '../types';
 
 // #region common parameter(s)
 export const winParams: CommandParameter[] = [
@@ -810,6 +810,21 @@ export const jumpCommandDefenitions: CommandDefinition[] = [
 // #endregion jump
 
 // #region helpers
+export function isSubCommandParameter(parameter: CommandParameter): parameter is SubCommandParameter {
+  switch (parameter.type) {
+    case HighlightType.SubCommand:
+    case HighlightType.SubCommandLike:
+    case HighlightType.FlowSubCommand:
+    case HighlightType.GuiSubCommand: {
+      if (parameter.values && 0 < parameter.values.length) {
+        return true;
+      }
+      break;
+    }
+    default: break;
+  }
+  return false;
+}
 export function optionItem(optionText: string): string {
   return `${optionText}<keyword>`;
 }
