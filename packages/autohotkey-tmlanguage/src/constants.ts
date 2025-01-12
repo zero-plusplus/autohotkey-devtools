@@ -599,6 +599,7 @@ export const enum HighlightType {
   // e.g. `Loop, Files, \path\to, DFR
   //                              ^^^
   CombiOptions = 'combi_options',
+  CombiOptionsOnly = 'combi_options_only',
 
   // Accepts entries beginning with `+`, `-` or `^` followed by one or more keywords. No space is needed between each
   // e.g. `FileSetAttrib, +HA-R`

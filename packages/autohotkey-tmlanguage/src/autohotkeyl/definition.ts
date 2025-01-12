@@ -111,7 +111,7 @@ export const directiveDefinitions: CommandDefinition[] = [
 export const loopCommandDefenitions: CommandDefinition[] = [
   command('Loop', [
     // https://www.autohotkey.com/docs/v1/lib/LoopFile.htm
-    signature([ flowSubcommand('Files'), path(), keywordsOnly([ optionItem('D'), optionItem('F'), optionItem('R') ]) ]),
+    signature([ flowSubcommand('Files'), path(), combiOptionsOnly([ optionItem('D'), optionItem('F'), optionItem('R') ]) ]),
 
     // https://www.autohotkey.com/docs/v1/lib/LoopParse.htm
     signature([ flowSubcommand('Parse'), input(), unquotedOrKeywords([ optionItem('CSV') ]), unquotedShouldEscapeComma() ]),
@@ -120,7 +120,7 @@ export const loopCommandDefenitions: CommandDefinition[] = [
     signature([ flowSubcommand('Read'), path(), unquotedShouldEscapeComma() ]),
 
     // https://www.autohotkey.com/docs/v1/lib/LoopReg.htm#new
-    signature([ flowSubcommand('Reg'), unquoted(), keywordsOnly([ optionItem('K'), optionItem('V'), optionItem('R') ]) ]),
+    signature([ flowSubcommand('Reg'), unquoted(), combiOptionsOnly([ optionItem('K'), optionItem('V'), optionItem('R') ]) ]),
   ]),
 ];
 // #endregion loop
@@ -313,7 +313,7 @@ export const commandDefinitions: CommandDefinition[] = [
 
   // https://www.autohotkey.com/docs/v1/lib/FormatTime.htm
   command('FormatTime', [
-    signature([ output(), unquoted(), keywordsOnly([ optionItem('Time'), optionItem('ShortDate'), optionItem('LongDate'), optionItem('YearMonth'), optionItem('YDay'), optionItem('YDay0'), optionItem('WDay'), optionItem('YWeek') ]) ]),
+    signature([ output(), unquoted(), subcommandlike([ optionItem('Time'), optionItem('ShortDate'), optionItem('LongDate'), optionItem('YearMonth'), optionItem('YDay'), optionItem('YDay0'), optionItem('WDay'), optionItem('YWeek') ]), restParams() ]),
     signature([ output(), unquoted(), formatTime() ]),
   ]),
 
@@ -930,6 +930,9 @@ export function unquotedOrKeywords(values: string[], flags: CommandParameterFlag
 export function combiOptions(values: string[], flags: CommandParameterFlag = CommandParameterFlag.None): CommandParameter {
   return { type: HighlightType.CombiOptions, flags, values };
 }
+export function combiOptionsOnly(values: string[], flags: CommandParameterFlag = CommandParameterFlag.None): CommandParameter {
+  return { type: HighlightType.CombiOptionsOnly, flags, values };
+}
 export function guiOptions(flags: CommandParameterFlag = CommandParameterFlag.None): CommandParameter {
   return {
     type: HighlightType.GuiOptions,
@@ -1096,7 +1099,7 @@ export function guiControlOptions(): CommandParameter {
   };
 }
 export function onOff(values: string[] = [], flags: CommandParameterFlag = CommandParameterFlag.None): CommandParameter {
-  return keywordsOnly([
+  return keywordOnly([
     optionItem('On'),
     optionItem('Off'),
     optionItem('1'),
@@ -1290,7 +1293,7 @@ export function timeunit(flags: CommandParameterFlag = CommandParameterFlag.None
   ], flags);
 }
 export function formatTime(flags: CommandParameterFlag = CommandParameterFlag.None): CommandParameter {
-  return unquoted([
+  return unquotedOrKeywords([
     optionItem('d'),
     optionItem('dd'),
     optionItem('ddd'),

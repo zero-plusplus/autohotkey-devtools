@@ -317,6 +317,33 @@ export function createCommandStatementExpectedData(scopeName: ScopeName): Expect
       ],
     ],
 
+    // https://www.autohotkey.com/docs/v1/lib/FormatTime.htm
+    [
+      dedent`
+      FormatTime, output, unquoted, Time
+      FormatTime, output, unquoted, ShortDate
+      FormatTime, output, unquoted, LongDate
+      FormatTime, output, unquoted, YearMonth
+      FormatTime, output, unquoted, YDay
+      FormatTime, output, unquoted, YDay0
+      FormatTime, output, unquoted, WDay
+      FormatTime, output, unquoted, YWeek
+    `,
+      [
+        ...[ 'Time', 'ShortDate', 'LongDate', 'YearMonth', 'YDay', 'YDay0', 'WDay', 'YWeek' ].flatMap((subcommand) => {
+          return [
+            { text: 'FormatTime', scopes: name(scopeName, RuleName.CommandName) },
+            { text: ',', scopes: name(scopeName, RuleName.Comma) },
+            { text: 'output', scopes: name(scopeName, RuleName.Variable) },
+            { text: ',', scopes: name(scopeName, RuleName.Comma) },
+            { text: 'unquoted', scopes: name(scopeName, RuleName.UnquotedString) },
+            { text: ',', scopes: name(scopeName, RuleName.Comma) },
+            { text: subcommand, scopes: name(scopeName, RuleName.UnquotedString, StyleName.Strong) },
+          ];
+        }),
+      ],
+    ],
+
     // https://www.autohotkey.com/docs/v1/lib/Gui.htm
     [
       dedent`
