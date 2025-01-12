@@ -1,26 +1,13 @@
-import { dedent } from '@zero-plusplus/utilities/src';
-import { RuleName, StyleName } from '../../../../src/constants';
-import type { ScopeName } from '../../../../src/types';
+import { dedent, hasFlag } from '@zero-plusplus/utilities/src';
+import * as definition_v1 from '../../../../src/autohotkeyl/definition';
+import { CommandFlag, HighlightType, RuleName, StyleName } from '../../../../src/constants';
+import type { CommandParameter, ScopeName } from '../../../../src/types';
 import { name } from '../../../../src/utils';
 import type { ExpectedTestData, ParsedResult } from '../../../types';
 
 export function createCommandStatementExpectedData(scopeName: ScopeName): ExpectedTestData[] {
   return [
-    ((): ExpectedTestData => {
-      const textLines: string[] = [];
-      const expected: ParsedResult[] = [];
-      definition_v1.commandDefinitions.forEach((commandDefinition) => {
-        textLines.push(commandDefinition.name);
-        expected.push({
-          text: commandDefinition.name,
-          scopes: hasFlag(commandDefinition.flags, CommandFlag.Deprecated)
-            ? name(scopeName, RuleName.CommandName, StyleName.Strikethrough)
-            : name(scopeName, RuleName.CommandName),
-        });
-      });
-
-      return [ textLines.join('\n'), expected ];
-    })(),
+    // createAllPatternTestData(scopeName),
 
     // https://www.autohotkey.com/docs/v1/lib/Control.htm
     [
@@ -1224,3 +1211,175 @@ export function createCommandStatementExpectedData(scopeName: ScopeName): Expect
     ],
   ];
 }
+
+// #region helpers
+// @ts-expect-error
+function createAllPatternTestData(scopeName: ScopeName): ExpectedTestData {
+  const linebreak = '\n';
+  const testData: ExpectedTestData = [ '', [] ];
+
+  definition_v1.commandDefinitions.forEach((commandDefinition) => {
+    commandDefinition.signatures.forEach((signature) => {
+      // command name
+      let textLine = commandDefinition.name;
+      const expectedLine: ParsedResult[] = [
+        {
+          text: commandDefinition.name,
+          scopes: hasFlag(commandDefinition.flags, CommandFlag.Deprecated)
+            ? name(scopeName, RuleName.CommandName, StyleName.Strikethrough)
+            : name(scopeName, RuleName.CommandName),
+        },
+      ];
+
+      let targetIndex = 0;
+      signature.parameters.forEach((parameter, i, parameters) => {
+        const isLastParameter = i === parameters.length - 1;
+
+        // comma separator
+        textLine += ' ,';
+        expectedLine.push({ text: ',', scopes: name(scopeName, RuleName.Comma) });
+
+        // Skip parameter other than the target
+        if (targetIndex !== i) {
+          // Add subcommands always
+          if (definition_v1.isSubCommandParameter(parameter)) {
+            const subcommandExpectedResults = parameterToExpectedResults(scopeName, parameter, isLastParameter);
+            textLine += ` ${subcommandExpectedResults[0]![0]}`;
+            expectedLine.push(...subcommandExpectedResults[0]![1]);
+          }
+          return;
+        }
+
+        const expectedResults = parameterToExpectedResults(scopeName, parameter, isLastParameter);
+        expectedResults.forEach((expectedResult) => {
+          testData[0] += linebreak + `${textLine} ${expectedResult[0]} ; comment`;
+          testData[1].push(
+            ...expectedLine,
+            ...expectedResults.flatMap((expectedResult) => expectedResult[1]),
+            { text: '; comment', scopes: name(scopeName, RuleName.InLineComment) },
+          );
+        });
+        targetIndex++;
+      });
+    });
+  });
+  return testData;
+}
+function parameterToExpectedResults(scopeName: ScopeName, parameter: CommandParameter, isLastParameter: boolean): ExpectedTestData[] {
+  const commonExpectedTestData: ExpectedTestData[] = [
+    [
+      'abc`n',
+      [
+        { text: 'abc', scopes: name(scopeName, RuleName.UnquotedString) },
+        { text: '`n', scopes: name(scopeName, RuleName.UnquotedString, StyleName.Escape) },
+      ],
+    ],
+    [
+      '%abc%',
+      [
+        { text: '%', scopes: name(scopeName, RuleName.PercentBegin) },
+        { text: 'abc', scopes: name(scopeName, RuleName.Variable) },
+        { text: '%', scopes: name(scopeName, RuleName.PercentEnd) },
+      ],
+    ],
+    [
+      '% abc + b',
+      [
+        { text: '%', scopes: name(scopeName, RuleName.PercentExpressionBegin) },
+        { text: 'a', scopes: name(scopeName, RuleName.Variable) },
+        { text: '+', scopes: name(scopeName, RuleName.Operator) },
+        { text: 'b', scopes: name(scopeName, RuleName.Variable) },
+      ],
+    ],
+  ];
+
+  switch (parameter.type) {
+    case HighlightType.None: return [];
+    case HighlightType.Blank: return [
+      [ 'blank', [ { text: 'blank', scopes: name(scopeName, RuleName.UnquotedString, StyleName.Invalid) } ] ],
+      [ '%abc%', [ { text: '%abc%', scopes: name(scopeName, RuleName.UnquotedString, StyleName.Invalid) } ] ],
+      [ '% abc + b', [ { text: '% abc + b', scopes: name(scopeName, RuleName.UnquotedString, StyleName.Invalid) } ] ],
+    ];
+    case HighlightType.BlankOrGuiName: return [
+      [ 'blank', [ { text: 'blank', scopes: name(scopeName, RuleName.UnquotedString, StyleName.Invalid) } ] ],
+      [
+        'GuiName:', [
+          { text: 'GuiName', scopes: name(scopeName, RuleName.LabelName) },
+          { text: ':', scopes: name(scopeName, RuleName.Colon) },
+        ],
+      ],
+      ...commonExpectedTestData,
+    ];
+    case HighlightType.CombiOptions:
+    case HighlightType.FileAttributeCombiOptions:
+    case HighlightType.GuiControlOptions:
+    case HighlightType.GuiOptions:
+    case HighlightType.Invalid:
+    case HighlightType.KeywordOnly:
+    case HighlightType.KeywordsOnly:
+    case HighlightType.LabelName:
+    case HighlightType.MenuItemName:
+    case HighlightType.Style:
+    case HighlightType.UnquotedOrKeywords:
+    case HighlightType.UnquotedString:
+    case HighlightType.UnquotedStringShouldEscapeComma:
+    case HighlightType.WinTitle: return [
+      ...(parameter.values ?? []).map((rawValue): ExpectedTestData => {
+        const { value } = definition_v1.parseParameterValue(rawValue);
+        return [ value, [ { text: value, scopes: name(scopeName, RuleName.UnquotedString, StyleName.Strong) } ] ];
+      }),
+      ...commonExpectedTestData,
+    ];
+    case HighlightType.SubCommand: return [
+      [
+        parameter.values![0]!,
+        [ { text: parameter.values![0]!, scopes: name(scopeName, RuleName.SubCommandName) } ],
+      ],
+    ];
+    case HighlightType.SubCommandLike: return [
+      [
+        parameter.values![0]!,
+        [ { text: parameter.values![0]!, scopes: name(scopeName, RuleName.UnquotedString, StyleName.Strong) } ],
+      ],
+    ];
+    case HighlightType.FlowSubCommand: return [
+      [
+        parameter.values![0]!,
+        [ { text: parameter.values![0]!, scopes: name(scopeName, RuleName.FlowSubCommandName) } ],
+      ],
+    ];
+    case HighlightType.GuiSubCommand: return [
+      [
+        parameter.values![0]!,
+        [ { text: parameter.values![0]!, scopes: name(scopeName, RuleName.SubCommandName) } ],
+      ],
+      [
+        `GuiName:${parameter.values![0]!}`,
+        [
+          { text: 'GuiName', scopes: name(scopeName, RuleName.LabelName) },
+          { text: ':', scopes: name(scopeName, RuleName.Colon) },
+          { text: parameter.values![0]!, scopes: name(scopeName, RuleName.SubCommandName) },
+        ],
+      ],
+    ];
+    case HighlightType.Input:
+    case HighlightType.Output: return [
+      [ 'abc', [ { text: 'abc', scopes: name(scopeName, RuleName.Variable) } ] ],
+      [ '^', [ { text: '^', scopes: name(scopeName, RuleName.UnquotedString, StyleName.Invalid) } ] ],
+    ];
+    case HighlightType.Expression:
+    case HighlightType.ExpressionWithOneTrueBrace: return [
+      [
+        'abc + b',
+        [
+          { text: 'a', scopes: name(scopeName, RuleName.Variable) },
+          { text: '+', scopes: name(scopeName, RuleName.Operator) },
+          { text: 'b', scopes: name(scopeName, RuleName.Variable) },
+        ],
+      ],
+    ];
+    default: break;
+  }
+  return [];
+}
+// #endregion helpers
