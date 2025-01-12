@@ -810,6 +810,24 @@ export const jumpCommandDefenitions: CommandDefinition[] = [
 // #endregion jump
 
 // #region helpers
+export interface ParameterValue {
+  prefix: string | undefined;
+  suffix: string | undefined;
+  value: string;
+}
+export function parseParameterValue(value: string): ParameterValue {
+  if (value.startsWith('<') && value.endsWith('>')) {
+    // e.g. `'<range>' -> 10-10`
+    return { prefix: undefined, value: '', suffix: value.slice(1, -1) };
+  }
+
+  const match = value.match(/(<(?<prefix>[a-zA-Z_-]+)>)?(?<value>[^<]*)(<(?<suffix>[a-zA-Z_-]+)>)?/);
+  return {
+    prefix: match?.groups?.['prefix'],
+    suffix: match?.groups?.['suffix'],
+    value: String(match!.groups!['value']),
+  };
+}
 export function isSubCommandParameter(parameter: CommandParameter): parameter is SubCommandParameter {
   switch (parameter.type) {
     case HighlightType.SubCommand:

@@ -3,7 +3,7 @@ import { CommandFlag, HighlightType, Repository, RuleName, StyleName } from '../
 import { alt, anyChars0, capture, char, endAnchor, group, groupMany0, groupMany1, ignoreCase, inlineSpace, inlineSpaces0, inlineSpaces1, keyword, lookahead, lookbehind, negativeLookahead, negChar, negChars0, negChars1, numbers0, numbers1, optional, optseq, ordalt, seq, startAnchor, text, wordBound, wordChars0, wordChars1 } from '../../../oniguruma';
 import type { BeginWhileRule, CommandDefinition, CommandParameter, CommandSignature, ElementName, MatchRule, PatternsRule, Rule, ScopeName } from '../../../types';
 import { includeRule, name, nameRule, patternsRule } from '../../../utils';
-import { isSubCommandParameter } from '../../definition';
+import { isSubCommandParameter, parseParameterValue, type ParameterValue } from '../../definition';
 import * as patterns_v1 from '../../patterns';
 
 interface Placeholder {
@@ -143,24 +143,6 @@ export function createCommandNames(scopeName: ScopeName, definitions: CommandDef
 }
 
 // #region helpers
-interface ParameterValue {
-  prefix: string | undefined;
-  suffix: string | undefined;
-  value: string;
-}
-function parseParameterValue(value: string): ParameterValue {
-  if (value.startsWith('<') && value.endsWith('>')) {
-    // e.g. `'<range>' -> 10-10`
-    return { prefix: undefined, value: '', suffix: value.slice(1, -1) };
-  }
-
-  const match = value.match(/(<(?<prefix>[a-zA-Z_-]+)>)?(?<value>[^<]*)(<(?<suffix>[a-zA-Z_-]+)>)?/);
-  return {
-    prefix: match?.groups?.['prefix'],
-    suffix: match?.groups?.['suffix'],
-    value: String(match!.groups!['value']),
-  };
-}
 function lookaheadOnigurumaByParameters(parameters: CommandParameter[], placeholder: Placeholder): string {
   const subcommandArgumentIndex = parameters.findLastIndex((parameter) => isSubCommandParameter(parameter));
   if (subcommandArgumentIndex === -1) {

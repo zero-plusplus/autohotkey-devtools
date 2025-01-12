@@ -1,6 +1,5 @@
-import { dedent, hasFlag } from '@zero-plusplus/utilities/src';
-import * as definition_v1 from '../../../../src/autohotkeyl/definition';
-import { CommandFlag, RuleName, StyleName } from '../../../../src/constants';
+import { dedent } from '@zero-plusplus/utilities/src';
+import { RuleName, StyleName } from '../../../../src/constants';
 import type { ScopeName } from '../../../../src/types';
 import { name } from '../../../../src/utils';
 import type { ExpectedTestData, ParsedResult } from '../../../types';

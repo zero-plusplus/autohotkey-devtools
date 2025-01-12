@@ -1,3 +1,46 @@
+import type { ScopeName } from '../../../src/types';
+import type { ExpectedTestData } from '../../types';
+import { createAssignmentDeclarationExpectedData } from './declaration/assignment';
+import { createBlockDeclarationExpectedData } from './declaration/block';
+import { createClassDeclarationExpectedData } from './declaration/class';
+import { createFunctionDeclarationExpectedData } from './declaration/function';
+import { createHotkeyLabelStatementExpectedData } from './declaration/hotkeyLabel';
+import { createHotstringLabelStatementExpectedData } from './declaration/hotstringLabel';
+import { createLabelStatementExpectedData } from './declaration/label';
+import { createModifierDeclarationExpectedData } from './declaration/modifier';
+import { createPropertyDeclarationExpectedData } from './declaration/property';
+import { createArrayLiteralExpectedData } from './expression/array';
+import { createBuiltinVariableExpectedData } from './expression/builtinVariable';
+import { createCallExpressionExpectedData } from './expression/call';
+import { createContinuationStringLiteralExpectedData } from './expression/continuationString';
+import { createDereferenceExpressionExpectedData } from './expression/dereference';
+import { createNewExpressionExpectedData } from './expression/new';
+import { createNumberLiteralExpectedData } from './expression/number';
+import { createObjectLiteralExpectedData } from './expression/object';
+import { createOperatorInExpressionExpectedData } from './expression/operator';
+import { createParenthesizedExpressionExpectedData } from './expression/parenthesized';
+import { createRegExpExpectedData } from './expression/regexp';
+import { createStringLiteralExpectedData } from './expression/string';
+import { createVariableExpectedData } from './expression/variable';
+import { createLegacyAssignmentStatementExpectedData } from './legacy/assignment';
+import { createCommandStatementExpectedData } from './legacy/command';
+import { createContinuationSectionExpectedData } from './legacy/continuationSection';
+import { createLegacyIfStatementExpectedData } from './legacy/if';
+import { createDirectiveStatementExpectedData } from './statement/directive';
+import { createForStatementExpectedData } from './statement/for';
+import { createIfStatementExpectedData } from './statement/if';
+import { createIncludeStatementExpectedData } from './statement/include';
+import { createJumpStatementExpectedData } from './statement/jump';
+import { createLoopStatementExpectedData } from './statement/loop';
+import { createSwitchStatementExpectedData } from './statement/switch';
+import { createThrowStatementExpectedData } from './statement/throw';
+import { createTryStatementExpectedData } from './statement/try';
+import { createUntilStatementExpectedData } from './statement/until';
+import { createWhileStatementExpectedData } from './statement/while';
+import { createDocumentCommentExpectedData } from './trivia/documentComment';
+import { createMultiLineCommentExpectedData } from './trivia/multiLineComment';
+import { createSingleLineCommentExpectedData } from './trivia/singleLineComment';
+
 export * from './declaration/assignment';
 export * from './declaration/block';
 export * from './declaration/class';
@@ -38,3 +81,48 @@ export * from './statement/while';
 export * from './trivia/documentComment';
 export * from './trivia/multiLineComment';
 export * from './trivia/singleLineComment';
+
+export function createExpectedDataList(scopeName: ScopeName): ExpectedTestData[] {
+  return [
+    ...createArrayLiteralExpectedData(scopeName),
+    ...createAssignmentDeclarationExpectedData(scopeName),
+    ...createBlockDeclarationExpectedData(scopeName),
+    ...createBuiltinVariableExpectedData(scopeName),
+    ...createCallExpressionExpectedData(scopeName),
+    ...createClassDeclarationExpectedData(scopeName),
+    ...createCommandStatementExpectedData(scopeName),
+    ...createContinuationSectionExpectedData(scopeName),
+    ...createContinuationStringLiteralExpectedData(scopeName),
+    ...createDereferenceExpressionExpectedData(scopeName),
+    ...createDirectiveStatementExpectedData(scopeName),
+    ...createDocumentCommentExpectedData(scopeName),
+    ...createForStatementExpectedData(scopeName),
+    ...createFunctionDeclarationExpectedData(scopeName),
+    ...createHotkeyLabelStatementExpectedData(scopeName),
+    ...createHotstringLabelStatementExpectedData(scopeName),
+    ...createIfStatementExpectedData(scopeName),
+    ...createIncludeStatementExpectedData(scopeName),
+    ...createJumpStatementExpectedData(scopeName),
+    ...createLabelStatementExpectedData(scopeName),
+    ...createLegacyAssignmentStatementExpectedData(scopeName),
+    ...createLegacyIfStatementExpectedData(scopeName),
+    ...createLoopStatementExpectedData(scopeName),
+    ...createModifierDeclarationExpectedData(scopeName),
+    ...createMultiLineCommentExpectedData(scopeName),
+    ...createNewExpressionExpectedData(scopeName),
+    ...createNumberLiteralExpectedData(scopeName),
+    ...createObjectLiteralExpectedData(scopeName),
+    ...createOperatorInExpressionExpectedData(scopeName),
+    ...createParenthesizedExpressionExpectedData(scopeName),
+    ...createPropertyDeclarationExpectedData(scopeName),
+    ...createRegExpExpectedData(scopeName),
+    ...createSingleLineCommentExpectedData(scopeName),
+    ...createStringLiteralExpectedData(scopeName),
+    ...createSwitchStatementExpectedData(scopeName),
+    ...createThrowStatementExpectedData(scopeName),
+    ...createTryStatementExpectedData(scopeName),
+    ...createUntilStatementExpectedData(scopeName),
+    ...createVariableExpectedData(scopeName),
+    ...createWhileStatementExpectedData(scopeName),
+  ];
+}
