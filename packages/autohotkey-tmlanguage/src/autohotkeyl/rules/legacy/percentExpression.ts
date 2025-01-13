@@ -2,14 +2,16 @@ import { Repository, RuleName } from '../../../constants';
 import { capture, char, inlineSpaces1, seq } from '../../../oniguruma';
 import type { MatchRule, ScopeName } from '../../../types';
 import { includeRule, nameRule, patternsRule } from '../../../utils';
-import * as patterns_v1 from '../../patterns';
 
-export function createPercentExpressionRule(scopeName: ScopeName): MatchRule {
+interface Placeholder {
+  expressionPattern: string;
+}
+export function createPercentExpressionRule(scopeName: ScopeName, placholder: Placeholder): MatchRule {
   return {
     match: seq(
       capture(char('%')),
       inlineSpaces1(),
-      capture(patterns_v1.expressionArgumentPattern),
+      capture(placholder.expressionPattern),
     ),
     captures: {
       1: nameRule(scopeName, RuleName.PercentExpressionBegin),

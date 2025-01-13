@@ -369,7 +369,7 @@ export function createRepositories(scopeName: ScopeName): Repositories {
       includeRule(Repository.InLineComments),
     ),
     [Repository.CommandLastArgument]: patternsRule(
-      includeRule(Repository.PercentExpression),
+      includeRule(Repository.PercentExpressions),
       includeRule(Repository.Dereference),
       includeRule(Repository.CommandLastArgumentText),
       includeRule(Repository.InLineComments),
@@ -397,7 +397,12 @@ export function createRepositories(scopeName: ScopeName): Repositories {
       startAnchor: patterns_v1.statementStartAnchor,
       leftHandPattern: patterns_v1.looseLeftHandPattern,
     }),
-    [Repository.PercentExpression]: rule_v1.createPercentExpressionRule(scopeName),
+    [Repository.PercentExpression]: rule_v1.createPercentExpressionRule(scopeName, {
+      expressionPattern: patterns_v1.expressionArgumentPattern,
+    }),
+    [Repository.PercentExpressions]: rule_v1.createPercentExpressionRule(scopeName, {
+      expressionPattern: patterns_v1.expressionLastArgumentPattern,
+    }),
     [Repository.ContinuationSection]: rule_v1.createContinuationSectionRule(scopeName, {
       endAnchor: patterns_v1.lineEndAnchor,
     }),

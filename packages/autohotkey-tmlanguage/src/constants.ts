@@ -386,6 +386,7 @@ export const enum Repository {
   LegacyAssignmentDeclaration = 'repository.legacy.declaration.assignment',
   LegacyIfStatement = 'repository.legacy.statement.if',
   PercentExpression = 'repository.legacy.expression.percent',
+  PercentExpressions = 'repository.legacy.expressions.percent',
   ContinuationSection = 'repository.legacy.continuation-section',
   ContinuationSectionText = 'repository.legacy.continuation-section.text',
   // #endregion legacy

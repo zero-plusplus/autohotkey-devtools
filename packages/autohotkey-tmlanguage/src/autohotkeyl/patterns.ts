@@ -91,7 +91,7 @@ export const percentExpressionLastArgumentPattern: string = seq(
 );
 export const lastArgumentPattern: string = group(alt(
   percentExpressionLastArgumentPattern,
-  groupMany0(alt(
+  groupMany1(alt(
     pairs,
     char(','),
     unquotedCharPattern,
