@@ -271,6 +271,32 @@ function parameterToOniguruma(parameter: CommandParameter, isLastParameter: bool
 }
 function parameterToPatternsRule(scopeName: ScopeName, defenition: CommandDefinition, parameter: CommandParameter, isLastParameter: boolean, placeholder: Placeholder): PatternsRule {
   const defaultArgumentRule = isLastParameter ? includeRule(Repository.CommandLastArgument) : includeRule(Repository.CommandArgument);
+  const defaultArgumentPatternsRule = patternsRule(
+    includeRule(Repository.InLineComments),
+    defaultArgumentRule,
+  );
+  const createUnquotedStringMatchRule = (...rules: Rule[]): MatchRule => {
+    return {
+      name: name(scopeName, RuleName.UnquotedString),
+      match: capture(seq(
+        negChar('%', '\\s'),
+        negChars0('\\s'),
+      )),
+      captures: {
+        1: patternsRule(
+          includeRule(Repository.UnquotedStringEscapeSequence),
+          ...rules,
+        ),
+      },
+    };
+  };
+  const createUnquotedStringPatternsRule = (...rules: Rule[]): PatternsRule => {
+    return patternsRule(
+      includeRule(Repository.PercentExpression),
+      includeRule(Repository.Dereference),
+      ...rules,
+    );
+  };
 
   switch (parameter.type) {
     case HighlightType.None:
@@ -283,7 +309,7 @@ function parameterToPatternsRule(scopeName: ScopeName, defenition: CommandDefini
     }
     case HighlightType.SubCommand: {
       if (!parameter.values || parameter.values.length === 0) {
-        return patternsRule(defaultArgumentRule);
+        return defaultArgumentPatternsRule;
       }
       return patternsRule(
         {
@@ -298,7 +324,7 @@ function parameterToPatternsRule(scopeName: ScopeName, defenition: CommandDefini
     }
     case HighlightType.SubCommandLike: {
       if (!parameter.values || parameter.values.length === 0) {
-        return patternsRule(defaultArgumentRule);
+        return defaultArgumentPatternsRule;
       }
       return patternsRule(
         {
@@ -313,7 +339,7 @@ function parameterToPatternsRule(scopeName: ScopeName, defenition: CommandDefini
     }
     case HighlightType.FlowSubCommand: {
       if (!parameter.values || parameter.values.length === 0) {
-        return patternsRule(defaultArgumentRule);
+        return defaultArgumentPatternsRule;
       }
       return patternsRule(
         {
@@ -328,7 +354,7 @@ function parameterToPatternsRule(scopeName: ScopeName, defenition: CommandDefini
     }
     case HighlightType.GuiSubCommand: {
       if (!parameter.values || parameter.values.length === 0) {
-        return patternsRule(defaultArgumentRule);
+        return defaultArgumentPatternsRule;
       }
       return patternsRule(
         {
@@ -397,85 +423,21 @@ function parameterToPatternsRule(scopeName: ScopeName, defenition: CommandDefini
         },
       },
     );
-    case HighlightType.CombiOptions: return patternsRule(
-      includeRule(Repository.PercentExpression),
-      includeRule(Repository.Dereference),
-      {
-        name: name(scopeName, RuleName.UnquotedString),
-        match: capture(seq(
-          negChar('%', '\\s'),
-          negChars0('\\s'),
-        )),
-        captures: {
-          1: patternsRule(
-            includeRule(Repository.UnquotedStringEscapeSequence),
-            ...optionItemsToRules(scopeName, parameter.values, false),
-          ),
-        },
-      },
-    );
-    case HighlightType.FileAttributeCombiOptions: return patternsRule(
-      includeRule(Repository.PercentExpression),
-      includeRule(Repository.Dereference),
-      {
-        name: name(scopeName, RuleName.UnquotedString),
-        match: capture(seq(
-          negChar('%', '\\s'),
-          negChars0('\\s'),
-        )),
-        captures: {
-          1: patternsRule(
-            includeRule(Repository.UnquotedStringEscapeSequence),
-            ...optionItemsToRules(scopeName, parameter.values, false),
-          ),
-        },
-      },
-    );
+    case HighlightType.CombiOptions:
+    case HighlightType.FileAttributeCombiOptions: return createUnquotedStringPatternsRule(createUnquotedStringMatchRule(...optionItemsToRules(scopeName, parameter.values, false)));
     case HighlightType.Style:
-    case HighlightType.UnquotedString: return patternsRule(defaultArgumentRule);
+    case HighlightType.UnquotedString: return defaultArgumentPatternsRule;
     case HighlightType.MenuItemName: return patternsRule(includeRule(Repository.MenuItemNameCommandArgument));
-    case HighlightType.UnquotedOrKeywords: {
-      return patternsRule(
-        includeRule(Repository.PercentExpression),
-        includeRule(Repository.Dereference),
-        {
-          name: name(scopeName, RuleName.UnquotedString),
-          match: capture(seq(
-            negChar('%', '\\s'),
-            negChars0('\\s'),
-          )),
-          captures: {
-            1: patternsRule(
-              includeRule(Repository.UnquotedStringEscapeSequence),
-              ...optionItemsToRules(scopeName, parameter.values, true),
-            ),
-          },
-        },
-      );
-    }
+    case HighlightType.UnquotedOrKeywords: return createUnquotedStringPatternsRule(createUnquotedStringMatchRule(...optionItemsToRules(scopeName, parameter.values, true)));
     case HighlightType.KeywordOnly:
     case HighlightType.KeywordsOnly:
-    case HighlightType.GuiControlOptions: return patternsRule(
-      includeRule(Repository.PercentExpression),
-      includeRule(Repository.Dereference),
+    case HighlightType.GuiControlOptions: return createUnquotedStringPatternsRule(createUnquotedStringMatchRule(
+      ...optionItemsToRules(scopeName, parameter.values, true),
       {
-        name: name(scopeName, RuleName.UnquotedString),
-        match: capture(seq(
-          negChar('%', '\\s'),
-          negChars0('\\s'),
-        )),
-        captures: {
-          1: patternsRule(
-            includeRule(Repository.UnquotedStringEscapeSequence),
-            ...optionItemsToRules(scopeName, parameter.values, true),
-            {
-              name: name(scopeName, StyleName.Invalid),
-              match: negChars1('\\s'),
-            },
-          ),
-        },
+        name: name(scopeName, StyleName.Invalid),
+        match: negChars1('\\s'),
       },
-    );
+    ));
     case HighlightType.GuiOptions: {
       return patternsRule(
         includeRule(Repository.PercentExpression),
