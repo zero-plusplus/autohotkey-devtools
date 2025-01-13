@@ -1209,6 +1209,20 @@ export function createCommandStatementExpectedData(scopeName: ScopeName): Expect
         { text: '; comment', scopes: name(scopeName, RuleName.InLineComment) },
       ],
     ],
+
+    // Fix: Using a percent expression in the last argument causes the comment to be highlighted as a string
+    [
+      dedent`
+        Click, % abc ; comment
+      `,
+      [
+        { text: 'Click', scopes: name(scopeName, RuleName.CommandName) },
+        { text: ',', scopes: name(scopeName, RuleName.Comma) },
+        { text: '%', scopes: name(scopeName, RuleName.PercentExpressionBegin) },
+        { text: 'abc', scopes: name(scopeName, RuleName.Variable) },
+        { text: '; comment', scopes: name(scopeName, RuleName.InLineComment) },
+      ],
+    ],
   ];
 }
 
