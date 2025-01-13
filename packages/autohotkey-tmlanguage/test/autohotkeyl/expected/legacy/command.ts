@@ -1250,17 +1250,20 @@ function createAllPatternTestData(scopeName: ScopeName): ExpectedTestData {
         const isLastParameter = i === parameters.length - 1;
 
         // comma separator
-        textLine += ' ,';
+        textLine += ',';
         expectedLine.push({ text: ',', scopes: name(scopeName, RuleName.Comma) });
+
+        // Add subcommands always
+        if (definition_v1.isSubCommandParameter(parameter)) {
+          const subcommandExpectedResults = parameterToExpectedResults(scopeName, parameter, isLastParameter);
+          textLine += ` ${subcommandExpectedResults[0]![0]}`;
+          expectedLine.push(...subcommandExpectedResults[0]![1]);
+          targetIndex++;
+          return;
+        }
 
         // Skip parameter other than the target
         if (targetIndex !== i) {
-          // Add subcommands always
-          if (definition_v1.isSubCommandParameter(parameter)) {
-            const subcommandExpectedResults = parameterToExpectedResults(scopeName, parameter, isLastParameter);
-            textLine += ` ${subcommandExpectedResults[0]![0]}`;
-            expectedLine.push(...subcommandExpectedResults[0]![1]);
-          }
           return;
         }
 
