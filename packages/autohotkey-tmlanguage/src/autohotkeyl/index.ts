@@ -27,21 +27,35 @@ export function createRepositories(scopeName: ScopeName): Repositories {
 
     // #region trivia
     [Repository.Comment]: patternsRule(
-      includeRule(Repository.InlineDocumentComment),
-      includeRule(Repository.DocumentComment),
+      includeRule(Repository.MultiLineComments),
+      includeRule(Repository.InLineComments),
+      includeRule(Repository.SingleLineComments),
+    ),
+    [Repository.MultiLineComments]: patternsRule(
+      includeRule(Repository.MultiLineDocumentComment),
       includeRule(Repository.MultiLineComment),
-      includeRule(Repository.SingleLineComment),
-      includeRule(Repository.InLineComment),
     ),
     [Repository.MultiLineComment]: rule_v1.createMultiLineCommentRule(scopeName),
-    [Repository.SingleLineComment]: rule_v1.createSingleLineCommentRule(scopeName),
-    [Repository.InLineComment]: rule_v1.createInLineCommentRule(scopeName),
-    [Repository.DocumentComment]: rule_v1.createDocumentCommentRule(scopeName, {
+    [Repository.MultiLineDocumentComment]: rule_v1.createDocumentCommentRule(scopeName, {
       leftHandPattern: patterns_v1.looseLeftHandPattern,
     }),
+    [Repository.SingleLineComments]: patternsRule(
+      includeRule(Repository.SingleLineDocumentComment),
+      includeRule(Repository.SingleLineComment),
+    ),
+    [Repository.SingleLineComment]: rule_v1.createSingleLineCommentRule(scopeName),
+    [Repository.SingleLineDocumentComment]: rule_v1.createSinglelineDocumentCommentRule(scopeName, {
+      leftHandPattern: patterns_v1.looseLeftHandPattern,
+    }),
+    [Repository.InLineComments]: patternsRule(
+      includeRule(Repository.InlineDocumentComment),
+      includeRule(Repository.InLineComment),
+    ),
+    [Repository.InLineComment]: rule_v1.createInLineCommentRule(scopeName),
     [Repository.InlineDocumentComment]: rule_v1.createInlineDocumentCommentRule(scopeName, {
       leftHandPattern: patterns_v1.looseLeftHandPattern,
     }),
+
     [Repository.TypeInDocument]: rule_v1.createDocumentTypeRule(scopeName),
     [Repository.InlineTextInDocument]: rule_v1.createInlineTextInDocumentRule(scopeName),
     // #endregion trivia
@@ -352,13 +366,13 @@ export function createRepositories(scopeName: ScopeName): Repositories {
       includeRule(Repository.PercentExpression),
       includeRule(Repository.Dereference),
       includeRule(Repository.CommandArgumentText),
-      includeRule(Repository.InLineComment),
+      includeRule(Repository.InLineComments),
     ),
     [Repository.CommandLastArgument]: patternsRule(
       includeRule(Repository.PercentExpression),
       includeRule(Repository.Dereference),
       includeRule(Repository.CommandLastArgumentText),
-      includeRule(Repository.InLineComment),
+      includeRule(Repository.InLineComments),
     ),
     [Repository.MenuItemNameCommandArgument]: rule_v1.createMenuNameCommandArgumentRule(scopeName),
     [Repository.UnquotedStringEscapeSequence]: rule_v1.createUnquotedEscapeSequencesRule(scopeName, constants_v1.unquoteEscapeSequences),

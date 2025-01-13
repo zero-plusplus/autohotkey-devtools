@@ -18,7 +18,7 @@ export function createContinuationSectionRule(scopeName: ScopeName, placeholder:
     )),
     beginCaptures: {
       1: patternsRule(includeRule(Repository.ContinuationStringOptions)),
-      3: patternsRule(includeRule(Repository.InLineComment)),
+      3: patternsRule(includeRule(Repository.InLineComments)),
     },
     end: seq(
       startAnchor(),
@@ -37,7 +37,7 @@ export function createContinuationSectionRule(scopeName: ScopeName, placeholder:
         includeRule(Repository.Comma),
         includeRule(Repository.CommandArgument),
       ),
-      3: patternsRule(includeRule(Repository.InLineComment)),
+      3: patternsRule(includeRule(Repository.InLineComments)),
     },
     patterns: [ includeRule(Repository.ContinuationSectionText) ],
   };

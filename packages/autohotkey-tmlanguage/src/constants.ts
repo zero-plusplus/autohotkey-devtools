@@ -243,13 +243,17 @@ export const enum Repository {
 
   // #region trivas
   Comment = 'repository.comment',
+  MultiLineComments = 'repository.comments.multi-line',
+  SingleLineComments = 'repository.comments.single-line',
+  InLineComments = 'repository.comments.in-line',
+  MultiLineComment = 'repository.comment.multi-line',
   SingleLineComment = 'repository.comment.single-line',
   InLineComment = 'repository.comment.in-line',
-  MultiLineComment = 'repository.comment.multi-line',
 
   // #region document
-  DocumentComment = 'repository.comment.document.block',
-  InlineDocumentComment = 'repository.comment.document.inline',
+  MultiLineDocumentComment = 'repository.comment.document.multi-line',
+  SingleLineDocumentComment = 'repository.comment.document.single-line',
+  InlineDocumentComment = 'repository.comment.document.in-line',
   FencedCodeBlockInDocument = 'repository.comment.document.fenced_code',
   InlineTextInDocument = 'repository.comment.document.inline-text',
   TypeInDocument = 'repository.comment.document.type',

@@ -42,7 +42,31 @@ export function createDocumentCommentRule(scopeName: ScopeName, placeholder: Pla
     ],
   };
 }
-export function createInlineDocumentCommentRule(scopeName: ScopeName, placeholder: Placeholder): BeginWhileRule {
+export function createInlineDocumentCommentRule(scopeName: ScopeName, placeholder: Placeholder): MatchRule {
+  const contentStartPattern = seq(
+    inlineSpaces1(),
+    text(';;'),
+  );
+  return {
+    name: name(scopeName, RuleName.DocumentComment),
+    match: seq(
+      contentStartPattern,
+      capture(anyChars1()),
+    ),
+    captures: {
+      1: patternsRule(
+        createTagAnnotationRule(scopeName, {
+          startPattern: contentStartPattern,
+          leftHandPattern: placeholder.leftHandPattern,
+        }),
+        includeRule(Repository.FencedCodeBlockInDocument),
+        includeRule(Repository.InlineTextInDocument),
+        { include: 'text.html.markdown#block' },
+      ),
+    },
+  };
+}
+export function createSinglelineDocumentCommentRule(scopeName: ScopeName, placeholder: Placeholder): BeginWhileRule {
   const capturedContentStartPattern = seq(startAnchor(), inlineSpaces0(), capture(text(';;')));
   const contentStartPattern = seq(startAnchor(), inlineSpaces0(), text(';;'));
 

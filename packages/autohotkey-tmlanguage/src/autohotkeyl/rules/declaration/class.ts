@@ -18,7 +18,7 @@ export function createClassDeclarationRule(scopeName: ScopeName, placeholder: Pl
     )),
     end: lookbehind('}'),
     patterns: [
-      includeRule(Repository.InLineComment),
+      includeRule(Repository.InLineComments),
 
       // class head
       {
