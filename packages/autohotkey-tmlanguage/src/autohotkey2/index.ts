@@ -1,3 +1,4 @@
+import * as markdown from '../__injection__/markdown';
 import * as rule_v1 from '../autohotkeyl/rules';
 import { Repository, RuleName } from '../constants';
 import type { Repositories, ScopeName, TmLanguage } from '../types';
@@ -21,13 +22,40 @@ export function createTmLanguage(): TmLanguage {
 
 export function createRepositories(scopeName: ScopeName): Repositories {
   return {
+    [Repository.FencedCodeBlockInDocument]: markdown.createCodeFenceInDocumentRule(),
+
     // #region trivia
     [Repository.Comment]: patternsRule(
+      includeRule(Repository.MultiLineComments),
+      includeRule(Repository.SingleLineComments),
+      includeRule(Repository.InLineComments),
+    ),
+    [Repository.MultiLineComments]: patternsRule(
+      includeRule(Repository.MultiLineDocumentComment),
+      includeRule(Repository.MultiLineComment),
+    ),
+    [Repository.MultiLineComment]: rule_v1.createMultiLineCommentRule(scopeName),
+    [Repository.MultiLineDocumentComment]: rule_v1.createDocumentCommentRule(scopeName, {
+      leftHandPattern: patterns_v2.looseLeftHandPattern,
+    }),
+    [Repository.SingleLineComments]: patternsRule(
+      includeRule(Repository.SingleLineDocumentComment),
       includeRule(Repository.SingleLineComment),
-      includeRule(Repository.InLineComment),
     ),
     [Repository.SingleLineComment]: rule_v1.createSingleLineCommentRule(scopeName),
+    [Repository.SingleLineDocumentComment]: rule_v1.createSinglelineDocumentCommentRule(scopeName, {
+      leftHandPattern: patterns_v2.looseLeftHandPattern,
+    }),
+    [Repository.InLineComments]: patternsRule(
+      includeRule(Repository.InLineComment),
+      includeRule(Repository.InlineDocumentComment),
+    ),
     [Repository.InLineComment]: rule_v1.createInLineCommentRule(scopeName),
+    [Repository.InlineDocumentComment]: rule_v1.createInlineDocumentCommentRule(scopeName, {
+      leftHandPattern: patterns_v2.looseLeftHandPattern,
+    }),
+    [Repository.TypeInDocument]: rule_v1.createDocumentTypeRule(scopeName),
+    [Repository.InlineTextInDocument]: rule_v1.createInlineTextInDocumentRule(scopeName),
     // #endregion trivia
 
     // #region statement
@@ -55,12 +83,17 @@ export function createRepositories(scopeName: ScopeName): Repositories {
 
     // #region variable
     [Repository.Variable]: patternsRule(
+      includeRule(Repository.KeywordLikeBuiltInVariable),
       includeRule(Repository.BuiltInVariable),
       includeRule(Repository.UserDefinedVariable),
       includeRule(Repository.InvalidVariable),
     ),
     [Repository.UserDefinedVariable]: rule_v1.createVariableRule(scopeName, patterns_v2.nameStart, patterns_v2.nameBody),
     [Repository.InvalidVariable]: rule_v1.createInvalidVariableRule(scopeName, patterns_v2.nameStart, patterns_v2.nameBody),
+    [Repository.KeywordLikeBuiltInVariable]: rule_v1.createBuiltinVariableRule(scopeName, {
+      variableRuleName: RuleName.KeywordLikeBuiltInVariable,
+      builtinVariables: constants_v2.keywordLikeBuiltinVariables,
+    }),
     [Repository.BuiltInVariable]: rule_v1.createBuiltinVariableRule(scopeName, {
       variableRuleName: RuleName.BuiltInVariable,
       builtinVariables: constants_v2.builtinVaribles,

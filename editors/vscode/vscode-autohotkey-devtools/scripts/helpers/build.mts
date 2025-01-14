@@ -1,6 +1,8 @@
 import tmLanguages from '@zero-plusplus/autohotkey-tmlanguage/src';
 import { ScopeName } from '@zero-plusplus/autohotkey-tmlanguage/src/types.js';
+import autohotkey2 from '@zero-plusplus/autohotkey-tmlanguage/test/autohotkey2/expected/index.js';
 import autohotkeyl from '@zero-plusplus/autohotkey-tmlanguage/test/autohotkeyl/expected/index.js';
+import type { ExpectedTestData } from '@zero-plusplus/autohotkey-tmlanguage/test/types.js';
 import * as esbuild from 'esbuild';
 import * as fs from 'fs/promises';
 import * as path from 'path';
@@ -150,17 +152,23 @@ export function createLanguageConfiguration(scopeName: ScopeName): Record<string
   return languageConfig;
 }
 
-export async function buildDemo(): Promise<void> {
+export async function buildDemoAll(): Promise<void> {
+  await buildDemoForV2();
   await buildDemoForV1();
 }
+export async function buildDemoForV2(): Promise<void> {
+  await buildDemo('autohotkey2', 'ahk2', autohotkey2.createExpectedDataList);
+}
 export async function buildDemoForV1(): Promise<void> {
-  const scopeName: ScopeName = 'autohotkeyl';
-  const demoPath = path.resolve(demoDir, `${scopeName}.ahkl`);
-  const demoText = autohotkeyl.createExpectedDataList(scopeName).map((expectedData) => expectedData[0]).join('\n');
-  await writeFile(demoPath, demoText);
+  await buildDemo('autohotkeyl', 'ahkl', autohotkeyl.createExpectedDataList);
 }
 
 // #region helpers
+async function buildDemo(scopeName: ScopeName, extension: string, expectedDataBuilder: (scopeName: ScopeName) => ExpectedTestData[]): Promise<void> {
+  const demoPath = path.resolve(demoDir, `${scopeName}.${extension}`);
+  const demoText = expectedDataBuilder(scopeName).map((expectedData) => expectedData[0]).join('\n');
+  await writeFile(demoPath, demoText);
+}
 async function writeFile(filePath: string, text: string): Promise<void> {
   let isExists = false;
   try {

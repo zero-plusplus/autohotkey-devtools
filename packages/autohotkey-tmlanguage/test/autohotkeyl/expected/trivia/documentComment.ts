@@ -2298,16 +2298,16 @@ export function createDocumentCommentExpectedData(scopeName: ScopeName): Expecte
     [
       dedent`
         /**
-         * \`\`\`autohotkeyl
+         * \`\`\`${scopeName}
          *  test := 123
          * \`\`\`
          */
         /**
-         * \`\`\`autohotkeyl
+         * \`\`\`${scopeName}
          *  test := 123
          */
         /**
-         * \`\`\`autohotkeyl
+         * \`\`\`${scopeName}
          *:  test := 123
          * \`\`\`
          */
@@ -2317,7 +2317,7 @@ export function createDocumentCommentExpectedData(scopeName: ScopeName): Expecte
         { text: '/**', scopes: name(scopeName, RuleName.DocumentComment, RuleDescriptor.Begin) },
         { text: ' *', scopes: name(scopeName, RuleName.DocumentComment) },
         { text: '```', scopes: `${RuleName.DocumentComment}.${scopeName} ${RuleName.FencedCodeBlock}.markdown ${RuleName.CodeFence}.markdown` },
-        { text: 'autohotkeyl', scopes: `${RuleName.DocumentComment}.${scopeName} ${RuleName.FencedCodeBlock}.markdown ${RuleName.LanguageName}.markdown` },
+        { text: scopeName, scopes: `${RuleName.DocumentComment}.${scopeName} ${RuleName.FencedCodeBlock}.markdown ${RuleName.LanguageName}.markdown` },
         { text: ' *', scopes: name(scopeName, RuleName.DocumentComment) },
         { text: 'test', scopes: `${RuleName.DocumentComment}.${scopeName} ${RuleName.FencedCodeBlock}.markdown ${RuleName.EmbeddedLanguage}.${scopeName} ${RuleName.Variable}.${scopeName}` },
         { text: ':=', scopes: `${RuleName.DocumentComment}.${scopeName} ${RuleName.FencedCodeBlock}.markdown ${RuleName.EmbeddedLanguage}.${scopeName} ${RuleName.Operator}.${scopeName}` },
@@ -2329,7 +2329,7 @@ export function createDocumentCommentExpectedData(scopeName: ScopeName): Expecte
         { text: '/**', scopes: name(scopeName, RuleName.DocumentComment, RuleDescriptor.Begin) },
         { text: ' *', scopes: name(scopeName, RuleName.DocumentComment) },
         { text: '```', scopes: `${RuleName.DocumentComment}.${scopeName} ${RuleName.FencedCodeBlock}.markdown ${RuleName.CodeFence}.markdown` },
-        { text: 'autohotkeyl', scopes: `${RuleName.DocumentComment}.${scopeName} ${RuleName.FencedCodeBlock}.markdown ${RuleName.LanguageName}.markdown` },
+        { text: scopeName, scopes: `${RuleName.DocumentComment}.${scopeName} ${RuleName.FencedCodeBlock}.markdown ${RuleName.LanguageName}.markdown` },
         { text: ' *', scopes: name(scopeName, RuleName.DocumentComment) },
         { text: 'test', scopes: `${RuleName.DocumentComment}.${scopeName} ${RuleName.FencedCodeBlock}.markdown ${RuleName.EmbeddedLanguage}.${scopeName} ${RuleName.Variable}.${scopeName}` },
         { text: ':=', scopes: `${RuleName.DocumentComment}.${scopeName} ${RuleName.FencedCodeBlock}.markdown ${RuleName.EmbeddedLanguage}.${scopeName} ${RuleName.Operator}.${scopeName}` },
@@ -2339,7 +2339,7 @@ export function createDocumentCommentExpectedData(scopeName: ScopeName): Expecte
         { text: '/**', scopes: name(scopeName, RuleName.DocumentComment, RuleDescriptor.Begin) },
         { text: ' *', scopes: name(scopeName, RuleName.DocumentComment) },
         { text: '```', scopes: `${RuleName.DocumentComment}.${scopeName} ${RuleName.FencedCodeBlock}.markdown ${RuleName.CodeFence}.markdown` },
-        { text: 'autohotkeyl', scopes: `${RuleName.DocumentComment}.${scopeName} ${RuleName.FencedCodeBlock}.markdown ${RuleName.LanguageName}.markdown` },
+        { text: scopeName, scopes: `${RuleName.DocumentComment}.${scopeName} ${RuleName.FencedCodeBlock}.markdown ${RuleName.LanguageName}.markdown` },
         { text: ' *', scopes: name(scopeName, RuleName.DocumentComment) },
         { text: ':', scopes: `${RuleName.DocumentComment}.${scopeName} ${RuleName.FencedCodeBlock}.markdown ${RuleName.EmbeddedLanguage}.${scopeName} ${RuleName.CodeBegin}.${scopeName}` },
         { text: 'test', scopes: `${RuleName.DocumentComment}.${scopeName} ${RuleName.FencedCodeBlock}.markdown ${RuleName.EmbeddedLanguage}.${scopeName} ${RuleName.Variable}.${scopeName}` },

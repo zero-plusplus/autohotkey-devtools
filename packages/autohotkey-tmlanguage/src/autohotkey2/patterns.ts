@@ -1,4 +1,4 @@
-import { alt, asciiChar, char, group, groupMany0, negativeLookbehind, negChar, negChars1, seq } from '../oniguruma';
+import { alt, asciiChar, char, group, groupMany0, manyXtoY, negativeLookbehind, negChar, negChars1, seq } from '../oniguruma';
 
 export const doubleQuoteRawTextPattern: string = negChars1('"', '`');
 export const doubleQuoteContentsPattern: string = groupMany0(alt(
@@ -20,6 +20,7 @@ export const singleQuoteStringEndPattern: string = seq(
 );
 
 // #region [Names](https://www.autohotkey.com/docs/v2/Concepts.htm#names)
+export const nameLimitLength = 253;
 const letter = '[a-zA-Z]';
 const numberChar = '\\d';
 const nonAsciiChar = negChar(asciiChar());
@@ -27,3 +28,8 @@ const sign = char('_');
 export const nameStart: string = group(alt(letter, nonAsciiChar, sign));
 export const nameBody: string = group(alt(letter, nonAsciiChar, sign, numberChar));
 // #endregion Names
+
+export const looseLeftHandPattern: string = manyXtoY(1, nameLimitLength)(group(alt(
+  nameBody,
+  char('%', '[', ']', '.'),
+)));
