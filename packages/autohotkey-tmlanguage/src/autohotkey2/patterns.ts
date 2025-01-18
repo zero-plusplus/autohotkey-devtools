@@ -1,23 +1,7 @@
-import { alt, asciiChar, char, group, groupMany0, manyXtoY, negativeLookbehind, negChar, negChars1, seq } from '../oniguruma';
+import { alt, asciiChar, char, group, manyXtoY, negChar, text } from '../oniguruma';
 
-export const doubleQuoteRawTextPattern: string = negChars1('"', '`');
-export const doubleQuoteContentsPattern: string = groupMany0(alt(
-  group(seq(char('`'), char('"'))),
-  negChar('"'),
-));
-export const doubleQuoteStringEndPattern: string = seq(
-  negativeLookbehind(char('`')),
-  char('"'),
-);
-export const singleQuoteRawTextPattern: string = negChars1('"', '`');
-export const singleQuoteContentsPattern: string = groupMany0(alt(
-  group(seq(char('`'), char(`'`))),
-  negChar(`'`),
-));
-export const singleQuoteStringEndPattern: string = seq(
-  negativeLookbehind(char('`')),
-  char(`'`),
-);
+export const unescapedDoubleQuotePattern: string = text('`"');
+export const unescapedSingleQuotePattern: string = text('`\'');
 
 // #region [Names](https://www.autohotkey.com/docs/v2/Concepts.htm#names)
 export const nameLimitLength = 253;

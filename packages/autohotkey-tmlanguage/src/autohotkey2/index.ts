@@ -1,4 +1,6 @@
 import * as markdown from '../__injection__/markdown';
+import * as constants_v1 from '../autohotkeyl/constants';
+import * as patterns_v1 from '../autohotkeyl/patterns';
 import * as rule_v1 from '../autohotkeyl/rules';
 import { Repository, RuleName } from '../constants';
 import type { Repositories, ScopeName, TmLanguage } from '../types';
@@ -65,13 +67,16 @@ export function createRepositories(scopeName: ScopeName): Repositories {
 
     // #region expression
     [Repository.Expression]: patternsRule(
+      includeRule(Repository.ShorthandRegexpMatch),
       includeRule(Repository.ParenthesizedExpression),
       includeRule(Repository.Literal),
+      includeRule(Repository.KeywordLikeBuiltInVariable),
       includeRule(Repository.BuiltInVariable),
       includeRule(Repository.InvalidVariable),
       includeRule(Repository.Variable),
       includeRule(Repository.InvalidDereference),
       includeRule(Repository.Dereference),
+
       includeRule(Repository.Dot),
       includeRule(Repository.Operator),
     ),
@@ -107,6 +112,7 @@ export function createRepositories(scopeName: ScopeName): Repositories {
 
     // #region literal
     [Repository.Literal]: patternsRule(
+      includeRule(Repository.StringAsRegExp),
       includeRule(Repository.String),
       includeRule(Repository.Number),
     ),
@@ -118,8 +124,7 @@ export function createRepositories(scopeName: ScopeName): Repositories {
     ),
     [Repository.DoubleString]: rule_v1.createStringRule(scopeName, {
       quoteChar: '"',
-      stringContentsPattern: patterns_v2.doubleQuoteContentsPattern,
-      stringEndPattern: patterns_v2.doubleQuoteStringEndPattern,
+      unescapedQuotePattern: patterns_v2.unescapedDoubleQuotePattern,
       stringContentRepository: Repository.DoubleStringContent,
       stringElementName: RuleName.DoubleString,
     }),
@@ -128,8 +133,7 @@ export function createRepositories(scopeName: ScopeName): Repositories {
     }),
     [Repository.SingleString]: rule_v1.createStringRule(scopeName, {
       quoteChar: `'`,
-      stringContentsPattern: patterns_v2.singleQuoteContentsPattern,
-      stringEndPattern: patterns_v2.singleQuoteStringEndPattern,
+      unescapedQuotePattern: patterns_v2.unescapedSingleQuotePattern,
       stringContentRepository: Repository.SingleStringContent,
       stringElementName: RuleName.SingleString,
     }),
@@ -158,7 +162,7 @@ export function createRepositories(scopeName: ScopeName): Repositories {
     // #endregion number
     // #endregion literal
 
-    // #region token
+    // #region token, keyword
     [Repository.Comma]: rule_v1.createOperatorRule(scopeName, {
       operatorRuleName: RuleName.Comma,
       operators: [ ',' ],
@@ -168,7 +172,66 @@ export function createRepositories(scopeName: ScopeName): Repositories {
       operatorRuleName: RuleName.Operator,
       operators: constants_v2.expressionOperators,
     }),
-    // #endregion token
+    // #endregion token, keyword
+
+    // #region regexp
+    [Repository.ShorthandRegexpMatch]: patternsRule(
+      rule_v1.createShorthandRegExpMatchRule(scopeName, {
+        quoteChar: '"',
+        unescapedQuotePattern: patterns_v2.unescapedDoubleQuotePattern,
+        regexpOptionsPattern: patterns_v1.regexpOptionsPattern,
+        contentRuleName: RuleName.RegExpString,
+        contentRepository: Repository.DoubleStringAsRegExpContent,
+      }),
+      rule_v1.createShorthandRegExpMatchRule(scopeName, {
+        quoteChar: `'`,
+        unescapedQuotePattern: patterns_v2.unescapedSingleQuotePattern,
+        regexpOptionsPattern: patterns_v1.regexpOptionsPattern,
+        contentRuleName: RuleName.RegExpString,
+        contentRepository: Repository.SingleStringAsRegExpContent,
+      }),
+    ),
+    [Repository.StringAsRegExp]: patternsRule(
+      includeRule(Repository.DoubleStringAsRegexp),
+      includeRule(Repository.SingleStringAsRegexp),
+    ),
+    [Repository.DoubleStringAsRegexp]: rule_v1.createStringAsRegExpRule(scopeName, {
+      quoteChar: '"',
+      unescapedQuotePattern: patterns_v2.unescapedDoubleQuotePattern,
+      regexpOptionsPattern: patterns_v1.regexpOptionsPattern,
+      contentRuleName: RuleName.RegExpString,
+      contentRepository: Repository.DoubleStringAsRegExpContent,
+    }),
+    [Repository.DoubleStringAsRegExpContent]: rule_v1.createStringAsRegExpContentRule(scopeName, {
+      regexpOptions: constants_v1.regexpOptions,
+      contentRepository: Repository.DoubleStringAsRegExpContent,
+      commonContentRepository: Repository.DoubleStringAsRegExpCommonContent,
+    }),
+    [Repository.DoubleStringAsRegExpCommonContent]: rule_v1.createRegExpCommonContentRule(scopeName, {
+      regexpEscapeSequences: constants_v1.regexpEscapeSequences,
+      stringEscapeSequences: constants_v2.doubleQuoteEscapeSequences,
+      pcreUnicodePropertyCodes: constants_v1.pcreUnicodePropertyCodes,
+      pcreUnicodePropertyScripts: constants_v1.pcreUnicodePropertyScripts,
+    }),
+    [Repository.SingleStringAsRegexp]: rule_v1.createStringAsRegExpRule(scopeName, {
+      quoteChar: `'`,
+      unescapedQuotePattern: patterns_v2.unescapedSingleQuotePattern,
+      regexpOptionsPattern: patterns_v1.regexpOptionsPattern,
+      contentRuleName: RuleName.RegExpString,
+      contentRepository: Repository.SingleStringAsRegExpContent,
+    }),
+    [Repository.SingleStringAsRegExpContent]: rule_v1.createStringAsRegExpContentRule(scopeName, {
+      regexpOptions: constants_v1.regexpOptions,
+      contentRepository: Repository.SingleStringAsRegExpContent,
+      commonContentRepository: Repository.SingleStringAsRegExpCommonContent,
+    }),
+    [Repository.SingleStringAsRegExpCommonContent]: rule_v1.createRegExpCommonContentRule(scopeName, {
+      regexpEscapeSequences: constants_v1.regexpEscapeSequences,
+      stringEscapeSequences: constants_v2.singleQuoteEscapeSequences,
+      pcreUnicodePropertyCodes: constants_v1.pcreUnicodePropertyCodes,
+      pcreUnicodePropertyScripts: constants_v1.pcreUnicodePropertyScripts,
+    }),
+    // #endregion regexp
     // #endregion expression
   };
 }

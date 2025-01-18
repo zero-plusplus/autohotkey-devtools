@@ -1,57 +1,32 @@
 import { dedent } from '@zero-plusplus/utilities/src';
-import * as constants_v1 from '../../../../src/autohotkeyl/constants';
-import { RuleDescriptor, RuleName, StyleName } from '../../../../src/constants';
+import { RuleDescriptor, RuleName } from '../../../../src/constants';
 import type { ScopeName } from '../../../../src/types';
 import { name } from '../../../../src/utils';
+import * as common from '../../../common/expression/string';
 import type { ExpectedTestData } from '../../../types';
 
-export function createStringLiteralExpectedData(scopeName: ScopeName): ExpectedTestData[] {
+interface Placeholder {
+  quote: string;
+  escapeSequences: readonly string[];
+}
+export function createStringLiteralExpectedData(scopeName: ScopeName, placeholder: Placeholder): ExpectedTestData[] {
+  const q = placeholder.quote;
   return [
-    [
-      dedent`
-        ""
-        "", ""
-        "string"
-      `, [
-        { text: '"', scopes: name(scopeName, RuleName.DoubleString, RuleDescriptor.Begin) },
-        { text: '"', scopes: name(scopeName, RuleName.DoubleString, RuleDescriptor.End) },
-
-        { text: '"', scopes: name(scopeName, RuleName.DoubleString, RuleDescriptor.Begin) },
-        { text: '"', scopes: name(scopeName, RuleName.DoubleString, RuleDescriptor.End) },
-        { text: ',', scopes: name(scopeName, RuleName.Comma) },
-        { text: '"', scopes: name(scopeName, RuleName.DoubleString, RuleDescriptor.Begin) },
-        { text: '"', scopes: name(scopeName, RuleName.DoubleString, RuleDescriptor.End) },
-
-        { text: '"', scopes: name(scopeName, RuleName.DoubleString, RuleDescriptor.Begin) },
-        { text: 'string', scopes: name(scopeName, RuleName.DoubleString) },
-        { text: '"', scopes: name(scopeName, RuleName.DoubleString, RuleDescriptor.End) },
-      ],
-    ],
-
-    // escape sequences
-    [
-      `"${constants_v1.doubleQuoteEscapeSequences.join('')}"`, [
-        { text: '"', scopes: name(scopeName, RuleName.DoubleString, RuleDescriptor.Begin) },
-        ...constants_v1.doubleQuoteEscapeSequences.map((escapeSequence) => {
-          return { text: escapeSequence, scopes: name(scopeName, RuleName.DoubleString, StyleName.Escape) };
-        }),
-        { text: '"', scopes: name(scopeName, RuleName.DoubleString, RuleDescriptor.End) },
-      ],
-    ],
+    ...common.createStringLiteralExpectedData(scopeName, placeholder),
 
     // Do not conflict with labels
     [
       dedent`
-        ":"
-        "::"
+        ${q}:${q}
+        ${q}::${q}
       `, [
-        { text: '"', scopes: name(scopeName, RuleName.DoubleString, RuleDescriptor.Begin) },
+        { text: q, scopes: name(scopeName, RuleName.DoubleString, RuleDescriptor.Begin) },
         { text: ':', scopes: name(scopeName, RuleName.DoubleString) },
-        { text: '"', scopes: name(scopeName, RuleName.DoubleString, RuleDescriptor.End) },
+        { text: q, scopes: name(scopeName, RuleName.DoubleString, RuleDescriptor.End) },
 
-        { text: '"', scopes: name(scopeName, RuleName.DoubleString, RuleDescriptor.Begin) },
+        { text: q, scopes: name(scopeName, RuleName.DoubleString, RuleDescriptor.Begin) },
         { text: '::', scopes: name(scopeName, RuleName.DoubleString) },
-        { text: '"', scopes: name(scopeName, RuleName.DoubleString, RuleDescriptor.End) },
+        { text: q, scopes: name(scopeName, RuleName.DoubleString, RuleDescriptor.End) },
       ],
     ],
   ];

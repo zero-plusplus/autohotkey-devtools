@@ -1,14 +1,20 @@
+import * as constants_v2 from '../../../src/autohotkey2/constants';
 import type { ScopeName } from '../../../src/types';
-import * as v1 from '../../autohotkeyl/expected';
+import * as common from '../../common';
 import type { ExpectedTestData } from '../../types';
 export * from './trivia/comment';
 
 export function createExpectedDataList(scopeName: ScopeName): ExpectedTestData[] {
   return [
     // #region common
-    ...v1.createDocumentCommentExpectedData(scopeName),
-    ...v1.createMultiLineCommentExpectedData(scopeName),
-    ...v1.createSingleLineCommentExpectedData(scopeName),
+    ...common.createDocumentCommentExpectedData(scopeName),
+    ...common.createMultiLineCommentExpectedData(scopeName),
+    ...common.createSingleLineCommentExpectedData(scopeName),
+    ...common.createRegExpExpectedData(scopeName, {
+      quote: '"',
+      escapedQuoted: '`"',
+      escapeSequences: constants_v2.doubleQuoteEscapeSequences,
+    }),
     // #endregion common
   ];
 }

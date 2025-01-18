@@ -6,6 +6,7 @@ import { includeRule, name, nameRule, patternsRule } from '../../../utils';
 interface Placeholder {
   endAnchor: string;
   quoteChar: string;
+  unescapedQuotePattern: string;
   stringElementName: ElementName;
   stringContentRepository: Repository;
 }
@@ -14,8 +15,9 @@ export function createContinuationString(scopeName: ScopeName, placeholder: Plac
     begin: seq(
       capture(char(placeholder.quoteChar)),
       capture(many0(alt(
-        seq(inlineSpace(), negativeLookahead(char(';'))),
-        seq(negChar(';')),
+        placeholder.unescapedQuotePattern,
+        seq(inlineSpaces1(), negativeLookahead(char(';'))),
+        negChar(placeholder.quoteChar, '\\s'),
       ))),
       capture(optseq(
         inlineSpaces1(),

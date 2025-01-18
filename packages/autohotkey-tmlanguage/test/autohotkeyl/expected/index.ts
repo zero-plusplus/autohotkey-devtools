@@ -1,3 +1,4 @@
+import * as constants_v1 from '../../../src/autohotkeyl/constants';
 import type { ScopeName } from '../../../src/types';
 import type { ExpectedTestData } from '../../types';
 import { createAssignmentDeclarationExpectedData } from './declaration/assignment';
@@ -117,7 +118,10 @@ export function createExpectedDataList(scopeName: ScopeName): ExpectedTestData[]
     ...createPropertyDeclarationExpectedData(scopeName),
     ...createRegExpExpectedData(scopeName),
     ...createSingleLineCommentExpectedData(scopeName),
-    ...createStringLiteralExpectedData(scopeName),
+    ...createStringLiteralExpectedData(scopeName, {
+      quote: '"',
+      escapeSequences: constants_v1.doubleQuoteEscapeSequences,
+    }),
     ...createSwitchStatementExpectedData(scopeName),
     ...createThrowStatementExpectedData(scopeName),
     ...createTryStatementExpectedData(scopeName),

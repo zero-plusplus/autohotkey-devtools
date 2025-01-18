@@ -1,22 +1,25 @@
 import { RuleDescriptor, StyleName, type Repository } from '../../../constants';
-import { capture, char, escapeOnigurumaTexts, ordalt, seq } from '../../../oniguruma';
+import { alt, capture, char, escapeOnigurumaTexts, inlineSpaces1, many0, negativeLookahead, negChar, ordalt, reluctant, seq } from '../../../oniguruma';
 import type { ElementName, MatchRule, PatternsRule, ScopeName } from '../../../types';
 import { includeRule, name, nameRule, patternsRule } from '../../../utils';
 
-interface Placeholder {
+interface Placeholder_StringRule {
   quoteChar: string;
-  stringContentsPattern: string;
-  stringEndPattern: string;
+  unescapedQuotePattern: string;
   stringElementName: ElementName;
   stringContentRepository: Repository;
 }
-export function createStringRule(scopeName: ScopeName, placeholder: Placeholder): MatchRule {
+export function createStringRule(scopeName: ScopeName, placeholder: Placeholder_StringRule): MatchRule {
   return {
     name: name(scopeName, placeholder.stringElementName),
     match: seq(
       capture(char(placeholder.quoteChar)),
-      capture(placeholder.stringContentsPattern),
-      capture(placeholder.stringEndPattern),
+      capture(reluctant(many0(alt(
+        placeholder.unescapedQuotePattern,
+        seq(inlineSpaces1(), negativeLookahead(char(';'))),
+        negChar(placeholder.quoteChar, '\\s'),
+      )))),
+      capture(char(placeholder.quoteChar)),
     ),
     captures: {
       1: nameRule(scopeName, RuleDescriptor.Begin),
@@ -26,10 +29,10 @@ export function createStringRule(scopeName: ScopeName, placeholder: Placeholder)
   };
 }
 
-interface Placeholder2 {
+interface Placeholder2_StringContentRule {
   escapeSequences: string[];
 }
-export function createStringContentRule(scopeName: ScopeName, placeholder: Placeholder2): PatternsRule {
+export function createStringContentRule(scopeName: ScopeName, placeholder: Placeholder2_StringContentRule): PatternsRule {
   return patternsRule(
     // Unofficial escape sequences used in regular expression-like string. e.g. "`)"
     {

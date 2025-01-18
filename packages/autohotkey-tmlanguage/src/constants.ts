@@ -343,9 +343,11 @@ export const enum Repository {
   // #region regexp
   StringAsRegExp = 'repository.regexp',
   DoubleStringAsRegexp = 'repository.regexp.double-quote',
-  SingleStringAsRegexp = 'repository.regexp.single-quote',
   DoubleStringAsRegExpContent = 'repository.regexp.double-quote.content',
   DoubleStringAsRegExpCommonContent = 'repository.regexp.double-quote.common',
+  SingleStringAsRegexp = 'repository.regexp.single-quote',
+  SingleStringAsRegExpContent = 'repository.regexp.single-quote.content',
+  SingleStringAsRegExpCommonContent = 'repository.regexp.single-quote.common',
   // #endregion regexp
 
   // #region misc

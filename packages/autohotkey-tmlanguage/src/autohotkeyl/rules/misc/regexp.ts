@@ -1,12 +1,12 @@
 import { Repository, RuleDescriptor, RuleName, StyleName, TokenType } from '../../../constants';
-import { alt, anyChar, anyChars0, backslash, capture, char, escapeOnigurumaTexts, group, ignoreCase, inlineSpaces0, lookahead, lookbehind, negativeLookahead, negChars1, numbers1, optional, optseq, ordalt, reluctant, seq, text, wordBound, wordChars0 } from '../../../oniguruma';
-import type { BeginEndRule, MatchRule, PatternsRule, ScopeName } from '../../../types';
+import { alt, anyChar, backslash, capture, char, endAnchor, escapeOnigurumaTexts, group, ignoreCase, inlineSpaces0, inlineSpaces1, lookahead, lookbehind, many0, many1, negativeLookahead, negChar, negChars1, numbers1, optional, optseq, ordalt, reluctant, seq, text, wordBound, wordChars0 } from '../../../oniguruma';
+import type { MatchRule, PatternsRule, ScopeName } from '../../../types';
 import { includeRule, name, nameRule, patternsRule } from '../../../utils';
 
 interface Placeholder {
   quoteChar: string;
+  unescapedQuotePattern: string;
   regexpOptionsPattern: string;
-  regexpEndPattern: string;
   contentRuleName: RuleName;
   contentRepository: Repository;
 }
@@ -28,8 +28,12 @@ export function createShorthandRegExpMatchRule(scopeName: ScopeName, placeholder
         )),
         ignoreCase(text('(*UCP)')),
       ))),
-      capture(reluctant(anyChars0())),
-      capture(placeholder.regexpEndPattern),
+      capture(reluctant(many0(alt(
+        placeholder.unescapedQuotePattern,
+        seq(inlineSpaces1(), negativeLookahead(char(';'))),
+        negChar(placeholder.quoteChar, '\\s'),
+      )))),
+      capture(char(placeholder.quoteChar)),
     ),
     captures: {
       1: nameRule(scopeName, RuleDescriptor.Begin),
@@ -39,30 +43,32 @@ export function createShorthandRegExpMatchRule(scopeName: ScopeName, placeholder
     },
   };
 }
-export function createStringAsRegExpRule(scopeName: ScopeName, placeholder: Placeholder): BeginEndRule {
+
+export function createStringAsRegExpRule(scopeName: ScopeName, placeholder: Placeholder): MatchRule {
   return {
     name: name(scopeName, placeholder.contentRuleName),
-    begin: seq(
+    match: seq(
       capture(char(placeholder.quoteChar)),
       inlineSpaces0(),
       capture(placeholder.regexpOptionsPattern),
-      negativeLookahead(placeholder.quoteChar),
+      capture(reluctant(many1(alt(
+        placeholder.unescapedQuotePattern,
+        seq(inlineSpaces1(), negativeLookahead(char(';'))),
+        negChar(placeholder.quoteChar, '\\s'),
+      )))),
+      capture(char(placeholder.quoteChar)),
     ),
-    beginCaptures: {
+    captures: {
       1: nameRule(scopeName, RuleDescriptor.Begin),
       2: nameRule(scopeName, RuleName.RegExpOption),
+      3: patternsRule(includeRule(placeholder.contentRepository)),
+      4: nameRule(scopeName, RuleDescriptor.End),
     },
-    end: capture(placeholder.regexpEndPattern),
-    endCaptures: {
-      1: nameRule(scopeName, RuleDescriptor.End),
-    },
-    patterns: [ includeRule(placeholder.contentRepository) ],
   };
 }
 
 interface Placeholder2 {
   regexpOptions: readonly string[];
-  regexpEndPattern: string;
   contentRepository: Repository;
   commonContentRepository: Repository;
 }
@@ -141,10 +147,11 @@ export function createStringAsRegExpContentRule(scopeName: ScopeName, placeholde
       beginCaptures: {
         1: nameRule(scopeName, RuleName.RegExpGroup, RuleDescriptor.Begin),
       },
-      end: capture(alt(
-        text('\\E'),
-        lookahead(placeholder.regexpEndPattern),
-      )),
+      end: alt(
+        capture(text('\\E')),
+        lookahead(seq(inlineSpaces1(), char(';'))),
+        endAnchor(),
+      ),
       endCaptures: {
         1: nameRule(scopeName, RuleName.RegExpGroup, RuleDescriptor.End),
       },
