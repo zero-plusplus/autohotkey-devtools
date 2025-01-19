@@ -15,6 +15,7 @@ import { createRegExpExpectedData } from './expression/regexp';
 import { createStringLiteralExpectedData } from './expression/string';
 import { createVariableExpectedData } from './expression/variable';
 import { createIncludeStatementExpectedData } from './statement/include';
+import { createJumpStatementExpectedData } from './statement/jump';
 
 export function createExpectedDataList(scopeName: ScopeName): ExpectedTestData[] {
   return [
@@ -31,6 +32,7 @@ export function createExpectedDataList(scopeName: ScopeName): ExpectedTestData[]
     ...createDereferenceExpressionExpectedData(scopeName),
     ...createFunctionDeclarationExpectedData(scopeName),
     ...createIncludeStatementExpectedData(scopeName),
+    ...createJumpStatementExpectedData(scopeName),
     ...createNumberLiteralExpectedData(scopeName),
     ...createObjectLiteralExpectedData(scopeName),
     ...createOperatorInExpressionExpectedData(scopeName),

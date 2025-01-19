@@ -64,12 +64,33 @@ export function createRepositories(scopeName: ScopeName): Repositories {
     [Repository.Statement]: patternsRule(
       includeRule(Repository.Declaration),
       includeRule(Repository.IncludeStatement),
+      includeRule(Repository.JumpStatement),
+      includeRule(Repository.JumpToLabelStatement),
 
       includeRule(Repository.ExpressionStatement),
     ),
     [Repository.IncludeStatement]: rule_v1.createIncludeStatementRule(scopeName, {
       startAnchor: patterns_v1.statementStartAnchor,
       endAnchor: patterns_v1.lineEndAnchor,
+    }),
+    [Repository.JumpStatement]: rule_v1.createJumpStatement(scopeName, {
+      startAnchor: patterns_v1.statementStartAnchor,
+      endAnchor: patterns_v1.lineEndAnchor,
+      names: [
+        'Exit',
+        'ExitApp',
+        'Return',
+      ],
+    }),
+    [Repository.JumpToLabelStatement]: rule_v1.createJumpToLabelStatement(scopeName, {
+      startAnchor: patterns_v1.statementStartAnchor,
+      endAnchor: patterns_v1.lineEndAnchor,
+      names: [
+        'Break',
+        'Gosub',
+        'Goto',
+      ],
+      labelPattern: patterns_v2.identifierPattern,
     }),
     [Repository.ExpressionStatement]: patternsRule(includeRule(Repository.Expressions)),
     // #endregion statement
