@@ -67,6 +67,7 @@ export function createRepositories(scopeName: ScopeName): Repositories {
       includeRule(Repository.JumpStatement),
       includeRule(Repository.JumpToLabelStatement),
       includeRule(Repository.HotstringLabelStatement),
+      includeRule(Repository.HotkeyLabelStatement),
 
       includeRule(Repository.ExpressionStatement),
     ),
@@ -96,6 +97,9 @@ export function createRepositories(scopeName: ScopeName): Repositories {
     [Repository.HotstringLabelStatement]: rule_v1.createHotstringLabelRule(scopeName, {
       startAnchor: patterns_v1.statementStartAnchor,
       endAnchor: patterns_v1.lineEndAnchor,
+    }),
+    [Repository.HotkeyLabelStatement]: rule_v1.createHotkeyLabelRule(scopeName, {
+      startAnchor: patterns_v1.statementStartAnchor,
     }),
     [Repository.ExpressionStatement]: patternsRule(includeRule(Repository.Expressions)),
     // #endregion statement
