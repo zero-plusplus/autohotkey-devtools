@@ -1,4 +1,4 @@
-import * as constants_v1 from '../../../../src/autohotkeyl/constants';
+import * as constants_v2 from '../../../../src/autohotkey2/constants';
 import { RuleName, StyleName } from '../../../../src/constants';
 import type { ScopeName } from '../../../../src/types';
 import { name } from '../../../../src/utils';
@@ -9,17 +9,17 @@ export function createVariableExpectedData(scopeName: ScopeName): ExpectedTestDa
   return [
     ...common.createVariableExpectedData(scopeName, {
       ruleName: RuleName.KeywordLikeBuiltInVariable,
-      variables: constants_v1.keywordLikeBuiltinVariables,
+      variables: constants_v2.keywordLikeBuiltinVariables,
     }),
     ...common.createVariableExpectedData(scopeName, {
       ruleName: RuleName.BuiltInVariable,
-      variables: constants_v1.builtinVaribles,
+      variables: constants_v2.builtinVaribles,
     }),
     ...common.createVariableExpectedData(scopeName, {
       ruleName: RuleName.Variable,
       variables: [
         'var',
-        '$#@_var123',
+        '_var123',
         'v'.repeat(253),
       ],
     }),
