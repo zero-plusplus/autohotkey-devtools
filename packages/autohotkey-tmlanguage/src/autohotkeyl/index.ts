@@ -250,13 +250,15 @@ export function createRepositories(scopeName: ScopeName): Repositories {
       includeRule(Repository.Array),
     ),
 
-    // #region string
+    // #region object
     [Repository.Object]: rule_v1.createObjectRule(scopeName, {
       startAnchor: patterns_v1.expressionContinuationStartAnchor,
       keyName: patterns_v1.keyName,
     }),
     [Repository.Array]: rule_v1.createArrayRule(scopeName),
+    // #endregion object
 
+    // #region string
     [Repository.String]: patternsRule(
       includeRule(Repository.DoubleString),
       includeRule(Repository.ContinuationDoubleString),

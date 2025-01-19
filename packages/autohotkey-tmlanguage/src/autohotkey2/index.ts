@@ -136,7 +136,17 @@ export function createRepositories(scopeName: ScopeName): Repositories {
       includeRule(Repository.StringAsRegExp),
       includeRule(Repository.String),
       includeRule(Repository.Number),
+      includeRule(Repository.Object),
+      includeRule(Repository.Array),
     ),
+
+    // #region object
+    [Repository.Object]: rule_v1.createObjectRule(scopeName, {
+      startAnchor: patterns_v2.expressionContinuationStartAnchor,
+      keyName: patterns_v2.keyName,
+    }),
+    [Repository.Array]: rule_v1.createArrayRule(scopeName),
+    // #endregion object
 
     // #region string
     [Repository.String]: patternsRule(
