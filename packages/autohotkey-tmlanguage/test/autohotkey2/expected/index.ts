@@ -1,6 +1,7 @@
 import type { ScopeName } from '../../../src/types';
 import * as common from '../../common';
 import type { ExpectedTestData } from '../../types';
+import { createAssignmentDeclarationExpectedData } from './declaration/assignment';
 import { createFunctionDeclarationExpectedData } from './declaration/function';
 import { createArrayLiteralExpectedData } from './expression/array';
 import { createCallExpressionExpectedData } from './expression/call';
@@ -22,6 +23,7 @@ export function createExpectedDataList(scopeName: ScopeName): ExpectedTestData[]
     // #endregion common
 
     ...createArrayLiteralExpectedData(scopeName),
+    ...createAssignmentDeclarationExpectedData(scopeName),
     ...createCallExpressionExpectedData(scopeName),
     ...createDereferenceExpressionExpectedData(scopeName),
     ...createFunctionDeclarationExpectedData(scopeName),

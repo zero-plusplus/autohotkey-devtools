@@ -1,4 +1,5 @@
 import { dedent } from '@zero-plusplus/utilities/src';
+import * as constants_v2 from '../../../../src/autohotkey2/constants';
 import * as constants_v1 from '../../../../src/autohotkeyl/constants';
 import { RuleDescriptor, RuleName } from '../../../../src/constants';
 import type { ScopeName } from '../../../../src/types';
@@ -10,7 +11,7 @@ export function createAssignmentDeclarationExpectedData(scopeName: ScopeName): E
   return [
     ...common.createAssignmentDeclarationExpectedData(scopeName, {
       modifiers: constants_v1.modifiers,
-      operators: constants_v1.assignmentOperators,
+      operators: constants_v2.assignmentOperators,
     }),
 
     // lefthand
@@ -73,6 +74,7 @@ export function createAssignmentDeclarationExpectedData(scopeName: ScopeName): E
       dedent`
         %input% := 1
         %input%ABC := 1
+        %a + b%ABC := 1
       `,
       [
         { text: '%', scopes: name(scopeName, RuleName.PercentBegin) },
@@ -83,6 +85,15 @@ export function createAssignmentDeclarationExpectedData(scopeName: ScopeName): E
 
         { text: '%', scopes: name(scopeName, RuleName.PercentBegin) },
         { text: 'input', scopes: name(scopeName, RuleName.Variable) },
+        { text: '%', scopes: name(scopeName, RuleName.PercentEnd) },
+        { text: 'ABC', scopes: name(scopeName, RuleName.Variable) },
+        { text: ':=', scopes: name(scopeName, RuleName.Operator) },
+        { text: '1', scopes: name(scopeName, RuleName.Integer) },
+
+        { text: '%', scopes: name(scopeName, RuleName.PercentBegin) },
+        { text: 'a', scopes: name(scopeName, RuleName.Variable) },
+        { text: '+', scopes: name(scopeName, RuleName.Operator) },
+        { text: 'b', scopes: name(scopeName, RuleName.Variable) },
         { text: '%', scopes: name(scopeName, RuleName.PercentEnd) },
         { text: 'ABC', scopes: name(scopeName, RuleName.Variable) },
         { text: ':=', scopes: name(scopeName, RuleName.Operator) },

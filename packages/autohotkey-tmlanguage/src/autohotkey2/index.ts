@@ -72,12 +72,18 @@ export function createRepositories(scopeName: ScopeName): Repositories {
     // #region declaration
     [Repository.Declaration]: patternsRule(
       includeRule(Repository.Modifier),
+      includeRule(Repository.AssignmentDeclaration),
       includeRule(Repository.CallExpression_FunctionDeclarationHead),
       includeRule(Repository.Block),
     ),
     [Repository.Modifier]: rule_v1.createModifierRule(scopeName, {
       startAnchor: patterns_v1.statementStartAnchor,
       modifiers: constants_v1.modifiers,
+    }),
+    [Repository.AssignmentDeclaration]: rule_v1.createAssignmentDeclarationRule(scopeName, {
+      startAnchor: patterns_v1.statementStartAnchor,
+      namePattern: patterns_v2.looseLeftHandPattern,
+      operators: constants_v2.assignmentOperators,
     }),
     [Repository.Block]: rule_v1.createBlockRule(scopeName, {
       statementsInBlock: [ includeRule(Repository.Self) ],
