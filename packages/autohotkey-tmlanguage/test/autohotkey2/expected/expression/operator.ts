@@ -1,4 +1,4 @@
-import * as constant_v1 from '../../../../src/autohotkeyl/constants';
+import * as constant_v2 from '../../../../src/autohotkey2/constants';
 import { RuleName } from '../../../../src/constants';
 import type { ScopeName } from '../../../../src/types';
 import { name } from '../../../../src/utils';
@@ -10,13 +10,13 @@ export function createOperatorInExpressionExpectedData(scopeName: ScopeName): Ex
     ...common.createOperatorInExpressionExpectedData(scopeName, {
       name: name(scopeName, RuleName.Operator),
       operators: [
-        ...constant_v1.assignmentOperators,
-        ...constant_v1.expressionOperators,
+        ...constant_v2.assignmentOperators,
+        ...constant_v2.expressionOperators,
       ],
     }),
     ...common.createOperatorInExpressionExpectedData(scopeName, {
       name: name(scopeName, RuleName.KeywordInExpression),
-      operators: [ ...constant_v1.expressionKeywords ],
+      operators: [ ...constant_v2.expressionKeywords ],
     }),
   ];
 }

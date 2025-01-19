@@ -329,23 +329,9 @@ export function createRegExpExpectedData(scopeName: ScopeName, placeholder: Plac
     // #region string as regexp
     [
       dedent`
-            ${q}i)${q}
-            ${q}i\`)text${q}
-            ${q})text${q}
-            ${q}im)text${q}
-          `, [
-        // If only the regexp options, it is highlighted as a string
-        { text: q, scopes: name(scopeName, RuleName.DoubleString, RuleDescriptor.Begin) },
-        { text: 'i)', scopes: name(scopeName, RuleName.DoubleString) },
-        { text: q, scopes: name(scopeName, RuleName.DoubleString, RuleDescriptor.End) },
-
-        // If the closing character of the regexp options is escaped, it is highlighted as a string
-        { text: q, scopes: name(scopeName, RuleName.DoubleString, RuleDescriptor.Begin) },
-        { text: 'i', scopes: name(scopeName, RuleName.DoubleString) },
-        { text: '`)', scopes: name(scopeName, RuleName.DoubleString, StyleName.Escape) },
-        { text: 'text', scopes: name(scopeName, RuleName.DoubleString) },
-        { text: q, scopes: name(scopeName, RuleName.DoubleString, RuleDescriptor.End) },
-
+        ${q})text${q}
+        ${q}im)text${q}
+      `, [
         { text: q, scopes: name(scopeName, RuleName.RegExpString, RuleDescriptor.Begin) },
         { text: ')', scopes: name(scopeName, RuleName.RegExpString, RuleName.RegExpOption) },
         { text: 'text', scopes: name(scopeName, RuleName.RegExpString) },

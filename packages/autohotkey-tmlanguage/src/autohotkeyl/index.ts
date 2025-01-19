@@ -197,7 +197,6 @@ export function createRepositories(scopeName: ScopeName): Repositories {
     // #region expression
     [Repository.Expression]: patternsRule(
       includeRule(Repository.ShorthandRegexpMatch),
-      includeRule(Repository.KeywordOperatorInExpression),
       includeRule(Repository.KeywordInExpression),
       includeRule(Repository.CallExpression_FunctionDeclarationHead),
       includeRule(Repository.ParenthesizedExpression),

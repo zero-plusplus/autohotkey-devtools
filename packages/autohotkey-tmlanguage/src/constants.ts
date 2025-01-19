@@ -365,7 +365,6 @@ export const enum Repository {
 
   // #region keyword
   KeywordInExpression = 'repository.keyword.expression',
-  KeywordOperatorInExpression = 'repository.expression.keyword-operator',
   // #endregion keyword
 
   // #region misc

@@ -68,6 +68,7 @@ export function createRepositories(scopeName: ScopeName): Repositories {
     // #region expression
     [Repository.Expression]: patternsRule(
       includeRule(Repository.ShorthandRegexpMatch),
+      includeRule(Repository.KeywordInExpression),
       includeRule(Repository.ParenthesizedExpression),
       includeRule(Repository.Literal),
       includeRule(Repository.KeywordLikeBuiltInVariable),
@@ -171,6 +172,15 @@ export function createRepositories(scopeName: ScopeName): Repositories {
     [Repository.Operator]: rule_v1.createOperatorRule(scopeName, {
       operatorRuleName: RuleName.Operator,
       operators: constants_v2.expressionOperators,
+    }),
+    [Repository.KeywordInExpression]: rule_v1.createKeywordRule(scopeName, {
+      keywordRuleName: RuleName.KeywordInExpression,
+      keywords: [
+        ...constants_v2.expressionKeywords,
+
+        // The following are not exactly keywords in the expression, but are defined here as keywords because it is more convenient for the TMLanguage mechanism
+        'in',
+      ],
     }),
     // #endregion token, keyword
 

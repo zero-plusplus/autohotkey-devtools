@@ -14,6 +14,16 @@ export const expressionOperators: readonly [ ...typeof commonExpressionOperators
   '=>', // `(args*) => expression`
   '??', // `a ?? b`
 ] as const;
+export const expressionKeywords = [
+  'IS',         // e.g. var is Class
+  'NOT',        // e.g. `not expression`
+  'AND',        // e.g. `1 and 1`
+  'OR',         // e.g. `1 or 1`
+
+  // Keywords reserved for future use
+  'IN',
+  'CONTAINS',
+] as const;
 // #endregion Operators
 
 // #region [BuiltIn](https://www.autohotkey.com/docs/v2/Variables.htm#BuiltIn)
