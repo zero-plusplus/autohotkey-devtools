@@ -4,6 +4,7 @@ import type { ExpectedTestData } from '../../types';
 import { createFunctionDeclarationExpectedData } from './declaration/function';
 import { createArrayLiteralExpectedData } from './expression/array';
 import { createCallExpressionExpectedData } from './expression/call';
+import { createDereferenceExpressionExpectedData } from './expression/dereference';
 import { createNumberLiteralExpectedData } from './expression/number';
 import { createObjectLiteralExpectedData } from './expression/object';
 import { createOperatorInExpressionExpectedData } from './expression/operator';
@@ -22,6 +23,7 @@ export function createExpectedDataList(scopeName: ScopeName): ExpectedTestData[]
 
     ...createArrayLiteralExpectedData(scopeName),
     ...createCallExpressionExpectedData(scopeName),
+    ...createDereferenceExpressionExpectedData(scopeName),
     ...createFunctionDeclarationExpectedData(scopeName),
     ...createNumberLiteralExpectedData(scopeName),
     ...createObjectLiteralExpectedData(scopeName),
