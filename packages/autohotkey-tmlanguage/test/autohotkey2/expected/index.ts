@@ -14,6 +14,7 @@ import { createParenthesizedExpressionExpectedData } from './expression/parenthe
 import { createRegExpExpectedData } from './expression/regexp';
 import { createStringLiteralExpectedData } from './expression/string';
 import { createVariableExpectedData } from './expression/variable';
+import { createIncludeStatementExpectedData } from './statement/include';
 
 export function createExpectedDataList(scopeName: ScopeName): ExpectedTestData[] {
   return [
@@ -29,6 +30,7 @@ export function createExpectedDataList(scopeName: ScopeName): ExpectedTestData[]
     ...createClassDeclarationExpectedData(scopeName),
     ...createDereferenceExpressionExpectedData(scopeName),
     ...createFunctionDeclarationExpectedData(scopeName),
+    ...createIncludeStatementExpectedData(scopeName),
     ...createNumberLiteralExpectedData(scopeName),
     ...createObjectLiteralExpectedData(scopeName),
     ...createOperatorInExpressionExpectedData(scopeName),

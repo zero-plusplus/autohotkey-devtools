@@ -63,9 +63,14 @@ export function createRepositories(scopeName: ScopeName): Repositories {
     // #region statement
     [Repository.Statement]: patternsRule(
       includeRule(Repository.Declaration),
+      includeRule(Repository.IncludeStatement),
 
       includeRule(Repository.ExpressionStatement),
     ),
+    [Repository.IncludeStatement]: rule_v1.createIncludeStatementRule(scopeName, {
+      startAnchor: patterns_v1.statementStartAnchor,
+      endAnchor: patterns_v1.lineEndAnchor,
+    }),
     [Repository.ExpressionStatement]: patternsRule(includeRule(Repository.Expressions)),
     // #endregion statement
 
@@ -314,5 +319,32 @@ export function createRepositories(scopeName: ScopeName): Repositories {
     }),
     // #endregion misc
     // #endregion expression
+
+    // #region misc
+    [Repository.CommandArgument]: patternsRule(
+      includeRule(Repository.PercentExpression),
+      includeRule(Repository.Dereference),
+      includeRule(Repository.CommandArgumentText),
+      includeRule(Repository.InLineComments),
+    ),
+    [Repository.CommandLastArgument]: patternsRule(
+      includeRule(Repository.PercentExpressions),
+      includeRule(Repository.Dereference),
+      includeRule(Repository.CommandLastArgumentText),
+      includeRule(Repository.InLineComments),
+    ),
+    [Repository.PercentExpressions]: rule_v1.createPercentExpressionRule(scopeName, {
+      expressionPattern: patterns_v1.expressionLastArgumentPattern,
+    }),
+    [Repository.UnquotedStringEscapeSequence]: rule_v1.createUnquotedEscapeSequencesRule(scopeName, constants_v2.unquoteEscapeSequences),
+    [Repository.CommandArgumentText]: rule_v1.createUnquotedString(scopeName, {
+      stringRuleName: RuleName.UnquotedString,
+      stringPattern: patterns_v1.commandArgumentPattern,
+    }),
+    [Repository.CommandLastArgumentText]: rule_v1.createUnquotedString(scopeName, {
+      stringRuleName: RuleName.UnquotedString,
+      stringPattern: patterns_v1.lastArgumentPattern,
+    }),
+    // #endregion misc
   };
 }

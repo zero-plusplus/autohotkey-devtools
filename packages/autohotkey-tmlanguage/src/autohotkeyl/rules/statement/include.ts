@@ -51,7 +51,7 @@ export function createIncludeStatementRule(scopeName: ScopeName, placeholder: Pl
         ),
         captures: {
           1: nameRule(scopeName, RuleName.DirectiveName),
-          2: patternsRule(includeRule(Repository.CommandArgument)),
+          2: patternsRule(includeRule(Repository.CommandLastArgument)),
         },
       },
     ],
