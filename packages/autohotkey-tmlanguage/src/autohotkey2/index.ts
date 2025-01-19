@@ -61,14 +61,34 @@ export function createRepositories(scopeName: ScopeName): Repositories {
     // #endregion trivia
 
     // #region statement
-    [Repository.Statement]: patternsRule(includeRule(Repository.ExpressionStatement)),
+    [Repository.Statement]: patternsRule(
+      includeRule(Repository.Declaration),
+
+      includeRule(Repository.ExpressionStatement),
+    ),
     [Repository.ExpressionStatement]: patternsRule(includeRule(Repository.Expressions)),
     // #endregion statement
+
+    // #region declaration
+    [Repository.Declaration]: patternsRule(
+      includeRule(Repository.Modifier),
+      includeRule(Repository.CallExpression_FunctionDeclarationHead),
+      includeRule(Repository.Block),
+    ),
+    [Repository.Modifier]: rule_v1.createModifierRule(scopeName, {
+      startAnchor: patterns_v1.statementStartAnchor,
+      modifiers: constants_v1.modifiers,
+    }),
+    [Repository.Block]: rule_v1.createBlockRule(scopeName, {
+      statementsInBlock: [ includeRule(Repository.Self) ],
+    }),
+    // #endregion declaration
 
     // #region expression
     [Repository.Expression]: patternsRule(
       includeRule(Repository.ShorthandRegexpMatch),
       includeRule(Repository.KeywordInExpression),
+      includeRule(Repository.CallExpression_FunctionDeclarationHead),
       includeRule(Repository.ParenthesizedExpression),
       includeRule(Repository.Literal),
       includeRule(Repository.KeywordLikeBuiltInVariable),
@@ -242,6 +262,13 @@ export function createRepositories(scopeName: ScopeName): Repositories {
       pcreUnicodePropertyScripts: constants_v1.pcreUnicodePropertyScripts,
     }),
     // #endregion regexp
+
+    // #region misc
+    [Repository.CallExpression_FunctionDeclarationHead]: rule_v1.createCallExpressionRule(scopeName, {
+      callableNamePattern: patterns_v1.looseCallableNamePattern,
+      keywordsInArgument: [],
+    }),
+    // #endregion misc
     // #endregion expression
   };
 }

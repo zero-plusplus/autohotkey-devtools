@@ -11,12 +11,12 @@ export function createFunctionDeclarationExpectedData(scopeName: ScopeName): Exp
 
     [
       dedent`
-        abc(byref a, b := 123, c*) {
+        abc(&a, b := 123, c*) {
         }
       `, [
         { text: 'abc', scopes: name(scopeName, RuleName.FunctionName) },
         { text: '(', scopes: name(scopeName, RuleName.OpenParen) },
-        { text: 'byref', scopes: name(scopeName, RuleName.ByrefKeyword) },
+        { text: '&', scopes: name(scopeName, RuleName.Operator) },
         { text: 'a', scopes: name(scopeName, RuleName.Variable) },
         { text: ',', scopes: name(scopeName, RuleName.Comma) },
         { text: 'b', scopes: name(scopeName, RuleName.Variable) },
