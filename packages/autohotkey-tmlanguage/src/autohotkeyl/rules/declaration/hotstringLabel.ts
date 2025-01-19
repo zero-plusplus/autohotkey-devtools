@@ -57,7 +57,7 @@ export function createHotstringLabelRule(scopeName: ScopeName, placeholder: Plac
               'O',                                  // https://www.autohotkey.com/docs/v1/Hotstrings.htm#O
               'R',                                  // https://www.autohotkey.com/docs/v1/Hotstrings.htm#raw
               'T',                                  // https://www.autohotkey.com/docs/v1/Hotstrings.htm#T
-              'Z',                                    // https://www.autohotkey.com/docs/v1/Hotstrings.htm#z
+              'Z',                                  // https://www.autohotkey.com/docs/v1/Hotstrings.htm#z
             ),
             optional(char('0')),
           ),

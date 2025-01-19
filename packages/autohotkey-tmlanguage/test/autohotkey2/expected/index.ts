@@ -4,6 +4,7 @@ import type { ExpectedTestData } from '../../types';
 import { createAssignmentDeclarationExpectedData } from './declaration/assignment';
 import { createClassDeclarationExpectedData } from './declaration/class';
 import { createFunctionDeclarationExpectedData } from './declaration/function';
+import { createHotstringLabelStatementExpectedData } from './declaration/hotstringLabel';
 import { createArrayLiteralExpectedData } from './expression/array';
 import { createCallExpressionExpectedData } from './expression/call';
 import { createDereferenceExpressionExpectedData } from './expression/dereference';
@@ -31,6 +32,7 @@ export function createExpectedDataList(scopeName: ScopeName): ExpectedTestData[]
     ...createClassDeclarationExpectedData(scopeName),
     ...createDereferenceExpressionExpectedData(scopeName),
     ...createFunctionDeclarationExpectedData(scopeName),
+    ...createHotstringLabelStatementExpectedData(scopeName),
     ...createIncludeStatementExpectedData(scopeName),
     ...createJumpStatementExpectedData(scopeName),
     ...createNumberLiteralExpectedData(scopeName),

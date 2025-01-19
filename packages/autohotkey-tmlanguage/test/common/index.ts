@@ -2,6 +2,7 @@ export * from './declaration/assignment';
 export * from './declaration/class/head';
 export * from './declaration/class/property';
 export * from './declaration/function';
+export * from './declaration/hotstringLabel';
 export * from './expression/operator';
 export * from './expression/regexp';
 export * from './expression/string';
