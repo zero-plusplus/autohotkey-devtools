@@ -63,5 +63,26 @@ export function createStringLiteralExpectedData(scopeName: ScopeName, placeholde
         { text: q, scopes: name(scopeName, placeholder.ruleName, RuleDescriptor.End) },
       ],
     ],
+
+    // continuation section
+    [
+      dedent`
+        abc := ${q}
+        (LTrim
+          1-line
+          2-line
+        )${q}
+      `, [
+        { text: 'abc', scopes: name(scopeName, RuleName.Variable) },
+        { text: ':=', scopes: name(scopeName, RuleName.Operator) },
+        { text: q, scopes: name(scopeName, placeholder.ruleName, RuleDescriptor.Begin) },
+        { text: '(', scopes: name(scopeName, RuleName.OpenParen) },
+        { text: 'LTrim', scopes: name(scopeName, RuleName.ContinuationOption, StyleName.Strong) },
+        { text: '  1-line', scopes: name(scopeName, placeholder.ruleName) },
+        { text: '  2-line', scopes: name(scopeName, placeholder.ruleName) },
+        { text: ')', scopes: name(scopeName, RuleName.CloseParen) },
+        { text: q, scopes: name(scopeName, placeholder.ruleName, RuleDescriptor.End) },
+      ],
+    ],
   ];
 }

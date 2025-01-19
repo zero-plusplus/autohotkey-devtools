@@ -7,6 +7,7 @@ import { createCallExpressionExpectedData } from './expression/call';
 import { createObjectLiteralExpectedData } from './expression/object';
 import { createOperatorInExpressionExpectedData } from './expression/operator';
 import { createRegExpExpectedData } from './expression/regexp';
+import { createStringLiteralExpectedData } from './expression/string';
 
 export function createExpectedDataList(scopeName: ScopeName): ExpectedTestData[] {
   return [
@@ -22,5 +23,6 @@ export function createExpectedDataList(scopeName: ScopeName): ExpectedTestData[]
     ...createObjectLiteralExpectedData(scopeName),
     ...createOperatorInExpressionExpectedData(scopeName),
     ...createRegExpExpectedData(scopeName),
+    ...createStringLiteralExpectedData(scopeName),
   ];
 }

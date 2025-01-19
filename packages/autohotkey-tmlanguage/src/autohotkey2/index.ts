@@ -152,6 +152,8 @@ export function createRepositories(scopeName: ScopeName): Repositories {
     [Repository.String]: patternsRule(
       includeRule(Repository.DoubleString),
       includeRule(Repository.SingleString),
+      includeRule(Repository.ContinuationDoubleString),
+      includeRule(Repository.ContinuationSingleString),
     ),
     [Repository.DoubleString]: rule_v1.createStringRule(scopeName, {
       quoteChar: '"',
@@ -170,6 +172,21 @@ export function createRepositories(scopeName: ScopeName): Repositories {
     }),
     [Repository.SingleStringContent]: rule_v1.createStringContentRule(scopeName, {
       escapeSequences: constants_v2.singleQuoteEscapeSequences,
+    }),
+    [Repository.ContinuationStringOptions]: rule_v1.createContinuationStringOptionsRule(scopeName),
+    [Repository.ContinuationDoubleString]: rule_v1.createContinuationString(scopeName, {
+      endAnchor: patterns_v1.lineEndAnchor,
+      quoteChar: '"',
+      unescapedQuotePattern: patterns_v2.unescapedDoubleQuotePattern,
+      stringElementName: RuleName.DoubleString,
+      stringContentRepository: Repository.DoubleStringContent,
+    }),
+    [Repository.ContinuationSingleString]: rule_v1.createContinuationString(scopeName, {
+      endAnchor: patterns_v1.lineEndAnchor,
+      quoteChar: `'`,
+      unescapedQuotePattern: patterns_v2.unescapedSingleQuotePattern,
+      stringElementName: RuleName.SingleString,
+      stringContentRepository: Repository.SingleStringContent,
     }),
     // #endregion string
 
