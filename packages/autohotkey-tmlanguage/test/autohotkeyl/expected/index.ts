@@ -8,7 +8,6 @@ import { createHotkeyLabelStatementExpectedData } from './declaration/hotkeyLabe
 import { createHotstringLabelStatementExpectedData } from './declaration/hotstringLabel';
 import { createLabelStatementExpectedData } from './declaration/label';
 import { createModifierDeclarationExpectedData } from './declaration/modifier';
-import { createPropertyDeclarationExpectedData } from './declaration/property';
 import { createArrayLiteralExpectedData } from './expression/array';
 import { createCallExpressionExpectedData } from './expression/call';
 import { createContinuationStringLiteralExpectedData } from './expression/continuationString';
@@ -48,7 +47,6 @@ export * from './declaration/hotkeyLabel';
 export * from './declaration/hotstringLabel';
 export * from './declaration/label';
 export * from './declaration/modifier';
-export * from './declaration/property';
 export * from './expression/array';
 export * from './expression/call';
 export * from './expression/continuationString';
@@ -111,7 +109,6 @@ export function createExpectedDataList(scopeName: ScopeName): ExpectedTestData[]
     ...createObjectLiteralExpectedData(scopeName),
     ...createOperatorInExpressionExpectedData(scopeName),
     ...createParenthesizedExpressionExpectedData(scopeName),
-    ...createPropertyDeclarationExpectedData(scopeName),
     ...createRegExpExpectedData(scopeName),
     ...createSingleLineCommentExpectedData(scopeName),
     ...createStringLiteralExpectedData(scopeName),

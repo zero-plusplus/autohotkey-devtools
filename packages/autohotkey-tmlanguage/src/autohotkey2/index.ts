@@ -74,6 +74,7 @@ export function createRepositories(scopeName: ScopeName): Repositories {
       includeRule(Repository.Modifier),
       includeRule(Repository.AssignmentDeclaration),
       includeRule(Repository.CallExpression_FunctionDeclarationHead),
+      includeRule(Repository.ClassDeclaration),
       includeRule(Repository.Block),
     ),
     [Repository.Modifier]: rule_v1.createModifierRule(scopeName, {
@@ -87,6 +88,16 @@ export function createRepositories(scopeName: ScopeName): Repositories {
     }),
     [Repository.Block]: rule_v1.createBlockRule(scopeName, {
       statementsInBlock: [ includeRule(Repository.Self) ],
+    }),
+    [Repository.ClassDeclaration]: rule_v1.createClassDeclarationRule(scopeName, {
+      startAnchor: patterns_v1.statementStartAnchor,
+      endAnchor: patterns_v1.lineEndAnchor,
+      identifierPattern: patterns_v2.identifierPattern,
+    }),
+    [Repository.PropertyDeclaration]: rule_v1.createPropertyDeclarationRule(scopeName, {
+      startAnchor: patterns_v1.statementStartAnchor,
+      identifierPattern: patterns_v2.identifierPattern,
+      keywordsInArgument: [],
     }),
     // #endregion declaration
 

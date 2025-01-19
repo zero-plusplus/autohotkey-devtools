@@ -1,3 +1,7 @@
+export * from './declaration/assignment';
+export * from './declaration/class/head';
+export * from './declaration/class/property';
+export * from './declaration/function';
 export * from './expression/operator';
 export * from './expression/regexp';
 export * from './expression/string';
