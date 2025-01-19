@@ -10,7 +10,6 @@ import { createLabelStatementExpectedData } from './declaration/label';
 import { createModifierDeclarationExpectedData } from './declaration/modifier';
 import { createPropertyDeclarationExpectedData } from './declaration/property';
 import { createArrayLiteralExpectedData } from './expression/array';
-import { createBuiltinVariableExpectedData } from './expression/builtinVariable';
 import { createCallExpressionExpectedData } from './expression/call';
 import { createContinuationStringLiteralExpectedData } from './expression/continuationString';
 import { createDereferenceExpressionExpectedData } from './expression/dereference';
@@ -51,7 +50,6 @@ export * from './declaration/label';
 export * from './declaration/modifier';
 export * from './declaration/property';
 export * from './expression/array';
-export * from './expression/builtinVariable';
 export * from './expression/call';
 export * from './expression/continuationString';
 export * from './expression/dereference';
@@ -87,7 +85,6 @@ export function createExpectedDataList(scopeName: ScopeName): ExpectedTestData[]
     ...createArrayLiteralExpectedData(scopeName),
     ...createAssignmentDeclarationExpectedData(scopeName),
     ...createBlockDeclarationExpectedData(scopeName),
-    ...createBuiltinVariableExpectedData(scopeName),
     ...createCallExpressionExpectedData(scopeName),
     ...createClassDeclarationExpectedData(scopeName),
     ...createCommandStatementExpectedData(scopeName),
