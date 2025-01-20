@@ -21,6 +21,7 @@ import { createIfStatementExpectedData } from './statement/if';
 import { createIncludeStatementExpectedData } from './statement/include';
 import { createJumpStatementExpectedData } from './statement/jump';
 import { createSwitchStatementExpectedData } from './statement/switch';
+import { createWhileStatementExpectedData } from './statement/while';
 
 export function createExpectedDataList(scopeName: ScopeName): ExpectedTestData[] {
   return [
@@ -50,5 +51,6 @@ export function createExpectedDataList(scopeName: ScopeName): ExpectedTestData[]
     ...createStringLiteralExpectedData(scopeName),
     ...createSwitchStatementExpectedData(scopeName),
     ...createVariableExpectedData(scopeName),
+    ...createWhileStatementExpectedData(scopeName),
   ];
 }
