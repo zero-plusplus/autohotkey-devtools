@@ -231,4 +231,49 @@ export const builtInFunctionNames = [
   'ATan',                                  // https://www.autohotkey.com/docs/v2/lib/ATan.htm
   'BlockInput',                            // https://www.autohotkey.com/docs/v2/lib/BlockInput.htm
 ] as const;
+
+// https://www.autohotkey.com/docs/v2/ObjList.htm
+export const builtInClassNames = [
+  /* > */ 'Any',                                    // https://www.autohotkey.com/docs/v2/lib/Any.htm
+  /* ==> */ 'Object',                               // https://www.autohotkey.com/docs/v2/lib/Object.htm
+  /* ====> */ 'Array',                              // https://www.autohotkey.com/docs/v2/lib/Array.htm
+  /* ====> */ 'Buffer',                             // https://www.autohotkey.com/docs/v2/lib/Buffer.htm
+  /* ======> */ 'ClipboardAll',                     // https://www.autohotkey.com/docs/v2/lib/ClipboardAll.htm
+  /* ====> */ 'Class',                              // https://www.autohotkey.com/docs/v2/lib/Class.htm
+  /* ====> */ 'Error',                              // https://www.autohotkey.com/docs/v2/lib/Error.htm
+  /* ======> */ 'MemoryError',                      // https://www.autohotkey.com/docs/v2/lib/MemoryError.htm
+  /* ======> */ 'OSError',                          // https://www.autohotkey.com/docs/v2/lib/OSError.htm
+  /* ======> */ 'TargetError',                      // https://www.autohotkey.com/docs/v2/lib/TargetError.htm
+  /* ======> */ 'TimeoutError',                     // https://www.autohotkey.com/docs/v2/lib/TimeoutError.htm
+  /* ======> */ 'TypeError',                        // https://www.autohotkey.com/docs/v2/lib/TypeError.htm
+  /* ======> */ 'UnsetError',                       // https://www.autohotkey.com/docs/v2/lib/UnsetError.htm
+  /* ========> */ 'MemberError',                    // https://www.autohotkey.com/docs/v2/lib/MemberError.htm
+  /* ==========> */ 'PropertyError',                // https://www.autohotkey.com/docs/v2/lib/PropertyError.htm
+  /* ==========> */ 'MethodError',                  // https://www.autohotkey.com/docs/v2/lib/MethodError.htm
+  /* ========> */ 'UnsetItemError',                 // https://www.autohotkey.com/docs/v2/lib/UnsetItemError.htm
+  /* ======> */ 'ValueError',                       // https://www.autohotkey.com/docs/v2/lib/ValueError.htm
+  /* ========> */ 'IndexError',                     // https://www.autohotkey.com/docs/v2/lib/IndexError.htm
+  /* ======> */ 'ZeroDivisionError',                // https://www.autohotkey.com/docs/v2/lib/ZeroDivisionError.htm
+  /* ====> */ 'File',                               // https://www.autohotkey.com/docs/v2/lib/File.htm
+  /* ====> */ 'Func',                               // https://www.autohotkey.com/docs/v2/lib/Func.htm
+  /* ======> */ 'BoundFunc',                        // https://www.autohotkey.com/docs/v2/lib/BoundFunc.htm
+  /* ======> */ 'Closure',                          // https://www.autohotkey.com/docs/v2/lib/Closure.htm
+  /* ======> */ 'Enumerator',                       // https://www.autohotkey.com/docs/v2/lib/Enumerator.htm
+  /* ====> */ 'Gui',                                // https://www.autohotkey.com/docs/v2/lib/Gui.htm
+  /* ====> */ 'InputHook',                          // https://www.autohotkey.com/docs/v2/lib/InputHook.htm
+  /* ====> */ 'Map',                                // https://www.autohotkey.com/docs/v2/lib/Map.htm
+  /* ====> */ 'Menu',                               // https://www.autohotkey.com/docs/v2/lib/Menu.htm
+  /* ======> */ 'MenuBar',                          // https://www.autohotkey.com/docs/v2/lib/MenuBar.htm
+  /* ====> */ 'RegExMatchInfo',                     // https://www.autohotkey.com/docs/v2/lib/RegExMatchInfo.htm
+  /* ==> */ 'Primitive',                            // https://www.autohotkey.com/docs/v2/lib/Primitive.htm
+  /* ====> */ 'Number',                             // https://www.autohotkey.com/docs/v2/lib/Number.htm
+  /* ======> */ 'Float',                            // https://www.autohotkey.com/docs/v2/lib/Float.htm
+  /* ======> */ 'Integer',                          // https://www.autohotkey.com/docs/v2/lib/Integer.htm
+  /* ====> */ 'String',                             // https://www.autohotkey.com/docs/v2/lib/String.htm
+  /* ==> */ 'VarRef',                               // https://www.autohotkey.com/docs/v2/lib/VarRef.htm
+  /* ==> */ 'ComValue',                             // https://www.autohotkey.com/docs/v2/lib/ComValue.htm
+  /* ====> */ 'ComObjArray',                        // https://www.autohotkey.com/docs/v2/lib/ComObjArray.htm
+  /* ====> */ 'ComObject',                          // https://www.autohotkey.com/docs/v2/lib/ComObject.htm
+  /* ====> */ 'ComValueRef',                        // https://www.autohotkey.com/docs/v2/lib/ComValueRef.htm
+] as const;
 // #endregion BuiltIn
