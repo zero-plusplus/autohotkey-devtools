@@ -4,6 +4,7 @@ export * from './declaration/class/property';
 export * from './declaration/function';
 export * from './declaration/hotkeyLabel';
 export * from './declaration/hotstringLabel';
+export * from './declaration/label';
 export * from './expression/operator';
 export * from './expression/regexp';
 export * from './expression/string';
