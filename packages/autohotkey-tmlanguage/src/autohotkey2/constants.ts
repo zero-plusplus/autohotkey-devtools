@@ -230,6 +230,57 @@ export const builtInFunctionNames = [
   'ACos',                                  // https://www.autohotkey.com/docs/v2/lib/ACos.htm
   'ATan',                                  // https://www.autohotkey.com/docs/v2/lib/ATan.htm
   'BlockInput',                            // https://www.autohotkey.com/docs/v2/lib/BlockInput.htm
+  'CallbackCreate',                        // https://www.autohotkey.com/docs/v2/lib/CallbackCreate.htm
+  'CallbackFree',                          // https://www.autohotkey.com/docs/v2/lib/CallbackFree.htm
+  'CaretGetPos',                           // https://www.autohotkey.com/docs/v2/lib/CaretGetPos.htm
+  'Ceil',                                  // https://www.autohotkey.com/docs/v2/lib/Ceil.htm
+  'Chr',                                   // https://www.autohotkey.com/docs/v2/lib/Chr.htm
+  'Click',                                 // https://www.autohotkey.com/docs/v2/lib/Click.htm
+  'ClipWait',                              // https://www.autohotkey.com/docs/v2/lib/ClipWait.htm
+  'ComCall',                               // https://www.autohotkey.com/docs/v2/lib/ComCall.htm
+  'ComObjActive',                          // https://www.autohotkey.com/docs/v2/lib/ComObjActive.htm
+  'ComObjConnect',                         // https://www.autohotkey.com/docs/v2/lib/ComObjConnect.htm
+  'ComObjFlags',                           // https://www.autohotkey.com/docs/v2/lib/ComObjFlags.htm
+  'ComObjFromPtr',                         // https://www.autohotkey.com/docs/v2/lib/ComObjFromPtr.htm
+  'ComObjGet',                             // https://www.autohotkey.com/docs/v2/lib/ComObjGet.htm
+  'ComObjQuery',                           // https://www.autohotkey.com/docs/v2/lib/ComObjQuery.htm
+  'ComObjType',                            // https://www.autohotkey.com/docs/v2/lib/ComObjType.htm
+  'ComObjValue',                           // https://www.autohotkey.com/docs/v2/lib/ComObjValue.htm
+  'ControlAddItem',                        // https://www.autohotkey.com/docs/v2/lib/ControlAddItem.htm
+  'ControlChooseIndex',                    // https://www.autohotkey.com/docs/v2/lib/ControlChooseIndex.htm
+  'ControlChooseString',                   // https://www.autohotkey.com/docs/v2/lib/ControlChooseString.htm
+  'ControlClick',                          // https://www.autohotkey.com/docs/v2/lib/ControlClick.htm
+  'ControlDeleteItem',                     // https://www.autohotkey.com/docs/v2/lib/ControlDeleteItem.htm
+  'ControlFindItem',                       // https://www.autohotkey.com/docs/v2/lib/ControlFindItem.htm
+  'ControlFocus',                          // https://www.autohotkey.com/docs/v2/lib/ControlFocus.htm
+  'ControlGetChecked',                     // https://www.autohotkey.com/docs/v2/lib/ControlGetChecked.htm
+  'ControlGetChoice',                      // https://www.autohotkey.com/docs/v2/lib/ControlGetChoice.htm
+  'ControlGetClassNN',                     // https://www.autohotkey.com/docs/v2/lib/ControlGetClassNN.htm
+  'ControlGetEnabled',                     // https://www.autohotkey.com/docs/v2/lib/ControlGetEnabled.htm
+  'ControlGetFocus',                       // https://www.autohotkey.com/docs/v2/lib/ControlGetFocus.htm
+  'ControlGetHwnd',                        // https://www.autohotkey.com/docs/v2/lib/ControlGetHwnd.htm
+  'ControlGetIndex',                       // https://www.autohotkey.com/docs/v2/lib/ControlGetIndex.htm
+  'ControlGetItems',                       // https://www.autohotkey.com/docs/v2/lib/ControlGetItems.htm
+  'ControlGetPos',                         // https://www.autohotkey.com/docs/v2/lib/ControlGetPos.htm
+  'ControlGetStyle',                       // https://www.autohotkey.com/docs/v2/lib/ControlGetStyle.htm
+  'ControlGetExStyle',                     // https://www.autohotkey.com/docs/v2/lib/ControlGetExStyle.htm
+  'ControlGetText',                        // https://www.autohotkey.com/docs/v2/lib/ControlGetText.htm
+  'ControlGetVisible',                     // https://www.autohotkey.com/docs/v2/lib/ControlGetVisible.htm
+  'ControlHide',                           // https://www.autohotkey.com/docs/v2/lib/ControlHide.htm
+  'ControlHideDropDown',                   // https://www.autohotkey.com/docs/v2/lib/ControlHideDropDown.htm
+  'ControlMove',                           // https://www.autohotkey.com/docs/v2/lib/ControlMove.htm
+  'ControlSend',                           // https://www.autohotkey.com/docs/v2/lib/ControlSend.htm
+  'ControlSendText',                       // https://www.autohotkey.com/docs/v2/lib/ControlSendText.htm
+  'ControlSetChecked',                     // https://www.autohotkey.com/docs/v2/lib/ControlSetChecked.htm
+  'ControlSetEnabled',                     // https://www.autohotkey.com/docs/v2/lib/ControlSetEnabled.htm
+  'ControlSetStyle',                       // https://www.autohotkey.com/docs/v2/lib/ControlSetStyle.htm
+  'ControlSetExStyle',                     // https://www.autohotkey.com/docs/v2/lib/ControlSetExStyle.htm
+  'ControlSetText',                        // https://www.autohotkey.com/docs/v2/lib/ControlSetText.htm
+  'ControlShow',                           // https://www.autohotkey.com/docs/v2/lib/ControlShow.htm
+  'ControlShowDropDown',                   // https://www.autohotkey.com/docs/v2/lib/ControlShowDropDown.htm
+  'CoordMode',                             // https://www.autohotkey.com/docs/v2/lib/CoordMode.htm
+  'Cos',                                   // https://www.autohotkey.com/docs/v2/lib/Cos.htm
+  'Critical',                              // https://www.autohotkey.com/docs/v2/lib/Critical.htm
 ] as const;
 
 // https://www.autohotkey.com/docs/v2/ObjList.htm
