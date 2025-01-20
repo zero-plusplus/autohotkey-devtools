@@ -224,4 +224,10 @@ export const directiveNames = [
   '#Warn',
   '#WinActivateForce',
 ] as const;
+export const builtInFunctionNames = [
+  'Abs',                                   // https://www.autohotkey.com/docs/v2/lib/Abs.htm
+  'ASin',                                  // https://www.autohotkey.com/docs/v2/lib/ASin.htm
+  'ACos',                                  // https://www.autohotkey.com/docs/v2/lib/ACos.htm
+  'ATan',                                  // https://www.autohotkey.com/docs/v2/lib/ATan.htm
+] as const;
 // #endregion BuiltIn
