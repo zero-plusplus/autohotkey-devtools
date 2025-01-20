@@ -132,7 +132,6 @@ export function createRepositories(scopeName: ScopeName): Repositories {
       labelPattern: patterns_v1.identifierPattern,
     }),
 
-    [Repository.ExpressionStatement]: patternsRule(includeRule(Repository.Expressions)),
     [Repository.IfStatement]: rule_v1.createIfStatementRule(scopeName, {
       startAnchor: patterns_v1.statementStartAnchor,
     }),
@@ -159,6 +158,8 @@ export function createRepositories(scopeName: ScopeName): Repositories {
     [Repository.ThrowStatement]: rule_v1.createThrowStatementRule(scopeName, {
       startAnchor: patterns_v1.statementStartAnchor,
     }),
+
+    [Repository.ExpressionStatement]: patternsRule(includeRule(Repository.Expressions)),
     // #endregion statement
 
     // #region declaration

@@ -69,6 +69,7 @@ export function createRepositories(scopeName: ScopeName): Repositories {
       includeRule(Repository.HotstringLabelStatement),
       includeRule(Repository.HotkeyLabelStatement),
       includeRule(Repository.LabelStatement),
+      includeRule(Repository.IfStatement),
 
       includeRule(Repository.ExpressionStatement),
     ),
@@ -105,6 +106,10 @@ export function createRepositories(scopeName: ScopeName): Repositories {
     [Repository.LabelStatement]: rule_v1.createLabelRule(scopeName, {
       startAnchor: patterns_v1.statementStartAnchor,
       labelPattern: patterns_v2.identifierPattern,
+    }),
+
+    [Repository.IfStatement]: rule_v1.createIfStatementRule(scopeName, {
+      startAnchor: patterns_v1.statementStartAnchor,
     }),
 
     [Repository.ExpressionStatement]: patternsRule(includeRule(Repository.Expressions)),
