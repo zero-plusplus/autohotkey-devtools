@@ -40,6 +40,9 @@
         "aliases": [
           "AutoHotkey Next"
         ],
+        "extensions": [
+          ".ahknext"
+        ],
         "configuration": "./build/autohotkeynext.language-configuration.json"
       },
       {

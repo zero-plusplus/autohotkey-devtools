@@ -2,6 +2,7 @@ import tmLanguages from '@zero-plusplus/autohotkey-tmlanguage/src';
 import { ScopeName } from '@zero-plusplus/autohotkey-tmlanguage/src/types.js';
 import autohotkey2 from '@zero-plusplus/autohotkey-tmlanguage/test/autohotkey2/expected/index.js';
 import autohotkeyl from '@zero-plusplus/autohotkey-tmlanguage/test/autohotkeyl/expected/index.js';
+import autohotkeynext from '@zero-plusplus/autohotkey-tmlanguage/test/autohotkeynext/expected/index.js';
 import type { ExpectedTestData } from '@zero-plusplus/autohotkey-tmlanguage/test/types.js';
 import * as esbuild from 'esbuild';
 import * as fs from 'fs/promises';
@@ -153,8 +154,12 @@ export function createLanguageConfiguration(scopeName: ScopeName): Record<string
 }
 
 export async function buildDemoAll(): Promise<void> {
+  await buildDemoForNext();
   await buildDemoForV2();
   await buildDemoForV1();
+}
+export async function buildDemoForNext(): Promise<void> {
+  await buildDemo('autohotkeynext', 'ahknext', autohotkeynext.createExpectedDataList);
 }
 export async function buildDemoForV2(): Promise<void> {
   await buildDemo('autohotkey2', 'ahk2', autohotkey2.createExpectedDataList);
