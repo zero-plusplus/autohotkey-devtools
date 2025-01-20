@@ -1,1 +1,2 @@
-export * from './expression';
+export * from './expression/access';
+export * from './expression/parenthesized';
