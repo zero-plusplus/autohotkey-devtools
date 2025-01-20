@@ -17,6 +17,7 @@ import { createParenthesizedExpressionExpectedData } from './expression/parenthe
 import { createRegExpExpectedData } from './expression/regexp';
 import { createStringLiteralExpectedData } from './expression/string';
 import { createVariableExpectedData } from './expression/variable';
+import { createForStatementExpectedData } from './statement/for';
 import { createIfStatementExpectedData } from './statement/if';
 import { createIncludeStatementExpectedData } from './statement/include';
 import { createJumpStatementExpectedData } from './statement/jump';
@@ -38,6 +39,7 @@ export function createExpectedDataList(scopeName: ScopeName): ExpectedTestData[]
     ...createCallExpressionExpectedData(scopeName),
     ...createClassDeclarationExpectedData(scopeName),
     ...createDereferenceExpressionExpectedData(scopeName),
+    ...createForStatementExpectedData(scopeName),
     ...createFunctionDeclarationExpectedData(scopeName),
     ...createHotkeyLabelStatementExpectedData(scopeName),
     ...createHotstringLabelStatementExpectedData(scopeName),

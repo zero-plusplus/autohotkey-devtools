@@ -74,6 +74,7 @@ export function createRepositories(scopeName: ScopeName): Repositories {
       includeRule(Repository.WhileStatement),
       includeRule(Repository.LoopStatement),
       includeRule(Repository.UntilStatement),
+      includeRule(Repository.ForStatement),
 
       includeRule(Repository.ExpressionStatement),
     ),
@@ -127,6 +128,9 @@ export function createRepositories(scopeName: ScopeName): Repositories {
       endAnchor: patterns_v1.controlFlowEndAnchor,
     }),
     [Repository.UntilStatement]: rule_v1.createUntilStatementRule(scopeName, {
+      startAnchor: patterns_v1.statementStartAnchor,
+    }),
+    [Repository.ForStatement]: rule_v1.createForStatementRule(scopeName, {
       startAnchor: patterns_v1.statementStartAnchor,
     }),
 

@@ -8,6 +8,7 @@ export * from './declaration/label';
 export * from './expression/operator';
 export * from './expression/regexp';
 export * from './expression/string';
+export * from './statement/for';
 export * from './statement/if';
 export * from './statement/include';
 export * from './statement/jump';
