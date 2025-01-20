@@ -10,7 +10,7 @@ export const singleQuoteEscapeSequences: [ ...typeof unquoteEscapeSequences, '`\
 export const assignmentOperators: readonly [ ...typeof commonAssignmentOperators ] = [ ...commonAssignmentOperators ] as const;
 export const expressionOperators: readonly [ ...typeof commonExpressionOperatorsWithoutAssignment, ... typeof commonAssignmentOperators, '=>', '??' ] = [
   ...commonExpressionOperatorsWithoutAssignment,
-  ...commonAssignmentOperators,
+  ...assignmentOperators,
   '=>', // `(args*) => expression`
   '??', // `a ?? b`
 ] as const;

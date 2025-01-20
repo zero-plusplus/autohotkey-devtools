@@ -62,6 +62,12 @@ export function createRepositories(scopeName: ScopeName): Repositories {
 
     // #region statement
     [Repository.Statement]: patternsRule(
+      includeRule(Repository.StatementWithoutCallAndExpression),
+
+      includeRule(Repository.CallStatement),
+      includeRule(Repository.ExpressionStatement),
+    ),
+    [Repository.StatementWithoutCallAndExpression]: patternsRule(
       includeRule(Repository.Declaration),
       includeRule(Repository.IncludeStatement),
       includeRule(Repository.JumpStatement),
@@ -77,8 +83,6 @@ export function createRepositories(scopeName: ScopeName): Repositories {
       includeRule(Repository.ForStatement),
       includeRule(Repository.TryStatement),
       includeRule(Repository.ThrowStatement),
-
-      includeRule(Repository.ExpressionStatement),
     ),
     [Repository.IncludeStatement]: rule_v1.createIncludeStatementRule(scopeName, {
       startAnchor: patterns_v1.statementStartAnchor,
@@ -141,7 +145,11 @@ export function createRepositories(scopeName: ScopeName): Repositories {
     [Repository.ThrowStatement]: rule_v1.createThrowStatementRule(scopeName, {
       startAnchor: patterns_v1.statementStartAnchor,
     }),
-
+    [Repository.CallStatement]: rule_v2.createCallStatementRule(scopeName, {
+      startAnchor: patterns_v1.statementStartAnchor,
+      identifierPattern: patterns_v2.identifierPattern,
+      expressionOperators: constants_v2.expressionOperators,
+    }),
     [Repository.ExpressionStatement]: patternsRule(includeRule(Repository.Expressions)),
     // #endregion statement
 

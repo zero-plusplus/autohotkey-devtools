@@ -26,15 +26,19 @@ export function createVariableExpectedData(scopeName: ScopeName): ExpectedTestDa
 
     // invalid
     [
-      'v'.repeat(255), [
+      `(${'v'.repeat(255)})`, [
+        { text: '(', scopes: name(scopeName, RuleName.OpenParen) },
         { text: 'v'.repeat(253), scopes: name(scopeName, RuleName.Variable) },
         { text: 'v'.repeat(2), scopes: name(scopeName, RuleName.Variable, StyleName.Invalid) },
+        { text: ')', scopes: name(scopeName, RuleName.CloseParen) },
       ],
     ],
     [
-      '12abc', [
+      '(12abc)', [
+        { text: '(', scopes: name(scopeName, RuleName.OpenParen) },
         { text: '12', scopes: name(scopeName, RuleName.Variable, RuleName.Integer, StyleName.Invalid) },
         { text: 'abc', scopes: name(scopeName, RuleName.Variable) },
+        { text: ')', scopes: name(scopeName, RuleName.CloseParen) },
       ],
     ],
   ];

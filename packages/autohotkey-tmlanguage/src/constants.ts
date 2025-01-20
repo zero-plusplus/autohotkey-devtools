@@ -262,6 +262,7 @@ export const enum Repository {
 
   // #region statements
   Statement = 'repository.statement',
+  StatementWithoutCallAndExpression = 'repository.statement.without-call-and-expression',
   ExpressionStatement = 'repository.statement.expression',
   IncludeStatement = 'repository.statement.include',
   DirectiveStatement = 'repository.statement.directive',
@@ -280,6 +281,7 @@ export const enum Repository {
   LabelStatement = 'repository.statement.label',
   HotkeyLabelStatement = 'repository.statement.hotkey',
   HotstringLabelStatement = 'repository.statement.hotstring',
+  CallStatement = 'repository.statement.expression.call',
   // #endregion statements
 
   // #region declaration

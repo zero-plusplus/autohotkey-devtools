@@ -56,7 +56,7 @@ export function createClassDeclarationRule(scopeName: ScopeName, placeholder: Pl
         beginCaptures: {
           1: nameRule(scopeName, RuleName.ClassBlockBegin),
         },
-        end: seq(inlineSpaces0(), capture(char('}'))),
+        end: capture(char('}')),
         endCaptures: {
           1: nameRule(scopeName, RuleName.ClassBlockEnd),
         },
@@ -83,7 +83,9 @@ export function createClassDeclarationRule(scopeName: ScopeName, placeholder: Pl
             ],
           }),
 
-          includeRule(Repository.Self),
+          includeRule(Repository.Comment),
+          includeRule(Repository.StatementWithoutCallAndExpression),
+          includeRule(Repository.ExpressionStatement),
         ],
       },
     ],

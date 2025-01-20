@@ -12,6 +12,7 @@ export function createAssignmentDeclarationRule(scopeName: ScopeName, placeholde
   return {
     match: seq(
       lookbehind(placeholder.startAnchor),
+      inlineSpaces0(),
       optional(capture(keyword('global', 'local', 'static'))),
       inlineSpaces0(),
       capture(seq(placeholder.namePattern)),

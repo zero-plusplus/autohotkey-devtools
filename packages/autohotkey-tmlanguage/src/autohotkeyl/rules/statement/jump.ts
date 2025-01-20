@@ -30,6 +30,7 @@ export function createJumpToLabelStatement(scopeName: ScopeName, placeholder: Pl
   return {
     match: seq(
       lookbehind(placeholder.startAnchor),
+      inlineSpaces0(),
       capture(ignoreCase(ordalt(...placeholder.names))),
       optseq(
         group(alt(
