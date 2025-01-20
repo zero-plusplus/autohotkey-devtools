@@ -1,7 +1,7 @@
 import { Repository, RuleName } from '../../../constants';
 import { alt, anyChars0, capture, char, ignoreCase, inlineSpace, inlineSpaces0, keyword, lookahead, lookbehind, negativeLookahead, seq, startAnchor } from '../../../oniguruma';
 import type { BeginEndRule, ScopeName } from '../../../types';
-import { includeRule, name, nameRule, patternsRule } from '../../../utils';
+import { includeRule, nameRule, patternsRule } from '../../../utils';
 
 interface Placeholder {
   startAnchor: string;
@@ -80,7 +80,6 @@ export function createSwitchStatementRule(scopeName: ScopeName, placeholder: Pla
             patterns: [ includeRule(Repository.Self) ],
           },
           {
-            name: name(scopeName, Repository.SwitchStatement),
             begin: seq(
               startAnchor(),
               inlineSpaces0(),

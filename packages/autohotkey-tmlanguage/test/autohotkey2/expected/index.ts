@@ -20,6 +20,7 @@ import { createVariableExpectedData } from './expression/variable';
 import { createIfStatementExpectedData } from './statement/if';
 import { createIncludeStatementExpectedData } from './statement/include';
 import { createJumpStatementExpectedData } from './statement/jump';
+import { createSwitchStatementExpectedData } from './statement/switch';
 
 export function createExpectedDataList(scopeName: ScopeName): ExpectedTestData[] {
   return [
@@ -47,6 +48,7 @@ export function createExpectedDataList(scopeName: ScopeName): ExpectedTestData[]
     ...createParenthesizedExpressionExpectedData(scopeName),
     ...createRegExpExpectedData(scopeName),
     ...createStringLiteralExpectedData(scopeName),
+    ...createSwitchStatementExpectedData(scopeName),
     ...createVariableExpectedData(scopeName),
   ];
 }

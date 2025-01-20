@@ -11,6 +11,7 @@ export * from './expression/string';
 export * from './statement/if';
 export * from './statement/include';
 export * from './statement/jump';
+export * from './statement/switch';
 export * from './trivia/documentComment';
 export * from './trivia/multiLineComment';
 export * from './trivia/singleLineComment';
