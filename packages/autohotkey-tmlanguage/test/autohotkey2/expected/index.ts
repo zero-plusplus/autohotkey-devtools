@@ -20,6 +20,7 @@ import { createVariableExpectedData } from './expression/variable';
 import { createIfStatementExpectedData } from './statement/if';
 import { createIncludeStatementExpectedData } from './statement/include';
 import { createJumpStatementExpectedData } from './statement/jump';
+import { createLoopStatementExpectedData } from './statement/loop';
 import { createSwitchStatementExpectedData } from './statement/switch';
 import { createWhileStatementExpectedData } from './statement/while';
 
@@ -43,6 +44,7 @@ export function createExpectedDataList(scopeName: ScopeName): ExpectedTestData[]
     ...createIncludeStatementExpectedData(scopeName),
     ...createJumpStatementExpectedData(scopeName),
     ...createLabelStatementExpectedData(scopeName),
+    ...createLoopStatementExpectedData(scopeName),
     ...createNumberLiteralExpectedData(scopeName),
     ...createObjectLiteralExpectedData(scopeName),
     ...createOperatorInExpressionExpectedData(scopeName),

@@ -24,7 +24,7 @@ export function createLoopStatementRule(scopeName: ScopeName, placeholder: Place
       match: seq(
         lookbehind(placeholder.startAnchor),
         inlineSpaces0(),
-        capture(keyword('loop')),
+        capture(keyword('Loop')),
         lookahead(alt(
           char(',', '{'),
           inlineSpace(),
