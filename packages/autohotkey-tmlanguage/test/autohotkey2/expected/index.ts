@@ -6,6 +6,7 @@ import { createClassDeclarationExpectedData } from './declaration/class';
 import { createFunctionDeclarationExpectedData } from './declaration/function';
 import { createHotkeyLabelStatementExpectedData } from './declaration/hotkeyLabel';
 import { createHotstringLabelStatementExpectedData } from './declaration/hotstringLabel';
+import { createLabelStatementExpectedData } from './declaration/label';
 import { createArrayLiteralExpectedData } from './expression/array';
 import { createCallExpressionExpectedData } from './expression/call';
 import { createDereferenceExpressionExpectedData } from './expression/dereference';
@@ -37,6 +38,7 @@ export function createExpectedDataList(scopeName: ScopeName): ExpectedTestData[]
     ...createHotstringLabelStatementExpectedData(scopeName),
     ...createIncludeStatementExpectedData(scopeName),
     ...createJumpStatementExpectedData(scopeName),
+    ...createLabelStatementExpectedData(scopeName),
     ...createNumberLiteralExpectedData(scopeName),
     ...createObjectLiteralExpectedData(scopeName),
     ...createOperatorInExpressionExpectedData(scopeName),

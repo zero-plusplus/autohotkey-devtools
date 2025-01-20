@@ -120,16 +120,16 @@ export function createRepositories(scopeName: ScopeName): Repositories {
       ],
       labelPattern: patterns_v1.identifierPattern,
     }),
-    [Repository.LabelStatement]: rule_v1.createLabelRule(scopeName, {
-      startAnchor: patterns_v1.statementStartAnchor,
-      labelPattern: patterns_v1.identifierPattern,
-    }),
     [Repository.HotstringLabelStatement]: rule_v1.createHotstringLabelRule(scopeName, {
       startAnchor: patterns_v1.statementStartAnchor,
       endAnchor: patterns_v1.lineEndAnchor,
     }),
     [Repository.HotkeyLabelStatement]: rule_v1.createHotkeyLabelRule(scopeName, {
       startAnchor: patterns_v1.statementStartAnchor,
+    }),
+    [Repository.LabelStatement]: rule_v1.createLabelRule(scopeName, {
+      startAnchor: patterns_v1.statementStartAnchor,
+      labelPattern: patterns_v1.identifierPattern,
     }),
 
     [Repository.ExpressionStatement]: patternsRule(includeRule(Repository.Expressions)),
