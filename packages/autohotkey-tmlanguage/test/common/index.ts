@@ -13,6 +13,7 @@ export * from './statement/if';
 export * from './statement/include';
 export * from './statement/jump';
 export * from './statement/switch';
+export * from './statement/try';
 export * from './statement/until';
 export * from './statement/while';
 export * from './trivia/documentComment';

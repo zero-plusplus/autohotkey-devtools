@@ -319,8 +319,11 @@ export function createRepositories(scopeName: ScopeName): Repositories {
         'new',
         ...constants_v1.expressionKeywords,
 
-        // The following are not exactly keywords in the expression, but are defined here as keywords because it is more convenient for the TMLanguage mechanism
+        // #region The following are not exactly keywords in the expression, but are defined here as keywords because it is more convenient for the TMLanguage mechanism
+        // for key, value in obj
+        //                ^^
         'in',
+        // #endregion
       ],
     }),
     // #endregion token, keyword

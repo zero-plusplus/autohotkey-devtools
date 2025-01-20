@@ -75,6 +75,7 @@ export function createRepositories(scopeName: ScopeName): Repositories {
       includeRule(Repository.LoopStatement),
       includeRule(Repository.UntilStatement),
       includeRule(Repository.ForStatement),
+      includeRule(Repository.TryStatement),
 
       includeRule(Repository.ExpressionStatement),
     ),
@@ -131,6 +132,9 @@ export function createRepositories(scopeName: ScopeName): Repositories {
       startAnchor: patterns_v1.statementStartAnchor,
     }),
     [Repository.ForStatement]: rule_v1.createForStatementRule(scopeName, {
+      startAnchor: patterns_v1.statementStartAnchor,
+    }),
+    [Repository.TryStatement]: rule_v1.createTryStatementRule(scopeName, {
       startAnchor: patterns_v1.statementStartAnchor,
     }),
 
@@ -310,8 +314,14 @@ export function createRepositories(scopeName: ScopeName): Repositories {
       keywords: [
         ...constants_v2.expressionKeywords,
 
-        // The following are not exactly keywords in the expression, but are defined here as keywords because it is more convenient for the TMLanguage mechanism
+        // #region The following are not exactly keywords in the expression, but are defined here as keywords because it is more convenient for the TMLanguage mechanism
+        // for key, value in obj
+        //                ^^
         'in',
+        // catch Error as err
+        //             ^^
+        'as',
+        // #endregion
       ],
     }),
     // #endregion token, keyword
