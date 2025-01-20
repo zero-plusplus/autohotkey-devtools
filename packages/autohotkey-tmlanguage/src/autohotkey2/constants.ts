@@ -229,5 +229,6 @@ export const builtInFunctionNames = [
   'ASin',                                  // https://www.autohotkey.com/docs/v2/lib/ASin.htm
   'ACos',                                  // https://www.autohotkey.com/docs/v2/lib/ACos.htm
   'ATan',                                  // https://www.autohotkey.com/docs/v2/lib/ATan.htm
+  'BlockInput',                            // https://www.autohotkey.com/docs/v2/lib/BlockInput.htm
 ] as const;
 // #endregion BuiltIn
