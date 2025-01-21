@@ -495,6 +495,17 @@ export const builtInFunctionNames = [
   'Suspend',                               // https://www.autohotkey.com/docs/v2/lib/Suspend.htm
   'SysGet',                                // https://www.autohotkey.com/docs/v2/lib/SysGet.htm
   'SysGetIPAddresses',                     // https://www.autohotkey.com/docs/v2/lib/SysGetIPAddresses.htm
+  'Tan',                                   // https://www.autohotkey.com/docs/v2/lib/Tan.htm
+  'Thread',                                // https://www.autohotkey.com/docs/v2/lib/Thread.htm
+  'ToolTip',                               // https://www.autohotkey.com/docs/v2/lib/ToolTip.htm
+  'TraySetIcon',                           // https://www.autohotkey.com/docs/v2/lib/TraySetIcon.htm
+  'TrayTip',                               // https://www.autohotkey.com/docs/v2/lib/TrayTip.htm
+  'Trim',                                  // https://www.autohotkey.com/docs/v2/lib/Trim.htm
+  'LTrim',                                 // https://www.autohotkey.com/docs/v2/lib/LTrim.htm
+  'RTrim',                                 // https://www.autohotkey.com/docs/v2/lib/RTrim.htm
+  'Type',                                  // https://www.autohotkey.com/docs/v2/lib/Type.htm
+  'VarSetStrCapacity',                     // https://www.autohotkey.com/docs/v2/lib/VarSetStrCapacity.htm
+  'VerCompare',                            // https://www.autohotkey.com/docs/v2/lib/VerCompare.htm
 ] as const;
 export const deprecatedBuiltinFunctionNames = [
   // https://www.autohotkey.com/docs/v2/lib/SendPlay.htm
