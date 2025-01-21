@@ -432,6 +432,19 @@ export const builtInFunctionNames = [
   'ProcessSetPriority',                    // https://www.autohotkey.com/docs/v2/lib/ProcessSetPriority.htm
   'ProcessWait',                           // https://www.autohotkey.com/docs/v2/lib/ProcessWait.htm
   'ProcessWaitClose',                      // https://www.autohotkey.com/docs/v2/lib/ProcessWaitClose.htm
+  'Random',                                // https://www.autohotkey.com/docs/v2/lib/Random.htm
+  'RegExMatch',                            // https://www.autohotkey.com/docs/v2/lib/RegExMatch.htm
+  'RegExReplace',                          // https://www.autohotkey.com/docs/v2/lib/RegExReplace.htm
+  'RegCreateKey',                          // https://www.autohotkey.com/docs/v2/lib/RegCreateKey.htm
+  'RegDelete',                             // https://www.autohotkey.com/docs/v2/lib/RegDelete.htm
+  'RegDeleteKey',                          // https://www.autohotkey.com/docs/v2/lib/RegDeleteKey.htm
+  'RegRead',                               // https://www.autohotkey.com/docs/v2/lib/RegRead.htm
+  'RegWrite',                              // https://www.autohotkey.com/docs/v2/lib/RegWrite.htm
+  'Reload',                                // https://www.autohotkey.com/docs/v2/lib/Reload.htm
+  'Round',                                 // https://www.autohotkey.com/docs/v2/lib/Round.htm
+  'Run',                                   // https://www.autohotkey.com/docs/v2/lib/Run.htm
+  'RunAs',                                 // https://www.autohotkey.com/docs/v2/lib/RunAs.htm
+  'RunWait',                               // https://www.autohotkey.com/docs/v2/lib/RunWait.htm
 ] as const;
 export const deprecatedBuiltinFunctionNames = [
   // https://www.autohotkey.com/docs/v2/lib/SendPlay.htm
