@@ -204,25 +204,25 @@ export const builtinVaribles = [
 ] as const;
 // https://www.autohotkey.com/docs/v2/lib/index.htm
 export const directiveNames = [
-  '#ClipboardTimeout',
-  '#DllLoad',
-  '#ErrorStdOut',
-  '#Hotstring',
-  '#HotIf',
-  '#HotIfTimeout',
-  '#Include',
-  '#IncludeAgain',
-  '#InputLevel',
-  '#MaxThreads',
-  '#MaxThreadsBuffer',
-  '#MaxThreadsPerHotkey',
-  '#NoTrayIcon',
-  '#Requires',
-  '#SingleInstance',
-  '#SuspendExempt',
-  '#UseHook',
-  '#Warn',
-  '#WinActivateForce',
+  '#ClipboardTimeout',                     // https://www.autohotkey.com/docs/v2/lib/_ClipboardTimeout.htm
+  '#DllLoad',                              // https://www.autohotkey.com/docs/v2/lib/_DllLoad.htm
+  '#ErrorStdOut',                          // https://www.autohotkey.com/docs/v2/lib/_ErrorStdOut.htm
+  '#Hotstring',                            // https://www.autohotkey.com/docs/v2/lib/_Hotstring.htm
+  '#HotIf',                                // https://www.autohotkey.com/docs/v2/lib/_HotIf.htm
+  '#HotIfTimeout',                         // https://www.autohotkey.com/docs/v2/lib/_HotIfTimeout.htm
+  // '#Include',                           // https://www.autohotkey.com/docs/v2/lib/_Include.htm
+  // '#IncludeAgain',                      // https://www.autohotkey.com/docs/v2/lib/_IncludeAgain.htm            // 404 - File not found
+  '#InputLevel',                           // https://www.autohotkey.com/docs/v2/lib/_InputLevel.htm
+  '#MaxThreads',                           // https://www.autohotkey.com/docs/v2/lib/_MaxThreads.htm
+  '#MaxThreadsBuffer',                     // https://www.autohotkey.com/docs/v2/lib/_MaxThreadsBuffer.htm
+  '#MaxThreadsPerHotkey',                  // https://www.autohotkey.com/docs/v2/lib/_MaxThreadsPerHotkey.htm
+  '#NoTrayIcon',                           // https://www.autohotkey.com/docs/v2/lib/_NoTrayIcon.htm
+  '#Requires',                             // https://www.autohotkey.com/docs/v2/lib/_Requires.htm
+  '#SingleInstance',                       // https://www.autohotkey.com/docs/v2/lib/_SingleInstance.htm
+  '#SuspendExempt',                        // https://www.autohotkey.com/docs/v2/lib/_SuspendExempt.htm
+  '#UseHook',                              // https://www.autohotkey.com/docs/v2/lib/_UseHook.htm
+  '#Warn',                                 // https://www.autohotkey.com/docs/v2/lib/_Warn.htm
+  '#WinActivateForce',                     // https://www.autohotkey.com/docs/v2/lib/_WinActivateForce.htm
 ] as const;
 export const builtInFunctionNames = [
   'Abs',                                   // https://www.autohotkey.com/docs/v2/lib/Abs.htm
