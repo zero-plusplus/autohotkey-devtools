@@ -445,6 +445,56 @@ export const builtInFunctionNames = [
   'Run',                                   // https://www.autohotkey.com/docs/v2/lib/Run.htm
   'RunAs',                                 // https://www.autohotkey.com/docs/v2/lib/RunAs.htm
   'RunWait',                               // https://www.autohotkey.com/docs/v2/lib/RunWait.htm
+  'Send',                                  // https://www.autohotkey.com/docs/v2/lib/Send.htm
+  'SendText',                              // https://www.autohotkey.com/docs/v2/lib/SendText.htm
+  'SendInput',                             // https://www.autohotkey.com/docs/v2/lib/SendInput.htm
+  'SendEvent',                             // https://www.autohotkey.com/docs/v2/lib/SendEvent.htm
+  'SendLevel',                             // https://www.autohotkey.com/docs/v2/lib/SendLevel.htm
+  'SendMessage',                           // https://www.autohotkey.com/docs/v2/lib/SendMessage.htm
+  'SendMode',                              // https://www.autohotkey.com/docs/v2/lib/SendMode.htm
+  'SetCapsLockState',                      // https://www.autohotkey.com/docs/v2/lib/SetCapsLockState.htm
+  'SetControlDelay',                       // https://www.autohotkey.com/docs/v2/lib/SetControlDelay.htm
+  'SetDefaultMouseSpeed',                  // https://www.autohotkey.com/docs/v2/lib/SetDefaultMouseSpeed.htm
+  'SetKeyDelay',                           // https://www.autohotkey.com/docs/v2/lib/SetKeyDelay.htm
+  'SetMouseDelay',                         // https://www.autohotkey.com/docs/v2/lib/SetMouseDelay.htm
+  'SetNumLockState',                       // https://www.autohotkey.com/docs/v2/lib/SetNumLockState.htm
+  'SetScrollLockState',                    // https://www.autohotkey.com/docs/v2/lib/SetScrollLockState.htm
+  'SetRegView',                            // https://www.autohotkey.com/docs/v2/lib/SetRegView.htm
+  'SetStoreCapsLockMode',                  // https://www.autohotkey.com/docs/v2/lib/SetStoreCapsLockMode.htm
+  'SetTimer',                              // https://www.autohotkey.com/docs/v2/lib/SetTimer.htm
+  'SetTitleMatchMode',                     // https://www.autohotkey.com/docs/v2/lib/SetTitleMatchMode.htm
+  'SetWinDelay',                           // https://www.autohotkey.com/docs/v2/lib/SetWinDelay.htm
+  'SetWorkingDir',                         // https://www.autohotkey.com/docs/v2/lib/SetWorkingDir.htm
+  'Shutdown',                              // https://www.autohotkey.com/docs/v2/lib/Shutdown.htm
+  'Sin',                                   // https://www.autohotkey.com/docs/v2/lib/Sin.htm
+  'Sleep',                                 // https://www.autohotkey.com/docs/v2/lib/Sleep.htm
+  'Sort',                                  // https://www.autohotkey.com/docs/v2/lib/Sort.htm
+  'SoundBeep',                             // https://www.autohotkey.com/docs/v2/lib/SoundBeep.htm
+  'SoundGetInterface',                     // https://www.autohotkey.com/docs/v2/lib/SoundGetInterface.htm
+  'SoundGetMute',                          // https://www.autohotkey.com/docs/v2/lib/SoundGetMute.htm
+  'SoundGetName',                          // https://www.autohotkey.com/docs/v2/lib/SoundGetName.htm
+  'SoundGetVolume',                        // https://www.autohotkey.com/docs/v2/lib/SoundGetVolume.htm
+  'SoundPlay',                             // https://www.autohotkey.com/docs/v2/lib/SoundPlay.htm
+  'SoundSetMute',                          // https://www.autohotkey.com/docs/v2/lib/SoundSetMute.htm
+  'SoundSetVolume',                        // https://www.autohotkey.com/docs/v2/lib/SoundSetVolume.htm
+  'SplitPath',                             // https://www.autohotkey.com/docs/v2/lib/SplitPath.htm
+  'Sqrt',                                  // https://www.autohotkey.com/docs/v2/lib/Sqrt.htm
+  'StatusBarGetText',                      // https://www.autohotkey.com/docs/v2/lib/StatusBarGetText.htm
+  'StatusBarWait',                         // https://www.autohotkey.com/docs/v2/lib/StatusBarWait.htm
+  'StrCompare',                            // https://www.autohotkey.com/docs/v2/lib/StrCompare.htm
+  'StrGet',                                // https://www.autohotkey.com/docs/v2/lib/StrGet.htm
+  'StrLen',                                // https://www.autohotkey.com/docs/v2/lib/StrLen.htm
+  'StrLower',                              // https://www.autohotkey.com/docs/v2/lib/StrLower.htm
+  'StrPtr',                                // https://www.autohotkey.com/docs/v2/lib/StrPtr.htm
+  'StrPut',                                // https://www.autohotkey.com/docs/v2/lib/StrPut.htm
+  'StrReplace',                            // https://www.autohotkey.com/docs/v2/lib/StrReplace.htm
+  'StrSplit',                              // https://www.autohotkey.com/docs/v2/lib/StrSplit.htm
+  'StrTitle',                              // https://www.autohotkey.com/docs/v2/lib/StrTitle.htm
+  'StrUpper',                              // https://www.autohotkey.com/docs/v2/lib/StrUpper.htm
+  'SubStr',                                // https://www.autohotkey.com/docs/v2/lib/SubStr.htm
+  'Suspend',                               // https://www.autohotkey.com/docs/v2/lib/Suspend.htm
+  'SysGet',                                // https://www.autohotkey.com/docs/v2/lib/SysGet.htm
+  'SysGetIPAddresses',                     // https://www.autohotkey.com/docs/v2/lib/SysGetIPAddresses.htm
 ] as const;
 export const deprecatedBuiltinFunctionNames = [
   // https://www.autohotkey.com/docs/v2/lib/SendPlay.htm
