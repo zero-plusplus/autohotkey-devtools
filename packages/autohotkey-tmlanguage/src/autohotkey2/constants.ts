@@ -317,6 +317,29 @@ export const builtInFunctionNames = [
   'EnvGet',                                // https://www.autohotkey.com/docs/v2/lib/EnvGet.htm
   'EnvSet',                                // https://www.autohotkey.com/docs/v2/lib/EnvSet.htm
   'Exp',                                   // https://www.autohotkey.com/docs/v2/lib/Exp.htm
+  'FileAppend',                            // https://www.autohotkey.com/docs/v2/lib/FileAppend.htm
+  'FileCopy',                              // https://www.autohotkey.com/docs/v2/lib/FileCopy.htm
+  'FileCreateShortcut',                    // https://www.autohotkey.com/docs/v2/lib/FileCreateShortcut.htm
+  'FileDelete',                            // https://www.autohotkey.com/docs/v2/lib/FileDelete.htm
+  'FileEncoding',                          // https://www.autohotkey.com/docs/v2/lib/FileEncoding.htm
+  'FileExist',                             // https://www.autohotkey.com/docs/v2/lib/FileExist.htm
+  'FileInstall',                           // https://www.autohotkey.com/docs/v2/lib/FileInstall.htm
+  'FileGetAttrib',                         // https://www.autohotkey.com/docs/v2/lib/FileGetAttrib.htm
+  'FileGetShortcut',                       // https://www.autohotkey.com/docs/v2/lib/FileGetShortcut.htm
+  'FileGetSize',                           // https://www.autohotkey.com/docs/v2/lib/FileGetSize.htm
+  'FileGetTime',                           // https://www.autohotkey.com/docs/v2/lib/FileGetTime.htm
+  'FileGetVersion',                        // https://www.autohotkey.com/docs/v2/lib/FileGetVersion.htm
+  'FileMove',                              // https://www.autohotkey.com/docs/v2/lib/FileMove.htm
+  'FileOpen',                              // https://www.autohotkey.com/docs/v2/lib/FileOpen.htm
+  'FileRead',                              // https://www.autohotkey.com/docs/v2/lib/FileRead.htm
+  'FileRecycle',                           // https://www.autohotkey.com/docs/v2/lib/FileRecycle.htm
+  'FileRecycleEmpty',                      // https://www.autohotkey.com/docs/v2/lib/FileRecycleEmpty.htm
+  'FileSelect',                            // https://www.autohotkey.com/docs/v2/lib/FileSelect.htm
+  'FileSetAttrib',                         // https://www.autohotkey.com/docs/v2/lib/FileSetAttrib.htm
+  'Float',                                 // https://www.autohotkey.com/docs/v2/lib/Float.htm
+  'Floor',                                 // https://www.autohotkey.com/docs/v2/lib/Floor.htm
+  'Format',                                // https://www.autohotkey.com/docs/v2/lib/Format.htm
+  'FormatTime',                            // https://www.autohotkey.com/docs/v2/lib/FormatTime.htm
 ] as const;
 
 // https://www.autohotkey.com/docs/v2/ObjList.htm
