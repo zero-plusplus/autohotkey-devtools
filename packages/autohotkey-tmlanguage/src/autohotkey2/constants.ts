@@ -362,6 +362,21 @@ export const builtInFunctionNames = [
   'HotIfWinNotExist',                      // https://www.autohotkey.com/docs/v2/lib/HotIfWinNotExist.htm
   'Hotkey',                                // https://www.autohotkey.com/docs/v2/lib/Hotkey.htm
   'Hotstring',                             // https://www.autohotkey.com/docs/v2/lib/Hotstring.htm
+  'IL_Create',                             // https://www.autohotkey.com/docs/v2/lib/IL_Create.htm
+  'IL_Add',                                // https://www.autohotkey.com/docs/v2/lib/IL_Add.htm
+  'IL_Destroy',                            // https://www.autohotkey.com/docs/v2/lib/IL_Destroy.htm
+  'ImageSearch',                           // https://www.autohotkey.com/docs/v2/lib/ImageSearch.htm
+  'IniDelete',                             // https://www.autohotkey.com/docs/v2/lib/IniDelete.htm
+  'IniRead',                               // https://www.autohotkey.com/docs/v2/lib/IniRead.htm
+  'IniWrite',                              // https://www.autohotkey.com/docs/v2/lib/IniWrite.htm
+  'InputBox',                              // https://www.autohotkey.com/docs/v2/lib/InputBox.htm
+  'InstallKeybdHook',                      // https://www.autohotkey.com/docs/v2/lib/InstallKeybdHook.htm
+  'InstallMouseHook',                      // https://www.autohotkey.com/docs/v2/lib/InstallMouseHook.htm
+  'InStr',                                 // https://www.autohotkey.com/docs/v2/lib/InStr.htm
+  'IsLabel',                               // https://www.autohotkey.com/docs/v2/lib/IsLabel.htm
+  'IsObject',                              // https://www.autohotkey.com/docs/v2/lib/IsObject.htm
+  'IsSet',                                 // https://www.autohotkey.com/docs/v2/lib/IsSet.htm
+  'IsSetRef',                              // https://www.autohotkey.com/docs/v2/lib/IsSetRef.htm
 ] as const;
 
 // https://www.autohotkey.com/docs/v2/ObjList.htm
