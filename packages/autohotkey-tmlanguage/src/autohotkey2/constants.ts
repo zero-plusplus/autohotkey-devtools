@@ -530,6 +530,15 @@ export const builtInFunctionNames = [
   'WinGetTitle',                           // https://www.autohotkey.com/docs/v2/lib/WinGetTitle.htm
   'WinGetTransColor',                      // https://www.autohotkey.com/docs/v2/lib/WinGetTransColor.htm
   'WinGetTransparent',                     // https://www.autohotkey.com/docs/v2/lib/WinGetTransparent.htm
+  'WinHide',                               // https://www.autohotkey.com/docs/v2/lib/WinHide.htm
+  'WinKill',                               // https://www.autohotkey.com/docs/v2/lib/WinKill.htm
+  'WinMaximize',                           // https://www.autohotkey.com/docs/v2/lib/WinMaximize.htm
+  'WinMinimize',                           // https://www.autohotkey.com/docs/v2/lib/WinMinimize.htm
+  'WinMinimizeAll',                        // https://www.autohotkey.com/docs/v2/lib/WinMinimizeAll.htm
+  'WinMinimizeAllUndo',                    // https://www.autohotkey.com/docs/v2/lib/WinMinimizeAllUndo.htm
+  'WinMove',                               // https://www.autohotkey.com/docs/v2/lib/WinMove.htm
+  'WinMoveBottom',                         // https://www.autohotkey.com/docs/v2/lib/WinMoveBottom.htm
+  'WinMoveTop',                            // https://www.autohotkey.com/docs/v2/lib/WinMoveTop.htm
 ] as const;
 export const deprecatedBuiltinFunctionNames = [
   // https://www.autohotkey.com/docs/v2/lib/SendPlay.htm
