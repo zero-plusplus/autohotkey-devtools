@@ -388,7 +388,7 @@ export const builtInFunctionNames = [
   'Ln',                                    // https://www.autohotkey.com/docs/v2/lib/Ln.htm
 export const deprecatedBuiltinFunctionNames = [
   // https://www.autohotkey.com/docs/v2/lib/SendPlay.htm
-  'SendPlay', 
+  'SendPlay',
 ] as const;
 
 // https://www.autohotkey.com/docs/v2/ObjList.htm
