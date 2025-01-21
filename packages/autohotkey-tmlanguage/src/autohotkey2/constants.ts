@@ -515,6 +515,21 @@ export const builtInFunctionNames = [
   'WinGetClientPos',                       // https://www.autohotkey.com/docs/v2/lib/WinGetClientPos.htm
   'WinGetControls',                        // https://www.autohotkey.com/docs/v2/lib/WinGetControls.htm
   'WinGetControlsHwnd',                    // https://www.autohotkey.com/docs/v2/lib/WinGetControlsHwnd.htm
+  'WinGetCount',                           // https://www.autohotkey.com/docs/v2/lib/WinGetCount.htm
+  'WinGetID',                              // https://www.autohotkey.com/docs/v2/lib/WinGetID.htm
+  'WinGetIDLast',                          // https://www.autohotkey.com/docs/v2/lib/WinGetIDLast.htm
+  'WinGetList',                            // https://www.autohotkey.com/docs/v2/lib/WinGetList.htm
+  'WinGetMinMax',                          // https://www.autohotkey.com/docs/v2/lib/WinGetMinMax.htm
+  'WinGetPID',                             // https://www.autohotkey.com/docs/v2/lib/WinGetPID.htm
+  'WinGetPos',                             // https://www.autohotkey.com/docs/v2/lib/WinGetPos.htm
+  'WinGetProcessName',                     // https://www.autohotkey.com/docs/v2/lib/WinGetProcessName.htm
+  'WinGetProcessPath',                     // https://www.autohotkey.com/docs/v2/lib/WinGetProcessPath.htm
+  'WinGetStyle',                           // https://www.autohotkey.com/docs/v2/lib/WinGetStyle.htm
+  'WinGetExStyle',                         // https://www.autohotkey.com/docs/v2/lib/WinGetExStyle.htm
+  'WinGetText',                            // https://www.autohotkey.com/docs/v2/lib/WinGetText.htm
+  'WinGetTitle',                           // https://www.autohotkey.com/docs/v2/lib/WinGetTitle.htm
+  'WinGetTransColor',                      // https://www.autohotkey.com/docs/v2/lib/WinGetTransColor.htm
+  'WinGetTransparent',                     // https://www.autohotkey.com/docs/v2/lib/WinGetTransparent.htm
 ] as const;
 export const deprecatedBuiltinFunctionNames = [
   // https://www.autohotkey.com/docs/v2/lib/SendPlay.htm
