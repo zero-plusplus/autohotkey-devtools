@@ -386,6 +386,21 @@ export const builtInFunctionNames = [
   'LoadPicture',                           // https://www.autohotkey.com/docs/v2/lib/LoadPicture.htm
   'Log',                                   // https://www.autohotkey.com/docs/v2/lib/Log.htm
   'Ln',                                    // https://www.autohotkey.com/docs/v2/lib/Ln.htm
+  'Max',                                   // https://www.autohotkey.com/docs/v2/lib/Max.htm
+  'MenuFromHandle',                        // https://www.autohotkey.com/docs/v2/lib/MenuFromHandle.htm
+  'MenuSelect',                            // https://www.autohotkey.com/docs/v2/lib/MenuSelect.htm
+  'Min',                                   // https://www.autohotkey.com/docs/v2/lib/Min.htm
+  'Mod',                                   // https://www.autohotkey.com/docs/v2/lib/Mod.htm
+  'MonitorGet',                            // https://www.autohotkey.com/docs/v2/lib/MonitorGet.htm
+  'MonitorGetCount',                       // https://www.autohotkey.com/docs/v2/lib/MonitorGetCount.htm
+  'MonitorGetName',                        // https://www.autohotkey.com/docs/v2/lib/MonitorGetName.htm
+  'MonitorGetPrimary',                     // https://www.autohotkey.com/docs/v2/lib/MonitorGetPrimary.htm
+  'MonitorGetWorkArea',                    // https://www.autohotkey.com/docs/v2/lib/MonitorGetWorkArea.htm
+  'MouseClick',                            // https://www.autohotkey.com/docs/v2/lib/MouseClick.htm
+  'MouseClickDrag',                        // https://www.autohotkey.com/docs/v2/lib/MouseClickDrag.htm
+  'MouseGetPos',                           // https://www.autohotkey.com/docs/v2/lib/MouseGetPos.htm
+  'MouseMove',                             // https://www.autohotkey.com/docs/v2/lib/MouseMove.htm
+  'MsgBox',                                // https://www.autohotkey.com/docs/v2/lib/MsgBox.htm
 export const deprecatedBuiltinFunctionNames = [
   // https://www.autohotkey.com/docs/v2/lib/SendPlay.htm
   'SendPlay',
