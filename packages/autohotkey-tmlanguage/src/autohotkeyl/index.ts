@@ -196,7 +196,7 @@ export function createRepositories(scopeName: ScopeName): Repositories {
 
         includeRule(Repository.PropertyDeclaration),
         includeRule(Repository.BlockInClassBody),
-        includeRule(Repository.ExpressionStatement),
+        includeRule(Repository.Statement),
       ],
     }),
     [Repository.BlockInClassBody]: rule_v1.createBlockInClassBodyRule(scopeName),

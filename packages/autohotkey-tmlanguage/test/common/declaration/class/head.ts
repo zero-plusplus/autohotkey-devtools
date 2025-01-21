@@ -79,5 +79,23 @@ export function createClassHeadDeclarationExpectedData(scopeName: ScopeName): Ex
         ]),
       ],
     ],
+
+    // Nested class
+    [
+      dedent`
+        class {
+          class {
+          }
+        }
+      `,
+      [
+        { text: 'class', scopes: name(scopeName, RuleName.ClassKeyword) },
+        { text: '{', scopes: name(scopeName, RuleName.ClassBlockBegin) },
+        { text: 'class', scopes: name(scopeName, RuleName.ClassKeyword) },
+        { text: '{', scopes: name(scopeName, RuleName.ClassBlockBegin) },
+        { text: '}', scopes: name(scopeName, RuleName.ClassBlockEnd) },
+        { text: '}', scopes: name(scopeName, RuleName.ClassBlockEnd) },
+      ],
+    ],
   ];
 }
