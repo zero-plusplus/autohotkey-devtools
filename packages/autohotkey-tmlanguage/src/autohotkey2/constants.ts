@@ -352,6 +352,16 @@ export const builtInFunctionNames = [
   'GroupDeactivate',                       // https://www.autohotkey.com/docs/v2/lib/GroupDeactivate.htm
   'GuiCtrlFromHwnd',                       // https://www.autohotkey.com/docs/v2/lib/GuiCtrlFromHwnd.htm
   'GuiFromHwnd',                           // https://www.autohotkey.com/docs/v2/lib/GuiFromHwnd.htm
+  'HasBase',                               // https://www.autohotkey.com/docs/v2/lib/HasBase.htm
+  'HasMethod',                             // https://www.autohotkey.com/docs/v2/lib/HasMethod.htm
+  'HasProp',                               // https://www.autohotkey.com/docs/v2/lib/HasProp.htm
+  'HotIf',                                 // https://www.autohotkey.com/docs/v2/lib/HotIf.htm
+  'HotIfWinActive',                        // https://www.autohotkey.com/docs/v2/lib/HotIfWinActive.htm
+  'HotIfWinExist',                         // https://www.autohotkey.com/docs/v2/lib/HotIfWinExist.htm
+  'HotIfWinNotActive',                     // https://www.autohotkey.com/docs/v2/lib/HotIfWinNotActive.htm
+  'HotIfWinNotExist',                      // https://www.autohotkey.com/docs/v2/lib/HotIfWinNotExist.htm
+  'Hotkey',                                // https://www.autohotkey.com/docs/v2/lib/Hotkey.htm
+  'Hotstring',                             // https://www.autohotkey.com/docs/v2/lib/Hotstring.htm
 ] as const;
 
 // https://www.autohotkey.com/docs/v2/ObjList.htm
