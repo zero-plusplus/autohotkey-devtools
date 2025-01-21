@@ -307,6 +307,16 @@ export const builtInFunctionNames = [
   'DriveRetract',                          // https://www.autohotkey.com/docs/v2/lib/DriveRetract.htm
   'DriveSetLabel',                         // https://www.autohotkey.com/docs/v2/lib/DriveSetLabel.htm
   'DriveUnlock',                           // https://www.autohotkey.com/docs/v2/lib/DriveUnlock.htm
+  'Edit',                                  // https://www.autohotkey.com/docs/v2/lib/Edit.htm
+  'EditGetCurrentCol',                     // https://www.autohotkey.com/docs/v2/lib/EditGetCurrentCol.htm
+  'EditGetCurrentLine',                    // https://www.autohotkey.com/docs/v2/lib/EditGetCurrentLine.htm
+  'EditGetLine',                           // https://www.autohotkey.com/docs/v2/lib/EditGetLine.htm
+  'EditGetLineCount',                      // https://www.autohotkey.com/docs/v2/lib/EditGetLineCount.htm
+  'EditGetSelectedText',                   // https://www.autohotkey.com/docs/v2/lib/EditGetSelectedText.htm
+  'EditPaste',                             // https://www.autohotkey.com/docs/v2/lib/EditPaste.htm
+  'EnvGet',                                // https://www.autohotkey.com/docs/v2/lib/EnvGet.htm
+  'EnvSet',                                // https://www.autohotkey.com/docs/v2/lib/EnvSet.htm
+  'Exp',                                   // https://www.autohotkey.com/docs/v2/lib/Exp.htm
 ] as const;
 
 // https://www.autohotkey.com/docs/v2/ObjList.htm
