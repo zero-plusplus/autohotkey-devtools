@@ -19,6 +19,7 @@ export const expressionKeywords = [
   'NOT',        // e.g. `not expression`
   'AND',        // e.g. `1 and 1`
   'OR',         // e.g. `1 or 1`
+  'Unset',      // e.g. `xxx(y := unset)
 
   // Keywords reserved for future use
   'IN',
@@ -29,7 +30,7 @@ export const expressionKeywords = [
 // #region [BuiltIn](https://www.autohotkey.com/docs/v2/Variables.htm#BuiltIn)
 export const keywordLikeBuiltinVariables = [
   'This',
-  'Base',
+  'Super',
   'True',
   'False',
 ] as const;
