@@ -539,6 +539,21 @@ export const builtInFunctionNames = [
   'WinMove',                               // https://www.autohotkey.com/docs/v2/lib/WinMove.htm
   'WinMoveBottom',                         // https://www.autohotkey.com/docs/v2/lib/WinMoveBottom.htm
   'WinMoveTop',                            // https://www.autohotkey.com/docs/v2/lib/WinMoveTop.htm
+  'WinRedraw',                             // https://www.autohotkey.com/docs/v2/lib/WinRedraw.htm
+  'WinRestore',                            // https://www.autohotkey.com/docs/v2/lib/WinRestore.htm
+  'WinSetAlwaysOnTop',                     // https://www.autohotkey.com/docs/v2/lib/WinSetAlwaysOnTop.htm
+  'WinSetEnabled',                         // https://www.autohotkey.com/docs/v2/lib/WinSetEnabled.htm
+  'WinSetRegion',                          // https://www.autohotkey.com/docs/v2/lib/WinSetRegion.htm
+  'WinSetStyle',                           // https://www.autohotkey.com/docs/v2/lib/WinSetStyle.htm
+  'WinSetExStyle',                         // https://www.autohotkey.com/docs/v2/lib/WinSetExStyle.htm
+  'WinSetTitle',                           // https://www.autohotkey.com/docs/v2/lib/WinSetTitle.htm
+  'WinSetTransColor',                      // https://www.autohotkey.com/docs/v2/lib/WinSetTransColor.htm
+  'WinSetTransparent',                     // https://www.autohotkey.com/docs/v2/lib/WinSetTransparent.htm
+  'WinShow',                               // https://www.autohotkey.com/docs/v2/lib/WinShow.htm
+  'WinWait',                               // https://www.autohotkey.com/docs/v2/lib/WinWait.htm
+  'WinWaitActive',                         // https://www.autohotkey.com/docs/v2/lib/WinWaitActive.htm
+  'WinWaitNotActive',                      // https://www.autohotkey.com/docs/v2/lib/WinWaitNotActive.htm
+  'WinWaitClose',                          // https://www.autohotkey.com/docs/v2/lib/WinWaitClose.htm
 ] as const;
 export const deprecatedBuiltinFunctionNames = [
   // https://www.autohotkey.com/docs/v2/lib/SendPlay.htm
