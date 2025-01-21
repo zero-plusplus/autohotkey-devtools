@@ -401,6 +401,8 @@ export const builtInFunctionNames = [
   'MouseGetPos',                           // https://www.autohotkey.com/docs/v2/lib/MouseGetPos.htm
   'MouseMove',                             // https://www.autohotkey.com/docs/v2/lib/MouseMove.htm
   'MsgBox',                                // https://www.autohotkey.com/docs/v2/lib/MsgBox.htm
+  'NumGet',                                // https://www.autohotkey.com/docs/v2/lib/NumGet.htm
+  'NumPut',                                // https://www.autohotkey.com/docs/v2/lib/NumPut.htm
 ] as const;
 export const deprecatedBuiltinFunctionNames = [
   // https://www.autohotkey.com/docs/v2/lib/SendPlay.htm
