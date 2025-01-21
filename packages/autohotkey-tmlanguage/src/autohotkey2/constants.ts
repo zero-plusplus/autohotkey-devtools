@@ -419,6 +419,19 @@ export const builtInFunctionNames = [
   'OnMessage',                             // https://www.autohotkey.com/docs/v2/lib/OnMessage.htm
   'Ord',                                   // https://www.autohotkey.com/docs/v2/lib/Ord.htm
   'OutputDebug',                           // https://www.autohotkey.com/docs/v2/lib/OutputDebug.htm
+  'Pause',                                 // https://www.autohotkey.com/docs/v2/lib/Pause.htm
+  'Persistent',                            // https://www.autohotkey.com/docs/v2/lib/Persistent.htm
+  'PixelGetColor',                         // https://www.autohotkey.com/docs/v2/lib/PixelGetColor.htm
+  'PixelSearch',                           // https://www.autohotkey.com/docs/v2/lib/PixelSearch.htm
+  'PostMessage',                           // https://www.autohotkey.com/docs/v2/lib/PostMessage.htm
+  'ProcessClose',                          // https://www.autohotkey.com/docs/v2/lib/ProcessClose.htm
+  'ProcessExist',                          // https://www.autohotkey.com/docs/v2/lib/ProcessExist.htm
+  'ProcessGetName',                        // https://www.autohotkey.com/docs/v2/lib/ProcessGetName.htm
+  'ProcessGetParent',                      // https://www.autohotkey.com/docs/v2/lib/ProcessGetParent.htm
+  'ProcessGetPath',                        // https://www.autohotkey.com/docs/v2/lib/ProcessGetPath.htm
+  'ProcessSetPriority',                    // https://www.autohotkey.com/docs/v2/lib/ProcessSetPriority.htm
+  'ProcessWait',                           // https://www.autohotkey.com/docs/v2/lib/ProcessWait.htm
+  'ProcessWaitClose',                      // https://www.autohotkey.com/docs/v2/lib/ProcessWaitClose.htm
 ] as const;
 export const deprecatedBuiltinFunctionNames = [
   // https://www.autohotkey.com/docs/v2/lib/SendPlay.htm
