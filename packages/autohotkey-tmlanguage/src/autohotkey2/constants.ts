@@ -340,6 +340,18 @@ export const builtInFunctionNames = [
   'Floor',                                 // https://www.autohotkey.com/docs/v2/lib/Floor.htm
   'Format',                                // https://www.autohotkey.com/docs/v2/lib/Format.htm
   'FormatTime',                            // https://www.autohotkey.com/docs/v2/lib/FormatTime.htm
+  'GetKeyName',                            // https://www.autohotkey.com/docs/v2/lib/GetKeyName.htm
+  'GetKeyVK',                              // https://www.autohotkey.com/docs/v2/lib/GetKeyVK.htm
+  'GetKeySC',                              // https://www.autohotkey.com/docs/v2/lib/GetKeySC.htm
+  'GetKeyState',                           // https://www.autohotkey.com/docs/v2/lib/GetKeyState.htm
+  'GetMethod',                             // https://www.autohotkey.com/docs/v2/lib/GetMethod.htm
+  'Goto',                                  // https://www.autohotkey.com/docs/v2/lib/Goto.htm
+  'GroupActivate',                         // https://www.autohotkey.com/docs/v2/lib/GroupActivate.htm
+  'GroupAdd',                              // https://www.autohotkey.com/docs/v2/lib/GroupAdd.htm
+  'GroupClose',                            // https://www.autohotkey.com/docs/v2/lib/GroupClose.htm
+  'GroupDeactivate',                       // https://www.autohotkey.com/docs/v2/lib/GroupDeactivate.htm
+  'GuiCtrlFromHwnd',                       // https://www.autohotkey.com/docs/v2/lib/GuiCtrlFromHwnd.htm
+  'GuiFromHwnd',                           // https://www.autohotkey.com/docs/v2/lib/GuiFromHwnd.htm
 ] as const;
 
 // https://www.autohotkey.com/docs/v2/ObjList.htm
