@@ -16,7 +16,7 @@ export function createFunctionDeclarationExpectedData(scopeName: ScopeName): Exp
       `, [
         { text: 'abc', scopes: name(scopeName, RuleName.FunctionName) },
         { text: '(', scopes: name(scopeName, RuleName.OpenParen) },
-        { text: 'byref', scopes: name(scopeName, RuleName.ByrefKeyword) },
+        { text: 'byref', scopes: name(scopeName, RuleName.KeywordInExpression) },
         { text: 'a', scopes: name(scopeName, RuleName.Variable) },
         { text: ',', scopes: name(scopeName, RuleName.Comma) },
         { text: 'b', scopes: name(scopeName, RuleName.Variable) },

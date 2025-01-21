@@ -1,32 +1,37 @@
 import { Repository, RuleName } from '../../../constants';
-import { alt, capture, char, group, inlineSpaces0, keyword, lookbehind, seq, startAnchor } from '../../../oniguruma';
+import { alt, capture, char, group, inlineSpace, inlineSpaces0, keyword, lookbehind, optseq, ordalt, seq, startAnchor } from '../../../oniguruma';
 import type { BeginEndRule, MatchRule, ScopeName } from '../../../types';
-import { includeRule, nameRule } from '../../../utils';
+import { includeRule, nameRule, patternsRule } from '../../../utils';
 
 interface Placeholder {
-  startAnchor: string;
+  modifiers: readonly string[];
   identifierPattern: string;
   keywordsInArgument: readonly string[];
 }
 export function createPropertyDeclarationRule(scopeName: ScopeName, placeholder: Placeholder): BeginEndRule {
   return {
     begin: seq(
-      lookbehind(placeholder.startAnchor),
+      startAnchor(),
+      inlineSpaces0(),
+      optseq(
+        capture(ordalt(...placeholder.modifiers)),
+        inlineSpace(),
+      ),
       inlineSpaces0(),
       capture(placeholder.identifierPattern),
       capture(char('[')),
     ),
     beginCaptures: {
-      1: nameRule(scopeName, RuleName.OpenBracket),
+      1: nameRule(scopeName, RuleName.Modifier),
+      2: patternsRule(includeRule(Repository.Expression)),
+      3: nameRule(scopeName, RuleName.OpenBracket),
     },
     end: capture(char(']')),
     endCaptures: {
       1: nameRule(scopeName, RuleName.CloseBracket),
     },
     patterns: [
-      includeRule(Repository.DirectiveStatement),
-      includeRule(Repository.Comment),
-      includeRule(Repository.ParenthesizedExpression),
+      includeRule(Repository.Meta),
 
       ...placeholder.keywordsInArgument.map((keywordsInArgument): MatchRule => {
         return {
@@ -39,7 +44,7 @@ export function createPropertyDeclarationRule(scopeName: ScopeName, placeholder:
             capture(keyword(keywordsInArgument)),
           ),
           captures: {
-            1: nameRule(scopeName, RuleName.ByrefKeyword),
+            1: nameRule(scopeName, RuleName.KeywordInExpression),
           },
         };
       }),

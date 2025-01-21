@@ -46,7 +46,7 @@ function createKeywordInArgumentRule(scopeName: ScopeName, placeholder: Placehol
         capture(keyword(keywordsInArgument)),
       ),
       captures: {
-        1: nameRule(scopeName, RuleName.ByrefKeyword),
+        1: nameRule(scopeName, RuleName.KeywordInExpression),
       },
     };
   }));

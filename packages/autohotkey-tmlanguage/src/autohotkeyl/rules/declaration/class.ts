@@ -1,6 +1,6 @@
 import { Repository, RuleName } from '../../../constants';
 import { alt, capture, char, endAnchor, group, inlineSpaces0, inlineSpaces1, keyword, lookahead, lookbehind, seq, startAnchor } from '../../../oniguruma';
-import type { BeginEndRule, ScopeName } from '../../../types';
+import type { BeginEndRule, Rule, ScopeName } from '../../../types';
 import { includeRule, name, nameRule } from '../../../utils';
 import { createBlockRule } from './block';
 
@@ -8,6 +8,7 @@ interface Placeholder {
   startAnchor: string;
   endAnchor: string;
   identifierPattern: string;
+  rulesInBody: Rule[];
 }
 export function createClassDeclarationRule(scopeName: ScopeName, placeholder: Placeholder): BeginEndRule {
   return {
@@ -60,34 +61,30 @@ export function createClassDeclarationRule(scopeName: ScopeName, placeholder: Pl
         endCaptures: {
           1: nameRule(scopeName, RuleName.ClassBlockEnd),
         },
-        patterns: [
-          // overwrite block
-          createBlockRule(scopeName, {
-            statementsInBlock: [
-              // get-set
-              {
-                match: seq(
-                  startAnchor(),
-                  inlineSpaces0(),
-                  capture(keyword('get', 'set')),
-                  lookahead(alt(
-                    seq(inlineSpaces1(), char(';')),
-                    seq(inlineSpaces0(), group(alt(char('{'), endAnchor()))),
-                  )),
-                ),
-                captures: {
-                  1: nameRule(scopeName, RuleName.GetSetKeyword),
-                },
-              },
-              includeRule(Repository.Self),
-            ],
-          }),
-
-          includeRule(Repository.Comment),
-          includeRule(Repository.StatementWithoutCallAndExpression),
-          includeRule(Repository.ExpressionStatement),
-        ],
+        patterns: placeholder.rulesInBody,
       },
     ],
   };
+}
+export function createBlockInClassBodyRule(scopeName: ScopeName): BeginEndRule {
+  return createBlockRule(scopeName, {
+    statementsInBlock: [
+      // get-set
+      {
+        match: seq(
+          startAnchor(),
+          inlineSpaces0(),
+          capture(keyword('get', 'set')),
+          lookahead(alt(
+            seq(inlineSpaces1(), char(';')),
+            seq(inlineSpaces0(), group(alt(char('{'), endAnchor()))),
+          )),
+        ),
+        captures: {
+          1: nameRule(scopeName, RuleName.GetSetKeyword),
+        },
+      },
+      includeRule(Repository.Self),
+    ],
+  });
 }

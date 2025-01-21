@@ -25,6 +25,10 @@ export function createTmLanguage(): TmLanguage {
 export function createRepositories(scopeName: ScopeName): Repositories {
   return {
     [Repository.FencedCodeBlockInDocument]: markdown.createCodeFenceInDocumentRule(),
+    [Repository.Meta]: patternsRule(
+      includeRule(Repository.Comment),
+      includeRule(Repository.DirectiveStatement),
+    ),
 
     // #region trivia
     [Repository.Comment]: patternsRule(
@@ -62,12 +66,12 @@ export function createRepositories(scopeName: ScopeName): Repositories {
 
     // #region statement
     [Repository.Statement]: patternsRule(
-      includeRule(Repository.StatementWithoutCallAndExpression),
+      includeRule(Repository.StatementCommon),
 
       includeRule(Repository.CallStatement),
       includeRule(Repository.ExpressionStatement),
     ),
-    [Repository.StatementWithoutCallAndExpression]: patternsRule(
+    [Repository.StatementCommon]: patternsRule(
       includeRule(Repository.Declaration),
       includeRule(Repository.IncludeStatement),
       includeRule(Repository.DirectiveStatement),
@@ -212,9 +216,18 @@ export function createRepositories(scopeName: ScopeName): Repositories {
       startAnchor: patterns_v1.statementStartAnchor,
       endAnchor: patterns_v1.lineEndAnchor,
       identifierPattern: patterns_v2.identifierPattern,
+      rulesInBody: [
+        includeRule(Repository.Meta),
+
+        includeRule(Repository.PropertyDeclaration),
+        includeRule(Repository.BlockInClassBody),
+        includeRule(Repository.StatementCommon),
+        includeRule(Repository.ExpressionStatement),
+      ],
     }),
+    [Repository.BlockInClassBody]: rule_v1.createBlockInClassBodyRule(scopeName),
     [Repository.PropertyDeclaration]: rule_v1.createPropertyDeclarationRule(scopeName, {
-      startAnchor: patterns_v1.statementStartAnchor,
+      modifiers: constants_v1.modifiers,
       identifierPattern: patterns_v2.identifierPattern,
       keywordsInArgument: [],
     }),

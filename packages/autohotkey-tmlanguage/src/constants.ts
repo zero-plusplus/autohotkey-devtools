@@ -240,6 +240,7 @@ export const commonPcreUnicodeProperyScripts = [
 // #region enum
 export const enum Repository {
   Self = '$self',
+  Meta = 'repository.meta',
 
   // #region trivas
   Comment = 'repository.comment',
@@ -262,7 +263,7 @@ export const enum Repository {
 
   // #region statements
   Statement = 'repository.statement',
-  StatementWithoutCallAndExpression = 'repository.statement.without-call-and-expression',
+  StatementCommon = 'repository.statement.common',
   ExpressionStatement = 'repository.statement.expression',
   IncludeStatement = 'repository.statement.include',
   DirectiveStatement = 'repository.statement.directive',
@@ -291,7 +292,9 @@ export const enum Repository {
   Modifier = 'repository.declaration.modifier',
   Declaration = 'repository.declaration',
   AssignmentDeclaration = 'repository.declaration.assignment',
+  TypedAssignmentDeclaration = 'repository.declaration.assignment.typed',
   ClassDeclaration = 'repository.declaration.class',
+  BlockInClassBody = 'repository.declaration.block.in-class-body',
   PropertyDeclaration = 'repository.declaration.property',
   // #endregion declaration
 
@@ -433,6 +436,7 @@ export const enum RuleName {
   // #endregion statement
 
   // #region declaration
+  Type = 'entity.name.type',
   Modifier = 'storage.modifier',
   BlockBegin = 'punctuation.definition.block.begin',
   ClassBlockBegin = 'punctuation.definition.class.block.begin',
