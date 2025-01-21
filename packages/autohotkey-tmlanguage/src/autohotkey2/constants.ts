@@ -345,7 +345,7 @@ export const builtInFunctionNames = [
   'GetKeySC',                              // https://www.autohotkey.com/docs/v2/lib/GetKeySC.htm
   'GetKeyState',                           // https://www.autohotkey.com/docs/v2/lib/GetKeyState.htm
   'GetMethod',                             // https://www.autohotkey.com/docs/v2/lib/GetMethod.htm
-  'Goto',                                  // https://www.autohotkey.com/docs/v2/lib/Goto.htm
+  // 'Goto',                               // https://www.autohotkey.com/docs/v2/lib/Goto.htm
   'GroupActivate',                         // https://www.autohotkey.com/docs/v2/lib/GroupActivate.htm
   'GroupAdd',                              // https://www.autohotkey.com/docs/v2/lib/GroupAdd.htm
   'GroupClose',                            // https://www.autohotkey.com/docs/v2/lib/GroupClose.htm
