@@ -3,6 +3,7 @@ import * as common from '../../common';
 import type { ExpectedTestData } from '../../types';
 import { createAssignmentDeclarationExpectedData } from './declaration/assignment';
 import { createClassDeclarationExpectedData } from './declaration/class';
+import { createFieldDeclarationExpectedData } from './declaration/class/field';
 import { createFunctionDeclarationExpectedData } from './declaration/function';
 import { createHotkeyLabelStatementExpectedData } from './declaration/hotkeyLabel';
 import { createHotstringLabelStatementExpectedData } from './declaration/hotstringLabel';
@@ -45,6 +46,7 @@ export function createExpectedDataList(scopeName: ScopeName): ExpectedTestData[]
     ...createClassDeclarationExpectedData(scopeName),
     ...createDereferenceExpressionExpectedData(scopeName),
     ...createDirectiveStatementExpectedData(scopeName),
+    ...createFieldDeclarationExpectedData(scopeName),
     ...createForStatementExpectedData(scopeName),
     ...createFunctionDeclarationExpectedData(scopeName),
     ...createHotkeyLabelStatementExpectedData(scopeName),

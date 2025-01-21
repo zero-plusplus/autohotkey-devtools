@@ -3,6 +3,7 @@ import type { ExpectedTestData } from '../../types';
 import { createAssignmentDeclarationExpectedData } from './declaration/assignment';
 import { createBlockDeclarationExpectedData } from './declaration/block';
 import { createClassDeclarationExpectedData } from './declaration/class';
+import { createFieldDeclarationExpectedData } from './declaration/class/field';
 import { createFunctionDeclarationExpectedData } from './declaration/function';
 import { createHotkeyLabelStatementExpectedData } from './declaration/hotkeyLabel';
 import { createHotstringLabelStatementExpectedData } from './declaration/hotstringLabel';
@@ -91,6 +92,7 @@ export function createExpectedDataList(scopeName: ScopeName): ExpectedTestData[]
     ...createDereferenceExpressionExpectedData(scopeName),
     ...createDirectiveStatementExpectedData(scopeName),
     ...createDocumentCommentExpectedData(scopeName),
+    ...createFieldDeclarationExpectedData(scopeName),
     ...createForStatementExpectedData(scopeName),
     ...createFunctionDeclarationExpectedData(scopeName),
     ...createHotkeyLabelStatementExpectedData(scopeName),

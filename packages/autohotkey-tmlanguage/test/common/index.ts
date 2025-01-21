@@ -1,4 +1,5 @@
 export * from './declaration/assignment';
+export * from './declaration/class/field';
 export * from './declaration/class/head';
 export * from './declaration/class/property';
 export * from './declaration/function';
