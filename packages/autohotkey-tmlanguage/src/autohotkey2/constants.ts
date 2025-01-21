@@ -22,6 +22,7 @@ export const expressionKeywords = [
   'Unset',      // e.g. `xxx(y := unset)
 
   // Keywords reserved for future use
+  'AS',
   'IN',
   'CONTAINS',
 ] as const;
