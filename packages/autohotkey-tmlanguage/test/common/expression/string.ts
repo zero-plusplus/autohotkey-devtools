@@ -1,4 +1,4 @@
-import { dedent } from '@zero-plusplus/utilities/src';
+import { dedent, repeatArray } from '@zero-plusplus/utilities/src';
 import { RuleDescriptor, RuleName, StyleName } from '../../../src/constants';
 import type { ScopeName } from '../../../src/types';
 import { name } from '../../../src/utils';
@@ -43,6 +43,16 @@ export function createStringLiteralExpectedData(scopeName: ScopeName, placeholde
         ],
       ];
     }),
+    ...placeholder.escapeSequences.map((escapeSequence): ExpectedTestData => {
+      const count = 5;
+      return [
+        `${q}${escapeSequence.repeat(count)}${q}`, [
+          { text: q, scopes: name(scopeName, placeholder.ruleName, RuleDescriptor.Begin) },
+          ...repeatArray(count, [ { text: escapeSequence, scopes: name(scopeName, placeholder.ruleName, StyleName.Escape) } ]),
+          { text: q, scopes: name(scopeName, placeholder.ruleName, RuleDescriptor.End) },
+        ],
+      ];
+    }),
 
     // String not treated as a regexp
     [
@@ -82,6 +92,40 @@ export function createStringLiteralExpectedData(scopeName: ScopeName, placeholde
         { text: '  2-line', scopes: name(scopeName, placeholder.ruleName) },
         { text: ')', scopes: name(scopeName, RuleName.CloseParen) },
         { text: q, scopes: name(scopeName, placeholder.ruleName, RuleDescriptor.End) },
+      ],
+    ],
+
+    // Do not conflict with labels
+    [
+      dedent`
+        ${q}:${q}
+        ${q}::${q}
+      `, [
+        { text: q, scopes: name(scopeName, placeholder.ruleName, RuleDescriptor.Begin) },
+        { text: ':', scopes: name(scopeName, placeholder.ruleName) },
+        { text: q, scopes: name(scopeName, placeholder.ruleName, RuleDescriptor.End) },
+
+        { text: q, scopes: name(scopeName, placeholder.ruleName, RuleDescriptor.Begin) },
+        { text: '::', scopes: name(scopeName, placeholder.ruleName) },
+        { text: q, scopes: name(scopeName, placeholder.ruleName, RuleDescriptor.End) },
+      ],
+    ],
+    // Multiple occurrences of a string on a single line
+    [
+      dedent`
+        (var ? ${q}  text  ${q} : ${q}  text  ${q})
+      `, [
+        { text: '(', scopes: name(scopeName, RuleName.OpenParen) },
+        { text: 'var', scopes: name(scopeName, RuleName.Variable) },
+        { text: '?', scopes: name(scopeName, RuleName.Operator) },
+        { text: q, scopes: name(scopeName, placeholder.ruleName, RuleDescriptor.Begin) },
+        { text: '  text  ', scopes: name(scopeName, placeholder.ruleName) },
+        { text: q, scopes: name(scopeName, placeholder.ruleName, RuleDescriptor.End) },
+        { text: ':', scopes: name(scopeName, RuleName.Operator) },
+        { text: q, scopes: name(scopeName, placeholder.ruleName, RuleDescriptor.Begin) },
+        { text: '  text  ', scopes: name(scopeName, placeholder.ruleName) },
+        { text: q, scopes: name(scopeName, placeholder.ruleName, RuleDescriptor.End) },
+        { text: ')', scopes: name(scopeName, RuleName.CloseParen) },
       ],
     ],
   ];

@@ -6,15 +6,19 @@ import type { ExpectedTestData } from '../../../types';
 
 export function createStringLiteralExpectedData(scopeName: ScopeName): ExpectedTestData[] {
   return [
-    ...common.createStringLiteralExpectedData(scopeName, {
-      ruleName: RuleName.DoubleString,
-      quote: '"',
-      escapeSequences: constants_v2.doubleQuoteEscapeSequences,
-    }),
-    ...common.createStringLiteralExpectedData(scopeName, {
-      ruleName: RuleName.SingleString,
-      quote: `'`,
-      escapeSequences: constants_v2.singleQuoteEscapeSequences,
+    ...[
+      {
+        ruleName: RuleName.DoubleString,
+        quote: '"',
+        escapeSequences: constants_v2.doubleQuoteEscapeSequences,
+      },
+      {
+        ruleName: RuleName.SingleString,
+        quote: `'`,
+        escapeSequences: constants_v2.singleQuoteEscapeSequences,
+      },
+    ].flatMap((placeholder): ExpectedTestData[] => {
+      return common.createStringLiteralExpectedData(scopeName, placeholder);
     }),
   ];
 }

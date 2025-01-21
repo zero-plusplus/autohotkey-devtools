@@ -1,5 +1,5 @@
 import { RuleDescriptor, StyleName, type Repository } from '../../../constants';
-import { alt, capture, char, escapeOnigurumaTexts, inlineSpaces1, many0, negativeLookahead, negChar, ordalt, reluctant, seq } from '../../../oniguruma';
+import { alt, capture, char, escapeOnigurumaTexts, groupMany0, negChar, ordalt, seq } from '../../../oniguruma';
 import type { ElementName, MatchRule, PatternsRule, ScopeName } from '../../../types';
 import { includeRule, name, nameRule, patternsRule } from '../../../utils';
 
@@ -14,11 +14,10 @@ export function createStringRule(scopeName: ScopeName, placeholder: Placeholder_
     name: name(scopeName, placeholder.stringElementName),
     match: seq(
       capture(char(placeholder.quoteChar)),
-      capture(reluctant(many0(alt(
+      capture(groupMany0(alt(
         placeholder.unescapedQuotePattern,
-        seq(inlineSpaces1(), negativeLookahead(char(';'))),
-        negChar(placeholder.quoteChar, '\\s'),
-      )))),
+        negChar(placeholder.quoteChar),
+      ))),
       capture(char(placeholder.quoteChar)),
     ),
     captures: {
