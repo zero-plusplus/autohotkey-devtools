@@ -281,6 +281,32 @@ export const builtInFunctionNames = [
   'CoordMode',                             // https://www.autohotkey.com/docs/v2/lib/CoordMode.htm
   'Cos',                                   // https://www.autohotkey.com/docs/v2/lib/Cos.htm
   'Critical',                              // https://www.autohotkey.com/docs/v2/lib/Critical.htm
+  'DateAdd',                               // https://www.autohotkey.com/docs/v2/lib/DateAdd.htm
+  'DateDiff',                              // https://www.autohotkey.com/docs/v2/lib/DateDiff.htm
+  'DetectHiddenText',                      // https://www.autohotkey.com/docs/v2/lib/DetectHiddenText.htm
+  'DetectHiddenWindows',                   // https://www.autohotkey.com/docs/v2/lib/DetectHiddenWindows.htm
+  'DirCopy',                               // https://www.autohotkey.com/docs/v2/lib/DirCopy.htm
+  'DirCreate',                             // https://www.autohotkey.com/docs/v2/lib/DirCreate.htm
+  'DirDelete',                             // https://www.autohotkey.com/docs/v2/lib/DirDelete.htm
+  'DirExist',                              // https://www.autohotkey.com/docs/v2/lib/DirExist.htm
+  'DirMove',                               // https://www.autohotkey.com/docs/v2/lib/DirMove.htm
+  'DirSelect',                             // https://www.autohotkey.com/docs/v2/lib/DirSelect.htm
+  'DllCall',                               // https://www.autohotkey.com/docs/v2/lib/DllCall.htm
+  'Download',                              // https://www.autohotkey.com/docs/v2/lib/Download.htm
+  'DriveEject',                            // https://www.autohotkey.com/docs/v2/lib/DriveEject.htm
+  'DriveGetCapacity',                      // https://www.autohotkey.com/docs/v2/lib/DriveGetCapacity.htm
+  'DriveGetFileSystem',                    // https://www.autohotkey.com/docs/v2/lib/DriveGetFileSystem.htm
+  'DriveGetLabel',                         // https://www.autohotkey.com/docs/v2/lib/DriveGetLabel.htm
+  'DriveGetList',                          // https://www.autohotkey.com/docs/v2/lib/DriveGetList.htm
+  'DriveGetSerial',                        // https://www.autohotkey.com/docs/v2/lib/DriveGetSerial.htm
+  'DriveGetSpaceFree',                     // https://www.autohotkey.com/docs/v2/lib/DriveGetSpaceFree.htm
+  'DriveGetStatus',                        // https://www.autohotkey.com/docs/v2/lib/DriveGetStatus.htm
+  'DriveGetStatusCD',                      // https://www.autohotkey.com/docs/v2/lib/DriveGetStatusCD.htm
+  'DriveGetType',                          // https://www.autohotkey.com/docs/v2/lib/DriveGetType.htm
+  'DriveLock',                             // https://www.autohotkey.com/docs/v2/lib/DriveLock.htm
+  'DriveRetract',                          // https://www.autohotkey.com/docs/v2/lib/DriveRetract.htm
+  'DriveSetLabel',                         // https://www.autohotkey.com/docs/v2/lib/DriveSetLabel.htm
+  'DriveUnlock',                           // https://www.autohotkey.com/docs/v2/lib/DriveUnlock.htm
 ] as const;
 
 // https://www.autohotkey.com/docs/v2/ObjList.htm
