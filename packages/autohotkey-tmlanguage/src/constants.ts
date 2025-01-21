@@ -375,7 +375,8 @@ export const enum Repository {
   // #endregion keyword
 
   // #region misc
-  UnquotedStringEscapeSequence = 'repository.misc.string.unquoted.escaped',
+  UnquotedStringEscapeSequence = 'repository.string.unquoted.escaped',
+  FunctionExpressionBlock = 'repository.expression.function',
   // #endregion misc
 
   // #region v1 syntax

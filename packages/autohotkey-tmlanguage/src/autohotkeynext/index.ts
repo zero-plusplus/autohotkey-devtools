@@ -6,11 +6,12 @@ import * as patterns_v1 from '../autohotkeyl/patterns';
 import * as rules_v1 from '../autohotkeyl/rules';
 import { Repository } from '../constants';
 import type { ScopeName, TmLanguage } from '../types';
-import { includeRule } from '../utils';
-import * as vnext from './rules';
+import { includeRule, patternsRule } from '../utils';
+import * as rules_vnext from './rules';
 
 export function createTmLanguage(): TmLanguage {
   const scopeName: ScopeName = 'autohotkeynext';
+  const repositories_v2 = v2.createRepositories(scopeName);
 
   return {
     scopeName: `source.${scopeName}`,
@@ -19,8 +20,9 @@ export function createTmLanguage(): TmLanguage {
       includeRule(Repository.Statement),
     ],
     repository: {
-      ...v2.createRepositories(scopeName),
+      ...repositories_v2,
 
+      // #region declaration
       [Repository.ClassDeclaration]: rules_v1.createClassDeclarationRule(scopeName, {
         startAnchor: patterns_v1.statementStartAnchor,
         endAnchor: patterns_v1.lineEndAnchor,
@@ -35,11 +37,20 @@ export function createTmLanguage(): TmLanguage {
           includeRule(Repository.ExpressionStatement),
         ],
       }),
-      [Repository.TypedAssignmentDeclaration]: vnext.createTypedAssignmentDeclarationRule(scopeName, {
+      [Repository.TypedAssignmentDeclaration]: rules_vnext.createTypedAssignmentDeclarationRule(scopeName, {
         modifiers: constants_v1.modifiers,
         namePattern: patterns_v2.looseLeftHandPattern,
         operators: constants_v2.assignmentOperators,
       }),
+      // #endregion declaration
+
+      // #region expression
+      [Repository.Expression]: patternsRule(
+        ...repositories_v2[Repository.Expression]!.patterns!,
+        includeRule(Repository.FunctionExpressionBlock),
+      ),
+      [Repository.FunctionExpressionBlock]: rules_vnext.createFunctionExpressionBlockRule(scopeName),
+      // #endregion expression
     },
   };
 }
