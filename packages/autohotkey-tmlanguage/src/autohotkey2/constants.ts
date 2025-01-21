@@ -506,6 +506,15 @@ export const builtInFunctionNames = [
   'Type',                                  // https://www.autohotkey.com/docs/v2/lib/Type.htm
   'VarSetStrCapacity',                     // https://www.autohotkey.com/docs/v2/lib/VarSetStrCapacity.htm
   'VerCompare',                            // https://www.autohotkey.com/docs/v2/lib/VerCompare.htm
+  'WinActivate',                           // https://www.autohotkey.com/docs/v2/lib/WinActivate.htm
+  'WinActivateBottom',                     // https://www.autohotkey.com/docs/v2/lib/WinActivateBottom.htm
+  'WinActive',                             // https://www.autohotkey.com/docs/v2/lib/WinActive.htm
+  'WinClose',                              // https://www.autohotkey.com/docs/v2/lib/WinClose.htm
+  'WinExist',                              // https://www.autohotkey.com/docs/v2/lib/WinExist.htm
+  'WinGetClass',                           // https://www.autohotkey.com/docs/v2/lib/WinGetClass.htm
+  'WinGetClientPos',                       // https://www.autohotkey.com/docs/v2/lib/WinGetClientPos.htm
+  'WinGetControls',                        // https://www.autohotkey.com/docs/v2/lib/WinGetControls.htm
+  'WinGetControlsHwnd',                    // https://www.autohotkey.com/docs/v2/lib/WinGetControlsHwnd.htm
 ] as const;
 export const deprecatedBuiltinFunctionNames = [
   // https://www.autohotkey.com/docs/v2/lib/SendPlay.htm
