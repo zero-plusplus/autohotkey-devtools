@@ -403,6 +403,22 @@ export const builtInFunctionNames = [
   'MsgBox',                                // https://www.autohotkey.com/docs/v2/lib/MsgBox.htm
   'NumGet',                                // https://www.autohotkey.com/docs/v2/lib/NumGet.htm
   'NumPut',                                // https://www.autohotkey.com/docs/v2/lib/NumPut.htm
+  'ObjAddRef',                             // https://www.autohotkey.com/docs/v2/lib/ObjAddRef.htm
+  'ObjRelease',                            // https://www.autohotkey.com/docs/v2/lib/ObjRelease.htm
+  'ObjBindMethod',                         // https://www.autohotkey.com/docs/v2/lib/ObjBindMethod.htm
+  'ObjHasOwnProp',                         // https://www.autohotkey.com/docs/v2/lib/ObjHasOwnProp.htm
+  'ObjOwnProps',                           // https://www.autohotkey.com/docs/v2/lib/ObjOwnProps.htm
+  'ObjGetBase',                            // https://www.autohotkey.com/docs/v2/lib/ObjGetBase.htm
+  'ObjGetCapacity',                        // https://www.autohotkey.com/docs/v2/lib/ObjGetCapacity.htm
+  'ObjOwnPropCount',                       // https://www.autohotkey.com/docs/v2/lib/ObjOwnPropCount.htm
+  'ObjSetBase',                            // https://www.autohotkey.com/docs/v2/lib/ObjSetBase.htm
+  'ObjSetCapacity',                        // https://www.autohotkey.com/docs/v2/lib/ObjSetCapacity.htm
+  'OnClipboardChange',                     // https://www.autohotkey.com/docs/v2/lib/OnClipboardChange.htm
+  'OnError',                               // https://www.autohotkey.com/docs/v2/lib/OnError.htm
+  'OnExit',                                // https://www.autohotkey.com/docs/v2/lib/OnExit.htm
+  'OnMessage',                             // https://www.autohotkey.com/docs/v2/lib/OnMessage.htm
+  'Ord',                                   // https://www.autohotkey.com/docs/v2/lib/Ord.htm
+  'OutputDebug',                           // https://www.autohotkey.com/docs/v2/lib/OutputDebug.htm
 ] as const;
 export const deprecatedBuiltinFunctionNames = [
   // https://www.autohotkey.com/docs/v2/lib/SendPlay.htm
