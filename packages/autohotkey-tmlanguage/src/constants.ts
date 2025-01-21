@@ -282,6 +282,8 @@ export const enum Repository {
   HotkeyLabelStatement = 'repository.statement.hotkey',
   HotstringLabelStatement = 'repository.statement.hotstring',
   CallStatement = 'repository.statement.expression.call',
+  BuiltInCallStatement = 'repository.statement.expression.call.builtin',
+  UserDefinedCallStatement = 'repository.statement.expression.call.user-defined',
   // #endregion statements
 
   // #region declaration

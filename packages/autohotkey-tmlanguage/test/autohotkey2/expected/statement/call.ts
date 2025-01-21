@@ -1,5 +1,6 @@
 import { dedent } from '@zero-plusplus/utilities/src';
-import { RuleDescriptor, RuleName } from '../../../../src/constants';
+import { builtInFunctionNames, deprecatedBuiltinFunctionNames } from '../../../../src/autohotkey2/constants';
+import { RuleDescriptor, RuleName, StyleName } from '../../../../src/constants';
 import type { ScopeName } from '../../../../src/types';
 import { name } from '../../../../src/utils';
 import type { ExpectedTestData } from '../../../types';
@@ -23,5 +24,11 @@ export function createCallStatementExpectedData(scopeName: ScopeName): ExpectedT
         { text: '; comment', scopes: name(scopeName, RuleName.InLineComment) },
       ],
     ],
+    ...builtInFunctionNames.map((functionName): ExpectedTestData => {
+      return [ functionName, [ { text: functionName, scopes: name(scopeName, RuleName.FunctionName) } ] ];
+    }),
+    ...deprecatedBuiltinFunctionNames.map((functionName): ExpectedTestData => {
+      return [ functionName, [ { text: functionName, scopes: name(scopeName, RuleName.FunctionName, StyleName.Strikethrough) } ] ];
+    }),
   ];
 }

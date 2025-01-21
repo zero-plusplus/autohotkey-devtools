@@ -70,6 +70,7 @@ export function createRepositories(scopeName: ScopeName): Repositories {
     [Repository.StatementWithoutCallAndExpression]: patternsRule(
       includeRule(Repository.Declaration),
       includeRule(Repository.IncludeStatement),
+      includeRule(Repository.DirectiveStatement),
       includeRule(Repository.JumpStatement),
       includeRule(Repository.JumpToLabelStatement),
       includeRule(Repository.HotstringLabelStatement),
@@ -88,6 +89,20 @@ export function createRepositories(scopeName: ScopeName): Repositories {
       startAnchor: patterns_v1.statementStartAnchor,
       endAnchor: patterns_v1.lineEndAnchor,
     }),
+    [Repository.DirectiveStatement]: patternsRule(
+      rule_v2.createCallStatementRule(scopeName, {
+        commandRuleName: RuleName.DirectiveName,
+        startAnchor: patterns_v1.statementStartAnchor,
+        names: constants_v2.directiveNames,
+        expressionOperators: constants_v2.expressionOperators,
+      }),
+      rule_v2.createCallStatementRule(scopeName, {
+        commandRuleName: RuleName.DirectiveName,
+        startAnchor: patterns_v1.statementStartAnchor,
+        identifierPattern: patterns_v2.directiveNamePattern,
+        expressionOperators: constants_v2.expressionOperators,
+      }),
+    ),
     [Repository.JumpStatement]: rule_v1.createJumpStatement(scopeName, {
       startAnchor: patterns_v1.statementStartAnchor,
       endAnchor: patterns_v1.lineEndAnchor,
@@ -145,7 +160,27 @@ export function createRepositories(scopeName: ScopeName): Repositories {
     [Repository.ThrowStatement]: rule_v1.createThrowStatementRule(scopeName, {
       startAnchor: patterns_v1.statementStartAnchor,
     }),
-    [Repository.CallStatement]: rule_v2.createCallStatementRule(scopeName, {
+    [Repository.CallStatement]: patternsRule(
+      includeRule(Repository.BuiltInCallStatement),
+      includeRule(Repository.UserDefinedCallStatement),
+    ),
+    [Repository.BuiltInCallStatement]: patternsRule(
+      rule_v2.createCallStatementRule(scopeName, {
+        commandRuleName: RuleName.FunctionName,
+        startAnchor: patterns_v1.statementStartAnchor,
+        names: constants_v2.builtInFunctionNames,
+        expressionOperators: constants_v2.expressionOperators,
+      }),
+      rule_v2.createCallStatementRule(scopeName, {
+        commandRuleName: RuleName.FunctionName,
+        startAnchor: patterns_v1.statementStartAnchor,
+        names: constants_v2.deprecatedBuiltinFunctionNames,
+        expressionOperators: constants_v2.expressionOperators,
+        isDeprecated: true,
+      }),
+    ),
+    [Repository.UserDefinedCallStatement]: rule_v2.createCallStatementRule(scopeName, {
+      commandRuleName: RuleName.FunctionName,
       startAnchor: patterns_v1.statementStartAnchor,
       identifierPattern: patterns_v2.identifierPattern,
       expressionOperators: constants_v2.expressionOperators,

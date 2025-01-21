@@ -379,6 +379,9 @@ export const builtInFunctionNames = [
   'IsSetRef',                              // https://www.autohotkey.com/docs/v2/lib/IsSetRef.htm
   'KeyHistory',                            // https://www.autohotkey.com/docs/v2/lib/KeyHistory.htm
   'KeyWait',                               // https://www.autohotkey.com/docs/v2/lib/KeyWait.htm
+export const deprecatedBuiltinFunctionNames = [
+  // https://www.autohotkey.com/docs/v2/lib/SendPlay.htm
+  'SendPlay', 
 ] as const;
 
 // https://www.autohotkey.com/docs/v2/ObjList.htm

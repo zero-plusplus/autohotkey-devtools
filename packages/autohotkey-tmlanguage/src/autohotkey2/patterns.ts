@@ -1,4 +1,4 @@
-import { alt, anyChars1, char, escapeOnigurumaTexts, group, manyLimit, manyXtoY, ordalt, seq, text, wordChar } from '../oniguruma';
+import { alt, anyChars1, char, escapeOnigurumaTexts, group, manyLimit, manyXtoY, optional, ordalt, seq, text, wordChar } from '../oniguruma';
 import * as constants_v2 from './constants';
 
 export const expressionContinuationStartAnchor: string = group(ordalt(...escapeOnigurumaTexts(constants_v2.expressionOperators)));
@@ -17,6 +17,10 @@ export const keyName: string = group(alt(
   group(seq(char('%'), anyChars1(), char('%'))),
   identifierPattern,
 ));
+export const directiveNamePattern: string = seq(
+  char('#'),
+  optional(identifierPattern),
+);
 // #endregion Names
 
 export const looseLeftHandPattern: string = manyXtoY(1, nameLimitLength)(group(alt(
