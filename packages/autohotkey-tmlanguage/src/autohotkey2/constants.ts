@@ -379,6 +379,13 @@ export const builtInFunctionNames = [
   'IsSetRef',                              // https://www.autohotkey.com/docs/v2/lib/IsSetRef.htm
   'KeyHistory',                            // https://www.autohotkey.com/docs/v2/lib/KeyHistory.htm
   'KeyWait',                               // https://www.autohotkey.com/docs/v2/lib/KeyWait.htm
+  'ListHotkeys',                           // https://www.autohotkey.com/docs/v2/lib/ListHotkeys.htm
+  'ListLines',                             // https://www.autohotkey.com/docs/v2/lib/ListLines.htm
+  'ListVars',                              // https://www.autohotkey.com/docs/v2/lib/ListVars.htm
+  'ListViewGetContent',                    // https://www.autohotkey.com/docs/v2/lib/ListViewGetContent.htm
+  'LoadPicture',                           // https://www.autohotkey.com/docs/v2/lib/LoadPicture.htm
+  'Log',                                   // https://www.autohotkey.com/docs/v2/lib/Log.htm
+  'Ln',                                    // https://www.autohotkey.com/docs/v2/lib/Ln.htm
 export const deprecatedBuiltinFunctionNames = [
   // https://www.autohotkey.com/docs/v2/lib/SendPlay.htm
   'SendPlay', 
