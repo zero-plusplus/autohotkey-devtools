@@ -265,6 +265,7 @@ export const enum Repository {
   Statement = 'repository.statement',
   StatementCommon = 'repository.statement.common',
   Import = 'repository.statement.import',
+  Export = 'repository.statement.export',
   ExpressionStatement = 'repository.statement.expression',
   IncludeStatement = 'repository.statement.include',
   DirectiveStatement = 'repository.statement.directive',

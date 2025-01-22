@@ -24,7 +24,6 @@ export function createClassDeclarationRule(scopeName: ScopeName, placeholder: Pl
       // class head
       {
         begin: seq(
-          lookahead(placeholder.startAnchor),
           inlineSpaces0(),
           capture(keyword('class')),
         ),
