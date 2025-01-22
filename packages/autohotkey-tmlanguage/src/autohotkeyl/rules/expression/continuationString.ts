@@ -1,5 +1,5 @@
 import { Repository, RuleDescriptor, RuleName, StyleName } from '../../../constants';
-import { alt, anyChars0, anyChars1, capture, char, endAnchor, group, ignoreCase, inlineSpace, inlineSpaces0, inlineSpaces1, lookahead, lookbehind, many0, negativeLookahead, negChar, negChars0, optseq, ordalt, seq, startAnchor, whitespace } from '../../../oniguruma';
+import { alt, anyChars0, capture, char, endAnchor, group, ignoreCase, inlineSpace, inlineSpaces0, inlineSpaces1, lookahead, lookbehind, many0, negativeLookahead, negChar, negChars0, optseq, ordalt, seq, startAnchor, whitespace } from '../../../oniguruma';
 import type { BeginEndRule, ElementName, ScopeName } from '../../../types';
 import { includeRule, name, nameRule, patternsRule } from '../../../utils';
 
@@ -34,29 +34,33 @@ export function createContinuationString(scopeName: ScopeName, placeholder: Plac
     end: seq(
       startAnchor(),
       inlineSpaces0(),
-      capture(char(')')),
-      capture(char(placeholder.quoteChar)),
+      capture(seq(
+        char(')'),
+        char(placeholder.quoteChar),
+      )),
     ),
     endCaptures: {
-      1: nameRule(scopeName, RuleName.CloseParen),
-      2: nameRule(scopeName, placeholder.stringElementName, RuleDescriptor.End),
+      1: nameRule(scopeName, placeholder.stringElementName, RuleDescriptor.End),
     },
     patterns: [
       {
-        match: capture(seq(
+        name: name(scopeName, placeholder.stringElementName),
+        begin: seq(
           startAnchor(),
           inlineSpaces0(),
           char('('),
-          anyChars0(),
+          capture(anyChars0()),
           endAnchor(),
-        )),
-        captures: {
+        ),
+        beginCaptures: {
           1: patternsRule(includeRule(Repository.ContinuationStringOptions)),
         },
-      },
-      {
-        name: name(scopeName, placeholder.stringElementName),
-        match: anyChars1(),
+        end: lookahead(seq(
+          startAnchor(),
+          inlineSpaces0(),
+          char(')'),
+          char(placeholder.quoteChar),
+        )),
         patterns: [ includeRule(placeholder.stringContentRepository) ],
       },
     ],
@@ -66,15 +70,11 @@ export function createContinuationString(scopeName: ScopeName, placeholder: Plac
 // [options](https://www.autohotkey.com/docs/v1/Scripts.htm#Join)
 export function createContinuationStringOptionsRule(scopeName: ScopeName): BeginEndRule {
   return {
-    begin: seq(
+    begin: lookbehind(seq(
       startAnchor(),
       inlineSpaces0(),
       capture(char('(')),
-    ),
-    beginCaptures: {
-      1: nameRule(scopeName, RuleName.OpenParen),
-      2: nameRule(scopeName, RuleName.ContinuationOption, StyleName.Strong),
-    },
+    )),
     end: endAnchor(),
     patterns: [
       includeRule(Repository.InLineComments),

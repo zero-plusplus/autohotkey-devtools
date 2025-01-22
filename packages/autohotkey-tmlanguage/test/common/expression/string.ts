@@ -86,12 +86,11 @@ export function createStringLiteralExpectedData(scopeName: ScopeName, placeholde
         { text: 'abc', scopes: name(scopeName, RuleName.Variable) },
         { text: ':=', scopes: name(scopeName, RuleName.Operator) },
         { text: q, scopes: name(scopeName, placeholder.ruleName, RuleDescriptor.Begin) },
-        { text: '(', scopes: name(scopeName, RuleName.OpenParen) },
-        { text: 'LTrim', scopes: name(scopeName, RuleName.ContinuationOption, StyleName.Strong) },
+        { text: '(', scopes: name(scopeName, placeholder.ruleName) },
+        { text: 'LTrim', scopes: name(scopeName, placeholder.ruleName, RuleName.ContinuationOption, StyleName.Strong) },
         { text: '  1-line', scopes: name(scopeName, placeholder.ruleName) },
         { text: '  2-line', scopes: name(scopeName, placeholder.ruleName) },
-        { text: ')', scopes: name(scopeName, RuleName.CloseParen) },
-        { text: q, scopes: name(scopeName, placeholder.ruleName, RuleDescriptor.End) },
+        { text: `)${q}`, scopes: name(scopeName, placeholder.ruleName, RuleDescriptor.End) },
       ],
     ],
 
@@ -126,6 +125,25 @@ export function createStringLiteralExpectedData(scopeName: ScopeName, placeholde
         { text: '  text  ', scopes: name(scopeName, placeholder.ruleName) },
         { text: q, scopes: name(scopeName, placeholder.ruleName, RuleDescriptor.End) },
         { text: ')', scopes: name(scopeName, RuleName.CloseParen) },
+      ],
+    ],
+    // Fix: Beginning with a parenthesis opening is misidentified as a starting position and highlighted as an option
+    [
+      dedent`
+        var := ${q}
+        (LTrim
+          (text
+          (text)
+        )${q}
+      `, [
+        { text: 'var', scopes: name(scopeName, RuleName.Variable) },
+        { text: ':=', scopes: name(scopeName, RuleName.Operator) },
+        { text: q, scopes: name(scopeName, placeholder.ruleName, RuleDescriptor.Begin) },
+        { text: '(', scopes: name(scopeName, placeholder.ruleName) },
+        { text: 'LTrim', scopes: name(scopeName, placeholder.ruleName, RuleName.ContinuationOption, StyleName.Strong) },
+        { text: '  (text', scopes: name(scopeName, placeholder.ruleName) },
+        { text: '  (text)', scopes: name(scopeName, placeholder.ruleName) },
+        { text: `)${q}`, scopes: name(scopeName, placeholder.ruleName, RuleDescriptor.End) },
       ],
     ],
   ];

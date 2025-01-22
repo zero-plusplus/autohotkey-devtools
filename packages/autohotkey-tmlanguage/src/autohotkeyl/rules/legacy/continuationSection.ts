@@ -8,16 +8,17 @@ interface Placeholder {
 }
 export function createContinuationSectionRule(scopeName: ScopeName, placeholder: Placeholder): BeginEndRule {
   return {
-    begin: capture(seq(
+    begin: seq(
       startAnchor(),
       inlineSpaces0(),
-      char('('),
+      capture(char('(')),
       inlineSpaces0(),
-      negChars0(')'),
+      capture(negChars0(')')),
       lookahead(placeholder.endAnchor),
-    )),
+    ),
     beginCaptures: {
-      1: patternsRule(includeRule(Repository.ContinuationStringOptions)),
+      1: nameRule(scopeName, RuleName.OpenParen),
+      2: patternsRule(includeRule(Repository.ContinuationStringOptions)),
       3: patternsRule(includeRule(Repository.InLineComments)),
     },
     end: seq(
