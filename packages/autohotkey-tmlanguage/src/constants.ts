@@ -342,6 +342,7 @@ export const enum Repository {
 
   // #region variable
   Variable = 'repository.expression.variable',
+  ConstantLikeVariable = 'repository.expression.variable.constant-like',
   UserDefinedVariable = 'repository.expression.variable.user-defined',
   BuiltInVariable = 'repository.expression.variable.built-in',
   KeywordLikeBuiltInVariable = 'repository.expression.variable.built-in.keyword-like',
@@ -449,6 +450,7 @@ export const enum RuleName {
   // #region expressions
   // #region variable
   Variable = 'variable.other',
+  ConstantLikeVariable = 'variable.other.constant.like',
   BuiltInVariable = 'support.variable',
   KeywordLikeBuiltInVariable = 'constant.language.varible',
   // #endregion variable

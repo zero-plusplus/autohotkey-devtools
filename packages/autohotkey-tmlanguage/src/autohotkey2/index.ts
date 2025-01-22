@@ -259,11 +259,25 @@ export function createRepositories(scopeName: ScopeName): Repositories {
     [Repository.Variable]: patternsRule(
       includeRule(Repository.KeywordLikeBuiltInVariable),
       includeRule(Repository.BuiltInVariable),
+      includeRule(Repository.ConstantLikeVariable),
       includeRule(Repository.UserDefinedVariable),
       includeRule(Repository.InvalidVariable),
     ),
-    [Repository.UserDefinedVariable]: rule_v1.createVariableRule(scopeName, patterns_v2.nameStart, patterns_v2.nameBody),
-    [Repository.InvalidVariable]: rule_v1.createInvalidVariableRule(scopeName, patterns_v2.nameStart, patterns_v2.nameBody),
+    [Repository.ConstantLikeVariable]: rule_v1.createVariableRule(scopeName, {
+      ruleName: RuleName.ConstantLikeVariable,
+      nameHeadChar: patterns_v2.nameStart_upper,
+      nameBodyChar: patterns_v2.nameBody_upper,
+    }),
+    [Repository.UserDefinedVariable]: rule_v1.createVariableRule(scopeName, {
+      ruleName: RuleName.Variable,
+      nameHeadChar: patterns_v2.nameStart,
+      nameBodyChar: patterns_v2.nameBody,
+    }),
+    [Repository.InvalidVariable]: rule_v1.createInvalidVariableRule(scopeName, {
+      ruleName: RuleName.Variable,
+      nameHeadChar: patterns_v2.nameStart,
+      nameBodyChar: patterns_v2.nameBody,
+    }),
     [Repository.KeywordLikeBuiltInVariable]: rule_v1.createBuiltinVariableRule(scopeName, {
       variableRuleName: RuleName.KeywordLikeBuiltInVariable,
       builtinVariables: constants_v2.keywordLikeBuiltinVariables,

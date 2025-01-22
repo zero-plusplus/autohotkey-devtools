@@ -3,44 +3,53 @@ import { capture, escapeOnigurumaTexts, ignoreCase, lookahead, lookbehind, many1
 import type { MatchRule, PatternsRule, ScopeName } from '../../../types';
 import { nameRule, patternsRule } from '../../../utils';
 
-export function createVariableRule(scopeName: ScopeName, nameStart: string, nameBody: string): MatchRule {
+interface Placeholder_UserDefined {
+  ruleName: RuleName;
+  nameHeadChar: string;
+  nameBodyChar: string;
+}
+export function createVariableRule(scopeName: ScopeName, placeholder: Placeholder_UserDefined): MatchRule {
   return {
-    match: capture(seq(nameStart, manyRange(nameBody, 0, 252))),
+    match: capture(seq(
+      placeholder.nameHeadChar,
+      manyRange(placeholder.nameBodyChar, 0, 252),
+      lookahead(wordBound()),
+    )),
     captures: {
-      1: nameRule(scopeName, RuleName.Variable),
+      1: nameRule(scopeName, placeholder.ruleName),
     },
   };
 }
-export function createInvalidVariableRule(scopeName: ScopeName, nameStart: string, nameBody: string): PatternsRule {
+export function createInvalidVariableRule(scopeName: ScopeName, placeholder: Placeholder_UserDefined): PatternsRule {
   return patternsRule(
     {
       match: seq(
         capture(numbers1()),
-        capture(seq(nameStart, manyRange(nameBody, 0, 252))),
+        capture(seq(placeholder.nameHeadChar, manyRange(placeholder.nameBodyChar, 0, 252))),
       ),
       captures: {
-        1: nameRule(scopeName, RuleName.Variable, RuleName.Integer, StyleName.Invalid),
-        2: nameRule(scopeName, RuleName.Variable),
+        1: nameRule(scopeName, placeholder.ruleName, RuleName.Integer, StyleName.Invalid),
+        2: nameRule(scopeName, placeholder.ruleName),
       },
     },
     {
       match: seq(
-        capture(seq(nameStart, manyRange(nameBody, 252))),
-        capture(many1(nameBody)),
+        capture(seq(placeholder.nameHeadChar, manyRange(placeholder.nameBodyChar, 252))),
+        capture(many1(placeholder.nameBodyChar)),
       ),
       captures: {
-        1: nameRule(scopeName, RuleName.Variable),
-        2: nameRule(scopeName, RuleName.Variable, StyleName.Invalid),
+        1: nameRule(scopeName, placeholder.ruleName),
+        2: nameRule(scopeName, placeholder.ruleName, StyleName.Invalid),
       },
     },
   );
 }
 
-interface Placeholder {
+interface Placeholder_BuiltIn {
   variableRuleName: RuleName;
   builtinVariables: readonly string[];
 }
-export function createBuiltinVariableRule(scopeName: ScopeName, placeholder: Placeholder): MatchRule {
+export function createBuiltinVariableRule(scopeName: ScopeName, placeholder: Placeholder_BuiltIn): MatchRule {
   return {
     match: ignoreCase(seq(
       lookbehind(wordBound()),

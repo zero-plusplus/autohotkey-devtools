@@ -23,6 +23,14 @@ export function createVariableExpectedData(scopeName: ScopeName): ExpectedTestDa
         'v'.repeat(253),
       ],
     }),
+    ...common.createVariableExpectedData(scopeName, {
+      ruleName: RuleName.ConstantLikeVariable,
+      variables: [
+        'VAR',
+        'VAR_VAR',
+        'V'.repeat(253),
+      ],
+    }),
 
     // invalid
     [

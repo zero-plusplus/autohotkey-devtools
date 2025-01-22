@@ -60,12 +60,12 @@ export function createAssignmentDeclarationExpectedData(scopeName: ScopeName): E
     ],
     [
       dedent`
-        input.ABC := 1
+        input.abc := 1
       `,
       [
         { text: 'input', scopes: name(scopeName, RuleName.Variable) },
         { text: '.', scopes: name(scopeName, RuleName.Dot) },
-        { text: 'ABC', scopes: name(scopeName, RuleName.Variable) },
+        { text: 'abc', scopes: name(scopeName, RuleName.Variable) },
         { text: ':=', scopes: name(scopeName, RuleName.Operator) },
         { text: '1', scopes: name(scopeName, RuleName.Integer) },
       ],
@@ -73,8 +73,8 @@ export function createAssignmentDeclarationExpectedData(scopeName: ScopeName): E
     [
       dedent`
         %input% := 1
-        %input%ABC := 1
-        %a + b%ABC := 1
+        %input%abc := 1
+        %a + b%abc := 1
       `,
       [
         { text: '%', scopes: name(scopeName, RuleName.PercentBegin) },
@@ -86,7 +86,7 @@ export function createAssignmentDeclarationExpectedData(scopeName: ScopeName): E
         { text: '%', scopes: name(scopeName, RuleName.PercentBegin) },
         { text: 'input', scopes: name(scopeName, RuleName.Variable) },
         { text: '%', scopes: name(scopeName, RuleName.PercentEnd) },
-        { text: 'ABC', scopes: name(scopeName, RuleName.Variable) },
+        { text: 'abc', scopes: name(scopeName, RuleName.Variable) },
         { text: ':=', scopes: name(scopeName, RuleName.Operator) },
         { text: '1', scopes: name(scopeName, RuleName.Integer) },
 
@@ -95,24 +95,24 @@ export function createAssignmentDeclarationExpectedData(scopeName: ScopeName): E
         { text: '+', scopes: name(scopeName, RuleName.Operator) },
         { text: 'b', scopes: name(scopeName, RuleName.Variable) },
         { text: '%', scopes: name(scopeName, RuleName.PercentEnd) },
-        { text: 'ABC', scopes: name(scopeName, RuleName.Variable) },
+        { text: 'abc', scopes: name(scopeName, RuleName.Variable) },
         { text: ':=', scopes: name(scopeName, RuleName.Operator) },
         { text: '1', scopes: name(scopeName, RuleName.Integer) },
       ],
     ],
     [
       dedent`
-        input.ABC[1].%ABC% := 1
+        input.abc[1].%abc% := 1
       `, [
         { text: 'input', scopes: name(scopeName, RuleName.Variable) },
         { text: '.', scopes: name(scopeName, RuleName.Dot) },
-        { text: 'ABC', scopes: name(scopeName, RuleName.Variable) },
+        { text: 'abc', scopes: name(scopeName, RuleName.Variable) },
         { text: '[', scopes: name(scopeName, RuleName.OpenBracket) },
         { text: '1', scopes: name(scopeName, RuleName.Integer) },
         { text: ']', scopes: name(scopeName, RuleName.CloseBracket) },
         { text: '.', scopes: name(scopeName, RuleName.Dot) },
         { text: '%', scopes: name(scopeName, RuleName.PercentBegin) },
-        { text: 'ABC', scopes: name(scopeName, RuleName.Variable) },
+        { text: 'abc', scopes: name(scopeName, RuleName.Variable) },
         { text: '%', scopes: name(scopeName, RuleName.PercentEnd) },
         { text: ':=', scopes: name(scopeName, RuleName.Operator) },
         { text: '1', scopes: name(scopeName, RuleName.Integer) },

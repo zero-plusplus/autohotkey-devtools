@@ -100,7 +100,9 @@ export const nameLimitLength = 253;
 const numberChar = '\\d';
 const sign = char('_', '#', '@', '$');
 export const nameStart: string = group(alt(wordChar(), sign));
+export const nameStart_upper: string = group('[A-Z_]');
 export const nameBody: string = group(alt(wordChar(), sign, numberChar));
+export const nameBody_upper: string = group('[A-Z_]');
 export const identifierPattern: string = group(seq(nameStart, manyLimit(nameBody, nameLimitLength - 1)));
 export const keyName: string = group(alt(
   group(seq(char('%'), anyChars1(), char('%'))),
