@@ -7,12 +7,15 @@ import * as rules_v1 from '../autohotkeyl/rules';
 import { Repository } from '../constants';
 import type { ScopeName, TmLanguage } from '../types';
 import { includeRule, patternsRule } from '../utils';
+import * as constants_vnext from './constants';
 import * as patterns_vnext from './patterns';
 import * as rules_vnext from './rules';
 
 export function createTmLanguage(): TmLanguage {
   const scopeName: ScopeName = 'autohotkeynext';
-  const repositories_v2 = v2.createRepositories(scopeName);
+  const repositories_v2 = v2.createRepositories(scopeName, {
+    directiveNames: constants_vnext.directiveNames,
+  });
 
   return {
     scopeName: `source.${scopeName}`,

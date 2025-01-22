@@ -1,3 +1,4 @@
+import * as constants_vnext from '../../../src/autohotkeynext/constants';
 import type { ScopeName } from '../../../src/types';
 import * as autohotkey2 from '../../autohotkey2/expected';
 import type { ExpectedTestData } from '../../types';
@@ -8,7 +9,9 @@ import { createFunctionExpressionExpectedData } from './expression/function';
 
 export function createExpectedDataList(scopeName: ScopeName): ExpectedTestData[] {
   return [
-    ...autohotkey2.createExpectedDataList(scopeName),
+    ...autohotkey2.createExpectedDataList(scopeName, {
+      directiveNames: constants_vnext.directiveNames,
+    }),
 
     ...createExportDeclarationExpectedData(scopeName),
     ...createFunctionExpressionExpectedData(scopeName),

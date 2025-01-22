@@ -22,7 +22,10 @@ export function createTmLanguage(): TmLanguage {
   };
 }
 
-export function createRepositories(scopeName: ScopeName): Repositories {
+interface Placeholder {
+  directiveNames: readonly string[];
+}
+export function createRepositories(scopeName: ScopeName, placeholder?: Placeholder): Repositories {
   return {
     [Repository.FencedCodeBlockInDocument]: markdown.createCodeFenceInDocumentRule(),
     [Repository.Meta]: patternsRule(
@@ -96,7 +99,7 @@ export function createRepositories(scopeName: ScopeName): Repositories {
       rule_v2.createCallStatementRule(scopeName, {
         commandRuleName: RuleName.DirectiveName,
         startAnchor: patterns_v1.statementStartAnchor,
-        names: constants_v2.directiveNames,
+        names: placeholder?.directiveNames ?? constants_v2.directiveNames,
         expressionOperators: constants_v2.expressionOperators,
       }),
       rule_v2.createCallStatementRule(scopeName, {

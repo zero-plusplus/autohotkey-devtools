@@ -31,7 +31,10 @@ import { createTryStatementExpectedData } from './statement/try';
 import { createUntilStatementExpectedData } from './statement/until';
 import { createWhileStatementExpectedData } from './statement/while';
 
-export function createExpectedDataList(scopeName: ScopeName): ExpectedTestData[] {
+interface Placeholder {
+  directiveNames: readonly string[];
+}
+export function createExpectedDataList(scopeName: ScopeName, placeholder?: Placeholder): ExpectedTestData[] {
   return [
     // #region common
     ...common.createDocumentCommentExpectedData(scopeName),
@@ -45,7 +48,7 @@ export function createExpectedDataList(scopeName: ScopeName): ExpectedTestData[]
     ...createCallStatementExpectedData(scopeName),
     ...createClassDeclarationExpectedData(scopeName),
     ...createDereferenceExpressionExpectedData(scopeName),
-    ...createDirectiveStatementExpectedData(scopeName),
+    ...createDirectiveStatementExpectedData(scopeName, placeholder),
     ...createFieldDeclarationExpectedData(scopeName),
     ...createForStatementExpectedData(scopeName),
     ...createFunctionDeclarationExpectedData(scopeName),
