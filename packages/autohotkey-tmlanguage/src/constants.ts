@@ -264,6 +264,7 @@ export const enum Repository {
   // #region statements
   Statement = 'repository.statement',
   StatementCommon = 'repository.statement.common',
+  Import = 'repository.statement.import',
   ExpressionStatement = 'repository.statement.expression',
   IncludeStatement = 'repository.statement.include',
   DirectiveStatement = 'repository.statement.directive',
@@ -496,6 +497,7 @@ export const enum RuleName {
   // #endregion expressions
 
   // #region keyword
+  MetaKeyword = 'keyword.control.meta',
   KeywordInExpression = 'keyword.control.in-expression',
   GetSetKeyword = 'storage.type.get-set',
   ByrefKeyword = 'keyword.control.byref',

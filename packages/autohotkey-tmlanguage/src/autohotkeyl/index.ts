@@ -26,6 +26,7 @@ export function createRepositories(scopeName: ScopeName): Repositories {
     [Repository.FencedCodeBlockInDocument]: markdown.createCodeFenceInDocumentRule(),
     [Repository.Meta]: patternsRule(
       includeRule(Repository.Comment),
+      includeRule(Repository.IncludeStatement),
       includeRule(Repository.DirectiveStatement),
     ),
 

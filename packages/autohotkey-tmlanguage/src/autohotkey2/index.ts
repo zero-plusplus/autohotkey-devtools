@@ -15,7 +15,7 @@ export function createTmLanguage(): TmLanguage {
   return {
     scopeName: `source.${scopeName}`,
     patterns: [
-      includeRule(Repository.Comment),
+      includeRule(Repository.Meta),
       includeRule(Repository.Statement),
     ],
     repository: createRepositories(scopeName),
@@ -27,6 +27,7 @@ export function createRepositories(scopeName: ScopeName): Repositories {
     [Repository.FencedCodeBlockInDocument]: markdown.createCodeFenceInDocumentRule(),
     [Repository.Meta]: patternsRule(
       includeRule(Repository.Comment),
+      includeRule(Repository.IncludeStatement),
       includeRule(Repository.DirectiveStatement),
     ),
 
@@ -73,8 +74,6 @@ export function createRepositories(scopeName: ScopeName): Repositories {
     ),
     [Repository.StatementCommon]: patternsRule(
       includeRule(Repository.Declaration),
-      includeRule(Repository.IncludeStatement),
-      includeRule(Repository.DirectiveStatement),
       includeRule(Repository.JumpStatement),
       includeRule(Repository.JumpToLabelStatement),
       includeRule(Repository.HotstringLabelStatement),

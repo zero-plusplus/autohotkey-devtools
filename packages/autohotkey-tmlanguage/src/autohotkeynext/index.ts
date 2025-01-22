@@ -16,13 +16,19 @@ export function createTmLanguage(): TmLanguage {
   return {
     scopeName: `source.${scopeName}`,
     patterns: [
-      includeRule(Repository.Comment),
+      includeRule(Repository.Meta),
       includeRule(Repository.Statement),
     ],
     repository: {
       ...repositories_v2,
 
+      [Repository.Meta]: patternsRule(
+        ...repositories_v2[Repository.Meta]!.patterns!,
+        includeRule(Repository.Import),
+      ),
+
       // #region declaration
+      [Repository.Import]: rules_vnext.createImportDeclarationRule(scopeName),
       [Repository.ClassDeclaration]: rules_v1.createClassDeclarationRule(scopeName, {
         startAnchor: patterns_v1.statementStartAnchor,
         endAnchor: patterns_v1.lineEndAnchor,
