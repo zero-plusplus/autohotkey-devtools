@@ -245,10 +245,6 @@ export function createRepositories(scopeName: ScopeName, placeholder?: Placehold
       includeRule(Repository.CallExpression_FunctionDeclarationHead),
       includeRule(Repository.ParenthesizedExpression),
       includeRule(Repository.Literal),
-      includeRule(Repository.KeywordLikeBuiltInVariable),
-      includeRule(Repository.BuiltInVariable),
-      includeRule(Repository.BuiltInClass),
-      includeRule(Repository.InvalidVariable),
       includeRule(Repository.Variable),
       includeRule(Repository.InvalidDereference),
       includeRule(Repository.Dereference),
@@ -264,12 +260,12 @@ export function createRepositories(scopeName: ScopeName, placeholder?: Placehold
 
     // #region variable
     [Repository.Variable]: patternsRule(
+      includeRule(Repository.InvalidVariable),
       includeRule(Repository.KeywordLikeBuiltInVariable),
       includeRule(Repository.BuiltInClass),
       includeRule(Repository.BuiltInVariable),
       includeRule(Repository.ConstantLikeVariable),
       includeRule(Repository.UserDefinedVariable),
-      includeRule(Repository.InvalidVariable),
     ),
     [Repository.ConstantLikeVariable]: rule_v1.createVariableRule(scopeName, {
       ruleName: RuleName.ConstantLikeVariable,
