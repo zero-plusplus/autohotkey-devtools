@@ -1,11 +1,11 @@
 import { Repository, RuleName } from '../../../constants';
-import { capture, char, inlineSpaces0, inlineSpaces1, keyword, negativeLookahead, optseq, seq, startAnchor } from '../../../oniguruma';
+import { capture, char, inlineSpaces0, inlineSpaces1, keyword, optseq, seq, startAnchor } from '../../../oniguruma';
 import type { PatternsRule, ScopeName } from '../../../types';
 import { includeRule, nameRule, patternsRule } from '../../../utils';
 
 export function createImportDeclarationRule(scopeName: ScopeName): PatternsRule {
   return patternsRule(
-    // e.g. `import * from X`
+    // e.g. `import * from "path/to"`
     //       ^^^^^^ ^ ^^^^
     {
       match: seq(
@@ -15,7 +15,7 @@ export function createImportDeclarationRule(scopeName: ScopeName): PatternsRule 
         inlineSpaces1(),
         capture(char('*')),
         optseq(
-          inlineSpaces0(),
+          inlineSpaces1(),
           capture(keyword('from')),
         ),
       ),
@@ -25,24 +25,8 @@ export function createImportDeclarationRule(scopeName: ScopeName): PatternsRule 
         3: nameRule(scopeName, RuleName.MetaKeyword),
       },
     },
-    // e.g. `import X`
-    //       ^^^^^^
-    {
-      match: seq(
-        startAnchor(),
-        inlineSpaces0(),
-        capture(keyword('import')),
-        negativeLookahead(seq(
-          inlineSpaces1(),
-          char('{'),
-        )),
-      ),
-      captures: {
-        1: nameRule(scopeName, RuleName.MetaKeyword),
-      },
-    },
-    // e.g. `import { Y as X } from X`
-    //       ^^^^^^ ^^^^^^^^^^ ^^^^
+    // e.g. `import { Y as X, A as B } from X`
+    //       ^^^^^^ ^ ^ ^^ ^^ ^ ^^ ^ ^ ^^^^
     {
       begin: seq(
         startAnchor(),
@@ -65,6 +49,20 @@ export function createImportDeclarationRule(scopeName: ScopeName): PatternsRule 
         2: nameRule(scopeName, RuleName.MetaKeyword),
       },
       patterns: [ includeRule(Repository.Expressions) ],
+    },
+    // e.g. `import "path/to"`
+    //       ^^^^^^
+    // e.g. `import "path/to" as X`
+    //       ^^^^^^
+    {
+      match: seq(
+        startAnchor(),
+        inlineSpaces0(),
+        capture(keyword('import')),
+      ),
+      captures: {
+        1: nameRule(scopeName, RuleName.MetaKeyword),
+      },
     },
   );
 }
