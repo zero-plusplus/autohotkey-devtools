@@ -10,6 +10,8 @@ export function createImportDeclarationExpectedData(scopeName: ScopeName): Expec
       dedent`
         import "path/to"
         import "path/to" as x
+        import x
+        import x as y
       `, [
         { text: 'import', scopes: name(scopeName, RuleName.MetaKeyword) },
         { text: '"', scopes: name(scopeName, RuleName.DoubleString, RuleDescriptor.Begin) },
@@ -22,6 +24,14 @@ export function createImportDeclarationExpectedData(scopeName: ScopeName): Expec
         { text: '"', scopes: name(scopeName, RuleName.DoubleString, RuleDescriptor.End) },
         { text: 'as', scopes: name(scopeName, RuleName.KeywordInExpression) },
         { text: 'x', scopes: name(scopeName, RuleName.Variable) },
+
+        { text: 'import', scopes: name(scopeName, RuleName.MetaKeyword) },
+        { text: 'x', scopes: name(scopeName, RuleName.Variable) },
+
+        { text: 'import', scopes: name(scopeName, RuleName.MetaKeyword) },
+        { text: 'x', scopes: name(scopeName, RuleName.Variable) },
+        { text: 'as', scopes: name(scopeName, RuleName.KeywordInExpression) },
+        { text: 'y', scopes: name(scopeName, RuleName.Variable) },
       ],
     ],
     [
