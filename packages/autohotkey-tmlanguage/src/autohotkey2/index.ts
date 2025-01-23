@@ -24,6 +24,7 @@ export function createTmLanguage(): TmLanguage {
 
 interface Placeholder {
   builtinVaribles: readonly string[];
+  builtInClassNames: readonly string[];
   builtInFunctionNames: readonly string[];
   directiveNames: readonly string[];
 }
@@ -246,6 +247,7 @@ export function createRepositories(scopeName: ScopeName, placeholder?: Placehold
       includeRule(Repository.Literal),
       includeRule(Repository.KeywordLikeBuiltInVariable),
       includeRule(Repository.BuiltInVariable),
+      includeRule(Repository.BuiltInClass),
       includeRule(Repository.InvalidVariable),
       includeRule(Repository.Variable),
       includeRule(Repository.InvalidDereference),
@@ -263,6 +265,7 @@ export function createRepositories(scopeName: ScopeName, placeholder?: Placehold
     // #region variable
     [Repository.Variable]: patternsRule(
       includeRule(Repository.KeywordLikeBuiltInVariable),
+      includeRule(Repository.BuiltInClass),
       includeRule(Repository.BuiltInVariable),
       includeRule(Repository.ConstantLikeVariable),
       includeRule(Repository.UserDefinedVariable),
@@ -290,6 +293,10 @@ export function createRepositories(scopeName: ScopeName, placeholder?: Placehold
     [Repository.BuiltInVariable]: rule_v1.createBuiltinVariableRule(scopeName, {
       variableRuleName: RuleName.BuiltInVariable,
       builtinVariables: placeholder?.builtinVaribles ?? constants_v2.builtinVaribles,
+    }),
+    [Repository.BuiltInClass]: rule_v1.createBuiltinVariableRule(scopeName, {
+      variableRuleName: RuleName.ClassName,
+      builtinVariables: placeholder?.builtInClassNames ?? constants_v2.builtInClassNames,
     }),
     // #endregion variable
 

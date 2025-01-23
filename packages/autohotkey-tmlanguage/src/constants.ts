@@ -346,6 +346,7 @@ export const enum Repository {
   ConstantLikeVariable = 'repository.expression.variable.constant-like',
   UserDefinedVariable = 'repository.expression.variable.user-defined',
   BuiltInVariable = 'repository.expression.variable.built-in',
+  BuiltInClass = 'repository.expression.class.built-in',
   KeywordLikeBuiltInVariable = 'repository.expression.variable.built-in.keyword-like',
   InvalidVariable = 'repository.expression.variable.invalid',
   // #endregion variable

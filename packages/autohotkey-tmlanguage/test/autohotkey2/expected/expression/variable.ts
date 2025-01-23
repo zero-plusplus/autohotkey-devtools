@@ -5,15 +5,20 @@ import { name } from '../../../../src/utils';
 import * as common from '../../../common/expression/variable';
 import type { ExpectedTestData } from '../../../types';
 
-export function createVariableExpectedData(scopeName: ScopeName): ExpectedTestData[] {
+interface Placeholder {
+  keywordLikeBuiltinVariables: readonly string[];
+  builtinVaribles: readonly string[];
+  builtInClassNames: readonly string[];
+}
+export function createVariableExpectedData(scopeName: ScopeName, placeholder?: Placeholder): ExpectedTestData[] {
   return [
     ...common.createVariableExpectedData(scopeName, {
       ruleName: RuleName.KeywordLikeBuiltInVariable,
-      variables: constants_v2.keywordLikeBuiltinVariables,
+      variables: placeholder?.keywordLikeBuiltinVariables ?? constants_v2.keywordLikeBuiltinVariables,
     }),
     ...common.createVariableExpectedData(scopeName, {
       ruleName: RuleName.BuiltInVariable,
-      variables: constants_v2.builtinVaribles,
+      variables: placeholder?.builtinVaribles ?? constants_v2.builtinVaribles,
     }),
     ...common.createVariableExpectedData(scopeName, {
       ruleName: RuleName.Variable,
@@ -22,6 +27,10 @@ export function createVariableExpectedData(scopeName: ScopeName): ExpectedTestDa
         '_var123',
         'v'.repeat(253),
       ],
+    }),
+    ...common.createVariableExpectedData(scopeName, {
+      ruleName: RuleName.ClassName,
+      variables: placeholder?.builtInClassNames ?? constants_v2.builtInClassNames,
     }),
 
     // invalid

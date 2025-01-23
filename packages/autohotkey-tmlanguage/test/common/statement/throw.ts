@@ -8,16 +8,16 @@ export function createThrowStatementExpectedData(scopeName: ScopeName): Expected
   return [
     [
       dedent`
-        throw Error
-        throw, Error
+        throw err
+        throw, err
       `,
       [
         { text: 'throw', scopes: name(scopeName, RuleName.ControlFlowKeyword) },
-        { text: 'Error', scopes: name(scopeName, RuleName.Variable) },
+        { text: 'err', scopes: name(scopeName, RuleName.Variable) },
 
         { text: 'throw', scopes: name(scopeName, RuleName.ControlFlowKeyword) },
         { text: ',', scopes: name(scopeName, RuleName.Comma) },
-        { text: 'Error', scopes: name(scopeName, RuleName.Variable) },
+        { text: 'err', scopes: name(scopeName, RuleName.Variable) },
       ],
     ],
   ];

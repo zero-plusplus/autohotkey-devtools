@@ -32,6 +32,9 @@ import { createUntilStatementExpectedData } from './statement/until';
 import { createWhileStatementExpectedData } from './statement/while';
 
 interface Placeholder {
+  keywordLikeBuiltinVariables: readonly string[];
+  builtinVaribles: readonly string[];
+  builtInClassNames: readonly string[];
   directiveNames: readonly string[];
 }
 export function createExpectedDataList(scopeName: ScopeName, placeholder?: Placeholder): ExpectedTestData[] {
@@ -69,7 +72,7 @@ export function createExpectedDataList(scopeName: ScopeName, placeholder?: Place
     ...createThrowStatementExpectedData(scopeName),
     ...createTryStatementExpectedData(scopeName),
     ...createUntilStatementExpectedData(scopeName),
-    ...createVariableExpectedData(scopeName),
+    ...createVariableExpectedData(scopeName, placeholder),
     ...createWhileStatementExpectedData(scopeName),
   ];
 }

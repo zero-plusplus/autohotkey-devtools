@@ -22,7 +22,7 @@ export function createTryStatementExpectedData(scopeName: ScopeName): ExpectedTe
         { text: '}', scopes: name(scopeName, RuleName.BlockEnd) },
 
         { text: 'catch', scopes: name(scopeName, RuleName.ControlFlowKeyword) },
-        { text: 'Error', scopes: name(scopeName, RuleName.Variable) },
+        { text: 'Error', scopes: name(scopeName, RuleName.ClassName) },
         { text: 'as', scopes: name(scopeName, RuleName.KeywordInExpression) },
         { text: 'err', scopes: name(scopeName, RuleName.Variable) },
         { text: '{', scopes: name(scopeName, RuleName.BlockBegin) },

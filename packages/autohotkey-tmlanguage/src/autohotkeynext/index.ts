@@ -15,6 +15,7 @@ export function createTmLanguage(): TmLanguage {
   const scopeName: ScopeName = 'autohotkeynext';
   const repositories_v2 = v2.createRepositories(scopeName, {
     builtinVaribles: constants_vnext.builtinVaribles,
+    builtInClassNames: constants_vnext.builtInClassNames,
     builtInFunctionNames: constants_vnext.builtInFunctionNames,
     directiveNames: constants_vnext.directiveNames,
   });

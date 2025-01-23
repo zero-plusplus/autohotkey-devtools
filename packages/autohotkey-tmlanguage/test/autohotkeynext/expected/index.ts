@@ -1,3 +1,4 @@
+import * as constants_v2 from '../../../src/autohotkey2/constants';
 import * as constants_vnext from '../../../src/autohotkeynext/constants';
 import type { ScopeName } from '../../../src/types';
 import * as autohotkey2 from '../../autohotkey2/expected';
@@ -10,6 +11,9 @@ import { createFunctionExpressionExpectedData } from './expression/function';
 export function createExpectedDataList(scopeName: ScopeName): ExpectedTestData[] {
   return [
     ...autohotkey2.createExpectedDataList(scopeName, {
+      keywordLikeBuiltinVariables: constants_v2.keywordLikeBuiltinVariables,
+      builtinVaribles: constants_vnext.builtinVaribles,
+      builtInClassNames: constants_vnext.builtInClassNames,
       directiveNames: constants_vnext.directiveNames,
     }),
 
