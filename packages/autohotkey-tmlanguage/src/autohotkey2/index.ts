@@ -23,6 +23,8 @@ export function createTmLanguage(): TmLanguage {
 }
 
 interface Placeholder {
+  builtinVaribles: readonly string[];
+  builtInFunctionNames: readonly string[];
   directiveNames: readonly string[];
 }
 export function createRepositories(scopeName: ScopeName, placeholder?: Placeholder): Repositories {
@@ -174,7 +176,7 @@ export function createRepositories(scopeName: ScopeName, placeholder?: Placehold
       rule_v2.createCallStatementRule(scopeName, {
         commandRuleName: RuleName.FunctionName,
         startAnchor: patterns_v1.statementStartAnchor,
-        names: constants_v2.builtInFunctionNames,
+        names: placeholder?.builtInFunctionNames ?? constants_v2.builtInFunctionNames,
         expressionOperators: constants_v2.expressionOperators,
       }),
       rule_v2.createCallStatementRule(scopeName, {
@@ -287,7 +289,7 @@ export function createRepositories(scopeName: ScopeName, placeholder?: Placehold
     }),
     [Repository.BuiltInVariable]: rule_v1.createBuiltinVariableRule(scopeName, {
       variableRuleName: RuleName.BuiltInVariable,
-      builtinVariables: constants_v2.builtinVaribles,
+      builtinVariables: placeholder?.builtinVaribles ?? constants_v2.builtinVaribles,
     }),
     // #endregion variable
 
