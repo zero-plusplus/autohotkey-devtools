@@ -14,7 +14,7 @@ export function createTmLanguage(): TmLanguage {
   return {
     scopeName: `source.${scopeName}`,
     patterns: [
-      includeRule(Repository.Comment),
+      includeRule(Repository.Meta),
       includeRule(Repository.Statement),
     ],
     repository: createRepositories(scopeName),
@@ -70,8 +70,6 @@ export function createRepositories(scopeName: ScopeName): Repositories {
       includeRule(Repository.ContinuationSection),
 
       includeRule(Repository.Declaration),
-      includeRule(Repository.IncludeStatement),
-      includeRule(Repository.DirectiveStatement),
       includeRule(Repository.CommandStatement),
       includeRule(Repository.JumpStatement),
       includeRule(Repository.JumpToLabelStatement),
@@ -99,6 +97,7 @@ export function createRepositories(scopeName: ScopeName): Repositories {
     }),
     [Repository.IncludeStatement]: rule_v1.createIncludeStatementRule(scopeName, {
       startAnchor: patterns_v1.statementStartAnchor,
+      expressionOperators: constants_v1.expressionOperators,
       endAnchor: patterns_v1.lineEndAnchor,
     }),
     [Repository.DirectiveStatement]: rule_v1.createCommandLikeStatementRule(scopeName, definition_v1.directiveDefinitions, {

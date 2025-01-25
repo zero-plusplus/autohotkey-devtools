@@ -96,6 +96,7 @@ export function createRepositories(scopeName: ScopeName, placeholder?: Placehold
     ),
     [Repository.IncludeStatement]: rule_v1.createIncludeStatementRule(scopeName, {
       startAnchor: patterns_v1.statementStartAnchor,
+      expressionOperators: constants_v2.expressionOperators,
       endAnchor: patterns_v1.lineEndAnchor,
     }),
     [Repository.DirectiveStatement]: patternsRule(
