@@ -25,8 +25,8 @@ export function createCallExpressionRule(scopeName: ScopeName, placeholder: Plac
       1: nameRule(scopeName, RuleName.CloseParen),
     },
     patterns: [
-      includeRule(Repository.DirectiveStatement),
-      includeRule(Repository.Comment),
+      includeRule(Repository.Meta),
+
       createKeywordInArgumentRule(scopeName, placeholder),
       includeRule(Repository.Comma),
       includeRule(Repository.Expression),

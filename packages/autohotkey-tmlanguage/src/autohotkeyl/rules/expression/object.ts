@@ -22,8 +22,8 @@ export function createObjectRule(scopeName: ScopeName, placeholder: Placeholder)
       1: nameRule(scopeName, RuleName.CloseBrace),
     },
     patterns: [
-      includeRule(Repository.Comment),
-      includeRule(Repository.DirectiveStatement),
+      includeRule(Repository.Meta),
+
       createObjectKeyRule(scopeName, placeholder),
       includeRule(Repository.Comma),
       includeRule(Repository.Expression),

@@ -14,8 +14,7 @@ export function createArrayRule(scopeName: ScopeName): BeginEndRule {
       1: nameRule(scopeName, RuleName.CloseBracket),
     },
     patterns: [
-      includeRule(Repository.Comment),
-      includeRule(Repository.DirectiveStatement),
+      includeRule(Repository.Meta),
 
       includeRule(Repository.Comma),
       includeRule(Repository.Expression),

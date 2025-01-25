@@ -268,6 +268,7 @@ export const enum Repository {
   Export = 'repository.statement.export',
   ExpressionStatement = 'repository.statement.expression',
   IncludeStatement = 'repository.statement.include',
+  RequiresStatement = 'repository.statement.requires',
   DirectiveStatement = 'repository.statement.directive',
   JumpStatement = 'repository.statement.jump',
   JumpToLabelStatement = 'repository.statement.jump.to-label',

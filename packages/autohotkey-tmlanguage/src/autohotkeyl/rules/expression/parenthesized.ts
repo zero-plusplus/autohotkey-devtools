@@ -30,8 +30,8 @@ export function createParenthesizedExpressionRule(scopeName: ScopeName): Pattern
         1: nameRule(scopeName, RuleName.CloseParen),
       },
       patterns: [
-        includeRule(Repository.DirectiveStatement),
-        includeRule(Repository.Comment),
+        includeRule(Repository.Meta),
+
         includeRule(Repository.Comma),
         includeRule(Repository.Expression),
       ],

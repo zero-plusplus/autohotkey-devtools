@@ -1,35 +1,9 @@
-import { Repository, RuleName, StyleName } from '../constants';
-import { anyChars0, capture, char, charRange, endAnchor, ignoreCase, inlineSpaces0, inlineSpaces1, negativeLookahead, seq, startAnchor } from '../oniguruma';
-import type { BeginWhileRule, ScopeName, TmLanguage } from '../types';
-import { createUtilities } from '../utils';
+import { alt, char, charRange, endAnchor, ignoreCase, inlineSpace, inlineSpaces0, inlineSpaces1, keyword, lookahead, negativeLookahead, seq, startAnchor } from '../oniguruma';
+import type { ScopeName, TmLanguage } from '../types';
+import { includeScope } from '../utils';
 
 export function createTmLanguage(): TmLanguage {
   const scopeName: ScopeName = 'autohotkey';
-  const { nameRule, includeScope } = createUtilities(scopeName);
-
-  const requiresKeyword = ignoreCase('#Requires');
-  const minVersion_2_1 = seq(
-    ignoreCase('AutoHotkey'),
-    inlineSpaces1(),
-    ignoreCase('v2'),
-    char('.'),
-    charRange('1', '9'),
-    anyChars0(),
-  );
-  const version_2_x = seq(
-    ignoreCase('AutoHotkey'),
-    inlineSpaces1(),
-    ignoreCase('v2'),
-    char('.'),
-    anyChars0(),
-  );
-  const version_1_x = seq(
-    ignoreCase('AutoHotkey'),
-    inlineSpaces1(),
-    capture(ignoreCase('v1')),
-    char('.'),
-    anyChars0(),
-  );
 
   return {
     scopeName: `source.${scopeName}`,
@@ -46,44 +20,54 @@ export function createTmLanguage(): TmLanguage {
         while: seq(startAnchor(), inlineSpaces0(), endAnchor()),
       },
       autohotkeynext_explicit: {
-        begin: seq(
-          startAnchor(),
-          inlineSpaces0(),
-          capture(requiresKeyword),
-          inlineSpaces1(),
-          capture(minVersion_2_1),
-          endAnchor(),
+        begin: alt(
+          lookahead(seq(ignoreCase('#Module'), alt(inlineSpace(), endAnchor()))),
+          lookahead((seq(
+            startAnchor(),
+            inlineSpaces0(),
+            ignoreCase('#Requires'),
+            inlineSpaces1(),
+            ignoreCase('AutoHotkey'),
+            inlineSpaces1(),
+            ignoreCase('v2'),
+            char('.'),
+            charRange('1', '9'),
+          ))),
         ),
-        beginCaptures: {
-          1: nameRule(Repository.DirectiveStatement, RuleName.DirectiveName, StyleName.Emphasis),
-          2: nameRule(Repository.DirectiveStatement, RuleName.UnquotedString, StyleName.Emphasis),
-        },
         while: seq(
           startAnchor(),
           negativeLookahead(seq(
             inlineSpaces0(),
-            requiresKeyword,
+            ignoreCase('#Requires'),
+            alt(
+              inlineSpace(),
+              endAnchor(),
+            ),
           )),
         ),
         patterns: [ includeScope('autohotkeynext') ],
       },
       autohotkey2_explicit: {
-        begin: seq(
+        begin: lookahead(seq(
           startAnchor(),
-          capture(requiresKeyword),
+          inlineSpaces0(),
+          ignoreCase('#Requires'),
           inlineSpaces1(),
-          capture(version_2_x),
-          endAnchor(),
-        ),
-        beginCaptures: {
-          1: nameRule(Repository.DirectiveStatement, RuleName.DirectiveName, StyleName.Emphasis),
-          2: nameRule(Repository.DirectiveStatement, RuleName.UnquotedString, StyleName.Emphasis),
-        },
+          ignoreCase('AutoHotkey'),
+          inlineSpaces1(),
+          ignoreCase('v2'),
+          char('.'),
+          char('0'),
+        )),
         while: seq(
           startAnchor(),
           negativeLookahead(seq(
             inlineSpaces0(),
-            requiresKeyword,
+            ignoreCase('#Requires'),
+            alt(
+              inlineSpace(),
+              endAnchor(),
+            ),
           )),
         ),
         patterns: [ includeScope('autohotkey2') ],
@@ -92,41 +76,40 @@ export function createTmLanguage(): TmLanguage {
         begin: seq(
           startAnchor(),
           inlineSpaces0(),
-          negativeLookahead(requiresKeyword),
+          negativeLookahead(keyword('#Requires')),
         ),
         while: seq(
           startAnchor(),
           negativeLookahead(seq(
             inlineSpaces0(),
-            requiresKeyword,
+            keyword('#Requires'),
           )),
         ),
         patterns: [ includeScope('autohotkey2') ],
       },
-      autohotkeyl_explicit: ((): BeginWhileRule => {
-        return {
-          begin: seq(
-            startAnchor(),
+      autohotkeyl_explicit: {
+        begin: lookahead(seq(
+          startAnchor(),
+          inlineSpaces0(),
+          ignoreCase('#Requires'),
+          inlineSpaces1(),
+          ignoreCase('AutoHotkey'),
+          inlineSpaces1(),
+          ignoreCase('v1'),
+        )),
+        while: seq(
+          startAnchor(),
+          negativeLookahead(seq(
             inlineSpaces0(),
-            capture(requiresKeyword),
-            inlineSpaces1(),
-            capture(version_1_x),
-            endAnchor(),
-          ),
-          beginCaptures: {
-            1: nameRule(Repository.DirectiveStatement, RuleName.DirectiveName, StyleName.Emphasis),
-            2: nameRule(Repository.DirectiveStatement, RuleName.UnquotedString, StyleName.Emphasis),
-          },
-          while: seq(
-            startAnchor(),
-            negativeLookahead(seq(
-              inlineSpaces0(),
-              requiresKeyword,
-            )),
-          ),
-          patterns: [ includeScope('autohotkeyl') ],
-        };
-      })(),
+            ignoreCase('#Requires'),
+            alt(
+              inlineSpace(),
+              endAnchor(),
+            ),
+          )),
+        ),
+        patterns: [ includeScope('autohotkeyl') ],
+      },
     },
   };
 }

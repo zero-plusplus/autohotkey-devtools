@@ -25,6 +25,7 @@ import { createIfStatementExpectedData } from './statement/if';
 import { createIncludeStatementExpectedData } from './statement/include';
 import { createJumpStatementExpectedData } from './statement/jump';
 import { createLoopStatementExpectedData } from './statement/loop';
+import { createRequiresStatementExpectedData } from './statement/requires';
 import { createSwitchStatementExpectedData } from './statement/switch';
 import { createThrowStatementExpectedData } from './statement/throw';
 import { createTryStatementExpectedData } from './statement/try';
@@ -67,6 +68,7 @@ export function createExpectedDataList(scopeName: ScopeName, placeholder?: Place
     ...createOperatorInExpressionExpectedData(scopeName),
     ...createParenthesizedExpressionExpectedData(scopeName),
     ...createRegExpExpectedData(scopeName),
+    ...createRequiresStatementExpectedData(scopeName),
     ...createStringLiteralExpectedData(scopeName),
     ...createSwitchStatementExpectedData(scopeName),
     ...createThrowStatementExpectedData(scopeName),
