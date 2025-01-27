@@ -1,5 +1,5 @@
 import { RuleName, StyleName } from '../../../constants';
-import { alt, capture, char, escapeOnigurumaTexts, group, ignoreCase, inlineSpace, inlineSpaces0, lookbehind, negativeLookahead, ordalt, seq } from '../../../oniguruma';
+import { alt, capture, char, endAnchor, escapeOnigurumaTexts, group, ignoreCase, inlineSpace, inlineSpaces0, lookbehind, negativeLookahead, ordalt, seq } from '../../../oniguruma';
 import type { ElementName, MatchRule, ScopeName } from '../../../types';
 import { nameRule } from '../../../utils';
 
@@ -28,10 +28,11 @@ export function createCallStatementRule(scopeName: ScopeName, placeholder: Place
           inlineSpace(),
           negativeLookahead(seq(inlineSpaces0(), ordalt(...escapeOnigurumaTexts(placeholder.expressionOperators)))),
         )),
-        seq(
+        group(seq(
           inlineSpaces0(),
           capture(char(',')),
-        ),
+        )),
+        endAnchor(),
       )),
     ),
     captures: {

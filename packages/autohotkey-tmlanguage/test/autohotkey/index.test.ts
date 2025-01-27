@@ -33,6 +33,26 @@ describe('autohotkey', () => {
     ]);
   });
 
+  test('treat as "autohotkeynext" using #Module', async() => {
+    const actual = await parse('autohotkey', dedent`
+      #Module
+
+      export xxx() {
+      }
+    `);
+    // console.log(JSON.stringify(actual, undefined, 2));
+
+    expect(actual).toStrictEqual([
+      { text: `#Module`, scopes: name('autohotkeynext', RuleName.DirectiveName) },
+      { text: `export`, scopes: name('autohotkeynext', RuleName.MetaKeyword) },
+      { text: `xxx`, scopes: name('autohotkeynext', RuleName.FunctionName) },
+      { text: `(`, scopes: name('autohotkeynext', RuleName.OpenParen) },
+      { text: `)`, scopes: name('autohotkeynext', RuleName.CloseParen) },
+      { text: `{`, scopes: name('autohotkeynext', RuleName.BlockBegin) },
+      { text: `}`, scopes: name('autohotkeynext', RuleName.BlockEnd) },
+    ]);
+  });
+
   test('treat as "autohotkey2" using #Requires', async() => {
     const actual = await parse('autohotkey', dedent`
       #Requires AutoHotkey v2.0
