@@ -124,6 +124,34 @@ export function createLanguageConfiguration(scopeName: ScopeName): Record<string
           indent: 'none',
         },
       },
+      // 4 indentations in the document
+      // /**
+      //  * @typedef {
+      //  *     xxx: yyy
+      //    ^^^^
+      //  * }
+      //  */
+      {
+        beforeText: '^\\s*\\*(?!/)\\s{5}',
+        action: {
+          appendText: '*     ',
+          indent: 'none',
+        },
+      },
+      // 2 indentations in the document
+      // /**
+      //  * @typedef {
+      //  *   xxx: yyy
+      //    ^^
+      //  * }
+      //  */
+      {
+        beforeText: '^\\s*\\*(?!/)\\s{3}',
+        action: {
+          appendText: '*   ',
+          indent: 'none',
+        },
+      },
       {
         beforeText: '^\\s*\\*(?!/)\\s*',
         action: {
