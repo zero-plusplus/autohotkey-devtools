@@ -7,7 +7,8 @@
       "request": "launch",
       "args": [
         "--extensionDevelopmentPath=${workspaceFolder}",
-        "${workspaceFolder}/build/demo"
+        "${workspaceFolder}/build/demo",
+        "${workspaceFolder}/../../../packages/autohotkey-modules",
       ],
       "outFiles": [
         "${workspaceFolder}/build/**/*.js"
