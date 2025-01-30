@@ -41,7 +41,8 @@ function createObjectKeyRule(scopeName: ScopeName, placeholder: Placeholder): Ma
     captures: {
       1: patternsRule(
         includeRule(Repository.Dereference),
-        includeRule(Repository.Variable),
+        includeRule(Repository.ConstantLikeVariable),
+        includeRule(Repository.UserDefinedVariable),
       ),
       2: nameRule(scopeName, RuleName.Colon),
     },

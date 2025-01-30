@@ -1,5 +1,5 @@
 import { RuleName, StyleName } from '../../../constants';
-import { capture, escapeOnigurumaTexts, ignoreCase, lookahead, lookbehind, many1, manyRange, ordalt, seq, wordBound } from '../../../oniguruma';
+import { capture, char, escapeOnigurumaTexts, ignoreCase, lookahead, lookbehind, many1, manyRange, negativeLookbehind, ordalt, seq, wordBound } from '../../../oniguruma';
 import type { MatchRule, ScopeName } from '../../../types';
 import { nameRule } from '../../../utils';
 
@@ -41,6 +41,7 @@ export function createBuiltinVariableRule(scopeName: ScopeName, placeholder: Pla
   return {
     match: ignoreCase(seq(
       lookbehind(wordBound()),
+      negativeLookbehind(char('.')),
       capture(ordalt(...escapeOnigurumaTexts(placeholder.builtinVariables))),
       lookahead(wordBound()),
     )),

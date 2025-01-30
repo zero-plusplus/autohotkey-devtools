@@ -1,3 +1,4 @@
+import { dedent } from '@zero-plusplus/utilities/src';
 import * as constants_v2 from '../../../../src/autohotkey2/constants';
 import { RuleName, StyleName } from '../../../../src/constants';
 import type { ScopeName } from '../../../../src/types';
@@ -32,6 +33,49 @@ export function createVariableExpectedData(scopeName: ScopeName, placeholder?: P
       ruleName: RuleName.ClassName,
       variables: placeholder?.builtInClassNames ?? constants_v2.builtInClassNames,
     }),
+
+    // Built-in class highlighting does not apply to field and object key
+    [
+      dedent`
+        (float)
+        (xxx.float)
+        (xxx.FLOAT)
+        ({
+          float: 123,
+          FLOAT: 123,
+        })
+      `,
+      [
+        { text: '(', scopes: name(scopeName, RuleName.OpenParen) },
+        { text: 'float', scopes: name(scopeName, RuleName.ClassName) },
+        { text: ')', scopes: name(scopeName, RuleName.CloseParen) },
+
+        { text: '(', scopes: name(scopeName, RuleName.OpenParen) },
+        { text: 'xxx', scopes: name(scopeName, RuleName.Variable) },
+        { text: '.', scopes: name(scopeName, RuleName.Dot) },
+        { text: 'float', scopes: name(scopeName, RuleName.Variable) },
+        { text: ')', scopes: name(scopeName, RuleName.CloseParen) },
+
+        { text: '(', scopes: name(scopeName, RuleName.OpenParen) },
+        { text: 'xxx', scopes: name(scopeName, RuleName.Variable) },
+        { text: '.', scopes: name(scopeName, RuleName.Dot) },
+        { text: 'FLOAT', scopes: name(scopeName, RuleName.ConstantLikeVariable) },
+        { text: ')', scopes: name(scopeName, RuleName.CloseParen) },
+
+        { text: '(', scopes: name(scopeName, RuleName.OpenParen) },
+        { text: '{', scopes: name(scopeName, RuleName.OpenBrace) },
+        { text: 'float', scopes: name(scopeName, RuleName.Variable) },
+        { text: ':', scopes: name(scopeName, RuleName.Colon) },
+        { text: '123', scopes: name(scopeName, RuleName.Integer) },
+        { text: ',', scopes: name(scopeName, RuleName.Comma) },
+        { text: 'FLOAT', scopes: name(scopeName, RuleName.ConstantLikeVariable) },
+        { text: ':', scopes: name(scopeName, RuleName.Colon) },
+        { text: '123', scopes: name(scopeName, RuleName.Integer) },
+        { text: ',', scopes: name(scopeName, RuleName.Comma) },
+        { text: '}', scopes: name(scopeName, RuleName.CloseBrace) },
+        { text: ')', scopes: name(scopeName, RuleName.CloseParen) },
+      ],
+    ],
 
     // invalid
     [

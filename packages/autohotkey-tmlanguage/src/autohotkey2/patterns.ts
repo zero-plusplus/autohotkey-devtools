@@ -1,7 +1,10 @@
 import { alt, anyChars1, char, escapeOnigurumaTexts, group, manyLimit, manyXtoY, optional, ordalt, seq, text, wordChar } from '../oniguruma';
 import * as constants_v2 from './constants';
 
-export const expressionContinuationStartAnchor: string = group(ordalt(...escapeOnigurumaTexts(constants_v2.expressionOperators)));
+export const expressionContinuationStartAnchor: string = group(ordalt(
+  ...escapeOnigurumaTexts(constants_v2.expressionOperators),
+  char('('),
+));
 
 export const unescapedDoubleQuotePattern: string = text('`"');
 export const unescapedSingleQuotePattern: string = text('`\'');
