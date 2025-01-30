@@ -132,7 +132,7 @@
   "qna": false,
   "devDependencies": {
     "@types/vscode": "^1.90.2",
-    "@vscode/vsce": "^3.1.0"
+    "@vscode/vsce": "^3.2.2"
   },
   "scripts": {
     "build": "npx tsx scripts/bin/build.mts",
