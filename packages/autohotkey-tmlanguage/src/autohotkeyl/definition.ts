@@ -100,7 +100,7 @@ export const directiveDefinitions: CommandDefinition[] = [
   command('#UseHook', signature([ onOff() ])),
 
   // https://www.autohotkey.com/docs/v1/lib/_Warn.htm
-  command('#Warn', signature([ keywordOnly([ 'UseUnsetLocal', 'UseUnsetGlobal', 'UseEnv', 'LocalSameAsGlobal', 'ClassOverwrite', 'Unreachable' ]), keywordOnly([ 'MsgBox', 'StdOut', 'OutputDebug', 'Off' ]) ])),
+  command('#Warn', signature([ keywordOnly([ 'UseUnsetLocal', 'UseUnsetGlobal', 'UseEnv', 'LocalSameAsGlobal', 'ClassOverwrite', 'Unreachable', 'All' ]), keywordOnly([ 'MsgBox', 'StdOut', 'OutputDebug', 'Off' ]) ])),
 
   // https://www.autohotkey.com/docs/v1/lib/_WinActivateForce.htm
   command('#WinActivateForce', signature([])),
