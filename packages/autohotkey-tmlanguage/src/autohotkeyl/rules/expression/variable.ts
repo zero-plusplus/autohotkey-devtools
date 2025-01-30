@@ -1,7 +1,7 @@
 import { RuleName, StyleName } from '../../../constants';
-import { capture, escapeOnigurumaTexts, ignoreCase, lookahead, lookbehind, many1, manyRange, numbers1, ordalt, seq, wordBound } from '../../../oniguruma';
-import type { MatchRule, PatternsRule, ScopeName } from '../../../types';
-import { nameRule, patternsRule } from '../../../utils';
+import { capture, escapeOnigurumaTexts, ignoreCase, lookahead, lookbehind, many1, manyRange, ordalt, seq, wordBound } from '../../../oniguruma';
+import type { MatchRule, ScopeName } from '../../../types';
+import { nameRule } from '../../../utils';
 
 interface Placeholder_UserDefined {
   ruleName: RuleName;
@@ -20,29 +20,17 @@ export function createVariableRule(scopeName: ScopeName, placeholder: Placeholde
     },
   };
 }
-export function createInvalidVariableRule(scopeName: ScopeName, placeholder: Placeholder_UserDefined): PatternsRule {
-  return patternsRule(
-    {
-      match: seq(
-        capture(numbers1()),
-        capture(seq(placeholder.nameHeadChar, manyRange(placeholder.nameBodyChar, 0, 252))),
-      ),
-      captures: {
-        1: nameRule(scopeName, placeholder.ruleName, RuleName.Integer, StyleName.Invalid),
-        2: nameRule(scopeName, placeholder.ruleName),
-      },
+export function createInvalidVariableRule(scopeName: ScopeName, placeholder: Placeholder_UserDefined): MatchRule {
+  return {
+    match: seq(
+      capture(seq(placeholder.nameHeadChar, manyRange(placeholder.nameBodyChar, 252))),
+      capture(many1(placeholder.nameBodyChar)),
+    ),
+    captures: {
+      1: nameRule(scopeName, placeholder.ruleName),
+      2: nameRule(scopeName, placeholder.ruleName, StyleName.Invalid),
     },
-    {
-      match: seq(
-        capture(seq(placeholder.nameHeadChar, manyRange(placeholder.nameBodyChar, 252))),
-        capture(many1(placeholder.nameBodyChar)),
-      ),
-      captures: {
-        1: nameRule(scopeName, placeholder.ruleName),
-        2: nameRule(scopeName, placeholder.ruleName, StyleName.Invalid),
-      },
-    },
-  );
+  };
 }
 
 interface Placeholder_BuiltIn {

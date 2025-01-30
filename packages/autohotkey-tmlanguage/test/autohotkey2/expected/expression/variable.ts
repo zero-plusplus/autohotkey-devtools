@@ -42,13 +42,5 @@ export function createVariableExpectedData(scopeName: ScopeName, placeholder?: P
         { text: ')', scopes: name(scopeName, RuleName.CloseParen) },
       ],
     ],
-    [
-      '(12abc)', [
-        { text: '(', scopes: name(scopeName, RuleName.OpenParen) },
-        { text: '12', scopes: name(scopeName, RuleName.Variable, RuleName.Integer, StyleName.Invalid) },
-        { text: 'abc', scopes: name(scopeName, RuleName.Variable) },
-        { text: ')', scopes: name(scopeName, RuleName.CloseParen) },
-      ],
-    ],
   ];
 }
