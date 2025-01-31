@@ -13,6 +13,10 @@ export function createJumpStatementExpectedData(scopeName: ScopeName): ExpectedT
             ${command}
             ${command} label
             ${command}, label
+
+            {
+              ${command}
+            }
           `,
           [
             { text: command, scopes: name(scopeName, RuleName.JumpCommandName) },
@@ -23,6 +27,10 @@ export function createJumpStatementExpectedData(scopeName: ScopeName): ExpectedT
             { text: command, scopes: name(scopeName, RuleName.JumpCommandName) },
             { text: ',', scopes: name(scopeName, RuleName.Comma) },
             { text: 'label', scopes: name(scopeName, RuleName.LabelName) },
+
+            { text: '{', scopes: name(scopeName, RuleName.BlockBegin) },
+            { text: command, scopes: name(scopeName, RuleName.JumpCommandName) },
+            { text: '}', scopes: name(scopeName, RuleName.BlockEnd) },
           ],
         ],
       ];
@@ -38,6 +46,10 @@ export function createJumpStatementExpectedData(scopeName: ScopeName): ExpectedT
             )
             ${command}, (
             )
+
+            {
+              ${command}
+            }
           `,
           [
             { text: command, scopes: name(scopeName, RuleName.JumpCommandName) },
@@ -57,6 +69,10 @@ export function createJumpStatementExpectedData(scopeName: ScopeName): ExpectedT
             { text: ',', scopes: name(scopeName, RuleName.Comma) },
             { text: '(', scopes: name(scopeName, RuleName.OpenParen) },
             { text: ')', scopes: name(scopeName, RuleName.CloseParen) },
+
+            { text: '{', scopes: name(scopeName, RuleName.BlockBegin) },
+            { text: command, scopes: name(scopeName, RuleName.JumpCommandName) },
+            { text: '}', scopes: name(scopeName, RuleName.BlockEnd) },
           ],
         ],
       ];

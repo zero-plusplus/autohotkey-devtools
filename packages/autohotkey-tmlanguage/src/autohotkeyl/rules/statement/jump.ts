@@ -12,6 +12,7 @@ export function createJumpStatement(scopeName: ScopeName, placeholder: Placehold
   return {
     match: seq(
       lookbehind(placeholder.startAnchor),
+      inlineSpaces0(),
       capture(ignoreCase(ordalt(...placeholder.names))),
     ),
     captures: {
