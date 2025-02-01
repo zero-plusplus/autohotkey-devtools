@@ -6,7 +6,7 @@ import type { ExpectedTestData } from '../../types';
 
 export function createJumpStatementExpectedData(scopeName: ScopeName): ExpectedTestData[] {
   return [
-    ...[ 'Break', 'Gosub', 'Goto' ].flatMap((command): ExpectedTestData[] => {
+    ...[ 'Break', 'Continue', 'Gosub', 'Goto' ].flatMap((command): ExpectedTestData[] => {
       return [
         [
           dedent`

@@ -125,6 +125,7 @@ export function createRepositories(scopeName: ScopeName): Repositories {
       endAnchor: patterns_v1.lineEndAnchor,
       names: [
         'Break',
+        'Continue',
         'Gosub',
         'Goto',
       ],

@@ -133,6 +133,7 @@ export function createRepositories(scopeName: ScopeName, placeholder?: Placehold
       endAnchor: patterns_v1.lineEndAnchor,
       names: [
         'Break',
+        'Continue',
         'Gosub',
         'Goto',
       ],
