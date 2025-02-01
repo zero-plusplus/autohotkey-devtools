@@ -1,7 +1,7 @@
 import { Repository, RuleName } from '../../../constants';
-import { alt, capture, char, group, ignoreCase, inlineSpace, lookbehind, optseq, seq, wordBound } from '../../../oniguruma';
+import { alt, anyChars0, capture, char, group, ignoreCase, inlineSpaces0, inlineSpaces1, lookbehind, optseq, seq, wordBound } from '../../../oniguruma';
 import type { BeginEndRule, ScopeName } from '../../../types';
-import { includeRule, nameRule } from '../../../utils';
+import { includeRule, nameRule, patternsRule } from '../../../utils';
 
 interface Placeholder {
   callableNamePattern: string;
@@ -10,20 +10,27 @@ export function createNewCallExpressionRule(scopeName: ScopeName, placeholder: P
   return {
     begin: seq(
       lookbehind(wordBound()),
+      inlineSpaces0(),
       capture(ignoreCase('new')),
       optseq(
-        inlineSpace(),
+        inlineSpaces1(),
+        optseq(
+          capture(anyChars0()),
+          capture(char('.')),
+        ),
         group(alt(
           lookbehind(char(']', '.')),
           capture(placeholder.callableNamePattern),
         )),
-        capture(char('(')),
       ),
+      capture(char('(')),
     ),
     beginCaptures: {
       1: nameRule(scopeName, RuleName.KeywordInExpression),
-      2: nameRule(scopeName, RuleName.ClassName),
-      3: nameRule(scopeName, RuleName.OpenParen),
+      2: patternsRule(includeRule(Repository.Expression)),
+      3: nameRule(scopeName, RuleName.Dot),
+      4: nameRule(scopeName, RuleName.ClassName),
+      5: nameRule(scopeName, RuleName.OpenParen),
     },
     end: capture(char(')')),
     endCaptures: {

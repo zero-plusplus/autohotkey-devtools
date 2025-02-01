@@ -217,8 +217,8 @@ export function createRepositories(scopeName: ScopeName): Repositories {
     // #region expression
     [Repository.Expression]: patternsRule(
       includeRule(Repository.ShorthandRegexpMatch),
-      includeRule(Repository.KeywordInExpression),
       includeRule(Repository.NewCallExpression),
+      includeRule(Repository.KeywordInExpression),
       includeRule(Repository.CallExpression_FunctionDeclarationHead),
       includeRule(Repository.ParenthesizedExpression),
       includeRule(Repository.Literal),
@@ -350,6 +350,7 @@ export function createRepositories(scopeName: ScopeName): Repositories {
     [Repository.KeywordInExpression]: rule_v1.createKeywordRule(scopeName, {
       keywordRuleName: RuleName.KeywordInExpression,
       keywords: [
+        'new',
         ...constants_v1.expressionKeywords,
 
         // #region The following are not exactly keywords in the expression, but are defined here as keywords because it is more convenient for the TMLanguage mechanism

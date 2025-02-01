@@ -30,6 +30,35 @@ export function createNewExpressionExpectedData(scopeName: ScopeName): ExpectedT
     ],
     [
       dedent`
+        new a.b.c()
+        new %a%.b[c].d()
+      `, [
+        { text: 'new', scopes: name(scopeName, RuleName.KeywordInExpression) },
+        { text: 'a', scopes: name(scopeName, RuleName.Variable) },
+        { text: '.', scopes: name(scopeName, RuleName.Dot) },
+        { text: 'b', scopes: name(scopeName, RuleName.Variable) },
+        { text: '.', scopes: name(scopeName, RuleName.Dot) },
+        { text: 'c', scopes: name(scopeName, RuleName.ClassName) },
+        { text: '(', scopes: name(scopeName, RuleName.OpenParen) },
+        { text: ')', scopes: name(scopeName, RuleName.CloseParen) },
+
+        { text: 'new', scopes: name(scopeName, RuleName.KeywordInExpression) },
+        { text: '%', scopes: name(scopeName, RuleName.PercentBegin) },
+        { text: 'a', scopes: name(scopeName, RuleName.Variable) },
+        { text: '%', scopes: name(scopeName, RuleName.PercentEnd) },
+        { text: '.', scopes: name(scopeName, RuleName.Dot) },
+        { text: 'b', scopes: name(scopeName, RuleName.Variable) },
+        { text: '[', scopes: name(scopeName, RuleName.OpenBracket) },
+        { text: 'c', scopes: name(scopeName, RuleName.Variable) },
+        { text: ']', scopes: name(scopeName, RuleName.CloseBracket) },
+        { text: '.', scopes: name(scopeName, RuleName.Dot) },
+        { text: 'd', scopes: name(scopeName, RuleName.ClassName) },
+        { text: '(', scopes: name(scopeName, RuleName.OpenParen) },
+        { text: ')', scopes: name(scopeName, RuleName.CloseParen) },
+      ],
+    ],
+    [
+      dedent`
         new abc(
           1,
           2,
