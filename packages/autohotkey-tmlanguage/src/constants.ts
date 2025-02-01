@@ -366,6 +366,7 @@ export const enum Repository {
   Dereference = 'repository.expression.dereference',
   InvalidDereference = 'repository.expression.dereference.invalid',
   CallExpression_FunctionDeclarationHead = 'repository.expression.call repository.declaration.function-method.head',
+  NewCallExpression = 'repository.expression.call.new',
   // #endregion misc
   // #endregion expressions
 

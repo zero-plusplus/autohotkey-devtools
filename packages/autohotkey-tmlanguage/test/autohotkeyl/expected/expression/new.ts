@@ -13,17 +13,17 @@ export function createNewExpressionExpectedData(scopeName: ScopeName): ExpectedT
         new %abc%edf()
       `, [
         { text: 'new', scopes: name(scopeName, RuleName.KeywordInExpression) },
-        { text: 'abc', scopes: name(scopeName, RuleName.FunctionName) },
+        { text: 'abc', scopes: name(scopeName, RuleName.ClassName) },
         { text: '(', scopes: name(scopeName, RuleName.OpenParen) },
         { text: ')', scopes: name(scopeName, RuleName.CloseParen) },
 
         { text: 'new', scopes: name(scopeName, RuleName.KeywordInExpression) },
-        { text: '%abc%', scopes: name(scopeName, RuleName.FunctionName) },
+        { text: '%abc%', scopes: name(scopeName, RuleName.ClassName) },
         { text: '(', scopes: name(scopeName, RuleName.OpenParen) },
         { text: ')', scopes: name(scopeName, RuleName.CloseParen) },
 
         { text: 'new', scopes: name(scopeName, RuleName.KeywordInExpression) },
-        { text: '%abc%edf', scopes: name(scopeName, RuleName.FunctionName) },
+        { text: '%abc%edf', scopes: name(scopeName, RuleName.ClassName) },
         { text: '(', scopes: name(scopeName, RuleName.OpenParen) },
         { text: ')', scopes: name(scopeName, RuleName.CloseParen) },
       ],
@@ -40,14 +40,14 @@ export function createNewExpressionExpectedData(scopeName: ScopeName): ExpectedT
         )
       `, [
         { text: 'new', scopes: name(scopeName, RuleName.KeywordInExpression) },
-        { text: 'abc', scopes: name(scopeName, RuleName.FunctionName) },
+        { text: 'abc', scopes: name(scopeName, RuleName.ClassName) },
         { text: '(', scopes: name(scopeName, RuleName.OpenParen) },
         { text: '1', scopes: name(scopeName, RuleName.Integer) },
         { text: ',', scopes: name(scopeName, RuleName.Comma) },
         { text: '2', scopes: name(scopeName, RuleName.Integer) },
         { text: ',', scopes: name(scopeName, RuleName.Comma) },
         { text: 'new', scopes: name(scopeName, RuleName.KeywordInExpression) },
-        { text: 'abc', scopes: name(scopeName, RuleName.FunctionName) },
+        { text: 'abc', scopes: name(scopeName, RuleName.ClassName) },
         { text: '(', scopes: name(scopeName, RuleName.OpenParen) },
         { text: '3', scopes: name(scopeName, RuleName.Integer) },
         { text: ',', scopes: name(scopeName, RuleName.Comma) },
@@ -65,12 +65,12 @@ export function createNewExpressionExpectedData(scopeName: ScopeName): ExpectedT
         new %abc%abc%()
       `, [
         { text: 'new', scopes: name(scopeName, RuleName.KeywordInExpression) },
-        { text: '%abc', scopes: name(scopeName, RuleName.FunctionName) },
+        { text: '%abc', scopes: name(scopeName, RuleName.ClassName) },
         { text: '(', scopes: name(scopeName, RuleName.OpenParen) },
         { text: ')', scopes: name(scopeName, RuleName.CloseParen) },
 
         { text: 'new', scopes: name(scopeName, RuleName.KeywordInExpression) },
-        { text: '%abc%abc%', scopes: name(scopeName, RuleName.FunctionName) },
+        { text: '%abc%abc%', scopes: name(scopeName, RuleName.ClassName) },
         { text: '(', scopes: name(scopeName, RuleName.OpenParen) },
         { text: ')', scopes: name(scopeName, RuleName.CloseParen) },
       ],
@@ -94,7 +94,7 @@ export function createNewExpressionExpectedData(scopeName: ScopeName): ExpectedT
         ) ; comment
       `, [
         { text: 'new', scopes: name(scopeName, RuleName.KeywordInExpression) },
-        { text: 'abc', scopes: name(scopeName, RuleName.FunctionName) },
+        { text: 'abc', scopes: name(scopeName, RuleName.ClassName) },
         { text: '(', scopes: name(scopeName, RuleName.OpenParen) },
         { text: 'a', scopes: name(scopeName, RuleName.Variable) },
         { text: ',', scopes: name(scopeName, RuleName.Comma) },
@@ -105,7 +105,7 @@ export function createNewExpressionExpectedData(scopeName: ScopeName): ExpectedT
         { text: '; comment', scopes: name(scopeName, RuleName.InLineComment) },
 
         { text: 'new', scopes: name(scopeName, RuleName.KeywordInExpression) },
-        { text: 'abc', scopes: name(scopeName, RuleName.FunctionName) },
+        { text: 'abc', scopes: name(scopeName, RuleName.ClassName) },
         { text: '(', scopes: name(scopeName, RuleName.OpenParen) },
         { text: '; comment', scopes: name(scopeName, RuleName.SingleLineComment) },
         { text: 'a', scopes: name(scopeName, RuleName.Variable) },
@@ -121,7 +121,7 @@ export function createNewExpressionExpectedData(scopeName: ScopeName): ExpectedT
         { text: '; comment', scopes: name(scopeName, RuleName.InLineComment) },
 
         { text: 'new', scopes: name(scopeName, RuleName.KeywordInExpression) },
-        { text: 'abc', scopes: name(scopeName, RuleName.FunctionName) },
+        { text: 'abc', scopes: name(scopeName, RuleName.ClassName) },
         { text: '(', scopes: name(scopeName, RuleName.OpenParen) },
         { text: '; comment', scopes: name(scopeName, RuleName.SingleLineComment) },
         { text: ',', scopes: name(scopeName, RuleName.Comma) },

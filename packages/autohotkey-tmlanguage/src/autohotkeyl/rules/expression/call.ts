@@ -34,7 +34,7 @@ export function createCallExpressionRule(scopeName: ScopeName, placeholder: Plac
   };
 }
 
-function createKeywordInArgumentRule(scopeName: ScopeName, placeholder: Placeholder): PatternsRule {
+export function createKeywordInArgumentRule(scopeName: ScopeName, placeholder: Placeholder): PatternsRule {
   return patternsRule(...placeholder.keywordsInArgument.map((keywordsInArgument): MatchRule => {
     return {
       match: seq(
