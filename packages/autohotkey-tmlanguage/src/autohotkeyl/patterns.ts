@@ -6,7 +6,7 @@ export const statementStartAnchor: string = alt(
   seq(char(':'), inlineSpaces0()),
   seq(inlineSpaces0(), char('}')),
 );
-export const expressionContinuationStartAnchor: string = group(ordalt(...escapeOnigurumaTexts(constants_v1.expressionOperators)));
+export const expressionContinuationStartAnchor: string = group(ordalt(...escapeOnigurumaTexts(constants_v1.continuationOperators)));
 export const lineEndAnchor: string = alt(
   seq(inlineSpaces1(), negativeLookahead(char('`')), char(';')),
   seq(inlineSpaces0(), endAnchor()),

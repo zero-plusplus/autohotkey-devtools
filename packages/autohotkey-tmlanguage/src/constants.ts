@@ -338,6 +338,8 @@ export const enum Repository {
 
   // #region object
   Object = 'repository.expression.object',
+  ObjectContent = 'repository.expression.object.content',
+  ObjectKey = 'repository.expression.object.key',
   Array = 'repository.expression.array',
   // #endregion object
   // #endregion literal

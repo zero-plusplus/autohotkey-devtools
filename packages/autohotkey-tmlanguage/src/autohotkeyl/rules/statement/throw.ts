@@ -1,24 +1,15 @@
+import * as rule_common from '../../../common/rules';
 import { RuleName } from '../../../constants';
-import { alt, capture, char, inlineSpace, inlineSpaces0, keyword, lookahead, lookbehind, seq } from '../../../oniguruma';
-import type { MatchRule, ScopeName } from '../../../types';
-import { nameRule } from '../../../utils';
+import type { PatternsRule, ScopeName } from '../../../types';
 
 interface Placeholder {
   startAnchor: string;
+  assignmentOperators: readonly string[];
 }
-export function createThrowStatementRule(scopeName: ScopeName, placeholder: Placeholder): MatchRule {
-  return {
-    match: seq(
-      lookbehind(placeholder.startAnchor),
-      inlineSpaces0(),
-      capture(keyword('throw')),
-      lookahead(alt(
-        char(','),
-        inlineSpace(),
-      )),
-    ),
-    captures: {
-      1: nameRule(scopeName, RuleName.ControlFlowKeyword),
-    },
-  };
+export function createThrowStatementRule(scopeName: ScopeName, placeholder: Placeholder): PatternsRule {
+  return rule_common.createCallStatementRule(scopeName, {
+    ...placeholder,
+    commandRuleName: RuleName.ControlFlowKeyword,
+    identifierPattern: 'throw',
+  });
 }

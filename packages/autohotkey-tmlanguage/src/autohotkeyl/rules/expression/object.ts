@@ -5,7 +5,6 @@ import { includeRule, nameRule, patternsRule } from '../../../utils';
 
 interface Placeholder {
   startAnchor: string;
-  keyName: string;
 }
 export function createObjectRule(scopeName: ScopeName, placeholder: Placeholder): BeginEndRule {
   return {
@@ -21,17 +20,14 @@ export function createObjectRule(scopeName: ScopeName, placeholder: Placeholder)
     endCaptures: {
       1: nameRule(scopeName, RuleName.CloseBrace),
     },
-    patterns: [
-      includeRule(Repository.Meta),
-
-      createObjectKeyRule(scopeName, placeholder),
-      includeRule(Repository.Comma),
-      includeRule(Repository.Expression),
-    ],
+    patterns: [ includeRule(Repository.ObjectContent) ],
   };
 }
 
-function createObjectKeyRule(scopeName: ScopeName, placeholder: Placeholder): MatchRule {
+interface Placeholder_ObjectKeyRule {
+  keyName: string;
+}
+export function createObjectKeyRule(scopeName: ScopeName, placeholder: Placeholder_ObjectKeyRule): MatchRule {
   return {
     match: seq(
       capture(placeholder.keyName),

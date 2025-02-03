@@ -47,6 +47,10 @@ export function createJumpStatementExpectedData(scopeName: ScopeName): ExpectedT
             ${command}, (
             )
 
+            ${command} {
+              key: value
+            }
+
             {
               ${command}
             }
@@ -69,6 +73,13 @@ export function createJumpStatementExpectedData(scopeName: ScopeName): ExpectedT
             { text: ',', scopes: name(scopeName, RuleName.Comma) },
             { text: '(', scopes: name(scopeName, RuleName.OpenParen) },
             { text: ')', scopes: name(scopeName, RuleName.CloseParen) },
+
+            { text: command, scopes: name(scopeName, RuleName.JumpCommandName) },
+            { text: '{', scopes: name(scopeName, RuleName.OpenBrace) },
+            { text: 'key', scopes: name(scopeName, RuleName.Variable) },
+            { text: ':', scopes: name(scopeName, RuleName.Colon) },
+            { text: 'value', scopes: name(scopeName, RuleName.Variable) },
+            { text: '}', scopes: name(scopeName, RuleName.CloseBrace) },
 
             { text: '{', scopes: name(scopeName, RuleName.BlockBegin) },
             { text: command, scopes: name(scopeName, RuleName.JumpCommandName) },

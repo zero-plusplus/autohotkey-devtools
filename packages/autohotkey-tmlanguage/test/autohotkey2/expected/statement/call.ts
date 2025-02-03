@@ -11,6 +11,10 @@ export function createCallStatementExpectedData(scopeName: ScopeName): ExpectedT
       dedent`
         Abc
         Abc, "arg1" ; comment
+
+        Abc {
+          key: value
+        }
       `,
       [
         { text: 'Abc', scopes: name(scopeName, RuleName.FunctionName) },
@@ -22,6 +26,13 @@ export function createCallStatementExpectedData(scopeName: ScopeName): ExpectedT
         { text: '"', scopes: name(scopeName, RuleName.DoubleString, RuleDescriptor.End) },
 
         { text: '; comment', scopes: name(scopeName, RuleName.InLineComment) },
+
+        { text: 'Abc', scopes: name(scopeName, RuleName.FunctionName) },
+        { text: '{', scopes: name(scopeName, RuleName.OpenBrace) },
+        { text: 'key', scopes: name(scopeName, RuleName.Variable) },
+        { text: ':', scopes: name(scopeName, RuleName.Colon) },
+        { text: 'value', scopes: name(scopeName, RuleName.Variable) },
+        { text: '}', scopes: name(scopeName, RuleName.CloseBrace) },
       ],
     ],
     ...builtInFunctionNames.map((functionName): ExpectedTestData => {

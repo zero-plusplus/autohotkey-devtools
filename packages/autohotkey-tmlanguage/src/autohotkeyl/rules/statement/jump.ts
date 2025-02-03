@@ -1,24 +1,21 @@
+import * as rule_common from '../../../common/rules';
 import { RuleName } from '../../../constants';
 import { alt, capture, char, group, ignoreCase, inlineSpace, inlineSpaces0, lookahead, lookbehind, optional, optseq, ordalt, seq } from '../../../oniguruma';
-import type { MatchRule, ScopeName } from '../../../types';
+import type { MatchRule, PatternsRule, ScopeName } from '../../../types';
 import { nameRule } from '../../../utils';
 
 interface Placeholder {
   startAnchor: string;
+  identifierPattern: string;
+  assignmentOperators: readonly string[];
   endAnchor: string;
-  names: readonly string[];
 }
-export function createJumpStatement(scopeName: ScopeName, placeholder: Placeholder): MatchRule {
-  return {
-    match: seq(
-      lookbehind(placeholder.startAnchor),
-      inlineSpaces0(),
-      capture(ignoreCase(ordalt(...placeholder.names))),
-    ),
-    captures: {
-      1: nameRule(scopeName, RuleName.JumpCommandName),
-    },
-  };
+export function createJumpStatement(scopeName: ScopeName, placeholder: Placeholder): PatternsRule {
+  return rule_common.createCallStatementRule(scopeName, {
+    ...placeholder,
+    commandRuleName: RuleName.JumpCommandName,
+    isDeprecated: false,
+  });
 }
 
 interface Placeholder2 {

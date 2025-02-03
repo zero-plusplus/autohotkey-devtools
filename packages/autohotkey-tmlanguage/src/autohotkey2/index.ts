@@ -2,7 +2,9 @@ import * as markdown from '../__injection__/markdown';
 import * as constants_v1 from '../autohotkeyl/constants';
 import * as patterns_v1 from '../autohotkeyl/patterns';
 import * as rule_v1 from '../autohotkeyl/rules';
+import * as rule_common from '../common/rules';
 import { Repository, RuleName } from '../constants';
+import { ordalt } from '../oniguruma';
 import type { Repositories, ScopeName, TmLanguage } from '../types';
 import { includeRule, patternsRule } from '../utils';
 import * as constants_v2 from './constants';
@@ -27,6 +29,7 @@ interface Placeholder {
   builtInClassNames: readonly string[];
   builtInFunctionNames: readonly string[];
   directiveNames: readonly string[];
+  deprecatedBuiltinFunctionNames: readonly string[];
 }
 export function createRepositories(scopeName: ScopeName, placeholder?: Placeholder): Repositories {
   return {
@@ -106,27 +109,24 @@ export function createRepositories(scopeName: ScopeName, placeholder?: Placehold
       endAnchor: patterns_v1.lineEndAnchor,
     }),
     [Repository.DirectiveStatement]: patternsRule(
-      rule_v2.createCallStatementRule(scopeName, {
+      rule_common.createCallStatementRule(scopeName, {
         commandRuleName: RuleName.DirectiveName,
         startAnchor: patterns_v1.statementStartAnchor,
-        names: placeholder?.directiveNames ?? constants_v2.directiveNames,
-        expressionOperators: constants_v2.expressionOperators,
+        identifierPattern: ordalt(...(placeholder?.directiveNames ?? constants_v2.directiveNames)),
+        assignmentOperators: constants_v2.expressionOperators,
       }),
-      rule_v2.createCallStatementRule(scopeName, {
+      rule_common.createCallStatementRule(scopeName, {
         commandRuleName: RuleName.DirectiveName,
         startAnchor: patterns_v1.statementStartAnchor,
         identifierPattern: patterns_v2.directiveNamePattern,
-        expressionOperators: constants_v2.expressionOperators,
+        assignmentOperators: constants_v2.expressionOperators,
       }),
     ),
     [Repository.JumpStatement]: rule_v1.createJumpStatement(scopeName, {
       startAnchor: patterns_v1.statementStartAnchor,
+      assignmentOperators: constants_v1.assignmentOperators,
       endAnchor: patterns_v1.lineEndAnchor,
-      names: [
-        'Exit',
-        'ExitApp',
-        'Return',
-      ],
+      identifierPattern: ordalt('Exit', 'ExitApp', 'Return'),
     }),
     [Repository.JumpToLabelStatement]: rule_v1.createJumpToLabelStatement(scopeName, {
       startAnchor: patterns_v1.statementStartAnchor,
@@ -176,31 +176,32 @@ export function createRepositories(scopeName: ScopeName, placeholder?: Placehold
     }),
     [Repository.ThrowStatement]: rule_v1.createThrowStatementRule(scopeName, {
       startAnchor: patterns_v1.statementStartAnchor,
+      assignmentOperators: constants_v2.assignmentOperators,
     }),
     [Repository.CallStatement]: patternsRule(
       includeRule(Repository.BuiltInCallStatement),
       includeRule(Repository.UserDefinedCallStatement),
     ),
     [Repository.BuiltInCallStatement]: patternsRule(
-      rule_v2.createCallStatementRule(scopeName, {
+      rule_common.createCallStatementRule(scopeName, {
         commandRuleName: RuleName.FunctionName,
         startAnchor: patterns_v1.statementStartAnchor,
-        names: placeholder?.builtInFunctionNames ?? constants_v2.builtInFunctionNames,
-        expressionOperators: constants_v2.expressionOperators,
+        identifierPattern: ordalt(...(placeholder?.builtInFunctionNames ?? constants_v2.builtInFunctionNames)),
+        assignmentOperators: constants_v2.expressionOperators,
       }),
-      rule_v2.createCallStatementRule(scopeName, {
+      rule_common.createCallStatementRule(scopeName, {
         commandRuleName: RuleName.FunctionName,
         startAnchor: patterns_v1.statementStartAnchor,
-        names: constants_v2.deprecatedBuiltinFunctionNames,
-        expressionOperators: constants_v2.expressionOperators,
+        identifierPattern: ordalt(...(placeholder?.deprecatedBuiltinFunctionNames ?? constants_v2.deprecatedBuiltinFunctionNames)),
+        assignmentOperators: constants_v2.expressionOperators,
         isDeprecated: true,
       }),
     ),
-    [Repository.UserDefinedCallStatement]: rule_v2.createCallStatementRule(scopeName, {
+    [Repository.UserDefinedCallStatement]: rule_common.createCallStatementRule(scopeName, {
       commandRuleName: RuleName.FunctionName,
       startAnchor: patterns_v1.statementStartAnchor,
       identifierPattern: patterns_v2.identifierPattern,
-      expressionOperators: constants_v2.expressionOperators,
+      assignmentOperators: constants_v2.expressionOperators,
     }),
     [Repository.ExpressionStatement]: patternsRule(includeRule(Repository.Expressions)),
     // #endregion statement
@@ -321,6 +322,15 @@ export function createRepositories(scopeName: ScopeName, placeholder?: Placehold
     // #region object
     [Repository.Object]: rule_v1.createObjectRule(scopeName, {
       startAnchor: patterns_v2.expressionContinuationStartAnchor,
+    }),
+    [Repository.ObjectContent]: patternsRule(
+      includeRule(Repository.Meta),
+
+      includeRule(Repository.ObjectKey),
+      includeRule(Repository.Comma),
+      includeRule(Repository.Expression),
+    ),
+    [Repository.ObjectKey]: rule_v1.createObjectKeyRule(scopeName, {
       keyName: patterns_v2.keyName,
     }),
     [Repository.Array]: rule_v1.createArrayRule(scopeName),

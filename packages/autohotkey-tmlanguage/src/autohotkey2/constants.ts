@@ -1,4 +1,4 @@
-import { commonAssignmentOperators, commonExpressionOperatorsWithoutAssignment } from '../constants';
+import { commonAssignmentOperators, commonExpressionKeywords, commonExpressionOperatorsWithoutAssignment } from '../constants';
 
 // #region [Escape Sequences](https://www.autohotkey.com/docs/v2/misc/EscapeChar.htm)
 export const unquoteEscapeSequences = [ '``', '`;', '`:', '`{', '`n', '`r', '`b', '`t', '`s', '`v', '`a', '`f' ] as const;
@@ -26,6 +26,11 @@ export const expressionKeywords = [
   'IN',
   'CONTAINS',
 ] as const;
+export const continuationOperators: string[] = [
+  ...expressionOperators.filter((operator) => !(operator === '++' || operator == '--')),
+  ...commonExpressionKeywords,
+  ',',
+];
 // #endregion Operators
 
 // #region [BuiltIn](https://www.autohotkey.com/docs/v2/Variables.htm#BuiltIn)

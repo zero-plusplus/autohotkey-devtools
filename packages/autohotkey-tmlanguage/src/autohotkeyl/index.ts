@@ -1,6 +1,6 @@
 import * as markdown from '../__injection__/markdown';
 import { Repository, RuleName } from '../constants';
-import { anyChars1 } from '../oniguruma';
+import { anyChars1, ordalt } from '../oniguruma';
 import type { Repositories, ScopeName, TmLanguage } from '../types';
 import { includeRule, patternsRule } from '../utils';
 import * as constants_v1 from './constants';
@@ -113,12 +113,9 @@ export function createRepositories(scopeName: ScopeName): Repositories {
     }),
     [Repository.JumpStatement]: rule_v1.createJumpStatement(scopeName, {
       startAnchor: patterns_v1.statementStartAnchor,
+      assignmentOperators: constants_v1.assignmentOperators,
       endAnchor: patterns_v1.lineEndAnchor,
-      names: [
-        'Exit',
-        'ExitApp',
-        'Return',
-      ],
+      identifierPattern: ordalt('Exit', 'ExitApp', 'Return'),
     }),
     [Repository.JumpToLabelStatement]: rule_v1.createJumpToLabelStatement(scopeName, {
       startAnchor: patterns_v1.statementStartAnchor,
@@ -168,6 +165,7 @@ export function createRepositories(scopeName: ScopeName): Repositories {
     }),
     [Repository.ThrowStatement]: rule_v1.createThrowStatementRule(scopeName, {
       startAnchor: patterns_v1.statementStartAnchor,
+      assignmentOperators: constants_v1.assignmentOperators,
     }),
 
     [Repository.ExpressionStatement]: patternsRule(includeRule(Repository.Expressions)),
@@ -288,6 +286,15 @@ export function createRepositories(scopeName: ScopeName): Repositories {
     // #region object
     [Repository.Object]: rule_v1.createObjectRule(scopeName, {
       startAnchor: patterns_v1.expressionContinuationStartAnchor,
+    }),
+    [Repository.ObjectContent]: patternsRule(
+      includeRule(Repository.Meta),
+
+      includeRule(Repository.ObjectKey),
+      includeRule(Repository.Comma),
+      includeRule(Repository.Expression),
+    ),
+    [Repository.ObjectKey]: rule_v1.createObjectKeyRule(scopeName, {
       keyName: patterns_v1.keyName,
     }),
     [Repository.Array]: rule_v1.createArrayRule(scopeName),

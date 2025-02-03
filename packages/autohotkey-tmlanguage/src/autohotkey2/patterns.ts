@@ -2,7 +2,7 @@ import { alt, anyChars1, char, escapeOnigurumaTexts, group, manyLimit, manyXtoY,
 import * as constants_v2 from './constants';
 
 export const expressionContinuationStartAnchor: string = group(ordalt(
-  ...escapeOnigurumaTexts(constants_v2.expressionOperators),
+  ...escapeOnigurumaTexts(constants_v2.continuationOperators),
   char('('),
 ));
 

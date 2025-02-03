@@ -27,6 +27,12 @@ export const builtInFunctionNames: [ ...(typeof constants_v2.builtInFunctionName
   ...additionalBuiltInFunctionNames,
 ];
 
+const additionalDeprecatedBuiltinFunctionNames = [] as const;
+export const deprecatedBuiltinFunctionNames: [ ...(typeof constants_v2.deprecatedBuiltinFunctionNames), ...(typeof additionalDeprecatedBuiltinFunctionNames) ] = [
+  ...constants_v2.deprecatedBuiltinFunctionNames,
+  ...additionalDeprecatedBuiltinFunctionNames,
+];
+
 const additionalDirectiveNames = [
   // [v2.1-alpha.11](https://www.autohotkey.com/docs/alpha/ChangeLog.htm#v2.1-alpha.11)
   '#Module',

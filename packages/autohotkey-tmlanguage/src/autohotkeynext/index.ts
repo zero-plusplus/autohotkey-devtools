@@ -18,6 +18,7 @@ export function createTmLanguage(): TmLanguage {
     builtInClassNames: constants_vnext.builtInClassNames,
     builtInFunctionNames: constants_vnext.builtInFunctionNames,
     directiveNames: constants_vnext.directiveNames,
+    deprecatedBuiltinFunctionNames: constants_vnext.deprecatedBuiltinFunctionNames,
   });
 
   return {

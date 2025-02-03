@@ -24,6 +24,7 @@ export const expressionKeywords: [ ...typeof commonExpressionKeywords ] = [ ...c
 export const continuationOperators: string[] = [
   ...expressionOperators.filter((operator) => !(operator === '++' || operator == '--')),
   ...commonExpressionKeywords,
+  ',',
 ];
 // #endregion Operators
 
