@@ -251,7 +251,6 @@ export function createRepositories(scopeName: ScopeName, placeholder?: Placehold
     [Repository.Expression]: patternsRule(
       includeRule(Repository.ShorthandRegexpMatch),
       includeRule(Repository.KeywordInExpression),
-      includeRule(Repository.InvalidDereference),
       includeRule(Repository.Dereference),
       includeRule(Repository.CallExpression_FunctionDeclarationHead),
       includeRule(Repository.ParenthesizedExpression),
@@ -307,7 +306,6 @@ export function createRepositories(scopeName: ScopeName, placeholder?: Placehold
 
     // #region access
     [Repository.Dereference]: rule_v2.createDereferenceRule(scopeName),
-    [Repository.InvalidDereference]: rule_v2.createInvalidDereferenceRule(scopeName),
     // #endregion access
 
     // #region literal

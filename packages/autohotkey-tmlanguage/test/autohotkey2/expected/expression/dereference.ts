@@ -1,4 +1,4 @@
-import { RuleName, StyleName } from '../../../../src/constants';
+import { RuleName } from '../../../../src/constants';
 import type { ScopeName } from '../../../../src/types';
 import { name } from '../../../../src/utils';
 import type { ExpectedTestData } from '../../../types';
@@ -36,20 +36,6 @@ export function createDereferenceExpressionExpectedData(scopeName: ScopeName): E
         { text: 'b', scopes: name(scopeName, RuleName.Variable) },
         { text: 'c', scopes: name(scopeName, RuleName.Variable) },
         { text: '%', scopes: name(scopeName, RuleName.PercentEnd) },
-      ],
-    ],
-
-    // invalid
-    [
-      '%%', [
-        { text: '%', scopes: name(scopeName, RuleName.PercentBegin, StyleName.Invalid) },
-        { text: '%', scopes: name(scopeName, RuleName.PercentEnd, StyleName.Invalid) },
-      ],
-    ],
-    [
-      '%a', [
-        { text: '%', scopes: name(scopeName, RuleName.PercentBegin) },
-        { text: 'a', scopes: name(scopeName, RuleName.Variable, StyleName.Invalid) },
       ],
     ],
   ];
