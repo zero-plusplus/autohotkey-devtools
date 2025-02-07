@@ -30,6 +30,15 @@ export function createCallExpressionExpectedData(scopeName: ScopeName): Expected
     ],
     [
       dedent`
+        Class()
+      `, [
+        { text: 'Class', scopes: name(scopeName, RuleName.FunctionName, RuleName.ClassName) },
+        { text: '(', scopes: name(scopeName, RuleName.OpenParen) },
+        { text: ')', scopes: name(scopeName, RuleName.CloseParen) },
+      ],
+    ],
+    [
+      dedent`
         (() => 123)()
         ((&a, b := 10) => 123)()
       `,
