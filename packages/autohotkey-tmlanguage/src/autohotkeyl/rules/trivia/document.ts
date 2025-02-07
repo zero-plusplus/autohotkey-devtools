@@ -205,6 +205,9 @@ function createTagAnnotationRule(scopeName: ScopeName, placeholder: Placeholder_
 
         // https://jsdoc.app/tags-name
         '@name',
+
+        // Tags not in jsdoc
+        '@template',
       ],
       rules: [
         {

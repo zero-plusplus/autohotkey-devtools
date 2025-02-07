@@ -2405,5 +2405,21 @@ export function createDocumentCommentExpectedData(scopeName: ScopeName): Expecte
         // #endregion line
       ],
     ],
+
+    // Tags not in jsdoc
+    [
+      dedent`
+        /**
+         * @template T
+         */
+      `,
+      [
+        { text: '/**', scopes: name(scopeName, RuleName.DocumentComment, RuleDescriptor.Begin) },
+        { text: ' *', scopes: name(scopeName, RuleName.DocumentComment) },
+        { text: '@template', scopes: name(scopeName, RuleName.DocumentComment, RuleName.DocumentTag) },
+        { text: 'T', scopes: name(scopeName, RuleName.DocumentComment, RuleName.NamePathInDocument) },
+        { text: '*/', scopes: name(scopeName, RuleName.DocumentComment, RuleDescriptor.End) },
+      ],
+    ],
   ];
 }
