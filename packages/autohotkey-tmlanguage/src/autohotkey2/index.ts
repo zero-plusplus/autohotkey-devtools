@@ -251,12 +251,12 @@ export function createRepositories(scopeName: ScopeName, placeholder?: Placehold
     [Repository.Expression]: patternsRule(
       includeRule(Repository.ShorthandRegexpMatch),
       includeRule(Repository.KeywordInExpression),
+      includeRule(Repository.InvalidDereference),
+      includeRule(Repository.Dereference),
       includeRule(Repository.CallExpression_FunctionDeclarationHead),
       includeRule(Repository.ParenthesizedExpression),
       includeRule(Repository.Literal),
       includeRule(Repository.Variable),
-      includeRule(Repository.InvalidDereference),
-      includeRule(Repository.Dereference),
 
       includeRule(Repository.Dot),
       includeRule(Repository.Operator),
@@ -486,7 +486,7 @@ export function createRepositories(scopeName: ScopeName, placeholder?: Placehold
 
     // #region misc
     [Repository.CallExpression_FunctionDeclarationHead]: rule_v1.createCallExpressionRule(scopeName, {
-      callableNamePattern: patterns_v1.looseCallableNamePattern,
+      callableNamePattern: patterns_v1.identifierPattern,
       keywordsInArgument: [],
     }),
     // #endregion misc

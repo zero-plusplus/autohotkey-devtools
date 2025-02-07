@@ -9,18 +9,8 @@ export function createCallExpressionExpectedData(scopeName: ScopeName): Expected
     [
       dedent`
         abc()
-        %abc%()
-        %abc%edf()
       `, [
         { text: 'abc', scopes: name(scopeName, RuleName.FunctionName) },
-        { text: '(', scopes: name(scopeName, RuleName.OpenParen) },
-        { text: ')', scopes: name(scopeName, RuleName.CloseParen) },
-
-        { text: '%abc%', scopes: name(scopeName, RuleName.FunctionName) },
-        { text: '(', scopes: name(scopeName, RuleName.OpenParen) },
-        { text: ')', scopes: name(scopeName, RuleName.CloseParen) },
-
-        { text: '%abc%edf', scopes: name(scopeName, RuleName.FunctionName) },
         { text: '(', scopes: name(scopeName, RuleName.OpenParen) },
         { text: ')', scopes: name(scopeName, RuleName.CloseParen) },
       ],
@@ -62,22 +52,6 @@ export function createCallExpressionExpectedData(scopeName: ScopeName): Expected
         { text: '(', scopes: name(scopeName, RuleName.OpenParen) },
         { text: ')', scopes: name(scopeName, RuleName.CloseParen) },
         { text: 'threadABC', scopes: name(scopeName, RuleName.FunctionName) },
-        { text: '(', scopes: name(scopeName, RuleName.OpenParen) },
-        { text: ')', scopes: name(scopeName, RuleName.CloseParen) },
-      ],
-    ],
-
-    // Note: The following variable names should be errors, but were daringly allowed because they slow down the processing speed to the extent that it freezes when analyzing exactly
-    [
-      dedent`
-        %abc()
-        %abc%abc%()
-      `, [
-        { text: '%abc', scopes: name(scopeName, RuleName.FunctionName) },
-        { text: '(', scopes: name(scopeName, RuleName.OpenParen) },
-        { text: ')', scopes: name(scopeName, RuleName.CloseParen) },
-
-        { text: '%abc%abc%', scopes: name(scopeName, RuleName.FunctionName) },
         { text: '(', scopes: name(scopeName, RuleName.OpenParen) },
         { text: ')', scopes: name(scopeName, RuleName.CloseParen) },
       ],

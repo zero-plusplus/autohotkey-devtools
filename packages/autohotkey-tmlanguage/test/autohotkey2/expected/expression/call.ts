@@ -11,6 +11,25 @@ export function createCallExpressionExpectedData(scopeName: ScopeName): Expected
 
     [
       dedent`
+        %abc%()
+        %abc%edf()
+      `, [
+        { text: '%', scopes: name(scopeName, RuleName.PercentBegin) },
+        { text: 'abc', scopes: name(scopeName, RuleName.Variable) },
+        { text: '%', scopes: name(scopeName, RuleName.PercentEnd) },
+        { text: '(', scopes: name(scopeName, RuleName.OpenParen) },
+        { text: ')', scopes: name(scopeName, RuleName.CloseParen) },
+
+        { text: '%', scopes: name(scopeName, RuleName.PercentBegin) },
+        { text: 'abc', scopes: name(scopeName, RuleName.Variable) },
+        { text: '%', scopes: name(scopeName, RuleName.PercentEnd) },
+        { text: 'edf', scopes: name(scopeName, RuleName.FunctionName) },
+        { text: '(', scopes: name(scopeName, RuleName.OpenParen) },
+        { text: ')', scopes: name(scopeName, RuleName.CloseParen) },
+      ],
+    ],
+    [
+      dedent`
         (() => 123)()
         ((&a, b := 10) => 123)()
       `,
@@ -38,6 +57,27 @@ export function createCallExpressionExpectedData(scopeName: ScopeName): Expected
         { text: ')', scopes: name(scopeName, RuleName.CloseParen) },
         { text: '(', scopes: name(scopeName, RuleName.OpenParen) },
         { text: ')', scopes: name(scopeName, RuleName.CloseParen) },
+      ],
+    ],
+    [
+      dedent`
+        abc := { key: %abc()% }
+        return
+      `,
+      [
+        { text: 'abc', scopes: name(scopeName, RuleName.Variable) },
+        { text: ':=', scopes: name(scopeName, RuleName.Operator) },
+        { text: '{', scopes: name(scopeName, RuleName.OpenBrace) },
+        { text: 'key', scopes: name(scopeName, RuleName.Variable) },
+        { text: ':', scopes: name(scopeName, RuleName.Colon) },
+        { text: '%', scopes: name(scopeName, RuleName.PercentBegin) },
+        { text: 'abc', scopes: name(scopeName, RuleName.FunctionName) },
+        { text: '(', scopes: name(scopeName, RuleName.OpenParen) },
+        { text: ')', scopes: name(scopeName, RuleName.CloseParen) },
+        { text: '%', scopes: name(scopeName, RuleName.PercentEnd) },
+        { text: '}', scopes: name(scopeName, RuleName.CloseBrace) },
+
+        { text: 'return', scopes: name(scopeName, RuleName.JumpCommandName) },
       ],
     ],
   ];

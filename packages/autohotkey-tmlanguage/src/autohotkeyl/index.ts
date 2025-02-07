@@ -217,6 +217,8 @@ export function createRepositories(scopeName: ScopeName): Repositories {
       includeRule(Repository.ShorthandRegexpMatch),
       includeRule(Repository.NewCallExpression),
       includeRule(Repository.KeywordInExpression),
+      includeRule(Repository.InvalidDereference),
+      includeRule(Repository.Dereference),
       includeRule(Repository.CallExpression_FunctionDeclarationHead),
       includeRule(Repository.ParenthesizedExpression),
       includeRule(Repository.Literal),
@@ -224,8 +226,6 @@ export function createRepositories(scopeName: ScopeName): Repositories {
       includeRule(Repository.BuiltInVariable),
       includeRule(Repository.InvalidVariable),
       includeRule(Repository.Variable),
-      includeRule(Repository.InvalidDereference),
-      includeRule(Repository.Dereference),
 
       includeRule(Repository.Dot),
       includeRule(Repository.Operator),

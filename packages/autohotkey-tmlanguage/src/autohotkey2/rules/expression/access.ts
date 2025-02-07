@@ -1,34 +1,28 @@
 import * as patterns_v1 from '../../../autohotkeyl/patterns';
 import { Repository, RuleName, StyleName } from '../../../constants';
-import { alt, anyChars1, capture, char, endAnchor, lookahead, negativeLookahead, negChar, negChars0, negChars1, seq } from '../../../oniguruma';
-import type { MatchRule, PatternsRule, ScopeName } from '../../../types';
+import { alt, capture, char, endAnchor, lookahead, negativeLookahead, negChar, negChars0, negChars1, seq } from '../../../oniguruma';
+import type { BeginEndRule, PatternsRule, ScopeName } from '../../../types';
 import { includeRule, nameRule } from '../../../utils';
 
-export function createDereferenceRule(scopeName: ScopeName): MatchRule {
+export function createDereferenceRule(scopeName: ScopeName): BeginEndRule {
   return {
-    match: seq(
-      capture(char('%')),
-      capture(negChars1('\\r', '\\n')),
-      capture(char('%')),
-    ),
-    captures: {
+    begin: capture(char('%')),
+    beginCaptures: {
       1: nameRule(scopeName, RuleName.PercentBegin),
-      2: {
-        patterns: [
-          includeRule(Repository.InvalidDereference),
-          includeRule(Repository.Dereference),
-          {
-            match: capture(anyChars1()),
-            captures: {
-              1: {
-                patterns: [ includeRule(Repository.Expressions) ],
-              },
-            },
-          },
-        ],
-      },
-      3: nameRule(scopeName, RuleName.PercentEnd),
     },
+    end: alt(
+      capture(char('%')),
+      endAnchor(),
+    ),
+    endCaptures: {
+      1: nameRule(scopeName, RuleName.PercentEnd),
+    },
+    patterns: [
+      includeRule(Repository.Meta),
+
+      includeRule(Repository.Comma),
+      includeRule(Repository.Expression),
+    ],
   };
 }
 export function createInvalidDereferenceRule(scopeName: ScopeName): PatternsRule {

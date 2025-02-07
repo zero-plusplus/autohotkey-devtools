@@ -8,7 +8,20 @@ import type { ExpectedTestData } from '../../../types';
 export function createCallExpressionExpectedData(scopeName: ScopeName): ExpectedTestData[] {
   return [
     ...common.createCallExpressionExpectedData(scopeName),
+    [
+      dedent`
+        %abc%()
+        %abc%edf()
+      `, [
+        { text: '%abc%', scopes: name(scopeName, RuleName.FunctionName) },
+        { text: '(', scopes: name(scopeName, RuleName.OpenParen) },
+        { text: ')', scopes: name(scopeName, RuleName.CloseParen) },
 
+        { text: '%abc%edf', scopes: name(scopeName, RuleName.FunctionName) },
+        { text: '(', scopes: name(scopeName, RuleName.OpenParen) },
+        { text: ')', scopes: name(scopeName, RuleName.CloseParen) },
+      ],
+    ],
     [
       dedent`
         #Include()
