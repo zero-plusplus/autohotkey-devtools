@@ -1,5 +1,5 @@
 import type { RuleName } from '../../../constants';
-import { keyword } from '../../../oniguruma';
+import { char, ignoreCase, lookahead, negativeLookbehind, ordalt, seq, wordBound } from '../../../oniguruma';
 import type { MatchRule, ScopeName } from '../../../types';
 import { name } from '../../../utils';
 
@@ -10,6 +10,10 @@ interface Placeholder {
 export function createKeywordRule(scopeName: ScopeName, placeholder: Placeholder): MatchRule {
   return {
     name: name(scopeName, placeholder.keywordRuleName),
-    match: keyword(...placeholder.keywords),
+    match: seq(
+      negativeLookbehind(char('.')),
+      ignoreCase(ordalt(...placeholder.keywords)),
+      lookahead(wordBound()),
+    ),
   };
 }
