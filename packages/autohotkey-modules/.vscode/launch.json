@@ -5,7 +5,9 @@
       "name": "AutoHotkey Debug (Advanced Configuration)",
       "type": "autohotkey",
       "request": "launch",
-      "runtime": "v2.1-alpha.15/AutoHotkey64.exe",
+      "runtime": {
+        ".ahk": "v2.1-alpha.15/AutoHotkey64.exe"
+      },
       "program": "${file}",
       "args": [],
       "port": "9002-9010",
