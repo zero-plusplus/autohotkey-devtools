@@ -30,7 +30,7 @@ export class Assert {
    * @throws {Error}
    * @return {AssertionResult}
    */
-  static equals := (self, actual, expected, message?) {
+  static equals := (self, actual, expected, message := '') {
     result := actual == expected
     if (result) {
       return AssertionResult(actual, expected, result, message)
@@ -46,7 +46,7 @@ export class Assert {
    * @throws {Error}
    * @return {AssertionResult}
    */
-  static equalsIgnoreCase := (self, actual, expected, message?) {
+  static equalsIgnoreCase := (self, actual, expected, message := '') {
     result := actual = expected
     if (result) {
       return AssertionResult(actual, expected, result, message)
@@ -76,9 +76,9 @@ export class AssertionResult {
    * @param {unknown} actual
    * @param {unknown} expected
    * @param {boolean} result
-   * @param {string?} message?
+   * @param {string} [message := '']
    */
-  __NEW(actual, expected, result, message?) {
+  __NEW(actual, expected, result, message := '') {
     /**
      * @readonly
      * @property {unknown} actual
@@ -98,7 +98,7 @@ export class AssertionResult {
      * @readonly
      * @property {string} message
      */
-    this.defineProp('message', { get: (*) => message ?? '' })
+    this.defineProp('message', { get: (*) => message })
   }
 }
 export class AssertionError extends Error {
