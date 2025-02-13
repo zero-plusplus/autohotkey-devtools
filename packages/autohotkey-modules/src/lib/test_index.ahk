@@ -181,6 +181,10 @@ export class TestSuite extends Array {
      */
     this.defineProp('result', {
       get: (*) {
+        if (this.length == 0) {
+          return false
+        }
+
         for i, testCaseOrTestSuite in this {
           if (testCaseOrTestSuite.result) {
             continue
@@ -235,6 +239,10 @@ export class TestCase extends Array {
      */
     this.defineProp('result', {
       get: (*) {
+        if (this.length == 0) {
+          return false
+        }
+
         for i, assertion in this {
           if (assertion.result) {
             continue
