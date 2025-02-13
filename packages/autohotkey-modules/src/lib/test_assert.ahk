@@ -54,6 +54,22 @@ export class Assert {
     throw AssertionError(message ?? 'The given values are not identical.', actual, expected)
   }
   equalsIgnoreCase := (self, actual, expected) => Assert.equalsIgnoreCase(actual, expected, this.message)
+  /**
+   * @static
+   * @instance
+   * @param {Func} callback
+   * @return {AssertionResult}
+   * @throws {AssertionError}
+   */
+  static throws(callback, message := '') {
+    try {
+      callback()
+    }
+    catch {
+      return AssertionResult(true, true, true, message)
+    }
+    throw AssertionError(message ?? 'no exceptions were raised', true, false)
+  }
   ; #endregion assertions
 
   ; #region inner
