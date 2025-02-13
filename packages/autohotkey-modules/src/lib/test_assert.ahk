@@ -23,35 +23,35 @@ export class Assert {
 
   ; #region assertions
   /**
-   * @instance
    * @static
+   * @instance
    * @param {unknown} actual
    * @param {unknown} expected
-   * @throws {Error}
    * @return {AssertionResult}
+   * @throws {AssertionError}
    */
   static equals := (self, actual, expected, message := '') {
     result := actual == expected
     if (result) {
       return AssertionResult(actual, expected, result, message)
     }
-    throw Error(message ?? 'The given values are not identical.')
+    throw AssertionError(message ?? 'The given values are not identical.', actual, expected)
   }
   equals := (self, actual, expected) => Assert.equals(actual, expected, this.message)
   /**
-   * @instance
    * @static
+   * @instance
    * @param {unknown} actual
    * @param {unknown} expected
-   * @throws {Error}
    * @return {AssertionResult}
+   * @throws {AssertionError}
    */
   static equalsIgnoreCase := (self, actual, expected, message := '') {
     result := actual = expected
     if (result) {
       return AssertionResult(actual, expected, result, message)
     }
-    throw Error(message ?? 'The given values are not identical.')
+    throw AssertionError(message ?? 'The given values are not identical.', actual, expected)
   }
   equalsIgnoreCase := (self, actual, expected) => Assert.equalsIgnoreCase(actual, expected, this.message)
   ; #endregion assertions
@@ -71,7 +71,7 @@ export class Assert {
   }
   ; #endregion inner
 }
-export class AssertionResult {
+export class AssertionResult extends Error {
   /**
    * @param {unknown} actual
    * @param {unknown} expected

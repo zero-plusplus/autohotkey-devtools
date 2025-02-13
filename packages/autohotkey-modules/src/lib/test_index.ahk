@@ -329,12 +329,7 @@ export class assert {
       CONTEXT.currentTestCase.push(result)
     }
     catch (Error as err) {
-      CONTEXT.currentTestCase.push({
-        result: false,
-        actual: params[1],
-        expected: params[2],
-        message: params.length == 3 ? params[3] : err.message,
-      })
+      CONTEXT.currentTestCase.push(err)
     }
   }
   __CALL(key, params) {
@@ -353,12 +348,8 @@ export class assert {
         CONTEXT.currentTestCase.push(result)
       }
       catch (Error as err) {
-        CONTEXT.currentTestCase.push({
-          result: true,
-          actual: params[1],
-          expected: params[2],
-          message: params.length == 3 ? params[3] : err.message,
-        })
+        err.defineProp('result', { get: (*) => true })
+        CONTEXT.currentTestCase.push(err)
       }
     }
     __CALL(key, params) {
