@@ -1,4 +1,4 @@
-#Requires AutoHotkey v2.1-
+﻿#Requires AutoHotkey v2.1-
 #Warn All, StdOut
 
 import { Assert as DefaultAssert } from test_assert
