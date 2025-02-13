@@ -74,6 +74,8 @@ addFixture(fixtureName, callback) {
 /**
  * Add a test suite to the current context.
  * @function
+ * @param {string} description
+ * @param {() => void} callback
  */
 export class describe {
   static call(description, callback) {
@@ -83,6 +85,8 @@ export class describe {
 /**
  * Add a test case to the current context.
  * @function
+ * @param {string} description
+ * @param {() => void} callback
  */
 export class test {
   static call(description, callback) {
@@ -104,6 +108,8 @@ export class test {
 /**
  * Add a fixture to be executed before each test suite in the current context.
  * @function
+ * @param {string} description
+ * @param {() => void} callback
  */
 export class beforeAll {
   static call(description, callback) {
@@ -113,6 +119,8 @@ export class beforeAll {
 /**
  * Add a fixture to be executed after each test suite in the current context.
  * @function
+ * @param {string} description
+ * @param {() => void} callback
  */
 export class afterAll {
   static call(description, callback) {
@@ -122,6 +130,8 @@ export class afterAll {
 /**
  * Add a fixture to be executed before each test case in the current context.
  * @function
+ * @param {string} description
+ * @param {() => void} callback
  */
 export class beforeEach {
   static call(description, callback) {
@@ -131,6 +141,8 @@ export class beforeEach {
 /**
  * Add a fixture to be executed after each test case in the current context.
  * @function
+ * @param {string} description
+ * @param {() => void} callback
  */
 export class afterEach {
   static call(description, callback) {
