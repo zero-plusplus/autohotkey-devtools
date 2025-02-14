@@ -62,7 +62,7 @@ export function createTmLanguage(): TmLanguage {
 
       // #region expression
       [Repository.Expression]: patternsRule(
-        ...repositories_v2[Repository.Expression]!.patterns!,
+        includeRule(Repository.ExpressionInControlFlow),
         includeRule(Repository.FunctionExpressionBlock),
       ),
       [Repository.FunctionExpressionBlock]: rules_vnext.createFunctionExpressionBlockRule(scopeName),

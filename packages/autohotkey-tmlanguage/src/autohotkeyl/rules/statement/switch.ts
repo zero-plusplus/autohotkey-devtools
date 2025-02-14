@@ -1,7 +1,7 @@
 import { Repository, RuleName } from '../../../constants';
-import { alt, anyChars0, capture, char, ignoreCase, inlineSpace, inlineSpaces0, keyword, lookahead, lookbehind, negativeLookahead, seq, startAnchor } from '../../../oniguruma';
+import { alt, capture, char, ignoreCase, inlineSpaces0, keyword, lookahead, lookbehind, optseq, seq, startAnchor } from '../../../oniguruma';
 import type { BeginEndRule, ScopeName } from '../../../types';
-import { includeRule, nameRule, patternsRule } from '../../../utils';
+import { includeRule, nameRule } from '../../../utils';
 
 interface Placeholder {
   startAnchor: string;
@@ -13,131 +13,86 @@ export function createSwitchStatementRule(scopeName: ScopeName, placeholder: Pla
       lookbehind(placeholder.startAnchor),
       inlineSpaces0(),
       capture(keyword('switch')),
-      lookahead(alt(
-        char('(', '{'),
-        inlineSpace(),
-      )),
     ),
     beginCaptures: {
       1: nameRule(scopeName, RuleName.ControlFlowKeyword),
     },
-    end: lookbehind(seq(inlineSpaces0(), char('}'))),
+    end: capture('}'),
+    endCaptures: {
+      1: nameRule(scopeName, RuleName.BlockEnd),
+    },
     patterns: [
-      // switch head
+      // #region switch head
       {
         begin: seq(
-          lookbehind(seq(
-            ignoreCase('switch'),
-            inlineSpace(),
-          )),
+          lookbehind(ignoreCase('switch')),
           inlineSpaces0(),
-          alt(
-            lookahead(char('(')),
-            negativeLookahead(char('{')),
-          ),
         ),
-        end: lookahead(alt(
+        end: alt(
+          lookahead(char('{')),
           placeholder.endAnchor,
-          char('{'),
-        )),
-        patterns: [ includeRule(Repository.Expressions) ],
+        ),
+        patterns: [
+          includeRule(Repository.Comma),
+          includeRule(Repository.ExpressionInControlFlow),
+        ],
       },
+      // #endregion switch head
 
-      // switch body
+      // #region switch body
       {
         begin: capture(char('{')),
         beginCaptures: {
           1: nameRule(scopeName, RuleName.BlockBegin),
         },
-        end: seq(inlineSpaces0(), capture(char('}'))),
-        endCaptures: {
-          1: nameRule(scopeName, RuleName.BlockEnd),
-        },
+        end: lookahead(char('}')),
         patterns: [
-          // #region one true brace style
+          // #region case
           {
             begin: seq(
               startAnchor(),
               inlineSpaces0(),
               capture(keyword('case')),
-              inlineSpaces0(),
-              capture(anyChars0()),
-              inlineSpaces0(),
-              capture(char(':')),
-              inlineSpaces0(),
-              capture(char('{')),
             ),
             beginCaptures: {
               1: nameRule(scopeName, RuleName.SwitchLabelKeyword),
-              2: patternsRule(includeRule(Repository.Expressions)),
-              3: nameRule(scopeName, RuleName.SemiColon),
-              4: nameRule(scopeName, RuleName.BlockBegin),
             },
-            end: seq(inlineSpaces0(), capture(char('}'))),
-            endCaptures: {
-              1: nameRule(scopeName, RuleName.BlockEnd),
-            },
-            patterns: [ includeRule(Repository.Self) ],
-          },
-          {
-            begin: seq(
-              startAnchor(),
-              inlineSpaces0(),
-              capture(keyword('default')),
-              inlineSpaces0(),
-              capture(char(':')),
-              inlineSpaces0(),
-              capture(char('{')),
+            end: alt(
+              seq(capture(char(':')), inlineSpaces0()),
+              placeholder.endAnchor,
             ),
-            beginCaptures: {
-              1: nameRule(scopeName, RuleName.SwitchLabelKeyword),
-              2: nameRule(scopeName, RuleName.SemiColon),
-              3: nameRule(scopeName, RuleName.BlockBegin),
-            },
-            end: seq(inlineSpaces0(), capture(char('}'))),
             endCaptures: {
-              1: nameRule(scopeName, RuleName.BlockEnd),
+              1: nameRule(scopeName, RuleName.Colon),
             },
-            patterns: [ includeRule(Repository.Self) ],
+            patterns: [
+              includeRule(Repository.Comma),
+              includeRule(Repository.ExpressionInControlFlow),
+            ],
           },
-          // #endregion one true brace style
+          // #endregion case
 
-          // #region k&r style
-          {
-            match: seq(
-              startAnchor(),
-              inlineSpaces0(),
-              capture(keyword('case')),
-              lookahead(inlineSpace()),
-              inlineSpaces0(),
-              capture(anyChars0()),
-              inlineSpaces0(),
-              capture(char(':')),
-            ),
-            captures: {
-              1: nameRule(scopeName, RuleName.SwitchLabelKeyword),
-              2: patternsRule(includeRule(Repository.Self)),
-              3: nameRule(scopeName, RuleName.SemiColon),
-            },
-          },
+          // #region default
           {
             match: seq(
               startAnchor(),
               inlineSpaces0(),
               capture(keyword('default')),
-              inlineSpaces0(),
-              capture(char(':')),
+              optseq(
+                capture(char(':')),
+                inlineSpaces0(),
+              ),
             ),
             captures: {
               1: nameRule(scopeName, RuleName.SwitchLabelKeyword),
-              2: nameRule(scopeName, RuleName.SemiColon),
+              2: nameRule(scopeName, RuleName.Colon),
             },
           },
-          // #endregion k&r style
+          // #endregion default
 
           includeRule(Repository.Self),
         ],
       },
+      // #endregion switch body
     ],
   };
 }

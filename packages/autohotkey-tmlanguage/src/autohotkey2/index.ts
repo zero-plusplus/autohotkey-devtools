@@ -248,7 +248,8 @@ export function createRepositories(scopeName: ScopeName, placeholder?: Placehold
     // #endregion declaration
 
     // #region expression
-    [Repository.Expression]: patternsRule(
+    [Repository.Expression]: includeRule(Repository.ExpressionInControlFlow),
+    [Repository.ExpressionInControlFlow]: patternsRule(
       includeRule(Repository.ShorthandRegexpMatch),
       includeRule(Repository.KeywordInExpression),
       includeRule(Repository.Dereference),

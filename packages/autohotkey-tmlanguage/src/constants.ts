@@ -304,6 +304,7 @@ export const enum Repository {
 
   // #region expressions
   Expression = 'repository.expression',
+  ExpressionInControlFlow = 'repository.expression.in-controlflow',
   Expressions = 'repository.expressions',
   ParenthesizedExpression = 'repository.expression.parenthesized',
   ShorthandRegexpMatch = 'repository.expression.regexp.shorthand',

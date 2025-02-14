@@ -213,7 +213,12 @@ export function createRepositories(scopeName: ScopeName): Repositories {
     // #endregion declaration
 
     // #region expression
-    [Repository.Expression]: patternsRule(
+    [Repository.Expression]: includeRule(Repository.ExpressionInControlFlow),
+    [Repository.Expressions]: patternsRule(
+      includeRule(Repository.Comma),
+      includeRule(Repository.Expression),
+    ),
+    [Repository.ExpressionInControlFlow]: patternsRule(
       includeRule(Repository.ShorthandRegexpMatch),
       includeRule(Repository.NewCallExpression),
       includeRule(Repository.KeywordInExpression),
@@ -229,10 +234,6 @@ export function createRepositories(scopeName: ScopeName): Repositories {
 
       includeRule(Repository.Dot),
       includeRule(Repository.Operator),
-    ),
-    [Repository.Expressions]: patternsRule(
-      includeRule(Repository.Comma),
-      includeRule(Repository.Expression),
     ),
     [Repository.ParenthesizedExpression]: rule_v1.createParenthesizedExpressionRule(scopeName),
 
