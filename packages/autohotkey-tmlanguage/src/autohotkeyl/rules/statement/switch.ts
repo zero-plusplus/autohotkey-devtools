@@ -1,5 +1,5 @@
 import { Repository, RuleName } from '../../../constants';
-import { alt, capture, char, ignoreCase, inlineSpaces0, keyword, lookahead, lookbehind, optseq, seq, startAnchor } from '../../../oniguruma';
+import { alt, capture, char, ignoreCase, inlineSpaces0, keyword, lookahead, lookbehind, optseq, ordalt, seq, startAnchor } from '../../../oniguruma';
 import type { BeginEndRule, ScopeName } from '../../../types';
 import { includeRule, nameRule } from '../../../utils';
 
@@ -59,7 +59,8 @@ export function createSwitchStatementRule(scopeName: ScopeName, placeholder: Pla
             },
             end: alt(
               seq(capture(char(':')), inlineSpaces0()),
-              placeholder.endAnchor,
+              lookahead(char('}')),
+              lookahead(seq(startAnchor(), inlineSpaces0(), ignoreCase(ordalt('case', 'default')))),
             ),
             endCaptures: {
               1: nameRule(scopeName, RuleName.Colon),

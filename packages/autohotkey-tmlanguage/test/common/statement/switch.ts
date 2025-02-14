@@ -188,5 +188,59 @@ export function createSwitchStatementExpectedData(scopeName: ScopeName): Expecte
         ]),
       ],
     ],
+    // Multi-line expressions in switch case label
+    [
+      dedent`
+        switch (true)
+        {
+          case a,
+               break,
+          case b:
+            break
+
+          case a,
+               break,
+          default:
+            break
+
+          case a,
+               break,
+        }
+      `,
+      [
+        { text: 'switch', scopes: name(scopeName, RuleName.ControlFlowKeyword) },
+        { text: '(', scopes: name(scopeName, RuleName.OpenParen) },
+        { text: 'true', scopes: name(scopeName, RuleName.KeywordLikeBuiltInVariable) },
+        { text: ')', scopes: name(scopeName, RuleName.CloseParen) },
+        { text: '{', scopes: name(scopeName, RuleName.BlockBegin) },
+
+        { text: 'case', scopes: name(scopeName, RuleName.SwitchLabelKeyword) },
+        { text: 'a', scopes: name(scopeName, RuleName.Variable) },
+        { text: ',', scopes: name(scopeName, RuleName.Comma) },
+        { text: 'break', scopes: name(scopeName, RuleName.Variable) },
+        { text: ',', scopes: name(scopeName, RuleName.Comma) },
+        { text: 'case', scopes: name(scopeName, RuleName.SwitchLabelKeyword) },
+        { text: 'b', scopes: name(scopeName, RuleName.Variable) },
+        { text: ':', scopes: name(scopeName, RuleName.Colon) },
+        { text: 'break', scopes: name(scopeName, RuleName.JumpCommandName) },
+
+        { text: 'case', scopes: name(scopeName, RuleName.SwitchLabelKeyword) },
+        { text: 'a', scopes: name(scopeName, RuleName.Variable) },
+        { text: ',', scopes: name(scopeName, RuleName.Comma) },
+        { text: 'break', scopes: name(scopeName, RuleName.Variable) },
+        { text: ',', scopes: name(scopeName, RuleName.Comma) },
+        { text: 'default', scopes: name(scopeName, RuleName.SwitchLabelKeyword) },
+        { text: ':', scopes: name(scopeName, RuleName.Colon) },
+        { text: 'break', scopes: name(scopeName, RuleName.JumpCommandName) },
+
+        { text: 'case', scopes: name(scopeName, RuleName.SwitchLabelKeyword) },
+        { text: 'a', scopes: name(scopeName, RuleName.Variable) },
+        { text: ',', scopes: name(scopeName, RuleName.Comma) },
+        { text: 'break', scopes: name(scopeName, RuleName.Variable) },
+        { text: ',', scopes: name(scopeName, RuleName.Comma) },
+
+        { text: '}', scopes: name(scopeName, RuleName.BlockEnd) },
+      ],
+    ],
   ];
 }
