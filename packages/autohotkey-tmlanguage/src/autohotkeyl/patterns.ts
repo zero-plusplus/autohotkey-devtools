@@ -1,9 +1,38 @@
 import { alt, anyChar, anyChars1, char, endAnchor, escapeOnigurumaTexts, group, groupMany0, groupMany1, inlineSpace, inlineSpaces0, inlineSpaces1, lookahead, manyLimit, manyRange, negativeLookahead, negativeLookbehind, negChar, negChars0, optional, ordalt, seq, startAnchor, text, wordChar } from '../oniguruma';
 import * as constants_v1 from './constants';
 
+// #region [Names](https://www.autohotkey.com/docs/v1/Concepts.htm#names)
+export const nameLimitLength = 253;
+const numberChar = '\\d';
+const sign = char('_', '#', '@', '$');
+export const nameStart: string = group(alt(wordChar(), sign));
+export const nameStart_upper: string = group('[A-Z_]');
+export const nameBody: string = group(alt(wordChar(), sign, numberChar));
+export const nameBody_upper: string = group('[A-Z_]');
+export const identifierPattern: string = group(seq(nameStart, manyLimit(nameBody, nameLimitLength - 1)));
+export const keyName: string = group(alt(
+  group(seq(char('%'), anyChars1(), char('%'))),
+  identifierPattern,
+));
+
+// Note: Analyze roughly, as accurate analysis slows down the speed of analysis to a great extent
+export const looseLeftHandPattern: string = group(manyRange(group(alt(
+  nameBody,
+  char('%', '[', ']', '.'),
+)), 1, nameLimitLength));
+export const looseCallableNamePattern: string = seq(
+  manyLimit(group(alt(
+    nameBody,
+    char('%'),
+  )), nameLimitLength),
+  lookahead(char('(')),
+);
+// #endregion Names
+
 export const statementStartAnchor: string = alt(
   seq(startAnchor(), inlineSpaces0()),
-  seq(char(':'), inlineSpaces0()),
+  seq(text('::'), inlineSpaces0()),
+  seq(identifierPattern, char(':'), inlineSpaces0()),
   seq(inlineSpaces0(), char('}')),
 );
 export const expressionContinuationStartAnchor: string = group(ordalt(...escapeOnigurumaTexts(constants_v1.continuationOperators)));
@@ -95,30 +124,3 @@ export const expressionWithOneTrueBraceArgumentPattern: string = groupMany0(alt(
 ));
 // #endregion command
 
-// #region [Names](https://www.autohotkey.com/docs/v1/Concepts.htm#names)
-export const nameLimitLength = 253;
-const numberChar = '\\d';
-const sign = char('_', '#', '@', '$');
-export const nameStart: string = group(alt(wordChar(), sign));
-export const nameStart_upper: string = group('[A-Z_]');
-export const nameBody: string = group(alt(wordChar(), sign, numberChar));
-export const nameBody_upper: string = group('[A-Z_]');
-export const identifierPattern: string = group(seq(nameStart, manyLimit(nameBody, nameLimitLength - 1)));
-export const keyName: string = group(alt(
-  group(seq(char('%'), anyChars1(), char('%'))),
-  identifierPattern,
-));
-
-// Note: Analyze roughly, as accurate analysis slows down the speed of analysis to a great extent
-export const looseLeftHandPattern: string = group(manyRange(group(alt(
-  nameBody,
-  char('%', '[', ']', '.'),
-)), 1, nameLimitLength));
-export const looseCallableNamePattern: string = seq(
-  manyLimit(group(alt(
-    nameBody,
-    char('%'),
-  )), nameLimitLength),
-  lookahead(char('(')),
-);
-// #endregion Names
