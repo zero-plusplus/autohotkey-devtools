@@ -1,9 +1,8 @@
-﻿#Requires AutoHotkey v2.1-
+#Requires AutoHotkey v2.1-
 #Warn All, StdOut
 
 import * from test_index
-import { at } from collection_at
-import { each } from collection_each
+import { at, each, eachOwn } from collection
 
 describe('collection', () {
   describe('at', () {
@@ -31,6 +30,15 @@ describe('collection', () {
   })
 
   describe('each', () {
+    test('Enumerations include inherited members', () {
+      obj := { fieldA: 'valueA', base: { fieldB: 'valueB' } }
+
+      e := each(obj)
+      e(&key, &value)
+      assert('fieldA is enumerated').equals(value, at(obj, key))
+      assert('Inherited fieldB is enumerated').equals(e(&key, &value), true)
+    })
+
     test.each([
       [ { key: 'value' } ],
       [ [ 1, 2, 3 ], ],
@@ -40,12 +48,44 @@ describe('collection', () {
         assert('key: "' key '"').equals(value, at(obj, key))
       })
     })
+
     test.each([
       [ { key: 'value' } ],
       [ [ 1, 2, 3 ], ],
       [ Map('key', 'value') ],
     ])('Enumeration with enumerator', (obj) {
       for (key, value in each(obj)) {
+        assert('key: "' key '"').equals(value, at(obj, key))
+      }
+    })
+  })
+
+  describe('eachOwn', () {
+    test('Enumeration does not include inherited members', () {
+      obj := { fieldA: 'valueA', base: { fieldB: 'valueB' } }
+
+      e := eachOwn(obj)
+      e(&key, &value)
+      assert('fieldA is enumerated').equals(value, at(obj, key))
+      assert('Inherited fieldB is not enumerated').equals(e(&key, &value), false)
+    })
+
+    test.each([
+      [ { key: 'value' } ],
+      [ [ 1, 2, 3 ], ],
+      [ Map('key', 'value') ],
+    ])('Enumeration with callback', (obj) {
+      eachOwn(obj, (value, key) {
+        assert('key: "' key '"').equals(value, at(obj, key))
+      })
+    })
+
+    test.each([
+      [ { key: 'value' } ],
+      [ [ 1, 2, 3 ], ],
+      [ Map('key', 'value') ],
+    ])('Enumeration with enumerator', (obj) {
+      for (key, value in eachOwn(obj)) {
         assert('key: "' key '"').equals(value, at(obj, key))
       }
     })
