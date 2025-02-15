@@ -1,8 +1,8 @@
-#Requires AutoHotkey v2.1-
+﻿#Requires AutoHotkey v2.1-
 #Warn All, StdOut
 
 import * from test_index
-import { at, each } from collection
+import { at, count, each } from collection
 
 describe('collection', () {
   describe('at', () {
@@ -26,6 +26,21 @@ describe('collection', () {
       assert('obj["key"]').equals(obj['key'], at(obj, 'key'))
       assert('obj["nest"]["key"]').equals(obj['nest']['key'], at(obj, [ 'nest', 'key' ]))
       assert('obj["unknown"]').equals('', at(obj, 'unknown', ''))
+    })
+  })
+
+  describe('count', () {
+    test.each([
+      [ { field1: 'value1', field2: 'value2', field3: 'value3' }, 3 ],
+      [ [ 1, 2, 3 ], 3 ],
+      [ Map('field1', 'value1', 'field2', 'value2', 'field3', 'value3'), 3 ],
+    ])('Get a number of members/elements', (obj, expectedCount) {
+      assert.equals(count(obj), expectedCount)
+    })
+
+    test('Inherited members are not counted', () {
+      obj := { fieldA: 'valueA', base: { fieldB: 'valueB' } }
+      assert.equals(count(obj), 1)
     })
   })
 
