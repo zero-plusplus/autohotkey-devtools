@@ -2,7 +2,7 @@
 #Warn All, StdOut
 
 import * from test_index
-import { at, each, eachOwn } from collection
+import { at, each } from collection
 
 describe('collection', () {
   describe('at', () {
@@ -39,13 +39,13 @@ describe('collection', () {
       assert.equals(e, each(e))
     })
 
-    test('Enumerations include inherited members', () {
+    test('Enumeration does not include inherited members', () {
       obj := { fieldA: 'valueA', base: { fieldB: 'valueB' } }
 
       e := each(obj)
       e(&key, &value)
       assert('fieldA is enumerated').equals(value, at(obj, key))
-      assert('Inherited fieldB is enumerated').equals(e(&key, &value), true)
+      assert('Inherited fieldB is not enumerated').equals(e(&key, &value), false)
     })
 
     test.each([
@@ -64,46 +64,6 @@ describe('collection', () {
       [ Map('key', 'value') ],
     ])('Enumeration with enumerator', (obj) {
       for (key, value in each(obj)) {
-        assert('key: "' key '"').equals(value, at(obj, key))
-      }
-    })
-  })
-
-  describe('eachOwn', () {
-    test.each([
-      [ { key: 'value' } ],
-      [ [ 1, 2, 3 ], ],
-      [ Map('key', 'value') ],
-    ])('Enumerator returns as given', (obj) {
-      e := each(obj)
-      assert.equals(e, each(e))
-    })
-
-    test('Enumeration does not include inherited members', () {
-      obj := { fieldA: 'valueA', base: { fieldB: 'valueB' } }
-
-      e := eachOwn(obj)
-      e(&key, &value)
-      assert('fieldA is enumerated').equals(value, at(obj, key))
-      assert('Inherited fieldB is not enumerated').equals(e(&key, &value), false)
-    })
-
-    test.each([
-      [ { key: 'value' } ],
-      [ [ 1, 2, 3 ], ],
-      [ Map('key', 'value') ],
-    ])('Enumeration with callback', (obj) {
-      eachOwn(obj, (value, key) {
-        assert('key: "' key '"').equals(value, at(obj, key))
-      })
-    })
-
-    test.each([
-      [ { key: 'value' } ],
-      [ [ 1, 2, 3 ], ],
-      [ Map('key', 'value') ],
-    ])('Enumeration with enumerator', (obj) {
-      for (key, value in eachOwn(obj)) {
         assert('key: "' key '"').equals(value, at(obj, key))
       }
     })

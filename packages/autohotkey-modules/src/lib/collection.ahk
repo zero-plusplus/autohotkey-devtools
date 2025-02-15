@@ -5,4 +5,3 @@ import collection_each
 
 export at := collection_at.at
 export each := collection_each.each
-export eachOwn := collection_each.eachOwn
