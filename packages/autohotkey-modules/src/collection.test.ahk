@@ -1,7 +1,7 @@
-﻿#Requires AutoHotkey v2.1-
+#Requires AutoHotkey v2.1-
 #Warn All, StdOut
 
-import * from test_index
+import * from test
 import { at, count, each } from collection
 
 describe('collection', () {

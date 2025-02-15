@@ -1,7 +1,7 @@
 #Requires AutoHotkey v2.1-
 #Warn All, StdOut
 
-import * from test_index
+import * from test
 import { callback } from function_callback
 
 describe('function', () {
