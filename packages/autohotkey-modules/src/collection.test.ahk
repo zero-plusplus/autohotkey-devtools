@@ -1,8 +1,8 @@
-#Requires AutoHotkey v2.1-
+﻿#Requires AutoHotkey v2.1-
 #Warn All, StdOut
 
 import * from test
-import { at, count, each } from collection
+import { at, count, each, Queue } from collection
 
 describe('collection', () {
   describe('at', () {
@@ -81,6 +81,32 @@ describe('collection', () {
       for (key, value in each(obj)) {
         assert('key: "' key '"').equals(value, at(obj, key))
       }
+    })
+  })
+
+  describe('Queue', () {
+    test('methods', () {
+      q := Queue('a', 'b')
+
+      assert('count').equals(q.count, 2)
+      assert('peek').equals(q.peek(), 'a')
+      assert('dequeue').equals(q.dequeue(), 'a')
+      assert('isEmpty').equals(q.isEmpty(), false)
+      assert('dequeue').equals(q.dequeue(), 'b')
+      assert('isEmpty').equals(q.isEmpty(), true)
+
+      q.enqueue('c')
+      assert('enqueue').equals(q.isEmpty(), false)
+    })
+
+    test('enumerator', () {
+      e := each(Queue('a', 'b'))
+
+      e(&key, &value)
+      assert('[' key ']: ' value).equals(value, 'a')
+
+      e(&key, &value)
+      assert('[' key ']: ' value).equals(value, 'b')
     })
   })
 })
