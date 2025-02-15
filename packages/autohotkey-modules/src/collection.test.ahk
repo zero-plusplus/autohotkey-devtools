@@ -30,6 +30,15 @@ describe('collection', () {
   })
 
   describe('each', () {
+    test.each([
+      [ { key: 'value' } ],
+      [ [ 1, 2, 3 ], ],
+      [ Map('key', 'value') ],
+    ])('Enumerator returns as given', (obj) {
+      e := each(obj)
+      assert.equals(e, each(e))
+    })
+
     test('Enumerations include inherited members', () {
       obj := { fieldA: 'valueA', base: { fieldB: 'valueB' } }
 
@@ -61,6 +70,15 @@ describe('collection', () {
   })
 
   describe('eachOwn', () {
+    test.each([
+      [ { key: 'value' } ],
+      [ [ 1, 2, 3 ], ],
+      [ Map('key', 'value') ],
+    ])('Enumerator returns as given', (obj) {
+      e := each(obj)
+      assert.equals(e, each(e))
+    })
+
     test('Enumeration does not include inherited members', () {
       obj := { fieldA: 'valueA', base: { fieldB: 'valueB' } }
 

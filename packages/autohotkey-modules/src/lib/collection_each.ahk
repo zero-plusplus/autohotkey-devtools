@@ -1,4 +1,4 @@
-#Requires AutoHotkey v2.1-
+﻿#Requires AutoHotkey v2.1-
 #Warn All, StdOut
 
 import function_callback as f
@@ -19,9 +19,7 @@ export each(obj, callback?) {
     throw TypeError('parametr #1 Need to specify an Object')
   }
 
-  props := Type(obj) == 'Object'
-    ? obj.props()
-    : obj.__Enum()
+  props := getEnumerator(obj, true)
   if (!IsSet(callback)) {
     return props
   }
@@ -47,9 +45,7 @@ export eachOwn(obj, callback?) {
     throw TypeError('parametr #1 Need to specify an Object')
   }
 
-  props := Type(obj) == 'Object'
-    ? obj.ownProps()
-    : obj.__Enum()
+  props := getEnumerator(obj)
   if (!IsSet(callback)) {
     return props
   }
@@ -57,4 +53,21 @@ export eachOwn(obj, callback?) {
   for key, value in props {
     f.callback(callback)(value, key, obj)
   }
+}
+
+/**
+ * @internal
+ * @param {object} obj
+ * @return {Enumerator}
+ */
+getEnumerator(obj, includeInherited := false) {
+  if (obj is Enumerator) {
+    return obj
+  }
+  if (Type(obj) == 'Object') {
+    return includeInherited
+      ? obj.props()
+      : obj.ownProps()
+  }
+  return obj.__Enum()
 }
