@@ -12,18 +12,9 @@ export class Queue {
   __NEW(items*) {
     this.defineProp('__items', { get: (*) => items })
   }
-  __ENUM() {
-    i := 1
-    return (&key, &value) {
-      __items := this.__items
-      if (__items.length < i) {
-        return false
-      }
-
-      key := i++
-      value := __items[key]
-      return true
-    }
+  __ENUM(params*) {
+    __items := this.__items
+    return __items.__ENUM(params*)
   }
   /**
    * Number of queue items
