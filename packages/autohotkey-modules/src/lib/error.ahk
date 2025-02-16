@@ -1,4 +1,4 @@
-#Requires AutoHotkey v2.1-
+﻿#Requires AutoHotkey v2.1-
 
 /**
  * Outputs the call stack of the error object specified in the standard error output in a Java-like format.
