@@ -1,7 +1,8 @@
 ﻿#Requires AutoHotkey v2.1-
 #Warn All, StdOut
 
-import * from test
+#Include ./.config.ahk
+
 import { callback } from function_callback
 
 describe('function', () {
@@ -22,5 +23,3 @@ describe('function', () {
     })
   })
 })
-
-runAllTest()

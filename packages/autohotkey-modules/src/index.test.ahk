@@ -1,7 +1,7 @@
 ﻿#Requires AutoHotkey v2.1-
 #Warn All, StdOut
 
-import * from test
+#Include ./.config.ahk
 
 describe('describe', () {
   test('test', () {
@@ -30,5 +30,3 @@ describe('describe', () {
     })
   })
 })
-
-runAllTest()

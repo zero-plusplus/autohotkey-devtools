@@ -1,7 +1,8 @@
 ﻿#Requires AutoHotkey v2.1-
 #Warn All, StdOut
 
-import * from test
+#Include ./.config.ahk
+
 import { at, count, each, Queue } from collection
 
 describe('collection', () {
@@ -110,5 +111,3 @@ describe('collection', () {
     })
   })
 })
-
-runAllTest()
