@@ -52,14 +52,28 @@ export class Enumerable {
     return getEnumerator(this.__source, params*)
   }
   /**
+   * Returns an Enumerator that enumerates each key.
+   * @return {Enumerable<number, string>}
+   */
+  keys() {
+    props := this.__ENUM()
+
+    i := 1
+    return Enumerable((&key?, &value?) {
+      value := i++
+      return props(&key)
+    })
+  }
+  /**
    * Returns an Enumerator that converts each enumerated element.
-   * @template Result
-   * @param {(value: unknown, key: unknown, source: T) => Result} callback
-   * @return {Result}
+   * @template Key, Result
+   * @param {(value: unknown, key: Key, source: T) => Result} callback
+   * @return {Enumerable<Key, Result>}
    */
   map(callback) {
     props := this.__ENUM()
     _callback := f.callback(callback)
+
     return Enumerable((&key?, &value?) {
       hasNext := props(&key, &value)
       if (hasNext) {

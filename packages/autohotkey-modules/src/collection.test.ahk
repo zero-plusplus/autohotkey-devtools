@@ -97,6 +97,16 @@ describe('collection', () {
         assert('key2').equals('value2', m['key2'])
       }
     })
+
+    test.each([
+      [ { key1: 5, key2: 10 } ],
+      [ Map('key1', 5, 'key2', 10 ) ],
+    ])('keys', (obj) {
+      keys := Array(Enumerable(obj).keys()*)
+      assert.equals(keys[1], 'key1')
+      assert.equals(keys[2], 'key2')
+    })
+
     test.each([
       [ { key1: 5, key2: 10 } ],
       [ Map('key1', 5, 'key2', 10 ) ],
