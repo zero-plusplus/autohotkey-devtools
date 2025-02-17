@@ -28,14 +28,14 @@ export class Assert {
    * @param {unknown} actual
    * @param {unknown} expected
    * @return {AssertionResult}
-   * @throws {AssertionError}
+   * @throws {AssertionResult}
    */
   static equals := (self, actual, expected, message := '') {
     result := actual == expected
     if (result) {
-      return AssertionResult(actual, expected, result, message)
+      return AssertionResult(actual, expected, result, Error(message, -4))
     }
-    throw AssertionError(message ?? 'The given values are not identical.', actual, expected)
+    throw AssertionResult(actual, expected, false, Error(message ?? 'The given values are not identical.', -4))
   }
   equals := (self, actual, expected) => Assert.equals(actual, expected, this.message)
   /**
@@ -44,14 +44,14 @@ export class Assert {
    * @param {unknown} actual
    * @param {unknown} expected
    * @return {AssertionResult}
-   * @throws {AssertionError}
+   * @throws {AssertionResult}
    */
   static equalsIgnoreCase := (self, actual, expected, message := '') {
     result := actual = expected
     if (result) {
-      return AssertionResult(actual, expected, result, message)
+      return AssertionResult(actual, expected, result, Error(message, -4))
     }
-    throw AssertionError(message ?? 'The given values are not identical.', actual, expected)
+    throw AssertionResult(actual, expected, false, Error(message ?? 'The given values are not identical.', -4))
   }
   equalsIgnoreCase := (self, actual, expected) => Assert.equalsIgnoreCase(actual, expected, this.message)
   /**
@@ -59,16 +59,16 @@ export class Assert {
    * @instance
    * @param {Func} callback
    * @return {AssertionResult}
-   * @throws {AssertionError}
+   * @throws {AssertionResult}
    */
   static throws(callback, message := '') {
     try {
       callback()
     }
     catch {
-      return AssertionResult(true, true, true, message)
+      return AssertionResult(true, true, true, Error(message, -4))
     }
-    throw AssertionError(message ?? 'no exceptions were raised', true, false)
+    throw AssertionResult(false, true, false, Error(message ?? 'no exceptions were raised', -4))
   }
   ; #endregion assertions
 
@@ -92,9 +92,9 @@ export class AssertionResult extends Error {
    * @param {unknown} actual
    * @param {unknown} expected
    * @param {boolean} result
-   * @param {string} [message := '']
+   * @param {Error} err
    */
-  __NEW(actual, expected, result, message := '') {
+  __NEW(actual, expected, result, err) {
     /**
      * @readonly
      * @property {unknown} actual
@@ -114,35 +114,26 @@ export class AssertionResult extends Error {
      * @readonly
      * @property {string} message
      */
-    this.defineProp('message', { get: (*) => message })
-  }
-}
-export class AssertionError extends Error {
-  /**
-   * @param {string} message
-   * @param {unknown} actual
-   * @param {unknown} expected
-   */
-  __NEW(message, actual, expected) {
+    this.defineProp('message', { get: (*) => err.message })
     /**
      * @readonly
-     * @property {string} message
+     * @property {string} what
      */
-    this.defineProp('message', { get: (*) => message })
+    this.defineProp('what', { get: (*) => err.what })
     /**
      * @readonly
-     * @property {unknown} actual
+     * @property {string} extra
      */
-    this.defineProp('actual', { get: (*) => actual })
+    this.defineProp('extra', { get: (*) => err.extra })
     /**
      * @readonly
-     * @property {unknown} expected
+     * @property {number} line
      */
-    this.defineProp('expected', { get: (*) => expected })
+    this.defineProp('line', { get: (*) => err.line })
     /**
      * @readonly
-     * @property {boolean} result
+     * @property {string} stack
      */
-    this.defineProp('result', { get: (*) => false })
+    this.defineProp('stack', { get: (*) => err.stack })
   }
 }

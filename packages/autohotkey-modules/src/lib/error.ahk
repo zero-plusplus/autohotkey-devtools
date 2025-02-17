@@ -24,7 +24,7 @@ export writeError(err) {
 
   FileAppend(err.__CLASS ': ' err.message '`n', '**')
 
-  if (err.extra !== '') {
+  if ((err.extra ?? '') !== '') {
     FileAppend('  > Specifically: ' err.extra '`n', '**')
   }
 

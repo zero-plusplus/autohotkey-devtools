@@ -11,3 +11,7 @@ export beforeEach := test_core.beforeEach
 export afterEach := test_core.afterEach
 export runAllTest := test_core.runAllTest
 export assert := test_core.assert
+export reportSummary := test_core.reportSummary
+export reportTestSuite := test_core.reportTestSuite
+export reportTestCase := test_core.reportTestCase
+export reportAssertions := test_core.reportAssertions

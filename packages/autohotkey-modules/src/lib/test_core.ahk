@@ -177,6 +177,53 @@ export class TestSuite extends Array {
     this.defineProp('parent', { get: (*) => parent ?? '' })
     /**
      * @readonly
+     * @property {AssertionResult} assertions
+     */
+    this.defineProp('assertions', {
+      get: (*) {
+        assertions := []
+        for i, testCaseOrTestSuite in this {
+          if (testCaseOrTestSuite is TestSuite) {
+            assertions.push(testCaseOrTestSuite.assertions*)
+            continue
+          }
+          assertions.push(testCaseOrTestSuite*)
+        }
+        return assertions
+      }
+    })
+    /**
+     * @readonly
+     * @property {AssertionResult} successes
+     */
+    this.defineProp('successes', {
+      get: (*) {
+        successes := []
+        for i, assertion in this.assertions {
+          if (assertion.result) {
+            successes.push(assertion)
+          }
+        }
+        return successes
+      }
+    })
+    /**
+     * @readonly
+     * @property {AssertionResult} failures
+     */
+    this.defineProp('failures', {
+      get: (*) {
+        failures := []
+        for i, assertion in this.assertions {
+          if (!assertion.result) {
+            failures.push(assertion)
+          }
+        }
+        return failures
+      }
+    })
+    /**
+     * @readonly
      * @property {boolean} result
      */
     this.defineProp('result', {
@@ -272,6 +319,11 @@ export runAllTest(config?) {
 
   reporter := config?.report ?? reportTestSuite
   reporter(CONTEXT.currentTestSuite)
+
+  if (CONTEXT.currentTestSuite.result) {
+    ExitApp 0
+  }
+  ExitApp 1
 }
 /**
  * @param {(context: TestContext) => void} callback
@@ -280,32 +332,89 @@ export runTestBy(callback) {
   callback(CONTEXT)
 }
 /**
- * @param {TestSuite} testSuiteInstance
- * @param {string} [indent := '']
+ * @typedef {{
+ *   indent: string;
+ *   filter: (test: TestSuite | TestCase | AssertionResult) => boolean;
+ *   checkmark: (test: TestSuite | TestCase | AssertionResult) => string;
+ *   onError: (assertion: AssertionResult, reportConfig: ReportConfig) => boolean;
+ * }} ReportConfig
  */
-export reportTestSuite(testSuiteInstance, indent := '') {
-  mark := testSuiteInstance.result ? '✅' : '❌'
-  FileAppend(indent '[' mark '] ' testSuiteInstance.description '`n', '*')
-
-  indent := indent == '' ? '  ' : (indent indent)
-  for i, testCaseOrSuite in testSuiteInstance {
-    if (testCaseOrSuite is TestSuite) {
-      reportTestSuite(testCaseOrSuite, indent)
-      continue
-    }
-    reportTestCase(testCaseOrSuite, indent)
-  }
+defaultReportConfig := {
+  indent: '',
+  filter: (*) => true,
+  checkmark: (test) => test.result ? '[✅] ' : '[❌] ',
+  onError: (*) {
+  },
 }
 /**
  * @param {TestSuite} testSuiteInstance
- * @param {string} [indent := '']
  */
-export reportTestCase(testCaseInstance, indent) {
-  mark := testCaseInstance.result ? '✅' : '❌'
-  FileAppend(indent '[' mark '] ' testCaseInstance.description '`n', '*')
-  for i, assertion in testCaseInstance {
-    mark := assertion.result ? '✅' : '❌'
-    FileAppend((indent '  ') '[' mark '] ' assertion.message '`n', '*')
+export reportSummary(testSuiteInstance, reportConfig := defaultReportConfig) {
+  summary := testSuiteInstance.result
+    ? Chr(0x001b) '[37m' Chr(0x001b) '[42mPASS'
+    : Chr(0x001b) '[37m' Chr(0x001b) '[41mFAIL'
+  summary .= Chr(0x001b) '[0m'
+  summary .= ': ' testSuiteInstance.description
+  summary .= ' ' testSuiteInstance.successes.length '/' testSuiteInstance.assertions.length
+  FileAppend(summary '`n', '*')
+
+  reportTestSuite(testSuiteInstance, reportConfig)
+}
+/**
+ * @param {TestSuite} testSuiteInstance
+ * @param {ReportConfig} reportConfig?
+ */
+export reportTestSuite(testSuiteInstance, reportConfig := defaultReportConfig) {
+  indent := reportConfig.indent ?? defaultReportConfig.indent
+  showTest := (reportConfig.filter ?? defaultReportConfig.filter).call(testSuiteInstance)
+  if (!showTest) {
+    return
+  }
+
+  mark := (reportConfig.checkmark ?? defaultReportConfig.checkmark).call(testSuiteInstance)
+  FileAppend(indent mark testSuiteInstance.description '`n', '*')
+
+  reportConfig.indent := indent == '' ? '  ' : (indent '  ')
+  for i, testCaseOrSuite in testSuiteInstance {
+    if (testCaseOrSuite is TestSuite) {
+      reportTestSuite(testCaseOrSuite, reportConfig)
+      continue
+    }
+    reportTestCase(testCaseOrSuite, reportConfig)
+  }
+}
+/**
+ * @param {TestCase} testCaseInstance
+ * @param {ReportConfig} reportConfig?
+ */
+export reportTestCase(testCaseInstance, reportConfig := defaultReportConfig) {
+  indent := reportConfig.indent ?? defaultReportConfig.indent
+  showTest := (reportConfig.filter ?? defaultReportConfig.filter).call(testCaseInstance)
+  if (!showTest) {
+    return
+  }
+
+  mark := (reportConfig.checkmark ?? defaultReportConfig.checkmark).call(testCaseInstance)
+  FileAppend(indent mark testCaseInstance.description '`n', '*')
+
+  reportAssertions(testCaseInstance, reportConfig)
+}
+/**
+ * @param {AssertionResult[]} assertions
+ * @param {ReportConfig} reportConfig?
+ */
+export reportAssertions(assertions, reportConfig := defaultReportConfig) {
+  indent := reportConfig.indent ?? defaultReportConfig.indent
+
+  for i, assertion in assertions {
+    showTest := (reportConfig.filter ?? defaultReportConfig.filter).call(assertion)
+    if (!showTest) {
+      continue
+    }
+
+    mark := (reportConfig.checkmark ?? defaultReportConfig.checkmark).call(assertion)
+    FileAppend((indent '  ') mark assertion.message '`n', '*')
+    (reportConfig.onError ?? defaultReportConfig.onError).call(assertion, reportConfig)
   }
 }
 
