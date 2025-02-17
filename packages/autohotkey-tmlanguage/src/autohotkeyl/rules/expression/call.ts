@@ -1,10 +1,11 @@
 import { Repository, RuleName } from '../../../constants';
 import { alt, capture, char, group, inlineSpaces0, keyword, lookbehind, seq, startAnchor } from '../../../oniguruma';
-import type { BeginEndRule, MatchRule, PatternsRule, ScopeName } from '../../../types';
-import { includeRule, name, namedPatternsRule, nameRule, patternsRule } from '../../../utils';
+import type { BeginEndRule, MatchRule, PatternsRule, Rule, ScopeName } from '../../../types';
+import { includeRule, nameRule, patternsRule } from '../../../utils';
 
 interface Placeholder {
   callableNamePattern: string;
+  callableNameRule: Rule;
   keywordsInArgument: string[];
 }
 export function createCallExpressionRule(scopeName: ScopeName, placeholder: Placeholder): BeginEndRule {
@@ -17,10 +18,7 @@ export function createCallExpressionRule(scopeName: ScopeName, placeholder: Plac
       capture(char('(')),
     ),
     beginCaptures: {
-      1: namedPatternsRule(
-        name(scopeName, RuleName.FunctionName),
-        [ includeRule(Repository.BuiltInClass) ],
-      ),
+      1: placeholder.callableNameRule,
       2: nameRule(scopeName, RuleName.OpenParen),
     },
     end: capture(char(')')),

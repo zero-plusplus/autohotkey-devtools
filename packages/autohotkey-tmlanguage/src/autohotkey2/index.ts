@@ -6,7 +6,7 @@ import * as rule_common from '../common/rules';
 import { Repository, RuleName } from '../constants';
 import { ordalt } from '../oniguruma';
 import type { Repositories, ScopeName, TmLanguage } from '../types';
-import { includeRule, patternsRule } from '../utils';
+import { includeRule, name, namedPatternsRule, nameRule, patternsRule } from '../utils';
 import * as constants_v2 from './constants';
 import * as patterns_v2 from './patterns';
 import * as rule_v2 from './rules';
@@ -233,6 +233,7 @@ export function createRepositories(scopeName: ScopeName, placeholder?: Placehold
       rulesInBody: [
         includeRule(Repository.Meta),
 
+        includeRule(Repository.MethodDeclarationHead),
         includeRule(Repository.PropertyDeclaration),
         includeRule(Repository.BlockInClassBody),
         includeRule(Repository.StatementCommon),
@@ -486,6 +487,15 @@ export function createRepositories(scopeName: ScopeName, placeholder?: Placehold
     // #region misc
     [Repository.CallExpression_FunctionDeclarationHead]: rule_v1.createCallExpressionRule(scopeName, {
       callableNamePattern: patterns_v1.identifierPattern,
+      callableNameRule: namedPatternsRule(
+        name(scopeName, RuleName.FunctionName),
+        [ includeRule(Repository.BuiltInClass) ],
+      ),
+      keywordsInArgument: [],
+    }),
+    [Repository.MethodDeclarationHead]: rule_v1.createCallExpressionRule(scopeName, {
+      callableNamePattern: patterns_v1.identifierPattern,
+      callableNameRule: nameRule(scopeName, RuleName.FunctionName),
       keywordsInArgument: [],
     }),
     // #endregion misc
