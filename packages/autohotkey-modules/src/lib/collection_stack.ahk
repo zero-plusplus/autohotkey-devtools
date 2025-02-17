@@ -2,12 +2,12 @@
 #Warn All, StdOut
 
 /**
- * This class is a data structure that manages queue items based on the FIFO (First In, First Out) concept.
+ * This class is a data structure that manages stack items based on the FILO (First In Last Out) concept.
  * @template [T extends unknown]
  */
-export class Queue {
+export class Stack {
   /**
-   * @param {T[]} items - Initial queue items
+   * @param {T[]} items - Initial stack items
    */
   __NEW(items*) {
     /**
@@ -18,41 +18,52 @@ export class Queue {
   }
   __ENUM(params*) {
     __items := this.__items
-    return __items.__ENUM(params*)
+
+    i := __items.length
+    return (&key, &value) {
+      if (!__items.has(i)) {
+        return false
+      }
+
+      key := i--
+      value := __items[key]
+
+      return true
+    }
   }
   /**
-   * Number of queue items
+   * Number of stack items
    * @property {number}
    */
   count => this.__items.length
   /**
-   * Checks if the queue is empty.
+   * Checks if the stack is empty.
    * @return {boolean}
    */
   isEmpty() {
     return this.count == 0
   }
   /**
-   * Gets a next queue item.
+   * Gets a next stack item.
    * @return {T | unset}
    */
   peek() {
     __items := this.__items
-    return (__items[1]?)
+    return (__items[__items.length]?)
   }
   /**
-   * Gets a next queue item. The retrieved queue item is removed.
+   * Gets a next stack item. The retrieved stack item is removed.
    * @return {T | unset}
    */
-  dequeue() {
+  pop() {
     __items := this.__items
-    return __items.removeAt(1)
+    return __items.pop()
   }
   /**
-   * Add a queue items.
+   * Add a stack items.
    * @param {T[]} items*
    */
-  enqueue(items*) {
+  push(items*) {
     __items := this.__items
     __items.push(items*)
   }

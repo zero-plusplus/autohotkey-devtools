@@ -3,7 +3,7 @@
 
 #Include ./.config.ahk
 
-import { at, count, each, Queue } from collection
+import { at, count, each, Stack, Queue } from collection
 
 describe('collection', () {
   describe('at', () {
@@ -85,6 +85,31 @@ describe('collection', () {
     })
   })
 
+  describe('Stack', () {
+    test('methods', () {
+      q := Stack('a', 'b')
+
+      assert('count').equals(q.count, 2)
+      assert('peek').equals(q.peek(), 'b')
+      assert('pop').equals(q.pop(), 'b')
+      assert('isEmpty').equals(q.isEmpty(), false)
+      assert('pop').equals(q.pop(), 'a')
+      assert('isEmpty').equals(q.isEmpty(), true)
+
+      q.push('c')
+      assert('push->isEmpty').equals(q.isEmpty(), false)
+    })
+
+    test('enumerator', () {
+      e := each(Stack('a', 'b'))
+
+      e(&key, &value)
+      assert('[' key ']: ' value).equals(value, 'b')
+
+      e(&key, &value)
+      assert('[' key ']: ' value).equals(value, 'a')
+    })
+  })
   describe('Queue', () {
     test('methods', () {
       q := Queue('a', 'b')
@@ -97,7 +122,7 @@ describe('collection', () {
       assert('isEmpty').equals(q.isEmpty(), true)
 
       q.enqueue('c')
-      assert('enqueue').equals(q.isEmpty(), false)
+      assert('enqueue->isEmpty').equals(q.isEmpty(), false)
     })
 
     test('enumerator', () {
