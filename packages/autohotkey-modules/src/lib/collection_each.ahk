@@ -19,27 +19,77 @@ export each(obj, callback?) {
     throw TypeError('parametr #1 Need to specify an Object')
   }
 
-  props := getEnumerator(obj)
   if (!IsSet(callback)) {
-    return props
+    if (obj is Enumerable) {
+      return obj
+    }
+    return Enumerable(obj)
   }
 
-  for key, value in props {
+  for key, value in Enumerable(obj) {
     f.callback(callback)(value, key, obj)
   }
 }
 
 /**
- * @internal
- * @param {object} obj
- * @return {Enumerator}
+ * This class is a wrapper with utility methods for enumeration.
  */
-getEnumerator(obj) {
-  if (obj is Enumerator) {
-    return obj
+export class Enumerable {
+  __NEW(source) {
+    /**
+     * @readonly
+     * @property {object} __source
+     */
+    this.defineProp('__source', { get: (*) => source })
   }
-  if (Type(obj) == 'Object') {
-    return obj.ownProps()
+  __ENUM(params*) {
+    __source := this.__source
+
+    if (__source is Enumerator) {
+      return __source
+    }
+    if (Type(__source) == 'Object') {
+      return __source.ownProps()
+    }
+    return __source.__Enum()
   }
-  return obj.__Enum()
+  /**
+   * Returns an Enumerator for the Map arguments.
+   * @return {Enumerator}
+   * @example
+   *: ;; The following are all synonymous with `Map('key1', 'value1', 'key2', 'value2')`
+   *: Map(each({ key1: 'value1', key2: 'value2' }).flatEntries()*)
+   *: Map(each([ 'key1', 'value1', 'key2', 'value2' ]).flatEntries()*)
+   *: Map(each(Map('key1', 'value1', 'key2', 'value2')).flatEntries()*)
+   */
+  flatEntries() {
+    props := this.__ENUM()
+    if (this.__source is Array) {
+      return props
+    }
+
+    _key := unset
+    _value := unset
+    e := (&key?, &value?, *) {
+      if (IsSet(_key)) {
+        key := _key
+
+        _key := unset
+        return true
+      }
+      else if (IsSet(_value)) {
+        key := _value
+
+        _value := unset
+        return true
+      }
+
+      hasNext := props(&_key, &_value)
+      if (hasNext) {
+        return e(&key, &value)
+      }
+      return false
+    }
+    return e
+  }
 }

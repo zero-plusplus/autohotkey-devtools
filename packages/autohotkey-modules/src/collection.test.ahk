@@ -3,7 +3,7 @@
 
 #Include ./.config.ahk
 
-import { at, count, each, Stack, Queue } from collection
+import { at, count, each, Enumerable, Stack, Queue } from collection
 
 describe('collection', () {
   describe('at', () {
@@ -58,7 +58,7 @@ describe('collection', () {
     test('Enumeration does not include inherited members', () {
       obj := { fieldA: 'valueA', base: { fieldB: 'valueB' } }
 
-      e := each(obj)
+      e := each(obj).__ENUM()
       e(&key, &value)
       assert('fieldA is enumerated').equals(value, at(obj, key))
       assert('Inherited fieldB is not enumerated').equals(e(&key, &value), false)
@@ -84,6 +84,20 @@ describe('collection', () {
       }
     })
   })
+  describe('Enumerable', () {
+    test.each([
+      [ { key1: 'value1', key2: 'value2' } ],
+      [ Map('key1', 'value1', 'key2', 'value2' ) ],
+      [ Array('key1', 'value1', 'key2', 'value2' ) ],
+    ])('flatEntries', (obj) {
+      for (i, constractor in [ each, Enumerable ]) {
+        m := Map(constractor(obj).flatEntries()*)
+
+        assert('key1').equals('value1', m['key1'])
+        assert('key2').equals('value2', m['key2'])
+      }
+    })
+  })
 
   describe('Stack', () {
     test('methods', () {
@@ -101,7 +115,7 @@ describe('collection', () {
     })
 
     test('enumerator', () {
-      e := each(Stack('a', 'b'))
+      e := each(Stack('a', 'b')).__ENUM()
 
       e(&key, &value)
       assert('[' key ']: ' value).equals(value, 'b')
@@ -126,7 +140,7 @@ describe('collection', () {
     })
 
     test('enumerator', () {
-      e := each(Queue('a', 'b'))
+      e := each(Queue('a', 'b')).__ENUM()
 
       e(&key, &value)
       assert('[' key ']: ' value).equals(value, 'a')
