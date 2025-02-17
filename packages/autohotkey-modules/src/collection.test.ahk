@@ -97,6 +97,20 @@ describe('collection', () {
         assert('key2').equals('value2', m['key2'])
       }
     })
+    test.each([
+      [ { key1: 5, key2: 10 } ],
+      [ Map('key1', 5, 'key2', 10 ) ],
+    ])('map', (obj) {
+      e := Enumerable(obj)
+        .map((value, key, _obj) {
+          assert.equals(obj, _obj)
+          return value * 2
+        })
+
+      m := Map(e.flatEntries()*)
+      assert.equals(m['key1'], at(obj, 'key1') * 2)
+      assert.equals(m['key2'], at(obj, 'key2') * 2)
+    })
   })
 
   describe('Stack', () {

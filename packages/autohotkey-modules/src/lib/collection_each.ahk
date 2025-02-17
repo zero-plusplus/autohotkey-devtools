@@ -33,9 +33,15 @@ export each(obj, callback?) {
 
 /**
  * This class is a wrapper with utility methods for enumeration.
+ * @template T
+ * @param {T} source
  */
 export class Enumerable {
   __NEW(source) {
+    if (source is Enumerable) {
+      return source
+    }
+
     /**
      * @readonly
      * @property {object} __source
@@ -43,15 +49,25 @@ export class Enumerable {
     this.defineProp('__source', { get: (*) => source })
   }
   __ENUM(params*) {
-    __source := this.__source
-
-    if (__source is Enumerator) {
-      return __source
-    }
-    if (Type(__source) == 'Object') {
-      return __source.ownProps()
-    }
-    return __source.__Enum()
+    return getEnumerator(this.__source, params*)
+  }
+  /**
+   * Returns an Enumerator that converts each enumerated element.
+   * @template Result
+   * @param {(value: unknown, key: unknown, source: T) => Result} callback
+   * @return {Result}
+   */
+  map(callback) {
+    props := this.__ENUM()
+    _callback := f.callback(callback)
+    return Enumerable((&key?, &value?) {
+      hasNext := props(&key, &value)
+      if (hasNext) {
+        value := _callback.call(value, key, this.__source)
+        return true
+      }
+      return false
+    })
   }
   /**
    * Returns an Enumerator for the Map arguments.
@@ -90,6 +106,28 @@ export class Enumerable {
       }
       return false
     }
-    return e
+
+    return Enumerable(e)
   }
+}
+
+/**
+ * @inner
+ * @return {Enumerator}
+ */
+getEnumerator(obj, params*) {
+  if (obj is Enumerable) {
+    return obj
+  }
+  if (obj is Enumerator) {
+    return obj
+  }
+  if (obj is Func || obj is Closure) {
+    return obj
+  }
+
+  if (Type(obj) == 'Object') {
+    return obj.ownProps()
+  }
+  return obj.__Enum(params*)
 }
