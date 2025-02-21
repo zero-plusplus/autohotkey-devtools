@@ -1,4 +1,4 @@
-﻿#Requires AutoHotkey v2.1-
+#Requires AutoHotkey v2.1-
 #Warn All, StdOut
 
 export class Assert {
@@ -70,6 +70,7 @@ export class Assert {
     }
     throw AssertionResult(false, true, false, Error(message ?? 'no exceptions were raised', -4))
   }
+  throws := (self, callback) => Assert.throws(callback, this.message)
   ; #endregion assertions
 
   ; #region inner
