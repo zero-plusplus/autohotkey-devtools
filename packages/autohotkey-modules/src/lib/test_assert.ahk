@@ -1,4 +1,4 @@
-#Requires AutoHotkey v2.1-
+﻿#Requires AutoHotkey v2.1-
 #Warn All, StdOut
 
 export class Assert {
@@ -27,6 +27,7 @@ export class Assert {
    * @instance
    * @param {unknown} actual
    * @param {unknown} expected
+   * @param {string} message?
    * @return {AssertionResult}
    * @throws {AssertionResult}
    */
@@ -43,6 +44,7 @@ export class Assert {
    * @instance
    * @param {unknown} actual
    * @param {unknown} expected
+   * @param {string} message?
    * @return {AssertionResult}
    * @throws {AssertionResult}
    */
@@ -58,6 +60,7 @@ export class Assert {
    * @static
    * @instance
    * @param {Func} callback
+   * @param {string} message?
    * @return {AssertionResult}
    * @throws {AssertionResult}
    */
