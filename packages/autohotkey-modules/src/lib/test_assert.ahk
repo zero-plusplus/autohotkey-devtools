@@ -36,7 +36,7 @@ export class Assert {
     if (result) {
       return AssertionResult(actual, expected, result, Error(message, -4))
     }
-    throw AssertionResult(actual, expected, false, Error(message ?? 'The given values are not identical.', -4))
+    throw AssertionResult(actual, expected, false, Error(message || 'The given values are not identical.', -4))
   }
   equals := (self, actual, expected) => Assert.equals(actual, expected, this.message)
   /**
@@ -53,7 +53,7 @@ export class Assert {
     if (result) {
       return AssertionResult(actual, expected, result, Error(message, -4))
     }
-    throw AssertionResult(actual, expected, false, Error(message ?? 'The given values are not identical.', -4))
+    throw AssertionResult(actual, expected, false, Error(message || 'The given values are not identical.', -4))
   }
   equalsIgnoreCase := (self, actual, expected) => Assert.equalsIgnoreCase(actual, expected, this.message)
   /**
