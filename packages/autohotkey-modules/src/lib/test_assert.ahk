@@ -77,6 +77,24 @@ export class Assert {
   /**
    * @static
    * @instance
+   * @param {unknown} actual
+   * @param {string} message?
+   * @return {AssertionResult}
+   * @throws {AssertionResult}
+   */
+  static isFalsy(actual, message := '') {
+    expected := false
+
+    result := (!!actual) == expected
+    if (result) {
+      return AssertionResult(actual, expected, result, Error(message ?? '', -4))
+    }
+    throw AssertionResult(actual, expected, false, Error(message ?? 'The given value is not a falsy.', -4))
+  }
+  isFalsy := (self, actual) => Assert.isFalsy(actual, this.message)
+  /**
+   * @static
+   * @instance
    * @param {Func} callback
    * @param {string} message?
    * @return {AssertionResult}
