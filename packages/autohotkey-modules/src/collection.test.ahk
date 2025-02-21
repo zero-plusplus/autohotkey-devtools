@@ -1,9 +1,9 @@
-﻿#Requires AutoHotkey v2.1-
+#Requires AutoHotkey v2.1-
 #Warn All, StdOut
 
 #Include ./.config.ahk
 
-import { at, count, each, Enumerable, Stack, Queue } from collection
+import { at, count, each, Enumerable, Stack, Queue, UniqueArray } from collection
 
 describe('collection', () {
   describe('at', () {
@@ -171,6 +171,26 @@ describe('collection', () {
 
       e(&key, &value)
       assert('[' key ']: ' value).equals(value, 'b')
+    })
+  })
+  describe('UniqueArray', () {
+    test('methods', () {
+      a := UniqueArray(1, 1, 2, 3, 3)
+      assert('length').equals(a.length, 3)
+      assert('push').equals(a.push(1, 1, 4), 1)
+      assert('pop').equals(a.pop(), 4)
+      assert('length').equals(a.length, 3)
+
+      b := a.clone()
+      assert('clone').isTruthy(b is UniqueArray)
+      assert('hasValue').isTruthy(a.hasValue(b[1]))
+      assert('length').equals(a.length, b.length)
+
+      b[1] := 3
+      assert('assign').equals(b[1], 1)
+
+      b[1] := 5
+      assert('assign').equals(b[1], 5)
     })
   })
 })
