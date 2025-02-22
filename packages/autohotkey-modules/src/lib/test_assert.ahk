@@ -1,4 +1,4 @@
-#Requires AutoHotkey v2.1-
+﻿#Requires AutoHotkey v2.1-
 #Warn All, StdOut
 
 export class Assert {
@@ -87,9 +87,9 @@ export class Assert {
 
     result := (!!actual) == expected
     if (result) {
-      return AssertionResult(actual, expected, result, Error(message ?? '', -4))
+      return AssertionResult(actual, expected, result, Error(messag, -4))
     }
-    throw AssertionResult(actual, expected, false, Error(message ?? 'The given value is not a falsy.', -4))
+    throw AssertionResult(actual, expected, false, Error(message || 'The given value is not a falsy.', -4))
   }
   isFalsy := (self, actual) => Assert.isFalsy(actual, this.message)
   /**
@@ -107,7 +107,7 @@ export class Assert {
     catch {
       return AssertionResult(true, true, true, Error(message, -4))
     }
-    throw AssertionResult(false, true, false, Error(message ?? 'no exceptions were raised', -4))
+    throw AssertionResult(false, true, false, Error(message || 'no exceptions were raised', -4))
   }
   throws := (self, callback) => Assert.throws(callback, this.message)
   /**
