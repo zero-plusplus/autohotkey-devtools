@@ -117,7 +117,7 @@ export class Assert {
    * @return {AssertionResult}
    */
   static pass(message := '') {
-    return this.isTruthy(true)
+    return AssertionResult(true, true, true, Error(message || 'assertion succeeds', -4))
   }
   pass := (self) => Assert.pass(this.message)
   /**
