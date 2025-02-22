@@ -120,6 +120,16 @@ export class Assert {
     return this.isTruthy(true)
   }
   pass := (self) => Assert.pass(this.message)
+  /**
+   * @static
+   * @instance
+   * @param {string} message?
+   * @throws {AssertionResult}
+   */
+  static fail(message := '') {
+    throw AssertionResult(false, false, false, Error(message || 'assertion fails', -4))
+  }
+  fail := (self) => Assert.fail(this.message)
   ; #endregion assertions
 
   ; #region inner
