@@ -76,12 +76,15 @@ export class UniqueArray extends Array {
    */
   removeAt(index, length?) {
     for key, i in this.__map {
-      if (!IsSet(length) && index == i) {
-        this.__map.delete(key)
-        break
+      if (!IsSet(length)) {
+        if ( index == i) {
+          this.__map.delete(key)
+          break
+        }
+        continue
       }
 
-      if (index <= i && i < index + length) {
+      if (index <= i && i <= index + length) {
         this.__map.delete(key)
         continue
       }
