@@ -116,8 +116,9 @@ describe('collection', () {
           assert.equals(obj, _obj)
           return value * 2
         })
+        .flatEntries()
 
-      m := Map(e.flatEntries()*)
+      m := Map(e*)
       assert.equals(m['key1'], at(obj, 'key1') * 2)
       assert.equals(m['key2'], at(obj, 'key2') * 2)
     })

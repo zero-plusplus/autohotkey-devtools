@@ -1,4 +1,4 @@
-﻿#Requires AutoHotkey v2.1-
+#Requires AutoHotkey v2.1-
 #Warn All, StdOut
 
 import function_callback as f
@@ -37,7 +37,11 @@ export each(obj, callback?) {
  * @param {T} source
  */
 export class Enumerable {
-  __NEW(source) {
+  __NEW(source, __ENUM := ((params*) => getEnumerator(source, params*)), parent?) {
+    if (IsSet(parent) && !(parent is Enumerable)) {
+      throw Error('parameter #3 must be Enumerable.')
+    }
+
     if (source is Enumerable) {
       return source
     }
@@ -47,9 +51,21 @@ export class Enumerable {
      * @property {object} __source
      */
     this.defineProp('__source', { get: (*) => source })
+    /**
+     * @readonly
+     * @property {Enumerable}
+     */
+    this.defineProp('__enumerator', { get: (*) => __ENUM })
+    /**
+     * @readonly
+     * @property {Enumerable}
+     */
+    this.defineProp('__parent', { get: (*) => (parent?) })
   }
   __ENUM(params*) {
-    return getEnumerator(this.__source, params*)
+    __enumerator := this.__enumerator
+    return __enumerator(this.__source)
+  }
   }
   /**
    * Returns an Enumerator that enumerates each key.
@@ -59,7 +75,7 @@ export class Enumerable {
     props := this.__ENUM()
 
     i := 1
-    return Enumerable((&key?, &value?) {
+    return Enumerable(this.__source, (*) => (&key?, &value?) {
       value := i++
       return props(&key)
     })
@@ -74,7 +90,7 @@ export class Enumerable {
     props := this.__ENUM()
     _callback := f.callback(callback)
 
-    return Enumerable((&key?, &value?) {
+    return Enumerable(this.__source, (*) => (&key?, &value?) {
       hasNext := props(&key, &value)
       if (hasNext) {
         value := _callback.call(value, key, this.__source)
@@ -100,7 +116,7 @@ export class Enumerable {
 
     _key := unset
     _value := unset
-    e := (&key?, &value?, *) {
+    __enumerate := (&key?, &value?, *) {
       if (IsSet(_key)) {
         key := _key
 
@@ -116,12 +132,12 @@ export class Enumerable {
 
       hasNext := props(&_key, &_value)
       if (hasNext) {
-        return e(&key, &value)
+        return __enumerate(&key, &value)
       }
       return false
     }
 
-    return Enumerable(e)
+    return Enumerable(this.__source, (*) => __enumerate)
   }
 }
 
