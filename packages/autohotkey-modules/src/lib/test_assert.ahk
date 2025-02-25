@@ -1,6 +1,8 @@
 ﻿#Requires AutoHotkey v2.1-
 #Warn All, StdOut
 
+import { equals } from predicate_equals
+
 export class Assert {
   ; #region initialize
   static __NEW() {
@@ -32,7 +34,7 @@ export class Assert {
    * @throws {AssertionResult}
    */
   static equals := (self, actual, expected, message := '') {
-    result := actual == expected
+    result := equals(actual, expected)
     if (result) {
       return AssertionResult(actual, expected, result, Error(message, -4))
     }
