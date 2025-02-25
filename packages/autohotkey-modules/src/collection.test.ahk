@@ -46,6 +46,30 @@ describe('collection', () {
   })
 
   describe('each', () {
+    describe('get / getOrDefault', () {
+      test('object', () {
+        obj := { key: 'value', nest: { key: 'value' } }
+
+        assert('obj.key').equals(obj.key, each(obj).get('key'))
+        assert('obj.nest.key').equals(obj.nest.key, each(obj).get('nest', 'key'))
+        assert('obj.unknown').equals('', each(obj).getOrDefault('unknown', ''))
+      })
+      test('array', () {
+        obj := [ 'a', [ 'b' ] ]
+
+        assert('obj[1]').equals(obj[1], each(obj).get(1))
+        assert('obj[2][1]').equals(obj[2][1], each(obj).get(2, 1))
+        assert('obj["unknown"]').equals('', each(obj).getOrDefault([ 'unknown' ], ''))
+      })
+      test('map', () {
+        obj := Map('key', 'value', 'nest', Map('key', 'value'))
+
+        assert('obj["key"]').equals(obj['key'], each(obj).get('key'))
+        assert('obj["nest"]["key"]').equals(obj['nest']['key'], each(obj).get('nest', 'key'))
+        assert('obj["unknown"]').equals('', each(obj).getOrDefault([ 'unknown' ], ''))
+      })
+    })
+
     test.each([
       [ { key: 'value' } ],
       [ [ 1, 2, 3 ], ],

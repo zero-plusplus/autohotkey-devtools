@@ -1,7 +1,8 @@
-#Requires AutoHotkey v2.1-
+﻿#Requires AutoHotkey v2.1-
 #Warn All, StdOut
 
 import function_callback as f
+import { at } from collection_at
 import { UniqueArray } from collection_unique
 
 /**
@@ -72,6 +73,21 @@ export class Enumerable {
     self ??= this
     __current := this.__current
     return __current(&key, &value, &self)
+  }
+  /**
+   * @param {unknown[]} keys*
+   * @return {unknown}
+   */
+  get(keys*) {
+    return at(this.__source, keys)
+  }
+  /**
+   * @param {unknown[]} keys
+   * @param {unknown} default?
+   * @return {unknown}
+   */
+  getOrDefault(keys, default?) {
+    return at(this.__source, keys, default)
   }
   /**
    * @chainable
