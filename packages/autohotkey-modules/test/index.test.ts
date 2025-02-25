@@ -10,6 +10,10 @@ describe('all tests', () => {
   test('function', () => {
     expect(testAutoHotkey('function')).toBeTruthy();
   });
+
+  test('predicate', () => {
+    expect(testAutoHotkey('predicate')).toBeTruthy();
+  });
 });
 
 // #region helpers
