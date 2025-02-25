@@ -87,7 +87,7 @@ export class Assert {
 
     result := (!!actual) == expected
     if (result) {
-      return AssertionResult(actual, expected, result, Error(messag, -4))
+      return AssertionResult(actual, expected, result, Error(message, -4))
     }
     throw AssertionResult(actual, expected, false, Error(message || 'The given value is not a falsy.', -4))
   }
