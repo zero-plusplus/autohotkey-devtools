@@ -3,7 +3,7 @@
 
 #Include ./.config.ahk
 
-import { at, count, each, Enumerable, Stack, Queue, UniqueArray } from collection
+import { at, count, each, Enumerable, Stack, Queue, UniqueArray, CircularInfomation } from collection
 
 describe('collection', () {
   describe('at', () {
@@ -121,6 +121,43 @@ describe('collection', () {
       m := Map(e*)
       assert.equals(m['key1'], at(obj, 'key1') * 2)
       assert.equals(m['key2'], at(obj, 'key2') * 2)
+    })
+  })
+
+  describe('traverse', () {
+    test.each([
+      [ { key1: 'value1', key2: 'value2', key3: 'value3', key4: 'value4', key5: 'value5' }, 5 ],
+      [ [ 1, 2, 3, 4, 5 ], 5],
+    ])('flat', (obj, expectedCount) {
+      actualCount := 0
+      for key, value, source in each(obj).traverse() {
+        actualCount++
+      }
+      assert.equals(actualCount, expectedCount)
+    })
+
+    test.each([
+      [ { key1: 'value1', nest: { key2: 'value2', nest2: { key3: 'value3', nest3: { key4: 'value4' } } }, key5: 'value5' }, 5 + 3 ],
+      [ [ 1, 2, 3, [ 4, 5, 6, [ 7, 8, 9 ] ] ], 9 + 2  ],
+    ])('nest', (obj, expectedCount) {
+      actualCount := 0
+      for key, value, context in each(obj).traverse() {
+        actualCount++
+      }
+      assert.equals(actualCount, expectedCount)
+    })
+
+    test('circular', () {
+      circular := {}
+      circular.circular := circular
+
+      for key, value in each(circular).traverse() {
+        if (value is CircularInfomation) {
+          assert.equals(circular, value.value)
+          return
+        }
+      }
+      assert.fail()
     })
   })
 

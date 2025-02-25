@@ -2,6 +2,7 @@
 #Warn All, StdOut
 
 import function_callback as f
+import { UniqueArray } from collection_unique
 
 /**
  * Gets an Enumerator that enumerates an elements or members of the specified object.
@@ -37,7 +38,7 @@ export each(obj, callback?) {
  * @param {T} source
  */
 export class Enumerable {
-  __NEW(source, __ENUM := ((params*) => getEnumerator(source, params*)), parent?) {
+  __NEW(source, customEnum := ((params*) => getEnumerator(source, params*))) {
     if (IsSet(parent) && !(parent is Enumerable)) {
       throw Error('parameter #3 must be Enumerable.')
     }
@@ -55,17 +56,73 @@ export class Enumerable {
      * @readonly
      * @property {Enumerable}
      */
-    this.defineProp('__enumerator', { get: (*) => __ENUM })
+    this.defineProp('__CUSTOMENUM', { get: (*) => customEnum })
     /**
      * @readonly
      * @property {Enumerable}
      */
-    this.defineProp('__parent', { get: (*) => (parent?) })
+    this.defineProp('__current', { get: (*) => (unset?) })
+    this.reset()
   }
   __ENUM(params*) {
-    __enumerator := this.__enumerator
-    return __enumerator(this.__source)
+    __CUSTOMENUM := this.__CUSTOMENUM
+    return __CUSTOMENUM(params*)
   }
+  call(&key?, &value?, &self?) {
+    self ??= this
+    __current := this.__current
+    return __current(&key, &value, &self)
+  }
+  /**
+   * @chainable
+   */
+  reset() {
+    current := this.__ENUM()
+    this.defineProp('__current', { get: (*) => current })
+
+    return this
+  }
+  /**
+   * @param {() => 1 | 0 | -1}
+   * @return {Enumerator<unknown[], unknown>}
+   */
+  traverse() {
+    __stack := UniqueArray(this.__source)
+    __self := this
+    __parent := []
+
+    return Enumerable(this.__source, (*) => (&keys, &value?, &self?) {
+      self ??= __self
+      __current := self.__current
+
+      keys := Array((keys ?? [])*)
+      keys.push(__parent*)
+
+      hasNext := __current(&key, &value, &self)
+      if (!hasNext) {
+        __stack.pop()
+        if (0 < __parent.length) {
+          __parent.pop()
+        }
+        return false
+      }
+
+      if (!IsObject(value)) {
+        keys.push(key)
+        return true
+      }
+
+      if (__stack.hasValue(value)) {
+        value := CircularInfomation(value)
+        return hasNext
+      }
+
+      __stack.push(value)
+      __self := Enumerable(value)
+      __parent.push(key)
+      self := __self
+      return true
+    })
   }
   /**
    * Returns an Enumerator that enumerates each key.
@@ -160,4 +217,12 @@ getEnumerator(obj, params*) {
     return obj.ownProps()
   }
   return obj.__Enum(params*)
+}
+
+export class CircularInfomation extends Error {
+  __NEW(value) {
+    super.__NEW('circular reference occurred.')
+
+    this.defineProp('value', { get: (*) => value })
+  }
 }
