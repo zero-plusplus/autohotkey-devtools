@@ -6,6 +6,7 @@ import type { ExpectedTestData } from '../../types';
 import { createExportDeclarationExpectedData } from './declaration/export';
 import { createImportDeclarationExpectedData } from './declaration/import';
 import { createTypedAssignmentDeclarationExpectedData } from './declaration/typedAssignment';
+import { createCallExpressionExpectedData } from './expression/call';
 import { createFunctionExpressionExpectedData } from './expression/function';
 
 export function createExpectedDataList(scopeName: ScopeName): ExpectedTestData[] {
@@ -17,6 +18,7 @@ export function createExpectedDataList(scopeName: ScopeName): ExpectedTestData[]
       directiveNames: constants_vnext.directiveNames,
     }),
 
+    ...createCallExpressionExpectedData(scopeName),
     ...createExportDeclarationExpectedData(scopeName),
     ...createFunctionExpressionExpectedData(scopeName),
     ...createImportDeclarationExpectedData(scopeName),

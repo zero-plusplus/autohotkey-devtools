@@ -30,6 +30,7 @@ export function createCallExpressionRule(scopeName: ScopeName, placeholder: Plac
 
       createKeywordInArgumentRule(scopeName, placeholder),
       includeRule(Repository.Comma),
+      includeRule(Repository.ObjectInParens),
       includeRule(Repository.Expression),
     ],
   };

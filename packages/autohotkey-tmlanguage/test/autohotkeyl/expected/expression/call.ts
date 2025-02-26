@@ -44,5 +44,22 @@ export function createCallExpressionExpectedData(scopeName: ScopeName): Expected
         { text: ')', scopes: name(scopeName, RuleName.CloseParen) },
       ],
     ],
+    [
+      dedent`
+        XXX(
+          { key: value }
+        )
+      `,
+      [
+        { text: 'XXX', scopes: name(scopeName, RuleName.FunctionName) },
+        { text: '(', scopes: name(scopeName, RuleName.OpenParen) },
+        { text: '{', scopes: name(scopeName, RuleName.OpenBrace) },
+        { text: 'key', scopes: name(scopeName, RuleName.Variable) },
+        { text: ':', scopes: name(scopeName, RuleName.Colon) },
+        { text: 'value', scopes: name(scopeName, RuleName.Variable) },
+        { text: '}', scopes: name(scopeName, RuleName.CloseBrace) },
+        { text: ')', scopes: name(scopeName, RuleName.CloseParen) },
+      ],
+    ],
   ];
 }

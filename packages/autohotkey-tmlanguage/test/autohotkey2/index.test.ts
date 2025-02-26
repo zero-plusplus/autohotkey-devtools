@@ -12,6 +12,14 @@ describe('autohotkey2', () => {
     const actual = await parse(scopeName, testText);
     // console.log(JSON.stringify(actual, undefined, 2));
 
+    // actual.forEach((actualValue, index) => {
+    //   const expectedValue = expected.at(index);
+    //
+    //   console.log(index);
+    //
+    //   expect(actualValue).toStrictEqual(expectedValue);
+    // });
+
     expect(actual).toStrictEqual(expected);
   });
 });

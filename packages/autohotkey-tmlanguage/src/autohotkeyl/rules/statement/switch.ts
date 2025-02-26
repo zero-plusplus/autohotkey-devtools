@@ -1,10 +1,12 @@
 import { Repository, RuleName } from '../../../constants';
-import { alt, capture, char, ignoreCase, inlineSpaces0, keyword, lookahead, lookbehind, optseq, ordalt, seq, startAnchor } from '../../../oniguruma';
+import { alt, capture, char, group, ignoreCase, inlineSpaces0, keyword, lookahead, lookbehind, optseq, ordalt, seq, startAnchor } from '../../../oniguruma';
 import type { BeginEndRule, ScopeName } from '../../../types';
 import { includeRule, nameRule } from '../../../utils';
+import { createJumpToLabelStatement } from './jump';
 
 interface Placeholder {
   startAnchor: string;
+  identifierPattern: string;
   endAnchor: string;
 }
 export function createSwitchStatementRule(scopeName: ScopeName, placeholder: Placeholder): BeginEndRule {
@@ -89,6 +91,17 @@ export function createSwitchStatementRule(scopeName: ScopeName, placeholder: Pla
             },
           },
           // #endregion default
+
+          // break keyword in switch block
+          createJumpToLabelStatement(scopeName, {
+            startAnchor: alt(
+              group(placeholder.startAnchor),
+              group(seq(char(':'), inlineSpaces0())),
+            ),
+            endAnchor: placeholder.endAnchor,
+            names: [ 'Break' ],
+            labelPattern: placeholder.identifierPattern,
+          }),
 
           includeRule(Repository.Self),
         ],
