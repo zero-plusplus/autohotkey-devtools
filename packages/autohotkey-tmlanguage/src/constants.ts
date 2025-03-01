@@ -299,6 +299,7 @@ export const enum Repository {
   ClassDeclaration = 'repository.declaration.class',
   BlockInClassBody = 'repository.declaration.block.in-class-body',
   PropertyDeclaration = 'repository.declaration.property',
+  MetaPropertyName = 'repository.expression.meta-property',
   MetaPropertyDeclaration = 'repository.declaration.meta-property',
   // #endregion declaration
 

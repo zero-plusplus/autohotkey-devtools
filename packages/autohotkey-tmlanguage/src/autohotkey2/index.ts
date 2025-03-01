@@ -234,6 +234,7 @@ export function createRepositories(scopeName: ScopeName, placeholder?: Placehold
       rulesInBody: [
         includeRule(Repository.Meta),
 
+        includeRule(Repository.MetaPropertyName),
         includeRule(Repository.MetaFunctionDeclarationHead),
         includeRule(Repository.MethodDeclarationHead),
         includeRule(Repository.MetaPropertyDeclaration),
@@ -244,6 +245,10 @@ export function createRepositories(scopeName: ScopeName, placeholder?: Placehold
       ],
     }),
     [Repository.BlockInClassBody]: rule_v1.createBlockInClassBodyRule(scopeName),
+    [Repository.MetaPropertyName]: rule_v1.createKeywordRule(scopeName, {
+      keywords: [ '__ITEM' ],
+      keywordRuleName: RuleName.MetaFunctionName,
+    }),
     [Repository.MetaPropertyDeclaration]: rule_v1.createPropertyDeclarationRule(scopeName, {
       modifiers: constants_v1.modifiers,
       identifierPattern: keyword('__ITEM'),
