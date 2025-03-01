@@ -4,7 +4,7 @@ import * as patterns_v1 from '../autohotkeyl/patterns';
 import * as rule_v1 from '../autohotkeyl/rules';
 import * as rule_common from '../common/rules';
 import { Repository, RuleName } from '../constants';
-import { ordalt } from '../oniguruma';
+import { keyword, ordalt } from '../oniguruma';
 import type { Repositories, ScopeName, TmLanguage } from '../types';
 import { includeRule, name, namedPatternsRule, nameRule, patternsRule } from '../utils';
 import * as constants_v2 from './constants';
@@ -234,7 +234,9 @@ export function createRepositories(scopeName: ScopeName, placeholder?: Placehold
       rulesInBody: [
         includeRule(Repository.Meta),
 
+        includeRule(Repository.MetaFunctionDeclarationHead),
         includeRule(Repository.MethodDeclarationHead),
+        includeRule(Repository.MetaPropertyDeclaration),
         includeRule(Repository.PropertyDeclaration),
         includeRule(Repository.BlockInClassBody),
         includeRule(Repository.StatementCommon),
@@ -242,9 +244,16 @@ export function createRepositories(scopeName: ScopeName, placeholder?: Placehold
       ],
     }),
     [Repository.BlockInClassBody]: rule_v1.createBlockInClassBodyRule(scopeName),
+    [Repository.MetaPropertyDeclaration]: rule_v1.createPropertyDeclarationRule(scopeName, {
+      modifiers: constants_v1.modifiers,
+      identifierPattern: keyword('__ITEM'),
+      identifierNameRule: nameRule(scopeName, RuleName.MetaFunctionName),
+      keywordsInArgument: [],
+    }),
     [Repository.PropertyDeclaration]: rule_v1.createPropertyDeclarationRule(scopeName, {
       modifiers: constants_v1.modifiers,
       identifierPattern: patterns_v2.identifierPattern,
+      identifierNameRule: nameRule(scopeName, RuleName.Variable),
       keywordsInArgument: [],
     }),
     // #endregion declaration
@@ -492,6 +501,11 @@ export function createRepositories(scopeName: ScopeName, placeholder?: Placehold
         name(scopeName, RuleName.FunctionName),
         [ includeRule(Repository.BuiltInClass) ],
       ),
+      keywordsInArgument: [],
+    }),
+    [Repository.MetaFunctionDeclarationHead]: rule_v1.createCallExpressionRule(scopeName, {
+      callableNamePattern: keyword('__NEW', '__DELETE', '__ENUM', '__GET', '__SET', '__CALL'),
+      callableNameRule: nameRule(scopeName, RuleName.MetaFunctionName),
       keywordsInArgument: [],
     }),
     [Repository.MethodDeclarationHead]: rule_v1.createCallExpressionRule(scopeName, {

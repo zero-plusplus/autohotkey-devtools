@@ -1,6 +1,6 @@
 import * as markdown from '../__injection__/markdown';
 import { Repository, RuleName } from '../constants';
-import { anyChars1, ordalt } from '../oniguruma';
+import { anyChars1, keyword, ordalt } from '../oniguruma';
 import type { Repositories, ScopeName, TmLanguage } from '../types';
 import { includeRule, name, namedPatternsRule, nameRule, patternsRule } from '../utils';
 import * as constants_v1 from './constants';
@@ -200,6 +200,7 @@ export function createRepositories(scopeName: ScopeName): Repositories {
       rulesInBody: [
         includeRule(Repository.Meta),
 
+        includeRule(Repository.MetaFunctionDeclarationHead),
         includeRule(Repository.MethodDeclarationHead),
         includeRule(Repository.PropertyDeclaration),
         includeRule(Repository.BlockInClassBody),
@@ -210,6 +211,7 @@ export function createRepositories(scopeName: ScopeName): Repositories {
     [Repository.PropertyDeclaration]: rule_v1.createPropertyDeclarationRule(scopeName, {
       modifiers: constants_v1.modifiers,
       identifierPattern: patterns_v1.looseLeftHandPattern,
+      identifierNameRule: nameRule(scopeName, RuleName.Variable),
       keywordsInArgument: [ 'byref' ],
     }),
     // #endregion declaration
@@ -411,6 +413,11 @@ export function createRepositories(scopeName: ScopeName): Repositories {
         name(scopeName, RuleName.FunctionName),
         [ includeRule(Repository.BuiltInClass) ],
       ),
+      keywordsInArgument: [ 'byref' ],
+    }),
+    [Repository.MetaFunctionDeclarationHead]: rule_v1.createCallExpressionRule(scopeName, {
+      callableNamePattern: keyword('__NEW', '__DELETE', '__GET', '__SET', '__CALL'),
+      callableNameRule: nameRule(scopeName, RuleName.MetaFunctionName),
       keywordsInArgument: [ 'byref' ],
     }),
     [Repository.MethodDeclarationHead]: rule_v1.createCallExpressionRule(scopeName, {

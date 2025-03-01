@@ -299,6 +299,7 @@ export const enum Repository {
   ClassDeclaration = 'repository.declaration.class',
   BlockInClassBody = 'repository.declaration.block.in-class-body',
   PropertyDeclaration = 'repository.declaration.property',
+  MetaPropertyDeclaration = 'repository.declaration.meta-property',
   // #endregion declaration
 
 
@@ -371,6 +372,7 @@ export const enum Repository {
   InvalidDereference = 'repository.expression.dereference.invalid',
   CallExpression_FunctionDeclarationHead = 'repository.expression.call repository.declaration.function.head',
   MethodDeclarationHead = 'repository.expression.call repository.declaration.method.head',
+  MetaFunctionDeclarationHead = 'repository.expression.call repository.declaration.meta-method.head',
   NewCallExpression = 'repository.expression.call.new',
   // #endregion misc
   // #endregion expressions
@@ -518,6 +520,7 @@ export const enum RuleName {
 
   // #region token
   FunctionName = 'support.function',
+  MetaFunctionName = 'storage.type',
   ControlFlowKeyword = 'keyword.control.flow',
   SwitchLabelKeyword = 'keyword.control.switch-case-default',
   PercentExpressionBegin = 'meta.percent.expresion.begin',

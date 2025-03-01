@@ -47,7 +47,9 @@ export function createTmLanguage(): TmLanguage {
           includeRule(Repository.Meta),
 
           includeRule(Repository.TypedAssignmentDeclaration),
+          includeRule(Repository.MetaFunctionDeclarationHead),
           includeRule(Repository.MethodDeclarationHead),
+          includeRule(Repository.MetaPropertyDeclaration),
           includeRule(Repository.PropertyDeclaration),
           includeRule(Repository.BlockInClassBody),
           includeRule(Repository.StatementCommon),

@@ -4,6 +4,7 @@ import { createAssignmentDeclarationExpectedData } from './declaration/assignmen
 import { createBlockDeclarationExpectedData } from './declaration/block';
 import { createClassDeclarationExpectedData } from './declaration/class';
 import { createFieldDeclarationExpectedData } from './declaration/class/field';
+import { createMetaFunctionDeclarationExpectedData } from './declaration/class/metaFunction';
 import { createFunctionDeclarationExpectedData } from './declaration/function';
 import { createHotkeyLabelStatementExpectedData } from './declaration/hotkeyLabel';
 import { createHotstringLabelStatementExpectedData } from './declaration/hotstringLabel';
@@ -105,6 +106,7 @@ export function createExpectedDataList(scopeName: ScopeName): ExpectedTestData[]
     ...createLegacyAssignmentStatementExpectedData(scopeName),
     ...createLegacyIfStatementExpectedData(scopeName),
     ...createLoopStatementExpectedData(scopeName),
+    ...createMetaFunctionDeclarationExpectedData(scopeName),
     ...createModifierDeclarationExpectedData(scopeName),
     ...createMultiLineCommentExpectedData(scopeName),
     ...createNewExpressionExpectedData(scopeName),
