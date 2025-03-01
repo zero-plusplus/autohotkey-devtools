@@ -48,9 +48,7 @@ export function createTmLanguage(): TmLanguage {
 
           includeRule(Repository.TypedAssignmentDeclaration),
           includeRule(Repository.MetaPropertyName),
-          includeRule(Repository.MetaFunctionDeclarationHead),
           includeRule(Repository.MethodDeclarationHead),
-          includeRule(Repository.MetaPropertyDeclaration),
           includeRule(Repository.PropertyDeclaration),
           includeRule(Repository.BlockInClassBody),
           includeRule(Repository.StatementCommon),
@@ -60,6 +58,7 @@ export function createTmLanguage(): TmLanguage {
       [Repository.TypedAssignmentDeclaration]: rules_vnext.createTypedAssignmentDeclarationRule(scopeName, {
         modifiers: constants_v1.modifiers,
         namePattern: patterns_v2.looseLeftHandPattern,
+        nameRule: patternsRule(includeRule(Repository.Variable)),
         operators: constants_v2.assignmentOperators,
       }),
       // #endregion declaration

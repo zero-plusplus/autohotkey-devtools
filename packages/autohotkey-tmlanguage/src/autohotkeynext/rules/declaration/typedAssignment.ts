@@ -1,11 +1,12 @@
-import { Repository, RuleName } from '../../../constants';
+import { RuleName } from '../../../constants';
 import { capture, char, inlineSpace, inlineSpaces0, optional, ordalt, seq, startAnchor } from '../../../oniguruma';
-import type { MatchRule, ScopeName } from '../../../types';
-import { includeRule, nameRule, patternsRule } from '../../../utils';
+import type { MatchRule, Rule, ScopeName } from '../../../types';
+import { nameRule } from '../../../utils';
 
 interface Placeholder {
   modifiers: readonly string[];
   namePattern: string;
+  nameRule: Rule;
   operators: readonly string[];
 }
 export function createTypedAssignmentDeclarationRule(scopeName: ScopeName, placeholder: Placeholder): MatchRule {
@@ -26,7 +27,7 @@ export function createTypedAssignmentDeclarationRule(scopeName: ScopeName, place
     ),
     captures: {
       1: nameRule(scopeName, RuleName.Modifier),
-      2: patternsRule(includeRule(Repository.Expressions)),
+      2: placeholder.nameRule,
       3: nameRule(scopeName, RuleName.Colon),
       4: nameRule(scopeName, RuleName.Type),
     },

@@ -299,8 +299,6 @@ export const enum Repository {
   ClassDeclaration = 'repository.declaration.class',
   BlockInClassBody = 'repository.declaration.block.in-class-body',
   PropertyDeclaration = 'repository.declaration.property',
-  MetaPropertyName = 'repository.expression.meta-property',
-  MetaPropertyDeclaration = 'repository.declaration.meta-property',
   // #endregion declaration
 
 
@@ -356,6 +354,10 @@ export const enum Repository {
   BuiltInClass = 'repository.expression.class.built-in',
   KeywordLikeBuiltInVariable = 'repository.expression.variable.built-in.keyword-like',
   InvalidVariable = 'repository.expression.variable.invalid',
+
+  MetaPropertyName = 'repository.expression.variable.meta-property',
+  MetaFunctionName = 'repository.expression.variable.meta-function',
+  FunctionName = 'repository.expression.variable.function',
   // #endregion variable
 
   // #region regexp
@@ -373,7 +375,6 @@ export const enum Repository {
   InvalidDereference = 'repository.expression.dereference.invalid',
   CallExpression_FunctionDeclarationHead = 'repository.expression.call repository.declaration.function.head',
   MethodDeclarationHead = 'repository.expression.call repository.declaration.method.head',
-  MetaFunctionDeclarationHead = 'repository.expression.call repository.declaration.meta-method.head',
   NewCallExpression = 'repository.expression.call.new',
   // #endregion misc
   // #endregion expressions

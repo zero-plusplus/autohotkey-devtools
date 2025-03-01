@@ -1,12 +1,12 @@
 import { Repository, RuleName } from '../../../constants';
 import { alt, capture, char, group, inlineSpace, inlineSpaces0, keyword, lookbehind, optseq, ordalt, seq, startAnchor } from '../../../oniguruma';
-import type { BeginEndRule, MatchRule, NameRule, ScopeName } from '../../../types';
+import type { BeginEndRule, MatchRule, Rule, ScopeName } from '../../../types';
 import { includeRule, nameRule } from '../../../utils';
 
 interface Placeholder {
   modifiers: readonly string[];
   identifierPattern: string;
-  identifierNameRule: NameRule;
+  identifierNameRule: Rule;
   keywordsInArgument: readonly string[];
 }
 export function createPropertyDeclarationRule(scopeName: ScopeName, placeholder: Placeholder): BeginEndRule {

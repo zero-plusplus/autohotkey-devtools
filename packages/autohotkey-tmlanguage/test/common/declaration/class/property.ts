@@ -48,6 +48,29 @@ export function createPropertyDeclarationExpectedData(scopeName: ScopeName): Exp
     [
       dedent`
         class {
+          PROPERTY {
+          }
+          PROPERTY
+          {
+          }
+        }
+      `,
+      [
+        { text: 'class', scopes: name(scopeName, RuleName.ClassKeyword) },
+        { text: '{', scopes: name(scopeName, RuleName.ClassBlockBegin) },
+
+        ...repeatArray(2, [
+          { text: 'PROPERTY', scopes: name(scopeName, RuleName.ConstantLikeVariable) },
+          { text: '{', scopes: name(scopeName, RuleName.BlockBegin) },
+          { text: '}', scopes: name(scopeName, RuleName.BlockEnd) },
+        ]),
+
+        { text: '}', scopes: name(scopeName, RuleName.ClassBlockEnd) },
+      ],
+    ],
+    [
+      dedent`
+        class {
           property[] {
             get {
             }
