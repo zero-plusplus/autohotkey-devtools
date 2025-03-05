@@ -17,3 +17,9 @@ Pull Request cannot be accepted due to personal reasons. Instead, I will accept 
 **This license is intended to protect my long plan that spans over 10 years. Therefore, please assume that all uses other than those contemplated will be denied. However, it is not intended to restrict end users any more than necessary, so if you have any requests, please discuss them in [Discussions](https://github.com/zero-plusplus/autohotkey-devtools/discussions). However, not everything will be allowed. Please understand in advance that this may cause inconvenience to end users.**
 
 > **Note: Specific notes will be added as needed. There is basically no impact on the end user unless major problems arise.**
+
+---
+
+### Supplement
+
+This project's first priority is to solve a personal problem. It is intentionally being developed by one person, as this is not a project that solves only universal problems. Therefore, I do not intend to collaborate with third parties, with the exception of feedback from end users.
