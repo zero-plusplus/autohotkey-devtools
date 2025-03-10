@@ -3,7 +3,7 @@
 
 #Include ./.config.ahk
 
-import { getIn, setIn, count, each, Enumerable, Stack, Queue, UniqueArray, CircularInfomation } from collection
+import { getIn, setIn, sizeOf, each, Enumerable, Stack, Queue, UniqueArray, CircularInfomation } from collection
 
 describe('collection', () {
   describe('getIn', () {
@@ -68,18 +68,18 @@ describe('collection', () {
     })
   })
 
-  describe('count', () {
+  describe('sizeOf', () {
     test.each([
       [ { field1: 'value1', field2: 'value2', field3: 'value3' }, 3 ],
       [ [ 1, 2, 3 ], 3 ],
       [ Map('field1', 'value1', 'field2', 'value2', 'field3', 'value3'), 3 ],
     ])('Get a number of members/elements', (obj, expectedCount) {
-      assert.equals(count(obj), expectedCount)
+      assert.equals(sizeOf(obj), expectedCount)
     })
 
     test('Inherited members are not counted', () {
       obj := { fieldA: 'valueA', base: { fieldB: 'valueB' } }
-      assert.equals(count(obj), 1)
+      assert.equals(sizeOf(obj), 1)
     })
   })
 

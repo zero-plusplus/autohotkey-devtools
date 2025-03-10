@@ -5,6 +5,14 @@ import function_callback as f
 import { UniqueArray } from collection_unique
 
 /**
+ * Gets number of members/elements of an object.
+ * @param {object} obj
+ * @return {number}
+ */
+export sizeOf(obj) {
+  return obj.length ?? obj.count ?? ObjOwnPropCount(obj)
+}
+/**
  * Gets a member from the specified object without raising an exception.
  * @template T
  * @param {object} obj
