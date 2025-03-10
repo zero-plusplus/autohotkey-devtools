@@ -3,7 +3,7 @@
 
 #Include ./.config.ahk
 
-import { getIn, count, each, Enumerable, Stack, Queue, UniqueArray, CircularInfomation } from collection
+import { getIn, setIn, count, each, Enumerable, Stack, Queue, UniqueArray, CircularInfomation } from collection
 
 describe('collection', () {
   describe('getIn', () {
@@ -27,6 +27,44 @@ describe('collection', () {
       assert('obj["key"]').equals(obj['key'], getIn(obj, 'key'))
       assert('obj["nest"]["key"]').equals(obj['nest']['key'], getIn(obj, [ 'nest', 'key' ]))
       assert('obj["unknown"]').equals('', getIn(obj, 'unknown', ''))
+    })
+  })
+
+  describe('setIn', () {
+    test('object', () {
+      obj := { key: 'value', nest: { key: 'value' } }
+
+      assert.isTruthy(setIn(obj, 'key', 'overwrite'))
+      assert('obj.key').equals(obj.key, 'overwrite')
+
+      assert.isTruthy(setIn(obj, [ 'nest', 'key' ], 'overwrite'))
+      assert('obj.nest.key').equals(obj.nest.key, 'overwrite')
+
+      assert.isTruthy(setIn(obj, [ 'unknown' ], 'overwrite'))
+      assert('obj.unknown').equals(obj.unknown, 'overwrite')
+    })
+    test('array', () {
+      obj := [ 'a', [ 'b' ] ]
+
+      assert.isTruthy(setIn(obj, 1, 'overwrite'))
+      assert('obj[1]').equals(obj[1], 'overwrite')
+
+      assert.isTruthy(setIn(obj, [ 2, 1 ], 'overwrite'))
+      assert('obj[2][1]').equals(obj[2][1], 'overwrite')
+
+      assert.isFalsy(setIn(obj, 'unknown', 'overwrite'))
+    })
+    test('map', () {
+      obj := Map('key', 'value', 'nest', Map('key', 'value'))
+
+      assert.isTruthy(setIn(obj, 'key', 'overwrite'))
+      assert('obj["key"]').equals(obj['key'], 'overwrite')
+
+      assert.isTruthy(setIn(obj, [ 'nest', 'key' ], 'overwrite'))
+      assert('obj["nest"]["key"]').equals(obj['nest']['key'], 'overwrite')
+
+      assert.isTruthy(setIn(obj, 'unknown', 'overwrite'))
+      assert('obj["unknown"]').equals(obj["unknown"], 'overwrite')
     })
   })
 

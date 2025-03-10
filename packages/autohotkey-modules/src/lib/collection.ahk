@@ -1,4 +1,4 @@
-#Requires AutoHotkey v2.1-
+﻿#Requires AutoHotkey v2.1-
 
 import collection_count
 import collection_each
@@ -9,6 +9,7 @@ import collection_unique
 export count := collection_count.count
 export each := collection_each.each
 export getIn := collection_each.getIn
+export setIn := collection_each.setIn
 export Enumerable := collection_each.Enumerable
 export CircularInfomation := collection_each.CircularInfomation
 export Queue := collection_queue.Queue
