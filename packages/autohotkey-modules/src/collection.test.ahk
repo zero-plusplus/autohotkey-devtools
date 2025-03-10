@@ -3,30 +3,30 @@
 
 #Include ./.config.ahk
 
-import { at, count, each, Enumerable, Stack, Queue, UniqueArray, CircularInfomation } from collection
+import { getIn, count, each, Enumerable, Stack, Queue, UniqueArray, CircularInfomation } from collection
 
 describe('collection', () {
-  describe('at', () {
+  describe('getIn', () {
     test('object', () {
       obj := { key: 'value', nest: { key: 'value' } }
 
-      assert('obj.key').equals(obj.key, at(obj, 'key'))
-      assert('obj.nest.key').equals(obj.nest.key, at(obj, [ 'nest', 'key' ]))
-      assert('obj.unknown').equals('', at(obj, 'unknown', ''))
+      assert('obj.key').equals(obj.key, getIn(obj, 'key'))
+      assert('obj.nest.key').equals(obj.nest.key, getIn(obj, [ 'nest', 'key' ]))
+      assert('obj.unknown').equals('', getIn(obj, 'unknown', ''))
     })
     test('array', () {
       obj := [ 'a', [ 'b' ] ]
 
-      assert('obj[1]').equals(obj[1], at(obj, 1))
-      assert('obj[2][1]').equals(obj[2][1], at(obj, [ 2, 1 ]))
-      assert('obj["unknown"]').equals('', at(obj, 'unknown', ''))
+      assert('obj[1]').equals(obj[1], getIn(obj, 1))
+      assert('obj[2][1]').equals(obj[2][1], getIn(obj, [ 2, 1 ]))
+      assert('obj["unknown"]').equals('', getIn(obj, 'unknown', ''))
     })
     test('map', () {
       obj := Map('key', 'value', 'nest', Map('key', 'value'))
 
-      assert('obj["key"]').equals(obj['key'], at(obj, 'key'))
-      assert('obj["nest"]["key"]').equals(obj['nest']['key'], at(obj, [ 'nest', 'key' ]))
-      assert('obj["unknown"]').equals('', at(obj, 'unknown', ''))
+      assert('obj["key"]').equals(obj['key'], getIn(obj, 'key'))
+      assert('obj["nest"]["key"]').equals(obj['nest']['key'], getIn(obj, [ 'nest', 'key' ]))
+      assert('obj["unknown"]').equals('', getIn(obj, 'unknown', ''))
     })
   })
 
@@ -84,7 +84,7 @@ describe('collection', () {
 
       e := each(obj).__ENUM()
       e(&key, &value)
-      assert('fieldA is enumerated').equals(value, at(obj, key))
+      assert('fieldA is enumerated').equals(value, getIn(obj, key))
       assert('Inherited fieldB is not enumerated').equals(e(&key, &value), false)
     })
 
@@ -94,7 +94,7 @@ describe('collection', () {
       [ Map('key', 'value') ],
     ])('Enumeration with callback', (obj) {
       each(obj, (value, key) {
-        assert('key: "' key '"').equals(value, at(obj, key))
+        assert('key: "' key '"').equals(value, getIn(obj, key))
       })
     })
 
@@ -104,7 +104,7 @@ describe('collection', () {
       [ Map('key', 'value') ],
     ])('Enumeration with enumerator', (obj) {
       for (key, value in each(obj)) {
-        assert('key: "' key '"').equals(value, at(obj, key))
+        assert('key: "' key '"').equals(value, getIn(obj, key))
       }
     })
   })
@@ -143,8 +143,8 @@ describe('collection', () {
         .flatEntries()
 
       m := Map(e*)
-      assert.equals(m['key1'], at(obj, 'key1') * 2)
-      assert.equals(m['key2'], at(obj, 'key2') * 2)
+      assert.equals(m['key1'], getIn(obj, 'key1') * 2)
+      assert.equals(m['key2'], getIn(obj, 'key2') * 2)
     })
   })
 
