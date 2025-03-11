@@ -1,13 +1,13 @@
-import tmLanguages from '@zero-plusplus/autohotkey-tmlanguage/src';
-import { ScopeName } from '@zero-plusplus/autohotkey-tmlanguage/src/types.js';
-import autohotkey2 from '@zero-plusplus/autohotkey-tmlanguage/test/autohotkey2/expected/index.js';
-import autohotkeyl from '@zero-plusplus/autohotkey-tmlanguage/test/autohotkeyl/expected/index.js';
-import autohotkeynext from '@zero-plusplus/autohotkey-tmlanguage/test/autohotkeynext/expected/index.js';
-import type { ExpectedTestData } from '@zero-plusplus/autohotkey-tmlanguage/test/types.js';
+import * as tmLanguages from '@zero-plusplus/autohotkey-tmlanguage/src';
+import { ScopeName } from '@zero-plusplus/autohotkey-tmlanguage/src/types';
+import * as autohotkey2 from '@zero-plusplus/autohotkey-tmlanguage/test/autohotkey2/expected';
+import * as autohotkeyl from '@zero-plusplus/autohotkey-tmlanguage/test/autohotkeyl/expected';
+import * as autohotkeynext from '@zero-plusplus/autohotkey-tmlanguage/test/autohotkeynext/expected';
+import type { ExpectedTestData } from '@zero-plusplus/autohotkey-tmlanguage/test/types';
 import * as esbuild from 'esbuild';
 import * as fs from 'fs/promises';
 import * as path from 'path';
-import { buildDir, demoDir } from '../config.mjs';
+import { buildDir, demoDir } from '../config';
 
 export async function build(buildOptions: esbuild.BuildOptions): Promise<void> {
   await fs.mkdir(buildDir, { recursive: true });

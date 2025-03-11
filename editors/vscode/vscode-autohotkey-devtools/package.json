@@ -132,13 +132,14 @@
   "qna": false,
   "devDependencies": {
     "@types/vscode": "^1.90.2",
-    "@vscode/vsce": "^3.2.2"
+    "@vscode/vsce": "^3.2.2",
+    "@zero-plusplus/autohotkey-tmlanguage": "^0.0.0"
   },
   "scripts": {
-    "build": "npx tsx scripts/bin/build.mts",
-    "watch": "npx tsx watch scripts/bin/watch.mts",
-    "clean": "npx tsx scripts/bin/clean.mts",
-    "prepackage": "npx tsx scripts/bin/prepackage.mts",
+    "build": "npx tsx scripts/bin/build.ts",
+    "watch": "npx tsx watch scripts/bin/watch.ts",
+    "clean": "npx tsx scripts/bin/clean.ts",
+    "prepackage": "npx tsx scripts/bin/prepackage.ts",
     "package": "npx @vscode/vsce package",
     "vscode:prepublish": "npm run prepackage"
   },

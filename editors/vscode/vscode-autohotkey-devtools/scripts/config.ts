@@ -2,7 +2,7 @@ import * as esbuild from 'esbuild';
 import { globSync } from 'fs';
 import * as path from 'path';
 
-export const packageDir: string = path.resolve(import.meta.dirname, '..');
+export const packageDir: string = path.resolve(__dirname, '..');
 export const projectRootDir: string = path.resolve(packageDir, '../../../');
 export const buildDir: string = path.resolve(packageDir, 'build');
 export const demoDir: string = path.resolve(buildDir, 'demo');

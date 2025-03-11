@@ -1,5 +1,5 @@
 import * as fs from 'fs/promises';
-import { buildDir, buildSourceDir } from '../config.mjs';
+import { buildDir, buildSourceDir } from '../config';
 
 export async function cleanBuild(): Promise<void> {
   try {
