@@ -129,6 +129,7 @@ export function createLanguageConfiguration(scopeName: ScopeName): Record<string
       // /**
       //  * @typedef {
       //  *     xxx: yyy
+      //  *     XXX: YYY
       //    ^^^^
       //  * }
       //  */
@@ -143,11 +144,25 @@ export function createLanguageConfiguration(scopeName: ScopeName): Record<string
       // /**
       //  * @typedef {
       //  *   xxx: yyy
+      //  *   XXX: YYY
       //    ^^
       //  * }
       //  */
       {
         beforeText: '^\\s*\\*(?!/)\\s{3}',
+        action: {
+          appendText: '*   ',
+          indent: 'none',
+        },
+      },
+      // /**
+      //  * @typedef {{
+      //  *
+      //    ^^
+      //  * }}
+      //  */
+      {
+        beforeText: '^\\s*\\*(?!/)\\s*[^{]*\\{*',
         action: {
           appendText: '*   ',
           indent: 'none',
