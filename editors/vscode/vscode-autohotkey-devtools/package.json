@@ -82,7 +82,11 @@
           "token.comment.autohotkeyl": "comment",
           "token.other.autohotkeyl": "other",
           "token.string.autohotkeyl": "string"
-        }
+        },
+        "unbalancedBracketScopes": [
+          "token.string",
+          "string.regexp keyword.other.regexp.option"
+        ]
       },
       {
         "language": "autohotkeynext",
@@ -93,7 +97,11 @@
           "token.comment.autohotkeynext": "comment",
           "token.other.autohotkeynext": "other",
           "token.string.autohotkeynext": "string"
-        }
+        },
+        "unbalancedBracketScopes": [
+          "token.string",
+          "string.regexp keyword.other.regexp.option"
+        ]
       },
       {
         "language": "autohotkey2",
@@ -104,7 +112,11 @@
           "token.comment.autohotkey2": "comment",
           "token.other.autohotkey2": "other",
           "token.string.autohotkey2": "string"
-        }
+        },
+        "unbalancedBracketScopes": [
+          "token.string",
+          "string.regexp keyword.other.regexp.option"
+        ]
       },
       {
         "language": "autohotkeyl",
@@ -115,7 +127,11 @@
           "token.comment.autohotkeyl": "comment",
           "token.other.autohotkeyl": "other",
           "token.string.autohotkeyl": "string"
-        }
+        },
+        "unbalancedBracketScopes": [
+          "token.string",
+          "string.regexp keyword.other.regexp.option"
+        ]
       },
       {
         "scopeName": "injection.to-markdown",
