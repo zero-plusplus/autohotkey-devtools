@@ -72,9 +72,16 @@
         "scopeName": "source.autohotkey",
         "path": "build/autohotkey.tmLanguage.json",
         "tokenTypes": {
-          "token.comment.autohotkey": "comment",
-          "token.other.autohotkey": "other",
-          "token.string.autohotkey": "string"
+          "meta.link.inline.markdown": "other",
+          "token.comment.autohotkeynext": "comment",
+          "token.other.autohotkeynext": "other",
+          "token.string.autohotkeynext": "string",
+          "token.comment.autohotkey2": "comment",
+          "token.other.autohotkey2": "other",
+          "token.string.autohotkey2": "string",
+          "token.comment.autohotkeyl": "comment",
+          "token.other.autohotkeyl": "other",
+          "token.string.autohotkeyl": "string"
         }
       },
       {
@@ -82,6 +89,7 @@
         "scopeName": "source.autohotkeynext",
         "path": "build/autohotkeynext.tmLanguage.json",
         "tokenTypes": {
+          "meta.link.inline.markdown": "other",
           "token.comment.autohotkeynext": "comment",
           "token.other.autohotkeynext": "other",
           "token.string.autohotkeynext": "string"
@@ -92,6 +100,7 @@
         "scopeName": "source.autohotkey2",
         "path": "build/autohotkey2.tmLanguage.json",
         "tokenTypes": {
+          "meta.link.inline.markdown": "other",
           "token.comment.autohotkey2": "comment",
           "token.other.autohotkey2": "other",
           "token.string.autohotkey2": "string"
@@ -102,6 +111,7 @@
         "scopeName": "source.autohotkeyl",
         "path": "build/autohotkeyl.tmLanguage.json",
         "tokenTypes": {
+          "meta.link.inline.markdown": "other",
           "token.comment.autohotkeyl": "comment",
           "token.other.autohotkeyl": "other",
           "token.string.autohotkeyl": "string"
@@ -114,6 +124,7 @@
           "text.html.markdown"
         ],
         "embeddedLanguages": {
+          "meta.link.inline.markdown": "other",
           "meta.embedded.block.autohotkeynext": "autohotkeynext",
           "meta.embedded.block.autohotkey2": "autohotkey2",
           "meta.embedded.block.autohotkeyl": "autohotkeyl",
