@@ -155,19 +155,6 @@ export function createLanguageConfiguration(scopeName: ScopeName): Record<string
           indent: 'none',
         },
       },
-      // /**
-      //  * @typedef {{
-      //  *
-      //    ^^
-      //  * }}
-      //  */
-      {
-        beforeText: '^\\s*\\*(?!/)\\s*[^{]*\\{*',
-        action: {
-          appendText: '*   ',
-          indent: 'none',
-        },
-      },
       {
         beforeText: '^\\s*\\*(?!/)\\s*',
         action: {
