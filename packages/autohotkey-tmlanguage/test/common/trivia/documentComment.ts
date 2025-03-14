@@ -1137,58 +1137,106 @@ export function createDocumentCommentExpectedData(scopeName: ScopeName): Expecte
          * @param
          * @param {type}
          * @param {type} name
+         * @param {type} name*
+         * @param {type} name?
          * @param {type} name description
+         * @param {type} name* description
+         * @param {type} name? description
          * @param {type} [name := ""] description
          * @param name
+         * @param name*
+         * @param name?
          * @param name description
+         * @param name* description
+         * @param name? description
          * @param [name := ""] description
          */
         /**
          * @arg
          * @arg {type}
          * @arg {type} name
+         * @arg {type} name*
+         * @arg {type} name?
          * @arg {type} name description
+         * @arg {type} name* description
+         * @arg {type} name? description
          * @arg {type} [name := ""] description
          * @arg name
+         * @arg name*
+         * @arg name?
          * @arg name description
+         * @arg name* description
+         * @arg name? description
          * @arg [name := ""] description
          */
         /**
          * @argument
          * @argument {type}
          * @argument {type} name
+         * @argument {type} name*
+         * @argument {type} name?
          * @argument {type} name description
+         * @argument {type} name* description
+         * @argument {type} name? description
          * @argument {type} [name := ""] description
          * @argument name
+         * @argument name*
+         * @argument name?
          * @argument name description
+         * @argument name* description
+         * @argument name? description
          * @argument [name := ""] description
          */
 
         ;; @param
         ;; @param {type}
         ;; @param {type} name
+        ;; @param {type} name*
+        ;; @param {type} name?
         ;; @param {type} name description
+        ;; @param {type} name* description
+        ;; @param {type} name? description
         ;; @param {type} [name := ""] description
         ;; @param name
+        ;; @param name*
+        ;; @param name?
         ;; @param name description
+        ;; @param name* description
+        ;; @param name? description
         ;; @param [name := ""] description
 
         ;; @arg
         ;; @arg {type}
         ;; @arg {type} name
+        ;; @arg {type} name*
+        ;; @arg {type} name?
         ;; @arg {type} name description
+        ;; @arg {type} name* description
+        ;; @arg {type} name? description
         ;; @arg {type} [name := ""] description
         ;; @arg name
+        ;; @arg name*
+        ;; @arg name?
         ;; @arg name description
+        ;; @arg name* description
+        ;; @arg name? description
         ;; @arg [name := ""] description
 
         ;; @argument
         ;; @argument {type}
         ;; @argument {type} name
+        ;; @argument {type} name*
+        ;; @argument {type} name?
         ;; @argument {type} name description
+        ;; @argument {type} name* description
+        ;; @argument {type} name? description
         ;; @argument {type} [name := ""] description
         ;; @argument name
+        ;; @argument name*
+        ;; @argument name?
         ;; @argument name description
+        ;; @argument name* description
+        ;; @argument name? description
         ;; @argument [name := ""] description
       `,
       [
@@ -1219,6 +1267,40 @@ export function createDocumentCommentExpectedData(scopeName: ScopeName): Expecte
             { text: 'type', scopes: name(scopeName, RuleName.DocumentComment, TokenType.Other, RuleName.TypeInDocument) },
             { text: '}', scopes: name(scopeName, RuleName.DocumentComment, TokenType.Other, RuleName.TypeInDocument, RuleName.CloseBrace) },
             { text: 'name', scopes: name(scopeName, RuleName.DocumentComment, TokenType.Other, RuleName.Variable) },
+            { text: '*', scopes: name(scopeName, RuleName.DocumentComment, TokenType.Other, RuleName.Operator) },
+
+            { text: ' *', scopes: name(scopeName, RuleName.DocumentComment) },
+            { text: tag, scopes: name(scopeName, RuleName.DocumentComment, RuleName.DocumentTag) },
+            { text: '{', scopes: name(scopeName, RuleName.DocumentComment, TokenType.Other, RuleName.TypeInDocument, RuleName.OpenBrace) },
+            { text: 'type', scopes: name(scopeName, RuleName.DocumentComment, TokenType.Other, RuleName.TypeInDocument) },
+            { text: '}', scopes: name(scopeName, RuleName.DocumentComment, TokenType.Other, RuleName.TypeInDocument, RuleName.CloseBrace) },
+            { text: 'name', scopes: name(scopeName, RuleName.DocumentComment, TokenType.Other, RuleName.Variable) },
+            { text: '?', scopes: name(scopeName, RuleName.DocumentComment, TokenType.Other, RuleName.Operator) },
+
+            { text: ' *', scopes: name(scopeName, RuleName.DocumentComment) },
+            { text: tag, scopes: name(scopeName, RuleName.DocumentComment, RuleName.DocumentTag) },
+            { text: '{', scopes: name(scopeName, RuleName.DocumentComment, TokenType.Other, RuleName.TypeInDocument, RuleName.OpenBrace) },
+            { text: 'type', scopes: name(scopeName, RuleName.DocumentComment, TokenType.Other, RuleName.TypeInDocument) },
+            { text: '}', scopes: name(scopeName, RuleName.DocumentComment, TokenType.Other, RuleName.TypeInDocument, RuleName.CloseBrace) },
+            { text: 'name', scopes: name(scopeName, RuleName.DocumentComment, TokenType.Other, RuleName.Variable) },
+            { text: 'description', scopes: name(scopeName, RuleName.DocumentComment) },
+
+            { text: ' *', scopes: name(scopeName, RuleName.DocumentComment) },
+            { text: tag, scopes: name(scopeName, RuleName.DocumentComment, RuleName.DocumentTag) },
+            { text: '{', scopes: name(scopeName, RuleName.DocumentComment, TokenType.Other, RuleName.TypeInDocument, RuleName.OpenBrace) },
+            { text: 'type', scopes: name(scopeName, RuleName.DocumentComment, TokenType.Other, RuleName.TypeInDocument) },
+            { text: '}', scopes: name(scopeName, RuleName.DocumentComment, TokenType.Other, RuleName.TypeInDocument, RuleName.CloseBrace) },
+            { text: 'name', scopes: name(scopeName, RuleName.DocumentComment, TokenType.Other, RuleName.Variable) },
+            { text: '*', scopes: name(scopeName, RuleName.DocumentComment, TokenType.Other, RuleName.Operator) },
+            { text: 'description', scopes: name(scopeName, RuleName.DocumentComment) },
+
+            { text: ' *', scopes: name(scopeName, RuleName.DocumentComment) },
+            { text: tag, scopes: name(scopeName, RuleName.DocumentComment, RuleName.DocumentTag) },
+            { text: '{', scopes: name(scopeName, RuleName.DocumentComment, TokenType.Other, RuleName.TypeInDocument, RuleName.OpenBrace) },
+            { text: 'type', scopes: name(scopeName, RuleName.DocumentComment, TokenType.Other, RuleName.TypeInDocument) },
+            { text: '}', scopes: name(scopeName, RuleName.DocumentComment, TokenType.Other, RuleName.TypeInDocument, RuleName.CloseBrace) },
+            { text: 'name', scopes: name(scopeName, RuleName.DocumentComment, TokenType.Other, RuleName.Variable) },
+            { text: '?', scopes: name(scopeName, RuleName.DocumentComment, TokenType.Other, RuleName.Operator) },
             { text: 'description', scopes: name(scopeName, RuleName.DocumentComment) },
 
             { text: ' *', scopes: name(scopeName, RuleName.DocumentComment) },
@@ -1241,6 +1323,28 @@ export function createDocumentCommentExpectedData(scopeName: ScopeName): Expecte
             { text: ' *', scopes: name(scopeName, RuleName.DocumentComment) },
             { text: tag, scopes: name(scopeName, RuleName.DocumentComment, RuleName.DocumentTag) },
             { text: 'name', scopes: name(scopeName, RuleName.DocumentComment, TokenType.Other, RuleName.Variable) },
+            { text: '*', scopes: name(scopeName, RuleName.DocumentComment, TokenType.Other, RuleName.Operator) },
+
+            { text: ' *', scopes: name(scopeName, RuleName.DocumentComment) },
+            { text: tag, scopes: name(scopeName, RuleName.DocumentComment, RuleName.DocumentTag) },
+            { text: 'name', scopes: name(scopeName, RuleName.DocumentComment, TokenType.Other, RuleName.Variable) },
+            { text: '?', scopes: name(scopeName, RuleName.DocumentComment, TokenType.Other, RuleName.Operator) },
+
+            { text: ' *', scopes: name(scopeName, RuleName.DocumentComment) },
+            { text: tag, scopes: name(scopeName, RuleName.DocumentComment, RuleName.DocumentTag) },
+            { text: 'name', scopes: name(scopeName, RuleName.DocumentComment, TokenType.Other, RuleName.Variable) },
+            { text: 'description', scopes: name(scopeName, RuleName.DocumentComment) },
+
+            { text: ' *', scopes: name(scopeName, RuleName.DocumentComment) },
+            { text: tag, scopes: name(scopeName, RuleName.DocumentComment, RuleName.DocumentTag) },
+            { text: 'name', scopes: name(scopeName, RuleName.DocumentComment, TokenType.Other, RuleName.Variable) },
+            { text: '*', scopes: name(scopeName, RuleName.DocumentComment, TokenType.Other, RuleName.Operator) },
+            { text: 'description', scopes: name(scopeName, RuleName.DocumentComment) },
+
+            { text: ' *', scopes: name(scopeName, RuleName.DocumentComment) },
+            { text: tag, scopes: name(scopeName, RuleName.DocumentComment, RuleName.DocumentTag) },
+            { text: 'name', scopes: name(scopeName, RuleName.DocumentComment, TokenType.Other, RuleName.Variable) },
+            { text: '?', scopes: name(scopeName, RuleName.DocumentComment, TokenType.Other, RuleName.Operator) },
             { text: 'description', scopes: name(scopeName, RuleName.DocumentComment) },
 
             { text: ' *', scopes: name(scopeName, RuleName.DocumentComment) },
@@ -1283,6 +1387,40 @@ export function createDocumentCommentExpectedData(scopeName: ScopeName): Expecte
             { text: 'type', scopes: name(scopeName, RuleName.DocumentComment, TokenType.Other, RuleName.TypeInDocument) },
             { text: '}', scopes: name(scopeName, RuleName.DocumentComment, TokenType.Other, RuleName.TypeInDocument, RuleName.CloseBrace) },
             { text: 'name', scopes: name(scopeName, RuleName.DocumentComment, TokenType.Other, RuleName.Variable) },
+            { text: '*', scopes: name(scopeName, RuleName.DocumentComment, TokenType.Other, RuleName.Operator) },
+
+            { text: ';;', scopes: name(scopeName, RuleName.DocumentComment) },
+            { text: tag, scopes: name(scopeName, RuleName.DocumentComment, RuleName.DocumentTag) },
+            { text: '{', scopes: name(scopeName, RuleName.DocumentComment, TokenType.Other, RuleName.TypeInDocument, RuleName.OpenBrace) },
+            { text: 'type', scopes: name(scopeName, RuleName.DocumentComment, TokenType.Other, RuleName.TypeInDocument) },
+            { text: '}', scopes: name(scopeName, RuleName.DocumentComment, TokenType.Other, RuleName.TypeInDocument, RuleName.CloseBrace) },
+            { text: 'name', scopes: name(scopeName, RuleName.DocumentComment, TokenType.Other, RuleName.Variable) },
+            { text: '?', scopes: name(scopeName, RuleName.DocumentComment, TokenType.Other, RuleName.Operator) },
+
+            { text: ';;', scopes: name(scopeName, RuleName.DocumentComment) },
+            { text: tag, scopes: name(scopeName, RuleName.DocumentComment, RuleName.DocumentTag) },
+            { text: '{', scopes: name(scopeName, RuleName.DocumentComment, TokenType.Other, RuleName.TypeInDocument, RuleName.OpenBrace) },
+            { text: 'type', scopes: name(scopeName, RuleName.DocumentComment, TokenType.Other, RuleName.TypeInDocument) },
+            { text: '}', scopes: name(scopeName, RuleName.DocumentComment, TokenType.Other, RuleName.TypeInDocument, RuleName.CloseBrace) },
+            { text: 'name', scopes: name(scopeName, RuleName.DocumentComment, TokenType.Other, RuleName.Variable) },
+            { text: 'description', scopes: name(scopeName, RuleName.DocumentComment) },
+
+            { text: ';;', scopes: name(scopeName, RuleName.DocumentComment) },
+            { text: tag, scopes: name(scopeName, RuleName.DocumentComment, RuleName.DocumentTag) },
+            { text: '{', scopes: name(scopeName, RuleName.DocumentComment, TokenType.Other, RuleName.TypeInDocument, RuleName.OpenBrace) },
+            { text: 'type', scopes: name(scopeName, RuleName.DocumentComment, TokenType.Other, RuleName.TypeInDocument) },
+            { text: '}', scopes: name(scopeName, RuleName.DocumentComment, TokenType.Other, RuleName.TypeInDocument, RuleName.CloseBrace) },
+            { text: 'name', scopes: name(scopeName, RuleName.DocumentComment, TokenType.Other, RuleName.Variable) },
+            { text: '*', scopes: name(scopeName, RuleName.DocumentComment, TokenType.Other, RuleName.Operator) },
+            { text: 'description', scopes: name(scopeName, RuleName.DocumentComment) },
+
+            { text: ';;', scopes: name(scopeName, RuleName.DocumentComment) },
+            { text: tag, scopes: name(scopeName, RuleName.DocumentComment, RuleName.DocumentTag) },
+            { text: '{', scopes: name(scopeName, RuleName.DocumentComment, TokenType.Other, RuleName.TypeInDocument, RuleName.OpenBrace) },
+            { text: 'type', scopes: name(scopeName, RuleName.DocumentComment, TokenType.Other, RuleName.TypeInDocument) },
+            { text: '}', scopes: name(scopeName, RuleName.DocumentComment, TokenType.Other, RuleName.TypeInDocument, RuleName.CloseBrace) },
+            { text: 'name', scopes: name(scopeName, RuleName.DocumentComment, TokenType.Other, RuleName.Variable) },
+            { text: '?', scopes: name(scopeName, RuleName.DocumentComment, TokenType.Other, RuleName.Operator) },
             { text: 'description', scopes: name(scopeName, RuleName.DocumentComment) },
 
             { text: ';;', scopes: name(scopeName, RuleName.DocumentComment) },
@@ -1305,6 +1443,28 @@ export function createDocumentCommentExpectedData(scopeName: ScopeName): Expecte
             { text: ';;', scopes: name(scopeName, RuleName.DocumentComment) },
             { text: tag, scopes: name(scopeName, RuleName.DocumentComment, RuleName.DocumentTag) },
             { text: 'name', scopes: name(scopeName, RuleName.DocumentComment, TokenType.Other, RuleName.Variable) },
+            { text: '*', scopes: name(scopeName, RuleName.DocumentComment, TokenType.Other, RuleName.Operator) },
+
+            { text: ';;', scopes: name(scopeName, RuleName.DocumentComment) },
+            { text: tag, scopes: name(scopeName, RuleName.DocumentComment, RuleName.DocumentTag) },
+            { text: 'name', scopes: name(scopeName, RuleName.DocumentComment, TokenType.Other, RuleName.Variable) },
+            { text: '?', scopes: name(scopeName, RuleName.DocumentComment, TokenType.Other, RuleName.Operator) },
+
+            { text: ';;', scopes: name(scopeName, RuleName.DocumentComment) },
+            { text: tag, scopes: name(scopeName, RuleName.DocumentComment, RuleName.DocumentTag) },
+            { text: 'name', scopes: name(scopeName, RuleName.DocumentComment, TokenType.Other, RuleName.Variable) },
+            { text: 'description', scopes: name(scopeName, RuleName.DocumentComment) },
+
+            { text: ';;', scopes: name(scopeName, RuleName.DocumentComment) },
+            { text: tag, scopes: name(scopeName, RuleName.DocumentComment, RuleName.DocumentTag) },
+            { text: 'name', scopes: name(scopeName, RuleName.DocumentComment, TokenType.Other, RuleName.Variable) },
+            { text: '*', scopes: name(scopeName, RuleName.DocumentComment, TokenType.Other, RuleName.Operator) },
+            { text: 'description', scopes: name(scopeName, RuleName.DocumentComment) },
+
+            { text: ';;', scopes: name(scopeName, RuleName.DocumentComment) },
+            { text: tag, scopes: name(scopeName, RuleName.DocumentComment, RuleName.DocumentTag) },
+            { text: 'name', scopes: name(scopeName, RuleName.DocumentComment, TokenType.Other, RuleName.Variable) },
+            { text: '?', scopes: name(scopeName, RuleName.DocumentComment, TokenType.Other, RuleName.Operator) },
             { text: 'description', scopes: name(scopeName, RuleName.DocumentComment) },
 
             { text: ';;', scopes: name(scopeName, RuleName.DocumentComment) },

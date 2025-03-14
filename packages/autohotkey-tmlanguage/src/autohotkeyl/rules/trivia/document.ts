@@ -451,13 +451,14 @@ function createDeclarationTagRule(scopeName: ScopeName, placeholder: Placeholder
           )),
           capture(seq(
             placeholder.leftHandPattern,
-            optional(char('*')),
+            optional(capture(char('*', '?'))),
           )),
           lookahead(alt(inlineSpace(), endAnchor())),
           inlineSpaces0(),
         ),
         captures: {
           1: patternsRule(includeRule(Repository.Expression)),
+          2: nameRule(scopeName, RuleName.Operator),
         },
       },
       // e.g. `@param {type}`
@@ -558,12 +559,13 @@ function createDeclarationTagRule(scopeName: ScopeName, placeholder: Placeholder
           inlineSpaces0(),
           capture(seq(
             placeholder.leftHandPattern,
-            optional(char('*')),
+            optional(capture(char('*', '?'))),
           )),
           inlineSpaces0(),
         ),
         captures: {
           1: patternsRule(includeRule(Repository.Expression)),
+          2: nameRule(scopeName, RuleName.Operator),
         },
       },
       ...placeholder.rules,
