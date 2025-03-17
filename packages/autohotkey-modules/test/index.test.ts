@@ -11,6 +11,10 @@ describe('all tests', () => {
     expect(testAutoHotkey('function')).toBeTruthy();
   });
 
+  test('hotkey', () => {
+    expect(testAutoHotkey('hotkey')).toBeTruthy();
+  });
+
   test('predicate', () => {
     expect(testAutoHotkey('predicate')).toBeTruthy();
   });
