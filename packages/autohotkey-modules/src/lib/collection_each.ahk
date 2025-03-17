@@ -228,10 +228,14 @@ export class Enumerable {
   keys() {
     props := this.__ENUM()
 
-    i := 1
     return Enumerable(this.__source, (*) => (&key?, &value?) {
-      value := i++
-      return props(&key)
+      hasNext := props(&key, &value)
+      if (!hasNext) {
+        return false
+      }
+
+      value := key
+      return true
     })
   }
   /**

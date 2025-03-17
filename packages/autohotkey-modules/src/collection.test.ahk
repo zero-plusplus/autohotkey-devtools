@@ -160,13 +160,18 @@ describe('collection', () {
       }
     })
 
-    test.each([
-      [ { key1: 5, key2: 10 } ],
-      [ Map('key1', 5, 'key2', 10 ) ],
-    ])('keys', (obj) {
-      keys := Array(Enumerable(obj).keys()*)
-      assert.equals(keys[1], 'key1')
-      assert.equals(keys[2], 'key2')
+    test('keys', () {
+      keys_obj := Array(Enumerable({ key1: 5, key2: 10 }).keys()*)
+      assert.equals(keys_obj[1], 'key1')
+      assert.equals(keys_obj[2], 'key2')
+
+      keys_map := Array(Enumerable(Map('key1', 5, 'key2', 10 )).keys()*)
+      assert.equals(keys_map[1], 'key1')
+      assert.equals(keys_map[2], 'key2')
+
+      keys_arr := Array(Enumerable([ 'value1', 'value2' ]).keys()*)
+      assert.equals(keys_arr[1], 1)
+      assert.equals(keys_arr[2], 2)
     })
 
     test.each([
