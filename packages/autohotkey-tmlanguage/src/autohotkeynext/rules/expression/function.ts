@@ -1,64 +1,28 @@
 import { Repository, RuleName } from '../../../constants';
-import { alt, capture, char, endAnchor, group, inlineSpaces0, inlineSpaces1, keyword, lookahead, lookbehind, seq, startAnchor } from '../../../oniguruma';
-import type { PatternsRule, Rule, ScopeName } from '../../../types';
+import { capture, char, inlineSpaces0, lookbehind, seq } from '../../../oniguruma';
+import type { PatternsRule, ScopeName } from '../../../types';
 import { includeRule, nameRule, patternsRule } from '../../../utils';
 
-export function createFunctionExpressionBlockRule(scopeName: ScopeName): PatternsRule {
-  const statementsRules: Rule[] = [
-    // Note: The get or set keywords must be valid here as well, since TMLanguage limitations make it impossible to distinguish between K&R-style property blocks and function definition expression blocks
-    {
-      match: seq(
-        startAnchor(),
+interface Placeholder {
+  startAnchor: string;
+}
+export function createFunctionExpressionBlockRule(scopeName: ScopeName, placeholder: Placeholder): PatternsRule {
+  return patternsRule({
+    begin: seq(
+      lookbehind(seq(
+        char(')'),
         inlineSpaces0(),
-        capture(keyword('get', 'set')),
-        lookahead(alt(
-          seq(inlineSpaces1(), char(';')),
-          seq(inlineSpaces0(), group(alt(char('{'), endAnchor()))),
-        )),
-      ),
-      captures: {
-        1: nameRule(scopeName, RuleName.GetSetKeyword),
-      },
+      )),
+      inlineSpaces0(),
+      capture(char('{')),
+    ),
+    beginCaptures: {
+      1: nameRule(scopeName, RuleName.BlockBegin),
     },
-    includeRule(Repository.Self),
-  ];
-
-  return patternsRule(
-    // One true brace style
-    //
-    {
-      begin: seq(
-        lookbehind(seq(
-          char(')'),
-          inlineSpaces0(),
-        )),
-        inlineSpaces0(),
-        capture(char('{')),
-      ),
-      beginCaptures: {
-        1: nameRule(scopeName, RuleName.BlockBegin),
-      },
-      end: capture(char('}')),
-      endCaptures: {
-        1: nameRule(scopeName, RuleName.BlockEnd),
-      },
-      patterns: statementsRules,
+    end: capture(char('}')),
+    endCaptures: {
+      1: nameRule(scopeName, RuleName.BlockEnd),
     },
-    // K&R style
-    {
-      begin: seq(
-        startAnchor(),
-        inlineSpaces0(),
-        capture(char('{')),
-      ),
-      beginCaptures: {
-        1: nameRule(scopeName, RuleName.BlockBegin),
-      },
-      end: capture(char('}')),
-      endCaptures: {
-        1: nameRule(scopeName, RuleName.BlockEnd),
-      },
-      patterns: statementsRules,
-    },
-  );
+    patterns: [ includeRule(Repository.Self) ],
+  });
 }

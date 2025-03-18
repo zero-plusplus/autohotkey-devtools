@@ -37,8 +37,8 @@ export function createTmLanguage(): TmLanguage {
       ),
 
       // #region declaration
-      [Repository.Import]: rules_vnext.createImportDeclarationRule(scopeName),
-      [Repository.Export]: rules_vnext.createExportDeclarationRule(scopeName),
+      [Repository.Import]: rules_vnext.createImportDeclarationRule(scopeName, { startAnchor: patterns_v1.labelStatementStartAnchor }),
+      [Repository.Export]: rules_vnext.createExportDeclarationRule(scopeName, { startAnchor: patterns_v1.labelStatementStartAnchor }),
       [Repository.ClassDeclaration]: rules_v1.createClassDeclarationRule(scopeName, {
         startAnchor: patterns_vnext.classStartAnchor,
         endAnchor: patterns_v1.lineEndAnchor,
@@ -56,6 +56,7 @@ export function createTmLanguage(): TmLanguage {
         ],
       }),
       [Repository.TypedAssignmentDeclaration]: rules_vnext.createTypedAssignmentDeclarationRule(scopeName, {
+        startAnchor: patterns_v1.labelStatementStartAnchor,
         modifiers: constants_v1.modifiers,
         namePattern: patterns_v2.looseLeftHandPattern,
         nameRule: patternsRule(includeRule(Repository.Variable)),
@@ -64,11 +65,14 @@ export function createTmLanguage(): TmLanguage {
       // #endregion declaration
 
       // #region expression
-      [Repository.Expression]: patternsRule(
+      [Repository.ExpressionInBrackets]: patternsRule(
+        includeRule(Repository.ObjectInBrackets),
         includeRule(Repository.ExpressionInControlFlow),
         includeRule(Repository.FunctionExpressionBlock),
       ),
-      [Repository.FunctionExpressionBlock]: rules_vnext.createFunctionExpressionBlockRule(scopeName),
+      [Repository.FunctionExpressionBlock]: rules_vnext.createFunctionExpressionBlockRule(scopeName, {
+        startAnchor: patterns_v1.labelStatementStartAnchor,
+      }),
       // #endregion expression
     },
   };

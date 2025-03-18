@@ -136,7 +136,7 @@ export function createRepositories(scopeName: ScopeName): Repositories {
       startAnchor: patterns_v1.statementStartAnchor,
     }),
     [Repository.LabelStatement]: rule_v1.createLabelRule(scopeName, {
-      startAnchor: patterns_v1.statementStartAnchor,
+      startAnchor: patterns_v1.labelStatementStartAnchor,
       labelPattern: patterns_v1.identifierPattern,
     }),
 
@@ -221,6 +221,10 @@ export function createRepositories(scopeName: ScopeName): Repositories {
       includeRule(Repository.Comma),
       includeRule(Repository.Expression),
     ),
+    [Repository.ExpressionInBrackets]: patternsRule(
+      includeRule(Repository.ObjectInBrackets),
+      includeRule(Repository.Expression),
+    ),
     [Repository.ExpressionInControlFlow]: patternsRule(
       includeRule(Repository.ShorthandRegexpMatch),
       includeRule(Repository.NewCallExpression),
@@ -297,8 +301,8 @@ export function createRepositories(scopeName: ScopeName): Repositories {
     ),
 
     // #region object
-    [Repository.ObjectInParens]: rule_v1.createObjectRule(scopeName, {
-      startAnchor: patterns_v1.objectInParentsStartAnchor,
+    [Repository.ObjectInBrackets]: rule_v1.createObjectRule(scopeName, {
+      startAnchor: patterns_v1.labelStatementStartAnchor,
     }),
     [Repository.Object]: rule_v1.createObjectRule(scopeName, {
       startAnchor: patterns_v1.expressionContinuationStartAnchor,

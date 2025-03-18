@@ -304,6 +304,7 @@ export const enum Repository {
 
   // #region expressions
   Expression = 'repository.expression',
+  ExpressionInBrackets = 'repository.expression.in-brackets',
   ExpressionInControlFlow = 'repository.expression.in-controlflow',
   Expressions = 'repository.expressions',
   ParenthesizedExpression = 'repository.expression.parenthesized',
@@ -339,7 +340,7 @@ export const enum Repository {
 
   // #region object
   Object = 'repository.expression.object',
-  ObjectInParens = 'repository.expression.parens.object',
+  ObjectInBrackets = 'repository.expression.brackets.object',
   ObjectContent = 'repository.expression.object.content',
   ObjectKey = 'repository.expression.object.key',
   Array = 'repository.expression.array',

@@ -29,9 +29,12 @@ export const looseCallableNamePattern: string = seq(
 );
 // #endregion Names
 
-export const objectInParentsStartAnchor: string = seq(startAnchor(), inlineSpaces0());
-export const statementStartAnchor: string = alt(
+export const labelStatementStartAnchor: string = alt(
+  seq('\\G', inlineSpaces0()),
   seq(startAnchor(), inlineSpaces0()),
+);
+export const statementStartAnchor: string = alt(
+  labelStatementStartAnchor,
   seq(text('::'), inlineSpaces0()),
   seq(startAnchor(), inlineSpaces0(), identifierPattern, char(':'), inlineSpaces0()),
   seq(inlineSpaces0(), char('}')),

@@ -1,9 +1,10 @@
 import { RuleName } from '../../../constants';
-import { capture, char, inlineSpace, inlineSpaces0, optional, ordalt, seq, startAnchor } from '../../../oniguruma';
+import { capture, char, inlineSpace, inlineSpaces0, lookbehind, optional, ordalt, seq } from '../../../oniguruma';
 import type { MatchRule, Rule, ScopeName } from '../../../types';
 import { nameRule } from '../../../utils';
 
 interface Placeholder {
+  startAnchor: string;
   modifiers: readonly string[];
   namePattern: string;
   nameRule: Rule;
@@ -12,7 +13,7 @@ interface Placeholder {
 export function createTypedAssignmentDeclarationRule(scopeName: ScopeName, placeholder: Placeholder): MatchRule {
   return {
     match: seq(
-      startAnchor(),
+      lookbehind(placeholder.startAnchor),
       inlineSpaces0(),
       optional(seq(
         capture(ordalt(...placeholder.modifiers)),

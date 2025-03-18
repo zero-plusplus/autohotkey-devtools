@@ -17,7 +17,7 @@ export function createArrayRule(scopeName: ScopeName): BeginEndRule {
       includeRule(Repository.Meta),
 
       includeRule(Repository.Comma),
-      includeRule(Repository.Expression),
+      includeRule(Repository.ExpressionInBrackets),
     ],
   };
 }

@@ -1,15 +1,18 @@
 import { Repository, RuleName } from '../../../constants';
-import { capture, char, inlineSpaces0, inlineSpaces1, keyword, optseq, seq, startAnchor } from '../../../oniguruma';
+import { capture, char, inlineSpaces0, inlineSpaces1, keyword, lookbehind, optseq, seq } from '../../../oniguruma';
 import type { PatternsRule, ScopeName } from '../../../types';
 import { includeRule, nameRule, patternsRule } from '../../../utils';
 
-export function createImportDeclarationRule(scopeName: ScopeName): PatternsRule {
+interface Placeholder {
+  startAnchor: string;
+}
+export function createImportDeclarationRule(scopeName: ScopeName, placeholder: Placeholder): PatternsRule {
   return patternsRule(
     // e.g. `import * from "path/to"`
     //       ^^^^^^ ^ ^^^^
     {
       match: seq(
-        startAnchor(),
+        lookbehind(placeholder.startAnchor),
         inlineSpaces0(),
         capture(keyword('import')),
         inlineSpaces1(),
@@ -29,7 +32,7 @@ export function createImportDeclarationRule(scopeName: ScopeName): PatternsRule 
     //       ^^^^^^ ^ ^ ^^ ^^ ^ ^^ ^ ^ ^^^^
     {
       begin: seq(
-        startAnchor(),
+        lookbehind(placeholder.startAnchor),
         inlineSpaces0(),
         capture(keyword('import')),
         inlineSpaces1(),
@@ -56,7 +59,7 @@ export function createImportDeclarationRule(scopeName: ScopeName): PatternsRule 
     //       ^^^^^^
     {
       match: seq(
-        startAnchor(),
+        lookbehind(placeholder.startAnchor),
         inlineSpaces0(),
         capture(keyword('import')),
       ),

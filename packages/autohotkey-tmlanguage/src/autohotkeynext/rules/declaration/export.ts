@@ -1,12 +1,15 @@
 import { RuleName } from '../../../constants';
-import { capture, inlineSpaces0, inlineSpaces1, keyword, lookahead, optseq, seq, startAnchor, wordBound } from '../../../oniguruma';
+import { capture, inlineSpaces0, inlineSpaces1, keyword, lookahead, lookbehind, optseq, seq, wordBound } from '../../../oniguruma';
 import type { MatchRule, ScopeName } from '../../../types';
 import { nameRule } from '../../../utils';
 
-export function createExportDeclarationRule(scopeName: ScopeName): MatchRule {
+interface Placeholder {
+  startAnchor: string;
+}
+export function createExportDeclarationRule(scopeName: ScopeName, placeholder: Placeholder): MatchRule {
   return {
     match: seq(
-      startAnchor(),
+      lookbehind(placeholder.startAnchor),
       inlineSpaces0(),
       capture(keyword('export')),
       optseq(
