@@ -785,7 +785,7 @@ export function createDocumentCommentExpectedData(scopeName: ScopeName): Expecte
 
         /**
          * @example
-         *:  test := 123
+         *  test := 123
          */
 
         ;; @example
@@ -795,7 +795,7 @@ export function createDocumentCommentExpectedData(scopeName: ScopeName): Expecte
         ;; @example
 
         ;; @example
-        ;;:  test := 123
+        ;;  test := 123
       `,
       [
         // #region block
@@ -823,7 +823,6 @@ export function createDocumentCommentExpectedData(scopeName: ScopeName): Expecte
         { text: ' *', scopes: name(scopeName, RuleName.DocumentComment) },
         { text: '@example', scopes: name(scopeName, RuleName.DocumentComment, RuleName.DocumentTag) },
         { text: ' *', scopes: name(scopeName, RuleName.DocumentComment) },
-        { text: ':', scopes: name(scopeName, RuleName.DocumentComment, RuleName.EmbeddedLanguage, RuleName.CodeBegin) },
         { text: 'test', scopes: name(scopeName, RuleName.DocumentComment, RuleName.EmbeddedLanguage, RuleName.Variable) },
         { text: ':=', scopes: name(scopeName, RuleName.DocumentComment, RuleName.EmbeddedLanguage, RuleName.Operator) },
         { text: '123', scopes: name(scopeName, RuleName.DocumentComment, RuleName.EmbeddedLanguage, RuleName.Integer) },
@@ -850,7 +849,6 @@ export function createDocumentCommentExpectedData(scopeName: ScopeName): Expecte
         { text: ';;', scopes: name(scopeName, RuleName.DocumentComment) },
         { text: '@example', scopes: name(scopeName, RuleName.DocumentComment, RuleName.DocumentTag) },
         { text: ';;', scopes: name(scopeName, RuleName.DocumentComment) },
-        { text: ':', scopes: name(scopeName, RuleName.DocumentComment, RuleName.EmbeddedLanguage, RuleName.CodeBegin) },
         { text: 'test', scopes: name(scopeName, RuleName.DocumentComment, RuleName.EmbeddedLanguage, RuleName.Variable) },
         { text: ':=', scopes: name(scopeName, RuleName.DocumentComment, RuleName.EmbeddedLanguage, RuleName.Operator) },
         { text: '123', scopes: name(scopeName, RuleName.DocumentComment, RuleName.EmbeddedLanguage, RuleName.Integer) },
@@ -2468,7 +2466,7 @@ export function createDocumentCommentExpectedData(scopeName: ScopeName): Expecte
          */
         /**
          * \`\`\`${scopeName}
-         *:  test := 123
+         *  test := 123
          * \`\`\`
          */
       `,
@@ -2501,7 +2499,6 @@ export function createDocumentCommentExpectedData(scopeName: ScopeName): Expecte
         { text: '```', scopes: `${RuleName.DocumentComment}.${scopeName} ${RuleName.FencedCodeBlock}.markdown ${RuleName.CodeFence}.markdown` },
         { text: scopeName, scopes: `${RuleName.DocumentComment}.${scopeName} ${RuleName.FencedCodeBlock}.markdown ${RuleName.LanguageName}.markdown` },
         { text: ' *', scopes: name(scopeName, RuleName.DocumentComment) },
-        { text: ':', scopes: `${RuleName.DocumentComment}.${scopeName} ${RuleName.FencedCodeBlock}.markdown ${RuleName.EmbeddedLanguage}.${scopeName} ${RuleName.CodeBegin}.${scopeName}` },
         { text: 'test', scopes: `${RuleName.DocumentComment}.${scopeName} ${RuleName.FencedCodeBlock}.markdown ${RuleName.EmbeddedLanguage}.${scopeName} ${RuleName.Variable}.${scopeName}` },
         { text: ':=', scopes: `${RuleName.DocumentComment}.${scopeName} ${RuleName.FencedCodeBlock}.markdown ${RuleName.EmbeddedLanguage}.${scopeName} ${RuleName.Operator}.${scopeName}` },
         { text: '123', scopes: `${RuleName.DocumentComment}.${scopeName} ${RuleName.FencedCodeBlock}.markdown ${RuleName.EmbeddedLanguage}.${scopeName} ${RuleName.Integer}.${scopeName}` },

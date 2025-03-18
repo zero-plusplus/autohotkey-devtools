@@ -111,20 +111,6 @@ export function createLanguageConfiguration(scopeName: ScopeName): Record<string
           indent: 'indentOutdent',
         },
       },
-      {
-        beforeText: '^\\s*\\*(?!/)\\s*((?i:@example)|```(?i:autohotkey|ahk))',
-        action: {
-          appendText: '*: ',
-          indent: 'none',
-        },
-      },
-      {
-        beforeText: '^\\s*\\*:\\s*',
-        action: {
-          appendText: '*: ',
-          indent: 'none',
-        },
-      },
       // 4 indentations in the document
       // /**
       //  * @typedef {

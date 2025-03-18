@@ -23,11 +23,11 @@ export isCustomCombiName(keyName) {
  * @param {string} keyName
  * @return {string[]}
  * @example
- *: getHotkeyOptions('Ctrl & v')  ; []
- *: getHotkeyOptions('*Ctrl & v') ; [ '*' ]
- *: getHotkeyOptions('^+v')       ; []
- *: getHotkeyOptions('~^+v')      ; [ '~' ]
- *: getHotkeyOptions('$~^+v')     ; [ '$', '~' ]
+ * getHotkeyOptions('Ctrl & v')  ; []
+ * getHotkeyOptions('*Ctrl & v') ; [ '*' ]
+ * getHotkeyOptions('^+v')       ; []
+ * getHotkeyOptions('~^+v')      ; [ '~' ]
+ * getHotkeyOptions('$~^+v')     ; [ '$', '~' ]
  */
 export getHotkeyOptions(keyName) {
   optionsText := (getHotkeyOptionsText(keyName)?)
@@ -38,11 +38,11 @@ export getHotkeyOptions(keyName) {
  * @param {string} keyName
  * @return {string | blank}
  * @example
- *: getHotkeyOptionsText('Ctrl & v')  ; ''
- *: getHotkeyOptionsText('*Ctrl & v') ; '*'
- *: getHotkeyOptionsText('+v')        ; ''
- *: getHotkeyOptionsText('~^+v')      ; '~'
- *: getHotkeyOptionsText('$~^+v')     ; '$~'
+ * getHotkeyOptionsText('Ctrl & v')  ; ''
+ * getHotkeyOptionsText('*Ctrl & v') ; '*'
+ * getHotkeyOptionsText('+v')        ; ''
+ * getHotkeyOptionsText('~^+v')      ; '~'
+ * getHotkeyOptionsText('$~^+v')     ; '$~'
  */
 export getHotkeyOptionsText(keyName) {
   RegExMatch(keyName, hotkeyOptionsRegExp, &match)

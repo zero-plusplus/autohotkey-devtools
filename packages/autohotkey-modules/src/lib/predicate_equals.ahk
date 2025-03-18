@@ -11,19 +11,19 @@ import { each } from collection
  * @param {any} right
  * @return {boolean}
  * @example
- *: equals('123', '123') ; => true
- *:
- *: obj := { key: '123' }
- *: equals(obj, obj)     ; => true
- *:
- *: equals('123', 123)                        ; => true
- *: equals({ key: '123' }, { key: '123' })    ; => true
- *: equals({ key: '123' }, Map('key', '123')) ; => true
- *:
- *: ; Nested objects are simply checked using equals.strict
- *: equals({ key: '123', deep: { key: 123 } }, { key: '123', deep: { key: 123 } }) ; => false
- *: obj := { key: 123 }
- *: equals({ key: '123', deep: obj }, { key: '123', deep: obj }) ; => true
+ * equals('123', '123') ; => true
+ *
+ * obj := { key: '123' }
+ * equals(obj, obj)     ; => true
+ *
+ * equals('123', 123)                        ; => true
+ * equals({ key: '123' }, { key: '123' })    ; => true
+ * equals({ key: '123' }, Map('key', '123')) ; => true
+ *
+ * ; Nested objects are simply checked using equals.strict
+ * equals({ key: '123', deep: { key: 123 } }, { key: '123', deep: { key: 123 } }) ; => false
+ * obj := { key: 123 }
+ * equals({ key: '123', deep: obj }, { key: '123', deep: obj }) ; => true
  */
 export class equals {
   static call(left, right, equiv := f.callback(equals.strict, equals)) {
@@ -63,12 +63,12 @@ export class equals {
    * @param {any} right
    * @return {boolean}
    * @example
-   *: equals.strict('123', '123') ; => true
-   *: obj := { key: '123' }
-   *: equals.strict(obj, obj) ; => true
-   *:
-   *: equals.strict('123', 123) ; => false
-   *: equals.strict({ key: '123' }, { key: '123' }) ; => false
+   * equals.strict('123', '123') ; => true
+   * obj := { key: '123' }
+   * equals.strict(obj, obj) ; => true
+   *
+   * equals.strict('123', 123) ; => false
+   * equals.strict({ key: '123' }, { key: '123' }) ; => false
    */
   static strict(left, right) {
     return left == right && Type(left) == Type(right)

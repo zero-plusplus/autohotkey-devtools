@@ -107,7 +107,7 @@ export function createRepositories(scopeName: ScopeName): Repositories {
       endAnchor: patterns_v1.lineEndAnchor,
     }),
     [Repository.DirectiveStatement]: rule_v1.createCommandLikeStatementRule(scopeName, definition_v1.directiveDefinitions, {
-      startAnchor: patterns_v1.statementStartAnchor,
+      startAnchor: patterns_v1.labelStatementStartAnchor,
       endAnchor: patterns_v1.lineEndAnchor,
       commandElementName: RuleName.DirectiveName,
     }),

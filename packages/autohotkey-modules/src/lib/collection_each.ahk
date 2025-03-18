@@ -261,10 +261,10 @@ export class Enumerable {
    * Returns an Enumerator for the Map arguments.
    * @return {Enumerator}
    * @example
-   *: ;; The following are all synonymous with `Map('key1', 'value1', 'key2', 'value2')`
-   *: Map(each({ key1: 'value1', key2: 'value2' }).flatEntries()*)
-   *: Map(each([ 'key1', 'value1', 'key2', 'value2' ]).flatEntries()*)
-   *: Map(each(Map('key1', 'value1', 'key2', 'value2')).flatEntries()*)
+   * ;; The following are all synonymous with `Map('key1', 'value1', 'key2', 'value2')`
+   * Map(each({ key1: 'value1', key2: 'value2' }).flatEntries()*)
+   * Map(each([ 'key1', 'value1', 'key2', 'value2' ]).flatEntries()*)
+   * Map(each(Map('key1', 'value1', 'key2', 'value2')).flatEntries()*)
    */
   flatEntries() {
     props := this.__ENUM()
