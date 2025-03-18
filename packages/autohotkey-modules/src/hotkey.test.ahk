@@ -27,5 +27,20 @@ describe('hotkey', () {
     assert.isFalsy(h.isCustomCombiName('~^+!v'))
     assert.isFalsy(h.isCustomCombiName('*^+!v'))
   })
+
+  test('getHotkeyOptions', () {
+    assert.equals(h.getHotkeyOptions('Ctrl & v'), [])
+    assert.equals(h.getHotkeyOptions('*Ctrl & v'), [ '*' ])
+    assert.equals(h.getHotkeyOptions('^+v'), [])
+    assert.equals(h.getHotkeyOptions('~^+v'), [ '~' ])
+    assert.equals(h.getHotkeyOptions('$~^+v'), [ '$', '~' ])
+  })
+  test('getHotkeyOptionsText', () {
+    assert.equals(h.getHotkeyOptionsText('Ctrl & v'), '')
+    assert.equals(h.getHotkeyOptionsText('*Ctrl & v'), '*')
+    assert.equals(h.getHotkeyOptionsText('+v'), '')
+    assert.equals(h.getHotkeyOptionsText('~^+v'), '~')
+    assert.equals(h.getHotkeyOptionsText('$~^+v'), '$~')
+  })
 })
 
