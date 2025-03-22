@@ -1,5 +1,6 @@
 import * as tmLanguages from '@zero-plusplus/autohotkey-tmlanguage/src';
 import { ScopeName } from '@zero-plusplus/autohotkey-tmlanguage/src/types';
+import * as autohotkey from '@zero-plusplus/autohotkey-tmlanguage/test/autohotkey/expected';
 import * as autohotkey2 from '@zero-plusplus/autohotkey-tmlanguage/test/autohotkey2/expected';
 import * as autohotkeyl from '@zero-plusplus/autohotkey-tmlanguage/test/autohotkeyl/expected';
 import * as autohotkeynext from '@zero-plusplus/autohotkey-tmlanguage/test/autohotkeynext/expected';
@@ -171,9 +172,13 @@ export function createLanguageConfiguration(scopeName: ScopeName): Record<string
 }
 
 export async function buildDemoAll(): Promise<void> {
+  await buildDemoForDefault();
   await buildDemoForNext();
   await buildDemoForV2();
   await buildDemoForV1();
+}
+export async function buildDemoForDefault(): Promise<void> {
+  await buildDemo('autohotkey', 'ahk', autohotkey.createExpectedDataList);
 }
 export async function buildDemoForNext(): Promise<void> {
   await buildDemo('autohotkeynext', 'ahknext', autohotkeynext.createExpectedDataList);
