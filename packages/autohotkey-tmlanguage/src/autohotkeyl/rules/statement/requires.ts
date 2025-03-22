@@ -1,5 +1,5 @@
 import { Repository, RuleName } from '../../../constants';
-import { alt, anyChars0, capture, char, escapeOnigurumaTexts, group, ignoreCase, inlineSpaces0, inlineSpaces1, lookahead, lookbehind, negativeLookahead, optseq, ordalt, reluctant, seq } from '../../../oniguruma';
+import { anyChars0, capture, escapeOnigurumaTexts, ignoreCase, inlineSpaces0, inlineSpaces1, lookahead, lookbehind, negativeLookahead, optseq, ordalt, reluctant, seq } from '../../../oniguruma';
 import type { BeginEndRule, ScopeName } from '../../../types';
 import { includeRule, nameRule, patternsRule } from '../../../utils';
 
@@ -10,17 +10,12 @@ interface Placeholder {
 }
 export function createRequiresStatementRule(scopeName: ScopeName, placeholder: Placeholder): BeginEndRule {
   return {
-    begin: seq(
+    begin: lookahead(seq(
       lookbehind(placeholder.startAnchor),
-      lookahead(seq(
-        inlineSpaces0(),
-        ignoreCase('#Requires'),
-        group(alt(
-          char(','),
-          negativeLookahead(ordalt(...escapeOnigurumaTexts(placeholder.expressionOperators))),
-        )),
-      )),
-    ),
+      ignoreCase('#Requires'),
+      inlineSpaces1(),
+      negativeLookahead(ordalt(...escapeOnigurumaTexts(placeholder.expressionOperators))),
+    )),
     end: lookahead(placeholder.endAnchor),
     patterns: [
       {

@@ -1,5 +1,5 @@
 import { Repository, RuleName } from '../../../constants';
-import { alt, anyChars0, capture, char, escapeOnigurumaTexts, group, ignoreCase, inlineSpace, inlineSpaces0, inlineSpaces1, lookahead, lookbehind, negativeLookahead, optseq, ordalt, reluctant, seq } from '../../../oniguruma';
+import { anyChars0, capture, char, escapeOnigurumaTexts, ignoreCase, inlineSpaces0, inlineSpaces1, lookahead, lookbehind, negativeLookahead, optseq, ordalt, reluctant, seq } from '../../../oniguruma';
 import type { PatternsRule, ScopeName } from '../../../types';
 import { includeRule, name, nameRule, patternsRule } from '../../../utils';
 
@@ -16,7 +16,7 @@ export function createIncludeStatementRule(scopeName: ScopeName, placeholder: Pl
         lookbehind(placeholder.startAnchor),
         inlineSpaces0(),
         capture(ignoreCase(ordalt('#Include', '#IncludeAgain'))),
-        inlineSpaces0(),
+        inlineSpaces1(),
         capture(char('<')),
         capture(anyChars0()),
         capture(char('>')),
@@ -35,9 +35,8 @@ export function createIncludeStatementRule(scopeName: ScopeName, placeholder: Pl
         lookahead(seq(
           inlineSpaces0(),
           ignoreCase(ordalt('#Include', '#IncludeAgain')),
-          lookahead(alt(char(','), inlineSpace())),
-          group(alt(
-            char(','),
+          lookahead(seq(
+            inlineSpaces1(),
             negativeLookahead(ordalt(...escapeOnigurumaTexts(placeholder.expressionOperators))),
           )),
         )),
@@ -46,8 +45,6 @@ export function createIncludeStatementRule(scopeName: ScopeName, placeholder: Pl
       patterns: [
         {
           match: seq(
-            lookbehind(placeholder.startAnchor),
-            inlineSpaces0(),
             capture(ignoreCase(ordalt('#Include', '#IncludeAgain'))),
             optseq(
               inlineSpaces1(),
