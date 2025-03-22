@@ -1,5 +1,5 @@
 import { Repository, RuleName } from '../constants';
-import { alt, anyChars0, capture, char, endAnchor, group, ignoreCase, inlineSpace, inlineSpaces0, lookbehind, manyX, manyXtoY, negativeLookahead, negChars0, optional, ordalt, seq, startAnchor } from '../oniguruma';
+import { alt, anyChars0, capture, char, endAnchor, group, ignoreCase, inlineSpace, inlineSpaces0, negativeLookahead, negChars0, optional, ordalt, seq, startAnchor, text } from '../oniguruma';
 import type { BeginEndRule, PatternsRule, ScopeName, TmLanguage } from '../types';
 import { includeRule, includeScope, name, nameRule, patternsRule } from '../utils';
 
@@ -13,29 +13,25 @@ export function createTmLanguage(): TmLanguage {
     },
   };
 }
-export function createCodeFencePatternsRule(inDocument = false): PatternsRule {
+export function createCodeFencePatternsRule(): PatternsRule {
   return patternsRule(
-    createCodeFenceRule('autohotkeynext', [ 'ahknext' ], inDocument),
-    createCodeFenceRule('autohotkey2', [ 'ahk2' ], inDocument),
-    createCodeFenceRule('autohotkeyl', [ 'ahkl' ], inDocument),
-    createCodeFenceRule('autohotkey', [ 'ahk' ], inDocument),
+    createCodeFenceRule('autohotkeynext', [ 'ahknext' ]),
+    createCodeFenceRule('autohotkey2', [ 'ahk2' ]),
+    createCodeFenceRule('autohotkeyl', [ 'ahkl' ]),
+    createCodeFenceRule('autohotkey', [ 'ahk' ]),
   );
 }
-export function createCodeFenceInDocumentRule(): PatternsRule {
-  return createCodeFencePatternsRule(true);
-}
-export function createCodeFenceRule(scopeName: ScopeName, aliases: readonly string[], inDocument = false): BeginEndRule {
+export function createCodeFenceRule(scopeName: ScopeName, aliases: readonly string[]): BeginEndRule {
   const markdownScopeName = 'markdown';
 
+  const startPattern = group(alt(startAnchor(), '\\G'));
+  const fencePattern = group(alt(text('```'), text('~~~')));
   return {
     name: name(markdownScopeName, RuleName.FencedCodeBlock),
     begin: seq(
-      capture(alt(startAnchor(), '\\G')),
-      capture(inlineSpaces0()),
-      capture(alt(
-        manyX(3)(char('`')),
-        manyX(3)(char('~')),
-      )),
+      startPattern,
+      capture(inlineSpaces0()),   // \\1: indent
+      capture(fencePattern),      // \\2: fenced
       inlineSpaces0(),
       group(seq(
         capture(ignoreCase(ordalt(scopeName, ...aliases))),
@@ -51,58 +47,39 @@ export function createCodeFenceRule(scopeName: ScopeName, aliases: readonly stri
       endAnchor(),
     ),
     beginCaptures: {
-      3: nameRule(markdownScopeName, RuleName.CodeFence),
-      4: nameRule(markdownScopeName, RuleName.LanguageName),
-      5: nameRule(markdownScopeName, RuleName.LanguageAttribute),
+      2: nameRule(markdownScopeName, RuleName.CodeFence),
+      3: nameRule(markdownScopeName, RuleName.LanguageName),
+      4: nameRule(markdownScopeName, RuleName.LanguageAttribute),
     },
     end: seq(
-      capture(alt(startAnchor(), '\\G')),
-      capture(alt(
-        '\\2',
-        manyXtoY(0, 3)(inlineSpace()),
-      )),
-      capture('\\3'),
+      startPattern,
+      '\\1',            // indent
+      capture('\\2'),   // fenced
       inlineSpaces0(),
       endAnchor(),
     ),
     endCaptures: {
-      3: nameRule(markdownScopeName, RuleName.CodeFence),
+      1: nameRule(markdownScopeName, RuleName.CodeFence),
     },
     patterns: [
       {
         contentName: name(scopeName, RuleName.EmbeddedLanguage),
         begin: seq(
-          capture(alt(startAnchor(), '\\G')),
-          capture(inlineSpaces0()),
-          capture(anyChars0()),
+          startPattern,
+          inlineSpaces0(),
+          anyChars0(),
+          endAnchor(),
         ),
         while: seq(
-          capture(alt(startAnchor(), '\\G')),
+          startPattern,
           negativeLookahead(seq(
             inlineSpaces0(),
-            capture(manyX(3)(char('`', '~'))),
+            fencePattern,
             inlineSpaces0(),
             endAnchor(),
           )),
         ),
-        patterns: [
-          ...(inDocument
-            ? [
-              {
-                name: name(scopeName, RuleName.CodeBegin),
-                match: seq(
-                  lookbehind(seq(
-                    startAnchor(),
-                    inlineSpaces0(),
-                    char('*'),
-                  )),
-                  char(':'),
-                ),
-              },
-            ]
-            : []),
-          includeScope(scopeName),
-        ],
+        patterns: [ includeScope(scopeName) ],
       },
     ],
   };

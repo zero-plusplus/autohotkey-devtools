@@ -23,7 +23,7 @@ export function createTmLanguage(): TmLanguage {
 
 export function createRepositories(scopeName: ScopeName): Repositories {
   return {
-    [Repository.FencedCodeBlockInDocument]: markdown.createCodeFenceInDocumentRule(),
+    [Repository.FencedCodeBlockInDocument]: markdown.createCodeFencePatternsRule(),
     [Repository.Meta]: patternsRule(
       includeRule(Repository.Comment),
       includeRule(Repository.RequiresStatement),

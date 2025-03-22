@@ -33,7 +33,7 @@ interface Placeholder {
 }
 export function createRepositories(scopeName: ScopeName, placeholder?: Placeholder): Repositories {
   return {
-    [Repository.FencedCodeBlockInDocument]: markdown.createCodeFenceInDocumentRule(),
+    [Repository.FencedCodeBlockInDocument]: markdown.createCodeFencePatternsRule(),
     [Repository.Meta]: patternsRule(
       includeRule(Repository.Comment),
       includeRule(Repository.RequiresStatement),
