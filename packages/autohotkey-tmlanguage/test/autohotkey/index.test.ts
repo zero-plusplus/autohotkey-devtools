@@ -1,119 +1,25 @@
-import { dedent } from '@zero-plusplus/utilities/src';
-import { RuleDescriptor, RuleName } from '../../src/constants';
-import { name } from '../../src/utils';
+import type { ScopeName } from '../../src/types';
 import { parse } from '../helpers/textmate-parser';
+import { createExpectedDataList } from './expected';
 
 describe('autohotkey', () => {
-  test('if #Requires is not used, treat as "autohotkey2".', async() => {
-    const actual = await parse('autohotkey', dedent`
-      "string"
-    `);
+  const scopeName: ScopeName = 'autohotkey';
+  const expectedDataList = createExpectedDataList(scopeName);
+  const testText = expectedDataList.map((dataList) => dataList[0]).join('\n');
+  const expected = expectedDataList.flatMap((dataList) => dataList[1]);
+
+  test('all test', async() => {
+    const actual = await parse(scopeName, testText);
     // console.log(JSON.stringify(actual, undefined, 2));
 
-    expect(actual).toStrictEqual([
-      { text: `"`, scopes: name('autohotkey2', RuleName.DoubleString, RuleDescriptor.Begin) },
-      { text: 'string', scopes: name('autohotkey2', RuleName.DoubleString) },
-      { text: `"`, scopes: name('autohotkey2', RuleName.DoubleString, RuleDescriptor.End) },
-    ]);
-  });
+    // actual.forEach((actualValue, index) => {
+    //   const expectedValue = expected.at(index);
+    //
+    //   console.log(index);
+    //
+    //   expect(actualValue).toStrictEqual(expectedValue);
+    // });
 
-  test('treat as "autohotkeynext" using #Requires', async() => {
-    const actual = await parse('autohotkey', dedent`
-      #Requires AutoHotkey v2.1
-      "string"
-    `);
-    // console.log(JSON.stringify(actual, undefined, 2));
-
-    expect(actual).toStrictEqual([
-      { text: `#Requires`, scopes: name('autohotkeynext', RuleName.DirectiveName) },
-      { text: `AutoHotkey v2.1`, scopes: name('autohotkeynext', RuleName.UnquotedString) },
-      { text: `"`, scopes: name('autohotkeynext', RuleName.DoubleString, RuleDescriptor.Begin) },
-      { text: 'string', scopes: name('autohotkeynext', RuleName.DoubleString) },
-      { text: `"`, scopes: name('autohotkeynext', RuleName.DoubleString, RuleDescriptor.End) },
-    ]);
-  });
-
-  test('treat as "autohotkeynext" using #Module', async() => {
-    const actual = await parse('autohotkey', dedent`
-      #Module
-
-      export xxx() {
-      }
-    `);
-    // console.log(JSON.stringify(actual, undefined, 2));
-
-    expect(actual).toStrictEqual([
-      { text: `#Module`, scopes: name('autohotkeynext', RuleName.DirectiveName) },
-      { text: `export`, scopes: name('autohotkeynext', RuleName.MetaKeyword) },
-      { text: `xxx`, scopes: name('autohotkeynext', RuleName.FunctionName) },
-      { text: `(`, scopes: name('autohotkeynext', RuleName.OpenParen) },
-      { text: `)`, scopes: name('autohotkeynext', RuleName.CloseParen) },
-      { text: `{`, scopes: name('autohotkeynext', RuleName.BlockBegin) },
-      { text: `}`, scopes: name('autohotkeynext', RuleName.BlockEnd) },
-    ]);
-  });
-
-  test('treat as "autohotkey2" using #Requires', async() => {
-    const actual = await parse('autohotkey', dedent`
-      #Requires AutoHotkey v2.0
-      "string"
-    `);
-    // console.log(JSON.stringify(actual, undefined, 2));
-
-    expect(actual).toStrictEqual([
-      { text: `#Requires`, scopes: name('autohotkey2', RuleName.DirectiveName) },
-      { text: `AutoHotkey v2.0`, scopes: name('autohotkey2', RuleName.UnquotedString) },
-      { text: `"`, scopes: name('autohotkey2', RuleName.DoubleString, RuleDescriptor.Begin) },
-      { text: 'string', scopes: name('autohotkey2', RuleName.DoubleString) },
-      { text: `"`, scopes: name('autohotkey2', RuleName.DoubleString, RuleDescriptor.End) },
-    ]);
-  });
-
-  test('treat as "autohotkeyl" using #Requires', async() => {
-    const actual = await parse('autohotkey', dedent`
-      #Requires AutoHotkey v1.1
-      "string"
-    `);
-    // console.log(JSON.stringify(actual, undefined, 2));
-
-    expect(actual).toStrictEqual([
-      { text: `#Requires`, scopes: name('autohotkeyl', RuleName.DirectiveName) },
-      { text: `AutoHotkey v1.1`, scopes: name('autohotkeyl', RuleName.UnquotedString) },
-      { text: `"`, scopes: name('autohotkeyl', RuleName.DoubleString, RuleDescriptor.Begin) },
-      { text: 'string', scopes: name('autohotkeyl', RuleName.DoubleString) },
-      { text: `"`, scopes: name('autohotkeyl', RuleName.DoubleString, RuleDescriptor.End) },
-    ]);
-  });
-
-  test('treat as "autohotkeynext", "autohotkey2", "autohotkeyl" using #Requires', async() => {
-    const actual = await parse('autohotkey', dedent`
-      #Requires AutoHotkey v2.1
-      "string"
-      #Requires AutoHotkey v2.0
-      "string"
-      #Requires AutoHotkey v1.1
-      "string"
-    `);
-    // console.log(JSON.stringify(actual, undefined, 2));
-
-    expect(actual).toStrictEqual([
-      { text: `#Requires`, scopes: name('autohotkeynext', RuleName.DirectiveName) },
-      { text: `AutoHotkey v2.1`, scopes: name('autohotkeynext', RuleName.UnquotedString) },
-      { text: `"`, scopes: name('autohotkeynext', RuleName.DoubleString, RuleDescriptor.Begin) },
-      { text: 'string', scopes: name('autohotkeynext', RuleName.DoubleString) },
-      { text: `"`, scopes: name('autohotkeynext', RuleName.DoubleString, RuleDescriptor.End) },
-
-      { text: `#Requires`, scopes: name('autohotkey2', RuleName.DirectiveName) },
-      { text: `AutoHotkey v2.0`, scopes: name('autohotkey2', RuleName.UnquotedString) },
-      { text: `"`, scopes: name('autohotkey2', RuleName.DoubleString, RuleDescriptor.Begin) },
-      { text: 'string', scopes: name('autohotkey2', RuleName.DoubleString) },
-      { text: `"`, scopes: name('autohotkey2', RuleName.DoubleString, RuleDescriptor.End) },
-
-      { text: `#Requires`, scopes: name('autohotkeyl', RuleName.DirectiveName) },
-      { text: `AutoHotkey v1.1`, scopes: name('autohotkeyl', RuleName.UnquotedString) },
-      { text: `"`, scopes: name('autohotkeyl', RuleName.DoubleString, RuleDescriptor.Begin) },
-      { text: 'string', scopes: name('autohotkeyl', RuleName.DoubleString) },
-      { text: `"`, scopes: name('autohotkeyl', RuleName.DoubleString, RuleDescriptor.End) },
-    ]);
+    expect(actual).toStrictEqual(expected);
   });
 });
