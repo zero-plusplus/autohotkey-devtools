@@ -513,6 +513,7 @@ export const enum RuleName {
   // #endregion expressions
 
   // #region keyword
+  ImportExportAll = 'constant.language.import-export-all',
   MetaKeyword = 'keyword.control.meta',
   KeywordInExpression = 'keyword.control.in-expression',
   GetSetKeyword = 'storage.type.get-set',

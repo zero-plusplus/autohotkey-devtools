@@ -1,12 +1,21 @@
 import { Repository, RuleName } from '../../../constants';
-import { capture, char, inlineSpaces0, inlineSpaces1, keyword, lookbehind, optseq, seq } from '../../../oniguruma';
-import type { PatternsRule, ScopeName } from '../../../types';
-import { includeRule, nameRule, patternsRule } from '../../../utils';
+import { anyChars0, capture, char, inlineSpaces0, inlineSpaces1, keyword, lookbehind, optseq, reluctant, seq } from '../../../oniguruma';
+import type { PatternsRule, Rule, ScopeName } from '../../../types';
+import { includeRule, name, nameRule, patternsRule } from '../../../utils';
 
 interface Placeholder {
   startAnchor: string;
 }
 export function createImportDeclarationRule(scopeName: ScopeName, placeholder: Placeholder): PatternsRule {
+  const rulesInBrace: Rule[] = [
+    {
+      name: name(scopeName, RuleName.ImportExportAll),
+      match: char('*'),
+    },
+    includeRule(Repository.Comma),
+    includeRule(Repository.Expression),
+  ];
+
   return patternsRule(
     // e.g. `import * from "path/to"`
     //       ^^^^^^ ^ ^^^^
@@ -24,7 +33,7 @@ export function createImportDeclarationRule(scopeName: ScopeName, placeholder: P
       ),
       captures: {
         1: nameRule(scopeName, RuleName.MetaKeyword),
-        2: nameRule(scopeName, RuleName.Operator),
+        2: nameRule(scopeName, RuleName.ImportExportAll),
         3: nameRule(scopeName, RuleName.MetaKeyword),
       },
     },
@@ -51,7 +60,35 @@ export function createImportDeclarationRule(scopeName: ScopeName, placeholder: P
         1: nameRule(scopeName, RuleName.CloseBrace),
         2: nameRule(scopeName, RuleName.MetaKeyword),
       },
-      patterns: [ includeRule(Repository.Expressions) ],
+      patterns: rulesInBrace,
+    },
+    // e.g. `export import "path/to" as X { *, Y, Z as ZZ }`
+    //       ^^^^^^
+    {
+      begin: seq(
+        lookbehind(placeholder.startAnchor),
+        inlineSpaces0(),
+        optseq(
+          capture(keyword('export')),
+          inlineSpaces1(),
+        ),
+        inlineSpaces0(),
+        capture(keyword('import')),
+        inlineSpaces1(),
+        capture(reluctant(anyChars0())),
+        capture(char('{')),
+      ),
+      beginCaptures: {
+        1: nameRule(scopeName, RuleName.MetaKeyword),
+        2: nameRule(scopeName, RuleName.MetaKeyword),
+        3: patternsRule(...rulesInBrace),
+        4: nameRule(scopeName, RuleName.OpenBrace),
+      },
+      end: capture(char('}')),
+      endCaptures: {
+        1: nameRule(scopeName, RuleName.CloseBrace),
+      },
+      patterns: rulesInBrace,
     },
     // e.g. `import "path/to"`
     //       ^^^^^^
@@ -61,10 +98,16 @@ export function createImportDeclarationRule(scopeName: ScopeName, placeholder: P
       match: seq(
         lookbehind(placeholder.startAnchor),
         inlineSpaces0(),
+        optseq(
+          capture(keyword('export')),
+          inlineSpaces1(),
+        ),
+        inlineSpaces0(),
         capture(keyword('import')),
       ),
       captures: {
         1: nameRule(scopeName, RuleName.MetaKeyword),
+        2: nameRule(scopeName, RuleName.MetaKeyword),
       },
     },
   );
