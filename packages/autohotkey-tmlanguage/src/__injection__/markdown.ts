@@ -1,6 +1,6 @@
 import { Repository, RuleName } from '../constants';
 import { alt, anyChars0, capture, char, endAnchor, group, ignoreCase, inlineSpace, inlineSpaces0, negativeLookahead, negChars0, optional, ordalt, seq, startAnchor, text } from '../oniguruma';
-import type { BeginEndRule, PatternsRule, ScopeName, TmLanguage } from '../types';
+import type { BeginEndRule, PatternsRule, Rule, ScopeName, TmLanguage } from '../types';
 import { includeRule, includeScope, name, nameRule, patternsRule } from '../utils';
 
 export function createTmLanguage(): TmLanguage {
@@ -9,19 +9,25 @@ export function createTmLanguage(): TmLanguage {
     injectionSelector: 'L:text.html.markdown',
     patterns: [ includeRule(Repository.FencedCodeBlockInDocument) ],
     repository: {
-      [Repository.FencedCodeBlockInDocument]: createCodeFencePatternsRule(),
+      [Repository.FencedCodeBlockInDocument]: patternsRule(
+        createCodeFenceRule('autohotkeynext', [ 'ahknext' ], includeScope('autohotkeynext')),
+        createCodeFenceRule('autohotkey2', [ 'ahk2' ], includeScope('autohotkey2')),
+        createCodeFenceRule('autohotkeyl', [ 'ahkl' ], includeScope('autohotkeyl')),
+        createCodeFenceRule('autohotkey', [ 'ahk' ], includeScope('autohotkey')),
+      ),
     },
   };
 }
 export function createCodeFencePatternsRule(): PatternsRule {
   return patternsRule(
-    createCodeFenceRule('autohotkeynext', [ 'ahknext' ]),
-    createCodeFenceRule('autohotkey2', [ 'ahk2' ]),
-    createCodeFenceRule('autohotkeyl', [ 'ahkl' ]),
-    createCodeFenceRule('autohotkey', [ 'ahk' ]),
+    createCodeFenceRule('autohotkeynext', [ 'ahknext' ], includeScope('autohotkeynext')),
+    createCodeFenceRule('autohotkey2', [ 'ahk2' ], includeScope('autohotkey2')),
+    createCodeFenceRule('autohotkeyl', [ 'ahkl' ], includeScope('autohotkeyl')),
+    // The `autohotkey` language ID mechanism does not work well in the fenced code block in the document. So I've highlighted it in the current scope until I can figure out the cause
+    createCodeFenceRule('autohotkey', [ 'ahk', '' ], includeRule(Repository.Self)),
   );
 }
-export function createCodeFenceRule(scopeName: ScopeName, aliases: readonly string[]): BeginEndRule {
+export function createCodeFenceRule(scopeName: ScopeName, aliases: readonly string[], syntax: Rule): BeginEndRule {
   const markdownScopeName = 'markdown';
 
   const startPattern = group(alt(startAnchor(), '\\G'));
@@ -79,7 +85,7 @@ export function createCodeFenceRule(scopeName: ScopeName, aliases: readonly stri
             endAnchor(),
           )),
         ),
-        patterns: [ includeScope(scopeName) ],
+        patterns: [ syntax ],
       },
     ],
   };
