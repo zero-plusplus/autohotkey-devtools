@@ -12,6 +12,7 @@ export function createRequiresStatementRule(scopeName: ScopeName, placeholder: P
   return {
     begin: lookahead(seq(
       lookbehind(placeholder.startAnchor),
+      inlineSpaces0(),
       ignoreCase('#Requires'),
       inlineSpaces1(),
       negativeLookahead(ordalt(...escapeOnigurumaTexts(placeholder.expressionOperators))),
