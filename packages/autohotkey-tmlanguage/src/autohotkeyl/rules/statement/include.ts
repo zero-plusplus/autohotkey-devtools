@@ -1,5 +1,5 @@
 import { Repository, RuleName } from '../../../constants';
-import { anyChars0, capture, char, escapeOnigurumaTexts, ignoreCase, inlineSpaces0, inlineSpaces1, lookahead, lookbehind, negativeLookahead, optseq, ordalt, reluctant, seq } from '../../../oniguruma';
+import { anyChars0, capture, char, ignoreCase, inlineSpaces0, inlineSpaces1, lookahead, lookbehind, optseq, ordalt, reluctant, seq } from '../../../oniguruma';
 import type { PatternsRule, ScopeName } from '../../../types';
 import { includeRule, name, nameRule, patternsRule } from '../../../utils';
 
@@ -35,10 +35,7 @@ export function createIncludeStatementRule(scopeName: ScopeName, placeholder: Pl
         lookahead(seq(
           inlineSpaces0(),
           ignoreCase(ordalt('#Include', '#IncludeAgain')),
-          lookahead(seq(
-            inlineSpaces1(),
-            negativeLookahead(ordalt(...escapeOnigurumaTexts(placeholder.expressionOperators))),
-          )),
+          inlineSpaces1(),
         )),
       ),
       end: lookahead(placeholder.endAnchor),

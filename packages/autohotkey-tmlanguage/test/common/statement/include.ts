@@ -26,6 +26,14 @@ export function createIncludeStatementExpectedData(scopeName: ScopeName): Expect
           ],
         ],
         [
+          `${directive} .\\path\\to\\, file .ahk ; inline comment`,
+          [
+            { text: directive, scopes: name(scopeName, Repository.IncludeStatement, RuleName.DirectiveName) },
+            { text: '.\\path\\to\\, file .ahk', scopes: name(scopeName, Repository.IncludeStatement, RuleName.UnquotedString) },
+            { text: '; inline comment', scopes: name(scopeName, RuleName.InLineComment) },
+          ],
+        ],
+        [
           `${directive} %A_LineFile%\\..\\file.ahk ; inline comment`,
           [
             { text: directive, scopes: name(scopeName, Repository.IncludeStatement, RuleName.DirectiveName) },
