@@ -1,8 +1,8 @@
-#Requires AutoHotkey v2.1-
+﻿#Requires AutoHotkey v2.1-
 #Warn All, StdOut
 
-import * from test
-import { writeError } from error
+import './lib/modules/test' { * }
+import './lib/modules/error' { writeError }
 
 SetTimer(() {
   runAllTest({

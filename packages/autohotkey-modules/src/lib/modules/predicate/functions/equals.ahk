@@ -1,8 +1,9 @@
-#Requires AutoHotkey v2.1-
+﻿#Requires AutoHotkey v2.1-
 #Warn All, StdOut
 
-import function_callback as f
-import { each } from collection
+import './lib/modules/function/classes/CallbackFunc' { CallbackFunc }
+import './lib/modules/function/functions/invokeCallback' { invokeCallback }
+import './lib/modules/collection/functions/each' { each }
 
 /**
  * Checks if `left` and `right` are equal.
@@ -26,9 +27,9 @@ import { each } from collection
  * equals({ key: '123', deep: obj }, { key: '123', deep: obj }) ; => true
  */
 export class equals {
-  static call(left, right, equiv := f.callback(equals.strict, equals)) {
+  static call(left, right, equiv := CallbackFunc(equals.strict, equals)) {
     if (!IsObject(left) || !IsObject(right)) {
-      return equiv(left, right)
+      return invokeCallback(equiv, [ left, right ])
     }
 
     enum_l := each(left)
@@ -44,13 +45,13 @@ export class equals {
     Loop keys_l.length {
       key_l := keys_l[A_Index]
       key_r := keys_r[A_Index]
-      if (!equiv(key_l, key_r)) {
+      if (!invokeCallback(equiv, [ key_l, key_r ])) {
         return false
       }
 
       value_l := enum_l.get(key_l)
       value_r := enum_r.get(key_r)
-      if (!equiv(value_l, value_r)) {
+      if (!invokeCallback(equiv, [ value_l, value_r ])) {
         return false
       }
     }

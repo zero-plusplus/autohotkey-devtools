@@ -1,13 +1,15 @@
 ﻿#Requires AutoHotkey v2.1-
 #Warn All, StdOut
 
+import './lib/modules/function/functions/invokeCallback' { invokeCallback }
+
 /**
  * Wraps the specified `callable` so that it can be called without throwing an exception regardless of the number of parameters.
  * @template [Params extends unknown[], R, T extends (params*: Params) => R]
  * @param {T} callable
  * @param {Params} params*
  */
-export class callback {
+export class CallbackFunc {
   __NEW(callable, context?) {
     /**
      * @readonly
@@ -59,7 +61,7 @@ export class callback {
     __context := (this.__context?)
 
     params.insertAt(1, this.__params*)
-    return callAsCallback(__callable, params, (__context?))
+    return invokeCallback(__callable, params, (__context?))
   }
   /**
    * @param {number} index
@@ -85,26 +87,4 @@ export class callback {
     this.defineProp('__params', { get: (*) => params })
     return this
   }
-}
-/**
- * Calls the specified `callable` without throwing an exception regardless of the number of parameters.
- * @template [Params extends unknown[], R, T extends (params*: Params) => R]
- * @param {T} callable
- * @param {Param[]} params*
- * @return {R}
- */
-export callAsCallback(callable, params, context?) {
-  if (IsSet(context)) {
-    params.insertAt(1, context)
-  }
-
-  slicedParams := []
-  Loop callable.maxParams {
-    if (params.has(A_Index)) {
-      slicedParams.push(params[A_Index])
-      continue
-    }
-    slicedParams.push('')
-  }
-  return callable.call(slicedParams*)
 }

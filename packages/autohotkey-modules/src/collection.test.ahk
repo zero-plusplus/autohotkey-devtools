@@ -1,9 +1,19 @@
-#Requires AutoHotkey v2.1-
+﻿#Requires AutoHotkey v2.1-
 #Warn All, StdOut
 
 #Include ./.config.ahk
 
-import { getIn, setIn, sizeOf, each, Enumerable, Stack, Queue, UniqueArray, CircularInfomation } from collection
+import './lib/modules/collection' {
+  CircularInfomation,
+  Enumerable,
+  Queue,
+  Stack,
+  UniqueArray,
+  each,
+  getIn,
+  setIn,
+  sizeOf,
+}
 
 describe('collection', () {
   describe('getIn', () {

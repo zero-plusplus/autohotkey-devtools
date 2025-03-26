@@ -3,29 +3,30 @@
 
 #Include ./.config.ahk
 
-import { callback, callAsCallback } from function_callback
+import './lib/modules/function' {
+  CallbackFunc,
+  invokeCallback,
+}
 
 describe('function', () {
-  describe('callback / callAsCallback', () {
-    test('callback / callAsCallback', () {
-      testCallback := (a, b, c) => ''
+  test('CallbackFunc / invokeCallback', () {
+    callback := (a, b, c) => ''
 
-      assert('Pass fewer parameters than the number of parameters').throws(() {
-        testCallback('')
-      })
-      assert('Pass more parameters than the number of parameters').throws(() {
-        testCallback('', '', '', '')
-      })
-      assert('Wrapped callback will not raise an exception regardless of the number of parameters').not.throws(() {
-        callback(testCallback)('')
-        callAsCallback(testCallback, [ '' ])
+    assert('Pass fewer parameters than the number of parameters').throws(() {
+      callback('')
+    })
+    assert('Pass more parameters than the number of parameters').throws(() {
+      callback('', '', '', '')
+    })
+    assert('Wrapped callback will not raise an exception regardless of the number of parameters').not.throws(() {
+      CallbackFunc(callback)('')
+      invokeCallback(callback, [ '' ])
 
-        callback(testCallback)('', '', '', '')
-        callAsCallback(testCallback, [ '', '', '', '' ])
+      CallbackFunc(callback)('', '', '', '')
+      invokeCallback(callback, [ '', '', '', '' ])
 
-        callback(T.method, T)('', '', '', '')
-        callAsCallback(T.method, [ '', '', '', '' ], T)
-      })
+      CallbackFunc(T.method, T)('', '', '', '')
+      invokeCallback(T.method, [ '', '', '', '' ], T)
     })
   })
 })

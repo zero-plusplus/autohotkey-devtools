@@ -6,7 +6,7 @@
       "type": "autohotkey",
       "request": "launch",
       "runtime": {
-        ".ahk": "v2.1-alpha.15/AutoHotkey64.exe"
+        ".ahk": "v2.1-alpha/AutoHotkey64.exe"
       },
       "program": "${file}",
       "args": [],

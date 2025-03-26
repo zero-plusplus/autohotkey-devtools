@@ -1,46 +1,51 @@
-#Requires AutoHotkey v2.1-
+﻿#Requires AutoHotkey v2.1-
 #Warn All, StdOut
 
 #Include ./.config.ahk
 
-import hotkey as h
+import './lib/modules/hotkey' {
+  getHotkeyOptions,
+  getHotkeyOptionsText,
+  isCustomCombiName,
+  isHotkeyName,
+}
 
 describe('hotkey', () {
   test('isHotkeyName', () {
-    assert.isTruthy(h.isHotkeyName('^v'))
-    assert.isTruthy(h.isHotkeyName('^+v'))
-    assert.isTruthy(h.isHotkeyName('^+!v'))
-    assert.isTruthy(h.isHotkeyName('~^+!v'))
-    assert.isTruthy(h.isHotkeyName('*^+!v'))
+    assert.isTruthy(isHotkeyName('^v'))
+    assert.isTruthy(isHotkeyName('^+v'))
+    assert.isTruthy(isHotkeyName('^+!v'))
+    assert.isTruthy(isHotkeyName('~^+!v'))
+    assert.isTruthy(isHotkeyName('*^+!v'))
 
-    assert.isFalsy(h.isHotkeyName('*^+! & v'))
-    assert.isFalsy(h.isHotkeyName('*Ctrl & v'))
+    assert.isFalsy(isHotkeyName('*^+! & v'))
+    assert.isFalsy(isHotkeyName('*Ctrl & v'))
   })
   test('isCustomCombiName', () {
-    assert.isTruthy(h.isCustomCombiName('Ctrl & v'))
-    assert.isTruthy(h.isCustomCombiName('*Ctrl & v'))
+    assert.isTruthy(isCustomCombiName('Ctrl & v'))
+    assert.isTruthy(isCustomCombiName('*Ctrl & v'))
 
-    assert.isFalsy(h.isCustomCombiName('*^+ & v'))
-    assert.isFalsy(h.isCustomCombiName('^v'))
-    assert.isFalsy(h.isCustomCombiName('^+v'))
-    assert.isFalsy(h.isCustomCombiName('^+!v'))
-    assert.isFalsy(h.isCustomCombiName('~^+!v'))
-    assert.isFalsy(h.isCustomCombiName('*^+!v'))
+    assert.isFalsy(isCustomCombiName('*^+ & v'))
+    assert.isFalsy(isCustomCombiName('^v'))
+    assert.isFalsy(isCustomCombiName('^+v'))
+    assert.isFalsy(isCustomCombiName('^+!v'))
+    assert.isFalsy(isCustomCombiName('~^+!v'))
+    assert.isFalsy(isCustomCombiName('*^+!v'))
   })
 
   test('getHotkeyOptions', () {
-    assert.equals(h.getHotkeyOptions('Ctrl & v'), [])
-    assert.equals(h.getHotkeyOptions('*Ctrl & v'), [ '*' ])
-    assert.equals(h.getHotkeyOptions('^+v'), [])
-    assert.equals(h.getHotkeyOptions('~^+v'), [ '~' ])
-    assert.equals(h.getHotkeyOptions('$~^+v'), [ '$', '~' ])
+    assert.equals(getHotkeyOptions('Ctrl & v'), [])
+    assert.equals(getHotkeyOptions('*Ctrl & v'), [ '*' ])
+    assert.equals(getHotkeyOptions('^+v'), [])
+    assert.equals(getHotkeyOptions('~^+v'), [ '~' ])
+    assert.equals(getHotkeyOptions('$~^+v'), [ '$', '~' ])
   })
   test('getHotkeyOptionsText', () {
-    assert.equals(h.getHotkeyOptionsText('Ctrl & v'), '')
-    assert.equals(h.getHotkeyOptionsText('*Ctrl & v'), '*')
-    assert.equals(h.getHotkeyOptionsText('+v'), '')
-    assert.equals(h.getHotkeyOptionsText('~^+v'), '~')
-    assert.equals(h.getHotkeyOptionsText('$~^+v'), '$~')
+    assert.equals(getHotkeyOptionsText('Ctrl & v'), '')
+    assert.equals(getHotkeyOptionsText('*Ctrl & v'), '*')
+    assert.equals(getHotkeyOptionsText('+v'), '')
+    assert.equals(getHotkeyOptionsText('~^+v'), '~')
+    assert.equals(getHotkeyOptionsText('$~^+v'), '$~')
   })
 })
 

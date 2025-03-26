@@ -1,12 +1,13 @@
 ﻿#Requires AutoHotkey v2.1-
 #Warn All, StdOut
 
-import { equals } from predicate_equals
+import './lib/modules/predicate/functions/equals' { equals }
+import './lib/modules/test/classes/AssertionResult' { AssertionResult }
 
-export class Assert {
+export class Assertion {
   ; #region initialize
   static __NEW() {
-    this.defineProp('not', { get: (*) => Assert.__NegativeAssert })
+    this.defineProp('not', { get: (*) => __NegativeAssert })
   }
   /**
    * @param {string} message
@@ -17,9 +18,9 @@ export class Assert {
      */
     this.defineProp('message', { get: (*) => message })
     /**
-     * @property {Assert} not
+     * @property {Assertion} not
      */
-    this.defineProp('not', { get: (*) => Assert.__NegativeAssert })
+    this.defineProp('not', { get: (*) => __NegativeAssert })
   }
   ; #endregion initialize
 
@@ -40,7 +41,7 @@ export class Assert {
     }
     throw AssertionResult(actual, expected, false, Error(message || 'The given values are not identical.', -4))
   }
-  equals := (self, actual, expected) => Assert.equals(actual, expected, this.message)
+  equals := (self, actual, expected) => Assertion.equals(actual, expected, this.message)
   /**
    * @static
    * @instance
@@ -57,7 +58,7 @@ export class Assert {
     }
     throw AssertionResult(actual, expected, false, Error(message || 'The given values are not identical.', -4))
   }
-  equalsIgnoreCase := (self, actual, expected) => Assert.equalsIgnoreCase(actual, expected, this.message)
+  equalsIgnoreCase := (self, actual, expected) => Assertion.equalsIgnoreCase(actual, expected, this.message)
   /**
    * @static
    * @instance
@@ -75,7 +76,7 @@ export class Assert {
     }
     throw AssertionResult(actual, expected, false, Error(message || 'The given value is not a truthy.', -4))
   }
-  isTruthy := (self, actual) => Assert.isTruthy(actual, this.message)
+  isTruthy := (self, actual) => Assertion.isTruthy(actual, this.message)
   /**
    * @static
    * @instance
@@ -93,7 +94,7 @@ export class Assert {
     }
     throw AssertionResult(actual, expected, false, Error(message || 'The given value is not a falsy.', -4))
   }
-  isFalsy := (self, actual) => Assert.isFalsy(actual, this.message)
+  isFalsy := (self, actual) => Assertion.isFalsy(actual, this.message)
   /**
    * @static
    * @instance
@@ -111,7 +112,7 @@ export class Assert {
     }
     throw AssertionResult(false, true, false, Error(message || 'no exceptions were raised', -4))
   }
-  throws := (self, callback) => Assert.throws(callback, this.message)
+  throws := (self, callback) => Assertion.throws(callback, this.message)
   /**
    * @static
    * @instance
@@ -121,7 +122,7 @@ export class Assert {
   static pass(message := '') {
     return AssertionResult(true, true, true, Error(message || 'assertion succeeds', -4))
   }
-  pass := (self) => Assert.pass(this.message)
+  pass := (self) => Assertion.pass(this.message)
   /**
    * @static
    * @instance
@@ -131,71 +132,21 @@ export class Assert {
   static fail(message := '') {
     throw AssertionResult(false, false, false, Error(message || 'assertion fails', -4))
   }
-  fail := (self) => Assert.fail(this.message)
+  fail := (self) => Assertion.fail(this.message)
   ; #endregion assertions
+}
 
-  ; #region inner
-  /**
-   * @inner
-   */
-  class __NegativeAssert {
-    static __CALL(key, params) {
-      for (i, assertion in [ Assert, Assert.__extends ]) {
-        if (assertion.hasOwnProp(key)) {
-          assertion.%key%(params*)
-        }
+; #region helpers
+/**
+ * @inner
+ */
+class __NegativeAssert {
+  static __CALL(key, params) {
+    for (i, assert in [ Assertion, Assertion.__extends ]) {
+      if (assert.hasOwnProp(key)) {
+        assert.%key%(params*)
       }
     }
   }
-  ; #endregion inner
 }
-export class AssertionResult extends Error {
-  /**
-   * @param {unknown} actual
-   * @param {unknown} expected
-   * @param {boolean} result
-   * @param {Error} err
-   */
-  __NEW(actual, expected, result, err) {
-    /**
-     * @readonly
-     * @property {unknown} actual
-     */
-    this.defineProp('actual', { get: (*) => actual })
-    /**
-     * @readonly
-     * @property {unknown} expected
-     */
-    this.defineProp('expected', { get: (*) => expected })
-    /**
-     * @readonly
-     * @property {boolean} result
-     */
-    this.defineProp('result', { get: (*) => result })
-    /**
-     * @readonly
-     * @property {string} message
-     */
-    this.defineProp('message', { get: (*) => err.message })
-    /**
-     * @readonly
-     * @property {string} what
-     */
-    this.defineProp('what', { get: (*) => err.what })
-    /**
-     * @readonly
-     * @property {string} extra
-     */
-    this.defineProp('extra', { get: (*) => err.extra })
-    /**
-     * @readonly
-     * @property {number} line
-     */
-    this.defineProp('line', { get: (*) => err.line })
-    /**
-     * @readonly
-     * @property {string} stack
-     */
-    this.defineProp('stack', { get: (*) => err.stack })
-  }
-}
+; #endregion helpers

@@ -1,118 +1,10 @@
 ﻿#Requires AutoHotkey v2.1-
-#Warn All, StdOut
 
-import function_callback as f
-import { UniqueArray } from collection_unique
-
-/**
- * Gets number of members/elements of an object.
- * @param {object} obj
- * @return {number}
- */
-export sizeOf(obj) {
-  return obj.length ?? obj.count ?? ObjOwnPropCount(obj)
-}
-/**
- * Gets a member from the specified object without raising an exception.
- * @template T
- * @param {object} obj
- * @param {string | unknown[]} keys
- * @param {unknown} default?
- * @return {any}
- */
-export getIn(obj, keyOrKeys, default?) {
-  if (!IsObject(obj)) {
-    throw Error('parameter #1 of ' A_ThisFunc ' requires Object, but received the ' Type(obj))
-  }
-  keys := keyOrKeys is Array ? keyOrKeys : [ keyOrKeys ]
-
-  current := obj
-  for (i, key in keys) {
-    if (Type(current) == 'Object') {
-      if (current.hasProp(key)) {
-        current := current.%key%
-        continue
-      }
-    }
-    else if (current.has(key)) {
-      current := current[key]
-      continue
-    }
-    return (default?)
-  }
-
-  return current
-}
-/**
- * Sets a member to the specified object without raising an exception.
- * @template T
- * @param {object} obj
- * @param {string | unknown[]} keys
- * @param {string | unknown[]} value
- * @return {boolean} Returns `true` if the value is set successfully, `false` otherwise.
- */
-export setIn(obj, keyOrKeys, value) {
-  if (!IsObject(obj)) {
-    throw Error('parameter #1 of ' A_ThisFunc ' requires Object, but received the ' Type(obj))
-  }
-  keys := keyOrKeys is Array ? keyOrKeys : [ keyOrKeys ]
-  targetKey := keys.pop()
-
-  current := obj
-  for (i, key in keys) {
-    if (Type(current) == 'Object') {
-      if (current.hasProp(key)) {
-        current := current.%key%
-        continue
-      }
-    }
-    else if (current.has(key)) {
-      current := current[key]
-      continue
-    }
-    return (default?)
-  }
-
-  try {
-    if (Type(current) == 'Object') {
-      current.%targetKey% := value
-    }
-    else {
-      current[targetKey] := value
-    }
-  }
-  catch {
-    return false
-  }
-  return true
-}
-/**
- * Gets an Enumerator that enumerates an elements or members of the specified object.
- * @param {object} obj
- * @return {Enumerator}
- */
-/**
- * Calls the specified callback, passing each element or member of the object as a parameter.
- * @template T
- * @param {T} obj
- * @param {(value: unknown, key: unknown, obj: T) => void} callback
- */
-export each(obj, callback?) {
-  if (!IsObject(obj)) {
-    throw TypeError('parametr #1 Need to specify an Object')
-  }
-
-  if (!IsSet(callback)) {
-    if (obj is Enumerable) {
-      return obj
-    }
-    return Enumerable(obj)
-  }
-
-  for key, value in Enumerable(obj) {
-    f.callback(callback)(value, key, obj)
-  }
-}
+import './lib/modules/collection/classes/CircularInfomation' { CircularInfomation }
+import './lib/modules/collection/classes/UniqueArray' { UniqueArray }
+import './lib/modules/collection/functions/getIn' { getIn }
+import './lib/modules/function/classes/CallbackFunc' { CallbackFunc }
+import './lib/modules/function/functions/invokeCallback' { invokeCallback }
 
 /**
  * This class is a wrapper with utility methods for enumeration.
@@ -246,7 +138,7 @@ export class Enumerable {
    */
   map(callback) {
     props := this.__ENUM()
-    _callback := f.callback(callback)
+    _callback := CallbackFunc(callback)
 
     return Enumerable(this.__source, (*) => (&key?, &value?) {
       hasNext := props(&key, &value)
@@ -299,6 +191,7 @@ export class Enumerable {
   }
 }
 
+; #region helpers
 /**
  * @inner
  * @return {Enumerator}
@@ -319,11 +212,4 @@ getEnumerator(obj, params*) {
   }
   return obj.__Enum(params*)
 }
-
-export class CircularInfomation extends Error {
-  __NEW(value) {
-    super.__NEW('circular reference occurred.')
-
-    this.defineProp('value', { get: (*) => value })
-  }
-}
+; #endregion helpers

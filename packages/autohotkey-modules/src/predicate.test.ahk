@@ -1,9 +1,9 @@
-#Requires AutoHotkey v2.1-
+﻿#Requires AutoHotkey v2.1-
 #Warn All, StdOut
 
 #Include ./.config.ahk
 
-import { equals } from predicate
+import './lib/modules/predicate' { equals }
 
 describe('predicate', () {
   test('equals', () {
