@@ -357,7 +357,7 @@ export function createRepositories(scopeName: ScopeName, placeholder?: Placehold
 
       includeRule(Repository.ObjectKey),
       includeRule(Repository.Comma),
-      includeRule(Repository.Expression),
+      includeRule(Repository.ExpressionInBrackets),
     ),
     [Repository.ObjectKey]: rule_v1.createObjectKeyRule(scopeName, {
       keyName: patterns_v2.keyName,
