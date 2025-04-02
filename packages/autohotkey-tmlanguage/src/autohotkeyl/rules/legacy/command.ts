@@ -1,6 +1,6 @@
 import { hasFlag } from '@zero-plusplus/utilities/src';
 import { CommandFlag, HighlightType, Repository, RuleName, StyleName } from '../../../constants';
-import { alt, anyChars0, anyChars1, capture, char, endAnchor, group, groupMany0, groupMany1, ignoreCase, inlineSpace, inlineSpaces0, inlineSpaces1, keyword, lookahead, lookbehind, negativeLookahead, negChar, negChars0, negChars1, numbers0, numbers1, optional, optseq, ordalt, seq, startAnchor, text, wordBound, wordChars0, wordChars1 } from '../../../oniguruma';
+import { alt, anyChars0, anyChars1, capture, char, endAnchor, group, groupMany0, groupMany1, ignoreCase, inlineSpace, inlineSpaces0, inlineSpaces1, keyword, lookahead, lookbehind, negativeLookahead, negChar, negChars0, negChars1, numbers0, numbers1, optional, optseq, ordalt, seq, text, wordBound, wordChars0, wordChars1 } from '../../../oniguruma';
 import type { BeginWhileRule, CommandDefinition, CommandParameter, CommandSignature, ElementName, MatchRule, PatternsRule, Rule, ScopeName } from '../../../types';
 import { includeRule, name, nameRule, patternsRule } from '../../../utils';
 import { isSubCommandParameter, parseParameterValue, type ParameterValue } from '../../definition';
@@ -39,7 +39,8 @@ export function createCommandLikeStatementRule(scopeName: ScopeName, definitions
       ),
     },
     while: seq(
-      startAnchor(),
+      lookbehind(placeholder.startAnchor),
+      inlineSpaces0(),
       capture(groupMany0(seq(
         inlineSpaces0(),
         char(','),
@@ -61,6 +62,7 @@ export function createCommandLikeRule(scopeName: ScopeName, definition: CommandD
   return {
     begin: lookahead(seq(
       lookbehind(placeholder.startAnchor),
+      inlineSpaces0(),
       ignoreCase(definition.name),
       lookahead(wordBound()),
       negativeLookahead(char('(')),
@@ -70,6 +72,7 @@ export function createCommandLikeRule(scopeName: ScopeName, definition: CommandD
       // command name
       seq(
         lookbehind(placeholder.startAnchor),
+        inlineSpaces0(),
         capture(ignoreCase(definition.name)),
         negativeLookahead(char('(')),
       ),
