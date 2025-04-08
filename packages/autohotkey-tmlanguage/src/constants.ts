@@ -630,16 +630,15 @@ export const enum HighlightType {
   //                    ^^^^ ^^^^           ^^^ ^^^ ^^^^^^^
   UnquotedOrKeywords = 'unquoted_or_keywords',
 
+
   // Accepts one or more arbitrary keywords. No space is needed between each
   // e.g. `Loop, Files, \path\to, DFR
   //                              ^^^
-  CombiOptions = 'combi_options',
-  CombiOptionsOnly = 'combi_options_only',
-
+  LetterOptions = 'letter_options',
   // Accepts entries beginning with `+`, `-` or `^` followed by one or more keywords. No space is needed between each
   // e.g. `FileSetAttrib, +HA-R`
   //                      ^^^^^
-  FileAttributeCombiOptions = 'file_attribute_combi_options',
+  FileAttributes = 'file_attributes',
 
   // Accepts zero or more keywords. Each keyword must be preceded by `+` or `-` and each must have a space
   // It also accepts an optional gui name for the first argument

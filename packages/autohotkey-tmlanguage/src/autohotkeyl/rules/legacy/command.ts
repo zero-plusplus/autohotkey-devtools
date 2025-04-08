@@ -406,7 +406,7 @@ function parameterToPatternsRule(scopeName: ScopeName, defenition: CommandDefini
         },
       );
     }
-    case HighlightType.CombiOptionsOnly: return patternsRule(
+    case HighlightType.LetterOptions: return patternsRule(
       includeRule(Repository.PercentExpression),
       includeRule(Repository.Dereference),
       {
@@ -427,11 +427,10 @@ function parameterToPatternsRule(scopeName: ScopeName, defenition: CommandDefini
         },
       },
     );
-    case HighlightType.CombiOptions:
-    case HighlightType.FileAttributeCombiOptions: return createUnquotedStringPatternsRule(createUnquotedStringMatchRule(...optionItemsToRules(scopeName, parameter.values, false)));
+    case HighlightType.FileAttributes: return createUnquotedStringPatternsRule(createUnquotedStringMatchRule(...optionItemsToRules(scopeName, parameter.values, false)));
     case HighlightType.Style:
-    case HighlightType.UnquotedString: return defaultArgumentPatternsRule;
     case HighlightType.MenuItemName: return patternsRule(includeRule(Repository.MenuItemNameCommandArgument));
+    case HighlightType.UnquotedString: return defaultArgumentPatternsRule;
     case HighlightType.UnquotedOrKeywords: return createUnquotedStringPatternsRule(createUnquotedStringMatchRule(...optionItemsToRules(scopeName, parameter.values, true)));
     case HighlightType.KeywordOnly:
     case HighlightType.KeywordsOnly:

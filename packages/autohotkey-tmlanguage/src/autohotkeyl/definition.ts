@@ -111,7 +111,7 @@ export const directiveDefinitions: CommandDefinition[] = [
 export const loopCommandDefenitions: CommandDefinition[] = [
   command('Loop', [
     // https://www.autohotkey.com/docs/v1/lib/LoopFile.htm
-    signature([ flowSubcommand('Files'), path(), combiOptionsOnly([ optionItem('D'), optionItem('F'), optionItem('R') ]) ]),
+    signature([ flowSubcommand('Files'), path(), letterOptions([ optionItem('D'), optionItem('F'), optionItem('R') ]) ]),
 
     // https://www.autohotkey.com/docs/v1/lib/LoopParse.htm
     signature([ flowSubcommand('Parse'), input(), unquotedOrKeywords([ optionItem('CSV') ]), unquotedShouldEscapeComma() ]),
@@ -120,7 +120,7 @@ export const loopCommandDefenitions: CommandDefinition[] = [
     signature([ flowSubcommand('Read'), path(), unquotedShouldEscapeComma() ]),
 
     // https://www.autohotkey.com/docs/v1/lib/LoopReg.htm#new
-    signature([ flowSubcommand('Reg'), unquoted(), combiOptionsOnly([ optionItem('K'), optionItem('V'), optionItem('R') ]) ]),
+    signature([ flowSubcommand('Reg'), unquoted(), letterOptions([ optionItem('K'), optionItem('V'), optionItem('R') ]) ]),
   ]),
 ];
 // #endregion loop
@@ -306,7 +306,7 @@ export const commandDefinitions: CommandDefinition[] = [
   command('FileSelectFolder', signature([ output(), unquoted(), expression(), unquoted() ])),
 
   // https://www.autohotkey.com/docs/v1/lib/FileSetAttrib.htm
-  command('FileSetAttrib', signature([ combiOptions([ optionItem('R'), optionItem('A'), optionItem('S'), optionItem('H'), optionItem('N'), optionItem('O'), optionItem('T') ]), glob(), expression(), expression() ])),
+  command('FileSetAttrib', signature([ fileAttributes([ optionItem('R'), optionItem('A'), optionItem('S'), optionItem('H'), optionItem('N'), optionItem('O'), optionItem('T') ]), glob(), expression(), expression() ])),
 
   // https://www.autohotkey.com/docs/v1/lib/FileSetTime.htm
   command('FileSetTime', signature([ expression(), glob(), keywordsOnly([ optionItem('M'), optionItem('C'), optionItem('A') ]), expression(), expression() ])),
@@ -573,7 +573,7 @@ export const commandDefinitions: CommandDefinition[] = [
   command('SoundGetWaveVolume', signature([ output(), unquoted() ])),
 
   // https://www.autohotkey.com/docs/v1/lib/SoundPlay.htm
-  command('SoundPlay', signature([ path(), keywordsOnly([ optionItem('Wait'), optionItem('1') ]) ])),
+  command('SoundPlay', signature([ path(), keywordOnly([ optionItem('Wait'), optionItem('1') ]) ])),
 
   // https://www.autohotkey.com/docs/v1/lib/SoundSet.htm
   command('SoundSet', signature([ expression(), soundComponent(), soundControlType(), expression() ])),
@@ -927,11 +927,11 @@ export function style(flags: CommandParameterFlag = CommandParameterFlag.None): 
 export function unquotedOrKeywords(values: string[], flags: CommandParameterFlag = CommandParameterFlag.None): CommandParameter {
   return { type: HighlightType.UnquotedOrKeywords, flags, values };
 }
-export function combiOptions(values: string[], flags: CommandParameterFlag = CommandParameterFlag.None): CommandParameter {
-  return { type: HighlightType.CombiOptions, flags, values };
+export function fileAttributes(values: string[], flags: CommandParameterFlag = CommandParameterFlag.None): CommandParameter {
+  return { type: HighlightType.FileAttributes, flags, values };
 }
-export function combiOptionsOnly(values: string[], flags: CommandParameterFlag = CommandParameterFlag.None): CommandParameter {
-  return { type: HighlightType.CombiOptionsOnly, flags, values };
+export function letterOptions(values: string[], flags: CommandParameterFlag = CommandParameterFlag.None): CommandParameter {
+  return { type: HighlightType.LetterOptions, flags, values };
 }
 export function guiOptions(flags: CommandParameterFlag = CommandParameterFlag.None): CommandParameter {
   return {
