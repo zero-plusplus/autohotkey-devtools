@@ -1,38 +1,37 @@
-import { dedent, hasFlag } from '@zero-plusplus/utilities/src';
-import * as definition_v1 from '../../../../src/autohotkeyl/definition';
-import { CommandFlag, HighlightType, RuleName, StyleName } from '../../../../src/constants';
-import type { CommandParameter, ScopeName } from '../../../../src/types';
+import { dedent } from '@zero-plusplus/utilities/src';
+import { onOff } from '../../../../src/autohotkeyl/definition';
+import { RuleName, StyleName } from '../../../../src/constants';
+import type { ScopeName } from '../../../../src/types';
 import { name } from '../../../../src/utils';
 import type { ExpectedTestData, ParsedResult } from '../../../types';
 
 export function createCommandStatementExpectedData(scopeName: ScopeName): ExpectedTestData[] {
   return [
-    // createAllPatternTestData(scopeName),
-
+    // #region signatures
     // https://www.autohotkey.com/docs/v1/lib/Control.htm
     [
       dedent`
-        Control, Check, blank, control id         ; comment
-        Control, UnCheck, blank, control id       ; comment
-        Control, Enable, blank, control id        ; comment
-        Control, Disable, blank, control id       ; comment
-        Control, Show, blank, control id          ; comment
-        Control, Hide, blank, control id          ; comment
-        Control, ShowDropDown, blank, control id  ; comment
-        Control, HideDropDown, blank, control id  ; comment
+        Control, Check, blank, control-id         ; comment
+        Control, UnCheck, blank, control-id       ; comment
+        Control, Enable, blank, control-id        ; comment
+        Control, Disable, blank, control-id       ; comment
+        Control, Show, blank, control-id          ; comment
+        Control, Hide, blank, control-id          ; comment
+        Control, ShowDropDown, blank, control-id  ; comment
+        Control, HideDropDown, blank, control-id  ; comment
 
-        Control, Style, xxx, control id           ; comment
-        Control, ExStyle, xxx, control id         ; comment
+        Control, Style, xxx, control-id           ; comment
+        Control, ExStyle, xxx, control-id         ; comment
 
-        Control, TabLeft, xxx, control id         ; comment
-        Control, TabRight, xxx, control id        ; comment
-        Control, Add, xxx, control id             ; comment
-        Control, Delete, xxx, control id          ; comment
-        Control, Choose, xxx, control id          ; comment
-        Control, ChooseString, xxx, control id    ; comment
-        Control, EditPaste, xxx, control id       ; comment
+        Control, TabLeft, xxx, control-id         ; comment
+        Control, TabRight, xxx, control-id        ; comment
+        Control, Add, xxx, control-id             ; comment
+        Control, Delete, xxx, control-id          ; comment
+        Control, Choose, xxx, control-id          ; comment
+        Control, ChooseString, xxx, control-id    ; comment
+        Control, EditPaste, xxx, control-id       ; comment
 
-        Control, XXX, blank, control id           ; comment
+        Control, XXX, blank, control-id           ; comment
       `,
       [
         ...[ 'Check', 'UnCheck', 'Enable', 'Disable', 'Show', 'Hide', 'ShowDropDown', 'HideDropDown' ].flatMap((subcommand): ParsedResult[] => {
@@ -43,7 +42,7 @@ export function createCommandStatementExpectedData(scopeName: ScopeName): Expect
             { text: ',', scopes: name(scopeName, RuleName.Comma) },
             { text: 'blank', scopes: name(scopeName, RuleName.UnquotedString, StyleName.Invalid) },
             { text: ',', scopes: name(scopeName, RuleName.Comma) },
-            { text: 'control id', scopes: name(scopeName, RuleName.UnquotedString) },
+            { text: 'control-id', scopes: name(scopeName, RuleName.UnquotedString) },
             { text: '; comment', scopes: name(scopeName, RuleName.InLineComment) },
           ];
         }),
@@ -56,7 +55,7 @@ export function createCommandStatementExpectedData(scopeName: ScopeName): Expect
             { text: ',', scopes: name(scopeName, RuleName.Comma) },
             { text: 'xxx', scopes: name(scopeName, RuleName.UnquotedString) },
             { text: ',', scopes: name(scopeName, RuleName.Comma) },
-            { text: 'control id', scopes: name(scopeName, RuleName.UnquotedString) },
+            { text: 'control-id', scopes: name(scopeName, RuleName.UnquotedString) },
             { text: '; comment', scopes: name(scopeName, RuleName.InLineComment) },
           ];
         }),
@@ -69,7 +68,7 @@ export function createCommandStatementExpectedData(scopeName: ScopeName): Expect
             { text: ',', scopes: name(scopeName, RuleName.Comma) },
             { text: 'xxx', scopes: name(scopeName, RuleName.UnquotedString) },
             { text: ',', scopes: name(scopeName, RuleName.Comma) },
-            { text: 'control id', scopes: name(scopeName, RuleName.UnquotedString) },
+            { text: 'control-id', scopes: name(scopeName, RuleName.UnquotedString) },
             { text: '; comment', scopes: name(scopeName, RuleName.InLineComment) },
           ];
         }),
@@ -80,7 +79,7 @@ export function createCommandStatementExpectedData(scopeName: ScopeName): Expect
         { text: ',', scopes: name(scopeName, RuleName.Comma) },
         { text: 'blank', scopes: name(scopeName, RuleName.UnquotedString) },
         { text: ',', scopes: name(scopeName, RuleName.Comma) },
-        { text: 'control id', scopes: name(scopeName, RuleName.UnquotedString) },
+        { text: 'control-id', scopes: name(scopeName, RuleName.UnquotedString) },
         { text: '; comment', scopes: name(scopeName, RuleName.InLineComment) },
       ],
     ],
@@ -88,22 +87,22 @@ export function createCommandStatementExpectedData(scopeName: ScopeName): Expect
     // https://www.autohotkey.com/docs/v1/lib/ControlGet.htm
     [
       dedent`
-        ControlGet, output, List, Selected, control id ; comment
+        ControlGet, output, List, Selected, control-id ; comment
 
-        ControlGet, output, Checked, blank, control id      ; comment
-        ControlGet, output, Enabled, blank, control id      ; comment
-        ControlGet, output, Visible, blank, control id      ; comment
-        ControlGet, output, Tab, blank, control id          ; comment
-        ControlGet, output, Choice, blank, control id       ; comment
-        ControlGet, output, LineCount, blank, control id    ; comment
-        ControlGet, output, CurrentLine, blank, control id  ; comment
-        ControlGet, output, CurrentCol, blank, control id   ; comment
-        ControlGet, output, Selected, blank, control id     ; comment
-        ControlGet, output, Style, blank, control id        ; comment
-        ControlGet, output, ExStyle, blank, control id      ; comment
-        ControlGet, output, Hwnd, blank, control id         ; comment
+        ControlGet, output, Checked, blank, control-id      ; comment
+        ControlGet, output, Enabled, blank, control-id      ; comment
+        ControlGet, output, Visible, blank, control-id      ; comment
+        ControlGet, output, Tab, blank, control-id          ; comment
+        ControlGet, output, Choice, blank, control-id       ; comment
+        ControlGet, output, LineCount, blank, control-id    ; comment
+        ControlGet, output, CurrentLine, blank, control-id  ; comment
+        ControlGet, output, CurrentCol, blank, control-id   ; comment
+        ControlGet, output, Selected, blank, control-id     ; comment
+        ControlGet, output, Style, blank, control-id        ; comment
+        ControlGet, output, ExStyle, blank, control-id      ; comment
+        ControlGet, output, Hwnd, blank, control-id         ; comment
 
-        ControlGet, output, XXX, blank, control id          ; comment
+        ControlGet, output, XXX, blank, control-id          ; comment
       `,
       [
         { text: 'ControlGet', scopes: name(scopeName, RuleName.CommandName) },
@@ -114,7 +113,7 @@ export function createCommandStatementExpectedData(scopeName: ScopeName): Expect
         { text: ',', scopes: name(scopeName, RuleName.Comma) },
         { text: 'Selected', scopes: name(scopeName, RuleName.UnquotedString, StyleName.Strong) },
         { text: ',', scopes: name(scopeName, RuleName.Comma) },
-        { text: 'control id', scopes: name(scopeName, RuleName.UnquotedString) },
+        { text: 'control-id', scopes: name(scopeName, RuleName.UnquotedString) },
         { text: '; comment', scopes: name(scopeName, RuleName.InLineComment) },
 
         ...[ 'Checked', 'Enabled', 'Visible', 'Tab', 'Choice', 'LineCount', 'CurrentLine', 'CurrentCol', 'Selected', 'Style', 'ExStyle', 'Hwnd' ].flatMap((subcommand) => {
@@ -127,7 +126,7 @@ export function createCommandStatementExpectedData(scopeName: ScopeName): Expect
             { text: ',', scopes: name(scopeName, RuleName.Comma) },
             { text: 'blank', scopes: name(scopeName, RuleName.UnquotedString, StyleName.Invalid) },
             { text: ',', scopes: name(scopeName, RuleName.Comma) },
-            { text: 'control id', scopes: name(scopeName, RuleName.UnquotedString) },
+            { text: 'control-id', scopes: name(scopeName, RuleName.UnquotedString) },
             { text: '; comment', scopes: name(scopeName, RuleName.InLineComment) },
           ];
         }),
@@ -140,7 +139,7 @@ export function createCommandStatementExpectedData(scopeName: ScopeName): Expect
         { text: ',', scopes: name(scopeName, RuleName.Comma) },
         { text: 'blank', scopes: name(scopeName, RuleName.UnquotedString) },
         { text: ',', scopes: name(scopeName, RuleName.Comma) },
-        { text: 'control id', scopes: name(scopeName, RuleName.UnquotedString) },
+        { text: 'control-id', scopes: name(scopeName, RuleName.UnquotedString) },
         { text: '; comment', scopes: name(scopeName, RuleName.InLineComment) },
       ],
     ],
@@ -307,15 +306,15 @@ export function createCommandStatementExpectedData(scopeName: ScopeName): Expect
     // https://www.autohotkey.com/docs/v1/lib/FormatTime.htm
     [
       dedent`
-      FormatTime, output, unquoted, Time
-      FormatTime, output, unquoted, ShortDate
-      FormatTime, output, unquoted, LongDate
-      FormatTime, output, unquoted, YearMonth
-      FormatTime, output, unquoted, YDay
-      FormatTime, output, unquoted, YDay0
-      FormatTime, output, unquoted, WDay
-      FormatTime, output, unquoted, YWeek
-    `,
+        FormatTime, output, unquoted, Time
+        FormatTime, output, unquoted, ShortDate
+        FormatTime, output, unquoted, LongDate
+        FormatTime, output, unquoted, YearMonth
+        FormatTime, output, unquoted, YDay
+        FormatTime, output, unquoted, YDay0
+        FormatTime, output, unquoted, WDay
+        FormatTime, output, unquoted, YWeek
+      `,
       [
         ...[ 'Time', 'ShortDate', 'LongDate', 'YearMonth', 'YDay', 'YDay0', 'WDay', 'YWeek' ].flatMap((subcommand) => {
           return [
@@ -434,9 +433,9 @@ export function createCommandStatementExpectedData(scopeName: ScopeName): Expect
         { text: ',', scopes: name(scopeName, RuleName.Comma) },
         { text: 'Margin', scopes: name(scopeName, RuleName.SubCommandName) },
         { text: ',', scopes: name(scopeName, RuleName.Comma) },
-        { text: '15', scopes: name(scopeName, RuleName.UnquotedString) },
+        { text: '15', scopes: name(scopeName, RuleName.Integer) },
         { text: ',', scopes: name(scopeName, RuleName.Comma) },
-        { text: '30', scopes: name(scopeName, RuleName.UnquotedString) },
+        { text: '30', scopes: name(scopeName, RuleName.Integer) },
         { text: '; comment', scopes: name(scopeName, RuleName.InLineComment) },
 
         { text: 'Gui', scopes: name(scopeName, RuleName.CommandName) },
@@ -999,7 +998,7 @@ export function createCommandStatementExpectedData(scopeName: ScopeName): Expect
         { text: ',', scopes: name(scopeName, RuleName.Comma) },
         { text: 'output', scopes: name(scopeName, RuleName.Variable) },
         { text: ',', scopes: name(scopeName, RuleName.Comma) },
-        { text: '80', scopes: name(scopeName, RuleName.UnquotedString) },
+        { text: '80', scopes: name(scopeName, RuleName.Integer) },
         { text: '; comment', scopes: name(scopeName, RuleName.InLineComment) },
       ],
     ],
@@ -1209,20 +1208,85 @@ export function createCommandStatementExpectedData(scopeName: ScopeName): Expect
         { text: '; comment', scopes: name(scopeName, RuleName.InLineComment) },
       ],
     ],
+    // #endregion signatures
 
-    // Fix: Using a percent expression in the last argument causes the comment to be highlighted as a string
+    // #region arg
     [
       dedent`
-        Click, % abc ; comment
+        AutoTrim, on
+        AutoTrim, ON
+        AutoTrim, off
+        AutoTrim, OFF
+        AutoTrim, 1
+        AutoTrim, 0
       `,
       [
-        { text: 'Click', scopes: name(scopeName, RuleName.CommandName) },
-        { text: ',', scopes: name(scopeName, RuleName.Comma) },
-        { text: '%', scopes: name(scopeName, RuleName.PercentExpressionBegin) },
-        { text: 'abc', scopes: name(scopeName, RuleName.Variable) },
-        { text: '; comment', scopes: name(scopeName, RuleName.InLineComment) },
+        ...[ 'on', 'ON', 'off', 'OFF', '1', '0' ].flatMap((arg) => {
+          onOff;
+
+          return [
+            { text: 'AutoTrim', scopes: name(scopeName, RuleName.CommandName) },
+            { text: ',', scopes: name(scopeName, RuleName.Comma) },
+            { text: arg, scopes: name(scopeName, RuleName.UnquotedString, StyleName.Strong) },
+          ];
+        }),
       ],
     ],
+    [
+      dedent`
+        BlockInput, Send
+        BlockInput, Mouse
+        BlockInput, SendAndMouse
+        BlockInput, Default
+        BlockInput, MouseMove
+        BlockInput, MouseMoveOff
+        BlockInput, on
+        BlockInput, ON
+        BlockInput, off
+        BlockInput, OFF
+        BlockInput, 1
+        BlockInput, 0
+      `,
+      [
+        ...[
+          ...[ // keywords
+            'Send',
+            'Mouse',
+            'SendAndMouse',
+            'Default',
+            'MouseMove',
+            'MouseMoveOff',
+          ],
+          'on',
+          'ON',
+          'off',
+          'OFF',
+          '1',
+          '0',
+        ].flatMap((arg) => {
+          onOff; // with keywords
+
+          return [
+            { text: 'BlockInput', scopes: name(scopeName, RuleName.CommandName) },
+            { text: ',', scopes: name(scopeName, RuleName.Comma) },
+            { text: arg, scopes: name(scopeName, RuleName.UnquotedString, StyleName.Strong) },
+          ];
+        }),
+      ],
+    ],
+    // [
+    //   dedent`
+    //     Click, 100 200 Left
+    //   `,
+    //   [
+    //     { text: 'Click', scopes: name(scopeName, RuleName.CommandName) },
+    //     { text: ',', scopes: name(scopeName, RuleName.Comma) },
+    //     { text: '100', scopes: name(scopeName, RuleName.Integer) },
+    //     { text: '200', scopes: name(scopeName, RuleName.Integer) },
+    //     { text: 'Left', scopes: name(scopeName, RuleName.UnquotedString, StyleName.Strong) },
+    //   ],
+    // ],
+    // #endregion arg
 
     // Fix: If the last argument is a percent expression, the comma after is highlighted as a string
     [
@@ -1241,178 +1305,3 @@ export function createCommandStatementExpectedData(scopeName: ScopeName): Expect
     ],
   ];
 }
-
-// #region helpers
-// @ts-expect-error
-function createAllPatternTestData(scopeName: ScopeName): ExpectedTestData {
-  const linebreak = '\n';
-  const testData: ExpectedTestData = [ '', [] ];
-
-  definition_v1.commandDefinitions.forEach((commandDefinition) => {
-    commandDefinition.signatures.forEach((signature) => {
-      // command name
-      let textLine = commandDefinition.name;
-      const expectedLine: ParsedResult[] = [
-        {
-          text: commandDefinition.name,
-          scopes: hasFlag(commandDefinition.flags, CommandFlag.Deprecated)
-            ? name(scopeName, RuleName.CommandName, StyleName.Strikethrough)
-            : name(scopeName, RuleName.CommandName),
-        },
-      ];
-
-      let targetIndex = 0;
-      signature.parameters.forEach((parameter, i, parameters) => {
-        const isLastParameter = i === parameters.length - 1;
-
-        // comma separator
-        textLine += ',';
-        expectedLine.push({ text: ',', scopes: name(scopeName, RuleName.Comma) });
-
-        // Add subcommands always
-        if (definition_v1.isSubCommandParameter(parameter)) {
-          const subcommandExpectedResults = parameterToExpectedResults(scopeName, parameter, isLastParameter);
-          textLine += ` ${subcommandExpectedResults[0]![0]}`;
-          expectedLine.push(...subcommandExpectedResults[0]![1]);
-          targetIndex++;
-          return;
-        }
-
-        // Skip parameter other than the target
-        if (targetIndex !== i) {
-          return;
-        }
-
-        const expectedResults = parameterToExpectedResults(scopeName, parameter, isLastParameter);
-        expectedResults.forEach((expectedResult) => {
-          testData[0] += linebreak + `${textLine} ${expectedResult[0]} ; comment`;
-          testData[1].push(
-            ...expectedLine,
-            ...expectedResults.flatMap((expectedResult) => expectedResult[1]),
-            { text: '; comment', scopes: name(scopeName, RuleName.InLineComment) },
-          );
-        });
-        targetIndex++;
-      });
-    });
-  });
-  return testData;
-}
-function parameterToExpectedResults(scopeName: ScopeName, parameter: CommandParameter, isLastParameter: boolean): ExpectedTestData[] {
-  const commonExpectedTestData: ExpectedTestData[] = [
-    [
-      'abc`n',
-      [
-        { text: 'abc', scopes: name(scopeName, RuleName.UnquotedString) },
-        { text: '`n', scopes: name(scopeName, RuleName.UnquotedString, StyleName.Escape) },
-      ],
-    ],
-    [
-      '%abc%',
-      [
-        { text: '%', scopes: name(scopeName, RuleName.PercentBegin) },
-        { text: 'abc', scopes: name(scopeName, RuleName.Variable) },
-        { text: '%', scopes: name(scopeName, RuleName.PercentEnd) },
-      ],
-    ],
-    [
-      '% abc + b',
-      [
-        { text: '%', scopes: name(scopeName, RuleName.PercentExpressionBegin) },
-        { text: 'a', scopes: name(scopeName, RuleName.Variable) },
-        { text: '+', scopes: name(scopeName, RuleName.Operator) },
-        { text: 'b', scopes: name(scopeName, RuleName.Variable) },
-      ],
-    ],
-  ];
-
-  switch (parameter.type) {
-    case HighlightType.None: return [];
-    case HighlightType.Blank: return [
-      [ 'blank', [ { text: 'blank', scopes: name(scopeName, RuleName.UnquotedString, StyleName.Invalid) } ] ],
-      [ '%abc%', [ { text: '%abc%', scopes: name(scopeName, RuleName.UnquotedString, StyleName.Invalid) } ] ],
-      [ '% abc + b', [ { text: '% abc + b', scopes: name(scopeName, RuleName.UnquotedString, StyleName.Invalid) } ] ],
-    ];
-    case HighlightType.BlankOrGuiName: return [
-      [ 'blank', [ { text: 'blank', scopes: name(scopeName, RuleName.UnquotedString, StyleName.Invalid) } ] ],
-      [
-        'GuiName:', [
-          { text: 'GuiName', scopes: name(scopeName, RuleName.LabelName) },
-          { text: ':', scopes: name(scopeName, RuleName.Colon) },
-        ],
-      ],
-      ...commonExpectedTestData,
-    ];
-    case HighlightType.CombiOptions:
-    case HighlightType.FileAttributeCombiOptions:
-    case HighlightType.GuiControlOptions:
-    case HighlightType.GuiOptions:
-    case HighlightType.Invalid:
-    case HighlightType.KeywordOnly:
-    case HighlightType.KeywordsOnly:
-    case HighlightType.LabelName:
-    case HighlightType.MenuItemName:
-    case HighlightType.Style:
-    case HighlightType.UnquotedOrKeywords:
-    case HighlightType.UnquotedString:
-    case HighlightType.UnquotedStringShouldEscapeComma:
-    case HighlightType.WinTitle: return [
-      ...(parameter.values ?? []).map((rawValue): ExpectedTestData => {
-        const { value } = definition_v1.parseParameterValue(rawValue);
-        return [ value, [ { text: value, scopes: name(scopeName, RuleName.UnquotedString, StyleName.Strong) } ] ];
-      }),
-      ...commonExpectedTestData,
-    ];
-    case HighlightType.SubCommand: return [
-      [
-        parameter.values![0]!,
-        [ { text: parameter.values![0]!, scopes: name(scopeName, RuleName.SubCommandName) } ],
-      ],
-    ];
-    case HighlightType.SubCommandLike: return [
-      [
-        parameter.values![0]!,
-        [ { text: parameter.values![0]!, scopes: name(scopeName, RuleName.UnquotedString, StyleName.Strong) } ],
-      ],
-    ];
-    case HighlightType.FlowSubCommand: return [
-      [
-        parameter.values![0]!,
-        [ { text: parameter.values![0]!, scopes: name(scopeName, RuleName.FlowSubCommandName) } ],
-      ],
-    ];
-    case HighlightType.GuiSubCommand: return [
-      [
-        parameter.values![0]!,
-        [ { text: parameter.values![0]!, scopes: name(scopeName, RuleName.SubCommandName) } ],
-      ],
-      [
-        `GuiName:${parameter.values![0]!}`,
-        [
-          { text: 'GuiName', scopes: name(scopeName, RuleName.LabelName) },
-          { text: ':', scopes: name(scopeName, RuleName.Colon) },
-          { text: parameter.values![0]!, scopes: name(scopeName, RuleName.SubCommandName) },
-        ],
-      ],
-    ];
-    case HighlightType.Input:
-    case HighlightType.Output: return [
-      [ 'abc', [ { text: 'abc', scopes: name(scopeName, RuleName.Variable) } ] ],
-      [ '^', [ { text: '^', scopes: name(scopeName, RuleName.UnquotedString, StyleName.Invalid) } ] ],
-    ];
-    case HighlightType.Expression:
-    case HighlightType.ExpressionWithOneTrueBrace: return [
-      [
-        'abc + b',
-        [
-          { text: 'a', scopes: name(scopeName, RuleName.Variable) },
-          { text: '+', scopes: name(scopeName, RuleName.Operator) },
-          { text: 'b', scopes: name(scopeName, RuleName.Variable) },
-        ],
-      ],
-    ];
-    default: break;
-  }
-  return [];
-}
-// #endregion helpers

@@ -489,7 +489,7 @@ export function createRepositories(scopeName: ScopeName): Repositories {
     [Repository.ContinuationSectionText]: rule_v1.createUnquotedString(scopeName, {
       stringRuleName: RuleName.UnquotedString,
       stringPattern: anyChars1(),
-      additionalEscapeSequences: [ '`)' ],
+      additionalRules: [ rule_v1.createUnquotedEscapeSequencesRule(scopeName, [ '`)' ]) ],
     }),
     // #endregion legacy
   };

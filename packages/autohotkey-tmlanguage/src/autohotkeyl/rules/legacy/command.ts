@@ -23,7 +23,7 @@ export function createCommandLikeStatementRule(scopeName: ScopeName, definitions
         seq(inlineSpaces1()),
         seq(inlineSpaces0(), char(',')),
       )),
-      optional(capture(anyChars0())),
+      optional(anyChars0()),
       lookahead(placeholder.endAnchor),
     )),
     beginCaptures: {
