@@ -623,7 +623,9 @@ export const enum HighlightType {
   // e.g. `Gui, Flash, Off`
   //                   ^^^
   KeywordOnly = 'keyword_only',
-  KeywordsOnly = 'keywords_only',
+  // e.g. `PixelGetColor, output, x, y, Fast RGB`
+  //                                    ^^^^ ^^^
+  SpacedKeywordsOnly = 'spaced_keywords_only',
 
   // Accepts zero or more unquoted strings or keywords. Must have a space between each
   // e.g. `ControlClick x123 y123`, `Click, 100 100 LButton`

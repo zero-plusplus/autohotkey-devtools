@@ -1,4 +1,4 @@
-import { command, expression, keywordsOnly, signature, unquoted } from '../autohotkeyl/definition';
+import { command, expression, keywordOnly, signature, unquoted } from '../autohotkeyl/definition';
 import type { CommandDefinition } from '../types';
 
 // #region directives
@@ -37,7 +37,7 @@ export const directiveDefinitions: CommandDefinition[] = [
   command('#NoTrayIcon', signature([])),
 
   // https://www.autohotkey.com/docs/v2/lib/_SingleInstance.htm
-  command('#SingleInstance', signature([ keywordsOnly([ 'Force', 'Ignore', 'Prompt', 'Off' ]) ])),
+  command('#SingleInstance', signature([ keywordOnly([ 'Force', 'Ignore', 'Prompt', 'Off' ]) ])),
 
   // https://www.autohotkey.com/docs/v2/lib/_SuspendExempt.htm
   command('#SuspendExempt', signature([ expression() ])),
@@ -47,8 +47,8 @@ export const directiveDefinitions: CommandDefinition[] = [
 
   // https://www.autohotkey.com/docs/v2/lib/_Warn.htm
   command('#Warn', signature([
-    keywordsOnly([ 'VarUnset', 'LocalSameAsGlobal', 'Unreachable', 'All' ]),
-    keywordsOnly([ 'MsgBox', 'StdOut', 'OutputDebug', 'Off' ]),
+    keywordOnly([ 'VarUnset', 'LocalSameAsGlobal', 'Unreachable', 'All' ]),
+    keywordOnly([ 'MsgBox', 'StdOut', 'OutputDebug', 'Off' ]),
   ])),
 
   // https://www.autohotkey.com/docs/v2/lib/_WinActivateForce.htm
