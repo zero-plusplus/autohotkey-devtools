@@ -550,11 +550,11 @@ export function createRepositories(scopeName: ScopeName, placeholder?: Placehold
       expressionPattern: patterns_v1.expressionLastArgumentPattern,
     }),
     [Repository.UnquotedStringEscapeSequence]: rule_v1.createUnquotedEscapeSequencesRule(scopeName, constants_v2.unquoteEscapeSequences),
-    [Repository.CommandArgumentText]: rule_v1.createUnquotedString(scopeName, {
+    [Repository.CommandArgumentText]: rule_v1.createUnquotedStringRule(scopeName, {
       stringRuleName: RuleName.UnquotedString,
       stringPattern: patterns_v1.commandArgumentPattern,
     }),
-    [Repository.CommandLastArgumentText]: rule_v1.createUnquotedString(scopeName, {
+    [Repository.CommandLastArgumentText]: rule_v1.createUnquotedStringRule(scopeName, {
       stringRuleName: RuleName.UnquotedString,
       stringPattern: patterns_v1.lastArgumentPattern,
     }),

@@ -20,8 +20,8 @@ export function createCommandStatementExpectedData(scopeName: ScopeName): Expect
         Control, ShowDropDown, blank, control-id  ; comment
         Control, HideDropDown, blank, control-id  ; comment
 
-        Control, Style, xxx, control-id           ; comment
-        Control, ExStyle, xxx, control-id         ; comment
+        Control, Style, +0x123, control-id           ; comment
+        Control, ExStyle, +0x123, control-id         ; comment
 
         Control, TabLeft, xxx, control-id         ; comment
         Control, TabRight, xxx, control-id        ; comment
@@ -53,7 +53,9 @@ export function createCommandStatementExpectedData(scopeName: ScopeName): Expect
             { text: ',', scopes: name(scopeName, RuleName.Comma) },
             { text: subcommand, scopes: name(scopeName, RuleName.SubCommandName) },
             { text: ',', scopes: name(scopeName, RuleName.Comma) },
-            { text: 'xxx', scopes: name(scopeName, RuleName.UnquotedString) },
+            { text: '+', scopes: name(scopeName, RuleName.Operator) },
+            { text: '0x', scopes: name(scopeName, RuleName.Hex, RuleName.HexPrefix) },
+            { text: '123', scopes: name(scopeName, RuleName.Hex, RuleName.HexValue) },
             { text: ',', scopes: name(scopeName, RuleName.Comma) },
             { text: 'control-id', scopes: name(scopeName, RuleName.UnquotedString) },
             { text: '; comment', scopes: name(scopeName, RuleName.InLineComment) },

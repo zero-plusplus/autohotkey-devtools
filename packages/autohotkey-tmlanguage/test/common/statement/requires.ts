@@ -9,8 +9,7 @@ export function createRequiresStatementExpectedData(scopeName: ScopeName): Expec
       `#Requires AutoHotkey v2.1 ; inline comment`,
       [
         { text: '#Requires', scopes: name(scopeName, RuleName.DirectiveName) },
-        { text: 'AutoHotkey', scopes: name(scopeName, RuleName.UnquotedString) },
-        { text: 'v2.1', scopes: name(scopeName, RuleName.UnquotedString) },
+        { text: 'AutoHotkey v2.1', scopes: name(scopeName, RuleName.UnquotedString) },
         { text: '; inline comment', scopes: name(scopeName, RuleName.InLineComment) },
       ],
     ],

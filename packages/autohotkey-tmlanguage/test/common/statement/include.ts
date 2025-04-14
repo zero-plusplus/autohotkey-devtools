@@ -21,9 +21,7 @@ export function createIncludeStatementExpectedData(scopeName: ScopeName): Expect
           `${directive} path\\to\\, file .ahk ; inline comment`,
           [
             { text: directive, scopes: name(scopeName, Repository.IncludeStatement, RuleName.DirectiveName) },
-            { text: 'path\\to\\,', scopes: name(scopeName, Repository.IncludeStatement, RuleName.UnquotedString) },
-            { text: 'file', scopes: name(scopeName, Repository.IncludeStatement, RuleName.UnquotedString) },
-            { text: '.ahk', scopes: name(scopeName, Repository.IncludeStatement, RuleName.UnquotedString) },
+            { text: 'path\\to\\, file .ahk', scopes: name(scopeName, Repository.IncludeStatement, RuleName.UnquotedString) },
             { text: '; inline comment', scopes: name(scopeName, RuleName.InLineComment) },
           ],
         ],
@@ -31,9 +29,7 @@ export function createIncludeStatementExpectedData(scopeName: ScopeName): Expect
           `${directive} .\\path\\to\\, file .ahk ; inline comment`,
           [
             { text: directive, scopes: name(scopeName, Repository.IncludeStatement, RuleName.DirectiveName) },
-            { text: '.\\path\\to\\,', scopes: name(scopeName, Repository.IncludeStatement, RuleName.UnquotedString) },
-            { text: 'file', scopes: name(scopeName, Repository.IncludeStatement, RuleName.UnquotedString) },
-            { text: '.ahk', scopes: name(scopeName, Repository.IncludeStatement, RuleName.UnquotedString) },
+            { text: '.\\path\\to\\, file .ahk', scopes: name(scopeName, Repository.IncludeStatement, RuleName.UnquotedString) },
             { text: '; inline comment', scopes: name(scopeName, RuleName.InLineComment) },
           ],
         ],

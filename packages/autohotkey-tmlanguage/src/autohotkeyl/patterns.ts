@@ -109,11 +109,11 @@ export const expressionLastArgumentPattern: string = groupMany1(alt(
   negChar('\\s'),
   seq(inlineSpaces1(), negativeLookahead(char(';'))),
 ));
-export const percentExpressionLastArgumentPattern: string = seq(
+export const percentExpressionLastArgumentPattern: string = group(seq(
   char('%'),
   inlineSpaces1(),
   optional(expressionLastArgumentPattern),
-);
+));
 export const lastArgumentPattern: string = group(alt(
   percentExpressionLastArgumentPattern,
   groupMany1(alt(

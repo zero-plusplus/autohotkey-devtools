@@ -456,11 +456,11 @@ export function createRepositories(scopeName: ScopeName): Repositories {
     ),
     [Repository.MenuItemNameCommandArgument]: rule_v1.createMenuNameCommandArgumentRule(scopeName),
     [Repository.UnquotedStringEscapeSequence]: rule_v1.createUnquotedEscapeSequencesRule(scopeName, constants_v1.unquoteEscapeSequences),
-    [Repository.CommandArgumentText]: rule_v1.createUnquotedString(scopeName, {
+    [Repository.CommandArgumentText]: rule_v1.createUnquotedStringRule(scopeName, {
       stringRuleName: RuleName.UnquotedString,
       stringPattern: patterns_v1.commandArgumentPattern,
     }),
-    [Repository.CommandLastArgumentText]: rule_v1.createUnquotedString(scopeName, {
+    [Repository.CommandLastArgumentText]: rule_v1.createUnquotedStringRule(scopeName, {
       stringRuleName: RuleName.UnquotedString,
       stringPattern: patterns_v1.lastArgumentPattern,
     }),
@@ -486,7 +486,7 @@ export function createRepositories(scopeName: ScopeName): Repositories {
     [Repository.ContinuationSection]: rule_v1.createContinuationSectionRule(scopeName, {
       endAnchor: patterns_v1.lineEndAnchor,
     }),
-    [Repository.ContinuationSectionText]: rule_v1.createUnquotedString(scopeName, {
+    [Repository.ContinuationSectionText]: rule_v1.createUnquotedStringRule(scopeName, {
       stringRuleName: RuleName.UnquotedString,
       stringPattern: anyChars1(),
       additionalRules: [ rule_v1.createUnquotedEscapeSequencesRule(scopeName, [ '`)' ]) ],

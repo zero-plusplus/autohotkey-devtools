@@ -1,10 +1,11 @@
 import { hasFlag } from '@zero-plusplus/utilities/src';
 import { CommandFlag, HighlightType, Repository, RuleName, StyleName } from '../../../constants';
-import { alt, anyChar, anyChars0, anyChars1, capture, char, chars1, endAnchor, group, groupMany0, groupMany1, ignoreCase, inlineSpace, inlineSpaces0, inlineSpaces1, keyword, lookahead, lookbehind, negativeLookahead, negChar, negChars0, negChars1, numbers0, numbers1, optional, optseq, ordalt, seq, text, wordBound, wordChars0, wordChars1 } from '../../../oniguruma';
+import { alt, anyChar, anyChars0, anyChars1, capture, char, endAnchor, group, groupMany0, groupMany1, ignoreCase, inlineSpace, inlineSpaces0, inlineSpaces1, keyword, lookahead, lookbehind, negativeLookahead, negChar, negChars0, negChars1, numbers0, numbers1, optional, optseq, ordalt, seq, text, wordBound, wordChars0, wordChars1 } from '../../../oniguruma';
 import type { BeginWhileRule, CommandDefinition, CommandParameter, CommandSignature, ElementName, MatchRule, PatternsRule, Rule, ScopeName } from '../../../types';
 import { includeRule, name, nameRule, patternsRule } from '../../../utils';
-import { isSubCommandParameter, parseParameterValue, type ParameterValue } from '../../definition';
+import { isSubCommandParameter, parseParameterValue } from '../../definition';
 import * as patterns_v1 from '../../patterns';
+import { createAllowArgumentRule, createArgumentNumberRules, createArgumentStringRule } from './unquotedString';
 
 interface Placeholder {
   startAnchor: string;
@@ -275,106 +276,82 @@ function parameterToOniguruma(parameter: CommandParameter, isLastParameter: bool
   }
 }
 function parameterToPatternsRule(scopeName: ScopeName, defenition: CommandDefinition, parameter: CommandParameter, isLastParameter: boolean, placeholder: Placeholder): PatternsRule {
-  const unquotedMatchRule = (...rules: Rule[]): MatchRule => {
-    return {
-      match: capture(seq(
-        negChar('%', '\\s'),
-        negChars0('\\s'),
-      )),
-      captures: {
-        1: patternsRule(
-          includeRule(Repository.UnquotedStringEscapeSequence),
-          ...rules,
-        ),
-      },
-    };
-  };
-
   switch (parameter.type) {
     case HighlightType.None:
     case HighlightType.Invalid:
-    case HighlightType.Blank: {
-      return patternsRule({
-        name: name(scopeName, RuleName.UnquotedString, StyleName.Invalid),
-        match: negChars1('\\s'),
-      });
+    case HighlightType.Blank:
+    {
+      return patternsRule(createAllowArgumentRule(scopeName, {
+        stringPattern: patterns_v1.commandArgumentPattern,
+        stringRuleName: RuleName.UnquotedString,
+        allowRules: [],
+      }));
     }
     case HighlightType.SubCommand:
     case HighlightType.SubCommandLike:
-    case HighlightType.FlowSubCommand: {
+    case HighlightType.FlowSubCommand:
+    {
       if (!parameter.values || parameter.values.length === 0) {
         throw Error('The subcommand keyword is not specified correctly.');
       }
-      return patternsRule(
-        {
-          name: ((): ElementName => {
-            switch (parameter.type) {
-              case HighlightType.SubCommand: return name(scopeName, RuleName.SubCommandName);
-              case HighlightType.FlowSubCommand: return name(scopeName, RuleName.FlowSubCommandName);
-              default: return name(scopeName, RuleName.UnquotedString, StyleName.Strong);
-            }
-          })(),
-          match: ignoreCase(ordalt(...parameter.values.map((value) => parseParameterValue(value).value))),
-        },
-        {
-          name: name(scopeName, RuleName.SubCommandName, StyleName.Invalid),
-          match: anyChars1(),
-        },
-      );
+      return patternsRule(createAllowArgumentRule(scopeName, {
+        stringPattern: patterns_v1.commandArgumentPattern,
+        stringRuleName: RuleName.UnquotedString,
+        allowRules: [
+          {
+            name: ((): ElementName => {
+              switch (parameter.type) {
+                case HighlightType.SubCommand: return name(scopeName, RuleName.SubCommandName);
+                case HighlightType.FlowSubCommand: return name(scopeName, RuleName.FlowSubCommandName);
+                default: return name(scopeName, RuleName.UnquotedString, StyleName.Strong);
+              }
+            })(),
+            match: ignoreCase(ordalt(...parameter.values.map((value) => parseParameterValue(value).value))),
+          },
+          {
+            name: name(scopeName, RuleName.SubCommandName, StyleName.Invalid),
+            match: anyChars1(),
+          },
+        ],
+      }));
     }
     case HighlightType.GuiSubCommand:
-    case HighlightType.BlankOrGuiName: {
-      return patternsRule(
-        {
-          match: seq(
-            optseq(
-              capture(wordChars0()),
-              capture(char(':')),
+    case HighlightType.BlankOrGuiName:
+    {
+      return patternsRule(createAllowArgumentRule(scopeName, {
+        stringPattern: patterns_v1.commandArgumentPattern,
+        stringRuleName: RuleName.UnquotedString,
+        allowRules: [
+          {
+            match: seq(
+              optseq(
+                capture(wordChars0()),
+                capture(char(':')),
+              ),
+              capture(ignoreCase(ordalt(...(parameter.values ?? []).map((value) => parseParameterValue(value).value)))),
             ),
-            capture(ignoreCase(ordalt(...(parameter.values ?? []).map((value) => parseParameterValue(value).value)))),
-          ),
-          captures: {
-            1: nameRule(scopeName, RuleName.LabelName),
-            2: nameRule(scopeName, RuleName.Colon),
-            3: nameRule(scopeName, RuleName.SubCommandName),
+            captures: {
+              1: nameRule(scopeName, RuleName.LabelName),
+              2: nameRule(scopeName, RuleName.Colon),
+              3: nameRule(scopeName, RuleName.SubCommandName),
+            },
           },
-        },
-        {
-          name: name(scopeName, RuleName.SubCommandName, StyleName.Invalid),
-          match: anyChars1(),
-        },
-      );
+          {
+            name: name(scopeName, RuleName.SubCommandName, StyleName.Invalid),
+            match: anyChars1(),
+          },
+        ],
+      }));
     }
     case HighlightType.LetterOptions:
-    case HighlightType.FileAttributes: return patternsRule(
-      includeRule(Repository.InLineComment),
-      {
-        match: capture(seq(
-          char('%'),
-          inlineSpace(),
-          anyChars0(),
-        )),
-        captures: {
-          1: patternsRule(includeRule(Repository.PercentExpression)),
-        },
-      },
-      includeRule(Repository.Dereference),
-      unquotedMatchRule({
-        match: seq(
-          lookbehind(alt(
-            inlineSpace(),
-            char(','),
-          )),
-          ...(parameter.type === HighlightType.FileAttributes ? [ optional(capture(char('+', '-', '^'))) ] : []),
-          capture(anyChars1()),
-          lookahead(alt(
-            inlineSpace(),
-            char(','),
-            endAnchor(),
-          )),
-        ),
-        captures: {
-          1: patternsRule(
+    case HighlightType.FileAttributes:
+    {
+      return patternsRule(
+        includeRule(Repository.PercentExpressions),
+        createArgumentStringRule(scopeName, {
+          stringPattern: patterns_v1.commandArgumentPattern,
+          stringRuleName: RuleName.UnquotedString,
+          additionalRules: [
             {
               name: name(scopeName, RuleName.UnquotedString, StyleName.Strong),
               match: ignoreCase(ordalt(...(parameter.values ?? []).map((value) => parseParameterValue(value).value))),
@@ -383,171 +360,170 @@ function parameterToPatternsRule(scopeName: ScopeName, defenition: CommandDefini
               name: name(scopeName, RuleName.UnquotedString, StyleName.Invalid),
               match: anyChar(),
             },
-          ),
-        },
-      }),
-    );
-    case HighlightType.Style: return patternsRule(
-      includeRule(Repository.InLineComment),
-      includeRule(Repository.PercentExpression),
-      includeRule(Repository.Dereference),
-      {
-        name: name(scopeName, RuleName.UnquotedString, StyleName.Strong),
-        match: seq(
-          lookbehind(alt(
-            inlineSpace(),
-            char(','),
-          )),
-          optional(char('+', '-', '^')),
-          seq(
-            optional(ignoreCase('0x')),
-            chars1('0-9', 'a-f', 'A-F'),
-          ),
-          lookahead(alt(
-            inlineSpace(),
-            char(','),
-            endAnchor(),
-          )),
-        ),
-      },
-    );
-    case HighlightType.MenuItemName: return patternsRule(
-      // e.g. `Menu, MenuName, Add, &test`
-      //                            ^^
-      {
-        name: name(scopeName, RuleName.UnquotedString, StyleName.Underline),
-        match: seq(char('&'), alt(negChar('&', '\\s'))),
-      },
-      {
-        name: name(scopeName, RuleName.UnquotedString, StyleName.Escape),
-        match: text('&&'),
-      },
-      {
-        name: name(scopeName, RuleName.UnquotedString),
-        match: seq(char('&'), negativeLookahead(char('&'))),
-      },
-      includeRule(Repository.UnquotedStringEscapeSequence),
-      {
-        name: name(scopeName, RuleName.UnquotedString),
-        match: negChars1('`', '&', '\\s'),
-      },
-    );
-    case HighlightType.UnquotedString: return patternsRule(
-      includeRule(Repository.InLineComment),
-      includeRule(Repository.PercentExpression),
-      includeRule(Repository.Dereference),
-      unquotedMatchRule(
-        ...optionItemsToRules(scopeName, parameter.values),
-        (isLastParameter ? includeRule(Repository.CommandLastArgument) : includeRule(Repository.CommandArgument)),
-        {
-          name: name(scopeName, RuleName.UnquotedString),
-          match: (negChars1('`', '\\s', ',')),
-        },
-      ),
-    );
-    case HighlightType.LetterOptions: return patternsRule(
-      includeRule(Repository.InLineComment),
-      includeRule(Repository.PercentExpression),
-      includeRule(Repository.Dereference),
-      unquotedMatchRule(
-        {
-          name: name(scopeName, RuleName.UnquotedString, StyleName.Strong),
-          match: ignoreCase(ordalt(...(parameter.values ?? []).map((value) => parseParameterValue(value).value))),
-        },
-        {
-          name: name(scopeName, RuleName.SubCommandName, StyleName.Invalid),
-          match: anyChar(),
-        },
-      ),
-    );
-    case HighlightType.KeywordOnly: return patternsRule(
-      includeRule(Repository.InLineComment),
-      includeRule(Repository.PercentExpression),
-      includeRule(Repository.Dereference),
-      unquotedMatchRule(
-        {
-          name: name(scopeName, RuleName.UnquotedString, StyleName.Strong),
-          match: ignoreCase(ordalt(...(parameter.values ?? []).map((value) => parseParameterValue(value).value))),
-        },
-        {
-          name: name(scopeName, RuleName.UnquotedString),
-          match: anyChars1(),
-        },
-      ),
-    );
-    case HighlightType.SpacedKeywordsOnly:
-    case HighlightType.GuiControlOptions: return patternsRule(
-      includeRule(Repository.InLineComment),
-      includeRule(Repository.PercentExpression),
-      includeRule(Repository.Dereference),
-      unquotedMatchRule(
-        {
-
-          name: name(scopeName, RuleName.UnquotedString, StyleName.Strong),
-          match: seq(
-            lookbehind(alt(
-              inlineSpace(),
-              char(','),
-            )),
-            ignoreCase(...(parameter.values ?? []).map((value) => parseParameterValue(value).value)),
-            lookbehind(alt(
-              inlineSpace(),
-              char(','),
-              endAnchor(),
-            )),
-          ),
-        },
-        {
-          name: name(scopeName, RuleName.UnquotedString, StyleName.Invalid),
-          match: negChars1('\\s'),
-        },
-      ),
-    );
-    case HighlightType.GuiOptions: {
+          ],
+        }),
+      );
+    }
+    case HighlightType.UnquotedString:
+    {
       return patternsRule(
-        includeRule(Repository.InLineComment),
-        includeRule(Repository.PercentExpression),
-        includeRule(Repository.Dereference),
-        // e.g. `Gui, GuiName:+Resize`
-        //            ^^^^^^^^
-        {
-          match: seq(
-            lookbehind(group(seq(
-              lookbehind(placeholder.startAnchor),
-              inlineSpaces0(),
-              ignoreCase(defenition.name),
-              alt(inlineSpace(), seq(inlineSpaces0(), char(','))),
-              inlineSpaces0(),
-            ))),
-            capture(wordChars1()),
-            capture(char(':')),
-          ),
-          captures: {
-            1: patternsRule(
-              includeRule(Repository.Dereference),
+        includeRule(Repository.PercentExpressions),
+        createArgumentStringRule(scopeName, {
+          stringPattern: patterns_v1.commandArgumentPattern,
+          stringRuleName: RuleName.UnquotedString,
+          overideRules: [],
+          additionalRules: [
+            ...createArgumentNumberRules(scopeName, {
+              additionalRules: optionItemsToRules(scopeName, parameter.values),
+            }),
+          ],
+        }),
+      );
+    }
+    case HighlightType.UnquotedStringShouldEscapeComma:
+    {
+      return patternsRule(
+        includeRule(Repository.PercentExpressions),
+        createArgumentStringRule(scopeName, {
+          stringPattern: patterns_v1.commandArgumentPattern,
+          stringRuleName: RuleName.UnquotedString,
+          overideRules: [],
+          additionalRules: createArgumentNumberRules(scopeName, {
+            additionalRules: [
               {
-                name: name(scopeName, RuleName.LabelName),
-                match: wordChars1(),
+                match: seq(
+                  negativeLookahead('`'),
+                  capture(char(',')),
+                ),
+                captures: { 1: patternsRule(includeRule(Repository.Comma)) },
               },
-            ),
-            2: nameRule(scopeName, RuleName.Colon),
-          },
-        },
-        // e.g. `Gui, GuiName:+Resize`
-        //                    ^^^^^^^
-        {
-          name: name(scopeName, RuleName.UnquotedString),
-          match: capture(seq(
-            negChar('%', '\\s'),
-            negChars0('\\s'),
-          )),
-          captures: {
-            1: patternsRule(
-              includeRule(Repository.UnquotedStringEscapeSequence),
-              ...optionItemsToRules(scopeName, parameter.values),
-            ),
-          },
-        },
+              {
+                name: name(scopeName, RuleName.UnquotedString),
+                match: (negChars1('`', '\\s', ',')),
+              },
+            ],
+          }),
+        }),
+      );
+    }
+    case HighlightType.Style:
+    {
+      return patternsRule(
+        includeRule(Repository.PercentExpressions),
+        createArgumentStringRule(scopeName, {
+          stringPattern: patterns_v1.commandArgumentPattern,
+          stringRuleName: RuleName.UnquotedString,
+          overideRules: [],
+          additionalRules: [
+            ...createArgumentNumberRules(scopeName, {
+              unaryOperator: [ '+', '-', '^' ],
+              additionalRules: optionItemsToRules(scopeName, parameter.values),
+            }),
+          ],
+        }),
+      );
+    }
+    case HighlightType.LetterOptions:
+    {
+      return patternsRule(
+        includeRule(Repository.PercentExpressions),
+        createArgumentStringRule(scopeName, {
+          stringPattern: patterns_v1.commandArgumentPattern,
+          stringRuleName: RuleName.UnquotedString,
+          overideRules: [],
+          additionalRules: [
+            {
+              name: name(scopeName, RuleName.UnquotedString, StyleName.Strong),
+              match: ignoreCase(ordalt(...(parameter.values ?? []).map((value) => parseParameterValue(value).value))),
+            },
+            {
+              name: name(scopeName, RuleName.SubCommandName, StyleName.Invalid),
+              match: anyChar(),
+            },
+          ],
+        }),
+      );
+    }
+    case HighlightType.KeywordOnly:
+    case HighlightType.SpacedKeywordsOnly:
+    case HighlightType.GuiControlOptions:
+    {
+      return patternsRule(
+        includeRule(Repository.PercentExpressions),
+        createAllowArgumentRule(scopeName, {
+          stringPattern: patterns_v1.commandArgumentPattern,
+          stringRuleName: RuleName.UnquotedString,
+          allowRules: optionItemsToRules(scopeName, parameter.values),
+        }),
+      );
+    }
+    case HighlightType.GuiOptions:
+    {
+      return patternsRule(
+        includeRule(Repository.PercentExpressions),
+        createArgumentStringRule(scopeName, {
+          stringPattern: patterns_v1.commandArgumentPattern,
+          stringRuleName: RuleName.UnquotedString,
+          additionalRules: [
+            // e.g. `Gui, GuiName:+Resize`
+            //            ^^^^^^^^
+            {
+              match: seq(
+                lookbehind(group(seq(
+                  lookbehind(placeholder.startAnchor),
+                  inlineSpaces0(),
+                  ignoreCase(defenition.name),
+                  alt(inlineSpace(), seq(inlineSpaces0(), char(','))),
+                  inlineSpaces0(),
+                ))),
+                capture(wordChars1()),
+                capture(char(':')),
+              ),
+              captures: {
+                1: patternsRule(
+                  includeRule(Repository.Dereference),
+                  {
+                    name: name(scopeName, RuleName.LabelName),
+                    match: wordChars1(),
+                  },
+                ),
+                2: nameRule(scopeName, RuleName.Colon),
+              },
+            },
+            // e.g. `Gui, GuiName:+Resize`
+            //                    ^^^^^^^
+            ...optionItemsToRules(scopeName, parameter.values),
+          ],
+        }),
+      );
+    }
+    case HighlightType.MenuItemName: {
+      return patternsRule(
+        includeRule(Repository.PercentExpressions),
+        createArgumentStringRule(scopeName, {
+          stringPattern: patterns_v1.commandArgumentPattern,
+          stringRuleName: RuleName.UnquotedString,
+          additionalRules: [
+            // e.g. `Menu, MenuName, Add, &test`
+            //                            ^^
+            {
+              name: name(scopeName, RuleName.UnquotedString, StyleName.Underline),
+              match: seq(char('&'), alt(negChar('&', '\\s'))),
+            },
+            {
+              name: name(scopeName, RuleName.UnquotedString, StyleName.Escape),
+              match: text('&&'),
+            },
+            {
+              name: name(scopeName, RuleName.UnquotedString),
+              match: seq(char('&'), negativeLookahead(char('&'))),
+            },
+            {
+              name: name(scopeName, RuleName.UnquotedString),
+              match: negChars1('`', '&', '\\s'),
+            },
+          ],
+        }),
       );
     }
     // Make each definition group easily distinguishable by underlining. However, if the underline is applied in TMLanguage, its color cannot be controlled. This should be implemented with semantic highlighting
@@ -556,7 +532,7 @@ function parameterToPatternsRule(scopeName: ScopeName, defenition: CommandDefini
     //                   ^^^ ^^^^^^^^^^^^^^^ ^^^^^^^^^^^^^
     // case HighlightType.WinTitle: {
     //   return patternsRule(
-    //     includeRule(Repository.PercentExpression),
+    //     includeRule(Repository.PercentExpressions),
     //     {
     //       match: seq(
     //         lookbehind(group(seq(
@@ -608,35 +584,43 @@ function parameterToPatternsRule(scopeName: ScopeName, defenition: CommandDefini
     //     },
     //   );
     // }
-    case HighlightType.UnquotedStringShouldEscapeComma: {
-      return patternsRule(
-        includeRule(Repository.InLineComments),
-        includeRule(Repository.Comma),
-        includeRule(Repository.CommandArgument),
-      );
-    }
     case HighlightType.LabelName: return patternsRule(nameRule(scopeName, Repository.CommandArgument, RuleName.LabelName));
     case HighlightType.Input:
     case HighlightType.Output:
-    case HighlightType.Expression: return patternsRule(
-      includeRule(Repository.InLineComments),
-      includeRule(Repository.PercentExpression),
-      includeRule(Repository.Expression),
-    );
+    case HighlightType.Expression:
+    {
+      return patternsRule(
+        includeRule(Repository.InLineComments),
+        includeRule(Repository.PercentExpressions),
+        includeRule(Repository.Expression),
+
+      );
+    }
     default: break;
   }
   throw Error(`Specified an unknown highligh type.\nSpecified: "${String(parameter.type)}"`);
 }
 function optionItemsToRules(scopeName: ScopeName, optionItems: string[] | undefined): Rule[] {
-  return (optionItems ?? [])
-    .map((value) => parseParameterValue(value))
-    .sort((a, b) => b.value.length - a.value.length)
-    .flatMap((parsedValue) => {
-      return parameterValueToRuleByType(scopeName, parsedValue);
-    });
+  if (optionItems === undefined || optionItems.length === 0) {
+    return [];
+  }
+  const grouped = Object.groupBy(
+    optionItems.map((value) => {
+      const parsed = parseParameterValue(value);
+      return parsed;
+    }),
+    (item) => `${item.prefix}${item.type}`,
+  );
+
+  return Object.entries(grouped).flatMap(([ , values ]): Rule[] => {
+    if (values?.[0] === undefined || values.length === 0) {
+      return [];
+    }
+    const { prefix, type } = values[0];
+    return [ parameterValueToRuleByType(scopeName, prefix, type, values.map(({ value }) => value)) ];
+  });
 }
-function parameterValueToRuleByType(scopeName: ScopeName, parameterValue: ParameterValue): Rule {
-  const { prefix, type, value } = parameterValue;
+function parameterValueToRuleByType(scopeName: ScopeName, prefix: string | undefined, type: string | undefined, values: string[]): Rule {
   const prefixPattern = prefixToPattern(prefix);
   const decimalPattern = numbers1();
   const numberPattern = seq(
@@ -655,8 +639,8 @@ function parameterValueToRuleByType(scopeName: ScopeName, parameterValue: Parame
     return {
       name: name(scopeName, RuleName.UnquotedString, StyleName.Strong),
       match: seq(
-        optional(prefixPattern),
-        ignoreCase(value),
+        ...(prefixPattern ? [ optional(prefixPattern) ] : []),
+        ignoreCase(ordalt(...values)),
       ),
     };
   }
@@ -667,10 +651,9 @@ function parameterValueToRuleByType(scopeName: ScopeName, parameterValue: Parame
       lookbehind(alt(
         inlineSpace(),
         char(','),
-        wordBound(),
       )),
       ...(prefixPattern ? [ optional(prefixPattern) ] : []),
-      ignoreCase(value),
+      ignoreCase(ordalt(...values)),
       ((): string => {
         switch (type) {
           case 'word': return wordChars0();

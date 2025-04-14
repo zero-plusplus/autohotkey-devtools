@@ -1,59 +1,120 @@
-import { Repository, RuleName } from '../../../constants';
-import { alt, capture, char, endAnchor, ignoreCase, inlineSpace, inlineSpaces0, lookahead, many1, negativeLookahead, negChar, negChars0, numbers1, optional, optseq, seq } from '../../../oniguruma';
+import { Repository, RuleName, StyleName } from '../../../constants';
+import { alt, capture, char, chars0, endAnchor, ignoreCase, inlineSpace, inlineSpaces0, lookahead, lookbehind, negChar, negChars0, negChars1, numbers1, optional, optseq, seq } from '../../../oniguruma';
 import type { MatchRule, Rule, ScopeName } from '../../../types';
 import { includeRule, name, patternsRule } from '../../../utils';
 
 interface Placeholder {
   stringRuleName: RuleName;
   stringPattern: string;
+  overideRules?: Rule[];
   additionalRules?: Rule[];
 }
-export function createUnquotedString(scopeName: ScopeName, placeholder: Placeholder): MatchRule {
+export function createUnquotedStringRule(scopeName: ScopeName, placeholder: Placeholder): MatchRule {
   return {
     match: seq(inlineSpaces0(), capture(placeholder.stringPattern)),
     captures: {
       1: patternsRule(
+        ...(placeholder.overideRules ?? []),
+        includeRule(Repository.UnquotedStringEscapeSequence),
+        includeRule(Repository.Dereference),
+        {
+          name: name(scopeName, placeholder.stringRuleName),
+          match: negChars1('`'),
+        },
+        ...(placeholder.additionalRules ?? []),
+      ),
+    },
+  };
+}
+export function createArgumentStringRule(scopeName: ScopeName, placeholder: Placeholder): MatchRule {
+  return {
+    match: seq(
+      inlineSpaces0(),
+      capture(seq(
+        negChar('%', '\\s'),
+        negChars0('\\s'),
+      )),
+    ),
+    captures: {
+      1: patternsRule(
+        ...(placeholder.overideRules ?? []),
         includeRule(Repository.UnquotedStringEscapeSequence),
         includeRule(Repository.Dereference),
         ...(placeholder.additionalRules ?? []),
         {
-          match: seq(
-            negativeLookahead(alt(
-              inlineSpace(),
-              char(','),
-              endAnchor(),
-            )),
-            capture(alt(
-              inlineSpaces0(),
-              seq(ignoreCase('0x'), many1('[0-9a-fA-F]')),
-              seq(
-                numbers1(),
-                optseq(char('.'), numbers1()),
-                optseq(
-                  ignoreCase('E'),
-                  optional(char('+', '-')),
-                  numbers1(),
-                ),
-              ),
-            )),
-            lookahead(alt(
-              inlineSpace(),
-              char(','),
-              endAnchor(),
-            )),
-          ),
-          captures: {
-            1: patternsRule(includeRule(Repository.Number)),
-          },
-        },
-        {
           name: name(scopeName, placeholder.stringRuleName),
-          match: seq(
-            negChar('`', '0-9', inlineSpace()),
-            negChars0('`', inlineSpace()),
-          ),
+          match: negChars1('`', inlineSpace()),
         },
       ),
     },
   };
+}
+
+interface Placeholder_ArgumentNumberRules {
+  unaryOperator?: readonly string[];
+  additionalRules?: Rule[];
+}
+export function createArgumentNumberRules(scopeName: ScopeName, placeholder: Placeholder_ArgumentNumberRules = {}): Rule[] {
+  return [
+    {
+      match: seq(
+        lookbehind(alt(
+          inlineSpace(),
+          char(','),
+        )),
+        ...(placeholder.unaryOperator ? [ optional(capture(char(...placeholder.unaryOperator))) ] : []),
+        capture(alt(
+          seq(ignoreCase('0x'), chars0('0-9', 'a-f', 'A-F')),
+          seq(
+            numbers1(),
+            optseq(char('.'), numbers1()),
+            optseq(
+              ignoreCase('E'),
+              optional(char('+', '-')),
+              numbers1(),
+            ),
+          ),
+        )),
+        lookahead(alt(
+          inlineSpace(),
+          char(','),
+          endAnchor(),
+        )),
+      ),
+      captures: placeholder.unaryOperator
+        ? {
+          1: patternsRule(includeRule(Repository.Operator)),
+          2: patternsRule(includeRule(Repository.Number)),
+        }
+        : {
+          1: patternsRule(includeRule(Repository.Number)),
+        },
+    },
+    ...(placeholder.additionalRules ?? []),
+    {
+      name: name(scopeName, RuleName.UnquotedString),
+      match: seq(
+        negChar('`', '0-9', inlineSpace(), ...(placeholder.unaryOperator ?? [])),
+        negChars0('`', inlineSpace()),
+      ),
+    },
+  ];
+}
+
+interface Placeholder_AllowArgumentRule {
+  stringRuleName: RuleName;
+  stringPattern: string;
+  allowRules: Rule[];
+}
+export function createAllowArgumentRule(scopeName: ScopeName, placeholder: Placeholder_AllowArgumentRule): MatchRule {
+  return createArgumentStringRule(scopeName, {
+    ...placeholder,
+    additionalRules: [
+      ...placeholder.allowRules,
+      {
+        name: name(scopeName, placeholder.stringRuleName, StyleName.Invalid),
+        match: negChars0('`', inlineSpace()),
+      },
+    ],
+  });
 }
