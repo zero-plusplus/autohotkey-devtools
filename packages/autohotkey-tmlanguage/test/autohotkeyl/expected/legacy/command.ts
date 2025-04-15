@@ -1,5 +1,5 @@
 import { dedent } from '@zero-plusplus/utilities/src';
-import { onOff, unquoted } from '../../../../src/autohotkeyl/definition';
+import { expression, onOff, unquoted } from '../../../../src/autohotkeyl/definition';
 import { RuleName, StyleName } from '../../../../src/constants';
 import type { ScopeName } from '../../../../src/types';
 import { name } from '../../../../src/utils';
@@ -1342,18 +1342,18 @@ export function createCommandStatementExpectedData(scopeName: ScopeName): Expect
     ],
     [
       dedent`
-        Click, 100 200 Left
-        Click, 100 200 L
-        Click, 100 200 Right
-        Click, 100 200 R
-        Click, 100 200 Middle
-        Click, 100 200 M
-        Click, 100 200 X1
-        Click, 100 200 X2
-        Click, 100 200 Up
-        Click, 100 200 U
-        Click, 100 200 Down
-        Click, 100 200 D
+        Click, 100 200 Left       ; comment
+        Click, 100 200 L          ; comment
+        Click, 100 200 Right      ; comment
+        Click, 100 200 R          ; comment
+        Click, 100 200 Middle     ; comment
+        Click, 100 200 M          ; comment
+        Click, 100 200 X1         ; comment
+        Click, 100 200 X2         ; comment
+        Click, 100 200 Up         ; comment
+        Click, 100 200 U          ; comment
+        Click, 100 200 Down       ; comment
+        Click, 100 200 D          ; comment
       `,
       [
         ...[ 'Left', 'L', 'Right', 'R', 'Middle', 'M', 'X1', 'X2', 'Up', 'U', 'Down', 'D' ].flatMap((keyword) => {
@@ -1365,8 +1365,40 @@ export function createCommandStatementExpectedData(scopeName: ScopeName): Expect
             { text: '100', scopes: name(scopeName, RuleName.Integer) },
             { text: '200', scopes: name(scopeName, RuleName.Integer) },
             { text: keyword, scopes: name(scopeName, RuleName.UnquotedString, StyleName.Strong) },
+            { text: '; comment', scopes: name(scopeName, RuleName.InLineComment) },
           ];
         }),
+      ],
+    ],
+    [
+      dedent`
+        ClipWait, 1, 0              ; comment
+        ClipWait, 1 + 1, var, 1     ; comment
+      `,
+      [
+        ...((): ParsedResult[] => {
+          expression;
+
+          return [
+            { text: 'ClipWait', scopes: name(scopeName, RuleName.CommandName) },
+            { text: ',', scopes: name(scopeName, RuleName.Comma) },
+            { text: '1', scopes: name(scopeName, RuleName.Integer) },
+            { text: ',', scopes: name(scopeName, RuleName.Comma) },
+            { text: '0', scopes: name(scopeName, RuleName.Integer) },
+            { text: '; comment', scopes: name(scopeName, RuleName.InLineComment) },
+
+            { text: 'ClipWait', scopes: name(scopeName, RuleName.CommandName) },
+            { text: ',', scopes: name(scopeName, RuleName.Comma) },
+            { text: '1', scopes: name(scopeName, RuleName.Integer) },
+            { text: '+', scopes: name(scopeName, RuleName.Operator) },
+            { text: '1', scopes: name(scopeName, RuleName.Integer) },
+            { text: ',', scopes: name(scopeName, RuleName.Comma) },
+            { text: 'var', scopes: name(scopeName, RuleName.Variable) },
+            { text: ',', scopes: name(scopeName, RuleName.Comma) },
+            { text: '1', scopes: name(scopeName, RuleName.Integer) },
+            { text: '; comment', scopes: name(scopeName, RuleName.InLineComment) },
+          ];
+        })(),
       ],
     ],
     // #endregion arg

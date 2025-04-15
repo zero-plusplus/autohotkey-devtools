@@ -247,7 +247,9 @@ function parameterToOniguruma(parameter: CommandParameter, isLastParameter: bool
     case HighlightType.Input:
     case HighlightType.Output:
     case HighlightType.Expression:
-      return patterns_v1.expressionArgumentPattern;
+      return isLastParameter
+        ? patterns_v1.expressionLastArgumentPattern
+        : patterns_v1.expressionArgumentPattern;
     case HighlightType.ExpressionWithOneTrueBrace:
       return isLastParameter
         ? patterns_v1.expressionWithOneTrueBraceArgumentPattern
@@ -590,7 +592,7 @@ function parameterToPatternsRule(scopeName: ScopeName, defenition: CommandDefini
       return patternsRule(
         includeRule(Repository.InLineComments),
         includeRule(Repository.PercentExpressions),
-        includeRule(Repository.Expression),
+        includeRule(Repository.Expressions),
 
       );
     }
