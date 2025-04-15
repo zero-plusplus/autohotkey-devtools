@@ -1530,7 +1530,8 @@ export function createCommandStatementExpectedData(scopeName: ScopeName): Expect
     ],
     [
       dedent`
-        ControlGet,, a, b, c    ; comment
+        ControlGet,, a, b, c      ; comment
+        ControlGet,, % a, b, c    ; comment
       `,
       [
         ...((): ParsedResult[] => {
@@ -1541,6 +1542,17 @@ export function createCommandStatementExpectedData(scopeName: ScopeName): Expect
             { text: ',', scopes: name(scopeName, RuleName.Comma) },
             { text: ',', scopes: name(scopeName, RuleName.Comma) },
             { text: 'a', scopes: name(scopeName, RuleName.UnquotedString) },
+            { text: ',', scopes: name(scopeName, RuleName.Comma) },
+            { text: 'b', scopes: name(scopeName, RuleName.UnquotedString) },
+            { text: ',', scopes: name(scopeName, RuleName.Comma) },
+            { text: 'c', scopes: name(scopeName, RuleName.UnquotedString) },
+            { text: '; comment', scopes: name(scopeName, RuleName.InLineComment) },
+
+            { text: 'ControlGet', scopes: name(scopeName, RuleName.CommandName) },
+            { text: ',', scopes: name(scopeName, RuleName.Comma) },
+            { text: ',', scopes: name(scopeName, RuleName.Comma) },
+            { text: '%', scopes: name(scopeName, RuleName.PercentExpressionBegin) },
+            { text: 'a', scopes: name(scopeName, RuleName.Variable) },
             { text: ',', scopes: name(scopeName, RuleName.Comma) },
             { text: 'b', scopes: name(scopeName, RuleName.UnquotedString) },
             { text: ',', scopes: name(scopeName, RuleName.Comma) },

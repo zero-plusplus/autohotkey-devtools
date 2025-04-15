@@ -590,6 +590,7 @@ export const enum HighlightType {
   ExpressionWithOneTrueBrace = 'expressionwithonetruebrace',
   UnquotedString = 'unquotedstring',
   UnquotedStringShouldEscapeComma = 'unquoted_string_should_escapecomma',
+  RestParams = 'rest_params',
   LabelName = 'labelname',
   // Keywords to distinguish between signatures
   // e.g. `Control, Check`, `Control, UnCheck`

@@ -908,7 +908,7 @@ export function unquotedShouldEscapeComma(values: string[] = [], flags: CommandP
   return { type: HighlightType.UnquotedStringShouldEscapeComma, flags, values };
 }
 export function restParams(values: string[] = [], flags: CommandParameterFlag = CommandParameterFlag.None): CommandParameter {
-  return unquotedShouldEscapeComma(values, flags);
+  return { type: HighlightType.RestParams, flags, values };
 }
 export function labelName(values: string[] = [], flags: CommandParameterFlag = CommandParameterFlag.None): CommandParameter {
   return { type: HighlightType.LabelName, flags, values };

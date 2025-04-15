@@ -254,6 +254,7 @@ function parameterToOniguruma(parameter: CommandParameter, isLastParameter: bool
       return isLastParameter
         ? patterns_v1.expressionWithOneTrueBraceArgumentPattern
         : patterns_v1.commandArgumentPattern;
+    case HighlightType.RestParams:
     case HighlightType.UnquotedStringShouldEscapeComma: {
       if (isLastParameter) {
         return seq(groupMany1(seq(
@@ -380,10 +381,15 @@ function parameterToPatternsRule(scopeName: ScopeName, defenition: CommandDefini
         }),
       );
     }
+    case HighlightType.RestParams:
     case HighlightType.UnquotedStringShouldEscapeComma:
     {
       return patternsRule(
-        includeRule(Repository.PercentExpressions),
+        ...(
+          parameter.type === HighlightType.RestParams
+            ? [ includeRule(Repository.PercentExpression), includeRule(Repository.Comma) ]
+            : [ includeRule(Repository.PercentExpressions) ]
+        ),
         createArgumentStringRule(scopeName, {
           stringPattern: patterns_v1.commandArgumentPattern,
           stringRuleName: RuleName.UnquotedString,
