@@ -316,7 +316,6 @@ function parameterToPatternsRule(scopeName: ScopeName, defenition: CommandDefini
       }));
     }
     case HighlightType.GuiSubCommand:
-    case HighlightType.BlankOrGuiName:
     {
       return patternsRule(createAllowArgumentRule(scopeName, {
         stringPattern: patterns_v1.commandArgumentPattern,
@@ -469,25 +468,24 @@ function parameterToPatternsRule(scopeName: ScopeName, defenition: CommandDefini
             //            ^^^^^^^^
             {
               match: seq(
-                lookbehind(group(seq(
+                lookbehind(seq(
                   lookbehind(placeholder.startAnchor),
                   inlineSpaces0(),
                   ignoreCase(defenition.name),
                   alt(inlineSpace(), seq(inlineSpaces0(), char(','))),
                   inlineSpaces0(),
-                ))),
-                capture(wordChars1()),
+                )),
+                inlineSpaces0(),
+                group(alt(
+                  capture(seq(char('%'), anyChars0(), char('%'))),
+                  seq(negativeLookahead(char('%')), capture(wordChars1())),
+                )),
                 capture(char(':')),
               ),
               captures: {
-                1: patternsRule(
-                  includeRule(Repository.Dereference),
-                  {
-                    name: name(scopeName, RuleName.LabelName),
-                    match: wordChars1(),
-                  },
-                ),
-                2: nameRule(scopeName, RuleName.Colon),
+                1: patternsRule(includeRule(Repository.Dereference)),
+                2: nameRule(scopeName, RuleName.LabelName),
+                3: nameRule(scopeName, RuleName.Colon),
               },
             },
             // e.g. `Gui, GuiName:+Resize`
@@ -609,7 +607,7 @@ function optionItemsToRules(scopeName: ScopeName, optionItems: string[] | undefi
       const parsed = parseParameterValue(value);
       return parsed;
     }),
-    (item) => `${item.prefix}${item.type}`,
+    (item) => (typeof item.prefix === 'string' ? `${item.prefix}-${item.type}` : item.type),
   );
 
   return Object.entries(grouped).flatMap(([ , values ]): Rule[] => {
@@ -665,7 +663,7 @@ function parameterValueToRuleByType(scopeName: ScopeName, prefix: string | undef
           );
           case 'decimal': return numbers1();
           case 'hex': return hexPattern;
-          case 'range': return optseq(
+          case 'range': return seq(
             numberPattern,
             optseq(
               char('-'),

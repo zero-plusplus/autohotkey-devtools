@@ -29,10 +29,15 @@ export function createUnquotedStringRule(scopeName: ScopeName, placeholder: Plac
 export function createArgumentStringRule(scopeName: ScopeName, placeholder: Placeholder): MatchRule {
   return {
     match: seq(
-      inlineSpaces0(),
-      capture(seq(
-        negChar('%', '\\s'),
-        negChars0('\\s'),
+      lookbehind(alt(
+        inlineSpace(),
+        char(','),
+      )),
+      capture(negChars1('\\s')),
+      lookahead(alt(
+        inlineSpace(),
+        char(','),
+        endAnchor(),
       )),
     ),
     captures: {

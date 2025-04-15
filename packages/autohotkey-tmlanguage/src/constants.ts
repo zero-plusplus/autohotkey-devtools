@@ -614,11 +614,6 @@ export const enum HighlightType {
   Output = 'output',
   Invalid = 'invalid',
 
-  // Accepts blank or Gui name. **Probably used only for GuiControl**
-  // e.g. `GuiControl, ,`, `GuiControl, GuiName:`
-  //                  ^                 ^^^^^^^^
-  BlankOrGuiName = 'blank_or_guiname',
-
   // Accepts one arbitrary keyword, otherwise not accepted
   // e.g. `Gui, Flash, Off`
   //                   ^^^

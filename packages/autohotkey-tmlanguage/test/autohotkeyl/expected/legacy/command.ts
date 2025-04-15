@@ -11,27 +11,27 @@ export function createCommandStatementExpectedData(scopeName: ScopeName): Expect
     // https://www.autohotkey.com/docs/v1/lib/Control.htm
     [
       dedent`
-        Control, Check, blank, control-id         ; comment
-        Control, UnCheck, blank, control-id       ; comment
-        Control, Enable, blank, control-id        ; comment
-        Control, Disable, blank, control-id       ; comment
-        Control, Show, blank, control-id          ; comment
-        Control, Hide, blank, control-id          ; comment
-        Control, ShowDropDown, blank, control-id  ; comment
-        Control, HideDropDown, blank, control-id  ; comment
+        Control, Check, blank, control-id             ; comment
+        Control, UnCheck, blank, control-id           ; comment
+        Control, Enable, blank, control-id            ; comment
+        Control, Disable, blank, control-id           ; comment
+        Control, Show, blank, control-id              ; comment
+        Control, Hide, blank, control-id              ; comment
+        Control, ShowDropDown, blank, control-id      ; comment
+        Control, HideDropDown, blank, control-id      ; comment
 
-        Control, Style, +0x123, control-id           ; comment
-        Control, ExStyle, +0x123, control-id         ; comment
+        Control, Style, +0x123, control-id            ; comment
+        Control, ExStyle, +0x123, control-id          ; comment
 
-        Control, TabLeft, xxx, control-id         ; comment
-        Control, TabRight, xxx, control-id        ; comment
-        Control, Add, xxx, control-id             ; comment
-        Control, Delete, xxx, control-id          ; comment
-        Control, Choose, xxx, control-id          ; comment
-        Control, ChooseString, xxx, control-id    ; comment
-        Control, EditPaste, xxx, control-id       ; comment
+        Control, TabLeft, unquoted, control-id        ; comment
+        Control, TabRight, unquoted, control-id       ; comment
+        Control, Add, unquoted, control-id            ; comment
+        Control, Delete, unquoted, control-id         ; comment
+        Control, Choose, unquoted, control-id         ; comment
+        Control, ChooseString, unquoted, control-id   ; comment
+        Control, EditPaste, unquoted, control-id      ; comment
 
-        Control, XXX, blank, control-id           ; comment
+        Control, unquoted, blank, control-id          ; comment
       `,
       [
         ...[ 'Check', 'UnCheck', 'Enable', 'Disable', 'Show', 'Hide', 'ShowDropDown', 'HideDropDown' ].flatMap((subcommand): ParsedResult[] => {
@@ -68,7 +68,7 @@ export function createCommandStatementExpectedData(scopeName: ScopeName): Expect
             { text: ',', scopes: name(scopeName, RuleName.Comma) },
             { text: subcommand, scopes: name(scopeName, RuleName.SubCommandName) },
             { text: ',', scopes: name(scopeName, RuleName.Comma) },
-            { text: 'xxx', scopes: name(scopeName, RuleName.UnquotedString) },
+            { text: 'unquoted', scopes: name(scopeName, RuleName.UnquotedString) },
             { text: ',', scopes: name(scopeName, RuleName.Comma) },
             { text: 'control-id', scopes: name(scopeName, RuleName.UnquotedString) },
             { text: '; comment', scopes: name(scopeName, RuleName.InLineComment) },
@@ -77,7 +77,7 @@ export function createCommandStatementExpectedData(scopeName: ScopeName): Expect
 
         { text: 'Control', scopes: name(scopeName, RuleName.CommandName) },
         { text: ',', scopes: name(scopeName, RuleName.Comma) },
-        { text: 'XXX', scopes: name(scopeName, RuleName.UnquotedString) },
+        { text: 'unquoted', scopes: name(scopeName, RuleName.UnquotedString) },
         { text: ',', scopes: name(scopeName, RuleName.Comma) },
         { text: 'blank', scopes: name(scopeName, RuleName.UnquotedString) },
         { text: ',', scopes: name(scopeName, RuleName.Comma) },
@@ -89,7 +89,7 @@ export function createCommandStatementExpectedData(scopeName: ScopeName): Expect
     // https://www.autohotkey.com/docs/v1/lib/ControlGet.htm
     [
       dedent`
-        ControlGet, output, List, Selected, control-id ; comment
+        ControlGet, output, List, Selected, control-id      ; comment
 
         ControlGet, output, Checked, blank, control-id      ; comment
         ControlGet, output, Enabled, blank, control-id      ; comment
@@ -154,7 +154,7 @@ export function createCommandStatementExpectedData(scopeName: ScopeName): Expect
         Drive, UnLock, C:     ; comment
         Drive, Eject, C:, 1   ; comment
 
-        Drive, XXX, C:        ; comment
+        Drive, unquoted, C:   ; comment
       `,
       [
         { text: 'Drive', scopes: name(scopeName, RuleName.CommandName) },
@@ -191,7 +191,7 @@ export function createCommandStatementExpectedData(scopeName: ScopeName): Expect
 
         { text: 'Drive', scopes: name(scopeName, RuleName.CommandName) },
         { text: ',', scopes: name(scopeName, RuleName.Comma) },
-        { text: 'XXX', scopes: name(scopeName, RuleName.UnquotedString) },
+        { text: 'unquoted', scopes: name(scopeName, RuleName.UnquotedString) },
         { text: ',', scopes: name(scopeName, RuleName.Comma) },
         { text: 'C:', scopes: name(scopeName, RuleName.UnquotedString) },
         { text: '; comment', scopes: name(scopeName, RuleName.InLineComment) },
@@ -212,7 +212,7 @@ export function createCommandStatementExpectedData(scopeName: ScopeName): Expect
         DriveGet, output, Status, \\path\\to    ; comment
         DriveGet, output, StatusCD, C:          ; comment
 
-        DriveGet, output, XXX, C:               ; comment
+        DriveGet, output, unquoted, C:          ; comment
       `,
       [
         { text: 'DriveGet', scopes: name(scopeName, RuleName.CommandName) },
@@ -298,7 +298,7 @@ export function createCommandStatementExpectedData(scopeName: ScopeName): Expect
         { text: ',', scopes: name(scopeName, RuleName.Comma) },
         { text: 'output', scopes: name(scopeName, RuleName.Variable) },
         { text: ',', scopes: name(scopeName, RuleName.Comma) },
-        { text: 'XXX', scopes: name(scopeName, RuleName.UnquotedString) },
+        { text: 'unquoted', scopes: name(scopeName, RuleName.UnquotedString) },
         { text: ',', scopes: name(scopeName, RuleName.Comma) },
         { text: 'C:', scopes: name(scopeName, RuleName.UnquotedString) },
         { text: '; comment', scopes: name(scopeName, RuleName.InLineComment) },
@@ -468,6 +468,7 @@ export function createCommandStatementExpectedData(scopeName: ScopeName): Expect
     [
       dedent`
         GuiControl,, unquoted, unquoted                     ; comment
+        GuiControl, +AltSubmit, unquoted, unquoted          ; comment
         GuiControl, Text, unquoted, unquoted                ; comment
         GuiControl, Choose, unquoted, unquoted              ; comment
         GuiControl, ChooseString, unquoted, unquoted        ; comment
@@ -484,6 +485,15 @@ export function createCommandStatementExpectedData(scopeName: ScopeName): Expect
       [
         { text: 'GuiControl', scopes: name(scopeName, RuleName.CommandName) },
         { text: ',', scopes: name(scopeName, RuleName.Comma) },
+        { text: ',', scopes: name(scopeName, RuleName.Comma) },
+        { text: 'unquoted', scopes: name(scopeName, RuleName.UnquotedString) },
+        { text: ',', scopes: name(scopeName, RuleName.Comma) },
+        { text: 'unquoted', scopes: name(scopeName, RuleName.UnquotedString) },
+        { text: '; comment', scopes: name(scopeName, RuleName.InLineComment) },
+
+        { text: 'GuiControl', scopes: name(scopeName, RuleName.CommandName) },
+        { text: ',', scopes: name(scopeName, RuleName.Comma) },
+        { text: '+AltSubmit', scopes: name(scopeName, RuleName.UnquotedString, StyleName.Strong) },
         { text: ',', scopes: name(scopeName, RuleName.Comma) },
         { text: 'unquoted', scopes: name(scopeName, RuleName.UnquotedString) },
         { text: ',', scopes: name(scopeName, RuleName.Comma) },
@@ -1118,7 +1128,7 @@ export function createCommandStatementExpectedData(scopeName: ScopeName): Expect
         WinSet, Disable, blank, ahk_id, unquoted, unquoted, unquoted            ; comment
         WinSet, Enable, blank, ahk_id, unquoted, unquoted, unquoted             ; comment
         WinSet, Redraw, blank, ahk_id, unquoted, unquoted, unquoted             ; comment
-        WinSet, Region, 10-10 R10-10, ahk_id, unquoted, unquoted, unquoted      ; comment
+        WinSet, Region, R10-10, ahk_id, unquoted, unquoted, unquoted            ; comment
       `,
       [
         { text: 'WinSet', scopes: name(scopeName, RuleName.CommandName) },
@@ -1197,7 +1207,6 @@ export function createCommandStatementExpectedData(scopeName: ScopeName): Expect
         { text: ',', scopes: name(scopeName, RuleName.Comma) },
         { text: 'Region', scopes: name(scopeName, RuleName.SubCommandName) },
         { text: ',', scopes: name(scopeName, RuleName.Comma) },
-        { text: '10-10', scopes: name(scopeName, RuleName.UnquotedString, StyleName.Strong) },
         { text: 'R10-10', scopes: name(scopeName, RuleName.UnquotedString, StyleName.Strong) },
         { text: ',', scopes: name(scopeName, RuleName.Comma) },
         { text: 'ahk_id', scopes: name(scopeName, RuleName.UnquotedString, StyleName.Strong) },

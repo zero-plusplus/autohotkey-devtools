@@ -353,7 +353,6 @@ export const commandDefinitions: CommandDefinition[] = [
     signature([ guiSubcommand([ 'Move', 'MoveDraw' ]), control(), controlMoveOptions() ]),
     signature([ guiSubcommand([ 'Focus', 'Disable', 'Enable', 'Hide', 'Show', 'Font' ]), control() ]),
     signature([ guiControlOptions(), control(), unquoted() ]),
-    signature([ blankOrGuiName(), control(), unquoted() ]),
   ]),
 
   // https://www.autohotkey.com/docs/v1/lib/GuiControlGet.htm
@@ -812,19 +811,15 @@ export const jumpCommandDefenitions: CommandDefinition[] = [
 // #region helpers
 export interface ParameterValue {
   prefix: string | undefined;
-  type: string | undefined;
+  type: string;
   value: string;
 }
 export function parseParameterValue(value: string): ParameterValue {
-  if (value.startsWith('<') && value.endsWith('>')) {
-    // e.g. `'<range>' -> 10-10`
-    return { prefix: undefined, value: '', type: value.slice(1, -1) };
-  }
+  const match = value.match(/(<(?<prefix>[>a-zA-Z_-]+)>)?(?<value>[^<]*)(<(?<type>[>a-zA-Z_-]+)>)?/);
 
-  const match = value.match(/(<(?<prefix>[a-zA-Z_-]+)>)?(?<value>[^<]*)(<(?<type>[a-zA-Z_-]+)>)?/);
   return {
     prefix: match?.groups?.['prefix'],
-    type: match?.groups?.['type'],
+    type: match?.groups?.['type'] ?? 'keyword',
     value: String(match!.groups!['value']),
   };
 }
@@ -906,9 +901,6 @@ export function guiSubcommand(values: string | string[] = [], flags: CommandPara
 export function blank(flags: CommandParameterFlag = CommandParameterFlag.None): CommandParameter {
   return { type: HighlightType.Blank, flags };
 }
-export function blankOrGuiName(flags: CommandParameterFlag = CommandParameterFlag.None): CommandParameter {
-  return { type: HighlightType.BlankOrGuiName, flags };
-}
 export function unquoted(values: string[] = [], flags: CommandParameterFlag = CommandParameterFlag.None): CommandParameter {
   return { type: HighlightType.UnquotedString, flags, values };
 }
@@ -938,29 +930,29 @@ export function guiOptions(flags: CommandParameterFlag = CommandParameterFlag.No
     type: HighlightType.GuiOptions,
     flags,
     values: [
-      flagOptionItem('AlwaysOnTop'),
-      flagOptionItem('Border'),
-      flagOptionItem('Caption'),
-      flagOptionItem('DelimiterSpace'),
-      flagOptionItem('DelimiterTab'),
+      flagOptionItem(optionItem('AlwaysOnTop')),
+      flagOptionItem(optionItem('Border')),
+      flagOptionItem(optionItem('Caption')),
+      flagOptionItem(optionItem('DelimiterSpace')),
+      flagOptionItem(optionItem('DelimiterTab')),
       flagOptionItem(stringOptionItem('Delimiter')),
-      flagOptionItem('Disabled'),
-      flagOptionItem('DPIScale'),
-      wordOptionItem('Hwnd'),
+      flagOptionItem(optionItem('Disabled')),
+      flagOptionItem(optionItem('DPIScale')),
+      flagOptionItem(wordOptionItem('Hwnd')),
       flagOptionItem(wordOptionItem('Label')),
       flagOptionItem(wordOptionItem('LastFound')),
-      flagOptionItem('LastFoundExist'),
-      flagOptionItem('MaximizeBox'),
-      flagOptionItem('MinimizeBox'),
+      flagOptionItem(optionItem('LastFoundExist')),
+      flagOptionItem(optionItem('MaximizeBox')),
+      flagOptionItem(optionItem('MinimizeBox')),
       flagOptionItem(sizeOptionItem('MinSize')),
       flagOptionItem(sizeOptionItem('MaxSize')),
-      flagOptionItem('OwnDialogs'),
-      flagOptionItem('Owner'),
-      flagOptionItem('Parent'),
-      flagOptionItem('Resize'),
-      flagOptionItem('SysMenu'),
-      flagOptionItem('Theme'),
-      flagOptionItem('ToolWindow'),
+      flagOptionItem(optionItem('OwnDialogs')),
+      flagOptionItem(optionItem('Owner')),
+      flagOptionItem(optionItem('Parent')),
+      flagOptionItem(optionItem('Resize')),
+      flagOptionItem(optionItem('SysMenu')),
+      flagOptionItem(optionItem('Theme')),
+      flagOptionItem(optionItem('ToolWindow')),
     ],
   };
 }
@@ -1052,35 +1044,35 @@ export function guiControlOptions(): CommandParameter {
     type: HighlightType.GuiOptions,
     flags: CommandParameterFlag.None,
     values: [
-      numberOptionItem('R'),
-      numberOptionItem('W'),
-      numberOptionItem('H'),
-      numberOptionItem('WP'),
-      numberOptionItem('HP'),
-      optionItem('X+M'),
-      optionItem('X-M'),
-      optionItem('Y+M'),
-      optionItem('Y-M'),
-      signedNumberOptionItem('X'),
-      signedNumberOptionItem('Y'),
-      signedNumberOptionItem('XP'),
-      signedNumberOptionItem('YP'),
-      signedNumberOptionItem('XM'),
-      signedNumberOptionItem('YM'),
-      signedNumberOptionItem('XS'),
-      signedNumberOptionItem('YS'),
-      wordOptionItem('V'),
-      wordOptionItem('G'),
-      optionItem('AltSubmit'),
-      hexOptionItem('C'),
-      optionItem('CDefault'),
-      numberOptionItem('Choose'),
-      toggleOptionItem('Disabled'),
-      toggleOptionItem('Hidden'),
-      optionItem('Left'),
-      optionItem('Right'),
-      optionItem('Center'),
-      optionItem('Section'),
+      flagOptionItem(numberOptionItem('R')),
+      flagOptionItem(numberOptionItem('W')),
+      flagOptionItem(numberOptionItem('H')),
+      flagOptionItem(numberOptionItem('WP')),
+      flagOptionItem(numberOptionItem('HP')),
+      flagOptionItem(optionItem('X+M')),
+      flagOptionItem(optionItem('X-M')),
+      flagOptionItem(optionItem('Y+M')),
+      flagOptionItem(optionItem('Y-M')),
+      flagOptionItem(signedNumberOptionItem('X')),
+      flagOptionItem(signedNumberOptionItem('Y')),
+      flagOptionItem(signedNumberOptionItem('XP')),
+      flagOptionItem(signedNumberOptionItem('YP')),
+      flagOptionItem(signedNumberOptionItem('XM')),
+      flagOptionItem(signedNumberOptionItem('YM')),
+      flagOptionItem(signedNumberOptionItem('XS')),
+      flagOptionItem(signedNumberOptionItem('YS')),
+      flagOptionItem(wordOptionItem('V')),
+      flagOptionItem(wordOptionItem('G')),
+      flagOptionItem(optionItem('AltSubmit')),
+      flagOptionItem(hexOptionItem('C')),
+      flagOptionItem(optionItem('CDefault')),
+      flagOptionItem(numberOptionItem('Choose')),
+      flagOptionItem(toggleOptionItem('Disabled')),
+      flagOptionItem(toggleOptionItem('Hidden')),
+      flagOptionItem(optionItem('Left')),
+      flagOptionItem(optionItem('Right')),
+      flagOptionItem(optionItem('Center')),
+      flagOptionItem(optionItem('Section')),
       flagOptionItem(optionItem('Tabstop')),
       flagOptionItem(optionItem('Wrap')),
       flagOptionItem(numberOptionItem('VScroll')),
@@ -1088,7 +1080,7 @@ export function guiControlOptions(): CommandParameter {
       flagOptionItem(optionItem('BackgroundTrans')),
       flagOptionItem(optionItem('Background')),
       flagOptionItem(optionItem('Border')),
-      wordOptionItem(optionItem('Hwnd')),
+      flagOptionItem(wordOptionItem('Hwnd')),
       flagOptionItem(optionItem('Theme')),
     ],
   };
