@@ -1,5 +1,5 @@
 import { dedent } from '@zero-plusplus/utilities/src';
-import { onOff } from '../../../../src/autohotkeyl/definition';
+import { onOff, unquoted } from '../../../../src/autohotkeyl/definition';
 import { RuleName, StyleName } from '../../../../src/constants';
 import type { ScopeName } from '../../../../src/types';
 import { name } from '../../../../src/utils';
@@ -1234,6 +1234,23 @@ export function createCommandStatementExpectedData(scopeName: ScopeName): Expect
         AutoTrim, % on                ; comment
         AutoTrim, %o%%f%%f%           ; comment
         AutoTrim, on,                 ; comment
+
+        BlockInput, Send
+        BlockInput, Mouse
+        BlockInput, SendAndMouse
+        BlockInput, Default
+        BlockInput, MouseMove
+        BlockInput, MouseMoveOff
+        BlockInput, on
+        BlockInput, ON
+        BlockInput, off
+        BlockInput, OFF
+        BlockInput, 1
+        BlockInput, 0
+
+        BlockInput, % on                ; comment
+        BlockInput, %o%%f%%f%           ; comment
+        BlockInput, on,                 ; comment
       `,
       [
         ...[ 'on', 'ON', 'off', 'OFF', '1', '0' ].flatMap((arg) => {
@@ -1271,24 +1288,7 @@ export function createCommandStatementExpectedData(scopeName: ScopeName): Expect
         { text: 'on', scopes: name(scopeName, RuleName.UnquotedString, StyleName.Strong) },
         { text: ',', scopes: name(scopeName, RuleName.UnquotedString, StyleName.Invalid) },
         { text: '; comment', scopes: name(scopeName, RuleName.InLineComment) },
-      ],
-    ],
-    [
-      dedent`
-        BlockInput, Send
-        BlockInput, Mouse
-        BlockInput, SendAndMouse
-        BlockInput, Default
-        BlockInput, MouseMove
-        BlockInput, MouseMoveOff
-        BlockInput, on
-        BlockInput, ON
-        BlockInput, off
-        BlockInput, OFF
-        BlockInput, 1
-        BlockInput, 0
-      `,
-      [
+
         ...[
           ...[ // keywords
             'Send',
@@ -1313,20 +1313,62 @@ export function createCommandStatementExpectedData(scopeName: ScopeName): Expect
             { text: arg, scopes: name(scopeName, RuleName.UnquotedString, StyleName.Strong) },
           ];
         }),
+
+        { text: 'BlockInput', scopes: name(scopeName, RuleName.CommandName) },
+        { text: ',', scopes: name(scopeName, RuleName.Comma) },
+        { text: '%', scopes: name(scopeName, RuleName.PercentExpressionBegin) },
+        { text: 'on', scopes: name(scopeName, RuleName.Variable) },
+        { text: '; comment', scopes: name(scopeName, RuleName.InLineComment) },
+
+        { text: 'BlockInput', scopes: name(scopeName, RuleName.CommandName) },
+        { text: ',', scopes: name(scopeName, RuleName.Comma) },
+        { text: '%', scopes: name(scopeName, RuleName.PercentBegin) },
+        { text: 'o', scopes: name(scopeName, RuleName.Variable) },
+        { text: '%', scopes: name(scopeName, RuleName.PercentEnd) },
+        { text: '%', scopes: name(scopeName, RuleName.PercentBegin) },
+        { text: 'f', scopes: name(scopeName, RuleName.Variable) },
+        { text: '%', scopes: name(scopeName, RuleName.PercentEnd) },
+        { text: '%', scopes: name(scopeName, RuleName.PercentBegin) },
+        { text: 'f', scopes: name(scopeName, RuleName.Variable) },
+        { text: '%', scopes: name(scopeName, RuleName.PercentEnd) },
+        { text: '; comment', scopes: name(scopeName, RuleName.InLineComment) },
+
+        { text: 'BlockInput', scopes: name(scopeName, RuleName.CommandName) },
+        { text: ',', scopes: name(scopeName, RuleName.Comma) },
+        { text: 'on', scopes: name(scopeName, RuleName.UnquotedString, StyleName.Strong) },
+        { text: ',', scopes: name(scopeName, RuleName.UnquotedString, StyleName.Invalid) },
+        { text: '; comment', scopes: name(scopeName, RuleName.InLineComment) },
       ],
     ],
-    // [
-    //   dedent`
-    //     Click, 100 200 Left
-    //   `,
-    //   [
-    //     { text: 'Click', scopes: name(scopeName, RuleName.CommandName) },
-    //     { text: ',', scopes: name(scopeName, RuleName.Comma) },
-    //     { text: '100', scopes: name(scopeName, RuleName.Integer) },
-    //     { text: '200', scopes: name(scopeName, RuleName.Integer) },
-    //     { text: 'Left', scopes: name(scopeName, RuleName.UnquotedString, StyleName.Strong) },
-    //   ],
-    // ],
+    [
+      dedent`
+        Click, 100 200 Left
+        Click, 100 200 L
+        Click, 100 200 Right
+        Click, 100 200 R
+        Click, 100 200 Middle
+        Click, 100 200 M
+        Click, 100 200 X1
+        Click, 100 200 X2
+        Click, 100 200 Up
+        Click, 100 200 U
+        Click, 100 200 Down
+        Click, 100 200 D
+      `,
+      [
+        ...[ 'Left', 'L', 'Right', 'R', 'Middle', 'M', 'X1', 'X2', 'Up', 'U', 'Down', 'D' ].flatMap((keyword) => {
+          unquoted;
+
+          return [
+            { text: 'Click', scopes: name(scopeName, RuleName.CommandName) },
+            { text: ',', scopes: name(scopeName, RuleName.Comma) },
+            { text: '100', scopes: name(scopeName, RuleName.Integer) },
+            { text: '200', scopes: name(scopeName, RuleName.Integer) },
+            { text: keyword, scopes: name(scopeName, RuleName.UnquotedString, StyleName.Strong) },
+          ];
+        }),
+      ],
+    ],
     // #endregion arg
 
     // Fix: If the last argument is a percent expression, the comma after is highlighted as a string
