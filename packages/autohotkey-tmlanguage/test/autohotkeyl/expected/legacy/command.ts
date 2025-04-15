@@ -1,6 +1,6 @@
 import { dedent } from '@zero-plusplus/utilities/src';
 import { blank, control, expression, onOff, unquoted, winTitle } from '../../../../src/autohotkeyl/definition';
-import { RuleName, StyleName } from '../../../../src/constants';
+import { RuleDescriptor, RuleName, StyleName } from '../../../../src/constants';
 import type { ScopeName } from '../../../../src/types';
 import { name } from '../../../../src/utils';
 import type { ExpectedTestData, ParsedResult } from '../../../types';
@@ -1403,7 +1403,9 @@ export function createCommandStatementExpectedData(scopeName: ScopeName): Expect
     ],
     [
       dedent`
-        Control, Check, blank              ; comment
+        Control, Check, blank             ; comment
+        Control, Check, %blank%           ; comment
+        Control, Check, % blank           ; comment
       `,
       [
         ...((): ParsedResult[] => {
@@ -1416,6 +1418,21 @@ export function createCommandStatementExpectedData(scopeName: ScopeName): Expect
             { text: ',', scopes: name(scopeName, RuleName.Comma) },
             { text: 'blank', scopes: name(scopeName, RuleName.UnquotedString, StyleName.Invalid) },
             { text: '; comment', scopes: name(scopeName, RuleName.InLineComment) },
+
+            { text: 'Control', scopes: name(scopeName, RuleName.CommandName) },
+            { text: ',', scopes: name(scopeName, RuleName.Comma) },
+            { text: 'Check', scopes: name(scopeName, RuleName.SubCommandName) },
+            { text: ',', scopes: name(scopeName, RuleName.Comma) },
+            { text: '%blank%', scopes: name(scopeName, RuleName.UnquotedString, StyleName.Invalid) },
+            { text: '; comment', scopes: name(scopeName, RuleName.InLineComment) },
+
+            { text: 'Control', scopes: name(scopeName, RuleName.CommandName) },
+            { text: ',', scopes: name(scopeName, RuleName.Comma) },
+            { text: 'Check', scopes: name(scopeName, RuleName.SubCommandName) },
+            { text: ',', scopes: name(scopeName, RuleName.Comma) },
+            { text: '%', scopes: name(scopeName, RuleName.UnquotedString, StyleName.Invalid) },
+            { text: 'blank', scopes: name(scopeName, RuleName.UnquotedString, StyleName.Invalid) },
+            { text: '; comment', scopes: name(scopeName, RuleName.InLineComment) },
           ];
         })(),
       ],
@@ -1423,6 +1440,7 @@ export function createCommandStatementExpectedData(scopeName: ScopeName): Expect
     [
       dedent`
         Control, Check,, ahk_id %ctrlHwnd%              ; comment
+        Control, Check,, % "ahk_id" ctrlHwnd            ; comment
       `,
       [
         ...((): ParsedResult[] => {
@@ -1439,6 +1457,18 @@ export function createCommandStatementExpectedData(scopeName: ScopeName): Expect
             { text: 'ctrlHwnd', scopes: name(scopeName, RuleName.Variable) },
             { text: '%', scopes: name(scopeName, RuleName.PercentEnd) },
             { text: '; comment', scopes: name(scopeName, RuleName.InLineComment) },
+
+            { text: 'Control', scopes: name(scopeName, RuleName.CommandName) },
+            { text: ',', scopes: name(scopeName, RuleName.Comma) },
+            { text: 'Check', scopes: name(scopeName, RuleName.SubCommandName) },
+            { text: ',', scopes: name(scopeName, RuleName.Comma) },
+            { text: ',', scopes: name(scopeName, RuleName.Comma) },
+            { text: '%', scopes: name(scopeName, RuleName.PercentExpressionBegin) },
+            { text: '"', scopes: name(scopeName, RuleName.DoubleString, RuleDescriptor.Begin) },
+            { text: 'ahk_id', scopes: name(scopeName, RuleName.DoubleString) },
+            { text: '"', scopes: name(scopeName, RuleName.DoubleString, RuleDescriptor.End) },
+            { text: 'ctrlHwnd', scopes: name(scopeName, RuleName.Variable) },
+            { text: '; comment', scopes: name(scopeName, RuleName.InLineComment) },
           ];
         })(),
       ],
@@ -1446,6 +1476,7 @@ export function createCommandStatementExpectedData(scopeName: ScopeName): Expect
     [
       dedent`
         Control, Check,,, ahk_class %winHwnd%               ; comment
+        Control, Check,,, % "ahk_class" winHwnd             ; comment
       `,
       [
         ...((): ParsedResult[] => {
@@ -1462,6 +1493,19 @@ export function createCommandStatementExpectedData(scopeName: ScopeName): Expect
             { text: '%', scopes: name(scopeName, RuleName.PercentBegin) },
             { text: 'winHwnd', scopes: name(scopeName, RuleName.Variable) },
             { text: '%', scopes: name(scopeName, RuleName.PercentEnd) },
+            { text: '; comment', scopes: name(scopeName, RuleName.InLineComment) },
+
+            { text: 'Control', scopes: name(scopeName, RuleName.CommandName) },
+            { text: ',', scopes: name(scopeName, RuleName.Comma) },
+            { text: 'Check', scopes: name(scopeName, RuleName.SubCommandName) },
+            { text: ',', scopes: name(scopeName, RuleName.Comma) },
+            { text: ',', scopes: name(scopeName, RuleName.Comma) },
+            { text: ',', scopes: name(scopeName, RuleName.Comma) },
+            { text: '%', scopes: name(scopeName, RuleName.PercentExpressionBegin) },
+            { text: '"', scopes: name(scopeName, RuleName.DoubleString, RuleDescriptor.Begin) },
+            { text: 'ahk_class', scopes: name(scopeName, RuleName.DoubleString) },
+            { text: '"', scopes: name(scopeName, RuleName.DoubleString, RuleDescriptor.End) },
+            { text: 'winHwnd', scopes: name(scopeName, RuleName.Variable) },
             { text: '; comment', scopes: name(scopeName, RuleName.InLineComment) },
           ];
         })(),

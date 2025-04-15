@@ -283,11 +283,10 @@ function parameterToPatternsRule(scopeName: ScopeName, defenition: CommandDefini
     case HighlightType.Invalid:
     case HighlightType.Blank:
     {
-      return patternsRule(createAllowArgumentRule(scopeName, {
-        stringPattern: patterns_v1.commandArgumentPattern,
-        stringRuleName: RuleName.UnquotedString,
-        allowRules: [],
-      }));
+      return patternsRule({
+        name: name(scopeName, RuleName.UnquotedString, StyleName.Invalid),
+        match: negChars1(',', inlineSpace()),
+      });
     }
     case HighlightType.SubCommand:
     case HighlightType.SubCommandLike:
