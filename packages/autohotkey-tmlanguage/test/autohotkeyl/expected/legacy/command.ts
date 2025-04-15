@@ -1,5 +1,5 @@
 import { dedent } from '@zero-plusplus/utilities/src';
-import { expression, onOff, unquoted } from '../../../../src/autohotkeyl/definition';
+import { blank, control, expression, onOff, unquoted, winTitle } from '../../../../src/autohotkeyl/definition';
 import { RuleName, StyleName } from '../../../../src/constants';
 import type { ScopeName } from '../../../../src/types';
 import { name } from '../../../../src/utils';
@@ -1396,6 +1396,72 @@ export function createCommandStatementExpectedData(scopeName: ScopeName): Expect
             { text: 'var', scopes: name(scopeName, RuleName.Variable) },
             { text: ',', scopes: name(scopeName, RuleName.Comma) },
             { text: '1', scopes: name(scopeName, RuleName.Integer) },
+            { text: '; comment', scopes: name(scopeName, RuleName.InLineComment) },
+          ];
+        })(),
+      ],
+    ],
+    [
+      dedent`
+        Control, Check, blank              ; comment
+      `,
+      [
+        ...((): ParsedResult[] => {
+          blank;
+
+          return [
+            { text: 'Control', scopes: name(scopeName, RuleName.CommandName) },
+            { text: ',', scopes: name(scopeName, RuleName.Comma) },
+            { text: 'Check', scopes: name(scopeName, RuleName.SubCommandName) },
+            { text: ',', scopes: name(scopeName, RuleName.Comma) },
+            { text: 'blank', scopes: name(scopeName, RuleName.UnquotedString, StyleName.Invalid) },
+            { text: '; comment', scopes: name(scopeName, RuleName.InLineComment) },
+          ];
+        })(),
+      ],
+    ],
+    [
+      dedent`
+        Control, Check,, ahk_id %ctrlHwnd%              ; comment
+      `,
+      [
+        ...((): ParsedResult[] => {
+          control;
+
+          return [
+            { text: 'Control', scopes: name(scopeName, RuleName.CommandName) },
+            { text: ',', scopes: name(scopeName, RuleName.Comma) },
+            { text: 'Check', scopes: name(scopeName, RuleName.SubCommandName) },
+            { text: ',', scopes: name(scopeName, RuleName.Comma) },
+            { text: ',', scopes: name(scopeName, RuleName.Comma) },
+            { text: 'ahk_id', scopes: name(scopeName, RuleName.UnquotedString, StyleName.Strong) },
+            { text: '%', scopes: name(scopeName, RuleName.PercentBegin) },
+            { text: 'ctrlHwnd', scopes: name(scopeName, RuleName.Variable) },
+            { text: '%', scopes: name(scopeName, RuleName.PercentEnd) },
+            { text: '; comment', scopes: name(scopeName, RuleName.InLineComment) },
+          ];
+        })(),
+      ],
+    ],
+    [
+      dedent`
+        Control, Check,,, ahk_class %winHwnd%               ; comment
+      `,
+      [
+        ...((): ParsedResult[] => {
+          winTitle;
+
+          return [
+            { text: 'Control', scopes: name(scopeName, RuleName.CommandName) },
+            { text: ',', scopes: name(scopeName, RuleName.Comma) },
+            { text: 'Check', scopes: name(scopeName, RuleName.SubCommandName) },
+            { text: ',', scopes: name(scopeName, RuleName.Comma) },
+            { text: ',', scopes: name(scopeName, RuleName.Comma) },
+            { text: ',', scopes: name(scopeName, RuleName.Comma) },
+            { text: 'ahk_class', scopes: name(scopeName, RuleName.UnquotedString, StyleName.Strong) },
+            { text: '%', scopes: name(scopeName, RuleName.PercentBegin) },
+            { text: 'winHwnd', scopes: name(scopeName, RuleName.Variable) },
+            { text: '%', scopes: name(scopeName, RuleName.PercentEnd) },
             { text: '; comment', scopes: name(scopeName, RuleName.InLineComment) },
           ];
         })(),
