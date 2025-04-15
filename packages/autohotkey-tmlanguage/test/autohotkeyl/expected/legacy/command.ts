@@ -1,5 +1,5 @@
 import { dedent } from '@zero-plusplus/utilities/src';
-import { blank, control, expression, onOff, unquoted, winTitle } from '../../../../src/autohotkeyl/definition';
+import { blank, control, expression, onOff, output, restParams, unquoted, winTitle } from '../../../../src/autohotkeyl/definition';
 import { RuleDescriptor, RuleName, StyleName } from '../../../../src/constants';
 import type { ScopeName } from '../../../../src/types';
 import { name } from '../../../../src/utils';
@@ -1506,6 +1506,45 @@ export function createCommandStatementExpectedData(scopeName: ScopeName): Expect
             { text: 'ahk_class', scopes: name(scopeName, RuleName.DoubleString) },
             { text: '"', scopes: name(scopeName, RuleName.DoubleString, RuleDescriptor.End) },
             { text: 'winHwnd', scopes: name(scopeName, RuleName.Variable) },
+            { text: '; comment', scopes: name(scopeName, RuleName.InLineComment) },
+          ];
+        })(),
+      ],
+    ],
+    [
+      dedent`
+        ControlGet, output    ; comment
+      `,
+      [
+        ...((): ParsedResult[] => {
+          output;
+
+          return [
+            { text: 'ControlGet', scopes: name(scopeName, RuleName.CommandName) },
+            { text: ',', scopes: name(scopeName, RuleName.Comma) },
+            { text: 'output', scopes: name(scopeName, RuleName.Variable) },
+            { text: '; comment', scopes: name(scopeName, RuleName.InLineComment) },
+          ];
+        })(),
+      ],
+    ],
+    [
+      dedent`
+        ControlGet,, a, b, c    ; comment
+      `,
+      [
+        ...((): ParsedResult[] => {
+          restParams;
+
+          return [
+            { text: 'ControlGet', scopes: name(scopeName, RuleName.CommandName) },
+            { text: ',', scopes: name(scopeName, RuleName.Comma) },
+            { text: ',', scopes: name(scopeName, RuleName.Comma) },
+            { text: 'a', scopes: name(scopeName, RuleName.UnquotedString) },
+            { text: ',', scopes: name(scopeName, RuleName.Comma) },
+            { text: 'b', scopes: name(scopeName, RuleName.UnquotedString) },
+            { text: ',', scopes: name(scopeName, RuleName.Comma) },
+            { text: 'c', scopes: name(scopeName, RuleName.UnquotedString) },
             { text: '; comment', scopes: name(scopeName, RuleName.InLineComment) },
           ];
         })(),
