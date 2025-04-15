@@ -1224,12 +1224,16 @@ export function createCommandStatementExpectedData(scopeName: ScopeName): Expect
     // #region arg
     [
       dedent`
-        AutoTrim, on
-        AutoTrim, ON
-        AutoTrim, off
-        AutoTrim, OFF
-        AutoTrim, 1
-        AutoTrim, 0
+        AutoTrim, on                  ; comment
+        AutoTrim, ON                  ; comment
+        AutoTrim, off                 ; comment
+        AutoTrim, OFF                 ; comment
+        AutoTrim, 1                   ; comment
+        AutoTrim, 0                   ; comment
+
+        AutoTrim, % on                ; comment
+        AutoTrim, %o%%f%%f%           ; comment
+        AutoTrim, on,                 ; comment
       `,
       [
         ...[ 'on', 'ON', 'off', 'OFF', '1', '0' ].flatMap((arg) => {
@@ -1239,8 +1243,34 @@ export function createCommandStatementExpectedData(scopeName: ScopeName): Expect
             { text: 'AutoTrim', scopes: name(scopeName, RuleName.CommandName) },
             { text: ',', scopes: name(scopeName, RuleName.Comma) },
             { text: arg, scopes: name(scopeName, RuleName.UnquotedString, StyleName.Strong) },
+            { text: '; comment', scopes: name(scopeName, RuleName.InLineComment) },
           ];
         }),
+
+        { text: 'AutoTrim', scopes: name(scopeName, RuleName.CommandName) },
+        { text: ',', scopes: name(scopeName, RuleName.Comma) },
+        { text: '%', scopes: name(scopeName, RuleName.PercentExpressionBegin) },
+        { text: 'on', scopes: name(scopeName, RuleName.Variable) },
+        { text: '; comment', scopes: name(scopeName, RuleName.InLineComment) },
+
+        { text: 'AutoTrim', scopes: name(scopeName, RuleName.CommandName) },
+        { text: ',', scopes: name(scopeName, RuleName.Comma) },
+        { text: '%', scopes: name(scopeName, RuleName.PercentBegin) },
+        { text: 'o', scopes: name(scopeName, RuleName.Variable) },
+        { text: '%', scopes: name(scopeName, RuleName.PercentEnd) },
+        { text: '%', scopes: name(scopeName, RuleName.PercentBegin) },
+        { text: 'f', scopes: name(scopeName, RuleName.Variable) },
+        { text: '%', scopes: name(scopeName, RuleName.PercentEnd) },
+        { text: '%', scopes: name(scopeName, RuleName.PercentBegin) },
+        { text: 'f', scopes: name(scopeName, RuleName.Variable) },
+        { text: '%', scopes: name(scopeName, RuleName.PercentEnd) },
+        { text: '; comment', scopes: name(scopeName, RuleName.InLineComment) },
+
+        { text: 'AutoTrim', scopes: name(scopeName, RuleName.CommandName) },
+        { text: ',', scopes: name(scopeName, RuleName.Comma) },
+        { text: 'on', scopes: name(scopeName, RuleName.UnquotedString, StyleName.Strong) },
+        { text: ',', scopes: name(scopeName, RuleName.UnquotedString, StyleName.Invalid) },
+        { text: '; comment', scopes: name(scopeName, RuleName.InLineComment) },
       ],
     ],
     [
