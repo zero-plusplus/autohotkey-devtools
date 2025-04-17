@@ -1,3 +1,4 @@
+import * as constants_common from '../common/constants';
 import { CommandFlag, CommandParameterFlag, CommandSignatureFlag, HighlightType } from '../constants';
 import type { CommandDefinition, CommandParameter, CommandSignature, SubCommandParameter } from '../types';
 
@@ -180,7 +181,7 @@ export const commandDefinitions: CommandDefinition[] = [
   command('ControlSend', signature([ control(), sendKeys(), ...winParams ])),
 
   // https://www.autohotkey.com/docs/v1/lib/ControlSendRaw.htm
-  command('ControlSendRaw', signature([ control(), sendKeys(), ...winParams ])),
+  command('ControlSendRaw', signature([ control(), unquoted(), ...winParams ])),
 
   // https://www.autohotkey.com/docs/v1/lib/ControlSetText.htm
   command('ControlSetText', signature([ control(), unquoted(), ...winParams ])),
@@ -390,7 +391,7 @@ export const commandDefinitions: CommandDefinition[] = [
   command('KeyHistory', signature([])),
 
   // https://www.autohotkey.com/docs/v1/lib/KeyWait.htm
-  command('KeyWait', signature([ keyName(), unquoted([ optionItem('D'), optionItem('L'), optionItem('T') ]) ])),
+  command('KeyWait', signature([ keyName(), unquoted([ optionItem('D'), optionItem('L'), decimalOptionItem('T') ]) ])),
 
   // https://www.autohotkey.com/docs/v1/lib/ListHotkeys.htm
   command('ListHotkeys', signature([])),
@@ -846,6 +847,7 @@ export function letterOptionItem(optionText: string): string {
 }
 export function flagOptionItem(optionText: string): string {
   // e.g. `+Resize`, `-MixmizeBox`
+  //       ^          ^
   return `<flag>${optionText}`;
 }
 export function toggleOptionItem(optionText: string): string {
@@ -1137,8 +1139,11 @@ export function encoding(flags: CommandParameterFlag = CommandParameterFlag.None
     numberOptionItem('CP'),
   ], flags);
 }
-export function keyName(values: string[] = [], flags: CommandParameterFlag = CommandParameterFlag.None): CommandParameter {
-  return unquoted([ ...values ], flags);
+export function keyName(flags: CommandParameterFlag = CommandParameterFlag.None): CommandParameter {
+  return unquoted([
+    ...constants_common.keyNameList.map((keyName) => optionItem(keyName)),
+    // specialKeyNameOptionItem(),
+  ], flags);
 }
 export function hotkeyName(flags: CommandParameterFlag = CommandParameterFlag.None): CommandParameter {
   return unquoted([], flags);
@@ -1146,121 +1151,6 @@ export function hotkeyName(flags: CommandParameterFlag = CommandParameterFlag.No
   //     type: HighlightType.HotkeyName,
   //     flags,
   //     values: [
-  //     optionItem('#'),
-  //     optionItem('!'),
-  //     optionItem('^'),
-  //     optionItem('+'),
-  //     optionItem('^'),
-  //     optionItem('+'),
-  //     optionItem('&'),
-  //     optionItem('<'),
-  //     optionItem('>'),
-  //     optionItem('<^>!'),
-  //     optionItem('*'),
-  //     optionItem('~'),
-  //     optionItem('$'),
-  //     // https://www.autohotkey.com/docs/v1/KeyList.htm
-  //     optionItem('LButton'),
-  //     optionItem('RButton'),
-  //     optionItem('MButton'),
-  //     optionItem('XButton1'),
-  //     optionItem('XButton2'),
-  //     optionItem('WheelDown'),
-  //     optionItem('WheelUp'),
-  //     optionItem('WheelLeft'),
-  //     optionItem('WheelRight'),
-  //     optionItem('CapsLock'),
-  //     optionItem('Space'),
-  //     optionItem('Tab'),
-  //     optionItem('Enter'),
-  //     optionItem('Escape'),
-  //     optionItem('Esc'),
-  //     optionItem('Backspace'),
-  //     optionItem('BS'),
-  //     optionItem('ScrollLock'),
-  //     optionItem('Delete'),
-  //     optionItem('Del'),
-  //     optionItem('Insert'),
-  //     optionItem('Ins'),
-  //     optionItem('Home'),
-  //     optionItem('End'),
-  //     optionItem('PgUp'),
-  //     optionItem('PgDn'),
-  //     optionItem('Up'),
-  //     optionItem('Down'),
-  //     optionItem('Left'),
-  //     optionItem('Right'),
-  //     optionItem('Numpad0'),
-  //     optionItem('Numpad1'),
-  //     optionItem('Numpad2'),
-  //     optionItem('Numpad3'),
-  //     optionItem('Numpad4'),
-  //     optionItem('Numpad5'),
-  //     optionItem('Numpad6'),
-  //     optionItem('Numpad7'),
-  //     optionItem('Numpad8'),
-  //     optionItem('Numpad9'),
-  //     optionItem('NumpadDot'),
-  //     optionItem('NumpadIns'),
-  //     optionItem('NumpadEnd'),
-  //     optionItem('NumpadDown'),
-  //     optionItem('NumpadPgDn'),
-  //     optionItem('NumpadLeft'),
-  //     optionItem('NumpadClear'),
-  //     optionItem('NumpadRight'),
-  //     optionItem('NumpadHome'),
-  //     optionItem('NumpadUp'),
-  //     optionItem('NumpadPgUp'),
-  //     optionItem('NumpadDel'),
-  //     optionItem('NumLock'),
-  //     optionItem('NumpadDiv'),
-  //     optionItem('NumpadMult'),
-  //     optionItem('NumpadAdd'),
-  //     optionItem('NumpadSub'),
-  //     optionItem('NumpadEnter'),
-  //     ...times(24, (index) => optionItem(`F${index + 1}`)),
-  //     optionItem('LWin'),
-  //     optionItem('RWin'),
-  //     optionItem('Control'),
-  //     optionItem('Ctrl'),
-  //     optionItem('Alt'),
-  //     optionItem('Shift'),
-  //     optionItem('LControl'),
-  //     optionItem('LCtrl'),
-  //     optionItem('RControl'),
-  //     optionItem('RCtrl'),
-  //     optionItem('LShift'),
-  //     optionItem('RShift'),
-  //     optionItem('LAlt'),
-  //     optionItem('RAlt'),
-  //     optionItem('Browser_Back'),
-  //     optionItem('Browser_Forward'),
-  //     optionItem('Browser_Refresh'),
-  //     optionItem('Browser_Stop'),
-  //     optionItem('Browser_Search'),
-  //     optionItem('Browser_Favorites'),
-  //     optionItem('Browser_Home'),
-  //     optionItem('Volume_Mute'),
-  //     optionItem('Volume_Down'),
-  //     optionItem('Volume_Up'),
-  //     optionItem('Media_Next'),
-  //     optionItem('Media_Prev'),
-  //     optionItem('Media_Stop'),
-  //     optionItem('Media_Play_Pause'),
-  //     optionItem('Launch_Mail'),
-  //     optionItem('Launch_Media'),
-  //     optionItem('Launch_App1'),
-  //     optionItem('Launch_App2'),
-  //     optionItem('AppsKey'),
-  //     optionItem('PrintScreen'),
-  //     optionItem('CtrlBreak'),
-  //     optionItem('Pause'),
-  //     optionItem('Break'),
-  //     optionItem('Help'),
-  //     optionItem('Sleep'),
-  //     decimalOptionItem('SC'),
-  //     decimalOptionItem('VK'),
-  //     ...times(32, (index) => optionItem(`Joy${index + 1}`)),
   //   ];
   // }
 }
