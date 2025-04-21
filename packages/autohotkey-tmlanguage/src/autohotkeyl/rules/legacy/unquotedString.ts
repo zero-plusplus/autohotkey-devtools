@@ -6,7 +6,6 @@ import { includeRule, name, patternsRule } from '../../../utils';
 interface Placeholder {
   stringRuleName: RuleName;
   stringPattern: string;
-  overideRules?: Rule[];
   additionalRules?: Rule[];
 }
 export function createUnquotedStringRule(scopeName: ScopeName, placeholder: Placeholder): MatchRule {
@@ -14,14 +13,14 @@ export function createUnquotedStringRule(scopeName: ScopeName, placeholder: Plac
     match: seq(inlineSpaces0(), capture(placeholder.stringPattern)),
     captures: {
       1: patternsRule(
-        ...(placeholder.overideRules ?? []),
-        includeRule(Repository.UnquotedStringEscapeSequence),
         includeRule(Repository.Dereference),
+        ...(placeholder.additionalRules ?? []),
+
+        includeRule(Repository.UnquotedStringEscapeSequence),
         {
           name: name(scopeName, placeholder.stringRuleName),
           match: negChars1('`'),
         },
-        ...(placeholder.additionalRules ?? []),
       ),
     },
   };
@@ -42,10 +41,10 @@ export function createArgumentStringRule(scopeName: ScopeName, placeholder: Plac
     ),
     captures: {
       1: patternsRule(
-        ...(placeholder.overideRules ?? []),
-        includeRule(Repository.UnquotedStringEscapeSequence),
         includeRule(Repository.Dereference),
         ...(placeholder.additionalRules ?? []),
+
+        includeRule(Repository.UnquotedStringEscapeSequence),
         {
           name: name(scopeName, placeholder.stringRuleName),
           match: negChars1('`', inlineSpace()),

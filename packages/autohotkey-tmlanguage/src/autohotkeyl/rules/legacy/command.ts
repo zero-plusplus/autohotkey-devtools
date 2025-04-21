@@ -372,7 +372,6 @@ function parameterToPatternsRule(scopeName: ScopeName, defenition: CommandDefini
         createArgumentStringRule(scopeName, {
           stringPattern: patterns_v1.commandArgumentPattern,
           stringRuleName: RuleName.UnquotedString,
-          overideRules: [],
           additionalRules: [
             ...createArgumentRulesWithNumber(scopeName, {
               additionalRules: optionItemPatternsToRules(scopeName, parameter.itemPatterns),
@@ -388,7 +387,6 @@ function parameterToPatternsRule(scopeName: ScopeName, defenition: CommandDefini
         createArgumentStringRule(scopeName, {
           stringPattern: patterns_v1.commandArgumentPattern,
           stringRuleName: RuleName.UnquotedString,
-          overideRules: [],
           additionalRules: [
             ...createArgumentRulesWithNumber(scopeName, {
               additionalRules: [],
@@ -409,7 +407,6 @@ function parameterToPatternsRule(scopeName: ScopeName, defenition: CommandDefini
         createArgumentStringRule(scopeName, {
           stringPattern: patterns_v1.commandArgumentPattern,
           stringRuleName: RuleName.UnquotedString,
-          overideRules: [],
           additionalRules: createArgumentRulesWithNumber(scopeName, {
             additionalRules: [
               {
@@ -436,7 +433,6 @@ function parameterToPatternsRule(scopeName: ScopeName, defenition: CommandDefini
         createArgumentStringRule(scopeName, {
           stringPattern: patterns_v1.commandArgumentPattern,
           stringRuleName: RuleName.UnquotedString,
-          overideRules: [],
           additionalRules: [
             ...createArgumentRulesWithNumber(scopeName, {
               unaryOperator: [ '+', '-', '^' ],
@@ -453,7 +449,6 @@ function parameterToPatternsRule(scopeName: ScopeName, defenition: CommandDefini
         createArgumentStringRule(scopeName, {
           stringPattern: patterns_v1.commandArgumentPattern,
           stringRuleName: RuleName.UnquotedString,
-          overideRules: [],
           additionalRules: [
             ...optionItemPatternsToRules(scopeName, parameter.itemPatterns),
             {
