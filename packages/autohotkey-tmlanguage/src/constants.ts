@@ -590,6 +590,9 @@ export const enum HighlightType {
   ExpressionWithOneTrueBrace = 'expressionwithonetruebrace',
   UnquotedString = 'unquotedstring',
   UnquotedStringShouldEscapeComma = 'unquoted_string_should_escapecomma',
+  // e.g. Send, {LButton 5}
+  //            ^^^^^^^^^^^
+  SendKeyName = 'send_key_name',
   RestParams = 'rest_params',
   LabelName = 'labelname',
   // Keywords to distinguish between signatures

@@ -59,7 +59,7 @@ interface Placeholder_ArgumentNumberRules {
   unaryOperator?: readonly string[];
   additionalRules?: Rule[];
 }
-export function createArgumentNumberRules(scopeName: ScopeName, placeholder: Placeholder_ArgumentNumberRules = {}): Rule[] {
+export function createArgumentRulesWithNumber(scopeName: ScopeName, placeholder: Placeholder_ArgumentNumberRules = {}): Rule[] {
   return [
     {
       match: seq(

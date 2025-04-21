@@ -160,3 +160,23 @@ export const keyNameList = [
   'Joy31',
   'Joy32',
 ] as const;
+
+// https://www.autohotkey.com/docs/v1/lib/Progress.htm#colors
+export const colorNames = [
+  'Black',
+  'Silver',
+  'Gray',
+  'White',
+  'Maroon',
+  'Red',
+  'Purple',
+  'Fuchsia',
+  'Green',
+  'Lime',
+  'Olive',
+  'Yellow',
+  'Navy',
+  'Blue',
+  'Teal',
+  'Aqua',
+] as const;
