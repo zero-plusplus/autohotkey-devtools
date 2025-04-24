@@ -147,7 +147,7 @@ export function createRepositories(scopeName: ScopeName, placeholder?: Placehold
       startAnchor: patterns_v1.statementStartAnchor,
     }),
     [Repository.LabelStatement]: rule_v1.createLabelRule(scopeName, {
-      startAnchor: patterns_v1.labelStatementStartAnchor,
+      startAnchor: patterns_v1.lineStartAnchor,
       labelPattern: patterns_v2.identifierPattern,
     }),
 
@@ -347,7 +347,7 @@ export function createRepositories(scopeName: ScopeName, placeholder?: Placehold
 
     // #region object
     [Repository.ObjectInBrackets]: rule_v1.createObjectRule(scopeName, {
-      startAnchor: patterns_v1.labelStatementStartAnchor,
+      startAnchor: patterns_v1.lineStartAnchor,
     }),
     [Repository.Object]: rule_v1.createObjectRule(scopeName, {
       startAnchor: patterns_v2.expressionContinuationStartAnchor,

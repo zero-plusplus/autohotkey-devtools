@@ -29,15 +29,15 @@ export const looseCallableNamePattern: string = seq(
 );
 // #endregion Names
 
-export const labelStatementStartAnchor: string = seq(
+export const lineStartAnchor: string = seq(
   group(alt(startAnchor(), '\\G')),
   inlineSpaces0(),
 );
 export const statementStartAnchor: string = alt(
-  labelStatementStartAnchor,
+  lineStartAnchor,
   seq(text('::'), inlineSpaces0()),
-  seq(startAnchor(), inlineSpaces0(), identifierPattern, char(':'), inlineSpaces0()),
-  seq(inlineSpaces0(), char('}')),
+  seq(lineStartAnchor, inlineSpaces0(), identifierPattern, char(':'), inlineSpaces0()),
+  seq(lineStartAnchor, inlineSpaces0(), char('}')),
 );
 export const expressionContinuationStartAnchor: string = group(ordalt(...escapeOnigurumaTexts(constants_v1.continuationOperators)));
 export const lineEndAnchor: string = alt(

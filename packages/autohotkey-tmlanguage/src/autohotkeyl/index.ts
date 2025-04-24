@@ -107,7 +107,7 @@ export function createRepositories(scopeName: ScopeName): Repositories {
       endAnchor: patterns_v1.lineEndAnchor,
     }),
     [Repository.DirectiveStatement]: rule_v1.createCommandLikeStatementRule(scopeName, definition_v1.directiveDefinitions, {
-      startAnchor: patterns_v1.labelStatementStartAnchor,
+      startAnchor: patterns_v1.lineStartAnchor,
       endAnchor: patterns_v1.lineEndAnchor,
       commandElementName: RuleName.DirectiveName,
     }),
@@ -136,7 +136,7 @@ export function createRepositories(scopeName: ScopeName): Repositories {
       startAnchor: patterns_v1.statementStartAnchor,
     }),
     [Repository.LabelStatement]: rule_v1.createLabelRule(scopeName, {
-      startAnchor: patterns_v1.labelStatementStartAnchor,
+      startAnchor: patterns_v1.lineStartAnchor,
       labelPattern: patterns_v1.identifierPattern,
     }),
 
@@ -302,7 +302,7 @@ export function createRepositories(scopeName: ScopeName): Repositories {
 
     // #region object
     [Repository.ObjectInBrackets]: rule_v1.createObjectRule(scopeName, {
-      startAnchor: patterns_v1.labelStatementStartAnchor,
+      startAnchor: patterns_v1.lineStartAnchor,
     }),
     [Repository.Object]: rule_v1.createObjectRule(scopeName, {
       startAnchor: patterns_v1.expressionContinuationStartAnchor,
