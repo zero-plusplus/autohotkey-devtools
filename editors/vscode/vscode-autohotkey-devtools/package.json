@@ -159,7 +159,7 @@
   "qna": false,
   "devDependencies": {
     "@types/vscode": "^1.90.2",
-    "@vscode/vsce": "^3.2.2",
+    "@vscode/vsce": "^3.3.2",
     "@zero-plusplus/autohotkey-tmlanguage": "^0.0.0"
   },
   "scripts": {
