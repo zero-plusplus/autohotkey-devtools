@@ -1,5 +1,5 @@
 import { dedent } from '@zero-plusplus/utilities/src';
-import { Repository, RuleName } from '../../../src/constants';
+import { RuleName } from '../../../src/constants';
 import type { ScopeName } from '../../../src/types';
 import { name } from '../../../src/utils';
 import type { ExpectedTestData } from '../../types';
@@ -8,11 +8,26 @@ export function createHotkeyLabelStatementExpectedData(scopeName: ScopeName): Ex
   return [
     [
       dedent`
-        ^abc::Return
+        ~a::Return
+        $+!#abc::Return
+        LShift & Left::Return
       `,
       [
-        { text: '^abc', scopes: name(scopeName, Repository.HotkeyLabelStatement, RuleName.HotkeyLabelName) },
-        { text: '::', scopes: name(scopeName, Repository.HotkeyLabelStatement, RuleName.ColonColon) },
+        { text: '~', scopes: name(scopeName, RuleName.HotkeyFlag) },
+        { text: 'a', scopes: name(scopeName, RuleName.HotkeyLabelName) },
+        { text: '::', scopes: name(scopeName, RuleName.ColonColon) },
+        { text: 'Return', scopes: name(scopeName, RuleName.JumpCommandName) },
+
+        { text: '$', scopes: name(scopeName, RuleName.HotkeyFlag) },
+        { text: '+!#', scopes: name(scopeName, RuleName.HotkeyModifier) },
+        { text: 'abc', scopes: name(scopeName, RuleName.HotkeyLabelName) },
+        { text: '::', scopes: name(scopeName, RuleName.ColonColon) },
+        { text: 'Return', scopes: name(scopeName, RuleName.JumpCommandName) },
+
+        { text: 'LShift', scopes: name(scopeName, RuleName.HotkeyLabelName) },
+        { text: '&', scopes: name(scopeName, RuleName.HotkeyCombinator) },
+        { text: 'Left', scopes: name(scopeName, RuleName.HotkeyLabelName) },
+        { text: '::', scopes: name(scopeName, RuleName.ColonColon) },
         { text: 'Return', scopes: name(scopeName, RuleName.JumpCommandName) },
       ],
     ],

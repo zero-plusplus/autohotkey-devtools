@@ -447,7 +447,10 @@ export const enum RuleName {
   ClassName = 'support.class.name',
   DirectiveName = 'meta.preprocessor.directive',
   LabelName = 'entity.name.label',
-  HotkeyLabelName = 'string.label.like.hotkey',
+  HotkeyFlag = 'string.label.like.flag',
+  HotkeyModifier = 'string.label.like.hotkey.modifier',
+  HotkeyLabelName = 'string.label.like.hotkey.label',
+  HotkeyCombinator = 'string.label.like.hotkey.combinator',
   HotstringOption = 'string.label.like.hotkey.option',
   HotstringLabelName = 'string.label.like.hotstring',
   // #endregion statement

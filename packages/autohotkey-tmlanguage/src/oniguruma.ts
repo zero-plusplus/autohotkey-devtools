@@ -160,6 +160,9 @@ export function chars1(...characters: string[]): string {
 export function text(rawText: string): string {
   return escapeOnigurumaText(rawText);
 }
+export function textalt(...rawTexts: string[]): string {
+  return alt(...escapeOnigurumaTexts(rawTexts.sort((a, b) => b.length - a.length)));
+}
 export function negChar(...characters: string[]): string {
   return `[^${[ ...characters ].map((character) => escapeCharClass(character)).join('')}]`;
 }
