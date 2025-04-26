@@ -1127,7 +1127,7 @@ export function sendKeys(flags: CommandParameterFlag = CommandParameterFlag.None
   return { type: HighlightType.SendKeyName, flags };
 }
 export function timeunit(flags: CommandParameterFlag = CommandParameterFlag.None): CommandParameter {
-  return unquoted([ optionItem('Seconds', 'Minutes', 'Hours', 'Days'), letterOptionItem('S', 'M', 'H', 'D') ], flags);
+  return keywordOnly([ optionItem('Seconds', 'S', 'Minutes', 'M', 'Hours', 'H', 'Days', 'D') ], flags);
 }
 export function formatTime(flags: CommandParameterFlag = CommandParameterFlag.None): CommandParameter {
   return unquoted([ letterOptionItem('d', 'dd', 'ddd', 'dddd', 'M', 'MM', 'MMM', 'MMMM', 'y', 'yy', 'yyyy', 'gg', 'h', 'hh', 'H', 'HH', 'm', 'mm', 's', 'ss', 't', 'tt') ], CommandParameterFlag.IgnoreCase | flags);
