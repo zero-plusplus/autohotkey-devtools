@@ -1,5 +1,5 @@
 import { dedent } from '@zero-plusplus/utilities/src';
-import { blank, control, expression, keywordOnly, onOff, output, restParams, sendKeys, unquoted, winTitle } from '../../../../src/autohotkeyl/definition';
+import { blank, control, expression, fileAttributes, keywordOnly, onOff, output, restParams, sendKeys, unquoted, winTitle } from '../../../../src/autohotkeyl/definition';
 import { RuleDescriptor, RuleName, StyleName } from '../../../../src/constants';
 import type { ScopeName } from '../../../../src/types';
 import { name } from '../../../../src/utils';
@@ -1710,6 +1710,43 @@ export function createCommandStatementExpectedData(scopeName: ScopeName): Expect
             { text: ',', scopes: name(scopeName, RuleName.Comma) },
             { text: '%', scopes: name(scopeName, RuleName.PercentExpressionBegin) },
             { text: 'expression', scopes: name(scopeName, RuleName.Variable) },
+            { text: '; comment', scopes: name(scopeName, RuleName.InLineComment) },
+          ];
+        })(),
+      ],
+    ],
+    [
+      dedent`
+        FileSetAttrib, RASHNOTU     ; comment
+        FileSetAttrib, +RA-SH^NO+U  ; comment
+      `,
+      [
+        ...((): ParsedResult[] => {
+          fileAttributes;
+
+          return [
+            { text: 'ControlSend', scopes: name(scopeName, RuleName.CommandName) },
+            { text: ',', scopes: name(scopeName, RuleName.Comma) },
+            { text: 'R', scopes: name(scopeName, RuleName.UnquotedString, StyleName.Strong) },
+            { text: 'A', scopes: name(scopeName, RuleName.UnquotedString, StyleName.Strong) },
+            { text: 'S', scopes: name(scopeName, RuleName.UnquotedString, StyleName.Strong) },
+            { text: 'H', scopes: name(scopeName, RuleName.UnquotedString, StyleName.Strong) },
+            { text: 'N', scopes: name(scopeName, RuleName.UnquotedString, StyleName.Strong) },
+            { text: 'O', scopes: name(scopeName, RuleName.UnquotedString, StyleName.Strong) },
+            { text: 'T', scopes: name(scopeName, RuleName.UnquotedString, StyleName.Strong) },
+            { text: 'U', scopes: name(scopeName, RuleName.UnquotedString, StyleName.Invalid) },
+            { text: '; comment', scopes: name(scopeName, RuleName.InLineComment) },
+
+            { text: 'ControlSend', scopes: name(scopeName, RuleName.CommandName) },
+            { text: ',', scopes: name(scopeName, RuleName.Comma) },
+            { text: '+R', scopes: name(scopeName, RuleName.UnquotedString, StyleName.Strong) },
+            { text: 'A', scopes: name(scopeName, RuleName.UnquotedString, StyleName.Strong) },
+            { text: '-S', scopes: name(scopeName, RuleName.UnquotedString, StyleName.Strong) },
+            { text: 'H', scopes: name(scopeName, RuleName.UnquotedString, StyleName.Strong) },
+            { text: '^N', scopes: name(scopeName, RuleName.UnquotedString, StyleName.Strong) },
+            { text: 'O', scopes: name(scopeName, RuleName.UnquotedString, StyleName.Strong) },
+            { text: '+', scopes: name(scopeName, RuleName.UnquotedString, StyleName.Invalid) },
+            { text: 'U', scopes: name(scopeName, RuleName.UnquotedString, StyleName.Invalid) },
             { text: '; comment', scopes: name(scopeName, RuleName.InLineComment) },
           ];
         })(),

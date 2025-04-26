@@ -308,7 +308,7 @@ export const commandDefinitions: CommandDefinition[] = [
   command('FileSelectFolder', signature([ output(), unquoted(), expression(), unquoted() ])),
 
   // https://www.autohotkey.com/docs/v1/lib/FileSetAttrib.htm
-  command('FileSetAttrib', signature([ fileAttributes([ optionItem('R', 'A', 'S', 'H', 'N', 'O', 'T') ]), glob(), expression(), expression() ])),
+  command('FileSetAttrib', signature([ fileAttributes(), glob(), expression(), expression() ])),
 
   // https://www.autohotkey.com/docs/v1/lib/FileSetTime.htm
   command('FileSetTime', signature([ expression(), glob(), keywordOnly([ letterOptionItem('M', 'C', 'A') ]), expression(), expression() ])),
@@ -843,6 +843,12 @@ export function flagedOptionItem(...options: string[]): string {
 export function letterOptionItem(...options: string[]): string {
   return ignoreCase(ordalt(...options));
 }
+export function flagedLetterOptionItem(...options: string[]): string {
+  return seq(
+    optional(char('+', '-', '^')),
+    ignoreCase(ordalt(...options)),
+  );
+}
 export function toggleOptionItem(...options: string[]): string {
   // e.g. `Disabled0`, `Hidden1`
   return createOptionItemPattern(seq(
@@ -1021,11 +1027,11 @@ export function expression(flags: CommandParameterFlag = CommandParameterFlag.No
 export function style(flags: CommandParameterFlag = CommandParameterFlag.None): CommandParameter {
   return { type: HighlightType.Style, flags };
 }
-export function fileAttributes(values: string[], flags: CommandParameterFlag = CommandParameterFlag.None): CommandParameter {
-  return { type: HighlightType.FileAttributes, flags, itemPatterns: values };
-}
 export function letterOptions(values: string[], flags: CommandParameterFlag = CommandParameterFlag.None): CommandParameter {
   return { type: HighlightType.LetterOptions, flags, itemPatterns: values };
+}
+export function fileAttributes(flags: CommandParameterFlag = CommandParameterFlag.None): CommandParameter {
+  return letterOptions([ flagedLetterOptionItem('R', 'A', 'S', 'H', 'N', 'O', 'T') ]);
 }
 export function guiOptions(flags: CommandParameterFlag = CommandParameterFlag.None): CommandParameter {
   return {
