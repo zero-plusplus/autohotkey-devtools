@@ -1,5 +1,5 @@
 import { dedent } from '@zero-plusplus/utilities/src';
-import { blank, control, expression, onOff, output, restParams, sendKeys, unquoted, winTitle } from '../../../../src/autohotkeyl/definition';
+import { blank, control, expression, keywordOnly, onOff, output, restParams, sendKeys, unquoted, winTitle } from '../../../../src/autohotkeyl/definition';
 import { RuleDescriptor, RuleName, StyleName } from '../../../../src/constants';
 import type { ScopeName } from '../../../../src/types';
 import { name } from '../../../../src/utils';
@@ -1660,6 +1660,57 @@ export function createCommandStatementExpectedData(scopeName: ScopeName): Expect
                 { text: '; comment', scopes: name(scopeName, RuleName.InLineComment) },
               ];
             }),
+          ];
+        })(),
+      ],
+    ],
+    [
+      dedent`
+        CoordMode, ToolTip          ; comment
+        CoordMode, Pixel            ; comment
+        CoordMode, Mouse            ; comment
+        CoordMode, Caret            ; comment
+        CoordMode, Menu             ; comment
+        CoordMode, Invalid          ; comment
+        CoordMode, MenuInvalid      ; comment
+
+        CoordMode, %var%            ; comment
+        CoordMode, % expression     ; comment
+      `,
+      [
+        ...((): ParsedResult[] => {
+          keywordOnly;
+          return [
+            ...[ 'ToolTip', 'Pixel', 'Mouse', 'Caret', 'Menu' ].flatMap((word) => {
+              return [
+                { text: 'CoordMode', scopes: name(scopeName, RuleName.CommandName) },
+                { text: ',', scopes: name(scopeName, RuleName.Comma) },
+                { text: word, scopes: name(scopeName, RuleName.UnquotedString, StyleName.Strong) },
+                { text: '; comment', scopes: name(scopeName, RuleName.InLineComment) },
+              ];
+            }),
+
+            ...[ 'Invalid', 'MenuInvalid' ].flatMap((word) => {
+              return [
+                { text: 'CoordMode', scopes: name(scopeName, RuleName.CommandName) },
+                { text: ',', scopes: name(scopeName, RuleName.Comma) },
+                { text: word, scopes: name(scopeName, RuleName.UnquotedString, StyleName.Invalid) },
+                { text: '; comment', scopes: name(scopeName, RuleName.InLineComment) },
+              ];
+            }),
+
+            { text: 'CoordMode', scopes: name(scopeName, RuleName.CommandName) },
+            { text: ',', scopes: name(scopeName, RuleName.Comma) },
+            { text: '%', scopes: name(scopeName, RuleName.PercentBegin) },
+            { text: 'var', scopes: name(scopeName, RuleName.Variable) },
+            { text: '%', scopes: name(scopeName, RuleName.PercentEnd) },
+            { text: '; comment', scopes: name(scopeName, RuleName.InLineComment) },
+
+            { text: 'CoordMode', scopes: name(scopeName, RuleName.CommandName) },
+            { text: ',', scopes: name(scopeName, RuleName.Comma) },
+            { text: '%', scopes: name(scopeName, RuleName.PercentExpressionBegin) },
+            { text: 'expression', scopes: name(scopeName, RuleName.Variable) },
+            { text: '; comment', scopes: name(scopeName, RuleName.InLineComment) },
           ];
         })(),
       ],
