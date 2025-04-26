@@ -87,6 +87,18 @@ export const keyNameList = [
   'F10',
   'F11',
   'F12',
+  'F13',
+  'F14',
+  'F15',
+  'F16',
+  'F17',
+  'F18',
+  'F19',
+  'F20',
+  'F21',
+  'F22',
+  'F23',
+  'F24',
   'LWin',
   'RWin',
   'Control',
@@ -158,6 +170,13 @@ export const keyNameList = [
   'Joy20',
   'Joy31',
   'Joy32',
+] as const;
+
+// https://www.autohotkey.com/docs/v1/lib/Send.htm#Special_modes
+export const sendSpecialModeList = [
+  'Blind',
+  'Raw',
+  'Text',
 ] as const;
 
 // https://www.autohotkey.com/docs/v1/lib/Progress.htm#colors

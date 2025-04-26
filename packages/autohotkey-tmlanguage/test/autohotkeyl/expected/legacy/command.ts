@@ -1,5 +1,5 @@
 import { dedent } from '@zero-plusplus/utilities/src';
-import { blank, control, expression, onOff, output, restParams, unquoted, winTitle } from '../../../../src/autohotkeyl/definition';
+import { blank, control, expression, onOff, output, restParams, sendKeys, unquoted, winTitle } from '../../../../src/autohotkeyl/definition';
 import { RuleDescriptor, RuleName, StyleName } from '../../../../src/constants';
 import type { ScopeName } from '../../../../src/types';
 import { name } from '../../../../src/utils';
@@ -1558,6 +1558,108 @@ export function createCommandStatementExpectedData(scopeName: ScopeName): Expect
             { text: ',', scopes: name(scopeName, RuleName.Comma) },
             { text: 'c', scopes: name(scopeName, RuleName.UnquotedString) },
             { text: '; comment', scopes: name(scopeName, RuleName.InLineComment) },
+          ];
+        })(),
+      ],
+    ],
+    [
+      dedent`
+        ControlSend,, +!#{Up}                 ; comment
+        ControlSend,, +!#{Tab Up}             ; comment
+        ControlSend,, +!#{Tab Down}           ; comment
+        ControlSend,, +!#{Tab DownTemp}       ; comment
+        ControlSend,, +!#{Tab 5}              ; comment
+        ControlSend,, {Click 100 100 Left}    ; comment
+        ControlSend,, {Blind}+!#{Up}          ; comment
+        ControlSend,, {Raw}+!#{Up}            ; comment
+        ControlSend,, {Raw}line 1\`nline 2    ; comment
+        ControlSend,, {Raw}%a%bc              ; comment
+        ControlSend,, {Text}+!#{Up}           ; comment
+        ControlSend,, {Text}line 1\`nline 2   ; comment
+        ControlSend,, {Text}%a%bc             ; comment
+      `,
+      [
+        ...((): ParsedResult[] => {
+          sendKeys;
+
+          return [
+            { text: 'ControlSend', scopes: name(scopeName, RuleName.CommandName) },
+            { text: ',', scopes: name(scopeName, RuleName.Comma) },
+            { text: ',', scopes: name(scopeName, RuleName.Comma) },
+            { text: '+!#', scopes: name(scopeName, RuleName.UnquotedString, StyleName.Strong) },
+            { text: '{Up}', scopes: name(scopeName, RuleName.UnquotedString, StyleName.Strong) },
+            { text: '; comment', scopes: name(scopeName, RuleName.InLineComment) },
+
+            ...[ 'Up', 'Down', 'DownTemp' ].flatMap((word) => {
+              return [
+                { text: 'ControlSend', scopes: name(scopeName, RuleName.CommandName) },
+                { text: ',', scopes: name(scopeName, RuleName.Comma) },
+                { text: ',', scopes: name(scopeName, RuleName.Comma) },
+                { text: '+!#', scopes: name(scopeName, RuleName.UnquotedString, StyleName.Strong) },
+                { text: '{', scopes: name(scopeName, RuleName.UnquotedString, StyleName.Strong) },
+                { text: 'Tab', scopes: name(scopeName, RuleName.UnquotedString, StyleName.Strong) },
+                { text: `${word}}`, scopes: name(scopeName, RuleName.UnquotedString, StyleName.Strong) },
+                { text: '; comment', scopes: name(scopeName, RuleName.InLineComment) },
+              ];
+            }),
+
+            { text: 'ControlSend', scopes: name(scopeName, RuleName.CommandName) },
+            { text: ',', scopes: name(scopeName, RuleName.Comma) },
+            { text: ',', scopes: name(scopeName, RuleName.Comma) },
+            { text: '+!#', scopes: name(scopeName, RuleName.UnquotedString, StyleName.Strong) },
+            { text: '{', scopes: name(scopeName, RuleName.UnquotedString, StyleName.Strong) },
+            { text: 'Tab', scopes: name(scopeName, RuleName.UnquotedString, StyleName.Strong) },
+            { text: '5}', scopes: name(scopeName, RuleName.UnquotedString, StyleName.Strong) },
+            { text: '; comment', scopes: name(scopeName, RuleName.InLineComment) },
+
+            { text: 'ControlSend', scopes: name(scopeName, RuleName.CommandName) },
+            { text: ',', scopes: name(scopeName, RuleName.Comma) },
+            { text: ',', scopes: name(scopeName, RuleName.Comma) },
+            { text: '{', scopes: name(scopeName, RuleName.UnquotedString, StyleName.Strong) },
+            { text: 'Click', scopes: name(scopeName, RuleName.UnquotedString, StyleName.Strong) },
+            { text: '100', scopes: name(scopeName, RuleName.UnquotedString, StyleName.Strong) },
+            { text: '100', scopes: name(scopeName, RuleName.UnquotedString, StyleName.Strong) },
+            { text: 'Left', scopes: name(scopeName, RuleName.UnquotedString, StyleName.Strong) },
+            { text: '}', scopes: name(scopeName, RuleName.UnquotedString, StyleName.Strong) },
+            { text: '; comment', scopes: name(scopeName, RuleName.InLineComment) },
+
+            { text: 'ControlSend', scopes: name(scopeName, RuleName.CommandName) },
+            { text: ',', scopes: name(scopeName, RuleName.Comma) },
+            { text: ',', scopes: name(scopeName, RuleName.Comma) },
+            { text: '{Blind}', scopes: name(scopeName, RuleName.UnquotedString, StyleName.Strong) },
+            { text: '+!#', scopes: name(scopeName, RuleName.UnquotedString, StyleName.Strong) },
+            { text: '{Up}', scopes: name(scopeName, RuleName.UnquotedString, StyleName.Strong) },
+            { text: '; comment', scopes: name(scopeName, RuleName.InLineComment) },
+
+            ...[ '{Raw}', '{Text}' ].flatMap((mode) => {
+              return [
+                { text: 'ControlSend', scopes: name(scopeName, RuleName.CommandName) },
+                { text: ',', scopes: name(scopeName, RuleName.Comma) },
+                { text: ',', scopes: name(scopeName, RuleName.Comma) },
+                { text: mode, scopes: name(scopeName, RuleName.UnquotedString, StyleName.Strong) },
+                { text: '+!#{Up}', scopes: name(scopeName, RuleName.UnquotedString) },
+                { text: '; comment', scopes: name(scopeName, RuleName.InLineComment) },
+
+                { text: 'ControlSend', scopes: name(scopeName, RuleName.CommandName) },
+                { text: ',', scopes: name(scopeName, RuleName.Comma) },
+                { text: ',', scopes: name(scopeName, RuleName.Comma) },
+                { text: mode, scopes: name(scopeName, RuleName.UnquotedString, StyleName.Strong) },
+                { text: `line 1`, scopes: name(scopeName, RuleName.UnquotedString) },
+                { text: `\`n`, scopes: name(scopeName, RuleName.UnquotedString, StyleName.Escape) },
+                { text: `line 2`, scopes: name(scopeName, RuleName.UnquotedString) },
+                { text: '; comment', scopes: name(scopeName, RuleName.InLineComment) },
+
+                { text: 'ControlSend', scopes: name(scopeName, RuleName.CommandName) },
+                { text: ',', scopes: name(scopeName, RuleName.Comma) },
+                { text: ',', scopes: name(scopeName, RuleName.Comma) },
+                { text: mode, scopes: name(scopeName, RuleName.UnquotedString, StyleName.Strong) },
+                { text: `%`, scopes: name(scopeName, RuleName.PercentBegin) },
+                { text: `a`, scopes: name(scopeName, RuleName.Variable) },
+                { text: `%`, scopes: name(scopeName, RuleName.PercentEnd) },
+                { text: 'bc', scopes: name(scopeName, RuleName.UnquotedString) },
+                { text: '; comment', scopes: name(scopeName, RuleName.InLineComment) },
+              ];
+            }),
           ];
         })(),
       ],
