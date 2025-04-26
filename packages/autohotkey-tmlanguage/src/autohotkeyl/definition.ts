@@ -311,7 +311,7 @@ export const commandDefinitions: CommandDefinition[] = [
   command('FileSetAttrib', signature([ fileAttributes([ optionItem('R', 'A', 'S', 'H', 'N', 'O', 'T') ]), glob(), expression(), expression() ])),
 
   // https://www.autohotkey.com/docs/v1/lib/FileSetTime.htm
-  command('FileSetTime', signature([ expression(), glob(), letterOptions([ letterOptionItem('M', 'C', 'A') ]), expression(), expression() ])),
+  command('FileSetTime', signature([ expression(), glob(), keywordOnly([ letterOptionItem('M', 'C', 'A') ]), expression(), expression() ])),
 
   // https://www.autohotkey.com/docs/v1/lib/FormatTime.htm
   command('FormatTime', [
