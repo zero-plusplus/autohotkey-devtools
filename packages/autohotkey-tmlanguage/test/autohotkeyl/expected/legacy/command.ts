@@ -1725,7 +1725,7 @@ export function createCommandStatementExpectedData(scopeName: ScopeName): Expect
           fileAttributes;
 
           return [
-            { text: 'ControlSend', scopes: name(scopeName, RuleName.CommandName) },
+            { text: 'FileSetAttrib', scopes: name(scopeName, RuleName.CommandName) },
             { text: ',', scopes: name(scopeName, RuleName.Comma) },
             { text: 'R', scopes: name(scopeName, RuleName.UnquotedString, StyleName.Strong) },
             { text: 'A', scopes: name(scopeName, RuleName.UnquotedString, StyleName.Strong) },
@@ -1737,7 +1737,7 @@ export function createCommandStatementExpectedData(scopeName: ScopeName): Expect
             { text: 'U', scopes: name(scopeName, RuleName.UnquotedString, StyleName.Invalid) },
             { text: '; comment', scopes: name(scopeName, RuleName.InLineComment) },
 
-            { text: 'ControlSend', scopes: name(scopeName, RuleName.CommandName) },
+            { text: 'FileSetAttrib', scopes: name(scopeName, RuleName.CommandName) },
             { text: ',', scopes: name(scopeName, RuleName.Comma) },
             { text: '+R', scopes: name(scopeName, RuleName.UnquotedString, StyleName.Strong) },
             { text: 'A', scopes: name(scopeName, RuleName.UnquotedString, StyleName.Strong) },
