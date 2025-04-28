@@ -1,5 +1,5 @@
 import { dedent } from '@zero-plusplus/utilities/src';
-import { blank, control, expression, fileAttributes, keywordOnly, onOff, output, restParams, sendKeys, unquoted, winTitle } from '../../../../src/autohotkeyl/definition';
+import { blank, control, expression, fileAttributes, guiOptions, keywordOnly, onOff, output, restParams, sendKeys, unquoted, winTitle } from '../../../../src/autohotkeyl/definition';
 import { RuleDescriptor, RuleName, StyleName } from '../../../../src/constants';
 import type { ScopeName } from '../../../../src/types';
 import { name } from '../../../../src/utils';
@@ -1772,6 +1772,37 @@ export function createCommandStatementExpectedData(scopeName: ScopeName): Expect
         })(),
       ],
     ],
+    ...((): ExpectedTestData[] => {
+      guiOptions;
+
+      return [
+        [
+          dedent`
+            Gui, GuiName:New, +AlwaysOnTop Delimiter\`,   ; comment
+            Gui, GuiName: +AlwaysOnTop Delimiter,         ; comment
+          `,
+          [
+            { text: 'Gui', scopes: name(scopeName, RuleName.CommandName) },
+            { text: ',', scopes: name(scopeName, RuleName.Comma) },
+            { text: 'GuiName', scopes: name(scopeName, RuleName.LabelName) },
+            { text: ':', scopes: name(scopeName, RuleName.Colon) },
+            { text: 'New', scopes: name(scopeName, RuleName.SubCommandName) },
+            { text: ',', scopes: name(scopeName, RuleName.Comma) },
+            { text: '+AlwaysOnTop', scopes: name(scopeName, RuleName.UnquotedString, StyleName.Strong) },
+            { text: 'Delimiter`,', scopes: name(scopeName, RuleName.UnquotedString, StyleName.Strong) },
+            { text: '; comment', scopes: name(scopeName, RuleName.InLineComment) },
+
+            { text: 'Gui', scopes: name(scopeName, RuleName.CommandName) },
+            { text: ',', scopes: name(scopeName, RuleName.Comma) },
+            { text: 'GuiName', scopes: name(scopeName, RuleName.LabelName) },
+            { text: ':', scopes: name(scopeName, RuleName.Colon) },
+            { text: '+AlwaysOnTop', scopes: name(scopeName, RuleName.UnquotedString, StyleName.Strong) },
+            { text: 'Delimiter,', scopes: name(scopeName, RuleName.UnquotedString, StyleName.Strong) },
+            { text: '; comment', scopes: name(scopeName, RuleName.InLineComment) },
+          ],
+        ],
+      ];
+    })(),
     // #endregion arg
 
     // Fix: If the last argument is a percent expression, the comma after is highlighted as a string
