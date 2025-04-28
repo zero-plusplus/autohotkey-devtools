@@ -1,6 +1,6 @@
 import * as constants_common from '../common/constants';
 import { CommandFlag, CommandParameterFlag, CommandSignatureFlag, HighlightType } from '../constants';
-import { alt, char, endAnchor, group, groupMany1, ignoreCase, inlineSpace, lookahead, lookbehind, negChars0, numbers0, numbers1, optional, optseq, ordalt, seq, wordChars0 } from '../oniguruma';
+import { alt, char, endAnchor, group, groupMany1, ignoreCase, inlineSpace, inlineSpaces0, lookahead, lookbehind, negChars0, negChars1, numbers0, numbers1, optional, optseq, ordalt, seq, textalt, wordChars0 } from '../oniguruma';
 import type { CommandDefinition, CommandParameter, CommandSignature, SubCommandParameter } from '../types';
 
 // #region common parameter(s)
@@ -383,7 +383,7 @@ export const commandDefinitions: CommandDefinition[] = [
   command('IniWrite', signature([ unquoted(), unquoted(), path(), unquoted(), unquoted() ])),
 
   // https://www.autohotkey.com/docs/v1/lib/Input.htm
-  command('Input', signature([ output(), unquoted([ optionItem('B', 'C', 'V', '*', 'E', 'M'), numberOptionItem('I', 'L', 'T') ]), sendKeys(), unquoted() ])),
+  command('Input', signature([ output(), unquoted([ optionItem('B', 'C', 'V', '*', 'E', 'M'), numberOptionItem('I', 'L', 'T') ]), unquoted([ endKeyOptionItem() ]), unquoted([ matchKeyOptionItem() ]) ])),
 
   // https://www.autohotkey.com/docs/v1/lib/InputBox.htm
   command('InputBox', signature([ output(), unquoted(), unquoted(), unquoted(), expression(), expression(), expression(), expression(), unquoted(), expression(), unquoted() ])),
@@ -832,13 +832,25 @@ export function isSubCommandParameter(parameter: CommandParameter): parameter is
   return false;
 }
 export function optionItem(...options: string[]): string {
-  return createOptionItemPattern(ignoreCase(ordalt(...options)));
+  return createOptionItemPattern(ignoreCase(textalt(...options)));
 }
 export function flagedOptionItem(...options: string[]): string {
   return createOptionItemPattern(seq(
     optional(char('+', '-', '^')),
     ignoreCase(ordalt(...options)),
   ));
+}
+export function endKeyOptionItem(): string {
+  return seq(
+    char('{'),
+    inlineSpaces0(),
+    negChars1(inlineSpace()),
+    inlineSpaces0(),
+    char('}'),
+  );
+}
+export function matchKeyOptionItem(): string {
+  return createOptionItemPattern(negChars1(','));
 }
 export function letterOptionItem(...options: string[]): string {
   return ignoreCase(ordalt(...options));

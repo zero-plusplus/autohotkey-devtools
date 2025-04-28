@@ -373,6 +373,10 @@ function parameterToPatternsRule(scopeName: ScopeName, defenition: CommandDefini
           stringPattern: patterns_v1.commandArgumentPattern,
           stringRuleName: RuleName.UnquotedString,
           additionalRules: [
+            ...(isLastParameter ? [
+              { name: name(scopeName, RuleName.UnquotedString, StyleName.Escape), match: text('`,') },
+              { name: name(scopeName, RuleName.UnquotedString), match: seq(char(',')) },
+            ] : []),
             ...createArgumentRulesWithNumber(scopeName, {
               additionalRules: optionItemPatternsToRules(scopeName, parameter.itemPatterns),
             }),
