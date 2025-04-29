@@ -1,5 +1,5 @@
 import { dedent } from '@zero-plusplus/utilities/src';
-import { blank, control, expression, fileAttributes, guiOptions, keywordOnly, onOff, output, restParams, sendKeys, unquoted, winTitle } from '../../../../src/autohotkeyl/definition';
+import { blank, control, expression, fileAttributes, flagedGuiControlOptions, guiControlOptions, guiOptions, keywordOnly, onOff, output, restParams, sendKeys, unquoted, winTitle } from '../../../../src/autohotkeyl/definition';
 import { RuleDescriptor, RuleName, StyleName } from '../../../../src/constants';
 import type { ScopeName } from '../../../../src/types';
 import { name } from '../../../../src/utils';
@@ -1799,6 +1799,32 @@ export function createCommandStatementExpectedData(scopeName: ScopeName): Expect
             { text: '+AlwaysOnTop', scopes: name(scopeName, RuleName.UnquotedString, StyleName.Strong) },
             { text: 'Delimiter,', scopes: name(scopeName, RuleName.UnquotedString, StyleName.Strong) },
             { text: '; comment', scopes: name(scopeName, RuleName.InLineComment) },
+          ],
+        ],
+      ];
+    })(),
+    ...((): ExpectedTestData[] => {
+      guiControlOptions;
+      flagedGuiControlOptions;
+
+      return [
+        [
+          dedent`
+            Gui, Add, ActiveX, X+M
+            GuiControl, +X+M
+          `,
+          [
+            { text: 'Gui', scopes: name(scopeName, RuleName.CommandName) },
+            { text: ',', scopes: name(scopeName, RuleName.Comma) },
+            { text: 'Add', scopes: name(scopeName, RuleName.SubCommandName) },
+            { text: ',', scopes: name(scopeName, RuleName.Comma) },
+            { text: 'ActiveX', scopes: name(scopeName, RuleName.UnquotedString, StyleName.Strong) },
+            { text: ',', scopes: name(scopeName, RuleName.Comma) },
+            { text: 'X+M', scopes: name(scopeName, RuleName.UnquotedString, StyleName.Strong) },
+
+            { text: 'GuiControl', scopes: name(scopeName, RuleName.CommandName) },
+            { text: ',', scopes: name(scopeName, RuleName.Comma) },
+            { text: '+X+M', scopes: name(scopeName, RuleName.UnquotedString, StyleName.Strong) },
           ],
         ],
       ];

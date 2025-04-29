@@ -214,20 +214,12 @@ function lookaheadOnigurumaByParameters(parameters: CommandParameter[], placehol
         }
         case HighlightType.GuiOptions:
         case HighlightType.GuiControlOptions: {
-          if (i === 0 && parameter.type === HighlightType.GuiOptions) {
-            return seq(
-              inlineSpaces0(),
-              optseq(
-                wordChars1(),
-                char(':'),
-              ),
-              inlineSpaces0(),
-              char('+', '-'),
-            );
-          }
           return seq(
             inlineSpaces0(),
-            char('+', '-'),
+            optseq(
+              patterns_v1.identifierPattern,
+              char(':'),
+            ),
           );
         }
         default: break;
@@ -605,7 +597,6 @@ function parameterToPatternsRule(scopeName: ScopeName, defenition: CommandDefini
     }
     case HighlightType.KeywordOnly:
     case HighlightType.SpacedKeywordsOnly:
-    case HighlightType.GuiControlOptions:
     {
       return patternsRule(
         includeRule(Repository.PercentExpressions),
@@ -617,6 +608,7 @@ function parameterToPatternsRule(scopeName: ScopeName, defenition: CommandDefini
       );
     }
     case HighlightType.GuiOptions:
+    case HighlightType.GuiControlOptions:
     {
       return patternsRule(
         includeRule(Repository.PercentExpressions),

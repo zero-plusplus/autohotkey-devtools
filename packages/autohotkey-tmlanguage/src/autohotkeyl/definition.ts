@@ -1,6 +1,7 @@
+import * as patterns_v1 from '../autohotkeyl/patterns';
 import * as constants_common from '../common/constants';
 import { CommandFlag, CommandParameterFlag, CommandSignatureFlag, HighlightType } from '../constants';
-import { alt, char, endAnchor, group, groupMany1, ignoreCase, inlineSpace, inlineSpaces0, lookahead, lookbehind, negChars0, negChars1, numbers0, numbers1, optional, optseq, ordalt, seq, textalt, wordChars0 } from '../oniguruma';
+import { alt, char, endAnchor, group, groupMany1, ignoreCase, inlineSpace, inlineSpaces0, lookahead, lookbehind, negChars0, negChars1, numbers0, numbers1, optional, optseq, ordalt, seq, textalt } from '../oniguruma';
 import type { CommandDefinition, CommandParameter, CommandSignature, SubCommandParameter } from '../types';
 
 // #region common parameter(s)
@@ -354,7 +355,7 @@ export const commandDefinitions: CommandDefinition[] = [
     signature([ guiSubcommand([ 'Text', 'Choose', 'ChooseString' ]), control(), unquoted() ]),
     signature([ guiSubcommand([ 'Move', 'MoveDraw' ]), control(), controlMoveOptions() ]),
     signature([ guiSubcommand([ 'Focus', 'Disable', 'Enable', 'Hide', 'Show', 'Font' ]), control() ]),
-    signature([ guiControlOptions(), control(), unquoted() ]),
+    signature([ flagedGuiControlOptions(), control(), unquoted() ]),
   ]),
 
   // https://www.autohotkey.com/docs/v1/lib/GuiControlGet.htm
@@ -562,7 +563,7 @@ export const commandDefinitions: CommandDefinition[] = [
   command('Sleep', signature([ expression() ])),
 
   // https://www.autohotkey.com/docs/v1/lib/Sort.htm
-  command('Sort', signature([ input(), unquoted([ optionItem('C', 'CL', 'N', 'R', 'Random', 'U', 'Z', '\\'), numberOptionItem('D', 'P'), wordOptionItem('F') ]) ])),
+  command('Sort', signature([ input(), unquoted([ optionItem('C', 'CL', 'N', 'R', 'Random', 'U', 'Z', '\\'), numberOptionItem('D', 'P'), identifierOptionItem('F') ]) ])),
 
   // https://www.autohotkey.com/docs/v1/lib/SoundBeep.htm
   command('SoundBeep', signature([ expression(), expression() ])),
@@ -837,7 +838,7 @@ export function optionItem(...options: string[]): string {
 export function flagedOptionItem(...options: string[]): string {
   return createOptionItemPattern(seq(
     optional(char('+', '-', '^')),
-    ignoreCase(ordalt(...options)),
+    ignoreCase(textalt(...options)),
   ));
 }
 export function endKeyOptionItem(): string {
@@ -853,18 +854,18 @@ export function matchKeyOptionItem(): string {
   return createOptionItemPattern(negChars1(','));
 }
 export function letterOptionItem(...options: string[]): string {
-  return ignoreCase(ordalt(...options));
+  return ignoreCase(textalt(...options));
 }
 export function flagedLetterOptionItem(...options: string[]): string {
   return seq(
     optional(char('+', '-', '^')),
-    ignoreCase(ordalt(...options)),
+    ignoreCase(textalt(...options)),
   );
 }
 export function toggleOptionItem(...options: string[]): string {
   // e.g. `Disabled0`, `Hidden1`
   return createOptionItemPattern(seq(
-    ignoreCase(ordalt(...options)),
+    ignoreCase(textalt(...options)),
     optional(char('0', '1')),
   ));
 }
@@ -872,13 +873,13 @@ export function flagedToggleOptionItem(...options: string[]): string {
   // e.g. `Disabled0`, `Hidden1`
   return createOptionItemPattern(seq(
     optional(char('+', '-')),
-    ignoreCase(ordalt(...options)),
+    ignoreCase(textalt(...options)),
     optional(char('0', '1')),
   ));
 }
 export function rangeOptionItem(...options: string[]): string {
   return createOptionItemPattern(seq(
-    ignoreCase(ordalt(...options)),
+    ignoreCase(textalt(...options)),
     optseq(
       numberPattern(),
       optseq(
@@ -890,7 +891,7 @@ export function rangeOptionItem(...options: string[]): string {
 }
 export function sizeOptionItem(...options: string[]): string {
   return createOptionItemPattern(seq(
-    ignoreCase(ordalt(...options)),
+    ignoreCase(textalt(...options)),
     optseq(
       numberPattern(),
       optseq(
@@ -903,7 +904,7 @@ export function sizeOptionItem(...options: string[]): string {
 export function flagedSizeOptionItem(...options: string[]): string {
   return createOptionItemPattern(seq(
     optional(char('+', '-')),
-    ignoreCase(ordalt(...options)),
+    ignoreCase(textalt(...options)),
     optseq(
       numberPattern(),
       optseq(
@@ -915,54 +916,54 @@ export function flagedSizeOptionItem(...options: string[]): string {
 }
 export function stringOptionItem(...options: string[]): string {
   return createOptionItemPattern(seq(
-    ignoreCase(ordalt(...options)),
+    ignoreCase(textalt(...options)),
     negChars0(inlineSpace()),
   ));
 }
 export function flagedStringOptionItem(...options: string[]): string {
   return createOptionItemPattern(seq(
     optional(char('+', '-')),
-    ignoreCase(ordalt(...options)),
+    ignoreCase(textalt(...options)),
     negChars0(inlineSpace()),
   ));
 }
-export function wordOptionItem(...options: string[]): string {
+export function identifierOptionItem(...options: string[]): string {
   return createOptionItemPattern(seq(
-    ignoreCase(ordalt(...options)),
-    wordChars0(),
+    ignoreCase(textalt(...options)),
+    optional(patterns_v1.identifierPattern),
   ));
 }
-export function flagedWordOptionItem(...options: string[]): string {
+export function flagedIdentifierOptionItem(...options: string[]): string {
   return createOptionItemPattern(seq(
     optional(char('+', '-')),
-    ignoreCase(ordalt(...options)),
-    wordChars0(),
+    ignoreCase(textalt(...options)),
+    optional(patterns_v1.identifierPattern),
   ));
 }
 export function decimalOptionItem(...options: string[]): string {
   return createOptionItemPattern(seq(
-    ignoreCase(ordalt(...options)),
+    ignoreCase(textalt(...options)),
     optional(decimalPattern()),
   ));
 }
 export function numberOptionItem(...options: string[]): string {
   return createOptionItemPattern(seq(
-    ignoreCase(ordalt(...options)),
+    ignoreCase(textalt(...options)),
     optional(numberPattern()),
   ));
 }
 export function flagedNumberOptionItem(...options: string[]): string {
   return createOptionItemPattern(seq(
     optional(char('+', '-')),
-    ignoreCase(ordalt(...options)),
+    ignoreCase(textalt(...options)),
     optional(numberPattern()),
   ));
 }
 export function signedNumberOptionItem(...options: string[]): string {
   return createOptionItemPattern(seq(
-    ignoreCase(ordalt(...options)),
+    ignoreCase(textalt(...options)),
     optseq(
-      char('+', '-'),
+      optional(char('+', '-')),
       optional(numberPattern()),
     ),
   ));
@@ -970,9 +971,9 @@ export function signedNumberOptionItem(...options: string[]): string {
 export function flagedSignedNumberOptionItem(...options: string[]): string {
   return createOptionItemPattern(seq(
     optional(char('+', '-')),
-    ignoreCase(ordalt(...options)),
+    ignoreCase(textalt(...options)),
     optseq(
-      char('+', '-'),
+      optional(char('+', '-')),
       optional(numberPattern()),
     ),
   ));
@@ -992,9 +993,9 @@ export function flagedHexOptionItem(...options: string[]): string {
 }
 export function colorOptionItem(...options: string[]): string {
   return createOptionItemPattern(seq(
-    ignoreCase(ordalt(...options)),
+    ignoreCase(textalt(...options)),
     group(alt(
-      group(ordalt(...constants_common.colorNames, 'Default')),
+      group(textalt(...constants_common.colorNames, 'Default')),
       group(hexPattern()),
     )),
   ));
@@ -1052,7 +1053,7 @@ export function guiOptions(flags: CommandParameterFlag = CommandParameterFlag.No
     itemPatterns: [
       flagedOptionItem('AlwaysOnTop', 'Border', 'Caption', 'DelimiterSpace', 'DelimiterTab', 'Disabled', 'DPIScale', 'LastFoundExist', 'MaximizeBox', 'MinimizeBox', 'OwnDialogs', 'Owner', 'Parent', 'Resize', 'SysMenu', 'Theme', 'ToolWindow'),
       flagedStringOptionItem('Delimiter'),
-      flagedWordOptionItem('Hwnd', 'Label', 'LastFound'),
+      flagedIdentifierOptionItem('Hwnd', 'Label', 'LastFound'),
       flagedSizeOptionItem('MinSize', 'MaxSize'),
     ],
   };
@@ -1094,19 +1095,21 @@ export function guiControlType(): CommandParameter {
 export function controlMoveOptions(): CommandParameter {
   return unquoted([ numberOptionItem('X', 'Y', 'W', 'H') ]);
 }
-export function guiControlOptions(): CommandParameter {
+export function guiControlOptions(_flaged = false): CommandParameter {
   return {
     type: HighlightType.GuiOptions,
     flags: CommandParameterFlag.None,
     itemPatterns: [
-      flagedOptionItem('X+M', 'X-M', 'Y+M', 'Y-M', 'Left', 'Right', 'Center', 'Section', 'Tabstop', 'Wrap', 'AltSubmit', 'CDefault', 'BackgroundTrans', 'Background', 'Border', 'Theme'),
-      flagedNumberOptionItem('R', 'W', 'H', 'WP', 'HP', 'Choose', 'VScroll', 'HScroll'),
-      flagedSignedNumberOptionItem('X', 'Y', 'XP', 'YP', 'XM', 'YM', 'XS', 'YS'),
-      flagedWordOptionItem('V', 'G', 'Hwnd'),
-      flagedHexOptionItem('C'),
-      flagedToggleOptionItem('Disabled', 'Hidden'),
+      (_flaged ? flagedSignedNumberOptionItem : signedNumberOptionItem)('R', 'W', 'H', 'WP', 'HP', 'X', 'Y', 'XP', 'YP', 'XM', 'YM', 'XS', 'YS', 'Choose', 'VScroll', 'HScroll'),
+      (_flaged ? flagedOptionItem : optionItem)('X+M', 'X-M', 'Y+M', 'Y-M', 'Left', 'Right', 'Center', 'Section', 'Tabstop', 'Wrap', 'AltSubmit', 'CDefault', 'BackgroundTrans', 'Background', 'Border', 'Theme'),
+      (_flaged ? flagedIdentifierOptionItem : identifierOptionItem)('V', 'G', 'Hwnd'),
+      (_flaged ? flagedHexOptionItem : hexOptionItem)('C'),
+      (_flaged ? flagedToggleOptionItem : toggleOptionItem)('Disabled', 'Hidden'),
     ],
   };
+}
+export function flagedGuiControlOptions(): CommandParameter {
+  return guiControlOptions(true);
 }
 export function onOff(values: string[] = [], flags: CommandParameterFlag = CommandParameterFlag.None): CommandParameter {
   return keywordOnly([ optionItem('On', 'Off', '1', '0'), ...values ], flags);
