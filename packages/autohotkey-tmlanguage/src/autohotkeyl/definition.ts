@@ -807,7 +807,7 @@ function createOptionItemPattern(pattern: string): string {
   return seq(
     lookbehind(alt(
       inlineSpace(),
-      char(','),
+      char(',', ':'),
     )),
     pattern,
     lookahead(alt(

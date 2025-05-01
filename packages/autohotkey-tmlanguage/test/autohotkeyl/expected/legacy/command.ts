@@ -1812,6 +1812,7 @@ export function createCommandStatementExpectedData(scopeName: ScopeName): Expect
           dedent`
             Gui, Add, ActiveX, X+M
             GuiControl, +X+M
+            GuiControl, GuiName:+X+M
           `,
           [
             { text: 'Gui', scopes: name(scopeName, RuleName.CommandName) },
@@ -1824,6 +1825,12 @@ export function createCommandStatementExpectedData(scopeName: ScopeName): Expect
 
             { text: 'GuiControl', scopes: name(scopeName, RuleName.CommandName) },
             { text: ',', scopes: name(scopeName, RuleName.Comma) },
+            { text: '+X+M', scopes: name(scopeName, RuleName.UnquotedString, StyleName.Strong) },
+
+            { text: 'GuiControl', scopes: name(scopeName, RuleName.CommandName) },
+            { text: ',', scopes: name(scopeName, RuleName.Comma) },
+            { text: 'GuiName', scopes: name(scopeName, RuleName.LabelName) },
+            { text: ':', scopes: name(scopeName, RuleName.Colon) },
             { text: '+X+M', scopes: name(scopeName, RuleName.UnquotedString, StyleName.Strong) },
           ],
         ],
