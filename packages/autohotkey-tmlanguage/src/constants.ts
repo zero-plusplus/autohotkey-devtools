@@ -453,6 +453,7 @@ export const enum RuleName {
   HotkeyCombinator = 'string.label.like.hotkey.combinator',
   HotstringOption = 'string.label.like.hotkey.option',
   HotstringLabelName = 'string.label.like.hotstring',
+  Namespace = 'support.class.namespace',
   // #endregion statement
 
   // #region declaration
@@ -593,6 +594,7 @@ export const enum HighlightType {
   ExpressionWithOneTrueBrace = 'expressionwithonetruebrace',
   UnquotedString = 'unquotedstring',
   UnquotedStringShouldEscapeComma = 'unquoted_string_should_escapecomma',
+  UnquotedInteger = 'unquotednumber',
   // e.g. Send, {LButton 5}
   //            ^^^^^^^^^^^
   SendKeyName = 'send_key_name',
@@ -667,6 +669,10 @@ export const enum HighlightType {
   // e.g. `WinGet, output,ID, abc ahk_exe abc.exe ahk_class abc
   //                          ^^^ ^^^^^^^^^^^^^^^ ^^^^^^^^^^^^^
   WinTitle = 'window_title',
+
+  // e.g. `#Module ModuleName`
+  //               ^^^^^^^^^^
+  Namespace = 'namespace',
 }
 export const enum CommandSignatureFlag {
   None = 0,

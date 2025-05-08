@@ -1,12 +1,13 @@
 import { hasFlag } from '@zero-plusplus/utilities/src';
+import * as patterns_v2 from '../../../autohotkey2/patterns';
 import * as constants_common from '../../../common/constants';
 import { CommandFlag, HighlightType, Repository, RuleName, StyleName } from '../../../constants';
-import { alt, anyChar, anyChars0, anyChars1, capture, char, chars1, endAnchor, group, groupMany0, groupMany1, ignoreCase, inlineSpace, inlineSpaces0, inlineSpaces1, keyword, lookahead, lookbehind, negativeLookahead, negChar, negChars0, negChars1, numbers1, optional, optseq, ordalt, seq, text, textalt, wordBound, wordChars0, wordChars1 } from '../../../oniguruma';
+import { alt, anyChar, anyChars0, anyChars1, capture, char, chars1, endAnchor, group, groupMany0, groupMany1, ignoreCase, inlineSpace, inlineSpaces0, inlineSpaces1, keyword, lookahead, lookbehind, negativeLookahead, negChar, negChars0, negChars1, numbers1, optional, optseq, ordalt, reluctant, seq, text, textalt, wordBound, wordChars0, wordChars1 } from '../../../oniguruma';
 import type { BeginWhileRule, CommandDefinition, CommandParameter, CommandSignature, ElementName, MatchRule, PatternsRule, Rule, ScopeName } from '../../../types';
 import { includeRule, name, nameRule, patternsRule } from '../../../utils';
 import { isSubCommandParameter } from '../../definition';
 import * as patterns_v1 from '../../patterns';
-import { createAllowArgumentRule, createArgumentRulesWithNumber, createArgumentStringRule } from './unquotedString';
+import { createAllowArgumentRule, createArgumentStringRule, createNumberRule } from './unquotedString';
 
 interface Placeholder {
   startAnchor: string;
@@ -80,24 +81,30 @@ export function createCommandLikeRule(scopeName: ScopeName, definition: CommandD
       ),
 
       // arguments
-      optional(signature.parameters.reduceRight<string>((prev, parameter, i, parameters) => {
-        const isLastParameter = parameters.length - 1 === i;
+      ...(0 < signature.parameters.length
+        ? [
+          reluctant(optional(signature.parameters.reduceRight<string>((prev, parameter, i, parameters) => {
+            const isLastParameter = parameters.length - 1 === i;
 
-        const capturedCommaSeparator = seq(inlineSpaces0(), capture(char(',')));
-        const capturedFirstSeparator = group(alt(
-          capturedCommaSeparator,
-          inlineSpaces1(),
-        ));
-        const separator = i === 0 ? capturedFirstSeparator : capturedCommaSeparator;
+            const capturedCommaSeparator = seq(inlineSpaces0(), capture(char(',')));
+            const capturedFirstSeparator = group(alt(
+              capturedCommaSeparator,
+              inlineSpaces1(),
+            ));
+            const separator = i === 0 ? capturedFirstSeparator : capturedCommaSeparator;
 
-        return seq(
-          separator,
-          negativeLookahead(seq(inlineSpaces1(), char(';'))),
-          inlineSpaces0(),
-          capture(parameterToOniguruma(parameter, isLastParameter, placeholder)),
-          prev !== '' ? optional(prev) : '',
-        );
-      }, '')),
+            return seq(
+              separator,
+              negativeLookahead(seq(inlineSpaces1(), char(';'))),
+              inlineSpaces0(),
+              capture(parameterToOniguruma(parameter, isLastParameter, placeholder)),
+              prev !== '' ? optional(prev) : '',
+            );
+          }, ''))),
+        ]
+        : []),
+      optional(char(',')),
+      lookahead(placeholder.endAnchor),
     ),
     endCaptures: Object.fromEntries([
       // command name
@@ -369,9 +376,39 @@ function parameterToPatternsRule(scopeName: ScopeName, defenition: CommandDefini
               { name: name(scopeName, RuleName.UnquotedString, StyleName.Escape), match: text('`,') },
               { name: name(scopeName, RuleName.UnquotedString), match: seq(char(',')) },
             ] : []),
-            ...createArgumentRulesWithNumber(scopeName, {
-              additionalRules: optionItemPatternsToRules(scopeName, parameter.itemPatterns),
-            }),
+            ...optionItemPatternsToRules(scopeName, parameter.itemPatterns),
+            createNumberRule(scopeName),
+            {
+              name: name(scopeName, RuleName.UnquotedString),
+              match: seq(
+                negChar('`', '0-9', inlineSpace()),
+                negChars0('`', inlineSpace()),
+              ),
+            },
+          ],
+        }),
+      );
+    }
+    case HighlightType.UnquotedInteger:
+    {
+      return patternsRule(
+        includeRule(Repository.PercentExpressions),
+        includeRule(Repository.Dereference),
+
+        createArgumentStringRule(scopeName, {
+          stringPattern: patterns_v1.commandArgumentPattern,
+          stringRuleName: RuleName.UnquotedString,
+          additionalRules: [
+            {
+              match: capture(numbers1()),
+              captures: {
+                1: patternsRule(includeRule(Repository.Integer)),
+              },
+            },
+            {
+              name: name(scopeName, RuleName.Integer, StyleName.Invalid),
+              match: negChars1(inlineSpace()),
+            },
           ],
         }),
       );
@@ -543,22 +580,24 @@ function parameterToPatternsRule(scopeName: ScopeName, defenition: CommandDefini
         createArgumentStringRule(scopeName, {
           stringPattern: patterns_v1.commandArgumentPattern,
           stringRuleName: RuleName.UnquotedString,
-          additionalRules: createArgumentRulesWithNumber(scopeName, {
-            additionalRules: [
-              {
-                match: seq(
-                  negativeLookahead('`'),
-                  capture(char(',')),
-                ),
-                captures: { 1: patternsRule(includeRule(Repository.Comma)) },
-              },
-              ...optionItemPatternsToRules(scopeName, parameter.itemPatterns),
-              {
-                name: name(scopeName, RuleName.UnquotedString),
-                match: (negChars1('`', '\\s', ',')),
-              },
-            ],
-          }),
+          additionalRules: [
+            ...optionItemPatternsToRules(scopeName, parameter.itemPatterns),
+            {
+              match: seq(
+                negativeLookahead('`'),
+                capture(char(',')),
+              ),
+              captures: { 1: patternsRule(includeRule(Repository.Comma)) },
+            },
+            createNumberRule(scopeName),
+            {
+              name: name(scopeName, RuleName.UnquotedString),
+              match: seq(
+                negChar('`', '0-9', inlineSpace(), ','),
+                negChars0('`', inlineSpace(), ','),
+              ),
+            },
+          ],
         }),
       );
     }
@@ -570,10 +609,15 @@ function parameterToPatternsRule(scopeName: ScopeName, defenition: CommandDefini
           stringPattern: patterns_v1.commandArgumentPattern,
           stringRuleName: RuleName.UnquotedString,
           additionalRules: [
-            ...createArgumentRulesWithNumber(scopeName, {
-              unaryOperator: [ '+', '-', '^' ],
-              additionalRules: optionItemPatternsToRules(scopeName, parameter.itemPatterns),
-            }),
+            ...optionItemPatternsToRules(scopeName, parameter.itemPatterns),
+            createNumberRule(scopeName, { unaryOperator: [ '+', '-', '^' ] }),
+            {
+              name: name(scopeName, RuleName.UnquotedString),
+              match: seq(
+                negChar('`', '0-9', '+', '-', '^', inlineSpace(), ','),
+                negChars0('`', inlineSpace(), ','),
+              ),
+            },
           ],
         }),
       );
@@ -744,6 +788,19 @@ function parameterToPatternsRule(scopeName: ScopeName, defenition: CommandDefini
         includeRule(Repository.PercentExpressions),
         includeRule(Repository.Expressions),
 
+      );
+    }
+    case HighlightType.Namespace:
+    {
+      return patternsRule(
+        {
+          name: name(scopeName, RuleName.Namespace),
+          match: seq(wordBound(), patterns_v2.identifierPattern, wordBound()),
+        },
+        {
+          name: name(scopeName, RuleName.Namespace, StyleName.Invalid),
+          match: anyChars1(),
+        },
       );
     }
     default: break;

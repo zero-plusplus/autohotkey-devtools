@@ -1,5 +1,5 @@
 import { Repository, RuleName, StyleName } from '../../../constants';
-import { alt, capture, char, chars0, endAnchor, ignoreCase, inlineSpace, inlineSpaces0, lookahead, lookbehind, negChar, negChars0, negChars1, numbers1, optional, optseq, seq } from '../../../oniguruma';
+import { alt, capture, char, chars0, endAnchor, ignoreCase, inlineSpace, inlineSpaces0, lookahead, lookbehind, negChars0, negChars1, numbers1, optional, optseq, seq } from '../../../oniguruma';
 import type { MatchRule, Rule, ScopeName } from '../../../types';
 import { includeRule, name, patternsRule } from '../../../utils';
 
@@ -56,53 +56,42 @@ export function createArgumentStringRule(scopeName: ScopeName, placeholder: Plac
 
 interface Placeholder_ArgumentNumberRules {
   unaryOperator?: readonly string[];
-  additionalRules?: Rule[];
 }
-export function createArgumentRulesWithNumber(scopeName: ScopeName, placeholder: Placeholder_ArgumentNumberRules = {}): Rule[] {
-  return [
-    {
-      match: seq(
-        lookbehind(alt(
-          inlineSpace(),
-          char(','),
-        )),
-        ...(placeholder.unaryOperator ? [ optional(capture(char(...placeholder.unaryOperator))) ] : []),
-        capture(alt(
-          seq(ignoreCase('0x'), chars0('0-9', 'a-f', 'A-F')),
-          seq(
+export function createNumberRule(scopeName: ScopeName, placeholder: Placeholder_ArgumentNumberRules = {}): MatchRule {
+  return {
+    match: seq(
+      lookbehind(alt(
+        inlineSpace(),
+        char(','),
+      )),
+      ...(placeholder.unaryOperator ? [ optional(capture(char(...placeholder.unaryOperator))) ] : []),
+      capture(alt(
+        seq(ignoreCase('0x'), chars0('0-9', 'a-f', 'A-F')),
+        seq(
+          numbers1(),
+          optseq(char('.'), numbers1()),
+          optseq(
+            ignoreCase('E'),
+            optional(char('+', '-')),
             numbers1(),
-            optseq(char('.'), numbers1()),
-            optseq(
-              ignoreCase('E'),
-              optional(char('+', '-')),
-              numbers1(),
-            ),
           ),
-        )),
-        lookahead(alt(
-          inlineSpace(),
-          char(','),
-          endAnchor(),
-        )),
-      ),
-      captures: placeholder.unaryOperator
-        ? {
-          1: patternsRule(includeRule(Repository.Operator)),
-          2: patternsRule(includeRule(Repository.Number)),
-        }
-        : {
-          1: patternsRule(includeRule(Repository.Number)),
-        },
-    },
-    ...(placeholder.additionalRules ?? []),
-    {
-      name: name(scopeName, RuleName.UnquotedString),
-      match: seq(
-        negChar('`', '0-9', inlineSpace(), ...(placeholder.unaryOperator ?? [])),
-        negChars0('`', inlineSpace()),
-      ),
-    },
-  ];
+        ),
+      )),
+      lookahead(alt(
+        inlineSpace(),
+        char(','),
+        endAnchor(),
+      )),
+    ),
+    captures: placeholder.unaryOperator
+      ? {
+        1: patternsRule(includeRule(Repository.Operator)),
+        2: patternsRule(includeRule(Repository.Number)),
+      }
+      : {
+        1: patternsRule(includeRule(Repository.Number)),
+      },
+  };
 }
 
 interface Placeholder_AllowArgumentRule {

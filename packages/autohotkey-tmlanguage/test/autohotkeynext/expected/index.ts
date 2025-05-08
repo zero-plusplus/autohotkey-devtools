@@ -16,7 +16,6 @@ export function createExpectedDataList(scopeName: ScopeName): ExpectedTestData[]
       keywordLikeBuiltinVariables: constants_v2.keywordLikeBuiltinVariables,
       builtinVaribles: constants_vnext.builtinVaribles,
       builtInClassNames: constants_vnext.builtInClassNames,
-      directiveNames: constants_vnext.directiveNames,
     }),
 
     ...createCallExpressionExpectedData(scopeName),

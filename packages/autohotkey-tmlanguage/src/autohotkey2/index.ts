@@ -8,6 +8,7 @@ import { ordalt } from '../oniguruma';
 import type { Repositories, ScopeName, TmLanguage } from '../types';
 import { includeRule, name, namedPatternsRule, patternsRule } from '../utils';
 import * as constants_v2 from './constants';
+import * as definition_v2 from './definition';
 import * as patterns_v2 from './patterns';
 import * as rule_v2 from './rules';
 
@@ -28,7 +29,6 @@ interface Placeholder {
   builtinVaribles: readonly string[];
   builtInClassNames: readonly string[];
   builtInFunctionNames: readonly string[];
-  directiveNames: readonly string[];
   deprecatedBuiltinFunctionNames: readonly string[];
 }
 export function createRepositories(scopeName: ScopeName, placeholder?: Placeholder): Repositories {
@@ -108,20 +108,11 @@ export function createRepositories(scopeName: ScopeName, placeholder?: Placehold
       expressionOperators: constants_v2.expressionOperators,
       endAnchor: patterns_v1.lineEndAnchor,
     }),
-    [Repository.DirectiveStatement]: patternsRule(
-      rule_common.createCallStatementRule(scopeName, {
-        commandRuleName: RuleName.DirectiveName,
-        startAnchor: patterns_v1.statementStartAnchor,
-        identifierPattern: ordalt(...(placeholder?.directiveNames ?? constants_v2.directiveNames)),
-        assignmentOperators: constants_v2.expressionOperators,
-      }),
-      rule_common.createCallStatementRule(scopeName, {
-        commandRuleName: RuleName.DirectiveName,
-        startAnchor: patterns_v1.statementStartAnchor,
-        identifierPattern: patterns_v2.directiveNamePattern,
-        assignmentOperators: constants_v2.expressionOperators,
-      }),
-    ),
+    [Repository.DirectiveStatement]: rule_v1.createCommandLikeStatementRule(scopeName, definition_v2.directiveDefinitions, {
+      startAnchor: patterns_v1.statementStartAnchor,
+      endAnchor: patterns_v1.lineEndAnchor,
+      commandElementName: RuleName.DirectiveName,
+    }),
     [Repository.JumpStatement]: rule_v1.createJumpStatement(scopeName, {
       startAnchor: patterns_v1.statementStartAnchor,
       assignmentOperators: constants_v1.assignmentOperators,

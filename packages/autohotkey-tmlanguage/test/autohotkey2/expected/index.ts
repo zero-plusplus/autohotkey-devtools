@@ -38,7 +38,6 @@ interface Placeholder {
   keywordLikeBuiltinVariables: readonly string[];
   builtinVaribles: readonly string[];
   builtInClassNames: readonly string[];
-  directiveNames: readonly string[];
 }
 export function createExpectedDataList(scopeName: ScopeName, placeholder?: Placeholder): ExpectedTestData[] {
   return [
@@ -54,7 +53,7 @@ export function createExpectedDataList(scopeName: ScopeName, placeholder?: Place
     ...createCallStatementExpectedData(scopeName),
     ...createClassDeclarationExpectedData(scopeName),
     ...createDereferenceExpressionExpectedData(scopeName),
-    ...createDirectiveStatementExpectedData(scopeName, placeholder),
+    ...createDirectiveStatementExpectedData(scopeName),
     ...createFieldDeclarationExpectedData(scopeName),
     ...createForStatementExpectedData(scopeName),
     ...createFunctionDeclarationExpectedData(scopeName),

@@ -1,37 +1,38 @@
-import { command, expression, keywordOnly, optionItem, signature, unquoted } from '../autohotkeyl/definition';
-import type { CommandDefinition } from '../types';
+import { command, decimalOptionItem, encoding, expression, keywordOnly, optionItem, signature, signedNumberOptionItem, toggleOptionItem, unquoted } from '../autohotkeyl/definition';
+import { CommandParameterFlag, HighlightType } from '../constants';
+import type { CommandDefinition, CommandParameter } from '../types';
 
 // #region directives
 export const directiveDefinitions: CommandDefinition[] = [
   // https://www.autohotkey.com/docs/v2/lib/_ClipboardTimeout.htm
-  command('#ClipboardTimeout', signature([ expression() ])),
+  command('#ClipboardTimeout', signature([ unquotedInteger() ])),
 
   // https://www.autohotkey.com/docs/v2/lib/_DllLoad.htm
   command('#DllLoad', signature([ expression() ])),
 
   // https://www.autohotkey.com/docs/v2/lib/_ErrorStdOut.htm
-  command('#ErrorStdOut', signature([ expression() ])),
+  command('#ErrorStdOut', signature([ quotableUnquoted(...encoding().itemPatterns!) ])),
 
   // https://www.autohotkey.com/docs/v2/lib/_HotIf.htm
   command('#HotIf', signature([ expression() ])),
 
   // https://www.autohotkey.com/docs/v2/lib/_HotIfTimeout.htm
-  command('#HotIfTimeout', signature([ expression() ])),
+  command('#HotIfTimeout', signature([ unquotedInteger() ])),
 
   // https://www.autohotkey.com/docs/v2/lib/_Hotstring.htm
-  command('#Hotstring', signature([ unquoted() ])),
+  command('#Hotstring', signature([ unquoted([ optionItem('NoMouse', 'EndChars', 'SI', 'SP', 'SE', 'X'), toggleOptionItem('*', '?', 'B', 'C', 'O', 'R', 'T', 'Z'), decimalOptionItem('P'), signedNumberOptionItem('K') ]) ])),
 
   // https://www.autohotkey.com/docs/v2/lib/_InputLevel.htm
-  command('#InputLevel', signature([ expression() ])),
+  command('#InputLevel', signature([ unquotedInteger() ])),
 
   // https://www.autohotkey.com/docs/v2/lib/_MaxThreads.htm
-  command('#MaxThreads', signature([ expression() ])),
+  command('#MaxThreads', signature([ unquotedInteger() ])),
 
   // https://www.autohotkey.com/docs/v2/lib/_MaxThreadsBuffer.htm
-  command('#MaxThreadsBuffer', signature([ expression() ])),
+  command('#MaxThreadsBuffer', signature([ unquotedAndBoolean() ])),
 
   // https://www.autohotkey.com/docs/v2/lib/_MaxThreadsPerHotkey.htm
-  command('#MaxThreadsPerHotkey', signature([ expression() ])),
+  command('#MaxThreadsPerHotkey', signature([ unquotedInteger() ])),
 
   // https://www.autohotkey.com/docs/v2/lib/_NoTrayIcon.htm
   command('#NoTrayIcon', signature([])),
@@ -40,18 +41,31 @@ export const directiveDefinitions: CommandDefinition[] = [
   command('#SingleInstance', signature([ keywordOnly([ optionItem('Force', 'Ignore', 'Prompt', 'Off') ]) ])),
 
   // https://www.autohotkey.com/docs/v2/lib/_SuspendExempt.htm
-  command('#SuspendExempt', signature([ expression() ])),
+  command('#SuspendExempt', signature([ unquotedAndBoolean() ])),
 
   // https://www.autohotkey.com/docs/v2/lib/_UseHook.htm
-  command('#UseHook', signature([ expression() ])),
+  command('#UseHook', signature([ unquotedAndBoolean() ])),
 
   // https://www.autohotkey.com/docs/v2/lib/_Warn.htm
-  command('#Warn', signature([
-    keywordOnly([ optionItem('VarUnset', 'LocalSameAsGlobal', 'Unreachable', 'All') ]),
-    keywordOnly([ optionItem('MsgBox', 'StdOut', 'OutputDebug', 'Off') ]),
-  ])),
+  command('#Warn', signature([ keywordOnly([ optionItem('VarUnset', 'LocalSameAsGlobal', 'Unreachable', 'All') ]), keywordOnly([ optionItem('MsgBox', 'StdOut', 'OutputDebug', 'Off') ]) ])),
 
   // https://www.autohotkey.com/docs/v2/lib/_WinActivateForce.htm
   command('#WinActivateForce', signature([])),
 ];
 // #endregion commands
+
+// #region helpers
+export function quotableUnquoted(...optionItems: string[]): CommandParameter {
+  return unquoted(optionItems);
+}
+export function unquotedInteger(...optionItems: string[]): CommandParameter {
+  return {
+    type: HighlightType.UnquotedInteger,
+    flags: CommandParameterFlag.None,
+    itemPatterns: optionItems,
+  };
+}
+export function unquotedAndBoolean(...optionItems: string[]): CommandParameter {
+  return unquoted([ optionItem('0', '1', 'true', 'false'), ...optionItems ]);
+}
+// #endregion helpers

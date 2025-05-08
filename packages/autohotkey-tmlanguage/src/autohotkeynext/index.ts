@@ -4,10 +4,11 @@ import * as patterns_v2 from '../autohotkey2/patterns';
 import * as constants_v1 from '../autohotkeyl/constants';
 import * as patterns_v1 from '../autohotkeyl/patterns';
 import * as rules_v1 from '../autohotkeyl/rules';
-import { Repository } from '../constants';
+import { Repository, RuleName } from '../constants';
 import type { ScopeName, TmLanguage } from '../types';
 import { includeRule, patternsRule } from '../utils';
 import * as constants_vnext from './constants';
+import * as definition_vnext from './definition';
 import * as patterns_vnext from './patterns';
 import * as rules_vnext from './rules';
 
@@ -17,7 +18,6 @@ export function createTmLanguage(): TmLanguage {
     builtinVaribles: constants_vnext.builtinVaribles,
     builtInClassNames: constants_vnext.builtInClassNames,
     builtInFunctionNames: constants_vnext.builtInFunctionNames,
-    directiveNames: constants_vnext.directiveNames,
     deprecatedBuiltinFunctionNames: constants_vnext.deprecatedBuiltinFunctionNames,
   });
 
@@ -63,6 +63,14 @@ export function createTmLanguage(): TmLanguage {
         operators: constants_v2.assignmentOperators,
       }),
       // #endregion declaration
+
+      // #region statement
+      [Repository.DirectiveStatement]: rules_v1.createCommandLikeStatementRule(scopeName, definition_vnext.directiveDefinitions, {
+        startAnchor: patterns_v1.statementStartAnchor,
+        endAnchor: patterns_v1.lineEndAnchor,
+        commandElementName: RuleName.DirectiveName,
+      }),
+      // #endregion statement
 
       // #region expression
       [Repository.ExpressionInBrackets]: patternsRule(
