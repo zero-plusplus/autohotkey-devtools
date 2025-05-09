@@ -109,5 +109,39 @@ export function createPropertyDeclarationExpectedData(scopeName: ScopeName): Exp
         { text: '}', scopes: name(scopeName, RuleName.ClassBlockEnd) },
       ],
     ],
+    [
+      dedent`
+        class {
+          property[
+            key
+          ]
+          {
+            get {
+            }
+            set {
+            }
+          }
+        }
+      `,
+      [
+        { text: 'class', scopes: name(scopeName, RuleName.ClassKeyword) },
+        { text: '{', scopes: name(scopeName, RuleName.ClassBlockBegin) },
+
+        { text: 'property', scopes: name(scopeName, RuleName.Variable) },
+        { text: '[', scopes: name(scopeName, RuleName.OpenBracket) },
+        { text: 'key', scopes: name(scopeName, RuleName.Variable) },
+        { text: ']', scopes: name(scopeName, RuleName.CloseBracket) },
+        { text: '{', scopes: name(scopeName, RuleName.BlockBegin) },
+        { text: 'get', scopes: name(scopeName, RuleName.GetSetKeyword) },
+        { text: '{', scopes: name(scopeName, RuleName.BlockBegin) },
+        { text: '}', scopes: name(scopeName, RuleName.BlockEnd) },
+        { text: 'set', scopes: name(scopeName, RuleName.GetSetKeyword) },
+        { text: '{', scopes: name(scopeName, RuleName.BlockBegin) },
+        { text: '}', scopes: name(scopeName, RuleName.BlockEnd) },
+        { text: '}', scopes: name(scopeName, RuleName.BlockEnd) },
+
+        { text: '}', scopes: name(scopeName, RuleName.ClassBlockEnd) },
+      ],
+    ],
   ];
 }
