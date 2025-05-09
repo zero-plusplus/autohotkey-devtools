@@ -174,6 +174,72 @@ export function createClassHeadDeclarationExpectedData(scopeName: ScopeName): Ex
             { text: '; comment', scopes: name(scopeName, RuleName.InLineComment) },
           ],
         ],
+        [
+          dedent`
+            class                   ; comment
+            {                       ; comment
+            }                       ; comment
+            class A                 ; comment
+            {                       ; comment
+            }                       ; comment
+            class A extends         ; comment
+            {                       ; comment
+            }                       ; comment
+            class A extends B       ; comment
+            {                       ; comment
+            }                       ; comment
+            class A extends B.C     ; comment
+            {                       ; comment
+            }                       ; comment
+          `,
+          [
+            { text: 'class', scopes: name(scopeName, RuleName.ClassKeyword) },
+            { text: '; comment', scopes: name(scopeName, RuleName.InLineComment) },
+            { text: '{', scopes: name(scopeName, RuleName.ClassBlockBegin) },
+            { text: '; comment', scopes: name(scopeName, RuleName.InLineComment) },
+            { text: '}', scopes: name(scopeName, RuleName.ClassBlockEnd) },
+            { text: '; comment', scopes: name(scopeName, RuleName.InLineComment) },
+
+            { text: 'class', scopes: name(scopeName, RuleName.ClassKeyword) },
+            { text: 'A', scopes: name(scopeName, RuleName.ClassName) },
+            { text: '; comment', scopes: name(scopeName, RuleName.InLineComment) },
+            { text: '{', scopes: name(scopeName, RuleName.ClassBlockBegin) },
+            { text: '; comment', scopes: name(scopeName, RuleName.InLineComment) },
+            { text: '}', scopes: name(scopeName, RuleName.ClassBlockEnd) },
+            { text: '; comment', scopes: name(scopeName, RuleName.InLineComment) },
+
+            { text: 'class', scopes: name(scopeName, RuleName.ClassKeyword) },
+            { text: 'A', scopes: name(scopeName, RuleName.ClassName) },
+            { text: 'extends', scopes: name(scopeName, RuleName.ExtendsKeyword) },
+            { text: '; comment', scopes: name(scopeName, RuleName.InLineComment) },
+            { text: '{', scopes: name(scopeName, RuleName.ClassBlockBegin) },
+            { text: '; comment', scopes: name(scopeName, RuleName.InLineComment) },
+            { text: '}', scopes: name(scopeName, RuleName.ClassBlockEnd) },
+            { text: '; comment', scopes: name(scopeName, RuleName.InLineComment) },
+
+            { text: 'class', scopes: name(scopeName, RuleName.ClassKeyword) },
+            { text: 'A', scopes: name(scopeName, RuleName.ClassName) },
+            { text: 'extends', scopes: name(scopeName, RuleName.ExtendsKeyword) },
+            { text: 'B', scopes: name(scopeName, RuleName.ClassName) },
+            { text: '; comment', scopes: name(scopeName, RuleName.InLineComment) },
+            { text: '{', scopes: name(scopeName, RuleName.ClassBlockBegin) },
+            { text: '; comment', scopes: name(scopeName, RuleName.InLineComment) },
+            { text: '}', scopes: name(scopeName, RuleName.ClassBlockEnd) },
+            { text: '; comment', scopes: name(scopeName, RuleName.InLineComment) },
+
+            { text: 'class', scopes: name(scopeName, RuleName.ClassKeyword) },
+            { text: 'A', scopes: name(scopeName, RuleName.ClassName) },
+            { text: 'extends', scopes: name(scopeName, RuleName.ExtendsKeyword) },
+            { text: 'B', scopes: name(scopeName, RuleName.ClassName) },
+            { text: '.', scopes: name(scopeName, RuleName.Dot) },
+            { text: 'C', scopes: name(scopeName, RuleName.ClassName) },
+            { text: '; comment', scopes: name(scopeName, RuleName.InLineComment) },
+            { text: '{', scopes: name(scopeName, RuleName.ClassBlockBegin) },
+            { text: '; comment', scopes: name(scopeName, RuleName.InLineComment) },
+            { text: '}', scopes: name(scopeName, RuleName.ClassBlockEnd) },
+            { text: '; comment', scopes: name(scopeName, RuleName.InLineComment) },
+          ],
+        ],
       ];
     })(),
 
