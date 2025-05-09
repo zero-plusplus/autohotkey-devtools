@@ -8,41 +8,79 @@ export function createPropertyDeclarationExpectedData(scopeName: ScopeName): Exp
   return [
     [
       dedent`
-        class {
-          property {
-            get {
-            }
-            set {
-            }
-          }
-          property
-          {
-            get
-            {
-            }
-            set
-            {
-            }
-          }
-        }
+        class {           ; comment
+          property {      ; comment
+            get {         ; comment
+            }             ; comment
+            set {         ; comment
+            }             ; comment
+          }               ; comment
+          property        ; comment
+          {               ; comment
+            get           ; comment
+            {             ; comment
+            }             ; comment
+            set           ; comment
+            {             ; comment
+            }             ; comment
+          }               ; comment
+        }                 ; comment
       `,
       [
         { text: 'class', scopes: name(scopeName, RuleName.ClassKeyword) },
         { text: '{', scopes: name(scopeName, RuleName.ClassBlockBegin) },
+        { text: '; comment', scopes: name(scopeName, RuleName.InLineComment) },
 
-        ...repeatArray(2, [
-          { text: 'property', scopes: name(scopeName, RuleName.Variable) },
-          { text: '{', scopes: name(scopeName, RuleName.BlockBegin) },
-          { text: 'get', scopes: name(scopeName, RuleName.GetSetKeyword) },
-          { text: '{', scopes: name(scopeName, RuleName.BlockBegin) },
-          { text: '}', scopes: name(scopeName, RuleName.BlockEnd) },
-          { text: 'set', scopes: name(scopeName, RuleName.GetSetKeyword) },
-          { text: '{', scopes: name(scopeName, RuleName.BlockBegin) },
-          { text: '}', scopes: name(scopeName, RuleName.BlockEnd) },
-          { text: '}', scopes: name(scopeName, RuleName.BlockEnd) },
-        ]),
+        { text: 'property', scopes: name(scopeName, RuleName.Variable) },
+        { text: '{', scopes: name(scopeName, RuleName.BlockBegin) },
+        { text: '; comment', scopes: name(scopeName, RuleName.InLineComment) },
+
+        { text: 'get', scopes: name(scopeName, RuleName.GetSetKeyword) },
+        { text: '{', scopes: name(scopeName, RuleName.BlockBegin) },
+        { text: '; comment', scopes: name(scopeName, RuleName.InLineComment) },
+
+        { text: '}', scopes: name(scopeName, RuleName.BlockEnd) },
+        { text: '; comment', scopes: name(scopeName, RuleName.InLineComment) },
+
+        { text: 'set', scopes: name(scopeName, RuleName.GetSetKeyword) },
+        { text: '{', scopes: name(scopeName, RuleName.BlockBegin) },
+        { text: '; comment', scopes: name(scopeName, RuleName.InLineComment) },
+
+        { text: '}', scopes: name(scopeName, RuleName.BlockEnd) },
+        { text: '; comment', scopes: name(scopeName, RuleName.InLineComment) },
+
+        { text: '}', scopes: name(scopeName, RuleName.BlockEnd) },
+        { text: '; comment', scopes: name(scopeName, RuleName.InLineComment) },
+
+        { text: 'property', scopes: name(scopeName, RuleName.Variable) },
+        { text: '; comment', scopes: name(scopeName, RuleName.InLineComment) },
+
+        { text: '{', scopes: name(scopeName, RuleName.BlockBegin) },
+        { text: '; comment', scopes: name(scopeName, RuleName.InLineComment) },
+
+        { text: 'get', scopes: name(scopeName, RuleName.GetSetKeyword) },
+        { text: '; comment', scopes: name(scopeName, RuleName.InLineComment) },
+
+        { text: '{', scopes: name(scopeName, RuleName.BlockBegin) },
+        { text: '; comment', scopes: name(scopeName, RuleName.InLineComment) },
+
+        { text: '}', scopes: name(scopeName, RuleName.BlockEnd) },
+        { text: '; comment', scopes: name(scopeName, RuleName.InLineComment) },
+
+        { text: 'set', scopes: name(scopeName, RuleName.GetSetKeyword) },
+        { text: '; comment', scopes: name(scopeName, RuleName.InLineComment) },
+
+        { text: '{', scopes: name(scopeName, RuleName.BlockBegin) },
+        { text: '; comment', scopes: name(scopeName, RuleName.InLineComment) },
+
+        { text: '}', scopes: name(scopeName, RuleName.BlockEnd) },
+        { text: '; comment', scopes: name(scopeName, RuleName.InLineComment) },
+
+        { text: '}', scopes: name(scopeName, RuleName.BlockEnd) },
+        { text: '; comment', scopes: name(scopeName, RuleName.InLineComment) },
 
         { text: '}', scopes: name(scopeName, RuleName.ClassBlockEnd) },
+        { text: '; comment', scopes: name(scopeName, RuleName.InLineComment) },
       ],
     ],
     [
