@@ -187,6 +187,39 @@ export function createFieldDeclarationExpectedData(scopeName: ScopeName): Expect
             { text: '}', scopes: name(scopeName, RuleName.ClassBlockEnd) },
           ],
         ],
+        [
+          dedent`
+            class {
+              field := Func(    ; comment
+                  123,          ; comment
+                , 123           ; comment
+              )                 ; comment
+            }
+          `,
+          [
+            { text: 'class', scopes: name(scopeName, RuleName.ClassKeyword) },
+            { text: '{', scopes: name(scopeName, RuleName.ClassBlockBegin) },
+
+            { text: 'field', scopes: name(scopeName, RuleName.Variable) },
+            { text: ':=', scopes: name(scopeName, RuleName.Operator) },
+            { text: 'Func', scopes: name(scopeName, RuleName.FunctionName) },
+            { text: '(', scopes: name(scopeName, RuleName.OpenParen) },
+            { text: '; comment', scopes: name(scopeName, RuleName.InLineComment) },
+
+            { text: '123', scopes: name(scopeName, RuleName.Integer) },
+            { text: ',', scopes: name(scopeName, RuleName.Comma) },
+            { text: '; comment', scopes: name(scopeName, RuleName.InLineComment) },
+
+            { text: ',', scopes: name(scopeName, RuleName.Comma) },
+            { text: '123', scopes: name(scopeName, RuleName.Integer) },
+            { text: '; comment', scopes: name(scopeName, RuleName.InLineComment) },
+
+            { text: ')', scopes: name(scopeName, RuleName.CloseParen) },
+            { text: '; comment', scopes: name(scopeName, RuleName.InLineComment) },
+
+            { text: '}', scopes: name(scopeName, RuleName.ClassBlockEnd) },
+          ],
+        ],
       ];
     })(),
 
