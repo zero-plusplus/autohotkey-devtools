@@ -117,6 +117,79 @@ export function createFieldDeclarationExpectedData(scopeName: ScopeName): Expect
       ];
     })(),
 
+    ...((): ExpectedTestData[] => {
+      return [
+        [
+          dedent`
+            class {
+              field := {        ; comment
+                  key: 123,     ; comment
+                , key: 123      ; comment
+              }                 ; comment
+            }
+          `,
+          [
+            { text: 'class', scopes: name(scopeName, RuleName.ClassKeyword) },
+            { text: '{', scopes: name(scopeName, RuleName.ClassBlockBegin) },
+
+            { text: 'field', scopes: name(scopeName, RuleName.Variable) },
+            { text: ':=', scopes: name(scopeName, RuleName.Operator) },
+            { text: '{', scopes: name(scopeName, RuleName.OpenBrace) },
+            { text: '; comment', scopes: name(scopeName, RuleName.InLineComment) },
+
+            { text: 'key', scopes: name(scopeName, RuleName.Variable) },
+            { text: ':', scopes: name(scopeName, RuleName.Colon) },
+            { text: '123', scopes: name(scopeName, RuleName.Integer) },
+            { text: ',', scopes: name(scopeName, RuleName.Comma) },
+            { text: '; comment', scopes: name(scopeName, RuleName.InLineComment) },
+
+            { text: ',', scopes: name(scopeName, RuleName.Comma) },
+            { text: 'key', scopes: name(scopeName, RuleName.Variable) },
+            { text: ':', scopes: name(scopeName, RuleName.Colon) },
+            { text: '123', scopes: name(scopeName, RuleName.Integer) },
+            { text: '; comment', scopes: name(scopeName, RuleName.InLineComment) },
+
+            { text: '}', scopes: name(scopeName, RuleName.CloseBrace) },
+            { text: '; comment', scopes: name(scopeName, RuleName.InLineComment) },
+
+            { text: '}', scopes: name(scopeName, RuleName.ClassBlockEnd) },
+          ],
+        ],
+        [
+          dedent`
+            class {
+              field := [    ; comment
+                  123,      ; comment
+                , 123       ; comment
+              ]             ; comment
+            }
+          `,
+          [
+            { text: 'class', scopes: name(scopeName, RuleName.ClassKeyword) },
+            { text: '{', scopes: name(scopeName, RuleName.ClassBlockBegin) },
+
+            { text: 'field', scopes: name(scopeName, RuleName.Variable) },
+            { text: ':=', scopes: name(scopeName, RuleName.Operator) },
+            { text: '[', scopes: name(scopeName, RuleName.OpenBracket) },
+            { text: '; comment', scopes: name(scopeName, RuleName.InLineComment) },
+
+            { text: '123', scopes: name(scopeName, RuleName.Integer) },
+            { text: ',', scopes: name(scopeName, RuleName.Comma) },
+            { text: '; comment', scopes: name(scopeName, RuleName.InLineComment) },
+
+            { text: ',', scopes: name(scopeName, RuleName.Comma) },
+            { text: '123', scopes: name(scopeName, RuleName.Integer) },
+            { text: '; comment', scopes: name(scopeName, RuleName.InLineComment) },
+
+            { text: ']', scopes: name(scopeName, RuleName.CloseBracket) },
+            { text: '; comment', scopes: name(scopeName, RuleName.InLineComment) },
+
+            { text: '}', scopes: name(scopeName, RuleName.ClassBlockEnd) },
+          ],
+        ],
+      ];
+    })(),
+
     // Field in nested class
     [
       dedent`
