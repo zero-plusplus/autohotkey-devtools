@@ -43,6 +43,50 @@ export function createMetaFunctionDeclarationExpectedData(scopeName: ScopeName):
         [
           dedent`
             class {                                     ; comment
+              ${metaFunctionName}(                      ; comment
+                  a,                                    ; comment
+                  b := 123                              ; comment
+                  , c*                                  ; comment
+                ) {                                     ; comment
+              }                                         ; comment
+            }                                           ; comment
+          `, [
+            { text: 'class', scopes: name(scopeName, RuleName.ClassKeyword) },
+            { text: '{', scopes: name(scopeName, RuleName.ClassBlockBegin) },
+            { text: '; comment', scopes: name(scopeName, RuleName.InLineComment) },
+
+            { text: metaFunctionName, scopes: name(scopeName, RuleName.MetaFunctionName) },
+            { text: '(', scopes: name(scopeName, RuleName.OpenParen) },
+            { text: '; comment', scopes: name(scopeName, RuleName.InLineComment) },
+
+            { text: 'a', scopes: name(scopeName, RuleName.Variable) },
+            { text: ',', scopes: name(scopeName, RuleName.Comma) },
+            { text: '; comment', scopes: name(scopeName, RuleName.InLineComment) },
+
+            { text: 'b', scopes: name(scopeName, RuleName.Variable) },
+            { text: ':=', scopes: name(scopeName, RuleName.Operator) },
+            { text: '123', scopes: name(scopeName, RuleName.Integer) },
+            { text: '; comment', scopes: name(scopeName, RuleName.InLineComment) },
+
+            { text: ',', scopes: name(scopeName, RuleName.Comma) },
+            { text: 'c', scopes: name(scopeName, RuleName.Variable) },
+            { text: '*', scopes: name(scopeName, RuleName.Operator) },
+            { text: '; comment', scopes: name(scopeName, RuleName.InLineComment) },
+
+            { text: ')', scopes: name(scopeName, RuleName.CloseParen) },
+            { text: '{', scopes: name(scopeName, RuleName.BlockBegin) },
+            { text: '; comment', scopes: name(scopeName, RuleName.InLineComment) },
+
+            { text: '}', scopes: name(scopeName, RuleName.BlockEnd) },
+            { text: '; comment', scopes: name(scopeName, RuleName.InLineComment) },
+
+            { text: '}', scopes: name(scopeName, RuleName.ClassBlockEnd) },
+            { text: '; comment', scopes: name(scopeName, RuleName.InLineComment) },
+          ],
+        ],
+        [
+          dedent`
+            class {                                     ; comment
               ${metaFunctionName}(a, b := 123, c*)      ; comment
               {                                         ; comment
               }                                         ; comment
