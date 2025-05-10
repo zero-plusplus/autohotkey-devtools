@@ -18,8 +18,10 @@ export function createContinuationSectionRule(scopeName: ScopeName, placeholder:
     ),
     beginCaptures: {
       1: nameRule(scopeName, RuleName.OpenParen),
-      2: patternsRule(includeRule(Repository.ContinuationStringOptions)),
-      3: patternsRule(includeRule(Repository.InLineComments)),
+      2: patternsRule(
+        includeRule(Repository.ContinuationStringOptions),
+        includeRule(Repository.InLineComments),
+      ),
     },
     end: seq(
       startAnchor(),

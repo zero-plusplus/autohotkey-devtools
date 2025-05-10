@@ -1838,6 +1838,67 @@ export function createCommandStatementExpectedData(scopeName: ScopeName): Expect
     })(),
     // #endregion arg
 
+    // #region continuation
+    ...((): ExpectedTestData[] => {
+      return [
+        [
+          dedent`
+            Control             ; comment
+              , arg1            ; comment
+              , arg2, arg3      ; comment
+          `,
+          [
+            { text: 'Control', scopes: name(scopeName, RuleName.CommandName) },
+            { text: '; comment', scopes: name(scopeName, RuleName.InLineComment) },
+
+            { text: ',', scopes: name(scopeName, RuleName.Comma) },
+            { text: 'arg1', scopes: name(scopeName, RuleName.UnquotedString) },
+            { text: '; comment', scopes: name(scopeName, RuleName.InLineComment) },
+
+            { text: ',', scopes: name(scopeName, RuleName.Comma) },
+            { text: 'arg2', scopes: name(scopeName, RuleName.UnquotedString) },
+            { text: ',', scopes: name(scopeName, RuleName.Comma) },
+            { text: 'arg3', scopes: name(scopeName, RuleName.UnquotedString) },
+            { text: '; comment', scopes: name(scopeName, RuleName.InLineComment) },
+          ],
+        ],
+        [
+          dedent`
+            Control             ; comment
+              , arg1            ; comment
+              , arg2, arg3,     ; comment
+              (                 ; comment
+                arg4            ; no comment
+              )                 ; comment
+          `,
+          [
+            { text: 'Control', scopes: name(scopeName, RuleName.CommandName) },
+            { text: '; comment', scopes: name(scopeName, RuleName.InLineComment) },
+
+            { text: ',', scopes: name(scopeName, RuleName.Comma) },
+            { text: 'arg1', scopes: name(scopeName, RuleName.UnquotedString) },
+            { text: '; comment', scopes: name(scopeName, RuleName.InLineComment) },
+
+            { text: ',', scopes: name(scopeName, RuleName.Comma) },
+            { text: 'arg2', scopes: name(scopeName, RuleName.UnquotedString) },
+            { text: ',', scopes: name(scopeName, RuleName.Comma) },
+            { text: 'arg3', scopes: name(scopeName, RuleName.UnquotedString) },
+            { text: ',', scopes: name(scopeName, RuleName.Comma) },
+            { text: '; comment', scopes: name(scopeName, RuleName.InLineComment) },
+
+            { text: '(', scopes: name(scopeName, RuleName.OpenParen) },
+            { text: '; comment', scopes: name(scopeName, RuleName.InLineComment) },
+
+            { text: 'arg4            ; no comment', scopes: name(scopeName, RuleName.UnquotedString) },
+
+            { text: ')', scopes: name(scopeName, RuleName.CloseParen) },
+            { text: '; comment', scopes: name(scopeName, RuleName.InLineComment) },
+          ],
+        ],
+      ];
+    })(),
+    // #endregion continuation
+
     // Fix: If the last argument is a percent expression, the comma after is highlighted as a string
     [
       dedent`

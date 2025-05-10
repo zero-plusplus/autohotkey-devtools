@@ -48,12 +48,15 @@ export function createCommandLikeStatementRule(scopeName: ScopeName, definitions
         char(','),
       )),
       inlineSpaces0(),
-      capture(groupMany0(seq(
+      capture(reluctant(groupMany0(seq(
         inlineSpaces0(),
         char(','),
         inlineSpaces0(),
         optional(patterns_v1.commandArgumentPattern),
-      ))),
+      )))),
+      inlineSpaces0(),
+      capture(optional(char(','))),
+      inlineSpaces0(),
       lookahead(placeholder.endAnchor),
     ),
     whileCaptures: {
@@ -61,6 +64,7 @@ export function createCommandLikeStatementRule(scopeName: ScopeName, definitions
         includeRule(Repository.Comma),
         includeRule(Repository.CommandArgument),
       ),
+      2: patternsRule(includeRule(Repository.Comma)),
     },
     patterns: [ includeRule(Repository.Comment) ],
   };
