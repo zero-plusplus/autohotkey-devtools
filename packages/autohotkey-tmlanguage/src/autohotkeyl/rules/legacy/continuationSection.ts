@@ -1,5 +1,5 @@
 import { Repository, RuleName } from '../../../constants';
-import { alt, capture, char, inlineSpace, inlineSpaces0, lookahead, many0, negativeLookahead, negChar, negChars0, seq, startAnchor } from '../../../oniguruma';
+import { alt, capture, char, inlineSpace, inlineSpaces0, lookahead, many0, negativeLookahead, negChar, negChars0, optional, reluctant, seq, startAnchor } from '../../../oniguruma';
 import type { BeginEndRule, ScopeName } from '../../../types';
 import { includeRule, nameRule, patternsRule } from '../../../utils';
 
@@ -28,10 +28,13 @@ export function createContinuationSectionRule(scopeName: ScopeName, placeholder:
       inlineSpaces0(),
       negativeLookahead(char('`')),
       capture(char(')')),
-      capture(many0(alt(
+      capture(reluctant(many0(alt(
         seq(negativeLookahead(inlineSpace()), char(';')),
         negChar(';'),
-      ))),
+      )))),
+      inlineSpaces0(),
+      optional(capture(char(','))),
+      inlineSpaces0(),
       lookahead(placeholder.endAnchor),
     ),
     endCaptures: {
@@ -41,6 +44,7 @@ export function createContinuationSectionRule(scopeName: ScopeName, placeholder:
         includeRule(Repository.CommandArgument),
       ),
       3: patternsRule(includeRule(Repository.InLineComments)),
+      4: patternsRule(includeRule(Repository.Comma)),
     },
     patterns: [ includeRule(Repository.ContinuationSectionText) ],
   };

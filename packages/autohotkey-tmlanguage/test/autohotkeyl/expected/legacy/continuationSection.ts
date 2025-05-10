@@ -33,6 +33,20 @@ export function createContinuationSectionExpectedData(scopeName: ScopeName): Exp
         { text: ')', scopes: name(scopeName, RuleName.CloseParen) },
       ],
     ],
+    [
+      dedent`
+        (           ; comment
+        ), text     ; comment
+      `, [
+        { text: '(', scopes: name(scopeName, RuleName.OpenParen) },
+        { text: '; comment', scopes: name(scopeName, RuleName.InLineComment) },
+
+        { text: ')', scopes: name(scopeName, RuleName.CloseParen) },
+        { text: ',', scopes: name(scopeName, RuleName.Comma) },
+        { text: 'text', scopes: name(scopeName, RuleName.UnquotedString) },
+        { text: '; comment', scopes: name(scopeName, RuleName.InLineComment) },
+      ],
+    ],
 
     [
       dedent`
