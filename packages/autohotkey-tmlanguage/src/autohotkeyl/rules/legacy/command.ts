@@ -43,6 +43,10 @@ export function createCommandLikeStatementRule(scopeName: ScopeName, definitions
     },
     while: seq(
       lookbehind(placeholder.startAnchor),
+      lookahead(seq(
+        inlineSpaces0(),
+        char(','),
+      )),
       inlineSpaces0(),
       capture(groupMany0(seq(
         inlineSpaces0(),
