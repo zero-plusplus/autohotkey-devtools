@@ -1843,11 +1843,32 @@ export function createCommandStatementExpectedData(scopeName: ScopeName): Expect
       return [
         [
           dedent`
-            Control             ; comment
-              , arg1            ; comment
-              , arg2, arg3      ; comment
+            Control               ; comment
+              , arg1              ; comment
+              , arg2, arg3        ; comment
+
+            {                     ; comment
+              Control             ; comment
+                , arg1            ; comment
+                , arg2, arg3      ; comment
+            }                     ; comment
+
+            F() {                 ; comment
+              Control             ; comment
+                , arg1            ; comment
+                , arg2, arg3      ; comment
+            }                     ; comment
+
+            class {               ; comment
+              M() {               ; comment
+                Control           ; comment
+                  , arg1          ; comment
+                  , arg2, arg3    ; comment
+              }                   ; comment
+            }                     ; comment
           `,
           [
+            // global
             { text: 'Control', scopes: name(scopeName, RuleName.CommandName) },
             { text: '; comment', scopes: name(scopeName, RuleName.InLineComment) },
 
@@ -1860,18 +1881,121 @@ export function createCommandStatementExpectedData(scopeName: ScopeName): Expect
             { text: ',', scopes: name(scopeName, RuleName.Comma) },
             { text: 'arg3', scopes: name(scopeName, RuleName.UnquotedString) },
             { text: '; comment', scopes: name(scopeName, RuleName.InLineComment) },
+
+            // block
+            { text: '{', scopes: name(scopeName, RuleName.BlockBegin) },
+            { text: '; comment', scopes: name(scopeName, RuleName.InLineComment) },
+
+            { text: 'Control', scopes: name(scopeName, RuleName.CommandName) },
+            { text: '; comment', scopes: name(scopeName, RuleName.InLineComment) },
+
+            { text: ',', scopes: name(scopeName, RuleName.Comma) },
+            { text: 'arg1', scopes: name(scopeName, RuleName.UnquotedString) },
+            { text: '; comment', scopes: name(scopeName, RuleName.InLineComment) },
+
+            { text: ',', scopes: name(scopeName, RuleName.Comma) },
+            { text: 'arg2', scopes: name(scopeName, RuleName.UnquotedString) },
+            { text: ',', scopes: name(scopeName, RuleName.Comma) },
+            { text: 'arg3', scopes: name(scopeName, RuleName.UnquotedString) },
+            { text: '; comment', scopes: name(scopeName, RuleName.InLineComment) },
+
+            { text: '}', scopes: name(scopeName, RuleName.BlockEnd) },
+            { text: '; comment', scopes: name(scopeName, RuleName.InLineComment) },
+
+            // function block
+            { text: 'F', scopes: name(scopeName, RuleName.FunctionName) },
+            { text: '(', scopes: name(scopeName, RuleName.OpenParen) },
+            { text: ')', scopes: name(scopeName, RuleName.CloseParen) },
+            { text: '{', scopes: name(scopeName, RuleName.BlockBegin) },
+            { text: '; comment', scopes: name(scopeName, RuleName.InLineComment) },
+
+            { text: 'Control', scopes: name(scopeName, RuleName.CommandName) },
+            { text: '; comment', scopes: name(scopeName, RuleName.InLineComment) },
+
+            { text: ',', scopes: name(scopeName, RuleName.Comma) },
+            { text: 'arg1', scopes: name(scopeName, RuleName.UnquotedString) },
+            { text: '; comment', scopes: name(scopeName, RuleName.InLineComment) },
+
+            { text: ',', scopes: name(scopeName, RuleName.Comma) },
+            { text: 'arg2', scopes: name(scopeName, RuleName.UnquotedString) },
+            { text: ',', scopes: name(scopeName, RuleName.Comma) },
+            { text: 'arg3', scopes: name(scopeName, RuleName.UnquotedString) },
+            { text: '; comment', scopes: name(scopeName, RuleName.InLineComment) },
+
+            { text: '}', scopes: name(scopeName, RuleName.BlockEnd) },
+            { text: '; comment', scopes: name(scopeName, RuleName.InLineComment) },
+
+            // method block
+            { text: 'class', scopes: name(scopeName, RuleName.ClassKeyword) },
+            { text: '{', scopes: name(scopeName, RuleName.ClassBlockBegin) },
+            { text: '; comment', scopes: name(scopeName, RuleName.InLineComment) },
+
+            { text: 'M', scopes: name(scopeName, RuleName.FunctionName) },
+            { text: '(', scopes: name(scopeName, RuleName.OpenParen) },
+            { text: ')', scopes: name(scopeName, RuleName.CloseParen) },
+            { text: '{', scopes: name(scopeName, RuleName.BlockBegin) },
+            { text: '; comment', scopes: name(scopeName, RuleName.InLineComment) },
+
+            { text: 'Control', scopes: name(scopeName, RuleName.CommandName) },
+            { text: '; comment', scopes: name(scopeName, RuleName.InLineComment) },
+
+            { text: ',', scopes: name(scopeName, RuleName.Comma) },
+            { text: 'arg1', scopes: name(scopeName, RuleName.UnquotedString) },
+            { text: '; comment', scopes: name(scopeName, RuleName.InLineComment) },
+
+            { text: ',', scopes: name(scopeName, RuleName.Comma) },
+            { text: 'arg2', scopes: name(scopeName, RuleName.UnquotedString) },
+            { text: ',', scopes: name(scopeName, RuleName.Comma) },
+            { text: 'arg3', scopes: name(scopeName, RuleName.UnquotedString) },
+            { text: '; comment', scopes: name(scopeName, RuleName.InLineComment) },
+
+            { text: '}', scopes: name(scopeName, RuleName.BlockEnd) },
+            { text: '; comment', scopes: name(scopeName, RuleName.InLineComment) },
+
+            { text: '}', scopes: name(scopeName, RuleName.ClassBlockEnd) },
+            { text: '; comment', scopes: name(scopeName, RuleName.InLineComment) },
           ],
         ],
         [
           dedent`
-            Control             ; comment
-              , arg1            ; comment
-              , arg2, arg3,     ; comment
-              (                 ; comment
-                arg4            ; no comment
-              )                 ; comment
+            Control               ; comment
+              , arg1              ; comment
+              , arg2, arg3,       ; comment
+              (                   ; comment
+                arg4              ; text
+              )                   ; comment
+
+            {                     ; comment
+              Control             ; comment
+                , arg1            ; comment
+                , arg2, arg3,     ; comment
+                (                 ; comment
+                  arg4            ; text
+                )                 ; comment
+            }                     ; comment
+
+            F() {                 ; comment
+              Control             ; comment
+                , arg1            ; comment
+                , arg2, arg3,     ; comment
+                (                 ; comment
+                  arg4            ; text
+                )                 ; comment
+            }                     ; comment
+
+            class {               ; comment
+              M() {               ; comment
+                Control           ; comment
+                  , arg1          ; comment
+                  , arg2, arg3,   ; comment
+                  (               ; comment
+                    arg4          ; text
+                  )               ; comment
+              }                   ; comment
+            }                     ; comment
           `,
           [
+            // global
             { text: 'Control', scopes: name(scopeName, RuleName.CommandName) },
             { text: '; comment', scopes: name(scopeName, RuleName.InLineComment) },
 
@@ -1889,9 +2013,109 @@ export function createCommandStatementExpectedData(scopeName: ScopeName): Expect
             { text: '(', scopes: name(scopeName, RuleName.OpenParen) },
             { text: '; comment', scopes: name(scopeName, RuleName.InLineComment) },
 
-            { text: 'arg4            ; no comment', scopes: name(scopeName, RuleName.UnquotedString) },
+            { text: 'arg4              ; text', scopes: name(scopeName, RuleName.UnquotedString) },
 
             { text: ')', scopes: name(scopeName, RuleName.CloseParen) },
+            { text: '; comment', scopes: name(scopeName, RuleName.InLineComment) },
+
+            // block
+            { text: '{', scopes: name(scopeName, RuleName.BlockBegin) },
+            { text: '; comment', scopes: name(scopeName, RuleName.InLineComment) },
+
+            { text: 'Control', scopes: name(scopeName, RuleName.CommandName) },
+            { text: '; comment', scopes: name(scopeName, RuleName.InLineComment) },
+
+            { text: ',', scopes: name(scopeName, RuleName.Comma) },
+            { text: 'arg1', scopes: name(scopeName, RuleName.UnquotedString) },
+            { text: '; comment', scopes: name(scopeName, RuleName.InLineComment) },
+
+            { text: ',', scopes: name(scopeName, RuleName.Comma) },
+            { text: 'arg2', scopes: name(scopeName, RuleName.UnquotedString) },
+            { text: ',', scopes: name(scopeName, RuleName.Comma) },
+            { text: 'arg3', scopes: name(scopeName, RuleName.UnquotedString) },
+            { text: ',', scopes: name(scopeName, RuleName.Comma) },
+            { text: '; comment', scopes: name(scopeName, RuleName.InLineComment) },
+
+            { text: '(', scopes: name(scopeName, RuleName.OpenParen) },
+            { text: '; comment', scopes: name(scopeName, RuleName.InLineComment) },
+
+            { text: 'arg4            ; text', scopes: name(scopeName, RuleName.UnquotedString) },
+
+            { text: ')', scopes: name(scopeName, RuleName.CloseParen) },
+            { text: '; comment', scopes: name(scopeName, RuleName.InLineComment) },
+
+            { text: '}', scopes: name(scopeName, RuleName.BlockEnd) },
+            { text: '; comment', scopes: name(scopeName, RuleName.InLineComment) },
+
+            // function block
+            { text: 'F', scopes: name(scopeName, RuleName.FunctionName) },
+            { text: '(', scopes: name(scopeName, RuleName.OpenParen) },
+            { text: ')', scopes: name(scopeName, RuleName.CloseParen) },
+            { text: '{', scopes: name(scopeName, RuleName.BlockBegin) },
+            { text: '; comment', scopes: name(scopeName, RuleName.InLineComment) },
+
+            { text: 'Control', scopes: name(scopeName, RuleName.CommandName) },
+            { text: '; comment', scopes: name(scopeName, RuleName.InLineComment) },
+
+            { text: ',', scopes: name(scopeName, RuleName.Comma) },
+            { text: 'arg1', scopes: name(scopeName, RuleName.UnquotedString) },
+            { text: '; comment', scopes: name(scopeName, RuleName.InLineComment) },
+
+            { text: ',', scopes: name(scopeName, RuleName.Comma) },
+            { text: 'arg2', scopes: name(scopeName, RuleName.UnquotedString) },
+            { text: ',', scopes: name(scopeName, RuleName.Comma) },
+            { text: 'arg3', scopes: name(scopeName, RuleName.UnquotedString) },
+            { text: ',', scopes: name(scopeName, RuleName.Comma) },
+            { text: '; comment', scopes: name(scopeName, RuleName.InLineComment) },
+
+            { text: '(', scopes: name(scopeName, RuleName.OpenParen) },
+            { text: '; comment', scopes: name(scopeName, RuleName.InLineComment) },
+
+            { text: 'arg4            ; text', scopes: name(scopeName, RuleName.UnquotedString) },
+
+            { text: ')', scopes: name(scopeName, RuleName.CloseParen) },
+            { text: '; comment', scopes: name(scopeName, RuleName.InLineComment) },
+
+            { text: '}', scopes: name(scopeName, RuleName.BlockEnd) },
+            { text: '; comment', scopes: name(scopeName, RuleName.InLineComment) },
+
+            // method block
+            { text: 'class', scopes: name(scopeName, RuleName.ClassKeyword) },
+            { text: '{', scopes: name(scopeName, RuleName.ClassBlockBegin) },
+            { text: '; comment', scopes: name(scopeName, RuleName.InLineComment) },
+
+            { text: 'M', scopes: name(scopeName, RuleName.FunctionName) },
+            { text: '(', scopes: name(scopeName, RuleName.OpenParen) },
+            { text: ')', scopes: name(scopeName, RuleName.CloseParen) },
+            { text: '{', scopes: name(scopeName, RuleName.BlockBegin) },
+            { text: '; comment', scopes: name(scopeName, RuleName.InLineComment) },
+
+            { text: 'Control', scopes: name(scopeName, RuleName.CommandName) },
+            { text: '; comment', scopes: name(scopeName, RuleName.InLineComment) },
+
+            { text: ',', scopes: name(scopeName, RuleName.Comma) },
+            { text: 'arg1', scopes: name(scopeName, RuleName.UnquotedString) },
+            { text: '; comment', scopes: name(scopeName, RuleName.InLineComment) },
+
+            { text: ',', scopes: name(scopeName, RuleName.Comma) },
+            { text: 'arg2', scopes: name(scopeName, RuleName.UnquotedString) },
+            { text: ',', scopes: name(scopeName, RuleName.Comma) },
+            { text: 'arg3', scopes: name(scopeName, RuleName.UnquotedString) },
+            { text: ',', scopes: name(scopeName, RuleName.Comma) },
+            { text: '; comment', scopes: name(scopeName, RuleName.InLineComment) },
+
+            { text: '(', scopes: name(scopeName, RuleName.OpenParen) },
+            { text: '; comment', scopes: name(scopeName, RuleName.InLineComment) },
+
+            { text: 'arg4          ; text', scopes: name(scopeName, RuleName.UnquotedString) },
+
+            { text: ')', scopes: name(scopeName, RuleName.CloseParen) },
+            { text: '; comment', scopes: name(scopeName, RuleName.InLineComment) },
+
+            { text: '}', scopes: name(scopeName, RuleName.BlockEnd) },
+            { text: '; comment', scopes: name(scopeName, RuleName.InLineComment) },
+
+            { text: '}', scopes: name(scopeName, RuleName.ClassBlockEnd) },
             { text: '; comment', scopes: name(scopeName, RuleName.InLineComment) },
           ],
         ],
