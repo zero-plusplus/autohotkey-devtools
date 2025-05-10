@@ -448,6 +448,7 @@ export function createRepositories(scopeName: ScopeName): Repositories {
       includeRule(Repository.CommandArgumentText),
       includeRule(Repository.InLineComments),
     ),
+    [Repository.CommandInvalidArgument]: rule_v1.createInvalidArgumentRule(scopeName),
     [Repository.CommandLastArgument]: patternsRule(
       includeRule(Repository.PercentExpressions),
       includeRule(Repository.Dereference),

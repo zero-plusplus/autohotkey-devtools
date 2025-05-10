@@ -180,6 +180,14 @@ export function createCommandNames(scopeName: ScopeName, definitions: CommandDef
   }));
 }
 
+export function createInvalidArgumentRule(scopeName: ScopeName): MatchRule {
+  return {
+    name: name(scopeName, RuleName.UnquotedString, StyleName.Invalid),
+    match: negChars1(',', inlineSpace()),
+  };
+}
+
+
 // #region helpers
 function lookaheadOnigurumaByParameters(parameters: CommandParameter[], placeholder: Placeholder): string {
   const subcommandArgumentIndex = parameters.findLastIndex((parameter) => isSubCommandParameter(parameter));
@@ -292,10 +300,7 @@ function parameterToPatternsRule(scopeName: ScopeName, defenition: CommandDefini
     case HighlightType.Invalid:
     case HighlightType.Blank:
     {
-      return patternsRule({
-        name: name(scopeName, RuleName.UnquotedString, StyleName.Invalid),
-        match: negChars1(',', inlineSpace()),
-      });
+      return patternsRule(includeRule(Repository.CommandInvalidArgument));
     }
     case HighlightType.SubCommand:
     case HighlightType.SubCommandLike:
@@ -826,3 +831,4 @@ function optionItemPatternsToRules(scopeName: ScopeName, optionItemPatterns: str
     };
   });
 }
+// #endregion helpers

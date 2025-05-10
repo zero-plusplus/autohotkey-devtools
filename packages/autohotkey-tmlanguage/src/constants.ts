@@ -403,6 +403,7 @@ export const enum Repository {
   CommandLastArgument = 'repository.command.argument.last',
   CommandArgumentText = 'repository.command.argument.text',
   CommandLastArgumentText = 'repository.command.argument.last.text',
+  CommandInvalidArgument = 'repository.command.argument.text.invalid',
   CommandArgumentControlStyleText = 'repository.command.argument.text.control-style',
   // #endregion v1 syntax
 

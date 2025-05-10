@@ -537,6 +537,7 @@ export function createRepositories(scopeName: ScopeName, placeholder?: Placehold
       includeRule(Repository.CommandLastArgumentText),
       includeRule(Repository.InLineComments),
     ),
+    [Repository.CommandInvalidArgument]: rule_v1.createInvalidArgumentRule(scopeName),
     [Repository.PercentExpressions]: rule_v1.createPercentExpressionRule(scopeName, {
       expressionPattern: patterns_v1.expressionLastArgumentPattern,
     }),
