@@ -137,7 +137,7 @@ export const commandDefinitions: CommandDefinition[] = [
   command('BlockInput', signature([ onOff([ optionItem('Send', 'Mouse', 'SendAndMouse', 'Default', 'MouseMove', 'MouseMoveOff') ]) ])),
 
   // https://www.autohotkey.com/docs/v1/lib/Click.htm
-  command('Click', signature([ unquoted([ optionItem('Left', 'L', 'Right', 'R', 'Middle', 'M', 'X1', 'X2', 'Up', 'U', 'Down', 'D') ]) ])),
+  command('Click', signature([ unquotedWithNumber([ optionItem('Left', 'L', 'Right', 'R', 'Middle', 'M', 'X1', 'X2', 'Up', 'U', 'Down', 'D') ]) ])),
 
   // https://www.autohotkey.com/docs/v1/lib/ClipWait.htm
   command('ClipWait', signature([ expression(), expression() ])),
@@ -344,7 +344,7 @@ export const commandDefinitions: CommandDefinition[] = [
     signature([ guiSubcommand([ 'Cancel', 'Hide', 'Destroy', 'Minimize', 'Maximize', 'Restore', 'Default' ]), restParams() ]),
     signature([ guiSubcommand('Font'), unquoted([ colorOptionItem('C'), numberOptionItem('S', 'W', 'Q') ]), unquoted() ]),
     signature([ guiSubcommand('Color'), color(), color() ]),
-    signature([ guiSubcommand('Margin'), unquoted(), unquoted() ]),
+    signature([ guiSubcommand('Margin'), unquotedWithNumber(), unquotedWithNumber() ]),
     signature([ guiSubcommand('Menu'), unquoted() ]),
     signature([ guiSubcommand('Flash'), keywordOnly([ 'Off' ]) ]),
     signature([ guiOptions() ]),
@@ -1027,6 +1027,9 @@ export function unquoted(values: string[] = [], flags: CommandParameterFlag = Co
 }
 export function unquotedShouldEscapeComma(values: string[] = [], flags: CommandParameterFlag = CommandParameterFlag.None): CommandParameter {
   return { type: HighlightType.UnquotedStringShouldEscapeComma, flags, itemPatterns: values };
+}
+export function unquotedWithNumber(values: string[] = [], flags: CommandParameterFlag = CommandParameterFlag.None): CommandParameter {
+  return { type: HighlightType.UnquotedStringWithNumber, flags, itemPatterns: values };
 }
 export function restParams(values: string[] = [], flags: CommandParameterFlag = CommandParameterFlag.None): CommandParameter {
   return { type: HighlightType.RestParams, flags, itemPatterns: values };

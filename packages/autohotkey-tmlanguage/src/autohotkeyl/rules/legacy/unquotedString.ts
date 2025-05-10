@@ -3,12 +3,12 @@ import { alt, capture, char, chars0, endAnchor, ignoreCase, inlineSpace, inlineS
 import type { MatchRule, Rule, ScopeName } from '../../../types';
 import { includeRule, name, patternsRule } from '../../../utils';
 
-interface Placeholder {
+interface Placeholder_UnquotedStringRule {
   stringRuleName: RuleName;
   stringPattern: string;
   additionalRules?: Rule[];
 }
-export function createUnquotedStringRule(scopeName: ScopeName, placeholder: Placeholder): MatchRule {
+export function createUnquotedStringRule(scopeName: ScopeName, placeholder: Placeholder_UnquotedStringRule): MatchRule {
   return {
     match: seq(inlineSpaces0(), capture(placeholder.stringPattern)),
     captures: {
@@ -25,7 +25,13 @@ export function createUnquotedStringRule(scopeName: ScopeName, placeholder: Plac
     },
   };
 }
-export function createArgumentStringRule(scopeName: ScopeName, placeholder: Placeholder): MatchRule {
+
+// #region helpers
+interface Placeholder_SpacedArgumentTextRule {
+  stringRuleName: RuleName;
+  additionalRules?: Rule[];
+}
+export function createSpacedArgumentTextRule(scopeName: ScopeName, placeholder: Placeholder_SpacedArgumentTextRule): MatchRule {
   return {
     match: seq(
       lookbehind(alt(
@@ -100,7 +106,7 @@ interface Placeholder_AllowArgumentRule {
   allowRules: Rule[];
 }
 export function createAllowArgumentRule(scopeName: ScopeName, placeholder: Placeholder_AllowArgumentRule): MatchRule {
-  return createArgumentStringRule(scopeName, {
+  return createSpacedArgumentTextRule(scopeName, {
     ...placeholder,
     additionalRules: [
       ...placeholder.allowRules,
@@ -111,3 +117,4 @@ export function createAllowArgumentRule(scopeName: ScopeName, placeholder: Place
     ],
   });
 }
+// #endregion helpers

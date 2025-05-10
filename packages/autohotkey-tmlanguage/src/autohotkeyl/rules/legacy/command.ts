@@ -7,7 +7,7 @@ import type { BeginWhileRule, CommandDefinition, CommandParameter, CommandSignat
 import { includeRule, name, nameRule, patternsRule } from '../../../utils';
 import { isSubCommandParameter } from '../../definition';
 import * as patterns_v1 from '../../patterns';
-import { createAllowArgumentRule, createArgumentStringRule, createNumberRule } from './unquotedString';
+import { createAllowArgumentRule, createNumberRule, createSpacedArgumentTextRule } from './unquotedString';
 
 interface Placeholder {
   startAnchor: string;
@@ -364,8 +364,7 @@ function parameterToPatternsRule(scopeName: ScopeName, defenition: CommandDefini
     {
       return patternsRule(
         includeRule(Repository.PercentExpressions),
-        createArgumentStringRule(scopeName, {
-          stringPattern: patterns_v1.commandArgumentPattern,
+        createSpacedArgumentTextRule(scopeName, {
           stringRuleName: RuleName.UnquotedString,
           additionalRules: [
             ...optionItemPatternsToRules(scopeName, parameter.itemPatterns),
@@ -379,10 +378,37 @@ function parameterToPatternsRule(scopeName: ScopeName, defenition: CommandDefini
     }
     case HighlightType.UnquotedString:
     {
+      if (parameter.itemPatterns === undefined || parameter.itemPatterns.length === 0) {
+        return patternsRule(includeRule(isLastParameter ? Repository.CommandLastArgument : Repository.CommandArgument));
+      }
+
       return patternsRule(
         includeRule(Repository.PercentExpressions),
-        createArgumentStringRule(scopeName, {
-          stringPattern: patterns_v1.commandArgumentPattern,
+        createSpacedArgumentTextRule(scopeName, {
+          stringRuleName: RuleName.UnquotedString,
+          additionalRules: [
+            ...(isLastParameter ? [
+              { name: name(scopeName, RuleName.UnquotedString, StyleName.Escape), match: text('`,') },
+              { name: name(scopeName, RuleName.UnquotedString), match: seq(char(',')) },
+            ] : []),
+            ...optionItemPatternsToRules(scopeName, parameter.itemPatterns),
+            {
+              name: name(scopeName, RuleName.UnquotedString),
+              match: negChars1('`', inlineSpace()),
+            },
+          ],
+        }),
+      );
+    }
+    case HighlightType.UnquotedStringWithNumber:
+    {
+      if (parameter.itemPatterns === undefined || parameter.itemPatterns.length === 0) {
+        return patternsRule(includeRule(isLastParameter ? Repository.CommandLastArgumentWithNumber : Repository.CommandArgumentWithNumber));
+      }
+
+      return patternsRule(
+        includeRule(Repository.PercentExpressions),
+        createSpacedArgumentTextRule(scopeName, {
           stringRuleName: RuleName.UnquotedString,
           additionalRules: [
             ...(isLastParameter ? [
@@ -408,8 +434,7 @@ function parameterToPatternsRule(scopeName: ScopeName, defenition: CommandDefini
         includeRule(Repository.PercentExpressions),
         includeRule(Repository.Dereference),
 
-        createArgumentStringRule(scopeName, {
-          stringPattern: patterns_v1.commandArgumentPattern,
+        createSpacedArgumentTextRule(scopeName, {
           stringRuleName: RuleName.UnquotedString,
           additionalRules: [
             {
@@ -590,8 +615,7 @@ function parameterToPatternsRule(scopeName: ScopeName, defenition: CommandDefini
             ? [ includeRule(Repository.PercentExpression), includeRule(Repository.Comma) ]
             : [ includeRule(Repository.PercentExpressions) ]
         ),
-        createArgumentStringRule(scopeName, {
-          stringPattern: patterns_v1.commandArgumentPattern,
+        createSpacedArgumentTextRule(scopeName, {
           stringRuleName: RuleName.UnquotedString,
           additionalRules: [
             ...optionItemPatternsToRules(scopeName, parameter.itemPatterns),
@@ -618,8 +642,7 @@ function parameterToPatternsRule(scopeName: ScopeName, defenition: CommandDefini
     {
       return patternsRule(
         includeRule(Repository.PercentExpressions),
-        createArgumentStringRule(scopeName, {
-          stringPattern: patterns_v1.commandArgumentPattern,
+        createSpacedArgumentTextRule(scopeName, {
           stringRuleName: RuleName.UnquotedString,
           additionalRules: [
             ...optionItemPatternsToRules(scopeName, parameter.itemPatterns),
@@ -639,8 +662,7 @@ function parameterToPatternsRule(scopeName: ScopeName, defenition: CommandDefini
     {
       return patternsRule(
         includeRule(Repository.PercentExpressions),
-        createArgumentStringRule(scopeName, {
-          stringPattern: patterns_v1.commandArgumentPattern,
+        createSpacedArgumentTextRule(scopeName, {
           stringRuleName: RuleName.UnquotedString,
           additionalRules: [
             ...optionItemPatternsToRules(scopeName, parameter.itemPatterns),
@@ -669,8 +691,7 @@ function parameterToPatternsRule(scopeName: ScopeName, defenition: CommandDefini
     {
       return patternsRule(
         includeRule(Repository.PercentExpressions),
-        createArgumentStringRule(scopeName, {
-          stringPattern: patterns_v1.commandArgumentPattern,
+        createSpacedArgumentTextRule(scopeName, {
           stringRuleName: RuleName.UnquotedString,
           additionalRules: [
             // e.g. `Gui, GuiName:+Resize`
@@ -707,8 +728,7 @@ function parameterToPatternsRule(scopeName: ScopeName, defenition: CommandDefini
     case HighlightType.MenuItemName: {
       return patternsRule(
         includeRule(Repository.PercentExpressions),
-        createArgumentStringRule(scopeName, {
-          stringPattern: patterns_v1.commandArgumentPattern,
+        createSpacedArgumentTextRule(scopeName, {
           stringRuleName: RuleName.UnquotedString,
           additionalRules: [
             // e.g. `Menu, MenuName, Add, &test`

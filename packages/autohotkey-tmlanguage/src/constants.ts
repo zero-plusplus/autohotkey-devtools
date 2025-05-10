@@ -399,10 +399,13 @@ export const enum Repository {
   Command = 'repository.command',
   CommonCommand = 'repository.common-command',
   CommandArgument = 'repository.command.argument',
-  MenuItemNameCommandArgument = 'repository.command.argument.menu-item-name',
+  CommandArgumentWithNumber = 'repository.command.argument.with-number',
   CommandLastArgument = 'repository.command.argument.last',
+  CommandLastArgumentWithNumber = 'repository.command.argument.with-number.last',
+  MenuItemNameCommandArgument = 'repository.command.argument.menu-item-name',
   CommandArgumentText = 'repository.command.argument.text',
   CommandLastArgumentText = 'repository.command.argument.last.text',
+  CommandArgumentNumber = 'repository.command.argument.number',
   CommandInvalidArgument = 'repository.command.argument.text.invalid',
   CommandArgumentControlStyleText = 'repository.command.argument.text.control-style',
   // #endregion v1 syntax
@@ -595,6 +598,7 @@ export const enum HighlightType {
   ExpressionWithOneTrueBrace = 'expressionwithonetruebrace',
   UnquotedString = 'unquotedstring',
   UnquotedStringShouldEscapeComma = 'unquoted_string_should_escapecomma',
+  UnquotedStringWithNumber = 'unquotedstring_with_number',
   UnquotedInteger = 'unquotednumber',
   // e.g. Send, {LButton 5}
   //            ^^^^^^^^^^^
