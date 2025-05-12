@@ -719,29 +719,7 @@ function parameterToPatternsRule(scopeName: ScopeName, defenition: CommandDefini
     case HighlightType.MenuItemName: {
       return patternsRule(
         includeRule(Repository.PercentExpressions),
-        createSpacedArgumentTextRule(scopeName, {
-          stringRuleName: RuleName.UnquotedString,
-          additionalRules: [
-            // e.g. `Menu, MenuName, Add, &test`
-            //                            ^^
-            {
-              name: name(scopeName, RuleName.UnquotedString, StyleName.Underline),
-              match: seq(char('&'), alt(negChar('&', '\\s'))),
-            },
-            {
-              name: name(scopeName, RuleName.UnquotedString, StyleName.Escape),
-              match: text('&&'),
-            },
-            {
-              name: name(scopeName, RuleName.UnquotedString),
-              match: seq(char('&'), negativeLookahead(char('&'))),
-            },
-            {
-              name: name(scopeName, RuleName.UnquotedString),
-              match: negChars1('`', '&', '\\s'),
-            },
-          ],
-        }),
+        includeRule(Repository.MenuItemNameCommandArgument),
       );
     }
     // Make each definition group easily distinguishable by underlining. However, if the underline is applied in TMLanguage, its color cannot be controlled. This should be implemented with semantic highlighting
