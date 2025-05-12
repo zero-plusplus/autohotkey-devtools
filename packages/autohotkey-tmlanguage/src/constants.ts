@@ -599,7 +599,7 @@ export const enum HighlightType {
   UnquotedString = 'unquotedstring',
   UnquotedStringShouldEscapeComma = 'unquoted_string_should_escapecomma',
   UnquotedStringWithNumber = 'unquotedstring_with_number',
-  UnquotedInteger = 'unquotednumber',
+  NumberInCommandArgument = 'number_in_command_argument',
   // e.g. Send, {LButton 5}
   //            ^^^^^^^^^^^
   SendKeyName = 'send_key_name',

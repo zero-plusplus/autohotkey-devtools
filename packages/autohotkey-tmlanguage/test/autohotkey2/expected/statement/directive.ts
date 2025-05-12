@@ -28,7 +28,7 @@ export function createDirectiveStatementExpectedData(scopeName: ScopeName): Expe
 
             { text: '#ClipboardTimeout', scopes: name(scopeName, RuleName.DirectiveName) },
             { text: ',', scopes: name(scopeName, RuleName.Comma) },
-            { text: 'invalid', scopes: name(scopeName, RuleName.Integer, StyleName.Invalid) },
+            { text: 'invalid', scopes: name(scopeName, RuleName.UnquotedString, StyleName.Invalid) },
             { text: '; comment', scopes: name(scopeName, RuleName.InLineComment) },
           ],
         ],

@@ -1,5 +1,4 @@
-import { command, decimalOptionItem, encoding, expression, keywordOnly, optionItem, signature, signedNumberOptionItem, toggleOptionItem, unquoted } from '../autohotkeyl/definition';
-import { CommandParameterFlag, HighlightType } from '../constants';
+import { command, decimalOptionItem, encoding, expression, keywordOnly, optionItem, signature, signedNumberOptionItem, toggleOptionItem, unquoted, unquotedNumber } from '../autohotkeyl/definition';
 import type { CommandDefinition, CommandParameter } from '../types';
 
 // #region directives
@@ -59,11 +58,7 @@ export function quotableUnquoted(...optionItems: string[]): CommandParameter {
   return unquoted(optionItems);
 }
 export function unquotedInteger(...optionItems: string[]): CommandParameter {
-  return {
-    type: HighlightType.UnquotedInteger,
-    flags: CommandParameterFlag.None,
-    itemPatterns: optionItems,
-  };
+  return unquotedNumber(...optionItems);
 }
 export function unquotedAndBoolean(...optionItems: string[]): CommandParameter {
   return unquoted([ optionItem('0', '1', 'true', 'false'), ...optionItems ]);

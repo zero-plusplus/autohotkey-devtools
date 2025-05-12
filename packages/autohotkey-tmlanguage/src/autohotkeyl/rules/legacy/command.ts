@@ -428,27 +428,13 @@ function parameterToPatternsRule(scopeName: ScopeName, defenition: CommandDefini
         }),
       );
     }
-    case HighlightType.UnquotedInteger:
+    case HighlightType.NumberInCommandArgument:
     {
       return patternsRule(
-        includeRule(Repository.PercentExpressions),
+        includeRule(Repository.PercentExpression),
         includeRule(Repository.Dereference),
-
-        createSpacedArgumentTextRule(scopeName, {
-          stringRuleName: RuleName.UnquotedString,
-          additionalRules: [
-            {
-              match: capture(numbers1()),
-              captures: {
-                1: patternsRule(includeRule(Repository.Integer)),
-              },
-            },
-            {
-              name: name(scopeName, RuleName.Integer, StyleName.Invalid),
-              match: negChars1(inlineSpace()),
-            },
-          ],
-        }),
+        includeRule(Repository.Number),
+        includeRule(Repository.CommandInvalidArgument),
       );
     }
     case HighlightType.SendKeyName:

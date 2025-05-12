@@ -1031,6 +1031,13 @@ export function unquotedShouldEscapeComma(values: string[] = [], flags: CommandP
 export function unquotedWithNumber(values: string[] = [], flags: CommandParameterFlag = CommandParameterFlag.None): CommandParameter {
   return { type: HighlightType.UnquotedStringWithNumber, flags, itemPatterns: values };
 }
+export function unquotedNumber(...optionItems: string[]): CommandParameter {
+  return {
+    type: HighlightType.NumberInCommandArgument,
+    flags: CommandParameterFlag.None,
+    itemPatterns: optionItems,
+  };
+}
 export function restParams(values: string[] = [], flags: CommandParameterFlag = CommandParameterFlag.None): CommandParameter {
   return { type: HighlightType.RestParams, flags, itemPatterns: values };
 }
