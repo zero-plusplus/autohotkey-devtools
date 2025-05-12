@@ -131,6 +131,157 @@ export function createCommandLikeRule(scopeName: ScopeName, definition: CommandD
     ].map((rule, i) => [ i + 1, rule ])),
   };
 }
+export function createSendKeyCommandArgumentRule(scopeName: ScopeName): PatternsRule {
+  return patternsRule(
+    includeRule(Repository.UnquotedStringEscapeSequence),
+    // https://www.autohotkey.com/docs/v1/lib/Send.htm#Blind
+    // e.g. `{Blind}`
+    //       ^^^^^^^
+    {
+      name: name(scopeName, RuleName.UnquotedString, StyleName.Strong),
+      match: ignoreCase(text('{Blind}')),
+    },
+    // https://www.autohotkey.com/docs/v1/lib/Send.htm#Raw
+    // https://www.autohotkey.com/docs/v1/lib/Send.htm#Text
+    // e.g. `{Text}raw text`
+    //       ^^^^^^^^^^^^^^
+    {
+      match: seq(
+        negativeLookahead(char(...constants_common.modifierSymbols)),
+        capture(seq(
+          char('{'),
+          inlineSpaces0(),
+          ignoreCase(textalt('Raw', 'Text')),
+          inlineSpaces0(),
+          char('}'),
+        )),
+        inlineSpaces0(),
+        capture(anyChars0()),
+      ),
+      captures: {
+        1: nameRule(scopeName, RuleName.UnquotedString, StyleName.Strong),
+        2: patternsRule(
+          includeRule(Repository.Dereference),
+          includeRule(Repository.UnquotedStringEscapeSequence),
+          {
+            name: name(scopeName, RuleName.UnquotedString),
+            match: negChars1('`', '%'),
+          },
+        ),
+      },
+    },
+    // e.g. `{!}`
+    //       ^^^
+    {
+      name: name(scopeName, RuleName.UnquotedString, StyleName.Strong),
+      match: seq(
+        char('{'),
+        inlineSpaces0(),
+        char('!', '#', '+', '^', '{', '}'),
+        inlineSpaces0(),
+        char('}'),
+      ),
+    },
+    // e.g. `{Up}`
+    //       ^^^^
+    {
+      name: name(scopeName, RuleName.UnquotedString, StyleName.Strong),
+      match: seq(
+        char('{'),
+        inlineSpaces0(),
+        keyword('Up', 'Down'),
+        inlineSpaces0(),
+        char('}'),
+      ),
+    },
+    // e.g. `{Click 100 200 Left}`
+    //       ^^^^^^ ^^^ ^^^ ^^^^^
+    {
+      match: seq(
+        capture(char('{')),
+        inlineSpaces0(),
+        capture(keyword('Click')),
+        optseq(
+          inlineSpaces1(),
+          capture(negChars0('}')),
+        ),
+        inlineSpaces0(),
+        capture(char('}')),
+      ),
+      captures: {
+        1: nameRule(scopeName, RuleName.UnquotedString, StyleName.Strong),
+        2: nameRule(scopeName, RuleName.UnquotedString, StyleName.Strong),
+        3: patternsRule(
+          includeRule(Repository.Dereference),
+          {
+            name: name(scopeName, RuleName.UnquotedString, StyleName.Strong),
+            match: keyword('Left', 'L', 'Right', 'R', 'Middle', 'M', 'X1', 'X2', 'Up', 'U', 'Down', 'D'),
+          },
+          {
+            name: name(scopeName, RuleName.UnquotedString, StyleName.Strong),
+            match: numbers1(),
+          },
+          {
+            name: name(scopeName, RuleName.UnquotedString),
+            match: negChar('}', '%'),
+          },
+        ),
+        4: nameRule(scopeName, RuleName.UnquotedString, StyleName.Strong),
+      },
+    },
+    // e.g. `{5 up}`
+    //       ^^
+    {
+      name: name(scopeName, RuleName.UnquotedString, StyleName.Strong),
+      match: seq(char('{'), inlineSpaces0(), numbers1(), wordBound()),
+    },
+    // e.g. `{Tab up}`
+    //       ^
+    {
+      name: name(scopeName, RuleName.UnquotedString, StyleName.Strong),
+      match: char('{'),
+    },
+    // e.g. `{5 up}`
+    //          ^^^
+    {
+      name: name(scopeName, RuleName.UnquotedString, StyleName.Strong),
+      match: seq(
+        group(alt(
+          ignoreCase(textalt('Up', 'Down', 'DownTemp', 'DownR')),
+          numbers1(),
+        )),
+        wordBound(),
+        inlineSpaces0(),
+        char('}'),
+      ),
+    },
+    // e.g. `{Up}`
+    //          ^
+    {
+      name: name(scopeName, RuleName.UnquotedString, StyleName.Strong),
+      match: char('}'),
+    },
+    // e.g. `!#Tab`
+    //         ^^^
+    {
+      name: name(scopeName, RuleName.UnquotedString, StyleName.Strong),
+      match: keyword(...constants_common.keyNameList),
+    },
+    // e.g. `+`, `!#a`
+    //       ^    ^^^
+    {
+      name: name(scopeName, RuleName.UnquotedString, StyleName.Strong),
+      match: seq(
+        chars1(...constants_common.modifierSymbols),
+        negChars0('{', '%', inlineSpace()),
+      ),
+    },
+    {
+      name: name(scopeName, RuleName.UnquotedString),
+      match: negChars1('`', '{', '}', '%', inlineSpace()),
+    },
+  );
+}
 export function createMenuNameCommandArgumentRule(scopeName: ScopeName): PatternsRule {
   return patternsRule(
     // e.g. `Menu, MenuName, Add, &test`
@@ -443,153 +594,7 @@ function parameterToPatternsRule(scopeName: ScopeName, defenition: CommandDefini
         includeRule(Repository.PercentExpressions),
 
         includeRule(Repository.Dereference),
-        includeRule(Repository.UnquotedStringEscapeSequence),
-        // https://www.autohotkey.com/docs/v1/lib/Send.htm#Blind
-        // e.g. `{Blind}`
-        //       ^^^^^^^
-        {
-          name: name(scopeName, RuleName.UnquotedString, StyleName.Strong),
-          match: ignoreCase(text('{Blind}')),
-        },
-        // https://www.autohotkey.com/docs/v1/lib/Send.htm#Raw
-        // https://www.autohotkey.com/docs/v1/lib/Send.htm#Text
-        // e.g. `{Text}raw text`
-        //       ^^^^^^^^^^^^^^
-        {
-          match: seq(
-            negativeLookahead(char(...constants_common.modifierSymbols)),
-            capture(seq(
-              char('{'),
-              inlineSpaces0(),
-              ignoreCase(textalt('Raw', 'Text')),
-              inlineSpaces0(),
-              char('}'),
-            )),
-            inlineSpaces0(),
-            capture(anyChars0()),
-          ),
-          captures: {
-            1: nameRule(scopeName, RuleName.UnquotedString, StyleName.Strong),
-            2: patternsRule(
-              includeRule(Repository.Dereference),
-              includeRule(Repository.UnquotedStringEscapeSequence),
-              {
-                name: name(scopeName, RuleName.UnquotedString),
-                match: negChars1('`', '%'),
-              },
-            ),
-          },
-        },
-        // e.g. `{!}`
-        //       ^^^
-        {
-          name: name(scopeName, RuleName.UnquotedString, StyleName.Strong),
-          match: seq(
-            char('{'),
-            inlineSpaces0(),
-            char('!', '#', '+', '^', '{', '}'),
-            inlineSpaces0(),
-            char('}'),
-          ),
-        },
-        // e.g. `{Up}`
-        //       ^^^^
-        {
-          name: name(scopeName, RuleName.UnquotedString, StyleName.Strong),
-          match: seq(
-            char('{'),
-            inlineSpaces0(),
-            keyword('Up', 'Down'),
-            inlineSpaces0(),
-            char('}'),
-          ),
-        },
-        // e.g. `{Click 100 200 Left}`
-        //       ^^^^^^ ^^^ ^^^ ^^^^^
-        {
-          match: seq(
-            capture(char('{')),
-            inlineSpaces0(),
-            capture(keyword('Click')),
-            optseq(
-              inlineSpaces1(),
-              capture(negChars0('}')),
-            ),
-            inlineSpaces0(),
-            capture(char('}')),
-          ),
-          captures: {
-            1: nameRule(scopeName, RuleName.UnquotedString, StyleName.Strong),
-            2: nameRule(scopeName, RuleName.UnquotedString, StyleName.Strong),
-            3: patternsRule(
-              includeRule(Repository.Dereference),
-              {
-                name: name(scopeName, RuleName.UnquotedString, StyleName.Strong),
-                match: keyword('Left', 'L', 'Right', 'R', 'Middle', 'M', 'X1', 'X2', 'Up', 'U', 'Down', 'D'),
-              },
-              {
-                name: name(scopeName, RuleName.UnquotedString, StyleName.Strong),
-                match: numbers1(),
-              },
-              {
-                name: name(scopeName, RuleName.UnquotedString),
-                match: negChar('}', '%'),
-              },
-            ),
-            4: nameRule(scopeName, RuleName.UnquotedString, StyleName.Strong),
-          },
-        },
-        // e.g. `{5 up}`
-        //       ^^
-        {
-          name: name(scopeName, RuleName.UnquotedString, StyleName.Strong),
-          match: seq(char('{'), inlineSpaces0(), numbers1(), wordBound()),
-        },
-        // e.g. `{Tab up}`
-        //       ^
-        {
-          name: name(scopeName, RuleName.UnquotedString, StyleName.Strong),
-          match: char('{'),
-        },
-        // e.g. `{5 up}`
-        //          ^^^
-        {
-          name: name(scopeName, RuleName.UnquotedString, StyleName.Strong),
-          match: seq(
-            group(alt(
-              ignoreCase(textalt('Up', 'Down', 'DownTemp', 'DownR')),
-              numbers1(),
-            )),
-            wordBound(),
-            inlineSpaces0(),
-            char('}'),
-          ),
-        },
-        // e.g. `{Up}`
-        //          ^
-        {
-          name: name(scopeName, RuleName.UnquotedString, StyleName.Strong),
-          match: char('}'),
-        },
-        // e.g. `!#Tab`
-        //         ^^^
-        {
-          name: name(scopeName, RuleName.UnquotedString, StyleName.Strong),
-          match: keyword(...constants_common.keyNameList),
-        },
-        // e.g. `+`, `!#a`
-        //       ^    ^^^
-        {
-          name: name(scopeName, RuleName.UnquotedString, StyleName.Strong),
-          match: seq(
-            chars1(...constants_common.modifierSymbols),
-            negChars0('{', '%', inlineSpace()),
-          ),
-        },
-        {
-          name: name(scopeName, RuleName.UnquotedString),
-          match: negChars1('`', '{', '}', '%', inlineSpace()),
-        },
+        includeRule(Repository.CommandArgumentSendKeyName),
       );
     }
     case HighlightType.RestParams:

@@ -301,7 +301,6 @@ export const enum Repository {
   PropertyDeclaration = 'repository.declaration.property',
   // #endregion declaration
 
-
   // #region expressions
   Expression = 'repository.expression',
   ExpressionInBrackets = 'repository.expression.in-brackets',
@@ -408,6 +407,7 @@ export const enum Repository {
   CommandArgumentNumber = 'repository.command.argument.number',
   CommandInvalidArgument = 'repository.command.argument.text.invalid',
   CommandArgumentControlStyleText = 'repository.command.argument.text.control-style',
+  CommandArgumentSendKeyName = 'repository.command.argument.text.send-key-name',
   // #endregion v1 syntax
 
   // #region legacy

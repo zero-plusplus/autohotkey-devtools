@@ -480,6 +480,7 @@ export function createRepositories(scopeName: ScopeName): Repositories {
       stringRuleName: RuleName.UnquotedString,
       stringPattern: patterns_v1.lastArgumentPattern,
     }),
+    [Repository.CommandArgumentSendKeyName]: rule_v1.createSendKeyCommandArgumentRule(scopeName),
     // #endregion command
 
     // #region legacy
