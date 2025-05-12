@@ -460,26 +460,19 @@ function parameterToPatternsRule(scopeName: ScopeName, defenition: CommandDefini
       if (!parameter.itemPatterns || parameter.itemPatterns.length === 0) {
         throw Error('The subcommand keyword is not specified correctly.');
       }
-      return patternsRule(createAllowArgumentRule(scopeName, {
-        stringPattern: patterns_v1.commandArgumentPattern,
-        stringRuleName: RuleName.UnquotedString,
-        allowRules: [
-          {
-            name: ((): ElementName => {
-              switch (parameter.type) {
-                case HighlightType.SubCommand: return name(scopeName, RuleName.SubCommandName);
-                case HighlightType.FlowSubCommand: return name(scopeName, RuleName.FlowSubCommandName);
-                default: return name(scopeName, RuleName.UnquotedString, StyleName.Strong);
-              }
-            })(),
-            match: ignoreCase(ordalt(...parameter.itemPatterns)),
-          },
-          {
-            name: name(scopeName, RuleName.SubCommandName, StyleName.Invalid),
-            match: anyChars1(),
-          },
-        ],
-      }));
+      return patternsRule(
+        {
+          name: ((): ElementName => {
+            switch (parameter.type) {
+              case HighlightType.SubCommand: return name(scopeName, RuleName.SubCommandName);
+              case HighlightType.FlowSubCommand: return name(scopeName, RuleName.FlowSubCommandName);
+              default: return name(scopeName, RuleName.UnquotedString, StyleName.Strong);
+            }
+          })(),
+          match: ignoreCase(ordalt(...parameter.itemPatterns)),
+        },
+        includeRule(Repository.CommandInvalidArgument),
+      );
     }
     case HighlightType.GuiSubCommand:
     {
