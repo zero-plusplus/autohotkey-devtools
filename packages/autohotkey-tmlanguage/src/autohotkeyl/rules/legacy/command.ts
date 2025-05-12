@@ -479,30 +479,23 @@ function parameterToPatternsRule(scopeName: ScopeName, defenition: CommandDefini
       if (!parameter.itemPatterns || parameter.itemPatterns.length === 0) {
         throw Error('The subcommand keyword is not specified correctly.');
       }
-      return patternsRule(createAllowArgumentRule(scopeName, {
-        stringPattern: patterns_v1.commandArgumentPattern,
-        stringRuleName: RuleName.UnquotedString,
-        allowRules: [
-          {
-            match: seq(
-              optseq(
-                capture(wordChars0()),
-                capture(char(':')),
-              ),
-              capture(ignoreCase(ordalt(...parameter.itemPatterns))),
+      return patternsRule(
+        {
+          match: seq(
+            optseq(
+              capture(wordChars0()),
+              capture(char(':')),
             ),
-            captures: {
-              1: nameRule(scopeName, RuleName.LabelName),
-              2: nameRule(scopeName, RuleName.Colon),
-              3: nameRule(scopeName, RuleName.SubCommandName),
-            },
+            capture(ignoreCase(ordalt(...parameter.itemPatterns))),
+          ),
+          captures: {
+            1: nameRule(scopeName, RuleName.LabelName),
+            2: nameRule(scopeName, RuleName.Colon),
+            3: nameRule(scopeName, RuleName.SubCommandName),
           },
-          {
-            name: name(scopeName, RuleName.SubCommandName, StyleName.Invalid),
-            match: anyChars1(),
-          },
-        ],
-      }));
+        },
+        includeRule(Repository.CommandInvalidArgument),
+      );
     }
     case HighlightType.LetterOptions:
     {
