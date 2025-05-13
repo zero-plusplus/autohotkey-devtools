@@ -974,12 +974,13 @@ export function createCommandStatementExpectedData(scopeName: ScopeName): Expect
     // https://www.autohotkey.com/docs/v1/lib/SysGet.htm
     [
       dedent`
-        SysGet, output, MonitorCount                                                   ; comment
-        SysGet, output, MonitorPrimary                                                 ; comment
-        SysGet, output, Monitor, unquoted                                              ; comment
-        SysGet, output, MonitorWorkArea, unquoted                                      ; comment
-        SysGet, output, MonitorName, unquoted                                          ; comment
-        SysGet, output, 80                                                             ; comment
+        SysGet, output, MonitorCount                ; comment
+        SysGet, output, MonitorPrimary              ; comment
+
+        SysGet, output, Monitor, 80                 ; comment
+        SysGet, output, MonitorWorkArea, 80         ; comment
+        SysGet, output, MonitorName, 80             ; comment
+        SysGet, output, 80                          ; comment
       `,
       [
         ...[ 'MonitorCount', 'MonitorPrimary' ].flatMap(((subcommand) => {
@@ -1001,7 +1002,7 @@ export function createCommandStatementExpectedData(scopeName: ScopeName): Expect
             { text: ',', scopes: name(scopeName, RuleName.Comma) },
             { text: subcommand, scopes: name(scopeName, RuleName.SubCommandName) },
             { text: ',', scopes: name(scopeName, RuleName.Comma) },
-            { text: 'unquoted', scopes: name(scopeName, RuleName.UnquotedString) },
+            { text: '80', scopes: name(scopeName, RuleName.Integer) },
             { text: '; comment', scopes: name(scopeName, RuleName.InLineComment) },
           ];
         })),
@@ -1020,8 +1021,8 @@ export function createCommandStatementExpectedData(scopeName: ScopeName): Expect
       dedent`
         Thread, NoTimers, a + b                       ; comment
         Thread, Priority, a + b                       ; comment
-        Thread, Interrupt, unquoted, unquoted         ; comment
-        Thread, unquoted                              ; comment
+        Thread, Interrupt, 80, 80                     ; comment
+        Thread, 80                                    ; comment
       `,
       [
         ...[ 'NoTimers', 'Priority' ].flatMap((subcommand) => {
@@ -1041,14 +1042,14 @@ export function createCommandStatementExpectedData(scopeName: ScopeName): Expect
         { text: ',', scopes: name(scopeName, RuleName.Comma) },
         { text: 'Interrupt', scopes: name(scopeName, RuleName.SubCommandName) },
         { text: ',', scopes: name(scopeName, RuleName.Comma) },
-        { text: 'unquoted', scopes: name(scopeName, RuleName.UnquotedString) },
+        { text: '80', scopes: name(scopeName, RuleName.Integer) },
         { text: ',', scopes: name(scopeName, RuleName.Comma) },
-        { text: 'unquoted', scopes: name(scopeName, RuleName.UnquotedString) },
+        { text: '80', scopes: name(scopeName, RuleName.Integer) },
         { text: '; comment', scopes: name(scopeName, RuleName.InLineComment) },
 
         { text: 'Thread', scopes: name(scopeName, RuleName.CommandName) },
         { text: ',', scopes: name(scopeName, RuleName.Comma) },
-        { text: 'unquoted', scopes: name(scopeName, RuleName.UnquotedString) },
+        { text: '80', scopes: name(scopeName, RuleName.UnquotedString, StyleName.Invalid) },
         { text: '; comment', scopes: name(scopeName, RuleName.InLineComment) },
       ],
     ],

@@ -282,6 +282,28 @@ export function createSendKeyCommandArgumentRule(scopeName: ScopeName): Patterns
     },
   );
 }
+export function createCommandRestArgumentsRule(scopeName: ScopeName): PatternsRule {
+  return patternsRule(
+    includeRule(Repository.PercentExpression),
+    includeRule(Repository.Comma),
+    createSpacedArgumentTextRule(scopeName, {
+      stringRuleName: RuleName.UnquotedString,
+      additionalRules: [
+        {
+          match: seq(
+            negativeLookahead('`'),
+            capture(char(',')),
+          ),
+          captures: { 1: patternsRule(includeRule(Repository.Comma)) },
+        },
+        {
+          name: name(scopeName, RuleName.UnquotedString),
+          match: negChars1('`', inlineSpace(), ','),
+        },
+      ],
+    }),
+  );
+}
 export function createMenuNameCommandArgumentRule(scopeName: ScopeName): PatternsRule {
   return patternsRule(
     // e.g. `Menu, MenuName, Add, &test`
@@ -586,12 +608,13 @@ function parameterToPatternsRule(scopeName: ScopeName, defenition: CommandDefini
     case HighlightType.RestParams:
     case HighlightType.UnquotedStringShouldEscapeComma:
     {
+      if (parameter.itemPatterns === undefined || parameter.itemPatterns.length === 0) {
+        return patternsRule(includeRule(Repository.CommandRestArguments));
+      }
+
       return patternsRule(
-        ...(
-          parameter.type === HighlightType.RestParams
-            ? [ includeRule(Repository.PercentExpression), includeRule(Repository.Comma) ]
-            : [ includeRule(Repository.PercentExpressions) ]
-        ),
+        includeRule(Repository.PercentExpression),
+        includeRule(Repository.Comma),
         createSpacedArgumentTextRule(scopeName, {
           stringRuleName: RuleName.UnquotedString,
           additionalRules: [
@@ -637,6 +660,10 @@ function parameterToPatternsRule(scopeName: ScopeName, defenition: CommandDefini
     }
     case HighlightType.LetterOptions:
     {
+      if (!parameter.itemPatterns || parameter.itemPatterns.length === 0) {
+        throw Error('letter option is not specified correctly');
+      }
+
       return patternsRule(
         includeRule(Repository.PercentExpressions),
         createSpacedArgumentTextRule(scopeName, {
@@ -654,6 +681,10 @@ function parameterToPatternsRule(scopeName: ScopeName, defenition: CommandDefini
     case HighlightType.KeywordOnly:
     case HighlightType.SpacedKeywordsOnly:
     {
+      if (!parameter.itemPatterns || parameter.itemPatterns.length === 0) {
+        throw Error('keyword is not specified correctly');
+      }
+
       return patternsRule(
         includeRule(Repository.PercentExpressions),
         createAllowArgumentRule(scopeName, {
@@ -666,6 +697,10 @@ function parameterToPatternsRule(scopeName: ScopeName, defenition: CommandDefini
     case HighlightType.GuiOptions:
     case HighlightType.GuiControlOptions:
     {
+      if (!parameter.itemPatterns || parameter.itemPatterns.length === 0) {
+        throw Error('keyword is not specified correctly');
+      }
+
       return patternsRule(
         includeRule(Repository.PercentExpressions),
         createSpacedArgumentTextRule(scopeName, {

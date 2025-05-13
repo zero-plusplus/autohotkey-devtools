@@ -649,16 +649,16 @@ export const commandDefinitions: CommandDefinition[] = [
 
   // https://www.autohotkey.com/docs/v1/lib/SysGet.htm
   command('SysGet', [
-    signature([ output(), subcommand([ 'MonitorCount', 'MonitorPrimary' ]), restParams() ]),
-    signature([ output(), subcommand([ 'Monitor', 'MonitorWorkArea', 'MonitorName' ]), unquoted() ]),
-    signature([ output(), restParams() ]),
+    signature([ output(), subcommand([ 'MonitorCount', 'MonitorPrimary' ]) ]),
+    signature([ output(), subcommand([ 'Monitor', 'MonitorWorkArea', 'MonitorName' ]), unquotedWithNumber() ]),
+    signature([ output(), unquotedNumber() ]),
   ]),
 
   // https://www.autohotkey.com/docs/v1/lib/Thread.htm
   command('Thread', [
     signature([ subcommand([ 'NoTimers', 'Priority' ]), expression() ]),
-    signature([ subcommand('Interrupt'), unquoted(), unquoted() ]),
-    signature([ restParams() ]),
+    signature([ subcommand('Interrupt'), unquotedNumber(), unquotedNumber() ]),
+    signature([ invalid() ]),
   ]),
 
   // https://www.autohotkey.com/docs/v1/lib/ToolTip.htm
@@ -1018,6 +1018,9 @@ export function flowSubcommand(values: string | string[] = [], flags: CommandPar
 }
 export function guiSubcommand(values: string | string[] = [], flags: CommandParameterFlag = CommandParameterFlag.None): CommandParameter {
   return { type: HighlightType.GuiSubCommand, flags, itemPatterns: Array.isArray(values) ? values : [ values ] };
+}
+export function invalid(flags: CommandParameterFlag = CommandParameterFlag.None): CommandParameter {
+  return { type: HighlightType.Invalid, flags };
 }
 export function blank(flags: CommandParameterFlag = CommandParameterFlag.None): CommandParameter {
   return { type: HighlightType.Blank, flags };

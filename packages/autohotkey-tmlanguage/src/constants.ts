@@ -401,6 +401,7 @@ export const enum Repository {
   CommandArgumentWithNumber = 'repository.command.argument.with-number',
   CommandLastArgument = 'repository.command.argument.last',
   CommandLastArgumentWithNumber = 'repository.command.argument.with-number.last',
+  CommandRestArguments = 'repository.command.argument.rest',
   MenuItemNameCommandArgument = 'repository.command.argument.menu-item-name',
   CommandArgumentText = 'repository.command.argument.text',
   CommandLastArgumentText = 'repository.command.argument.last.text',
