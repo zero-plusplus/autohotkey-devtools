@@ -8,11 +8,13 @@ export function createRegExpExpectedData(scopeName: ScopeName): ExpectedTestData
     ...common.createRegExpExpectedData(scopeName, {
       quote: '"',
       escapedQuoted: '`"',
+      regexOptions: constants_v2.regexpOptions,
       escapeSequences: constants_v2.doubleQuoteEscapeSequences,
     }),
     ...common.createRegExpExpectedData(scopeName, {
       quote: `'`,
       escapedQuoted: `\`'`,
+      regexOptions: constants_v2.regexpOptions,
       escapeSequences: constants_v2.singleQuoteEscapeSequences,
     }),
   ];

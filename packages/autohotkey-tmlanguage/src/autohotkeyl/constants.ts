@@ -1,10 +1,11 @@
 import { commonAssignmentOperators, commonExpressionKeywords, commonExpressionOperatorsWithoutAssignment, commonModifiers, commonPcreUnicodeProperyCodes, commonPcreUnicodeProperyScripts, commonRegexpEscapeSequences, commonRegexpOptions } from '../constants';
 
+export const regexpOptions: [ ...typeof commonRegexpOptions, 'O' ] = [ ...commonRegexpOptions, 'O' ];
+
 // #region [Escape Sequences](https://www.autohotkey.com/docs/v1/misc/EscapeChar.htm)
 export const unquoteEscapeSequences = [ '``', '`,', '`%', '``', '`;', '`::', '`r', '`n', '`b', '`t', '`v', '`a', '`f' ] as const;
 export const doubleQuoteEscapeSequences: [ '""', ...typeof unquoteEscapeSequences] = [ '""', ...unquoteEscapeSequences ] as const;
 export const regexpEscapeSequences: [ ...typeof commonRegexpEscapeSequences ] = [ ...commonRegexpEscapeSequences ];
-export const regexpOptions: [ ...typeof commonRegexpOptions ] = [ ...commonRegexpOptions ];
 export const pcreUnicodePropertyCodes: [ ...typeof commonPcreUnicodeProperyCodes ] = [ ...commonPcreUnicodeProperyCodes ];
 export const pcreUnicodePropertyScripts: [ ...typeof commonPcreUnicodeProperyScripts ] = [ ...commonPcreUnicodeProperyScripts ];
 // #endregion Escape Sequences

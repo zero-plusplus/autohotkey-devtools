@@ -9,6 +9,7 @@ interface Placeholder {
   quote: string;
   escapedQuoted: string;
   escapeSequences: readonly string[];
+  regexOptions: readonly string[];
 }
 export function createRegExpExpectedData(scopeName: ScopeName, placeholder: Placeholder): ExpectedTestData[] {
   const q = placeholder.quote;
@@ -18,7 +19,7 @@ export function createRegExpExpectedData(scopeName: ScopeName, placeholder: Plac
       dedent`
         var ~= ${q}${q}
         var ~= ${q}text${q}
-        var ~= ${q}im)text${q}
+        var ~= ${q}${placeholder.regexOptions.join('')})text${q}
         var ~= ${q}(*UCP)text${q}
         var ~= ${q}i)(*UCP)text${q}
       `, [
@@ -36,7 +37,7 @@ export function createRegExpExpectedData(scopeName: ScopeName, placeholder: Plac
         { text: 'var', scopes: name(scopeName, RuleName.Variable) },
         { text: '~=', scopes: name(scopeName, RuleName.Operator) },
         { text: q, scopes: name(scopeName, RuleName.RegExpString, RuleDescriptor.Begin) },
-        { text: 'im)', scopes: name(scopeName, RuleName.RegExpString, RuleName.RegExpOption) },
+        { text: `${placeholder.regexOptions.join('')})`, scopes: name(scopeName, RuleName.RegExpString, RuleName.RegExpOption) },
         { text: 'text', scopes: name(scopeName, RuleName.RegExpString) },
         { text: q, scopes: name(scopeName, RuleName.RegExpString, RuleDescriptor.End) },
 
@@ -330,7 +331,7 @@ export function createRegExpExpectedData(scopeName: ScopeName, placeholder: Plac
     [
       dedent`
         ${q})text${q}
-        ${q}im)text${q}
+        ${q}${placeholder.regexOptions.join('')})text${q}
       `, [
         { text: q, scopes: name(scopeName, RuleName.RegExpString, RuleDescriptor.Begin) },
         { text: ')', scopes: name(scopeName, RuleName.RegExpString, RuleName.RegExpOption) },
@@ -338,7 +339,7 @@ export function createRegExpExpectedData(scopeName: ScopeName, placeholder: Plac
         { text: q, scopes: name(scopeName, RuleName.RegExpString, RuleDescriptor.End) },
 
         { text: q, scopes: name(scopeName, RuleName.RegExpString, RuleDescriptor.Begin) },
-        { text: 'im)', scopes: name(scopeName, RuleName.RegExpString, RuleName.RegExpOption) },
+        { text: `${placeholder.regexOptions.join('')})`, scopes: name(scopeName, RuleName.RegExpString, RuleName.RegExpOption) },
         { text: 'text', scopes: name(scopeName, RuleName.RegExpString) },
         { text: q, scopes: name(scopeName, RuleName.RegExpString, RuleDescriptor.End) },
       ],

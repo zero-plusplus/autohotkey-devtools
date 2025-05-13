@@ -1,4 +1,6 @@
-import { commonAssignmentOperators, commonExpressionKeywords, commonExpressionOperatorsWithoutAssignment } from '../constants';
+import { commonAssignmentOperators, commonExpressionKeywords, commonExpressionOperatorsWithoutAssignment, commonRegexpOptions } from '../constants';
+
+export const regexpOptions: [ ...typeof commonRegexpOptions ] = [ ...commonRegexpOptions ];
 
 // #region [Escape Sequences](https://www.autohotkey.com/docs/v2/misc/EscapeChar.htm)
 export const unquoteEscapeSequences = [ '``', '`;', '`:', '`{', '`n', '`r', '`b', '`t', '`s', '`v', '`a', '`f' ] as const;
