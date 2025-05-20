@@ -7,6 +7,7 @@ interface Placeholder_UnquotedStringRule {
   stringRuleName: RuleName;
   stringPattern: string;
   additionalRules?: Rule[];
+  escapeSequenceRepository?: Repository;
 }
 export function createUnquotedStringRule(scopeName: ScopeName, placeholder: Placeholder_UnquotedStringRule): MatchRule {
   return {
@@ -16,10 +17,10 @@ export function createUnquotedStringRule(scopeName: ScopeName, placeholder: Plac
         includeRule(Repository.Dereference),
         ...(placeholder.additionalRules ?? []),
 
-        includeRule(Repository.UnquotedStringEscapeSequence),
+        includeRule(placeholder.escapeSequenceRepository ?? Repository.UnquotedStringEscapeSequence),
         {
           name: name(scopeName, placeholder.stringRuleName),
-          match: negChars1('`'),
+          match: negChars1('`', '%'),
         },
       ),
     },

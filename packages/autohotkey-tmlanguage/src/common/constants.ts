@@ -1,3 +1,50 @@
+// https://www.autohotkey.com/docs/v2/misc/Ahk2ExeDirectives.htm#Intro2
+export const compilerDirectiveEscapeSequences = [
+  '``',
+  '`,',
+  '`n',
+  '`r',
+  '`t',
+] as const;
+
+// https://www.autohotkey.com/docs/v2/misc/Ahk2ExeDirectives.htm#Intro2
+export const compilerDirectiveVariables = [
+  // Group 1
+  'A_AhkPath',
+  'A_AppData',
+  'A_AppDataCommon',
+  'A_ComputerName',
+  'A_ComSpec',
+  'A_Desktop',
+  'A_DesktopCommon',
+  'A_MyDocuments',
+  'A_ProgramFiles',
+  'A_Programs',
+  'A_ProgramsCommon',
+  'A_ScriptDir',
+  'A_ScriptFullPath',
+  'A_ScriptName',
+  'A_Space',
+  'A_StartMenu',
+  'A_StartMenuCommon',
+  'A_Startup',
+  'A_StartupCommon',
+  'A_Tab',
+  'A_Temp',
+  'A_UserName',
+  'A_WinDir',
+
+  // Group 2
+  'A_AhkVersion',
+  'A_IsCompiled',
+  'A_PtrSize',
+
+  // Special variable
+  'A_WorkFileName',
+  'A_BasePath',
+  'A_PriorLine',
+] as const;
+
 export const hotkeyFlags = [
   '*',
   '~',

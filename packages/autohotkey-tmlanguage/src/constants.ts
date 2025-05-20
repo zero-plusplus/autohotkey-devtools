@@ -249,6 +249,7 @@ export const enum Repository {
   InLineComments = 'repository.comments.in-line',
   MultiLineComment = 'repository.comment.multi-line',
   SingleLineComment = 'repository.comment.single-line',
+  CompilerDirectiveComment = 'repository.comment.single-line.directive.compiler',
   InLineComment = 'repository.comment.in-line',
 
   // #region document
@@ -392,6 +393,16 @@ export const enum Repository {
   // #region misc
   UnquotedStringEscapeSequence = 'repository.string.unquoted.escaped',
   FunctionExpressionBlock = 'repository.expression.function',
+
+  // #region compiler directive
+  BuiltInVariableInCompilerDirective = 'repository.variable.builtin.compiler-directive',
+  UnquotedStringInCompilerDirective = 'repository.string.unquoted.compiler-directive',
+  ExpressionInCompilerDirective = 'repository.comment.expression.',
+  DoubleStringInCompilerDirective = 'repository.comment.single-line.directive.string',
+  DoubleStringContentInCompilerDirective = 'repository.comment.single-line.directive.string.content',
+  DereferenceInCompilerDirective = 'repository.comment.single-line.directive.regex',
+  UnquotedStringEscapeSequenceInCompilerDirective = 'repository.string.unquoted.escaped.compiler-directive',
+  // #endregion compiler directive
   // #endregion misc
 
   // #region v1 syntax
@@ -430,6 +441,8 @@ export const enum RuleName {
   SingleLineComment = 'comment.single-line',
   InLineComment = 'comment.in-line',
   MultiLineComment = 'comment.multi-line',
+  DirectiveComment = 'comment.single-line.directive',
+  DirectiveCommentName = 'meta.preprocessor.comment.directive',
 
   // #region document
   DocumentComment = 'comment.multi-line.document',
@@ -642,7 +655,6 @@ export const enum HighlightType {
   //                    ^^^^ ^^^^           ^^^ ^^^ ^^^^^^^
   UnquotedOrKeywords = 'unquoted_or_keywords',
 
-
   // Accepts one or more arbitrary keywords. No space is needed between each
   // e.g. `Loop, Files, \path\to, DFR
   //                              ^^^
@@ -679,6 +691,14 @@ export const enum HighlightType {
   // e.g. `#Module ModuleName`
   //               ^^^^^^^^^^
   Namespace = 'namespace',
+
+  // ; @Ahk2Exe-AddResource fileName
+  //                        ^^^^^^^^
+  UnquotedStringInCompilerDirective = 'unquotedstring_in_compiler_directive',
+
+  // ; @Ahk2Exe-Let name = value
+  //                ^^^^^^^^^^^^
+  ExpressionInCompilerDirective = 'expression_in_compiler_directive',
 }
 export const enum CommandSignatureFlag {
   None = 0,

@@ -20,6 +20,7 @@ export * from './statement/throw';
 export * from './statement/try';
 export * from './statement/until';
 export * from './statement/while';
+export * from './trivia/directiveComment';
 export * from './trivia/documentComment';
 export * from './trivia/multiLineComment';
 export * from './trivia/singleLineComment';

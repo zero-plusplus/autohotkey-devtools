@@ -33,6 +33,7 @@ import { createThrowStatementExpectedData } from './statement/throw';
 import { createTryStatementExpectedData } from './statement/try';
 import { createUntilStatementExpectedData } from './statement/until';
 import { createWhileStatementExpectedData } from './statement/while';
+import { createDirectiveCommentExpectedData } from './trivia/directiveComment';
 
 interface Placeholder {
   keywordLikeBuiltinVariables: readonly string[];
@@ -53,6 +54,7 @@ export function createExpectedDataList(scopeName: ScopeName, placeholder?: Place
     ...createCallStatementExpectedData(scopeName),
     ...createClassDeclarationExpectedData(scopeName),
     ...createDereferenceExpressionExpectedData(scopeName),
+    ...createDirectiveCommentExpectedData(scopeName),
     ...createDirectiveStatementExpectedData(scopeName),
     ...createFieldDeclarationExpectedData(scopeName),
     ...createForStatementExpectedData(scopeName),

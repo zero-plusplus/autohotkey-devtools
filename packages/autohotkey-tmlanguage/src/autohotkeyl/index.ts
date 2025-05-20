@@ -1,4 +1,7 @@
 import * as markdown from '../__injection__/markdown';
+import * as constants_common from '../common/constants';
+import * as definition_common from '../common/definition';
+import * as rules_common from '../common/rules';
 import { Repository, RuleName } from '../constants';
 import { anyChars1, ordalt } from '../oniguruma';
 import type { Repositories, ScopeName, TmLanguage } from '../types';
@@ -46,6 +49,7 @@ export function createRepositories(scopeName: ScopeName): Repositories {
       leftHandPattern: patterns_v1.looseLeftHandPattern,
     }),
     [Repository.SingleLineComments]: patternsRule(
+      includeRule(Repository.CompilerDirectiveComment),
       includeRule(Repository.SingleLineDocumentComment),
       includeRule(Repository.SingleLineComment),
     ),
@@ -510,5 +514,43 @@ export function createRepositories(scopeName: ScopeName): Repositories {
       additionalRules: [ rule_v1.createUnquotedEscapeSequencesRule(scopeName, [ '`)' ]) ],
     }),
     // #endregion legacy
+
+    // #region compiler directive
+    [Repository.CompilerDirectiveComment]: rule_v1.createDirectiveCommentPatternsRule(scopeName, {
+      startAnchor: patterns_v1.lineStartAnchor,
+      endAnchor: patterns_v1.lineEndAnchor,
+      definitions: definition_common.compilerDirectives,
+    }),
+    [Repository.UnquotedStringInCompilerDirective]: rule_v1.createUnquotedStringRule(scopeName, {
+      stringRuleName: RuleName.UnquotedString,
+      stringPattern: patterns_v1.commandArgumentPattern,
+      escapeSequenceRepository: Repository.UnquotedStringEscapeSequenceInCompilerDirective,
+      additionalRules: [ includeRule(Repository.DereferenceInCompilerDirective) ],
+    }),
+    [Repository.UnquotedStringEscapeSequenceInCompilerDirective]: rule_v1.createUnquotedEscapeSequencesRule(
+      scopeName,
+      constants_common.compilerDirectiveEscapeSequences,
+    ),
+    [Repository.BuiltInVariableInCompilerDirective]: rule_v1.createBuiltinVariableRule(scopeName, {
+      variableRuleName: RuleName.KeywordLikeBuiltInVariable,
+      builtinVariables: constants_common.compilerDirectiveVariables,
+    }),
+    [Repository.DereferenceInCompilerDirective]: rules_common.createCompilerDirectiveDereferenceMatchRule(scopeName),
+    [Repository.ExpressionInCompilerDirective]: patternsRule(
+      includeRule(Repository.KeywordInExpression),
+      includeRule(Repository.Dereference),
+      includeRule(Repository.ParenthesizedExpression),
+      includeRule(Repository.DereferenceInCompilerDirective),
+      includeRule(Repository.DoubleStringInCompilerDirective),
+      includeRule(Repository.Literal),
+      includeRule(Repository.BuiltInVariableInCompilerDirective),
+      includeRule(Repository.Variable),
+
+      includeRule(Repository.Dot),
+      includeRule(Repository.Operator),
+    ),
+    [Repository.DoubleStringInCompilerDirective]: rules_common.createDoubleStringInCompilerDirectiveRule(scopeName),
+    [Repository.DoubleStringContentInCompilerDirective]: rules_common.createDoubleStringContentInCompilerDirectiveRule(scopeName),
+    // #endregion compiler directive
   };
 }

@@ -131,6 +131,68 @@ export function createCommandLikeRule(scopeName: ScopeName, definition: CommandD
     ].map((rule, i) => [ i + 1, rule ])),
   };
 }
+
+export function createDirectiveCommentRule(scopeName: ScopeName, definition: CommandDefinition, signature: CommandSignature, placeholder: Placeholder): Rule {
+  return {
+    match: seq(
+      // command name
+      seq(
+        lookbehind(placeholder.startAnchor),
+        inlineSpaces0(),
+        capture(char(';')),
+        inlineSpaces0(),
+        capture(ignoreCase(definition.name)),
+        negativeLookahead(char('(')),
+      ),
+
+      // arguments
+      ...(0 < signature.parameters.length
+        ? [
+          reluctant(optional(signature.parameters.reduceRight<string>((prev, parameter, i, parameters) => {
+            const isLastParameter = parameters.length - 1 === i;
+
+            const capturedCommaSeparator = seq(inlineSpaces0(), capture(char(',')));
+            const capturedFirstSeparator = group(alt(
+              capturedCommaSeparator,
+              inlineSpaces1(),
+            ));
+            const separator = i === 0 ? capturedFirstSeparator : capturedCommaSeparator;
+
+            return seq(
+              separator,
+              negativeLookahead(seq(inlineSpaces1(), char(';'))),
+              inlineSpaces0(),
+              capture(parameterToOniguruma(parameter, isLastParameter, placeholder)),
+              prev !== '' ? optional(prev) : '',
+            );
+          }, ''))),
+        ]
+        : [ seq(inlineSpaces0(), capture(anyChars0())) ]
+      ),
+      lookahead(placeholder.endAnchor),
+    ),
+    captures: Object.fromEntries([
+      nameRule(scopeName, RuleName.DirectiveComment),
+
+      // command name
+      hasFlag(definition.flags, CommandFlag.Deprecated)
+        ? nameRule(scopeName, placeholder.commandElementName, StyleName.Strikethrough)
+        : nameRule(scopeName, placeholder.commandElementName),
+
+      // parameters
+      ...signature.parameters.flatMap((parameter, i, parameters) => {
+        const isLastParameter = parameters.length - 1 === i;
+        return [
+          patternsRule(includeRule(Repository.Comma)),
+          parameterToPatternsRule(scopeName, definition, parameter, isLastParameter, placeholder),
+        ];
+      }),
+
+      // inline comment
+      nameRule(scopeName, RuleName.InLineComment),
+    ].map((rule, i) => [ i + 1, rule ])),
+  };
+}
 export function createSendKeyCommandArgumentRule(scopeName: ScopeName): PatternsRule {
   return patternsRule(
     includeRule(Repository.UnquotedStringEscapeSequence),
@@ -461,6 +523,9 @@ function parameterToOniguruma(parameter: CommandParameter, isLastParameter: bool
       }
       return patterns_v1.commandArgumentPattern;
     }
+    case HighlightType.UnquotedStringInCompilerDirective:
+    case HighlightType.ExpressionInCompilerDirective:
+      return patterns_v1.commandArgumentPattern;
     default:
       return isLastParameter
         ? patterns_v1.lastArgumentPattern
@@ -825,6 +890,14 @@ function parameterToPatternsRule(scopeName: ScopeName, defenition: CommandDefini
           match: anyChars1(),
         },
       );
+    }
+    case HighlightType.UnquotedStringInCompilerDirective:
+    {
+      return patternsRule(includeRule(Repository.UnquotedStringInCompilerDirective));
+    }
+    case HighlightType.ExpressionInCompilerDirective:
+    {
+      return patternsRule(includeRule(Repository.ExpressionInCompilerDirective));
     }
     default: break;
   }

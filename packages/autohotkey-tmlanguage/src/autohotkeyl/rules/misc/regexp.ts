@@ -223,7 +223,7 @@ interface Placeholder3 {
   regexpEscapeSequences: readonly string[];
   pcreUnicodePropertyCodes: readonly string[];
   pcreUnicodePropertyScripts: readonly string[];
-  stringEscapeSequences: string[];
+  stringEscapeSequences: readonly string[];
 }
 export function createRegExpCommonContentRule(scopeName: ScopeName, placeholder: Placeholder3): PatternsRule {
   return patternsRule(

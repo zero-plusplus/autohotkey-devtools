@@ -37,6 +37,7 @@ export * from './statement/throw';
 export * from './statement/try';
 export * from './statement/until';
 export * from './statement/while';
+export * from './trivia/directive';
 export * from './trivia/document';
 export * from './trivia/multiLine';
 export * from './trivia/singleLine';
