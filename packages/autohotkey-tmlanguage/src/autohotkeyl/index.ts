@@ -309,18 +309,16 @@ export function createRepositories(scopeName: ScopeName): Repositories {
     [Repository.ObjectInBrackets]: rules_common.createObjectRule(scopeName, {
       startAnchor: patterns_common.lineStartAnchor,
     }),
-    [Repository.Object]: rules_common.createObjectRule(scopeName, {
+    ...rules_common.createObjectRepositories(scopeName, {
       startAnchor: patterns_v1.expressionContinuationStartAnchor,
-    }),
-    [Repository.ObjectContent]: patternsRule(
-      includeRule(Repository.Meta),
-
-      includeRule(Repository.ObjectKey),
-      includeRule(Repository.Comma),
-      includeRule(Repository.ExpressionInBrackets),
-    ),
-    [Repository.ObjectKey]: rules_common.createObjectKeyRule(scopeName, {
       keyName: patterns_v1.keyName,
+      contents: [
+        includeRule(Repository.Meta),
+
+        includeRule(Repository.ObjectKey),
+        includeRule(Repository.Comma),
+        includeRule(Repository.ExpressionInBrackets),
+      ],
     }),
     [Repository.Array]: rule_v1.createArrayRule(scopeName),
     // #endregion object

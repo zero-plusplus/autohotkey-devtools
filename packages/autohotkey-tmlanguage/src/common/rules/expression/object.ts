@@ -1,12 +1,26 @@
 import { Repository, RuleName } from '../../../constants';
 import { capture, char, inlineSpaces0, lookbehind, seq } from '../../../oniguruma';
-import type { BeginEndRule, MatchRule, ScopeName } from '../../../types';
+import type { BeginEndRule, MatchRule, Repositories, Rule, ScopeName } from '../../../types';
 import { includeRule, nameRule, patternsRule } from '../../../utils';
 
-interface Placeholder {
+interface Placeholder extends Placeholder_ObjectRule, Placeholder_ObjectKeyRule {
+  contents: Rule[];
+}
+export function createObjectRepositories(scopeName: ScopeName, placeholder: Placeholder): Repositories {
+  return {
+    [Repository.Object]: createObjectRule(scopeName, {
+      startAnchor: placeholder.startAnchor,
+    }),
+    [Repository.ObjectKey]: createObjectKeyRule(scopeName, {
+      keyName: placeholder.keyName,
+    }),
+    [Repository.ObjectContent]: patternsRule(...placeholder.contents),
+  };
+}
+interface Placeholder_ObjectRule {
   startAnchor: string;
 }
-export function createObjectRule(scopeName: ScopeName, placeholder: Placeholder): BeginEndRule {
+export function createObjectRule(scopeName: ScopeName, placeholder: Placeholder_ObjectRule): BeginEndRule {
   return {
     begin: seq(
       lookbehind(placeholder.startAnchor),
