@@ -1,5 +1,8 @@
 import { Repository, RuleName } from '../constants';
-import { alt, anyChars0, capture, char, endAnchor, group, ignoreCase, inlineSpace, inlineSpaces0, negativeLookahead, negChars0, optional, ordalt, seq, startAnchor, text } from '../oniguruma';
+import {
+  alt, anyChars0, capture, char, endAnchor, group, ignoreCase, inlineSpace,
+  inlineSpaces0, negativeLookahead, negChars0, optional, ordalt, seq, startAnchor, text,
+} from '../oniguruma';
 import type { BeginEndRule, PatternsRule, Rule, ScopeName, TmLanguage } from '../types';
 import { includeRule, includeScope, name, nameRule, patternsRule } from '../utils';
 

@@ -1,5 +1,8 @@
 import { RuleName, StyleName } from '../../../constants';
-import { capture, char, escapeOnigurumaTexts, ignoreCase, lookahead, lookbehind, many1, manyRange, negativeLookbehind, ordalt, seq, wordBound } from '../../../oniguruma';
+import {
+  capture, char, escapeOnigurumaTexts, ignoreCase, lookahead, lookbehind, many1, manyRange, negativeLookbehind,
+  ordalt, seq, wordBound,
+} from '../../../oniguruma';
 import type { MatchRule, ScopeName } from '../../../types';
 import { nameRule } from '../../../utils';
 

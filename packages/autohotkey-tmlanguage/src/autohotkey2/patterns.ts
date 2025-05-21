@@ -1,4 +1,7 @@
-import { alt, anyChars1, char, escapeOnigurumaTexts, group, manyLimit, manyXtoY, optional, ordalt, seq, text, wordChar } from '../oniguruma';
+import {
+  alt, anyChars1, char, escapeOnigurumaTexts, group, manyLimit, manyXtoY, optional, ordalt,
+  seq, text, wordChar,
+} from '../oniguruma';
 import * as constants_v2 from './constants';
 
 export const expressionContinuationStartAnchor: string = group(ordalt(

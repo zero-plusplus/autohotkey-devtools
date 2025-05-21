@@ -1,5 +1,8 @@
 import { dedent } from '@zero-plusplus/utilities/src';
-import { blank, control, expression, fileAttributes, flagedGuiControlOptions, guiControlOptions, guiOptions, keywordOnly, onOff, output, restParams, sendKeys, unquoted, winTitle } from '../../../../src/autohotkeyl/definition';
+import {
+  blank, control, expression, fileAttributes, flagedGuiControlOptions, guiControlOptions, guiOptions, keywordOnly,
+  onOff, output, restParams, sendKeys, unquoted, winTitle,
+} from '../../../../src/autohotkeyl/definition';
 import { RuleDescriptor, RuleName, StyleName } from '../../../../src/constants';
 import type { ScopeName } from '../../../../src/types';
 import { name } from '../../../../src/utils';

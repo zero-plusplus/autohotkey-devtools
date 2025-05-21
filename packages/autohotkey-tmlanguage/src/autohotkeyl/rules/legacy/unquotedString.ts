@@ -1,5 +1,8 @@
 import { Repository, RuleName, StyleName } from '../../../constants';
-import { alt, capture, char, chars0, endAnchor, ignoreCase, inlineSpace, inlineSpaces0, lookahead, lookbehind, negChars0, negChars1, numbers1, optional, optseq, seq } from '../../../oniguruma';
+import {
+  alt, capture, char, chars0, endAnchor, ignoreCase, inlineSpace, inlineSpaces0, lookahead, lookbehind, negChars0,
+  negChars1, numbers1, optional, optseq, seq,
+} from '../../../oniguruma';
 import type { MatchRule, Rule, ScopeName } from '../../../types';
 import { includeRule, name, patternsRule } from '../../../utils';
 

@@ -1,6 +1,9 @@
 import * as rule_common from '../../../common/rules';
 import { RuleName } from '../../../constants';
-import { alt, capture, char, group, ignoreCase, inlineSpace, inlineSpaces0, lookahead, lookbehind, optional, optseq, ordalt, seq } from '../../../oniguruma';
+import {
+  alt, capture, char, group, ignoreCase, inlineSpace, inlineSpaces0, lookahead, lookbehind, optional,
+  optseq, ordalt, seq,
+} from '../../../oniguruma';
 import type { MatchRule, PatternsRule, ScopeName } from '../../../types';
 import { nameRule } from '../../../utils';
 

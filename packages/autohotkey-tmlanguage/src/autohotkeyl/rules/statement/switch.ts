@@ -1,5 +1,8 @@
 import { Repository, RuleName } from '../../../constants';
-import { alt, capture, char, group, ignoreCase, inlineSpaces0, keyword, lookahead, lookbehind, optseq, ordalt, seq, startAnchor } from '../../../oniguruma';
+import {
+  alt, capture, char, group, ignoreCase, inlineSpaces0, keyword, lookahead, lookbehind, optseq,
+  ordalt, seq, startAnchor,
+} from '../../../oniguruma';
 import type { BeginEndRule, ScopeName } from '../../../types';
 import { includeRule, nameRule } from '../../../utils';
 import { createJumpToLabelStatement } from './jump';

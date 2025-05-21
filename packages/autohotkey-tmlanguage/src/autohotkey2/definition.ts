@@ -1,4 +1,7 @@
-import { command, decimalOptionItem, encoding, expression, keywordOnly, optionItem, signature, signedNumberOptionItem, toggleOptionItem, unquoted, unquotedNumber } from '../autohotkeyl/definition';
+import {
+  command, decimalOptionItem, encoding, expression, keywordOnly, optionItem, signature, signedNumberOptionItem,
+  toggleOptionItem, unquoted, unquotedNumber,
+} from '../autohotkeyl/definition';
 import type { CommandDefinition, CommandParameter } from '../types';
 
 // #region directives

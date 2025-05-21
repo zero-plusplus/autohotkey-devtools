@@ -1,5 +1,9 @@
 import { lineStartAnchor } from '../common/patterns';
-import { alt, anyChar, anyChars1, char, endAnchor, escapeOnigurumaTexts, group, groupMany0, groupMany1, inlineSpace, inlineSpaces0, inlineSpaces1, lookahead, manyLimit, manyRange, negativeLookahead, negativeLookbehind, negChar, negChars0, optional, ordalt, reluctant, seq, text, wordChar } from '../oniguruma';
+import {
+  alt, anyChar, anyChars1, char, endAnchor, escapeOnigurumaTexts, group, groupMany0, groupMany1, inlineSpace,
+  inlineSpaces0, inlineSpaces1, lookahead, manyLimit, manyRange, negativeLookahead, negativeLookbehind, negChar,
+  negChars0, optional, ordalt, reluctant, seq, text, wordChar,
+} from '../oniguruma';
 import * as constants_v1 from './constants';
 
 // #region [Names](https://www.autohotkey.com/docs/v1/Concepts.htm#names)

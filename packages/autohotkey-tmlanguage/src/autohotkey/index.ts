@@ -1,6 +1,9 @@
 import * as constants_v2 from '../autohotkey2/constants';
 import * as constants_v1 from '../autohotkeyl/constants';
-import { alt, anyChars0, capture, char, charRange, endAnchor, escapeOnigurumaTexts, group, ignoreCase, inlineSpaces0, inlineSpaces1, lookahead, lookbehind, negativeLookahead, optional, optseq, ordalt, reluctant, seq, startAnchor } from '../oniguruma';
+import {
+  alt, anyChars0, capture, char, charRange, endAnchor, escapeOnigurumaTexts, group, ignoreCase, inlineSpaces0,
+  inlineSpaces1, lookahead, lookbehind, negativeLookahead, optional, optseq, ordalt, reluctant, seq, startAnchor,
+} from '../oniguruma';
 import type { Rule, ScopeName, TmLanguage } from '../types';
 import { includeScope, patternsRule } from '../utils';
 

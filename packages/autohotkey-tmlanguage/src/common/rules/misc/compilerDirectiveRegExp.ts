@@ -1,7 +1,10 @@
 import type { ScopeName } from 'vscode-textmate/release/theme';
 import * as pattern_v1 from '../../../autohotkeyl/patterns';
 import { Repository, RuleDescriptor, RuleName, StyleName, TokenType } from '../../../constants';
-import { alt, anyChars0, capture, char, escapeOnigurumaTexts, group, ignoreCase, many0, negChar, negChars1, number, numbers0, optional, optseq, ordalt, seq, text } from '../../../oniguruma';
+import {
+  alt, anyChars0, capture, char, escapeOnigurumaTexts, group, ignoreCase, many0, negChar, negChars1,
+  number, numbers0, optional, optseq, ordalt, seq, text,
+} from '../../../oniguruma';
 import type { MatchRule, PatternsRule } from '../../../types';
 import { includeRule, name, namedPatternsRule, nameRule, patternsRule } from '../../../utils';
 import * as constants_common from '../../constants';

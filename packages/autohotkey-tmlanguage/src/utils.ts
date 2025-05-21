@@ -2,8 +2,14 @@ import type { LiteralUnion } from 'type-fest';
 import * as constants_v2 from './autohotkey2/constants';
 import * as constants_v1 from './autohotkeyl/constants';
 import { Repository } from './constants';
-import { alt, asciiChar, char, escapeOnigurumaText, group, inlineSpaces0, lookbehind, negChar, opt, ordalt, seq, startAnchor } from './oniguruma';
-import type { ElementName, EscapeSequencesInfo, IncludeRule, NameRule, PatternsRule, Rule, ScopeName, Utilities, VariableParts } from './types';
+import {
+  alt, asciiChar, char, escapeOnigurumaText, group, inlineSpaces0, lookbehind, negChar, opt,
+  ordalt, seq, startAnchor,
+} from './oniguruma';
+import type {
+  ElementName, EscapeSequencesInfo, IncludeRule, NameRule, PatternsRule, Rule, ScopeName,
+  Utilities, VariableParts,
+} from './types';
 
 export function getVariableParts(scopeName: ScopeName): VariableParts {
   const letter = '[a-zA-Z]';

@@ -1,5 +1,9 @@
 import { Repository, RuleDescriptor, RuleName, TokenType } from '../../../constants';
-import { alphaChar, alt, anyChars0, anyChars1, capture, char, endAnchor, group, groupMany0, groupMany1, ignoreCase, inlineSpace, inlineSpaces0, inlineSpaces1, keyword, lookahead, lookbehind, negativeLookahead, negChar, negChars0, negChars1, optional, optseq, ordalt, seq, startAnchor, text } from '../../../oniguruma';
+import {
+  alphaChar, alt, anyChars0, anyChars1, capture, char, endAnchor, group, groupMany0, groupMany1, ignoreCase,
+  inlineSpace, inlineSpaces0, inlineSpaces1, keyword, lookahead, lookbehind, negativeLookahead, negChar, negChars0,
+  negChars1, optional, optseq, ordalt, seq, startAnchor, text,
+} from '../../../oniguruma';
 import type { BeginEndRule, BeginWhileRule, ElementName, MatchRule, PatternsRule, Rule, ScopeName } from '../../../types';
 import { includeRule, name, nameRule, patternsRule } from '../../../utils';
 
