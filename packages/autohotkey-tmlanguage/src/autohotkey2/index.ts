@@ -214,7 +214,7 @@ export function createRepositories(scopeName: ScopeName, placeholder?: Placehold
     ),
     [Repository.Modifier]: rule_v1.createModifierRule(scopeName, {
       startAnchor: patterns_v1.statementStartAnchor,
-      modifiers: constants_v1.modifiers,
+      modifiers: constants_common.accessModifiers,
     }),
     [Repository.AssignmentDeclaration]: rule_v1.createAssignmentDeclarationRule(scopeName, {
       startAnchor: patterns_v1.statementStartAnchor,
@@ -241,7 +241,7 @@ export function createRepositories(scopeName: ScopeName, placeholder?: Placehold
     }),
     [Repository.BlockInClassBody]: rule_v1.createBlockInClassBodyRule(scopeName),
     [Repository.PropertyDeclaration]: rule_v1.createPropertyDeclarationRule(scopeName, {
-      modifiers: constants_v1.modifiers,
+      modifiers: constants_common.accessModifiers,
       identifierPattern: patterns_v2.identifierPattern,
       identifierNameRule: patternsRule(
         includeRule(Repository.MetaPropertyName),

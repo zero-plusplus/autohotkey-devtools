@@ -10,10 +10,6 @@ export const pcreUnicodePropertyCodes: [ ...typeof constants_common.commonPcreUn
 export const pcreUnicodePropertyScripts: [ ...typeof constants_common.commonPcreUnicodeProperyScripts ] = [ ...constants_common.commonPcreUnicodeProperyScripts ];
 // #endregion Escape Sequences
 
-// #region modifiers
-export const modifiers: [ ...typeof constants_common.commonModifiers ] = [ ...constants_common.commonModifiers ];
-// #endregion modifiers
-
 // #region [Operators](https://www.autohotkey.com/docs/v1/Variables.htm#Operators)
 export const assignmentOperators: [ ...typeof constants_common.commonAssignmentOperators ] = [ ...constants_common.commonAssignmentOperators ] as const;
 export const expressionOperators: [ ...typeof constants_common.commonExpressionOperatorsWithoutAssignment, ...typeof assignmentOperators, '<>' ] = [

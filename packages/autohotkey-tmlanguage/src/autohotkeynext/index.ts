@@ -1,9 +1,9 @@
 import * as v2 from '../autohotkey2';
 import * as constants_v2 from '../autohotkey2/constants';
 import * as patterns_v2 from '../autohotkey2/patterns';
-import * as constants_v1 from '../autohotkeyl/constants';
 import * as patterns_v1 from '../autohotkeyl/patterns';
 import * as rules_v1 from '../autohotkeyl/rules';
+import * as constants_common from '../common/constants';
 import { Repository, RuleName } from '../constants';
 import type { ScopeName, TmLanguage } from '../types';
 import { includeRule, patternsRule } from '../utils';
@@ -57,7 +57,7 @@ export function createTmLanguage(): TmLanguage {
       }),
       [Repository.TypedAssignmentDeclaration]: rules_vnext.createTypedAssignmentDeclarationRule(scopeName, {
         startAnchor: patterns_v1.lineStartAnchor,
-        modifiers: constants_v1.modifiers,
+        modifiers: constants_common.accessModifiers,
         namePattern: patterns_v2.looseLeftHandPattern,
         nameRule: patternsRule(includeRule(Repository.Variable)),
         operators: constants_v2.assignmentOperators,

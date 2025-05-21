@@ -1,5 +1,6 @@
 import { dedent } from '@zero-plusplus/utilities/src';
 import * as constants_v1 from '../../../../src/autohotkeyl/constants';
+import * as constants_common from '../../../../src/common/constants';
 import { RuleDescriptor, RuleName } from '../../../../src/constants';
 import type { ScopeName } from '../../../../src/types';
 import { name } from '../../../../src/utils';
@@ -9,7 +10,7 @@ import type { ExpectedTestData } from '../../../types';
 export function createAssignmentDeclarationExpectedData(scopeName: ScopeName): ExpectedTestData[] {
   return [
     ...common.createAssignmentDeclarationExpectedData(scopeName, {
-      modifiers: constants_v1.modifiers,
+      modifiers: constants_common.accessModifiers,
       operators: constants_v1.assignmentOperators,
     }),
 

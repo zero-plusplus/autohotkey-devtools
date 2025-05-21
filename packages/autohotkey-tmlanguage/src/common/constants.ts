@@ -267,9 +267,8 @@ export const commonAssignmentOperators = [
   '>>=', // e.g. `a >>= 1`
   '<<=', // e.g. `a <<= 1`
   '>>>=', // e.g. `a >>>= 1`
-] as const;// #region modifiers
+] as const;
 
-export const commonModifiers = [ 'local', 'global', 'static' ] as const;
 export const commonExpressionOperatorsWithoutAssignment = [
   '+', // e.g. `+1`, `1 + 1`
   '++', // e.g. `++1`, `1++`
@@ -482,3 +481,7 @@ export const commonPcreUnicodeProperyScripts = [
   'Yi',
 ] as const;
 // #endregion regexp
+
+// #region misc
+export const accessModifiers = [ 'local', 'global', 'static' ] as const;
+// #endregion misc
