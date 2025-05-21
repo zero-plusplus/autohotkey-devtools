@@ -241,7 +241,6 @@ export function createRepositories(scopeName: ScopeName): Repositories {
       includeRule(Repository.Literal),
       includeRule(Repository.KeywordLikeBuiltInVariable),
       includeRule(Repository.BuiltInVariable),
-      includeRule(Repository.InvalidVariable),
       includeRule(Repository.Variable),
 
       includeRule(Repository.Dot),
@@ -255,7 +254,6 @@ export function createRepositories(scopeName: ScopeName): Repositories {
       includeRule(Repository.BuiltInVariable),
       includeRule(Repository.ConstantLikeVariable),
       includeRule(Repository.UserDefinedVariable),
-      includeRule(Repository.InvalidVariable),
     ),
     [Repository.ConstantLikeVariable]: rules_common.createIdentifierRule(scopeName, {
       ruleName: RuleName.ConstantLikeVariable,
@@ -264,11 +262,6 @@ export function createRepositories(scopeName: ScopeName): Repositories {
     [Repository.UserDefinedVariable]: rules_common.createIdentifierRule(scopeName, {
       ruleName: RuleName.Variable,
       identifierPattern: patterns_v1.identifierPattern,
-    }),
-    [Repository.InvalidVariable]: rules_common.createInvalidVariableRule(scopeName, {
-      ruleName: RuleName.Variable,
-      nameHeadChar: patterns_v1.nameStart,
-      nameBodyChar: patterns_v1.nameBody,
     }),
     [Repository.KeywordLikeBuiltInVariable]: rules_common.createBuiltinVariableRule(scopeName, {
       variableRuleName: RuleName.KeywordLikeBuiltInVariable,

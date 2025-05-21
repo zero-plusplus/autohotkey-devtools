@@ -278,7 +278,6 @@ export function createRepositories(scopeName: ScopeName, placeholder?: Placehold
 
     // #region variable
     [Repository.Variable]: patternsRule(
-      includeRule(Repository.InvalidVariable),
       includeRule(Repository.KeywordLikeBuiltInVariable),
       includeRule(Repository.BuiltInClass),
       includeRule(Repository.BuiltInVariable),
@@ -292,11 +291,6 @@ export function createRepositories(scopeName: ScopeName, placeholder?: Placehold
     [Repository.UserDefinedVariable]: rule_common.createIdentifierRule(scopeName, {
       ruleName: RuleName.Variable,
       identifierPattern: patterns_v2.identifierPattern,
-    }),
-    [Repository.InvalidVariable]: rule_common.createInvalidVariableRule(scopeName, {
-      ruleName: RuleName.Variable,
-      nameHeadChar: patterns_v2.nameStart,
-      nameBodyChar: patterns_v2.nameBody,
     }),
     [Repository.KeywordLikeBuiltInVariable]: rule_common.createBuiltinVariableRule(scopeName, {
       variableRuleName: RuleName.KeywordLikeBuiltInVariable,

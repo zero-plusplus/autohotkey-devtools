@@ -117,7 +117,6 @@ export const enum Repository {
   BuiltInVariable = 'Repository.BuiltInVariable',
   BuiltInClass = 'Repository.BuiltInClass',
   KeywordLikeBuiltInVariable = 'Repository.KeywordLikeBuiltInVariable',
-  InvalidVariable = 'Repository.InvalidVariable',
 
   MetaPropertyName = 'Repository.MetaPropertyName',
   MetaFunctionName = 'Repository.MetaFunctionName',

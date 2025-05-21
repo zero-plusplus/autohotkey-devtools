@@ -1,7 +1,7 @@
 import { RuleName, StyleName } from '../../../constants';
 import {
   capture, char, escapeOnigurumaTexts, ignoreCase, lookahead, lookbehind, many1,
-  manyRange, negativeLookbehind, ordalt, seq, wordBound,
+  manyRange, negativeLookbehind, optional, ordalt, seq, wordBound,
 } from '../../../oniguruma';
 import type { MatchRule, ScopeName } from '../../../types';
 import { nameRule } from '../../../utils';
@@ -14,10 +14,12 @@ export function createIdentifierRule(scopeName: ScopeName, placeholder: Placehol
   return {
     match: seq(
       capture(placeholder.identifierPattern),
+      optional(capture(placeholder.identifierPattern)),
       lookahead(wordBound()),
     ),
     captures: {
       1: nameRule(scopeName, placeholder.ruleName),
+      2: nameRule(scopeName, placeholder.ruleName, StyleName.Invalid),
     },
   };
 }
