@@ -383,12 +383,12 @@ export function createRepositories(scopeName: ScopeName, placeholder?: Placehold
     // #endregion literal
 
     // #region token, keyword
-    [Repository.Comma]: rule_v1.createOperatorRule(scopeName, {
+    [Repository.Comma]: rule_common.createOperatorRule(scopeName, {
       operatorRuleName: RuleName.Comma,
       operators: [ ',' ],
     }),
-    [Repository.Dot]: rule_v1.createDotOperatorRule(scopeName),
-    [Repository.Operator]: rule_v1.createOperatorRule(scopeName, {
+    [Repository.Dot]: rule_common.createDotOperatorRule(scopeName),
+    [Repository.Operator]: rule_common.createOperatorRule(scopeName, {
       operatorRuleName: RuleName.Operator,
       operators: constants_v2.expressionOperators,
     }),

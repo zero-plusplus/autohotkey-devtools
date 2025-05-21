@@ -10,7 +10,6 @@ export * from './expression/array';
 export * from './expression/call';
 export * from './expression/dereference';
 export * from './expression/new';
-export * from './expression/operator';
 export * from './expression/parenthesized';
 export * from './expression/variable';
 export * from './legacy/assignment';
