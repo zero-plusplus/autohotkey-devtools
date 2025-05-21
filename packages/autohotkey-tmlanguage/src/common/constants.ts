@@ -1,3 +1,4 @@
+// #region compiler directive
 // https://www.autohotkey.com/docs/v2/misc/Ahk2ExeDirectives.htm#Intro2
 export const compilerDirectiveEscapeSequences = [
   '``',
@@ -44,7 +45,9 @@ export const compilerDirectiveVariables = [
   'A_BasePath',
   'A_PriorLine',
 ] as const;
+// #endregion compiler directive
 
+// #region hotkey
 export const hotkeyFlags = [
   '*',
   '~',
@@ -225,6 +228,7 @@ export const sendSpecialModeList = [
   'Raw',
   'Text',
 ] as const;
+// #endregion hotkey
 
 // https://www.autohotkey.com/docs/v1/lib/Progress.htm#colors
 export const colorNames = [
@@ -245,7 +249,7 @@ export const colorNames = [
   'Teal',
   'Aqua',
 ] as const;
-// #endregion modifiers
+
 // #region operators
 // https://www.autohotkey.com/docs/v2/Variables.htm#Operators
 // https://www.autohotkey.com/docs/v1/Variables.htm#Operators
@@ -302,8 +306,8 @@ export const commonExpressionKeywords = [
   'OR', // e.g. `1 or 1`
 ] as const;
 // #endregion operators
-// #region regexp
 
+// #region regexp
 export const commonRegexpOptions = [ 'i', 'm', 's', 'x', 'A', 'D', 'J', 'U', 'X', 'S', 'C', '`a', '`n', '`r' ] as const;
 export const commonRegexpEscapeSequences = [ '\\.', '\\*', '\\?', '\\+', '\\[', '\\{', '\\|', '\\(', '\\)', '\\^', '\\$', '\\\\' ] as const;
 export const commonPcreUnicodeProperyCodes = [
@@ -477,4 +481,4 @@ export const commonPcreUnicodeProperyScripts = [
   'Warang_Citi',
   'Yi',
 ] as const;
-
+// #endregion regexp
