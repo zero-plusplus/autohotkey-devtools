@@ -40,6 +40,5 @@ export const statementStartAnchor: string = alt(
   seq(constants_common.lineStartAnchor, inlineSpaces0(), char('}')),
 );
 
-export const unescapedDoubleQuotePattern: string = text('`"');
-export const unescapedSingleQuotePattern: string = text('`\'');
-
+export const escapedDoubleQuotePattern: string = text('`"');
+export const escapedSingleQuotePattern: string = text('`\'');

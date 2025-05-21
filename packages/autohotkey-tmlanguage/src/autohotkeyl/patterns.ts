@@ -65,7 +65,7 @@ export const pairs: string = group(alt(
   seq(char('['), negChars0('\\r', '\\n', ']'), char(']')),
   seq(char('{'), negChars0('\\r', '\\n', '}'), char('}')),
 ));
-export const unescapedDoubleQuotePattern: string = text('""');
+export const escapedDoubleQuotePattern: string = text('""');
 
 // https://www.autohotkey.com/docs/v1/misc/RegEx-QuickRef.htm#Options
 export const regexpOptionsPattern: string = seq(

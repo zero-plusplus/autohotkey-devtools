@@ -328,18 +328,9 @@ export function createRepositories(scopeName: ScopeName): Repositories {
       includeRule(Repository.DoubleString),
       includeRule(Repository.ContinuationDoubleString),
     ),
-    [Repository.DoubleString]: rules_common.createStringRule(scopeName, {
-      quoteChar: '"',
-      unescapedQuotePattern: patterns_v1.unescapedDoubleQuotePattern,
-      stringElementName: RuleName.DoubleString,
-      escapeSequences: constants_v1.doubleQuoteEscapeSequences,
-    }),
-    [Repository.ContinuationStringOptions]: rules_common.createContinuationStringOptionsRule(scopeName),
-    [Repository.ContinuationDoubleString]: rules_common.createContinuationString(scopeName, {
+    ...rules_common.createDoubleStringRepositories(scopeName, {
       endAnchor: patterns_v1.lineEndAnchor,
-      quoteChar: '"',
-      unescapedQuotePattern: patterns_v1.unescapedDoubleQuotePattern,
-      stringElementName: RuleName.DoubleString,
+      escapedQuotePattern: patterns_v1.escapedDoubleQuotePattern,
       escapeSequences: constants_v1.doubleQuoteEscapeSequences,
     }),
     // #endregion string
@@ -392,7 +383,7 @@ export function createRepositories(scopeName: ScopeName): Repositories {
     // #region regexp
     [Repository.ShorthandRegexpMatch]: rule_v1.createShorthandRegExpMatchRule(scopeName, {
       quoteChar: '"',
-      unescapedQuotePattern: patterns_v1.unescapedDoubleQuotePattern,
+      escapedQuotePattern: patterns_v1.escapedDoubleQuotePattern,
       regexpOptionsPattern: patterns_v1.regexpOptionsPattern,
       contentRuleName: RuleName.RegExpString,
       contentRepository: Repository.DoubleStringAsRegExpContent,
@@ -400,7 +391,7 @@ export function createRepositories(scopeName: ScopeName): Repositories {
     [Repository.StringAsRegExp]: patternsRule(includeRule(Repository.DoubleStringAsRegexp)),
     [Repository.DoubleStringAsRegexp]: rule_v1.createStringAsRegExpRule(scopeName, {
       quoteChar: '"',
-      unescapedQuotePattern: patterns_v1.unescapedDoubleQuotePattern,
+      escapedQuotePattern: patterns_v1.escapedDoubleQuotePattern,
       regexpOptionsPattern: patterns_v1.regexpOptionsPattern,
       contentRuleName: RuleName.RegExpString,
       contentRepository: Repository.DoubleStringAsRegExpContent,

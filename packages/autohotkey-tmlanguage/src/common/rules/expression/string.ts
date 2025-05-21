@@ -4,12 +4,60 @@ import {
   inlineSpaces0, inlineSpaces1, lookahead, lookbehind, many0, negativeLookahead, negChar,
   negChars0, optseq, ordalt, seq, startAnchor, textalt, whitespace,
 } from '../../../oniguruma';
-import type { BeginEndRule, ElementName, MatchRule, Rule, ScopeName } from '../../../types';
+import type { BeginEndRule, ElementName, MatchRule, Repositories, Rule, ScopeName } from '../../../types';
 import { includeRule, name, nameRule, patternsRule } from '../../../utils';
+
+interface Placeholder {
+  endAnchor: string;
+  escapedQuotePattern: string;
+  escapeSequences: readonly string[];
+}
+export function createDoubleStringRepositories(scopeName: ScopeName, placeholder: Placeholder): Repositories {
+  const quoteChar = '"';
+  const stringElementName = RuleName.DoubleString;
+
+  return {
+    [Repository.DoubleString]: createStringRule(scopeName, {
+      quoteChar,
+      stringElementName,
+      escapedQuotePattern: placeholder.escapedQuotePattern,
+      escapeSequences: placeholder.escapeSequences,
+    }),
+    [Repository.ContinuationStringOptions]: createContinuationStringOptionsRule(scopeName),
+    [Repository.ContinuationDoubleString]: createContinuationString(scopeName, {
+      quoteChar,
+      stringElementName,
+      endAnchor: placeholder.endAnchor,
+      escapedQuotePattern: placeholder.escapedQuotePattern,
+      escapeSequences: placeholder.escapeSequences,
+    }),
+  };
+}
+export function createSingleStringRepositories(scopeName: ScopeName, placeholder: Placeholder): Repositories {
+  const quoteChar = `'`;
+  const stringElementName = RuleName.SingleString;
+
+  return {
+    [Repository.SingleString]: createStringRule(scopeName, {
+      quoteChar,
+      stringElementName,
+      escapedQuotePattern: placeholder.escapedQuotePattern,
+      escapeSequences: placeholder.escapeSequences,
+    }),
+    [Repository.ContinuationStringOptions]: createContinuationStringOptionsRule(scopeName),
+    [Repository.ContinuationSingleString]: createContinuationString(scopeName, {
+      quoteChar,
+      stringElementName,
+      endAnchor: placeholder.endAnchor,
+      escapedQuotePattern: placeholder.escapedQuotePattern,
+      escapeSequences: placeholder.escapeSequences,
+    }),
+  };
+}
 
 interface Placeholder_StringRule {
   quoteChar: string;
-  unescapedQuotePattern: string;
+  escapedQuotePattern: string;
   stringElementName: ElementName;
   escapeSequences: readonly string[];
 }
@@ -19,7 +67,7 @@ export function createStringRule(scopeName: ScopeName, placeholder: Placeholder_
     match: seq(
       capture(char(placeholder.quoteChar)),
       capture(groupMany0(alt(
-        placeholder.unescapedQuotePattern,
+        placeholder.escapedQuotePattern,
         negChar(placeholder.quoteChar),
       ))),
       capture(char(placeholder.quoteChar)),
@@ -51,7 +99,7 @@ export function createStringRule(scopeName: ScopeName, placeholder: Placeholder_
 interface Placeholder_ContinuationString {
   endAnchor: string;
   quoteChar: string;
-  unescapedQuotePattern: string;
+  escapedQuotePattern: string;
   stringElementName: ElementName;
   escapeSequences: readonly string[];
 }
@@ -71,7 +119,7 @@ export function createContinuationString(scopeName: ScopeName, placeholder: Plac
     begin: seq(
       capture(char(placeholder.quoteChar)),
       capture(many0(alt(
-        placeholder.unescapedQuotePattern,
+        placeholder.escapedQuotePattern,
         seq(inlineSpaces1(), negativeLookahead(char(';'))),
         negChar(placeholder.quoteChar, '\\s'),
       ))),

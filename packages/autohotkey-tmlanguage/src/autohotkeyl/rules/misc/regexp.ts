@@ -9,7 +9,7 @@ import { includeRule, name, nameRule, patternsRule } from '../../../utils';
 
 interface Placeholder {
   quoteChar: string;
-  unescapedQuotePattern: string;
+  escapedQuotePattern: string;
   regexpOptionsPattern: string;
   contentRuleName: RuleName;
   contentRepository: Repository;
@@ -33,7 +33,7 @@ export function createShorthandRegExpMatchRule(scopeName: ScopeName, placeholder
         ignoreCase(text('(*UCP)')),
       ))),
       capture(reluctant(many0(alt(
-        placeholder.unescapedQuotePattern,
+        placeholder.escapedQuotePattern,
         seq(inlineSpaces1(), negativeLookahead(char(';'))),
         negChar(placeholder.quoteChar, '\\s'),
       )))),
@@ -56,7 +56,7 @@ export function createStringAsRegExpRule(scopeName: ScopeName, placeholder: Plac
       inlineSpaces0(),
       capture(placeholder.regexpOptionsPattern),
       capture(reluctant(many1(alt(
-        placeholder.unescapedQuotePattern,
+        placeholder.escapedQuotePattern,
         seq(inlineSpaces1(), negativeLookahead(char(';'))),
         negChar(placeholder.quoteChar, '\\s'),
       )))),
