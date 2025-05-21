@@ -377,15 +377,15 @@ export function createRepositories(scopeName: ScopeName, placeholder?: Placehold
       stringElementName: RuleName.SingleString,
       escapeSequences: constants_v2.singleQuoteEscapeSequences,
     }),
-    [Repository.ContinuationStringOptions]: rule_v1.createContinuationStringOptionsRule(scopeName),
-    [Repository.ContinuationDoubleString]: rule_v1.createContinuationString(scopeName, {
+    [Repository.ContinuationStringOptions]: rule_common.createContinuationStringOptionsRule(scopeName),
+    [Repository.ContinuationDoubleString]: rule_common.createContinuationString(scopeName, {
       endAnchor: patterns_v1.lineEndAnchor,
       quoteChar: '"',
       unescapedQuotePattern: patterns_v2.unescapedDoubleQuotePattern,
       stringElementName: RuleName.DoubleString,
       escapeSequences: constants_v2.doubleQuoteEscapeSequences,
     }),
-    [Repository.ContinuationSingleString]: rule_v1.createContinuationString(scopeName, {
+    [Repository.ContinuationSingleString]: rule_common.createContinuationString(scopeName, {
       endAnchor: patterns_v1.lineEndAnchor,
       quoteChar: `'`,
       unescapedQuotePattern: patterns_v2.unescapedSingleQuotePattern,
