@@ -306,10 +306,10 @@ export function createRepositories(scopeName: ScopeName): Repositories {
     ),
 
     // #region object
-    [Repository.ObjectInBrackets]: rule_v1.createObjectRule(scopeName, {
+    [Repository.ObjectInBrackets]: rules_common.createObjectRule(scopeName, {
       startAnchor: patterns_common.lineStartAnchor,
     }),
-    [Repository.Object]: rule_v1.createObjectRule(scopeName, {
+    [Repository.Object]: rules_common.createObjectRule(scopeName, {
       startAnchor: patterns_v1.expressionContinuationStartAnchor,
     }),
     [Repository.ObjectContent]: patternsRule(
@@ -319,7 +319,7 @@ export function createRepositories(scopeName: ScopeName): Repositories {
       includeRule(Repository.Comma),
       includeRule(Repository.ExpressionInBrackets),
     ),
-    [Repository.ObjectKey]: rule_v1.createObjectKeyRule(scopeName, {
+    [Repository.ObjectKey]: rules_common.createObjectKeyRule(scopeName, {
       keyName: patterns_v1.keyName,
     }),
     [Repository.Array]: rule_v1.createArrayRule(scopeName),
