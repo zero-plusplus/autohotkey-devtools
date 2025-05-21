@@ -9,9 +9,10 @@ export const enum Repository {
 
   // #region trivas
   Comment = 'Repository.Comment',
-  MultiLineComments = 'Repository.MultiLineComments',
-  SingleLineComments = 'Repository.SingleLineComments',
-  InLineComments = 'Repository.InLineComments',
+  AllMultiLineComments = 'Repository.AllMultiLineComments',
+  AllSingleLineComments = 'Repository.AllSingleLineComments',
+  AllInLineComments = 'Repository.AllInLineComments',
+
   MultiLineComment = 'Repository.MultiLineComment',
   SingleLineComment = 'Repository.SingleLineComment',
   CompilerDirectiveComment = 'Repository.CompilerDirectiveComment',
@@ -25,6 +26,16 @@ export const enum Repository {
   InlineTextInDocument = 'Repository.InlineTextInDocument',
   TypeInDocument = 'Repository.TypeInDocument',
   // #endregion document
+
+  // #region compiler directive
+  BuiltInVariableInCompilerDirective = 'Repository.BuiltInVariableInCompilerDirective',
+  UnquotedStringInCompilerDirective = 'Repository.UnquotedStringInCompilerDirective',
+  ExpressionInCompilerDirective = 'Repository.ExpressionInCompilerDirective',
+  DoubleStringInCompilerDirective = 'Repository.DoubleStringInCompilerDirective',
+  DoubleStringContentInCompilerDirective = 'Repository.DoubleStringContentInCompilerDirective',
+  DereferenceInCompilerDirective = 'Repository.DereferenceInCompilerDirective',
+  UnquotedStringEscapeSequenceInCompilerDirective = 'Repository.UnquotedStringEscapeSequenceInCompilerDirective',
+  // #endregion compiler directive
   // #endregion trivas
 
   // #region statements
@@ -154,16 +165,6 @@ export const enum Repository {
   // #region misc
   UnquotedStringEscapeSequence = 'Repository.UnquotedStringEscapeSequence',
   FunctionExpressionBlock = 'Repository.FunctionExpressionBlock',
-
-  // #region compiler directive
-  BuiltInVariableInCompilerDirective = 'Repository.BuiltInVariableInCompilerDirective',
-  UnquotedStringInCompilerDirective = 'Repository.UnquotedStringInCompilerDirective',
-  ExpressionInCompilerDirective = 'Repository.ExpressionInCompilerDirective',
-  DoubleStringInCompilerDirective = 'Repository.DoubleStringInCompilerDirective',
-  DoubleStringContentInCompilerDirective = 'Repository.DoubleStringContentInCompilerDirective',
-  DereferenceInCompilerDirective = 'Repository.DereferenceInCompilerDirective',
-  UnquotedStringEscapeSequenceInCompilerDirective = 'Repository.UnquotedStringEscapeSequenceInCompilerDirective',
-  // #endregion compiler directive
   // #endregion misc
 
   // #region v1 syntax

@@ -37,11 +37,11 @@ export function createRepositories(scopeName: ScopeName): Repositories {
 
     // #region trivia
     [Repository.Comment]: patternsRule(
-      includeRule(Repository.MultiLineComments),
-      includeRule(Repository.InLineComments),
-      includeRule(Repository.SingleLineComments),
+      includeRule(Repository.AllMultiLineComments),
+      includeRule(Repository.AllInLineComments),
+      includeRule(Repository.AllSingleLineComments),
     ),
-    [Repository.MultiLineComments]: patternsRule(
+    [Repository.AllMultiLineComments]: patternsRule(
       includeRule(Repository.MultiLineDocumentComment),
       includeRule(Repository.MultiLineComment),
     ),
@@ -49,7 +49,7 @@ export function createRepositories(scopeName: ScopeName): Repositories {
     [Repository.MultiLineDocumentComment]: rule_v1.createDocumentCommentRule(scopeName, {
       leftHandPattern: patterns_v1.looseLeftHandPattern,
     }),
-    [Repository.SingleLineComments]: patternsRule(
+    [Repository.AllSingleLineComments]: patternsRule(
       includeRule(Repository.CompilerDirectiveComment),
       includeRule(Repository.SingleLineDocumentComment),
       includeRule(Repository.SingleLineComment),
@@ -58,7 +58,7 @@ export function createRepositories(scopeName: ScopeName): Repositories {
     [Repository.SingleLineDocumentComment]: rule_v1.createSinglelineDocumentCommentRule(scopeName, {
       leftHandPattern: patterns_v1.looseLeftHandPattern,
     }),
-    [Repository.InLineComments]: patternsRule(
+    [Repository.AllInLineComments]: patternsRule(
       includeRule(Repository.InlineDocumentComment),
       includeRule(Repository.InLineComment),
     ),
@@ -405,27 +405,27 @@ export function createRepositories(scopeName: ScopeName): Repositories {
       includeRule(Repository.PercentExpression),
       includeRule(Repository.Dereference),
       includeRule(Repository.CommandArgumentText),
-      includeRule(Repository.InLineComments),
+      includeRule(Repository.AllInLineComments),
     ),
     [Repository.CommandArgumentWithNumber]: patternsRule(
       includeRule(Repository.PercentExpression),
       includeRule(Repository.Dereference),
       includeRule(Repository.CommandArgumentNumber),
       includeRule(Repository.CommandArgumentText),
-      includeRule(Repository.InLineComments),
+      includeRule(Repository.AllInLineComments),
     ),
     [Repository.CommandLastArgument]: patternsRule(
       includeRule(Repository.PercentExpressionInLastArgument),
       includeRule(Repository.Dereference),
       includeRule(Repository.CommandLastArgumentText),
-      includeRule(Repository.InLineComments),
+      includeRule(Repository.AllInLineComments),
     ),
     [Repository.CommandLastArgumentWithNumber]: patternsRule(
       includeRule(Repository.PercentExpressionInLastArgument),
       includeRule(Repository.Dereference),
       includeRule(Repository.CommandArgumentNumber),
       includeRule(Repository.CommandLastArgumentText),
-      includeRule(Repository.InLineComments),
+      includeRule(Repository.AllInLineComments),
     ),
     [Repository.CommandRestArguments]: rule_v1.createCommandRestArgumentsRule(scopeName),
     [Repository.CommandInvalidArgument]: rule_v1.createInvalidArgumentRule(scopeName),

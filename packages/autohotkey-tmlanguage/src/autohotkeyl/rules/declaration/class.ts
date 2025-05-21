@@ -22,7 +22,7 @@ export function createClassDeclarationRule(scopeName: ScopeName, placeholder: Pl
     )),
     end: lookbehind('}'),
     patterns: [
-      includeRule(Repository.InLineComments),
+      includeRule(Repository.AllInLineComments),
 
       // class head
       {

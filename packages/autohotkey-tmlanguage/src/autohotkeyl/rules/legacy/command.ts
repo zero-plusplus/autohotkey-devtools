@@ -890,7 +890,7 @@ function parameterToPatternsRule(scopeName: ScopeName, defenition: CommandDefini
         includeRule(isLastParameter ? Repository.PercentExpressionInLastArgument : Repository.PercentExpression),
 
         includeRule(Repository.Comma),
-        includeRule(Repository.InLineComments),
+        includeRule(Repository.AllInLineComments),
         includeRule(Repository.Expression),
       );
     }
