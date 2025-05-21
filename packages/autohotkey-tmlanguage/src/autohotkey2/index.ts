@@ -118,7 +118,7 @@ export function createRepositories(scopeName: ScopeName, placeholder?: Placehold
     }),
     [Repository.JumpStatement]: rule_v1.createJumpStatement(scopeName, {
       startAnchor: patterns_v1.statementStartAnchor,
-      assignmentOperators: constants_v1.assignmentOperators,
+      assignmentOperators: constants_common.assignmentOperators,
       endAnchor: patterns_v1.lineEndAnchor,
       identifierPattern: ordalt('Exit', 'ExitApp', 'Return'),
     }),
@@ -171,7 +171,7 @@ export function createRepositories(scopeName: ScopeName, placeholder?: Placehold
     }),
     [Repository.ThrowStatement]: rule_v1.createThrowStatementRule(scopeName, {
       startAnchor: patterns_v1.statementStartAnchor,
-      assignmentOperators: constants_v2.assignmentOperators,
+      assignmentOperators: constants_common.assignmentOperators,
     }),
     [Repository.CallStatement]: patternsRule(
       includeRule(Repository.BuiltInCallStatement),
@@ -219,7 +219,7 @@ export function createRepositories(scopeName: ScopeName, placeholder?: Placehold
     [Repository.AssignmentDeclaration]: rule_v1.createAssignmentDeclarationRule(scopeName, {
       startAnchor: patterns_v1.statementStartAnchor,
       namePattern: patterns_v2.looseLeftHandPattern,
-      operators: constants_v2.assignmentOperators,
+      operators: constants_common.assignmentOperators,
     }),
     [Repository.Block]: rule_v1.createBlockRule(scopeName, {
       statementsInBlock: [ includeRule(Repository.Self) ],

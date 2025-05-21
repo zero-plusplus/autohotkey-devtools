@@ -253,7 +253,7 @@ export const colorNames = [
 // #region operators
 // https://www.autohotkey.com/docs/v2/Variables.htm#Operators
 // https://www.autohotkey.com/docs/v1/Variables.htm#Operators
-export const commonAssignmentOperators = [
+export const assignmentOperators = [
   ':=', // e.g. `a := 1`
   '+=', // e.g. `a += 1`
   '-=', // e.g. `a -= 1`

@@ -9,10 +9,14 @@ export const singleQuoteEscapeSequences: [ ...typeof unquoteEscapeSequences, '`\
 // #endregion Escape Sequences
 
 // #region [Operators](https://www.autohotkey.com/docs/v2/Variables.htm#Operators)
-export const assignmentOperators: readonly [ ...typeof constants_common.commonAssignmentOperators ] = [ ...constants_common.commonAssignmentOperators ] as const;
-export const expressionOperators: readonly [ ...typeof constants_common.expressionOperatorsWithoutAssignment, ... typeof constants_common.commonAssignmentOperators, '=>', '??' ] = [
+export const expressionOperators: readonly [
+  ...typeof constants_common.expressionOperatorsWithoutAssignment,
+  ... typeof constants_common.assignmentOperators,
+  '=>',
+  '??',
+] = [
   ...constants_common.expressionOperatorsWithoutAssignment,
-  ...assignmentOperators,
+  ...constants_common.assignmentOperators,
   '=>', // `(args*) => expression`
   '??', // `a ?? b`
 ] as const;

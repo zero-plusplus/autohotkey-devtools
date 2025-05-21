@@ -1,5 +1,4 @@
 import * as v2 from '../autohotkey2';
-import * as constants_v2 from '../autohotkey2/constants';
 import * as patterns_v2 from '../autohotkey2/patterns';
 import * as patterns_v1 from '../autohotkeyl/patterns';
 import * as rules_v1 from '../autohotkeyl/rules';
@@ -60,7 +59,7 @@ export function createTmLanguage(): TmLanguage {
         modifiers: constants_common.accessModifiers,
         namePattern: patterns_v2.looseLeftHandPattern,
         nameRule: patternsRule(includeRule(Repository.Variable)),
-        operators: constants_v2.assignmentOperators,
+        operators: constants_common.assignmentOperators,
       }),
       // #endregion declaration
 

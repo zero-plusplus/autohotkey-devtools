@@ -1,5 +1,4 @@
 import { dedent } from '@zero-plusplus/utilities/src';
-import * as constants_v2 from '../../../../src/autohotkey2/constants';
 import * as constants_common from '../../../../src/common/constants';
 import { RuleDescriptor, RuleName } from '../../../../src/constants';
 import type { ScopeName } from '../../../../src/types';
@@ -11,7 +10,7 @@ export function createAssignmentDeclarationExpectedData(scopeName: ScopeName): E
   return [
     ...common.createAssignmentDeclarationExpectedData(scopeName, {
       modifiers: constants_common.accessModifiers,
-      operators: constants_v2.assignmentOperators,
+      operators: constants_common.assignmentOperators,
     }),
 
     // lefthand
