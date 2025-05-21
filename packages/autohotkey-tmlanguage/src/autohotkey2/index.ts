@@ -54,7 +54,7 @@ export function createRepositories(scopeName: ScopeName, placeholder?: Placehold
       includeRule(Repository.MultiLineDocumentComment),
       includeRule(Repository.MultiLineComment),
     ),
-    [Repository.MultiLineComment]: rule_v1.createMultiLineCommentRule(scopeName),
+    [Repository.MultiLineComment]: rule_common.createMultiLineCommentRule(scopeName),
     [Repository.MultiLineDocumentComment]: rule_v1.createDocumentCommentRule(scopeName, {
       leftHandPattern: patterns_v2.looseLeftHandPattern,
     }),
