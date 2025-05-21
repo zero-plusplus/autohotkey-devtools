@@ -879,10 +879,10 @@ function parameterToPatternsRule(scopeName: ScopeName, defenition: CommandDefini
     case HighlightType.Expression:
     {
       return patternsRule(
+        includeRule(Repository.Comma),
         includeRule(Repository.InLineComments),
         includeRule(Repository.PercentExpressions),
-        includeRule(Repository.Expressions),
-
+        includeRule(Repository.Expression),
       );
     }
     case HighlightType.Namespace:

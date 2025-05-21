@@ -270,10 +270,6 @@ export function createRepositories(scopeName: ScopeName, placeholder?: Placehold
       includeRule(Repository.Dot),
       includeRule(Repository.Operator),
     ),
-    [Repository.Expressions]: patternsRule(
-      includeRule(Repository.Comma),
-      includeRule(Repository.Expression),
-    ),
     [Repository.ParenthesizedExpression]: rule_v2.createParenthesizedExpressionRule(scopeName),
 
     // #region identifier

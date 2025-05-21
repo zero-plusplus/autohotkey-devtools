@@ -21,7 +21,10 @@ export function createAssignmentDeclarationRule(scopeName: ScopeName, placeholde
     ),
     captures: {
       1: patternsRule(includeRule(Repository.Modifier)),
-      2: patternsRule(includeRule(Repository.Expressions)),
+      2: patternsRule(
+        includeRule(Repository.Comma),
+        includeRule(Repository.Expression),
+      ),
       3: nameRule(scopeName, RuleName.Operator),
     },
   };

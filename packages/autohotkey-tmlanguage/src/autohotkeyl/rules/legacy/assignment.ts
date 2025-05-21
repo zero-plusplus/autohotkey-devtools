@@ -36,7 +36,10 @@ export function createLegacyAssignmentRule(scopeName: ScopeName, placeholder: Pl
     captures: {
       1: {
         name: name(scopeName, Repository.LegacyAssignmentDeclaration),
-        patterns: [ includeRule(Repository.Expressions) ],
+        patterns: [
+          includeRule(Repository.Comma),
+          includeRule(Repository.Expression), 
+        ],
       },
       2: nameRule(scopeName, Repository.LegacyAssignmentDeclaration, RuleName.Operator),
       3: {

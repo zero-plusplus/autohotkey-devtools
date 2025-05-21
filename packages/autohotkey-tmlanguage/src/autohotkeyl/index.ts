@@ -174,7 +174,10 @@ export function createRepositories(scopeName: ScopeName): Repositories {
       assignmentOperators: constants_common.assignmentOperators,
     }),
 
-    [Repository.ExpressionStatement]: patternsRule(includeRule(Repository.Expressions)),
+    [Repository.ExpressionStatement]: patternsRule(
+      includeRule(Repository.Comma),
+      includeRule(Repository.Expression),
+    ),
     // #endregion statement
 
     // #region declaration
@@ -222,10 +225,6 @@ export function createRepositories(scopeName: ScopeName): Repositories {
 
     // #region expression
     [Repository.Expression]: includeRule(Repository.ExpressionInControlFlow),
-    [Repository.Expressions]: patternsRule(
-      includeRule(Repository.Comma),
-      includeRule(Repository.Expression),
-    ),
     [Repository.ExpressionInBrackets]: patternsRule(
       includeRule(Repository.ObjectInBrackets),
       includeRule(Repository.Expression),

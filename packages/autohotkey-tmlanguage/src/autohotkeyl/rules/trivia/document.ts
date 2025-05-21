@@ -261,7 +261,10 @@ function createTagAnnotationRule(scopeName: ScopeName, placeholder: Placeholder_
         '@default',
         '@defaultvalue',
       ],
-      rules: [ includeRule(Repository.Expressions) ],
+      rules: [
+        includeRule(Repository.Comma),
+        includeRule(Repository.Expression),
+      ],
     }),
     createAttributeAnnotationTagRule(scopeName, {
       ...placeholder,

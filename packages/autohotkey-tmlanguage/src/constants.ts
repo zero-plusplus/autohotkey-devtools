@@ -71,7 +71,6 @@ export const enum Repository {
   Expression = 'Repository.Expression',
   ExpressionInBrackets = 'Repository.ExpressionInBrackets',
   ExpressionInControlFlow = 'Repository.ExpressionInControlFlow',
-  Expressions = 'Repository.Expressions',
   ParenthesizedExpression = 'Repository.ParenthesizedExpression',
   ShorthandRegexpMatch = 'Repository.ShorthandRegexpMatch',
 
