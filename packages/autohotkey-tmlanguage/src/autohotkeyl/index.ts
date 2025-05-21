@@ -345,13 +345,13 @@ export function createRepositories(scopeName: ScopeName): Repositories {
       includeRule(Repository.InvalidScientificNotation),
       includeRule(Repository.ScientificNotation),
     ),
-    [Repository.Integer]: rule_v1.createIntegerRule(scopeName),
-    [Repository.Float]: rule_v1.createFloatRule(scopeName),
-    [Repository.InvalidFloat]: rule_v1.createInvalidFloatRule(scopeName),
-    [Repository.Hex]: rule_v1.createHexRule(scopeName),
-    [Repository.InvalidHex]: rule_v1.createInvalidHexRule(scopeName),
-    [Repository.ScientificNotation]: rule_v1.createScientificNotationRule(scopeName),
-    [Repository.InvalidScientificNotation]: rule_v1.createInvalidScientificNotationRule(scopeName),
+    [Repository.Integer]: rules_common.createIntegerRule(scopeName),
+    [Repository.Float]: rules_common.createFloatRule(scopeName),
+    [Repository.InvalidFloat]: rules_common.createInvalidFloatRule(scopeName),
+    [Repository.Hex]: rules_common.createHexRule(scopeName),
+    [Repository.InvalidHex]: rules_common.createInvalidHexRule(scopeName),
+    [Repository.ScientificNotation]: rules_common.createScientificNotationRule(scopeName),
+    [Repository.InvalidScientificNotation]: rules_common.createInvalidScientificNotationRule(scopeName),
     // #endregion number
     // #endregion literal
 
