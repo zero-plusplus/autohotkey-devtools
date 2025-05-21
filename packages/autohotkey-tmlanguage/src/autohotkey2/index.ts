@@ -513,7 +513,7 @@ export function createRepositories(scopeName: ScopeName, placeholder?: Placehold
     // #endregion misc
 
     // #region compiler directive
-    [Repository.CompilerDirectiveComment]: rule_v1.createDirectiveCommentPatternsRule(scopeName, {
+    [Repository.CompilerDirectiveComment]: rule_common.createDirectiveCommentPatternsRule(scopeName, {
       startAnchor: patterns_common.lineStartAnchor,
       endAnchor: patterns_v1.lineEndAnchor,
       definitions: definition_common.compilerDirectives,
