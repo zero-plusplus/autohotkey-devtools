@@ -1,11 +1,31 @@
-import { RuleName, StyleName } from '../../../constants';
+import { Repository, RuleName, StyleName } from '../../../constants';
 import {
   alt, capture, char, group, hexPrefix, hexValue, ignoreCase, integer, lookahead, lookbehind, negativeLookahead,
   number, numbers0, numbers1, opt, seq, wordBound,
 } from '../../../oniguruma';
-import type { MatchRule, PatternsRule, ScopeName } from '../../../types';
-import { name, nameRule, patternsRule } from '../../../utils';
+import type { MatchRule, PatternsRule, Repositories, ScopeName } from '../../../types';
+import { includeRule, name, nameRule, patternsRule } from '../../../utils';
 
+export function createNumberRepositories(scopeName: ScopeName): Repositories {
+  return {
+    [Repository.Number]: patternsRule(
+      includeRule(Repository.Integer),
+      includeRule(Repository.InvalidFloat),
+      includeRule(Repository.Float),
+      includeRule(Repository.InvalidHex),
+      includeRule(Repository.Hex),
+      includeRule(Repository.InvalidScientificNotation),
+      includeRule(Repository.ScientificNotation),
+    ),
+    [Repository.Integer]: createIntegerRule(scopeName),
+    [Repository.Float]: createFloatRule(scopeName),
+    [Repository.InvalidFloat]: createInvalidFloatRule(scopeName),
+    [Repository.Hex]: createHexRule(scopeName),
+    [Repository.InvalidHex]: createInvalidHexRule(scopeName),
+    [Repository.ScientificNotation]: createScientificNotationRule(scopeName),
+    [Repository.InvalidScientificNotation]: createInvalidScientificNotationRule(scopeName),
+  };
+}
 export function createIntegerRule(scopeName: ScopeName): MatchRule {
   return {
     match: seq(
