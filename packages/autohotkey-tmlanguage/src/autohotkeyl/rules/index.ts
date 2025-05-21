@@ -19,7 +19,6 @@ export * from './legacy/escape';
 export * from './legacy/if';
 export * from './legacy/percentExpression';
 export * from './legacy/unquotedString';
-export * from './misc/keyword';
 export * from './misc/regexp';
 export * from './statement/for';
 export * from './statement/if';

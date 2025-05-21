@@ -312,7 +312,7 @@ export function createRepositories(scopeName: ScopeName, placeholder?: Placehold
       variableRuleName: RuleName.ClassName,
       builtinVariables: placeholder?.builtInClassNames ?? constants_v2.builtInClassNames,
     }),
-    [Repository.MetaFunctionName]: rule_v1.createKeywordRule(scopeName, {
+    [Repository.MetaFunctionName]: rule_common.createKeywordRule(scopeName, {
       keywords: [ '__NEW', '__DELETE', '__ENUM', '__GET', '__SET', '__CALL' ],
       keywordRuleName: RuleName.MetaFunctionName,
     }),
@@ -321,7 +321,7 @@ export function createRepositories(scopeName: ScopeName, placeholder?: Placehold
       nameHeadChar: patterns_v2.nameStart,
       nameBodyChar: patterns_v2.nameBody,
     }),
-    [Repository.MetaPropertyName]: rule_v1.createKeywordRule(scopeName, {
+    [Repository.MetaPropertyName]: rule_common.createKeywordRule(scopeName, {
       keywords: [ '__ITEM' ],
       keywordRuleName: RuleName.MetaFunctionName,
     }),
@@ -386,7 +386,7 @@ export function createRepositories(scopeName: ScopeName, placeholder?: Placehold
     ...rule_common.createOperatorRepositories(scopeName, {
       expressionOperators: constants_v2.expressionOperators,
     }),
-    [Repository.KeywordInExpression]: rule_v1.createKeywordRule(scopeName, {
+    [Repository.KeywordInExpression]: rule_common.createKeywordRule(scopeName, {
       keywordRuleName: RuleName.KeywordInExpression,
       keywords: [
         ...constants_v2.expressionKeywords,

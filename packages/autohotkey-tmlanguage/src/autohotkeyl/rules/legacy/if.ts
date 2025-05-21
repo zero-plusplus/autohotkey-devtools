@@ -1,3 +1,4 @@
+import * as rules_common from '../../../common/rules/misc/keyword';
 import { Repository, RuleName, StyleName } from '../../../constants';
 import {
   capture, char, charRange, ignoreCase, inlineSpaces0, inlineSpaces1, keyword, lookahead, lookbehind,
@@ -5,7 +6,6 @@ import {
 } from '../../../oniguruma';
 import type { BeginEndRule, MatchRule, ScopeName } from '../../../types';
 import { includeRule, name, nameRule } from '../../../utils';
-import { createKeywordRule } from '../misc/keyword';
 
 interface Placeholder {
   startAnchor: string;
@@ -44,7 +44,7 @@ export function createLegacyIfStatementRule(scopeName: ScopeName, placeholder: P
       includeRule(Repository.IfStatement),
 
       // https://www.autohotkey.com/docs/v1/lib/IfBetween.htm
-      createKeywordRule(scopeName, {
+      rules_common.createKeywordRule(scopeName, {
         keywordRuleName: RuleName.KeywordInExpression,
         keywords: [ 'between', 'not' ],
       }),
@@ -58,11 +58,11 @@ export function createLegacyIfStatementRule(scopeName: ScopeName, placeholder: P
         end: lookahead(placeholder.endAnchor),
         patterns: [
           invalidOnetTrueBraceStyleRule,
-          createKeywordRule(scopeName, {
+          rules_common.createKeywordRule(scopeName, {
             keywordRuleName: RuleName.KeywordInExpression,
             keywords: [ 'not' ],
           }),
-          createKeywordRule(scopeName, {
+          rules_common.createKeywordRule(scopeName, {
             keywordRuleName: RuleName.KeywordLikeBuiltInVariable,
             keywords: [
               'integer',

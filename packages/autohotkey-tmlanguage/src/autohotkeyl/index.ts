@@ -280,7 +280,7 @@ export function createRepositories(scopeName: ScopeName): Repositories {
       variableRuleName: RuleName.BuiltInVariable,
       builtinVariables: constants_v1.builtinVaribles,
     }),
-    [Repository.MetaFunctionName]: rule_v1.createKeywordRule(scopeName, {
+    [Repository.MetaFunctionName]: rules_common.createKeywordRule(scopeName, {
       keywordRuleName: RuleName.MetaFunctionName,
       keywords: [ '__NEW', '__DELETE', '__GET', '__SET', '__CALL' ],
     }),
@@ -344,7 +344,7 @@ export function createRepositories(scopeName: ScopeName): Repositories {
     ...rules_common.createOperatorRepositories(scopeName, {
       expressionOperators: constants_v1.expressionOperators,
     }),
-    [Repository.KeywordInExpression]: rule_v1.createKeywordRule(scopeName, {
+    [Repository.KeywordInExpression]: rules_common.createKeywordRule(scopeName, {
       keywordRuleName: RuleName.KeywordInExpression,
       keywords: [
         'new',

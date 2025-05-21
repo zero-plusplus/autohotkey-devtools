@@ -3,4 +3,5 @@ export * from './expression/object';
 export * from './expression/operator';
 export * from './expression/string';
 export * from './misc/compilerDirectiveRegExp';
+export * from './misc/keyword';
 export * from './statement/call';
