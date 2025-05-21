@@ -269,7 +269,7 @@ export const commonAssignmentOperators = [
   '>>>=', // e.g. `a >>>= 1`
 ] as const;
 
-export const commonExpressionOperatorsWithoutAssignment = [
+export const expressionOperatorsWithoutAssignment = [
   '+', // e.g. `+1`, `1 + 1`
   '++', // e.g. `++1`, `1++`
   '-', // e.g. `-1`, `1 - 1`
@@ -299,6 +299,7 @@ export const commonExpressionOperatorsWithoutAssignment = [
   ':', // e.g. `a ? b : c`
   '~=', // e.g. value ~= "i)abc"
 ] as const;
+
 export const commonExpressionKeywords = [
   'NOT', // e.g. `not expression`
   'AND', // e.g. `1 and 1`

@@ -12,8 +12,8 @@ export const pcreUnicodePropertyScripts: [ ...typeof constants_common.commonPcre
 
 // #region [Operators](https://www.autohotkey.com/docs/v1/Variables.htm#Operators)
 export const assignmentOperators: [ ...typeof constants_common.commonAssignmentOperators ] = [ ...constants_common.commonAssignmentOperators ] as const;
-export const expressionOperators: [ ...typeof constants_common.commonExpressionOperatorsWithoutAssignment, ...typeof assignmentOperators, '<>' ] = [
-  ...constants_common.commonExpressionOperatorsWithoutAssignment,
+export const expressionOperators: [ ...typeof constants_common.expressionOperatorsWithoutAssignment, ...typeof assignmentOperators, '<>' ] = [
+  ...constants_common.expressionOperatorsWithoutAssignment,
   ...assignmentOperators,
   '<>', // e.g. `1 <> 1` Deprecated
 ] as const;
