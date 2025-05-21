@@ -417,7 +417,7 @@ export function createRepositories(scopeName: ScopeName): Repositories {
     [Repository.DoubleStringAsRegExpCommonContent]: rule_v1.createRegExpCommonContentRule(scopeName, {
       regexpEscapeSequences: constants_common.regexpEscapeSequences,
       stringEscapeSequences: constants_v1.doubleQuoteEscapeSequences,
-      pcreUnicodePropertyCodes: constants_v1.pcreUnicodePropertyCodes,
+      pcreUnicodePropertyCodes: constants_common.pcreUnicodePropertyCodes,
       pcreUnicodePropertyScripts: constants_v1.pcreUnicodePropertyScripts,
     }),
     // #endregion regexp

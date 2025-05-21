@@ -484,7 +484,7 @@ export function createRepositories(scopeName: ScopeName, placeholder?: Placehold
     [Repository.DoubleStringAsRegExpCommonContent]: rule_v1.createRegExpCommonContentRule(scopeName, {
       regexpEscapeSequences: constants_common.regexpEscapeSequences,
       stringEscapeSequences: constants_v2.doubleQuoteEscapeSequences,
-      pcreUnicodePropertyCodes: constants_v1.pcreUnicodePropertyCodes,
+      pcreUnicodePropertyCodes: constants_common.pcreUnicodePropertyCodes,
       pcreUnicodePropertyScripts: constants_v1.pcreUnicodePropertyScripts,
     }),
     [Repository.SingleStringAsRegexp]: rule_v1.createStringAsRegExpRule(scopeName, {
@@ -502,7 +502,7 @@ export function createRepositories(scopeName: ScopeName, placeholder?: Placehold
     [Repository.SingleStringAsRegExpCommonContent]: rule_v1.createRegExpCommonContentRule(scopeName, {
       regexpEscapeSequences: constants_common.regexpEscapeSequences,
       stringEscapeSequences: constants_v2.singleQuoteEscapeSequences,
-      pcreUnicodePropertyCodes: constants_v1.pcreUnicodePropertyCodes,
+      pcreUnicodePropertyCodes: constants_common.pcreUnicodePropertyCodes,
       pcreUnicodePropertyScripts: constants_v1.pcreUnicodePropertyScripts,
     }),
     // #endregion regexp

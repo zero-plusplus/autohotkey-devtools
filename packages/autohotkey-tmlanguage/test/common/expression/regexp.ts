@@ -197,7 +197,7 @@ export function createRegExpExpectedData(scopeName: ScopeName, placeholder: Plac
         { text: q, scopes: name(scopeName, RuleName.RegExpString, RuleDescriptor.End) },
       ],
     ],
-    ...[ ...constants_v1.pcreUnicodePropertyCodes, ...constants_v1.pcreUnicodePropertyScripts ].map((code): ExpectedTestData => {
+    ...[ ...constants_common.pcreUnicodePropertyCodes, ...constants_v1.pcreUnicodePropertyScripts ].map((code): ExpectedTestData => {
       return [
         dedent`
           var ~= ${q}\\p{${code}}${q}
@@ -212,7 +212,7 @@ export function createRegExpExpectedData(scopeName: ScopeName, placeholder: Plac
         ],
       ];
     }),
-    ...constants_v1.pcreUnicodePropertyCodes.filter((code) => code.length === 1).map((letterCode): ExpectedTestData => {
+    ...constants_common.pcreUnicodePropertyCodes.filter((code) => code.length === 1).map((letterCode): ExpectedTestData => {
       return [
         dedent`
           var ~= ${q}\\p${letterCode}${q}
