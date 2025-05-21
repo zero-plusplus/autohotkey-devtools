@@ -328,7 +328,7 @@ export function createRepositories(scopeName: ScopeName): Repositories {
       includeRule(Repository.DoubleString),
       includeRule(Repository.ContinuationDoubleString),
     ),
-    [Repository.DoubleString]: rule_v1.createStringRule(scopeName, {
+    [Repository.DoubleString]: rules_common.createStringRule(scopeName, {
       quoteChar: '"',
       unescapedQuotePattern: patterns_v1.unescapedDoubleQuotePattern,
       stringElementName: RuleName.DoubleString,

@@ -365,13 +365,13 @@ export function createRepositories(scopeName: ScopeName, placeholder?: Placehold
       includeRule(Repository.ContinuationDoubleString),
       includeRule(Repository.ContinuationSingleString),
     ),
-    [Repository.DoubleString]: rule_v1.createStringRule(scopeName, {
+    [Repository.DoubleString]: rule_common.createStringRule(scopeName, {
       quoteChar: '"',
       unescapedQuotePattern: patterns_v2.unescapedDoubleQuotePattern,
       stringElementName: RuleName.DoubleString,
       escapeSequences: constants_v2.doubleQuoteEscapeSequences,
     }),
-    [Repository.SingleString]: rule_v1.createStringRule(scopeName, {
+    [Repository.SingleString]: rule_common.createStringRule(scopeName, {
       quoteChar: `'`,
       unescapedQuotePattern: patterns_v2.unescapedSingleQuotePattern,
       stringElementName: RuleName.SingleString,

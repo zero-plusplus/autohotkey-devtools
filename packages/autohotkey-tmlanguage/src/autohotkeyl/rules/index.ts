@@ -14,7 +14,6 @@ export * from './expression/new';
 export * from './expression/number';
 export * from './expression/operator';
 export * from './expression/parenthesized';
-export * from './expression/string';
 export * from './expression/variable';
 export * from './legacy/assignment';
 export * from './legacy/command';
