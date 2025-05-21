@@ -382,7 +382,7 @@ export function createRepositories(scopeName: ScopeName): Repositories {
       keywordRuleName: RuleName.KeywordInExpression,
       keywords: [
         'new',
-        ...constants_v1.expressionKeywords,
+        ...constants_common.expressionKeywords,
 
         // #region The following are not exactly keywords in the expression, but are defined here as keywords because it is more convenient for the TMLanguage mechanism
         // for key, value in obj

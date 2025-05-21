@@ -300,7 +300,7 @@ export const expressionOperatorsWithoutAssignment = [
   '~=', // e.g. value ~= "i)abc"
 ] as const;
 
-export const commonExpressionKeywords = [
+export const expressionKeywords = [
   'NOT', // e.g. `not expression`
   'AND', // e.g. `1 and 1`
   'OR', // e.g. `1 or 1`

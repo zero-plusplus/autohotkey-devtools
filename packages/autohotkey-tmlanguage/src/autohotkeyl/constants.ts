@@ -20,10 +20,9 @@ export const expressionOperators: [
   ...constants_common.assignmentOperators,
   '<>', // e.g. `1 <> 1` Deprecated
 ] as const;
-export const expressionKeywords: [ ...typeof constants_common.commonExpressionKeywords ] = [ ...constants_common.commonExpressionKeywords ] as const;
 export const continuationOperators: string[] = [
   ...expressionOperators.filter((operator) => !(operator === '++' || operator == '--')),
-  ...constants_common.commonExpressionKeywords,
+  ...constants_common.expressionKeywords,
   ',',
 ];
 // #endregion Operators

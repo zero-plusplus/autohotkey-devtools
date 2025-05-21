@@ -17,7 +17,7 @@ export function createOperatorInExpressionExpectedData(scopeName: ScopeName): Ex
     }),
     ...common.createOperatorInExpressionExpectedData(scopeName, {
       name: name(scopeName, RuleName.KeywordInExpression),
-      operators: [ ...constant_v1.expressionKeywords ],
+      operators: [ ...constant_common.expressionKeywords ],
     }),
   ];
 }
