@@ -1,6 +1,6 @@
-import { commonAssignmentOperators, commonExpressionKeywords, commonExpressionOperatorsWithoutAssignment, commonRegexpOptions } from '../constants';
+import * as constants_common from '../common/constants';
 
-export const regexpOptions: [ ...typeof commonRegexpOptions ] = [ ...commonRegexpOptions ];
+export const regexpOptions: [ ...typeof constants_common.commonRegexpOptions ] = [ ...constants_common.commonRegexpOptions ];
 
 // #region [Escape Sequences](https://www.autohotkey.com/docs/v2/misc/EscapeChar.htm)
 export const unquoteEscapeSequences = [ '``', '`;', '`:', '`{', '`n', '`r', '`b', '`t', '`s', '`v', '`a', '`f' ] as const;
@@ -9,9 +9,9 @@ export const singleQuoteEscapeSequences: [ ...typeof unquoteEscapeSequences, '`\
 // #endregion Escape Sequences
 
 // #region [Operators](https://www.autohotkey.com/docs/v2/Variables.htm#Operators)
-export const assignmentOperators: readonly [ ...typeof commonAssignmentOperators ] = [ ...commonAssignmentOperators ] as const;
-export const expressionOperators: readonly [ ...typeof commonExpressionOperatorsWithoutAssignment, ... typeof commonAssignmentOperators, '=>', '??' ] = [
-  ...commonExpressionOperatorsWithoutAssignment,
+export const assignmentOperators: readonly [ ...typeof constants_common.commonAssignmentOperators ] = [ ...constants_common.commonAssignmentOperators ] as const;
+export const expressionOperators: readonly [ ...typeof constants_common.commonExpressionOperatorsWithoutAssignment, ... typeof constants_common.commonAssignmentOperators, '=>', '??' ] = [
+  ...constants_common.commonExpressionOperatorsWithoutAssignment,
   ...assignmentOperators,
   '=>', // `(args*) => expression`
   '??', // `a ?? b`
@@ -30,7 +30,7 @@ export const expressionKeywords = [
 ] as const;
 export const continuationOperators: string[] = [
   ...expressionOperators.filter((operator) => !(operator === '++' || operator == '--')),
-  ...commonExpressionKeywords,
+  ...constants_common.commonExpressionKeywords,
   ',',
 ];
 // #endregion Operators
