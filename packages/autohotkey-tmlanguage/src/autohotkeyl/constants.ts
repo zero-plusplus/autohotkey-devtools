@@ -1,7 +1,5 @@
 import * as constants_common from '../common/constants';
 
-export const regexpOptions: [ ...typeof constants_common.commonRegexpOptions, 'O' ] = [ ...constants_common.commonRegexpOptions, 'O' ];
-
 // #region [Escape Sequences](https://www.autohotkey.com/docs/v1/misc/EscapeChar.htm)
 export const unquoteEscapeSequences = [ '``', '`,', '`%', '``', '`;', '`::', '`r', '`n', '`b', '`t', '`v', '`a', '`f' ] as const;
 export const doubleQuoteEscapeSequences: [ '""', ...typeof unquoteEscapeSequences] = [ '""', ...unquoteEscapeSequences ] as const;
@@ -26,6 +24,10 @@ export const continuationOperators: string[] = [
   ',',
 ];
 // #endregion Operators
+
+// #region [RegEx](https://www.autohotkey.com/docs/v1/misc/RegEx-QuickRef.htm)
+export const regexpOptions: [ ...typeof constants_common.regexpOptions, 'O' ] = [ ...constants_common.regexpOptions, 'O' ];
+// #endregion RegEx
 
 // #region [BuiltIn](https://www.autohotkey.com/docs/v1/Variables.htm#BuiltIn)
 export const keywordLikeBuiltinVariables = [

@@ -1,7 +1,5 @@
 import * as constants_common from '../common/constants';
 
-export const regexpOptions: [ ...typeof constants_common.commonRegexpOptions ] = [ ...constants_common.commonRegexpOptions ];
-
 // #region [Escape Sequences](https://www.autohotkey.com/docs/v2/misc/EscapeChar.htm)
 export const unquoteEscapeSequences = [ '``', '`;', '`:', '`{', '`n', '`r', '`b', '`t', '`s', '`v', '`a', '`f' ] as const;
 export const doubleQuoteEscapeSequences: [ ...typeof unquoteEscapeSequences, '`"'] = [ ...unquoteEscapeSequences, '`"' ] as const;
