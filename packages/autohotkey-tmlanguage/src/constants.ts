@@ -188,7 +188,7 @@ export const enum Repository {
   LegacyAssignmentDeclaration = 'Repository.LegacyAssignmentDeclaration',
   LegacyIfStatement = 'Repository.LegacyIfStatement',
   PercentExpression = 'Repository.PercentExpression',
-  PercentExpressions = 'Repository.PercentExpressions',
+  PercentExpressionInLastArgument = 'Repository.PercentExpressionInLastArgument',
   ContinuationSection = 'Repository.ContinuationSection',
   ContinuationSectionText = 'Repository.ContinuationSectionText',
   // #endregion legacy

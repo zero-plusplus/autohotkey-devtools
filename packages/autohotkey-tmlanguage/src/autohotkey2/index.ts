@@ -484,20 +484,20 @@ export function createRepositories(scopeName: ScopeName, placeholder?: Placehold
       includeRule(Repository.InLineComments),
     ),
     [Repository.CommandLastArgument]: patternsRule(
-      includeRule(Repository.PercentExpressions),
+      includeRule(Repository.PercentExpressionInLastArgument),
       includeRule(Repository.Dereference),
       includeRule(Repository.CommandLastArgumentText),
       includeRule(Repository.InLineComments),
     ),
     [Repository.CommandLastArgumentWithNumber]: patternsRule(
-      includeRule(Repository.PercentExpressions),
+      includeRule(Repository.PercentExpressionInLastArgument),
       includeRule(Repository.Dereference),
       includeRule(Repository.CommandArgumentNumber),
       includeRule(Repository.CommandLastArgumentText),
       includeRule(Repository.InLineComments),
     ),
     [Repository.CommandInvalidArgument]: rule_v1.createInvalidArgumentRule(scopeName),
-    [Repository.PercentExpressions]: rule_v1.createPercentExpressionRule(scopeName, {
+    [Repository.PercentExpressionInLastArgument]: rule_v1.createPercentExpressionRule(scopeName, {
       expressionPattern: patterns_v1.expressionLastArgumentPattern,
     }),
     [Repository.UnquotedStringEscapeSequence]: rule_v1.createUnquotedEscapeSequencesRule(scopeName, constants_v2.unquoteEscapeSequences),

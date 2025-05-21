@@ -594,7 +594,8 @@ function parameterToPatternsRule(scopeName: ScopeName, defenition: CommandDefini
     case HighlightType.LetterOptions:
     {
       return patternsRule(
-        includeRule(Repository.PercentExpressions),
+        includeRule(isLastParameter ? Repository.PercentExpressionInLastArgument : Repository.PercentExpression),
+
         createSpacedArgumentTextRule(scopeName, {
           stringRuleName: RuleName.UnquotedString,
           additionalRules: [
@@ -614,7 +615,8 @@ function parameterToPatternsRule(scopeName: ScopeName, defenition: CommandDefini
       }
 
       return patternsRule(
-        includeRule(Repository.PercentExpressions),
+        includeRule(isLastParameter ? Repository.PercentExpressionInLastArgument : Repository.PercentExpression),
+
         createSpacedArgumentTextRule(scopeName, {
           stringRuleName: RuleName.UnquotedString,
           additionalRules: [
@@ -638,7 +640,8 @@ function parameterToPatternsRule(scopeName: ScopeName, defenition: CommandDefini
       }
 
       return patternsRule(
-        includeRule(Repository.PercentExpressions),
+        includeRule(isLastParameter ? Repository.PercentExpressionInLastArgument : Repository.PercentExpression),
+
         createSpacedArgumentTextRule(scopeName, {
           stringRuleName: RuleName.UnquotedString,
           additionalRules: [
@@ -671,7 +674,7 @@ function parameterToPatternsRule(scopeName: ScopeName, defenition: CommandDefini
     case HighlightType.SendKeyName:
     {
       return patternsRule(
-        includeRule(Repository.PercentExpressions),
+        includeRule(isLastParameter ? Repository.PercentExpressionInLastArgument : Repository.PercentExpression),
 
         includeRule(Repository.Dereference),
         includeRule(Repository.CommandArgumentSendKeyName),
@@ -713,7 +716,8 @@ function parameterToPatternsRule(scopeName: ScopeName, defenition: CommandDefini
     case HighlightType.Style:
     {
       return patternsRule(
-        includeRule(Repository.PercentExpressions),
+        includeRule(isLastParameter ? Repository.PercentExpressionInLastArgument : Repository.PercentExpression),
+
         createSpacedArgumentTextRule(scopeName, {
           stringRuleName: RuleName.UnquotedString,
           additionalRules: [
@@ -737,7 +741,8 @@ function parameterToPatternsRule(scopeName: ScopeName, defenition: CommandDefini
       }
 
       return patternsRule(
-        includeRule(Repository.PercentExpressions),
+        includeRule(isLastParameter ? Repository.PercentExpressionInLastArgument : Repository.PercentExpression),
+
         createSpacedArgumentTextRule(scopeName, {
           stringRuleName: RuleName.UnquotedString,
           additionalRules: [
@@ -758,7 +763,8 @@ function parameterToPatternsRule(scopeName: ScopeName, defenition: CommandDefini
       }
 
       return patternsRule(
-        includeRule(Repository.PercentExpressions),
+        includeRule(isLastParameter ? Repository.PercentExpressionInLastArgument : Repository.PercentExpression),
+
         createAllowArgumentRule(scopeName, {
           stringPattern: patterns_v1.commandArgumentPattern,
           stringRuleName: RuleName.UnquotedString,
@@ -774,7 +780,8 @@ function parameterToPatternsRule(scopeName: ScopeName, defenition: CommandDefini
       }
 
       return patternsRule(
-        includeRule(Repository.PercentExpressions),
+        includeRule(isLastParameter ? Repository.PercentExpressionInLastArgument : Repository.PercentExpression),
+
         createSpacedArgumentTextRule(scopeName, {
           stringRuleName: RuleName.UnquotedString,
           additionalRules: [
@@ -811,7 +818,8 @@ function parameterToPatternsRule(scopeName: ScopeName, defenition: CommandDefini
     }
     case HighlightType.MenuItemName: {
       return patternsRule(
-        includeRule(Repository.PercentExpressions),
+        includeRule(isLastParameter ? Repository.PercentExpressionInLastArgument : Repository.PercentExpression),
+
         includeRule(Repository.MenuItemNameCommandArgument),
       );
     }
@@ -879,9 +887,10 @@ function parameterToPatternsRule(scopeName: ScopeName, defenition: CommandDefini
     case HighlightType.Expression:
     {
       return patternsRule(
+        includeRule(isLastParameter ? Repository.PercentExpressionInLastArgument : Repository.PercentExpression),
+
         includeRule(Repository.Comma),
         includeRule(Repository.InLineComments),
-        includeRule(Repository.PercentExpressions),
         includeRule(Repository.Expression),
       );
     }
