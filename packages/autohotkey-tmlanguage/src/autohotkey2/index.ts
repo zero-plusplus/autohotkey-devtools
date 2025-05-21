@@ -63,7 +63,7 @@ export function createRepositories(scopeName: ScopeName, placeholder?: Placehold
       includeRule(Repository.SingleLineDocumentComment),
       includeRule(Repository.SingleLineComment),
     ),
-    [Repository.SingleLineComment]: rule_v1.createSingleLineCommentRule(scopeName),
+    [Repository.SingleLineComment]: rule_common.createSingleLineCommentRule(scopeName),
     [Repository.SingleLineDocumentComment]: rule_v1.createSinglelineDocumentCommentRule(scopeName, {
       leftHandPattern: patterns_v2.looseLeftHandPattern,
     }),
@@ -71,7 +71,7 @@ export function createRepositories(scopeName: ScopeName, placeholder?: Placehold
       includeRule(Repository.InLineComment),
       includeRule(Repository.InlineDocumentComment),
     ),
-    [Repository.InLineComment]: rule_v1.createInLineCommentRule(scopeName),
+    [Repository.InLineComment]: rule_common.createInLineCommentRule(scopeName),
     [Repository.InlineDocumentComment]: rule_v1.createInlineDocumentCommentRule(scopeName, {
       leftHandPattern: patterns_v2.looseLeftHandPattern,
     }),

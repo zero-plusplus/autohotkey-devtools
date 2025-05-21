@@ -32,4 +32,3 @@ export * from './statement/until';
 export * from './statement/while';
 export * from './trivia/directive';
 export * from './trivia/document';
-export * from './trivia/singleLine';
