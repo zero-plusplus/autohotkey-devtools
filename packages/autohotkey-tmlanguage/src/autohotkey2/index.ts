@@ -368,19 +368,13 @@ export function createRepositories(scopeName: ScopeName, placeholder?: Placehold
     [Repository.DoubleString]: rule_v1.createStringRule(scopeName, {
       quoteChar: '"',
       unescapedQuotePattern: patterns_v2.unescapedDoubleQuotePattern,
-      stringContentRepository: Repository.DoubleStringContent,
       stringElementName: RuleName.DoubleString,
-    }),
-    [Repository.DoubleStringContent]: rule_v1.createStringContentRule(scopeName, {
       escapeSequences: constants_v2.doubleQuoteEscapeSequences,
     }),
     [Repository.SingleString]: rule_v1.createStringRule(scopeName, {
       quoteChar: `'`,
       unescapedQuotePattern: patterns_v2.unescapedSingleQuotePattern,
-      stringContentRepository: Repository.SingleStringContent,
       stringElementName: RuleName.SingleString,
-    }),
-    [Repository.SingleStringContent]: rule_v1.createStringContentRule(scopeName, {
       escapeSequences: constants_v2.singleQuoteEscapeSequences,
     }),
     [Repository.ContinuationStringOptions]: rule_v1.createContinuationStringOptionsRule(scopeName),
@@ -389,14 +383,14 @@ export function createRepositories(scopeName: ScopeName, placeholder?: Placehold
       quoteChar: '"',
       unescapedQuotePattern: patterns_v2.unescapedDoubleQuotePattern,
       stringElementName: RuleName.DoubleString,
-      stringContentRepository: Repository.DoubleStringContent,
+      escapeSequences: constants_v2.doubleQuoteEscapeSequences,
     }),
     [Repository.ContinuationSingleString]: rule_v1.createContinuationString(scopeName, {
       endAnchor: patterns_v1.lineEndAnchor,
       quoteChar: `'`,
       unescapedQuotePattern: patterns_v2.unescapedSingleQuotePattern,
       stringElementName: RuleName.SingleString,
-      stringContentRepository: Repository.SingleStringContent,
+      escapeSequences: constants_v2.singleQuoteEscapeSequences,
     }),
     // #endregion string
 

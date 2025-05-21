@@ -1,9 +1,10 @@
 import { Repository, RuleDescriptor, RuleName, StyleName } from '../../../constants';
 import {
   alt, anyChars0, capture, char, endAnchor, group, ignoreCase, inlineSpace, inlineSpaces0, inlineSpaces1,
-  lookahead, lookbehind, many0, negativeLookahead, negChar, negChars0, optseq, ordalt, seq, startAnchor, whitespace,
+  lookahead, lookbehind, many0, negativeLookahead, negChar, negChars0, optseq, ordalt, seq, startAnchor,
+  textalt, whitespace,
 } from '../../../oniguruma';
-import type { BeginEndRule, ElementName, ScopeName } from '../../../types';
+import type { BeginEndRule, ElementName, Rule, ScopeName } from '../../../types';
 import { includeRule, name, nameRule, patternsRule } from '../../../utils';
 
 interface Placeholder {
@@ -11,9 +12,20 @@ interface Placeholder {
   quoteChar: string;
   unescapedQuotePattern: string;
   stringElementName: ElementName;
-  stringContentRepository: Repository;
+  escapeSequences: readonly string[];
 }
 export function createContinuationString(scopeName: ScopeName, placeholder: Placeholder): BeginEndRule {
+  const contentRules: Rule[] = [
+    {
+      name: name(scopeName, StyleName.Escape),
+      match: textalt(...placeholder.escapeSequences),
+    },
+    {
+      name: name(scopeName, StyleName.Invalid),
+      match: char('`'),
+    },
+  ];
+
   return {
     begin: seq(
       capture(char(placeholder.quoteChar)),
@@ -31,7 +43,7 @@ export function createContinuationString(scopeName: ScopeName, placeholder: Plac
     ),
     beginCaptures: {
       1: nameRule(scopeName, placeholder.stringElementName, RuleDescriptor.Begin),
-      2: patternsRule(includeRule(placeholder.stringContentRepository)),
+      2: patternsRule(...contentRules),
       3: patternsRule(includeRule(Repository.InLineComments)),
     },
     end: seq(
@@ -64,7 +76,7 @@ export function createContinuationString(scopeName: ScopeName, placeholder: Plac
           char(')'),
           char(placeholder.quoteChar),
         )),
-        patterns: [ includeRule(placeholder.stringContentRepository) ],
+        patterns: contentRules,
       },
     ],
   };

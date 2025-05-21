@@ -82,10 +82,8 @@ export const enum Repository {
   String = 'Repository.String',
   InvalidStringContent = 'Repository.InvalidStringContent',
   DoubleString = 'Repository.DoubleString',
-  DoubleStringContent = 'Repository.DoubleStringContent',
   DoubleStringEscapeSequence = 'Repository.DoubleStringEscapeSequence',
   SingleString = 'Repository.SingleString',
-  SingleStringContent = 'Repository.SingleStringContent',
   SingleStringEscapeSequence = 'Repository.SingleStringEscapeSequence',
 
   ContinuationStringOptions = 'Repository.ContinuationStringOptions',
