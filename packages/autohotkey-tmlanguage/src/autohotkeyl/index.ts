@@ -1,6 +1,7 @@
 import * as markdown from '../__injection__/markdown';
 import * as constants_common from '../common/constants';
 import * as definition_common from '../common/definition';
+import * as patterns_common from '../common/patterns';
 import * as rules_common from '../common/rules';
 import { Repository, RuleName } from '../constants';
 import { anyChars1, ordalt } from '../oniguruma';
@@ -111,7 +112,7 @@ export function createRepositories(scopeName: ScopeName): Repositories {
       endAnchor: patterns_v1.lineEndAnchor,
     }),
     [Repository.DirectiveStatement]: rule_v1.createCommandLikeStatementRule(scopeName, definition_v1.directiveDefinitions, {
-      startAnchor: patterns_v1.lineStartAnchor,
+      startAnchor: patterns_common.lineStartAnchor,
       endAnchor: patterns_v1.lineEndAnchor,
       commandElementName: RuleName.DirectiveName,
     }),
@@ -140,7 +141,7 @@ export function createRepositories(scopeName: ScopeName): Repositories {
       startAnchor: patterns_v1.statementStartAnchor,
     }),
     [Repository.LabelStatement]: rule_v1.createLabelRule(scopeName, {
-      startAnchor: patterns_v1.lineStartAnchor,
+      startAnchor: patterns_common.lineStartAnchor,
       labelPattern: patterns_v1.identifierPattern,
     }),
 
@@ -306,7 +307,7 @@ export function createRepositories(scopeName: ScopeName): Repositories {
 
     // #region object
     [Repository.ObjectInBrackets]: rule_v1.createObjectRule(scopeName, {
-      startAnchor: patterns_v1.lineStartAnchor,
+      startAnchor: patterns_common.lineStartAnchor,
     }),
     [Repository.Object]: rule_v1.createObjectRule(scopeName, {
       startAnchor: patterns_v1.expressionContinuationStartAnchor,
@@ -517,7 +518,7 @@ export function createRepositories(scopeName: ScopeName): Repositories {
 
     // #region compiler directive
     [Repository.CompilerDirectiveComment]: rule_v1.createDirectiveCommentPatternsRule(scopeName, {
-      startAnchor: patterns_v1.lineStartAnchor,
+      startAnchor: patterns_common.lineStartAnchor,
       endAnchor: patterns_v1.lineEndAnchor,
       definitions: definition_common.compilerDirectives,
     }),

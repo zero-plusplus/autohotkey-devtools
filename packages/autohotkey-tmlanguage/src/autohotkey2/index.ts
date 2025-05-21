@@ -4,6 +4,7 @@ import * as patterns_v1 from '../autohotkeyl/patterns';
 import * as rule_v1 from '../autohotkeyl/rules';
 import * as constants_common from '../common/constants';
 import * as definition_common from '../common/definition';
+import * as patterns_common from '../common/patterns';
 import * as rule_common from '../common/rules';
 import { Repository, RuleName } from '../constants';
 import { ordalt } from '../oniguruma';
@@ -141,7 +142,7 @@ export function createRepositories(scopeName: ScopeName, placeholder?: Placehold
       startAnchor: patterns_v1.statementStartAnchor,
     }),
     [Repository.LabelStatement]: rule_v1.createLabelRule(scopeName, {
-      startAnchor: patterns_v1.lineStartAnchor,
+      startAnchor: patterns_common.lineStartAnchor,
       labelPattern: patterns_v2.identifierPattern,
     }),
 
@@ -341,7 +342,7 @@ export function createRepositories(scopeName: ScopeName, placeholder?: Placehold
 
     // #region object
     [Repository.ObjectInBrackets]: rule_v1.createObjectRule(scopeName, {
-      startAnchor: patterns_v1.lineStartAnchor,
+      startAnchor: patterns_common.lineStartAnchor,
     }),
     [Repository.Object]: rule_v1.createObjectRule(scopeName, {
       startAnchor: patterns_v2.expressionContinuationStartAnchor,
@@ -572,7 +573,7 @@ export function createRepositories(scopeName: ScopeName, placeholder?: Placehold
 
     // #region compiler directive
     [Repository.CompilerDirectiveComment]: rule_v1.createDirectiveCommentPatternsRule(scopeName, {
-      startAnchor: patterns_v1.lineStartAnchor,
+      startAnchor: patterns_common.lineStartAnchor,
       endAnchor: patterns_v1.lineEndAnchor,
       definitions: definition_common.compilerDirectives,
     }),

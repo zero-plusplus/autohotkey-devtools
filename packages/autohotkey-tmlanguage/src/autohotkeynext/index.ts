@@ -3,6 +3,7 @@ import * as patterns_v2 from '../autohotkey2/patterns';
 import * as patterns_v1 from '../autohotkeyl/patterns';
 import * as rules_v1 from '../autohotkeyl/rules';
 import * as constants_common from '../common/constants';
+import * as patterns_common from '../common/patterns';
 import { Repository, RuleName } from '../constants';
 import type { ScopeName, TmLanguage } from '../types';
 import { includeRule, patternsRule } from '../utils';
@@ -36,8 +37,12 @@ export function createTmLanguage(): TmLanguage {
       ),
 
       // #region declaration
-      [Repository.Import]: rules_vnext.createImportDeclarationRule(scopeName, { startAnchor: patterns_v1.lineStartAnchor }),
-      [Repository.Export]: rules_vnext.createExportDeclarationRule(scopeName, { startAnchor: patterns_v1.lineStartAnchor }),
+      [Repository.Import]: rules_vnext.createImportDeclarationRule(scopeName, {
+        startAnchor: patterns_common.lineStartAnchor,
+      }),
+      [Repository.Export]: rules_vnext.createExportDeclarationRule(scopeName, {
+        startAnchor: patterns_common.lineStartAnchor,
+      }),
       [Repository.ClassDeclaration]: rules_v1.createClassDeclarationRule(scopeName, {
         startAnchor: patterns_vnext.classStartAnchor,
         endAnchor: patterns_v1.lineEndAnchor,
@@ -55,7 +60,7 @@ export function createTmLanguage(): TmLanguage {
         ],
       }),
       [Repository.TypedAssignmentDeclaration]: rules_vnext.createTypedAssignmentDeclarationRule(scopeName, {
-        startAnchor: patterns_v1.lineStartAnchor,
+        startAnchor: patterns_common.lineStartAnchor,
         modifiers: constants_common.accessModifiers,
         namePattern: patterns_v2.looseLeftHandPattern,
         nameRule: patternsRule(includeRule(Repository.Variable)),
@@ -78,7 +83,7 @@ export function createTmLanguage(): TmLanguage {
         includeRule(Repository.FunctionExpressionBlock),
       ),
       [Repository.FunctionExpressionBlock]: rules_vnext.createFunctionExpressionBlockRule(scopeName, {
-        startAnchor: patterns_v1.lineStartAnchor,
+        startAnchor: patterns_common.lineStartAnchor,
       }),
       // #endregion expression
     },
