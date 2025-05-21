@@ -46,7 +46,7 @@ export function createRepositories(scopeName: ScopeName): Repositories {
       includeRule(Repository.MultiLineComment),
     ),
     [Repository.MultiLineComment]: rules_common.createMultiLineCommentRule(scopeName),
-    [Repository.MultiLineDocumentComment]: rule_v1.createDocumentCommentRule(scopeName, {
+    [Repository.MultiLineDocumentComment]: rules_common.createDocumentCommentRule(scopeName, {
       leftHandPattern: patterns_v1.looseLeftHandPattern,
     }),
     [Repository.AllSingleLineComments]: patternsRule(
@@ -55,7 +55,7 @@ export function createRepositories(scopeName: ScopeName): Repositories {
       includeRule(Repository.SingleLineComment),
     ),
     [Repository.SingleLineComment]: rules_common.createSingleLineCommentRule(scopeName),
-    [Repository.SingleLineDocumentComment]: rule_v1.createSinglelineDocumentCommentRule(scopeName, {
+    [Repository.SingleLineDocumentComment]: rules_common.createSinglelineDocumentCommentRule(scopeName, {
       leftHandPattern: patterns_v1.looseLeftHandPattern,
     }),
     [Repository.AllInLineComments]: patternsRule(
@@ -63,12 +63,12 @@ export function createRepositories(scopeName: ScopeName): Repositories {
       includeRule(Repository.InLineComment),
     ),
     [Repository.InLineComment]: rules_common.createInLineCommentRule(scopeName),
-    [Repository.InlineDocumentComment]: rule_v1.createInlineDocumentCommentRule(scopeName, {
+    [Repository.InlineDocumentComment]: rules_common.createInlineDocumentCommentRule(scopeName, {
       leftHandPattern: patterns_v1.looseLeftHandPattern,
     }),
 
-    [Repository.TypeInDocument]: rule_v1.createDocumentTypeRule(scopeName),
-    [Repository.InlineTextInDocument]: rule_v1.createInlineTextInDocumentRule(scopeName),
+    [Repository.TypeInDocument]: rules_common.createDocumentTypeRule(scopeName),
+    [Repository.InlineTextInDocument]: rules_common.createInlineTextInDocumentRule(scopeName),
     // #endregion trivia
 
     // #region statement

@@ -5,5 +5,6 @@ export * from './expression/operator';
 export * from './expression/string';
 export * from './misc/compilerDirectiveRegExp';
 export * from './statement/call';
+export * from './trivia/document';
 export * from './trivia/multiLine';
 export * from './trivia/singleLine';
