@@ -25,19 +25,19 @@ export function createIdentifierRule(scopeName: ScopeName, placeholder: Placehol
 }
 
 interface Placeholder_BuiltIn {
-  variableRuleName: RuleName;
-  builtinVariables: readonly string[];
+  ruleName: RuleName;
+  identifiers: readonly string[];
 }
-export function createBuiltinVariableRule(scopeName: ScopeName, placeholder: Placeholder_BuiltIn): MatchRule {
+export function createReservedIdentifierRule(scopeName: ScopeName, placeholder: Placeholder_BuiltIn): MatchRule {
   return {
     match: seq(
       lookbehind(wordBound()),
       negativeLookbehind(char('.')),
-      capture(ignoreCase(textalt(...placeholder.builtinVariables))),
+      capture(ignoreCase(textalt(...placeholder.identifiers))),
       lookahead(wordBound()),
     ),
     captures: {
-      1: nameRule(scopeName, placeholder.variableRuleName),
+      1: nameRule(scopeName, placeholder.ruleName),
     },
   };
 }

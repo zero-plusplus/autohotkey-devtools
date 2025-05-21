@@ -263,17 +263,17 @@ export function createRepositories(scopeName: ScopeName): Repositories {
       ruleName: RuleName.Variable,
       identifierPattern: patterns_v1.identifierPattern,
     }),
-    [Repository.KeywordLikeBuiltInVariable]: rules_common.createBuiltinVariableRule(scopeName, {
-      variableRuleName: RuleName.KeywordLikeBuiltInVariable,
-      builtinVariables: constants_v1.keywordLikeBuiltinVariables,
+    [Repository.KeywordLikeBuiltInVariable]: rules_common.createReservedIdentifierRule(scopeName, {
+      ruleName: RuleName.KeywordLikeBuiltInVariable,
+      identifiers: constants_v1.keywordLikeBuiltinVariables,
     }),
-    [Repository.BuiltInVariable]: rules_common.createBuiltinVariableRule(scopeName, {
-      variableRuleName: RuleName.BuiltInVariable,
-      builtinVariables: constants_v1.builtinVaribles,
+    [Repository.BuiltInVariable]: rules_common.createReservedIdentifierRule(scopeName, {
+      ruleName: RuleName.BuiltInVariable,
+      identifiers: constants_v1.builtinVaribles,
     }),
-    [Repository.MetaFunctionName]: rules_common.createKeywordRule(scopeName, {
-      keywordRuleName: RuleName.MetaFunctionName,
-      keywords: [ '__NEW', '__DELETE', '__GET', '__SET', '__CALL' ],
+    [Repository.MetaFunctionName]: rules_common.createReservedIdentifierRule(scopeName, {
+      ruleName: RuleName.MetaFunctionName,
+      identifiers: [ '__NEW', '__DELETE', '__GET', '__SET', '__CALL' ],
     }),
     [Repository.FunctionName]: rules_common.createIdentifierRule(scopeName, {
       ruleName: RuleName.FunctionName,
@@ -334,9 +334,9 @@ export function createRepositories(scopeName: ScopeName): Repositories {
     ...rules_common.createOperatorRepositories(scopeName, {
       expressionOperators: constants_v1.expressionOperators,
     }),
-    [Repository.KeywordInExpression]: rules_common.createKeywordRule(scopeName, {
-      keywordRuleName: RuleName.KeywordInExpression,
-      keywords: [
+    [Repository.KeywordInExpression]: rules_common.createReservedIdentifierRule(scopeName, {
+      ruleName: RuleName.KeywordInExpression,
+      identifiers: [
         'new',
         ...constants_common.expressionKeywords,
 
@@ -487,9 +487,9 @@ export function createRepositories(scopeName: ScopeName): Repositories {
       scopeName,
       constants_common.compilerDirectiveEscapeSequences,
     ),
-    [Repository.BuiltInVariableInCompilerDirective]: rules_common.createBuiltinVariableRule(scopeName, {
-      variableRuleName: RuleName.KeywordLikeBuiltInVariable,
-      builtinVariables: constants_common.compilerDirectiveVariables,
+    [Repository.BuiltInVariableInCompilerDirective]: rules_common.createReservedIdentifierRule(scopeName, {
+      ruleName: RuleName.KeywordLikeBuiltInVariable,
+      identifiers: constants_common.compilerDirectiveVariables,
     }),
     [Repository.DereferenceInCompilerDirective]: rules_common.createCompilerDirectiveDereferenceMatchRule(scopeName),
     [Repository.ExpressionInCompilerDirective]: patternsRule(

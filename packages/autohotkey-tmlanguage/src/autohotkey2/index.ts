@@ -292,29 +292,29 @@ export function createRepositories(scopeName: ScopeName, placeholder?: Placehold
       ruleName: RuleName.Variable,
       identifierPattern: patterns_v2.identifierPattern,
     }),
-    [Repository.KeywordLikeBuiltInVariable]: rule_common.createBuiltinVariableRule(scopeName, {
-      variableRuleName: RuleName.KeywordLikeBuiltInVariable,
-      builtinVariables: constants_v2.keywordLikeBuiltinVariables,
+    [Repository.KeywordLikeBuiltInVariable]: rule_common.createReservedIdentifierRule(scopeName, {
+      ruleName: RuleName.KeywordLikeBuiltInVariable,
+      identifiers: constants_v2.keywordLikeBuiltinVariables,
     }),
-    [Repository.BuiltInVariable]: rule_common.createBuiltinVariableRule(scopeName, {
-      variableRuleName: RuleName.BuiltInVariable,
-      builtinVariables: placeholder?.builtinVaribles ?? constants_v2.builtinVaribles,
+    [Repository.BuiltInVariable]: rule_common.createReservedIdentifierRule(scopeName, {
+      ruleName: RuleName.BuiltInVariable,
+      identifiers: placeholder?.builtinVaribles ?? constants_v2.builtinVaribles,
     }),
-    [Repository.BuiltInClass]: rule_common.createBuiltinVariableRule(scopeName, {
-      variableRuleName: RuleName.ClassName,
-      builtinVariables: placeholder?.builtInClassNames ?? constants_v2.builtInClassNames,
-    }),
-    [Repository.MetaFunctionName]: rule_common.createKeywordRule(scopeName, {
-      keywords: [ '__NEW', '__DELETE', '__ENUM', '__GET', '__SET', '__CALL' ],
-      keywordRuleName: RuleName.MetaFunctionName,
+    [Repository.BuiltInClass]: rule_common.createReservedIdentifierRule(scopeName, {
+      ruleName: RuleName.ClassName,
+      identifiers: placeholder?.builtInClassNames ?? constants_v2.builtInClassNames,
     }),
     [Repository.FunctionName]: rule_common.createIdentifierRule(scopeName, {
       ruleName: RuleName.FunctionName,
       identifierPattern: patterns_v2.identifierPattern,
     }),
-    [Repository.MetaPropertyName]: rule_common.createKeywordRule(scopeName, {
-      keywords: [ '__ITEM' ],
-      keywordRuleName: RuleName.MetaFunctionName,
+    [Repository.MetaFunctionName]: rule_common.createReservedIdentifierRule(scopeName, {
+      ruleName: RuleName.MetaFunctionName,
+      identifiers: [ '__NEW', '__DELETE', '__ENUM', '__GET', '__SET', '__CALL' ],
+    }),
+    [Repository.MetaPropertyName]: rule_common.createReservedIdentifierRule(scopeName, {
+      ruleName: RuleName.MetaFunctionName,
+      identifiers: [ '__ITEM' ],
     }),
     // #endregion variable
 
@@ -377,9 +377,9 @@ export function createRepositories(scopeName: ScopeName, placeholder?: Placehold
     ...rule_common.createOperatorRepositories(scopeName, {
       expressionOperators: constants_v2.expressionOperators,
     }),
-    [Repository.KeywordInExpression]: rule_common.createKeywordRule(scopeName, {
-      keywordRuleName: RuleName.KeywordInExpression,
-      keywords: [
+    [Repository.KeywordInExpression]: rule_common.createReservedIdentifierRule(scopeName, {
+      ruleName: RuleName.KeywordInExpression,
+      identifiers: [
         ...constants_v2.expressionKeywords,
 
         // #region The following are not exactly keywords in the expression, but are defined here as keywords because it is more convenient for the TMLanguage mechanism
@@ -532,9 +532,9 @@ export function createRepositories(scopeName: ScopeName, placeholder?: Placehold
       scopeName,
       constants_common.compilerDirectiveEscapeSequences,
     ),
-    [Repository.BuiltInVariableInCompilerDirective]: rule_common.createBuiltinVariableRule(scopeName, {
-      variableRuleName: RuleName.KeywordLikeBuiltInVariable,
-      builtinVariables: constants_common.compilerDirectiveVariables,
+    [Repository.BuiltInVariableInCompilerDirective]: rule_common.createReservedIdentifierRule(scopeName, {
+      ruleName: RuleName.KeywordLikeBuiltInVariable,
+      identifiers: constants_common.compilerDirectiveVariables,
     }),
     [Repository.DereferenceInCompilerDirective]: rule_common.createCompilerDirectiveDereferenceMatchRule(scopeName),
     [Repository.ExpressionInCompilerDirective]: patternsRule(

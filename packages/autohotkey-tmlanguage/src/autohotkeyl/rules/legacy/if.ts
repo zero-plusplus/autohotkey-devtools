@@ -1,4 +1,4 @@
-import * as rules_common from '../../../common/rules/misc/keyword';
+import * as rules_common from '../../../common/rules';
 import { Repository, RuleName, StyleName } from '../../../constants';
 import {
   capture, char, charRange, ignoreCase, inlineSpaces0, inlineSpaces1, keyword, lookahead, lookbehind,
@@ -44,9 +44,9 @@ export function createLegacyIfStatementRule(scopeName: ScopeName, placeholder: P
       includeRule(Repository.IfStatement),
 
       // https://www.autohotkey.com/docs/v1/lib/IfBetween.htm
-      rules_common.createKeywordRule(scopeName, {
-        keywordRuleName: RuleName.KeywordInExpression,
-        keywords: [ 'between', 'not' ],
+      rules_common.createReservedIdentifierRule(scopeName, {
+        ruleName: RuleName.KeywordInExpression,
+        identifiers: [ 'between', 'not' ],
       }),
 
       // https://www.autohotkey.com/docs/v1/lib/IfIs.htm
@@ -58,13 +58,13 @@ export function createLegacyIfStatementRule(scopeName: ScopeName, placeholder: P
         end: lookahead(placeholder.endAnchor),
         patterns: [
           invalidOnetTrueBraceStyleRule,
-          rules_common.createKeywordRule(scopeName, {
-            keywordRuleName: RuleName.KeywordInExpression,
-            keywords: [ 'not' ],
+          rules_common.createReservedIdentifierRule(scopeName, {
+            ruleName: RuleName.KeywordInExpression,
+            identifiers: [ 'not' ],
           }),
-          rules_common.createKeywordRule(scopeName, {
-            keywordRuleName: RuleName.KeywordLikeBuiltInVariable,
-            keywords: [
+          rules_common.createReservedIdentifierRule(scopeName, {
+            ruleName: RuleName.KeywordLikeBuiltInVariable,
+            identifiers: [
               'integer',
               'float',
               'number',
