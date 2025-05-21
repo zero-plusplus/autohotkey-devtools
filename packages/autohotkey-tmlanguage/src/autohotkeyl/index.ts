@@ -257,15 +257,13 @@ export function createRepositories(scopeName: ScopeName): Repositories {
       includeRule(Repository.UserDefinedVariable),
       includeRule(Repository.InvalidVariable),
     ),
-    [Repository.ConstantLikeVariable]: rules_common.createVariableRule(scopeName, {
+    [Repository.ConstantLikeVariable]: rules_common.createIdentifierRule(scopeName, {
       ruleName: RuleName.ConstantLikeVariable,
-      nameHeadChar: patterns_v1.nameStart_upper,
-      nameBodyChar: patterns_v1.nameBody_upper,
+      identifierPattern: patterns_v1.upperIdentifierPattern,
     }),
-    [Repository.UserDefinedVariable]: rules_common.createVariableRule(scopeName, {
+    [Repository.UserDefinedVariable]: rules_common.createIdentifierRule(scopeName, {
       ruleName: RuleName.Variable,
-      nameHeadChar: patterns_v1.nameStart,
-      nameBodyChar: patterns_v1.nameBody,
+      identifierPattern: patterns_v1.identifierPattern,
     }),
     [Repository.InvalidVariable]: rules_common.createInvalidVariableRule(scopeName, {
       ruleName: RuleName.Variable,
@@ -284,10 +282,9 @@ export function createRepositories(scopeName: ScopeName): Repositories {
       keywordRuleName: RuleName.MetaFunctionName,
       keywords: [ '__NEW', '__DELETE', '__GET', '__SET', '__CALL' ],
     }),
-    [Repository.FunctionName]: rules_common.createVariableRule(scopeName, {
+    [Repository.FunctionName]: rules_common.createIdentifierRule(scopeName, {
       ruleName: RuleName.FunctionName,
-      nameHeadChar: patterns_v1.nameStart,
-      nameBodyChar: patterns_v1.nameBody,
+      identifierPattern: patterns_v1.identifierPattern,
     }),
     // #endregion variable
 

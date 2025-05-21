@@ -1,29 +1,32 @@
 import { RuleName, StyleName } from '../../../constants';
 import {
-  capture, char, escapeOnigurumaTexts, ignoreCase, lookahead, lookbehind, many1, manyRange, negativeLookbehind,
-  ordalt, seq, wordBound,
+  capture, char, escapeOnigurumaTexts, ignoreCase, lookahead, lookbehind, many1,
+  manyRange, negativeLookbehind, ordalt, seq, wordBound,
 } from '../../../oniguruma';
 import type { MatchRule, ScopeName } from '../../../types';
 import { nameRule } from '../../../utils';
 
-interface Placeholder_UserDefined {
+interface Placeholder_IdentifierRule {
   ruleName: RuleName;
-  nameHeadChar: string;
-  nameBodyChar: string;
+  identifierPattern: string;
 }
-export function createVariableRule(scopeName: ScopeName, placeholder: Placeholder_UserDefined): MatchRule {
+export function createIdentifierRule(scopeName: ScopeName, placeholder: Placeholder_IdentifierRule): MatchRule {
   return {
-    match: capture(seq(
-      placeholder.nameHeadChar,
-      manyRange(placeholder.nameBodyChar, 0, 252),
+    match: seq(
+      capture(placeholder.identifierPattern),
       lookahead(wordBound()),
-    )),
+    ),
     captures: {
       1: nameRule(scopeName, placeholder.ruleName),
     },
   };
 }
-export function createInvalidVariableRule(scopeName: ScopeName, placeholder: Placeholder_UserDefined): MatchRule {
+interface Placeholder_Invalid {
+  ruleName: RuleName;
+  nameHeadChar: string;
+  nameBodyChar: string;
+}
+export function createInvalidVariableRule(scopeName: ScopeName, placeholder: Placeholder_Invalid): MatchRule {
   return {
     match: seq(
       capture(seq(placeholder.nameHeadChar, manyRange(placeholder.nameBodyChar, 252))),

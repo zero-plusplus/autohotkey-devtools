@@ -7,14 +7,18 @@ import {
 import * as constants_v1 from './constants';
 
 // #region [Names](https://www.autohotkey.com/docs/v1/Concepts.htm#names)
-export const nameLimitLength = 253;
+const nameLimitLength = 253;
 const numberChar = '\\d';
 const sign = char('_', '#', '@', '$');
+
 export const nameStart: string = group(alt(wordChar(), sign));
-export const nameStart_upper: string = group('[A-Z_]');
 export const nameBody: string = group(alt(wordChar(), sign, numberChar));
-export const nameBody_upper: string = group('[A-Z_]');
 export const identifierPattern: string = group(seq(nameStart, manyLimit(nameBody, nameLimitLength - 1)));
+
+export const nameStart_upper: string = group('[A-Z_]');
+export const nameBody_upper: string = group('[A-Z_]');
+export const upperIdentifierPattern: string = group(seq(nameStart_upper, manyLimit(nameBody_upper, nameLimitLength - 1)));
+
 export const keyName: string = group(alt(
   group(seq(char('%'), anyChars1(), char('%'))),
   identifierPattern,

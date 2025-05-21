@@ -285,15 +285,13 @@ export function createRepositories(scopeName: ScopeName, placeholder?: Placehold
       includeRule(Repository.ConstantLikeVariable),
       includeRule(Repository.UserDefinedVariable),
     ),
-    [Repository.ConstantLikeVariable]: rule_common.createVariableRule(scopeName, {
+    [Repository.ConstantLikeVariable]: rule_common.createIdentifierRule(scopeName, {
       ruleName: RuleName.ConstantLikeVariable,
-      nameHeadChar: patterns_v2.nameStart_upper,
-      nameBodyChar: patterns_v2.nameBody_upper,
+      identifierPattern: patterns_v2.upperIdentifierPattern,
     }),
-    [Repository.UserDefinedVariable]: rule_common.createVariableRule(scopeName, {
+    [Repository.UserDefinedVariable]: rule_common.createIdentifierRule(scopeName, {
       ruleName: RuleName.Variable,
-      nameHeadChar: patterns_v2.nameStart,
-      nameBodyChar: patterns_v2.nameBody,
+      identifierPattern: patterns_v2.identifierPattern,
     }),
     [Repository.InvalidVariable]: rule_common.createInvalidVariableRule(scopeName, {
       ruleName: RuleName.Variable,
@@ -316,10 +314,9 @@ export function createRepositories(scopeName: ScopeName, placeholder?: Placehold
       keywords: [ '__NEW', '__DELETE', '__ENUM', '__GET', '__SET', '__CALL' ],
       keywordRuleName: RuleName.MetaFunctionName,
     }),
-    [Repository.FunctionName]: rule_common.createVariableRule(scopeName, {
+    [Repository.FunctionName]: rule_common.createIdentifierRule(scopeName, {
       ruleName: RuleName.FunctionName,
-      nameHeadChar: patterns_v2.nameStart,
-      nameBodyChar: patterns_v2.nameBody,
+      identifierPattern: patterns_v2.identifierPattern,
     }),
     [Repository.MetaPropertyName]: rule_common.createKeywordRule(scopeName, {
       keywords: [ '__ITEM' ],
