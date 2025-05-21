@@ -1,21 +1,10 @@
 import { RuleName, StyleName } from '../../../constants';
 import {
-  alt, capture, char, charRange, group, groupMany1, ignoreCase, lookahead, lookbehind, negativeLookahead,
+  alt, capture, char, group, hexPrefix, hexValue, ignoreCase, integer, lookahead, lookbehind, negativeLookahead,
   number, numbers0, numbers1, opt, seq, wordBound,
 } from '../../../oniguruma';
 import type { MatchRule, PatternsRule, ScopeName } from '../../../types';
 import { name, nameRule, patternsRule } from '../../../utils';
-
-const integer: string = alt(
-  seq(charRange('1', '9'), numbers0()),
-  char('0'),
-);
-const hexPrefix: string = seq(char('0'), ignoreCase(char('x')));
-const hexValue: string = groupMany1(alt(
-  charRange('0', '9'),
-  charRange('a', 'f'),
-  charRange('A', 'F'),
-));
 
 export function createIntegerRule(scopeName: ScopeName): MatchRule {
   return {
@@ -67,8 +56,8 @@ export function createHexRule(scopeName: ScopeName): MatchRule {
     name: name(scopeName, RuleName.Hex),
     match: seq(
       lookbehind(wordBound()),
-      capture(hexPrefix),
-      capture(hexValue),
+      capture(hexPrefix()),
+      capture(hexValue()),
       lookahead(wordBound()),
     ),
     captures: {
@@ -83,8 +72,8 @@ export function createInvalidHexRule(scopeName: ScopeName): PatternsRule {
       match: seq(
         capture(numbers1()),
         capture(seq(
-          capture(hexPrefix),
-          opt(capture(hexValue)),
+          capture(hexPrefix()),
+          opt(capture(hexValue())),
         )),
       ),
       captures: {
@@ -98,7 +87,7 @@ export function createInvalidHexRule(scopeName: ScopeName): PatternsRule {
       match: ignoreCase(seq(
         capture(char('0')),
         capture(char('x')),
-        negativeLookahead(hexValue),
+        negativeLookahead(hexValue()),
       )),
       captures: {
         1: nameRule(scopeName, RuleName.Hex, RuleName.HexPrefix),
@@ -107,8 +96,8 @@ export function createInvalidHexRule(scopeName: ScopeName): PatternsRule {
     },
     {
       match: ignoreCase(seq(
-        capture(hexPrefix),
-        capture(hexValue),
+        capture(hexPrefix()),
+        capture(hexValue()),
         capture(seq(char('.'), numbers0())),
       )),
       captures: {
@@ -124,8 +113,8 @@ export function createScientificNotationRule(scopeName: ScopeName): MatchRule {
     match: seq(
       lookbehind(wordBound()),
       group(alt(
-        seq(capture(integer), capture(char('.')), capture(numbers1())),
-        capture(integer),
+        seq(capture(integer()), capture(char('.')), capture(numbers1())),
+        capture(integer()),
       )),
       capture(ignoreCase(char('e'))),
       opt(capture(char('+', '-'))),
@@ -151,8 +140,8 @@ export function createInvalidScientificNotationRule(scopeName: ScopeName): Patte
       match: seq(
         lookbehind(wordBound()),
         group(alt(
-          seq(capture(integer), capture(char('.')), capture(numbers1())),
-          capture(integer),
+          seq(capture(integer()), capture(char('.')), capture(numbers1())),
+          capture(integer()),
         )),
         capture(ignoreCase(char('e'))),
         opt(capture(char('+', '-'))),
@@ -176,8 +165,8 @@ export function createInvalidScientificNotationRule(scopeName: ScopeName): Patte
       match: seq(
         lookbehind(wordBound()),
         group(alt(
-          seq(capture(integer), capture(char('.')), capture(numbers1())),
-          capture(integer),
+          seq(capture(integer()), capture(char('.')), capture(numbers1())),
+          capture(integer()),
         )),
         capture(ignoreCase(char('e'))),
         capture(char('+', '-')),
@@ -198,8 +187,8 @@ export function createInvalidScientificNotationRule(scopeName: ScopeName): Patte
       match: seq(
         lookbehind(wordBound()),
         group(alt(
-          seq(capture(integer), capture(char('.')), capture(numbers1())),
-          capture(integer),
+          seq(capture(integer()), capture(char('.')), capture(numbers1())),
+          capture(integer()),
         )),
         capture(ignoreCase(char('e'))),
         negativeLookahead(alt(char('+', '-'), number())),

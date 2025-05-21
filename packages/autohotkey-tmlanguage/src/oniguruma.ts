@@ -70,6 +70,24 @@ export function alphaChar(): string {
 }
 // #endregion char classes
 
+// #region custom char classes
+export function integer(): string {
+  return alt(
+    seq(char('1-9'), numbers0()),
+    char('0'),
+  );
+}
+export function hexPrefix(): string {
+  return seq(char('0'), char('x', 'X'));
+}
+export function hexValue(): string {
+  return groupMany1(alt(
+    char('0-9'),
+    ignoreCase(char('a-f')),
+  ));
+}
+// #endregion custom char classes
+
 // #region combinator
 export function many0(onigurumaText: string): string {
   return `${onigurumaText}*`;
