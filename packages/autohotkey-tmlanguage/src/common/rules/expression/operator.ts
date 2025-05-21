@@ -33,9 +33,12 @@ export function createOperatorRule(scopeName: ScopeName, placeholder: Placeholde
 export function createDotOperatorRule(scopeName: ScopeName): MatchRule {
   return {
     name: name(scopeName, RuleName.Dot),
-    match: seq(char('.'), negativeLookahead(alt(
-      char('='),
-      inlineSpace(),
-    ))),
+    match: seq(
+      char('.'),
+      negativeLookahead(alt(
+        char('='),
+        inlineSpace(),
+      )),
+    ),
   };
 }
