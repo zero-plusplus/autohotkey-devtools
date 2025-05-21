@@ -3,7 +3,6 @@ import * as constants_common from '../common/constants';
 // #region [Escape Sequences](https://www.autohotkey.com/docs/v1/misc/EscapeChar.htm)
 export const unquoteEscapeSequences = [ '``', '`,', '`%', '``', '`;', '`::', '`r', '`n', '`b', '`t', '`v', '`a', '`f' ] as const;
 export const doubleQuoteEscapeSequences: [ '""', ...typeof unquoteEscapeSequences] = [ '""', ...unquoteEscapeSequences ] as const;
-export const regexpEscapeSequences: [ ...typeof constants_common.commonRegexpEscapeSequences ] = [ ...constants_common.commonRegexpEscapeSequences ];
 export const pcreUnicodePropertyCodes: [ ...typeof constants_common.commonPcreUnicodeProperyCodes ] = [ ...constants_common.commonPcreUnicodeProperyCodes ];
 export const pcreUnicodePropertyScripts: [ ...typeof constants_common.commonPcreUnicodeProperyScripts ] = [ ...constants_common.commonPcreUnicodeProperyScripts ];
 // #endregion Escape Sequences

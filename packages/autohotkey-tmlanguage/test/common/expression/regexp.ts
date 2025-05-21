@@ -1,5 +1,6 @@
 import { dedent } from '@zero-plusplus/utilities/src';
 import * as constants_v1 from '../../../src/autohotkeyl/constants';
+import * as constants_common from '../../../src/common/constants';
 import { RuleDescriptor, RuleName, StyleName, TokenType } from '../../../src/constants';
 import type { ScopeName } from '../../../src/types';
 import { name } from '../../../src/utils';
@@ -298,7 +299,7 @@ export function createRegExpExpectedData(scopeName: ScopeName, placeholder: Plac
         var ~= ${q}\\$[\\$]${q}
         var ~= ${q}\\\\[\\\\]${q}
       `, [
-        ...constants_v1.regexpEscapeSequences.flatMap((escapeSequence): ParsedResult[] => {
+        ...constants_common.regexpEscapeSequences.flatMap((escapeSequence): ParsedResult[] => {
           return [
             { text: 'var', scopes: name(scopeName, RuleName.Variable) },
             { text: '~=', scopes: name(scopeName, RuleName.Operator) },

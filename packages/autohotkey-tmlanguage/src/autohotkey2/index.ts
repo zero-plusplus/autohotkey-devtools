@@ -482,7 +482,7 @@ export function createRepositories(scopeName: ScopeName, placeholder?: Placehold
       commonContentRepository: Repository.DoubleStringAsRegExpCommonContent,
     }),
     [Repository.DoubleStringAsRegExpCommonContent]: rule_v1.createRegExpCommonContentRule(scopeName, {
-      regexpEscapeSequences: constants_v1.regexpEscapeSequences,
+      regexpEscapeSequences: constants_common.regexpEscapeSequences,
       stringEscapeSequences: constants_v2.doubleQuoteEscapeSequences,
       pcreUnicodePropertyCodes: constants_v1.pcreUnicodePropertyCodes,
       pcreUnicodePropertyScripts: constants_v1.pcreUnicodePropertyScripts,
@@ -500,7 +500,7 @@ export function createRepositories(scopeName: ScopeName, placeholder?: Placehold
       commonContentRepository: Repository.SingleStringAsRegExpCommonContent,
     }),
     [Repository.SingleStringAsRegExpCommonContent]: rule_v1.createRegExpCommonContentRule(scopeName, {
-      regexpEscapeSequences: constants_v1.regexpEscapeSequences,
+      regexpEscapeSequences: constants_common.regexpEscapeSequences,
       stringEscapeSequences: constants_v2.singleQuoteEscapeSequences,
       pcreUnicodePropertyCodes: constants_v1.pcreUnicodePropertyCodes,
       pcreUnicodePropertyScripts: constants_v1.pcreUnicodePropertyScripts,

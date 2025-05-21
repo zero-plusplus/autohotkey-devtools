@@ -309,7 +309,7 @@ export const expressionKeywords = [
 
 // #region regexp
 export const regexpOptions = [ 'i', 'm', 's', 'x', 'A', 'D', 'J', 'U', 'X', 'S', 'C', '`a', '`n', '`r' ] as const;
-export const commonRegexpEscapeSequences = [ '\\.', '\\*', '\\?', '\\+', '\\[', '\\{', '\\|', '\\(', '\\)', '\\^', '\\$', '\\\\' ] as const;
+export const regexpEscapeSequences = [ '\\.', '\\*', '\\?', '\\+', '\\[', '\\{', '\\|', '\\(', '\\)', '\\^', '\\$', '\\\\' ] as const;
 export const commonPcreUnicodeProperyCodes = [
   // https://www.autohotkey.com/docs/v1/misc/RegEx-QuickRef.htm#slashP
   // https://www.autohotkey.com/docs/v2/misc/RegEx-QuickRef.htm#slashP

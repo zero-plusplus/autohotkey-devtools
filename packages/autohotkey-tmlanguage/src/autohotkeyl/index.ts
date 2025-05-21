@@ -415,7 +415,7 @@ export function createRepositories(scopeName: ScopeName): Repositories {
       commonContentRepository: Repository.DoubleStringAsRegExpCommonContent,
     }),
     [Repository.DoubleStringAsRegExpCommonContent]: rule_v1.createRegExpCommonContentRule(scopeName, {
-      regexpEscapeSequences: constants_v1.regexpEscapeSequences,
+      regexpEscapeSequences: constants_common.regexpEscapeSequences,
       stringEscapeSequences: constants_v1.doubleQuoteEscapeSequences,
       pcreUnicodePropertyCodes: constants_v1.pcreUnicodePropertyCodes,
       pcreUnicodePropertyScripts: constants_v1.pcreUnicodePropertyScripts,
