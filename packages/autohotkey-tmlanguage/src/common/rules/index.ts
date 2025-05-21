@@ -1,3 +1,4 @@
+export * from './expression/identifier';
 export * from './expression/number';
 export * from './expression/object';
 export * from './expression/operator';

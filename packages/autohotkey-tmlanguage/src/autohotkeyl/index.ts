@@ -257,26 +257,26 @@ export function createRepositories(scopeName: ScopeName): Repositories {
       includeRule(Repository.UserDefinedVariable),
       includeRule(Repository.InvalidVariable),
     ),
-    [Repository.ConstantLikeVariable]: rule_v1.createVariableRule(scopeName, {
+    [Repository.ConstantLikeVariable]: rules_common.createVariableRule(scopeName, {
       ruleName: RuleName.ConstantLikeVariable,
       nameHeadChar: patterns_v1.nameStart_upper,
       nameBodyChar: patterns_v1.nameBody_upper,
     }),
-    [Repository.UserDefinedVariable]: rule_v1.createVariableRule(scopeName, {
+    [Repository.UserDefinedVariable]: rules_common.createVariableRule(scopeName, {
       ruleName: RuleName.Variable,
       nameHeadChar: patterns_v1.nameStart,
       nameBodyChar: patterns_v1.nameBody,
     }),
-    [Repository.InvalidVariable]: rule_v1.createInvalidVariableRule(scopeName, {
+    [Repository.InvalidVariable]: rules_common.createInvalidVariableRule(scopeName, {
       ruleName: RuleName.Variable,
       nameHeadChar: patterns_v1.nameStart,
       nameBodyChar: patterns_v1.nameBody,
     }),
-    [Repository.KeywordLikeBuiltInVariable]: rule_v1.createBuiltinVariableRule(scopeName, {
+    [Repository.KeywordLikeBuiltInVariable]: rules_common.createBuiltinVariableRule(scopeName, {
       variableRuleName: RuleName.KeywordLikeBuiltInVariable,
       builtinVariables: constants_v1.keywordLikeBuiltinVariables,
     }),
-    [Repository.BuiltInVariable]: rule_v1.createBuiltinVariableRule(scopeName, {
+    [Repository.BuiltInVariable]: rules_common.createBuiltinVariableRule(scopeName, {
       variableRuleName: RuleName.BuiltInVariable,
       builtinVariables: constants_v1.builtinVaribles,
     }),
@@ -284,7 +284,7 @@ export function createRepositories(scopeName: ScopeName): Repositories {
       keywordRuleName: RuleName.MetaFunctionName,
       keywords: [ '__NEW', '__DELETE', '__GET', '__SET', '__CALL' ],
     }),
-    [Repository.FunctionName]: rule_v1.createVariableRule(scopeName, {
+    [Repository.FunctionName]: rules_common.createVariableRule(scopeName, {
       ruleName: RuleName.FunctionName,
       nameHeadChar: patterns_v1.nameStart,
       nameBodyChar: patterns_v1.nameBody,
@@ -497,7 +497,7 @@ export function createRepositories(scopeName: ScopeName): Repositories {
       scopeName,
       constants_common.compilerDirectiveEscapeSequences,
     ),
-    [Repository.BuiltInVariableInCompilerDirective]: rule_v1.createBuiltinVariableRule(scopeName, {
+    [Repository.BuiltInVariableInCompilerDirective]: rules_common.createBuiltinVariableRule(scopeName, {
       variableRuleName: RuleName.KeywordLikeBuiltInVariable,
       builtinVariables: constants_common.compilerDirectiveVariables,
     }),

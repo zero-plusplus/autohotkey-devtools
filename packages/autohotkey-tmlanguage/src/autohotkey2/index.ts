@@ -285,30 +285,30 @@ export function createRepositories(scopeName: ScopeName, placeholder?: Placehold
       includeRule(Repository.ConstantLikeVariable),
       includeRule(Repository.UserDefinedVariable),
     ),
-    [Repository.ConstantLikeVariable]: rule_v1.createVariableRule(scopeName, {
+    [Repository.ConstantLikeVariable]: rule_common.createVariableRule(scopeName, {
       ruleName: RuleName.ConstantLikeVariable,
       nameHeadChar: patterns_v2.nameStart_upper,
       nameBodyChar: patterns_v2.nameBody_upper,
     }),
-    [Repository.UserDefinedVariable]: rule_v1.createVariableRule(scopeName, {
+    [Repository.UserDefinedVariable]: rule_common.createVariableRule(scopeName, {
       ruleName: RuleName.Variable,
       nameHeadChar: patterns_v2.nameStart,
       nameBodyChar: patterns_v2.nameBody,
     }),
-    [Repository.InvalidVariable]: rule_v1.createInvalidVariableRule(scopeName, {
+    [Repository.InvalidVariable]: rule_common.createInvalidVariableRule(scopeName, {
       ruleName: RuleName.Variable,
       nameHeadChar: patterns_v2.nameStart,
       nameBodyChar: patterns_v2.nameBody,
     }),
-    [Repository.KeywordLikeBuiltInVariable]: rule_v1.createBuiltinVariableRule(scopeName, {
+    [Repository.KeywordLikeBuiltInVariable]: rule_common.createBuiltinVariableRule(scopeName, {
       variableRuleName: RuleName.KeywordLikeBuiltInVariable,
       builtinVariables: constants_v2.keywordLikeBuiltinVariables,
     }),
-    [Repository.BuiltInVariable]: rule_v1.createBuiltinVariableRule(scopeName, {
+    [Repository.BuiltInVariable]: rule_common.createBuiltinVariableRule(scopeName, {
       variableRuleName: RuleName.BuiltInVariable,
       builtinVariables: placeholder?.builtinVaribles ?? constants_v2.builtinVaribles,
     }),
-    [Repository.BuiltInClass]: rule_v1.createBuiltinVariableRule(scopeName, {
+    [Repository.BuiltInClass]: rule_common.createBuiltinVariableRule(scopeName, {
       variableRuleName: RuleName.ClassName,
       builtinVariables: placeholder?.builtInClassNames ?? constants_v2.builtInClassNames,
     }),
@@ -316,7 +316,7 @@ export function createRepositories(scopeName: ScopeName, placeholder?: Placehold
       keywords: [ '__NEW', '__DELETE', '__ENUM', '__GET', '__SET', '__CALL' ],
       keywordRuleName: RuleName.MetaFunctionName,
     }),
-    [Repository.FunctionName]: rule_v1.createVariableRule(scopeName, {
+    [Repository.FunctionName]: rule_common.createVariableRule(scopeName, {
       ruleName: RuleName.FunctionName,
       nameHeadChar: patterns_v2.nameStart,
       nameBodyChar: patterns_v2.nameBody,
@@ -541,7 +541,7 @@ export function createRepositories(scopeName: ScopeName, placeholder?: Placehold
       scopeName,
       constants_common.compilerDirectiveEscapeSequences,
     ),
-    [Repository.BuiltInVariableInCompilerDirective]: rule_v1.createBuiltinVariableRule(scopeName, {
+    [Repository.BuiltInVariableInCompilerDirective]: rule_common.createBuiltinVariableRule(scopeName, {
       variableRuleName: RuleName.KeywordLikeBuiltInVariable,
       builtinVariables: constants_common.compilerDirectiveVariables,
     }),
