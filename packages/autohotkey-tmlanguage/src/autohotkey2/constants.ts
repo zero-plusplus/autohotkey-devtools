@@ -8,13 +8,11 @@ export const singleQuoteEscapeSequences: [ ...typeof unquoteEscapeSequences, '`\
 
 // #region [Operators](https://www.autohotkey.com/docs/v2/Variables.htm#Operators)
 export const expressionOperators: readonly [
-  ...typeof constants_common.expressionOperatorsWithoutAssignment,
-  ... typeof constants_common.assignmentOperators,
+  ...typeof constants_common.expressionOperators,
   '=>',
   '??',
 ] = [
-  ...constants_common.expressionOperatorsWithoutAssignment,
-  ...constants_common.assignmentOperators,
+  ...constants_common.expressionOperators,
   '=>', // `(args*) => expression`
   '??', // `a ?? b`
 ] as const;

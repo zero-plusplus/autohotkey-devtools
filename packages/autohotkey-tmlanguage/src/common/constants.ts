@@ -268,8 +268,15 @@ export const assignmentOperators = [
   '<<=', // e.g. `a <<= 1`
   '>>>=', // e.g. `a >>>= 1`
 ] as const;
-
-export const expressionOperatorsWithoutAssignment = [
+export const comparisonOperators = [
+  '>', // e.g. `1 > 1`
+  '>=', // e.g. `1 >= 1`
+  '<', // e.g. `1 < 1`
+  '<=', // e.g. `1 <= 1`
+  '=', // e.g. `1 = 1`
+  '==', // e.g. `1 == 1`
+] as const;
+export const arithmeticOperators = [
   '+', // e.g. `+1`, `1 + 1`
   '++', // e.g. `++1`, `1++`
   '-', // e.g. `-1`, `1 - 1`
@@ -278,7 +285,8 @@ export const expressionOperatorsWithoutAssignment = [
   '**', // e.g. `1 ** 1`
   '/', // e.g. `1 / 1`
   '//', // e.g. `1 // 1`
-  '.', // e.g. `1 . 1`, `obj.member`
+] as const;
+export const bitwiseOperators = [
   '~', // e.g. `~1`
   '&', // e.g. `&var`, `1 & 1`
   '|', // e.g. `1 | 1`
@@ -286,20 +294,37 @@ export const expressionOperatorsWithoutAssignment = [
   '<<', // e.g. `1 << 1`
   '>>', // e.g. `1 >> 1`
   '>>>', // e.g. `1 >>> 1`
+] as const;
+export const logicalOperators = [
   '!', // e.g. `!expression`
   '&&', // e.g. `1 && 1`
   '||', // e.g. `1 || 1`
-  '>', // e.g. `1 > 1`
-  '>=', // e.g. `1 >= 1`
-  '<', // e.g. `1 < 1`
-  '<=', // e.g. `1 <= 1`
-  '=', // e.g. `1 = 1`
-  '==', // e.g. `1 == 1`
-  '?', // e.g. `a ? b : c`, `a?.b`
-  ':', // e.g. `a ? b : c`
+] as const;
+export const stringOperators = [
+  '.', // e.g. `1 . 1`, `obj.member`
   '~=', // e.g. value ~= "i)abc"
 ] as const;
-
+export const ternaryOperator = [
+  '?', // e.g. `a ? b : c`, `a?.b`
+  ':', // e.g. `a ? b : c`
+] as const;
+export const expressionOperators: [
+  ...typeof assignmentOperators,
+  ...typeof comparisonOperators,
+  ...typeof arithmeticOperators,
+  ...typeof bitwiseOperators,
+  ...typeof logicalOperators,
+  ...typeof stringOperators,
+  ...typeof ternaryOperator,
+] = [
+  ...assignmentOperators,
+  ...comparisonOperators,
+  ...arithmeticOperators,
+  ...bitwiseOperators,
+  ...logicalOperators,
+  ...stringOperators,
+  ...ternaryOperator,
+] as const;
 export const expressionKeywords = [
   'NOT', // e.g. `not expression`
   'AND', // e.g. `1 and 1`

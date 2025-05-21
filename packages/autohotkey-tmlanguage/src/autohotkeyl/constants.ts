@@ -7,12 +7,10 @@ export const doubleQuoteEscapeSequences: [ '""', ...typeof unquoteEscapeSequence
 
 // #region [Operators](https://www.autohotkey.com/docs/v1/Variables.htm#Operators)
 export const expressionOperators: [
-  ...typeof constants_common.expressionOperatorsWithoutAssignment,
-  ...typeof constants_common.assignmentOperators,
+  ...typeof constants_common.expressionOperators,
   '<>',
 ] = [
-  ...constants_common.expressionOperatorsWithoutAssignment,
-  ...constants_common.assignmentOperators,
+  ...constants_common.expressionOperators,
   '<>', // e.g. `1 <> 1` Deprecated
 ] as const;
 export const continuationOperators: string[] = [
