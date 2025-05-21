@@ -352,7 +352,7 @@ export const pcreUnicodePropertyCodes = [
   'Zp', // Paragraph separator
   'Zs', // Space separator
 ] as const;
-export const commonPcreUnicodeProperyScripts = [
+export const pcreUnicodePropertyScripts = [
   'Common',
 
   'Arabic',

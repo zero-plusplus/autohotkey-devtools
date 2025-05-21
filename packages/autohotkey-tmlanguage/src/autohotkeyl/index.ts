@@ -418,7 +418,7 @@ export function createRepositories(scopeName: ScopeName): Repositories {
       regexpEscapeSequences: constants_common.regexpEscapeSequences,
       stringEscapeSequences: constants_v1.doubleQuoteEscapeSequences,
       pcreUnicodePropertyCodes: constants_common.pcreUnicodePropertyCodes,
-      pcreUnicodePropertyScripts: constants_v1.pcreUnicodePropertyScripts,
+      pcreUnicodePropertyScripts: constants_common.pcreUnicodePropertyScripts,
     }),
     // #endregion regexp
 

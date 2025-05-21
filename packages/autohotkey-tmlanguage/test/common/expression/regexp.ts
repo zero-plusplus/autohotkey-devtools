@@ -1,5 +1,4 @@
 import { dedent } from '@zero-plusplus/utilities/src';
-import * as constants_v1 from '../../../src/autohotkeyl/constants';
 import * as constants_common from '../../../src/common/constants';
 import { RuleDescriptor, RuleName, StyleName, TokenType } from '../../../src/constants';
 import type { ScopeName } from '../../../src/types';
@@ -197,7 +196,7 @@ export function createRegExpExpectedData(scopeName: ScopeName, placeholder: Plac
         { text: q, scopes: name(scopeName, RuleName.RegExpString, RuleDescriptor.End) },
       ],
     ],
-    ...[ ...constants_common.pcreUnicodePropertyCodes, ...constants_v1.pcreUnicodePropertyScripts ].map((code): ExpectedTestData => {
+    ...[ ...constants_common.pcreUnicodePropertyCodes, ...constants_common.pcreUnicodePropertyScripts ].map((code): ExpectedTestData => {
       return [
         dedent`
           var ~= ${q}\\p{${code}}${q}
