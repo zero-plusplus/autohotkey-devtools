@@ -248,7 +248,7 @@ export function createRepositories(scopeName: ScopeName): Repositories {
     ),
     [Repository.ParenthesizedExpression]: rule_v1.createParenthesizedExpressionRule(scopeName),
 
-    // #region variable
+    // #region identifier
     [Repository.Variable]: patternsRule(
       includeRule(Repository.KeywordLikeBuiltInVariable),
       includeRule(Repository.BuiltInVariable),
@@ -279,7 +279,20 @@ export function createRepositories(scopeName: ScopeName): Repositories {
       ruleName: RuleName.FunctionName,
       identifierPattern: patterns_v1.identifierPattern,
     }),
-    // #endregion variable
+    [Repository.KeywordInExpression]: rules_common.createReservedIdentifierRule(scopeName, {
+      ruleName: RuleName.KeywordInExpression,
+      identifiers: [
+        'new',
+        ...constants_common.expressionKeywords,
+
+        // #region The following are not exactly keywords in the expression, but are defined here as keywords because it is more convenient for the TMLanguage mechanism
+        // for key, value in obj
+        //                ^^
+        'in',
+        // #endregion
+      ],
+    }),
+    // #endregion identifier
 
     // #region access
     [Repository.Dereference]: rule_v1.createDereferenceRule(scopeName),
@@ -330,24 +343,11 @@ export function createRepositories(scopeName: ScopeName): Repositories {
     // #endregion number
     // #endregion literal
 
-    // #region token, keyword
+    // #region operator
     ...rules_common.createOperatorRepositories(scopeName, {
       expressionOperators: constants_v1.expressionOperators,
     }),
-    [Repository.KeywordInExpression]: rules_common.createReservedIdentifierRule(scopeName, {
-      ruleName: RuleName.KeywordInExpression,
-      identifiers: [
-        'new',
-        ...constants_common.expressionKeywords,
-
-        // #region The following are not exactly keywords in the expression, but are defined here as keywords because it is more convenient for the TMLanguage mechanism
-        // for key, value in obj
-        //                ^^
-        'in',
-        // #endregion
-      ],
-    }),
-    // #endregion token, keyword
+    // #endregion operator
 
     // #region regexp
     [Repository.ShorthandRegexpMatch]: rule_v1.createShorthandRegExpMatchRule(scopeName, {

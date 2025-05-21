@@ -276,7 +276,7 @@ export function createRepositories(scopeName: ScopeName, placeholder?: Placehold
     ),
     [Repository.ParenthesizedExpression]: rule_v2.createParenthesizedExpressionRule(scopeName),
 
-    // #region variable
+    // #region identifier
     [Repository.Variable]: patternsRule(
       includeRule(Repository.KeywordLikeBuiltInVariable),
       includeRule(Repository.BuiltInClass),
@@ -316,7 +316,22 @@ export function createRepositories(scopeName: ScopeName, placeholder?: Placehold
       ruleName: RuleName.MetaFunctionName,
       identifiers: [ '__ITEM' ],
     }),
-    // #endregion variable
+    [Repository.KeywordInExpression]: rule_common.createReservedIdentifierRule(scopeName, {
+      ruleName: RuleName.KeywordInExpression,
+      identifiers: [
+        ...constants_v2.expressionKeywords,
+
+        // #region The following are not exactly keywords in the expression, but are defined here as keywords because it is more convenient for the TMLanguage mechanism
+        // for key, value in obj
+        //                ^^
+        'in',
+        // catch Error as err
+        //             ^^
+        'as',
+        // #endregion
+      ],
+    }),
+    // #endregion identifier
 
     // #region access
     [Repository.Dereference]: rule_v2.createDereferenceRule(scopeName),
@@ -373,26 +388,11 @@ export function createRepositories(scopeName: ScopeName, placeholder?: Placehold
     // #endregion number
     // #endregion literal
 
-    // #region token, keyword
+    // #region operator
     ...rule_common.createOperatorRepositories(scopeName, {
       expressionOperators: constants_v2.expressionOperators,
     }),
-    [Repository.KeywordInExpression]: rule_common.createReservedIdentifierRule(scopeName, {
-      ruleName: RuleName.KeywordInExpression,
-      identifiers: [
-        ...constants_v2.expressionKeywords,
-
-        // #region The following are not exactly keywords in the expression, but are defined here as keywords because it is more convenient for the TMLanguage mechanism
-        // for key, value in obj
-        //                ^^
-        'in',
-        // catch Error as err
-        //             ^^
-        'as',
-        // #endregion
-      ],
-    }),
-    // #endregion token, keyword
+    // #endregion operator
 
     // #region regexp
     [Repository.ShorthandRegexpMatch]: patternsRule(
