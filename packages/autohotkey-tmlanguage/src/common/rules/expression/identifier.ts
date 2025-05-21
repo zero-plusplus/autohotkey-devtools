@@ -1,7 +1,7 @@
 import { RuleName, StyleName } from '../../../constants';
 import {
-  capture, char, escapeOnigurumaTexts, ignoreCase, lookahead, lookbehind, many1,
-  manyRange, negativeLookbehind, optional, ordalt, seq, wordBound,
+  capture, char, ignoreCase, lookahead, lookbehind, negativeLookbehind, optional, seq,
+  textalt, wordBound,
 } from '../../../oniguruma';
 import type { MatchRule, ScopeName } from '../../../types';
 import { nameRule } from '../../../utils';
@@ -23,23 +23,6 @@ export function createIdentifierRule(scopeName: ScopeName, placeholder: Placehol
     },
   };
 }
-interface Placeholder_Invalid {
-  ruleName: RuleName;
-  nameHeadChar: string;
-  nameBodyChar: string;
-}
-export function createInvalidVariableRule(scopeName: ScopeName, placeholder: Placeholder_Invalid): MatchRule {
-  return {
-    match: seq(
-      capture(seq(placeholder.nameHeadChar, manyRange(placeholder.nameBodyChar, 252))),
-      capture(many1(placeholder.nameBodyChar)),
-    ),
-    captures: {
-      1: nameRule(scopeName, placeholder.ruleName),
-      2: nameRule(scopeName, placeholder.ruleName, StyleName.Invalid),
-    },
-  };
-}
 
 interface Placeholder_BuiltIn {
   variableRuleName: RuleName;
@@ -47,12 +30,12 @@ interface Placeholder_BuiltIn {
 }
 export function createBuiltinVariableRule(scopeName: ScopeName, placeholder: Placeholder_BuiltIn): MatchRule {
   return {
-    match: ignoreCase(seq(
+    match: seq(
       lookbehind(wordBound()),
       negativeLookbehind(char('.')),
-      capture(ordalt(...escapeOnigurumaTexts(placeholder.builtinVariables))),
+      capture(ignoreCase(textalt(...placeholder.builtinVariables))),
       lookahead(wordBound()),
-    )),
+    ),
     captures: {
       1: nameRule(scopeName, placeholder.variableRuleName),
     },
