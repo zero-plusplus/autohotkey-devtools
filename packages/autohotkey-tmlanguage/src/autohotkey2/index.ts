@@ -103,28 +103,28 @@ export function createRepositories(scopeName: ScopeName, placeholder?: Placehold
       includeRule(Repository.ThrowStatement),
     ),
     [Repository.RequiresStatement]: rule_v1.createRequiresStatementRule(scopeName, {
-      startAnchor: patterns_v1.statementStartAnchor,
+      startAnchor: patterns_v2.statementStartAnchor,
       expressionOperators: constants_v2.expressionOperators,
       endAnchor: patterns_v1.lineEndAnchor,
     }),
     [Repository.IncludeStatement]: rule_v1.createIncludeStatementRule(scopeName, {
-      startAnchor: patterns_v1.statementStartAnchor,
+      startAnchor: patterns_v2.statementStartAnchor,
       expressionOperators: constants_v2.expressionOperators,
       endAnchor: patterns_v1.lineEndAnchor,
     }),
     [Repository.DirectiveStatement]: rule_v1.createCommandLikeStatementRule(scopeName, definition_v2.directiveDefinitions, {
-      startAnchor: patterns_v1.statementStartAnchor,
+      startAnchor: patterns_v2.statementStartAnchor,
       endAnchor: patterns_v1.lineEndAnchor,
       commandElementName: RuleName.DirectiveName,
     }),
     [Repository.JumpStatement]: rule_v1.createJumpStatement(scopeName, {
-      startAnchor: patterns_v1.statementStartAnchor,
+      startAnchor: patterns_v2.statementStartAnchor,
       assignmentOperators: constants_common.assignmentOperators,
       endAnchor: patterns_v1.lineEndAnchor,
       identifierPattern: ordalt('Exit', 'ExitApp', 'Return'),
     }),
     [Repository.JumpToLabelStatement]: rule_v1.createJumpToLabelStatement(scopeName, {
-      startAnchor: patterns_v1.statementStartAnchor,
+      startAnchor: patterns_v2.statementStartAnchor,
       endAnchor: patterns_v1.lineEndAnchor,
       names: [
         'Break',
@@ -135,11 +135,11 @@ export function createRepositories(scopeName: ScopeName, placeholder?: Placehold
       labelPattern: patterns_v2.identifierPattern,
     }),
     [Repository.HotstringLabelStatement]: rule_v1.createHotstringLabelRule(scopeName, {
-      startAnchor: patterns_v1.statementStartAnchor,
+      startAnchor: patterns_v2.statementStartAnchor,
       endAnchor: patterns_v1.lineEndAnchor,
     }),
     [Repository.HotkeyLabelStatement]: rule_v1.createHotkeyLabelRule(scopeName, {
-      startAnchor: patterns_v1.statementStartAnchor,
+      startAnchor: patterns_v2.statementStartAnchor,
     }),
     [Repository.LabelStatement]: rule_v1.createLabelRule(scopeName, {
       startAnchor: patterns_common.lineStartAnchor,
@@ -147,31 +147,31 @@ export function createRepositories(scopeName: ScopeName, placeholder?: Placehold
     }),
 
     [Repository.IfStatement]: rule_v1.createIfStatementRule(scopeName, {
-      startAnchor: patterns_v1.statementStartAnchor,
+      startAnchor: patterns_v2.statementStartAnchor,
     }),
     [Repository.SwitchStatement]: rule_v1.createSwitchStatementRule(scopeName, {
-      startAnchor: patterns_v1.statementStartAnchor,
+      startAnchor: patterns_v2.statementStartAnchor,
       endAnchor: patterns_v1.lineEndAnchor,
       identifierPattern: patterns_v2.identifierPattern,
     }),
     [Repository.WhileStatement]: rule_v1.createWhileStatementRule(scopeName, {
-      startAnchor: patterns_v1.statementStartAnchor,
+      startAnchor: patterns_v2.statementStartAnchor,
     }),
     [Repository.LoopStatement]: rule_v2.createLoopStatementRule(scopeName, {
-      startAnchor: patterns_v1.statementStartAnchor,
+      startAnchor: patterns_v2.statementStartAnchor,
       endAnchor: patterns_v1.controlFlowEndAnchor,
     }),
     [Repository.UntilStatement]: rule_v1.createUntilStatementRule(scopeName, {
-      startAnchor: patterns_v1.statementStartAnchor,
+      startAnchor: patterns_v2.statementStartAnchor,
     }),
     [Repository.ForStatement]: rule_v1.createForStatementRule(scopeName, {
-      startAnchor: patterns_v1.statementStartAnchor,
+      startAnchor: patterns_v2.statementStartAnchor,
     }),
     [Repository.TryStatement]: rule_v1.createTryStatementRule(scopeName, {
-      startAnchor: patterns_v1.statementStartAnchor,
+      startAnchor: patterns_v2.statementStartAnchor,
     }),
     [Repository.ThrowStatement]: rule_v1.createThrowStatementRule(scopeName, {
-      startAnchor: patterns_v1.statementStartAnchor,
+      startAnchor: patterns_v2.statementStartAnchor,
       assignmentOperators: constants_common.assignmentOperators,
     }),
     [Repository.CallStatement]: patternsRule(
@@ -181,13 +181,13 @@ export function createRepositories(scopeName: ScopeName, placeholder?: Placehold
     [Repository.BuiltInCallStatement]: patternsRule(
       rule_common.createCallStatementRule(scopeName, {
         commandRuleName: RuleName.FunctionName,
-        startAnchor: patterns_v1.statementStartAnchor,
+        startAnchor: patterns_v2.statementStartAnchor,
         identifierPattern: ordalt(...(placeholder?.builtInFunctionNames ?? constants_v2.builtInFunctionNames)),
         assignmentOperators: constants_v2.expressionOperators,
       }),
       rule_common.createCallStatementRule(scopeName, {
         commandRuleName: RuleName.FunctionName,
-        startAnchor: patterns_v1.statementStartAnchor,
+        startAnchor: patterns_v2.statementStartAnchor,
         identifierPattern: ordalt(...(placeholder?.deprecatedBuiltinFunctionNames ?? constants_v2.deprecatedBuiltinFunctionNames)),
         assignmentOperators: constants_v2.expressionOperators,
         isDeprecated: true,
@@ -195,7 +195,7 @@ export function createRepositories(scopeName: ScopeName, placeholder?: Placehold
     ),
     [Repository.UserDefinedCallStatement]: rule_common.createCallStatementRule(scopeName, {
       commandRuleName: RuleName.FunctionName,
-      startAnchor: patterns_v1.statementStartAnchor,
+      startAnchor: patterns_v2.statementStartAnchor,
       identifierPattern: patterns_v2.identifierPattern,
       assignmentOperators: constants_v2.expressionOperators,
     }),
@@ -214,11 +214,11 @@ export function createRepositories(scopeName: ScopeName, placeholder?: Placehold
       includeRule(Repository.Block),
     ),
     [Repository.Modifier]: rule_v1.createModifierRule(scopeName, {
-      startAnchor: patterns_v1.statementStartAnchor,
+      startAnchor: patterns_v2.statementStartAnchor,
       modifiers: constants_common.accessModifiers,
     }),
     [Repository.AssignmentDeclaration]: rule_v1.createAssignmentDeclarationRule(scopeName, {
-      startAnchor: patterns_v1.statementStartAnchor,
+      startAnchor: patterns_v2.statementStartAnchor,
       namePattern: patterns_v2.looseLeftHandPattern,
       operators: constants_common.assignmentOperators,
     }),
@@ -226,7 +226,7 @@ export function createRepositories(scopeName: ScopeName, placeholder?: Placehold
       statementsInBlock: [ includeRule(Repository.Self) ],
     }),
     [Repository.ClassDeclaration]: rule_v1.createClassDeclarationRule(scopeName, {
-      startAnchor: patterns_v1.statementStartAnchor,
+      startAnchor: patterns_v2.statementStartAnchor,
       endAnchor: patterns_v1.lineEndAnchor,
       identifierPattern: patterns_v2.identifierPattern,
       rulesInBody: [

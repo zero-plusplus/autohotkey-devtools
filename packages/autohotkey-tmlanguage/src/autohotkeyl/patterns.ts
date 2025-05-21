@@ -37,7 +37,6 @@ export const looseCallableNamePattern: string = seq(
 export const statementStartAnchor: string = alt(
   lineStartAnchor,
   reluctant(seq(lineStartAnchor, inlineSpaces0(), groupMany1(alt(negChar(':', seq(char('`'), char(':'))))), text('::'), inlineSpaces0())),
-  // seq(lineStartAnchor, inlineSpaces0(), char(':'), negChars0(':'), char(':'), reluctant(groupMany1(alt(negChar(':', seq(char(':'), negativeLookahead(':')))))), text('::'), inlineSpaces0()),
   seq(lineStartAnchor, inlineSpaces0(), identifierPattern, char(':'), inlineSpaces0()),
   seq(lineStartAnchor, inlineSpaces0(), char('}')),
 );

@@ -1,16 +1,10 @@
+import * as constants_common from '../common/patterns';
 import {
-  alt, anyChars1, char, escapeOnigurumaTexts, group, manyLimit, manyXtoY, optional, ordalt,
-  seq, text, wordChar,
+  alt, anyChars1, char, escapeOnigurumaTexts, group, groupMany1, inlineSpaces0, manyLimit, manyXtoY, negChar,
+  optional, ordalt, reluctant, seq, text, wordChar,
 } from '../oniguruma';
 import * as constants_v2 from './constants';
 
-export const expressionContinuationStartAnchor: string = group(ordalt(
-  ...escapeOnigurumaTexts(constants_v2.continuationOperators),
-  char('('),
-));
-
-export const unescapedDoubleQuotePattern: string = text('`"');
-export const unescapedSingleQuotePattern: string = text('`\'');
 
 // #region [Names](https://www.autohotkey.com/docs/v2/Concepts.htm#names)
 export const nameLimitLength = 253;
@@ -35,3 +29,17 @@ export const looseLeftHandPattern: string = manyXtoY(1, nameLimitLength)(group(a
   nameBody,
   char('%', '[', ']', '.'),
 )));
+export const expressionContinuationStartAnchor: string = group(ordalt(
+  ...escapeOnigurumaTexts(constants_v2.continuationOperators),
+  char('('),
+));
+export const statementStartAnchor: string = alt(
+  constants_common.lineStartAnchor,
+  reluctant(seq(constants_common.lineStartAnchor, inlineSpaces0(), groupMany1(alt(negChar(':', seq(char('`'), char(':'))))), text('::'), inlineSpaces0())),
+  seq(constants_common.lineStartAnchor, inlineSpaces0(), identifierPattern, char(':'), inlineSpaces0()),
+  seq(constants_common.lineStartAnchor, inlineSpaces0(), char('}')),
+);
+
+export const unescapedDoubleQuotePattern: string = text('`"');
+export const unescapedSingleQuotePattern: string = text('`\'');
+
