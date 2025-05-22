@@ -245,10 +245,12 @@ export function createRepositories(scopeName: ScopeName): Repositories {
     [Repository.ConstantLikeVariable]: rules_common.createIdentifierRule(scopeName, {
       ruleName: RuleName.ConstantLikeVariable,
       identifierPattern: patterns_v1.upperIdentifierPattern,
+      endAnchor: patterns_v1.identifierEndAnchor,
     }),
     [Repository.UserDefinedVariable]: rules_common.createIdentifierRule(scopeName, {
       ruleName: RuleName.Variable,
       identifierPattern: patterns_v1.identifierPattern,
+      endAnchor: patterns_v1.identifierEndAnchor,
     }),
     [Repository.KeywordLikeBuiltInVariable]: rules_common.createReservedIdentifierRule(scopeName, {
       ruleName: RuleName.KeywordLikeBuiltInVariable,

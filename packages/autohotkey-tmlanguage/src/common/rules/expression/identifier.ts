@@ -9,13 +9,14 @@ import { nameRule } from '../../../utils';
 interface Placeholder_IdentifierRule {
   ruleName: RuleName;
   identifierPattern: string;
+  endAnchor?: string;
 }
 export function createIdentifierRule(scopeName: ScopeName, placeholder: Placeholder_IdentifierRule): MatchRule {
   return {
     match: seq(
       capture(placeholder.identifierPattern),
       optional(capture(placeholder.identifierPattern)),
-      lookahead(wordBound()),
+      lookahead(placeholder.endAnchor ?? wordBound()),
     ),
     captures: {
       1: nameRule(scopeName, placeholder.ruleName),

@@ -18,6 +18,9 @@ export function createVariableExpectedData(scopeName: ScopeName): ExpectedTestDa
     ...common.createVariableExpectedData(scopeName, {
       ruleName: RuleName.Variable,
       variables: [
+        '$',
+        '#',
+        '@',
         'var',
         '$#@_var123',
         'v'.repeat(253),

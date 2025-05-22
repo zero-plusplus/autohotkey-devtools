@@ -2,22 +2,26 @@ import { lineStartAnchor } from '../common/patterns';
 import {
   alt, anyChar, anyChars1, char, endAnchor, escapeOnigurumaTexts, group, groupMany0, groupMany1, inlineSpace,
   inlineSpaces0, inlineSpaces1, lookahead, manyLimit, manyRange, negativeLookahead, negativeLookbehind, negChar,
-  negChars0, optional, ordalt, reluctant, seq, text, wordChar,
+  negChars0, number, optional, ordalt, reluctant, seq, text, wordChar,
 } from '../oniguruma';
 import * as constants_v1 from './constants';
 
 // #region [Names](https://www.autohotkey.com/docs/v1/Concepts.htm#names)
 const nameLimitLength = 253;
-const numberChar = '\\d';
 const sign = char('_', '#', '@', '$');
 
 export const nameStart: string = group(alt(wordChar(), sign));
-export const nameBody: string = group(alt(wordChar(), sign, numberChar));
+export const nameBody: string = group(alt(wordChar(), sign, number()));
 export const identifierPattern: string = group(seq(nameStart, manyLimit(nameBody, nameLimitLength - 1)));
 
 export const nameStart_upper: string = group('[A-Z_]');
 export const nameBody_upper: string = group('[A-Z_]');
 export const upperIdentifierPattern: string = group(seq(nameStart_upper, manyLimit(nameBody_upper, nameLimitLength - 1)));
+export const identifierEndAnchor: string = group(alt(
+  negChar(wordChar(), number(), '_', '#', '@', '$'),
+  inlineSpace(),
+  endAnchor(),
+));
 
 export const keyName: string = group(alt(
   group(seq(char('%'), anyChars1(), char('%'))),
