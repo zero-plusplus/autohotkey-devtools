@@ -5,7 +5,8 @@ import { CommandFlag, HighlightType, Repository, RuleName, StyleName } from '../
 import {
   alt, anyChar, anyChars0, anyChars1, capture, char, chars1, endAnchor, group, groupMany0, groupMany1,
   ignoreCase, inlineSpace, inlineSpaces0, inlineSpaces1, keyword, lookahead, lookbehind, negativeLookahead,
-  negChar, negChars0, negChars1, numbers1, optional, optseq, ordalt, reluctant, seq, text, textalt, wordBound, wordChars0, wordChars1,
+  negativeLookbehind, negChar, negChars0, negChars1, numbers1, optional, optseq, ordalt, reluctant, seq, text,
+  textalt, wordBound, wordChars0, wordChars1,
 } from '../../../oniguruma';
 import type {
   BeginWhileRule, CommandDefinition, CommandParameter, CommandSignature, ElementName, MatchRule,
@@ -26,6 +27,7 @@ export function createCommandLikeStatementRule(scopeName: ScopeName, definitions
 
   return {
     begin: capture(seq(
+      negativeLookbehind(seq(char('('), inlineSpaces0())),   // Disable within parentheses expression
       lookbehind(placeholder.startAnchor),
       inlineSpaces0(),
       ignoreCase(alt(...sortedDefinitions.map((definition) => definition.name))),
@@ -82,7 +84,6 @@ export function createCommandLikeRule(scopeName: ScopeName, definition: CommandD
       lookbehind(placeholder.startAnchor),
       inlineSpaces0(),
       ignoreCase(definition.name),
-      lookahead(wordBound()),
       negativeLookahead(char('(')),
       lookaheadOnigurumaByParameters(signature.parameters, placeholder),
     )),
