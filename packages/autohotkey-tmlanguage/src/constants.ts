@@ -380,7 +380,10 @@ export const enum HighlightType {
   SendKeyName = 'send_key_name',
   // e.g. #Requires AutoHotkey v2.0
   //                ^^^^^^^^^^^^^^^
-  RequiresVersion = 'requires_version',
+  // RequiresVersion = 'requires_version',
+  // e.g. `#Include path\to`, `#Include <lib>`
+  //                ^^^^^^^             ^^^^^
+  IncludeLibrary = 'include_library',
 
   RestParams = 'rest_params',
   LabelName = 'labelname',

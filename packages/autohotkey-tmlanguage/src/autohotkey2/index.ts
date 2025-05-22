@@ -39,7 +39,6 @@ export function createRepositories(scopeName: ScopeName, placeholder?: Placehold
     [Repository.FencedCodeBlockInDocument]: markdown.createCodeFencePatternsRule(),
     [Repository.Meta]: patternsRule(
       includeRule(Repository.Comment),
-      includeRule(Repository.IncludeStatement),
       includeRule(Repository.DirectiveStatement),
     ),
 
@@ -101,11 +100,6 @@ export function createRepositories(scopeName: ScopeName, placeholder?: Placehold
       includeRule(Repository.TryStatement),
       includeRule(Repository.ThrowStatement),
     ),
-    [Repository.IncludeStatement]: rule_v1.createIncludeStatementRule(scopeName, {
-      startAnchor: patterns_v2.statementStartAnchor,
-      expressionOperators: constants_v2.expressionOperators,
-      endAnchor: patterns_v1.lineEndAnchor,
-    }),
     [Repository.DirectiveStatement]: rule_v1.createCommandLikeStatementRule(scopeName, definition_v2.directiveDefinitions, {
       startAnchor: patterns_v2.statementStartAnchor,
       endAnchor: patterns_v1.lineEndAnchor,

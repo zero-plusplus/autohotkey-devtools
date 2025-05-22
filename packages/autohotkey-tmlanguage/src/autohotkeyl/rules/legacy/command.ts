@@ -530,6 +530,11 @@ function parameterToOniguruma(parameter: CommandParameter, isLastParameter: bool
       }
       return patterns_v1.commandArgumentPattern;
     }
+    case HighlightType.Namespace:
+    case HighlightType.IncludeLibrary:
+    {
+      return patterns_v1.lastArgumentPattern;
+    }
     case HighlightType.UnquotedStringInCompilerDirective:
     case HighlightType.ExpressionInCompilerDirective:
       return patterns_v1.commandArgumentPattern;
@@ -816,11 +821,34 @@ function parameterToPatternsRule(scopeName: ScopeName, defenition: CommandDefini
         }),
       );
     }
-    case HighlightType.MenuItemName: {
+    case HighlightType.MenuItemName:
+    {
       return patternsRule(
         includeRule(isLastParameter ? Repository.PercentExpressionInLastArgument : Repository.PercentExpression),
 
         includeRule(Repository.MenuItemNameCommandArgument),
+      );
+    }
+    case HighlightType.IncludeLibrary:
+    {
+      return patternsRule(
+        {
+          match: seq(
+            capture(negChars0('<')),
+            capture(char('<')),
+            capture(anyChars0()),
+            capture(char('>')),
+            capture(anyChars0()),
+          ),
+          captures: {
+            1: nameRule(scopeName, RuleName.UnquotedString, StyleName.Invalid),
+            2: nameRule(scopeName, RuleName.OpenAngleBracket),
+            3: nameRule(scopeName, RuleName.UnquotedString, StyleName.Strong),
+            4: nameRule(scopeName, RuleName.CloseAngleBracket),
+            5: nameRule(scopeName, RuleName.UnquotedString, StyleName.Invalid),
+          },
+        },
+        includeRule(Repository.CommandLastArgument),
       );
     }
     // Make each definition group easily distinguishable by underlining. However, if the underline is applied in TMLanguage, its color cannot be controlled. This should be implemented with semantic highlighting

@@ -51,6 +51,10 @@ export const directiveDefinitions: CommandDefinition[] = [
   // https://www.autohotkey.com/docs/v1/lib/_IfTimeout.htm
   command('#IfTimeout', signature([ unquoted() ])),
 
+  // https://www.autohotkey.com/docs/v1/lib/_Include.htm
+  command('#Include', signature([ includeLib() ])),
+  command('#IncludeAgain', signature([ includeLib() ])),
+
   // https://www.autohotkey.com/docs/v1/lib/_IfWinActive.htm
   command('#IfWinActive', signature([ winTitle(), unquoted() ])),
   command('#IfWinNotActive', signature([ winTitle(), unquoted() ])),
@@ -1098,6 +1102,9 @@ export function output(flags: CommandParameterFlag = CommandParameterFlag.None):
 }
 export function menuItemName(flags: CommandParameterFlag = CommandParameterFlag.None): CommandParameter {
   return { type: HighlightType.MenuItemName, flags };
+}
+export function includeLib(flags: CommandParameterFlag = CommandParameterFlag.None): CommandParameter {
+  return { type: HighlightType.IncludeLibrary, flags };
 }
 export function requiresVersion(flags: CommandParameterFlag = CommandParameterFlag.None): CommandParameter {
   return unquoted([

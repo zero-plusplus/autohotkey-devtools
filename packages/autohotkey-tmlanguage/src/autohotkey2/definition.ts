@@ -1,5 +1,5 @@
 import {
-  command, decimalOptionItem, encoding, expression, keywordOnly, optionItem, requiresVersion,
+  command, decimalOptionItem, encoding, expression, includeLib, keywordOnly, optionItem, requiresVersion,
   signature, signedNumberOptionItem, toggleOptionItem, unquoted, unquotedNumber,
 } from '../autohotkeyl/definition';
 import type { CommandDefinition, CommandParameter } from '../types';
@@ -23,6 +23,10 @@ export const directiveDefinitions: CommandDefinition[] = [
 
   // https://www.autohotkey.com/docs/v2/lib/_Hotstring.htm
   command('#Hotstring', signature([ unquoted([ optionItem('NoMouse', 'EndChars', 'SI', 'SP', 'SE', 'X'), toggleOptionItem('*', '?', 'B', 'C', 'O', 'R', 'T', 'Z'), decimalOptionItem('P'), signedNumberOptionItem('K') ]) ])),
+
+  // https://www.autohotkey.com/docs/v2/lib/_Include.htm
+  command('#Include', signature([ includeLib() ])),
+  command('#IncludeAgain', signature([ includeLib() ])),
 
   // https://www.autohotkey.com/docs/v2/lib/_InputLevel.htm
   command('#InputLevel', signature([ unquotedInteger() ])),

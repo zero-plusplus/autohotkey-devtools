@@ -1,12 +1,17 @@
 import { dedent } from '@zero-plusplus/utilities/src';
-import { quotableUnquoted, unquotedAndBoolean, unquotedInteger } from '../../../../src/autohotkey2/definition';
+import { directiveDefinitions, quotableUnquoted, unquotedAndBoolean, unquotedInteger } from '../../../../src/autohotkey2/definition';
 import { RuleName, StyleName } from '../../../../src/constants';
 import type { ScopeName } from '../../../../src/types';
 import { name } from '../../../../src/utils';
+import * as common from '../../../common';
 import type { ExpectedTestData } from '../../../types';
 
 export function createDirectiveStatementExpectedData(scopeName: ScopeName): ExpectedTestData[] {
   return [
+    ...common.createDirectiveStatementExpectedData(scopeName, {
+      directiveDefinitions,
+    }),
+
     ...((): ExpectedTestData[] => {
       unquotedInteger;
 

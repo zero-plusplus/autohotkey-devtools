@@ -29,10 +29,8 @@ import { createLegacyIfStatementExpectedData } from './legacy/if';
 import { createDirectiveStatementExpectedData } from './statement/directive';
 import { createForStatementExpectedData } from './statement/for';
 import { createIfStatementExpectedData } from './statement/if';
-import { createIncludeStatementExpectedData } from './statement/include';
 import { createJumpStatementExpectedData } from './statement/jump';
 import { createLoopStatementExpectedData } from './statement/loop';
-import { createRequiresStatementExpectedData } from './statement/requires';
 import { createSwitchStatementExpectedData } from './statement/switch';
 import { createThrowStatementExpectedData } from './statement/throw';
 import { createTryStatementExpectedData } from './statement/try';
@@ -70,7 +68,6 @@ export * from './legacy/if';
 export * from './statement/directive';
 export * from './statement/for';
 export * from './statement/if';
-export * from './statement/include';
 export * from './statement/jump';
 export * from './statement/loop';
 export * from './statement/switch';
@@ -102,7 +99,6 @@ export function createExpectedDataList(scopeName: ScopeName): ExpectedTestData[]
     ...createHotkeyLabelStatementExpectedData(scopeName),
     ...createHotstringLabelStatementExpectedData(scopeName),
     ...createIfStatementExpectedData(scopeName),
-    ...createIncludeStatementExpectedData(scopeName),
     ...createJumpStatementExpectedData(scopeName),
     ...createLabelStatementExpectedData(scopeName),
     ...createLegacyAssignmentStatementExpectedData(scopeName),
@@ -117,7 +113,6 @@ export function createExpectedDataList(scopeName: ScopeName): ExpectedTestData[]
     ...createOperatorInExpressionExpectedData(scopeName),
     ...createParenthesizedExpressionExpectedData(scopeName),
     ...createRegExpExpectedData(scopeName),
-    ...createRequiresStatementExpectedData(scopeName),
     ...createSingleLineCommentExpectedData(scopeName),
     ...createStringLiteralExpectedData(scopeName),
     ...createSwitchStatementExpectedData(scopeName),
