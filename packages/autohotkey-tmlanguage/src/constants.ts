@@ -45,7 +45,6 @@ export const enum Repository {
   Export = 'Repository.Export',
   ExpressionStatement = 'Repository.ExpressionStatement',
   IncludeStatement = 'Repository.IncludeStatement',
-  RequiresStatement = 'Repository.RequiresStatement',
   DirectiveStatement = 'Repository.DirectiveStatement',
   JumpStatement = 'Repository.JumpStatement',
   JumpToLabelStatement = 'Repository.JumpToLabelStatement',
@@ -379,6 +378,10 @@ export const enum HighlightType {
   // e.g. Send, {LButton 5}
   //            ^^^^^^^^^^^
   SendKeyName = 'send_key_name',
+  // e.g. #Requires AutoHotkey v2.0
+  //                ^^^^^^^^^^^^^^^
+  RequiresVersion = 'requires_version',
+
   RestParams = 'rest_params',
   LabelName = 'labelname',
   // Keywords to distinguish between signatures

@@ -1,5 +1,5 @@
 import { dedent } from '@zero-plusplus/utilities/src';
-import { RuleDescriptor, RuleName } from '../../../src/constants';
+import { RuleDescriptor, RuleName, StyleName } from '../../../src/constants';
 import type { ScopeName } from '../../../src/types';
 import { name } from '../../../src/utils';
 import type { ExpectedTestData } from '../../types';
@@ -29,19 +29,22 @@ export function createExpectedDataList(scopeName: ScopeName): ExpectedTestData[]
         { text: '"', scopes: name(autohotkey2, RuleName.DoubleString, RuleDescriptor.End) },
 
         { text: '#Requires', scopes: name(autohotkey2, RuleName.DirectiveName) },
-        { text: 'AutoHotkey v2.0', scopes: name(autohotkey2, RuleName.UnquotedString) },
+        { text: 'AutoHotkey', scopes: name(autohotkey2, RuleName.UnquotedString, StyleName.Strong) },
+        { text: 'v2.0', scopes: name(autohotkey2, RuleName.UnquotedString, StyleName.Strong) },
         { text: '"', scopes: name(autohotkey2, RuleName.DoubleString, RuleDescriptor.Begin) },
         { text: 'string', scopes: name(autohotkey2, RuleName.DoubleString) },
         { text: '"', scopes: name(autohotkey2, RuleName.DoubleString, RuleDescriptor.End) },
 
         { text: '#Requires', scopes: name(autohotkeynext, RuleName.DirectiveName) },
-        { text: 'AutoHotkey v2.1', scopes: name(autohotkeynext, RuleName.UnquotedString) },
+        { text: 'AutoHotkey', scopes: name(autohotkeynext, RuleName.UnquotedString, StyleName.Strong) },
+        { text: 'v2.1', scopes: name(autohotkeynext, RuleName.UnquotedString, StyleName.Strong) },
         { text: '"', scopes: name(autohotkeynext, RuleName.DoubleString, RuleDescriptor.Begin) },
         { text: 'string', scopes: name(autohotkeynext, RuleName.DoubleString) },
         { text: '"', scopes: name(autohotkeynext, RuleName.DoubleString, RuleDescriptor.End) },
 
         { text: '#Requires', scopes: name(autohotkeyl, RuleName.DirectiveName) },
-        { text: 'AutoHotkey v1.1', scopes: name(autohotkeyl, RuleName.UnquotedString) },
+        { text: 'AutoHotkey', scopes: name(autohotkeyl, RuleName.UnquotedString, StyleName.Strong) },
+        { text: 'v1.1', scopes: name(autohotkeyl, RuleName.UnquotedString, StyleName.Strong) },
         { text: '"', scopes: name(autohotkeyl, RuleName.DoubleString, RuleDescriptor.Begin) },
         { text: 'string', scopes: name(autohotkeyl, RuleName.DoubleString) },
         { text: '"', scopes: name(autohotkeyl, RuleName.DoubleString, RuleDescriptor.End) },

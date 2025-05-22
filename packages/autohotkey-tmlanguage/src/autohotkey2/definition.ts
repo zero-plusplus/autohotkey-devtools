@@ -1,6 +1,6 @@
 import {
-  command, decimalOptionItem, encoding, expression, keywordOnly, optionItem, signature, signedNumberOptionItem,
-  toggleOptionItem, unquoted, unquotedNumber,
+  command, decimalOptionItem, encoding, expression, keywordOnly, optionItem, requiresVersion,
+  signature, signedNumberOptionItem, toggleOptionItem, unquoted, unquotedNumber,
 } from '../autohotkeyl/definition';
 import type { CommandDefinition, CommandParameter } from '../types';
 
@@ -38,6 +38,9 @@ export const directiveDefinitions: CommandDefinition[] = [
 
   // https://www.autohotkey.com/docs/v2/lib/_NoTrayIcon.htm
   command('#NoTrayIcon', signature([])),
+
+  // https://www.autohotkey.com/docs/v2/lib/_Requires.htm
+  command('#Requires', signature([ requiresVersion() ])),
 
   // https://www.autohotkey.com/docs/v2/lib/_SingleInstance.htm
   command('#SingleInstance', signature([ keywordOnly([ optionItem('Force', 'Ignore', 'Prompt', 'Off') ]) ])),
