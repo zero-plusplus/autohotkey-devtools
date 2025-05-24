@@ -1,7 +1,9 @@
-import { command, encoding, keywordOnly, optionItem, output, signature, unquotedNumber, unquotedWithNumber } from '../autohotkeyl/definition';
+import { command, encoding, invalid, keywordOnly, optionItem, output, signature, unquotedNumber, unquotedWithNumber } from '../autohotkeyl/definition';
 import { CommandFlag, CommandParameterFlag, HighlightType } from '../constants';
+import { seq, wordChars0 } from '../oniguruma';
 import type { CommandDefinition, CommandParameter } from '../types';
 
+export const undefinedDirective: CommandDefinition = command(seq('#', wordChars0()), signature([ invalid() ]));
 export const compilerDirectives: CommandDefinition[] = [
   command('@Ahk2Exe', signature([])),
   command('@Ahk2Exe-IgnoreBegin', signature([])),
