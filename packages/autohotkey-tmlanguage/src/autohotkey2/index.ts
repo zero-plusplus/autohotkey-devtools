@@ -129,7 +129,7 @@ export function createRepositories(scopeName: ScopeName, placeholder?: Placehold
       ],
       labelPattern: patterns_v2.identifierPattern,
     }),
-    [Repository.HotstringLabelStatement]: rule_v1.createHotstringLabelRule(scopeName, {
+    [Repository.HotstringLabelStatement]: rules_common.createHotstringLabelRule(scopeName, {
       startAnchor: patterns_v2.statementStartAnchor,
       endAnchor: patterns_common.lineEndAnchor,
     }),
