@@ -26,7 +26,7 @@ export function createLegacyAssignmentRule(scopeName: ScopeName, placeholder: Pl
       capture(char('=')),
       inlineSpaces0(),
       capture(groupMany0(alt(
-        patterns_common.unquotedPairsStringPattern,
+        patterns_common.unquotedPairStringPattern,
         patterns_common.unquotedCharPattern,
         group(ordalt(...constants_v1.unquoteEscapeSequences)),
         char('%'),
