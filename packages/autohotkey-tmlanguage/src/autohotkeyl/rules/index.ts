@@ -18,4 +18,3 @@ export * from './misc/regexp';
 export * from './statement/loop';
 export * from './statement/requires';
 export * from './statement/throw';
-export * from './statement/try';
