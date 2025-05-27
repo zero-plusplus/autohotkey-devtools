@@ -105,13 +105,13 @@ export function createRepositories(scopeName: ScopeName): Repositories {
       endAnchor: patterns_common.lineEndAnchor,
       commandElementName: RuleName.DirectiveName,
     }),
-    [Repository.JumpStatement]: rule_v1.createJumpStatement(scopeName, {
+    [Repository.JumpStatement]: rules_common.createJumpStatement(scopeName, {
       startAnchor: patterns_v1.statementStartAnchor,
       assignmentOperators: constants_common.assignmentOperators,
       endAnchor: patterns_common.lineEndAnchor,
       identifierPattern: ordalt('Exit', 'ExitApp', 'Return'),
     }),
-    [Repository.JumpToLabelStatement]: rule_v1.createJumpToLabelStatement(scopeName, {
+    [Repository.JumpToLabelStatement]: rules_common.createJumpToLabelStatement(scopeName, {
       startAnchor: patterns_v1.statementStartAnchor,
       endAnchor: patterns_common.lineEndAnchor,
       names: [

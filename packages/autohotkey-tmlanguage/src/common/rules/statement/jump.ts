@@ -1,4 +1,4 @@
-import * as rule_common from '../../../common/rules';
+import * as rule_common from '..';
 import { Repository, RuleName } from '../../../constants';
 import {
   alt, capture, char, group, ignoreCase, inlineSpace, inlineSpaces0, lookahead, lookbehind, optional,

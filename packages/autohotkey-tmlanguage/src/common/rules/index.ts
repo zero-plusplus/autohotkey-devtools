@@ -6,6 +6,7 @@ export * from './expression/string';
 export * from './misc/compilerDirectiveRegExp';
 export * from './statement/call';
 export * from './statement/command';
+export * from './statement/jump';
 export * from './trivia/directive';
 export * from './trivia/document';
 export * from './trivia/multiLine';

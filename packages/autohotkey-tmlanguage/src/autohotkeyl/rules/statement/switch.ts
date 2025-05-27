@@ -1,3 +1,4 @@
+import * as rules_common from '../../../common/rules';
 import { Repository, RuleName } from '../../../constants';
 import {
   alt, capture, char, group, ignoreCase, inlineSpaces0, keyword, lookahead, lookbehind, optseq,
@@ -5,7 +6,6 @@ import {
 } from '../../../oniguruma';
 import type { BeginEndRule, ScopeName } from '../../../types';
 import { includeRule, nameRule } from '../../../utils';
-import { createJumpToLabelStatement } from './jump';
 
 interface Placeholder {
   startAnchor: string;
@@ -96,7 +96,7 @@ export function createSwitchStatementRule(scopeName: ScopeName, placeholder: Pla
           // #endregion default
 
           // break keyword in switch block
-          createJumpToLabelStatement(scopeName, {
+          rules_common.createJumpToLabelStatement(scopeName, {
             startAnchor: alt(
               group(placeholder.startAnchor),
               group(seq(char(':'), inlineSpaces0())),
