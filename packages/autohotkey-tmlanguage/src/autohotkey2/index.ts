@@ -493,12 +493,12 @@ export function createRepositories(scopeName: ScopeName, placeholder?: Placehold
     ),
     [Repository.CommandInvalidArgument]: rules_common.createInvalidArgumentRule(scopeName),
     [Repository.UnquotedStringEscapeSequence]: rule_v1.createUnquotedEscapeSequencesRule(scopeName, constants_v2.unquoteEscapeSequences),
-    [Repository.CommandArgumentText]: rule_v1.createUnquotedStringRule(scopeName, {
+    [Repository.CommandArgumentText]: rules_common.createUnquotedStringRule(scopeName, {
       stringRuleName: RuleName.UnquotedString,
       stringPattern: patterns_common.unquotedArgumentPattern,
     }),
-    [Repository.CommandArgumentNumber]: rule_v1.createNumberRule(scopeName),
-    [Repository.CommandLastArgumentText]: rule_v1.createUnquotedStringRule(scopeName, {
+    [Repository.CommandArgumentNumber]: rules_common.createNumberRule(scopeName),
+    [Repository.CommandLastArgumentText]: rules_common.createUnquotedStringRule(scopeName, {
       stringRuleName: RuleName.UnquotedString,
       stringPattern: patterns_common.unquotedLastArgumentPattern,
     }),
@@ -510,7 +510,7 @@ export function createRepositories(scopeName: ScopeName, placeholder?: Placehold
       endAnchor: patterns_common.lineEndAnchor,
       definitions: definition_common.compilerDirectives,
     }),
-    [Repository.UnquotedStringInCompilerDirective]: rule_v1.createUnquotedStringRule(scopeName, {
+    [Repository.UnquotedStringInCompilerDirective]: rules_common.createUnquotedStringRule(scopeName, {
       stringRuleName: RuleName.UnquotedString,
       stringPattern: patterns_common.unquotedArgumentPattern,
       escapeSequenceRepository: Repository.UnquotedStringEscapeSequenceInCompilerDirective,

@@ -426,12 +426,12 @@ export function createRepositories(scopeName: ScopeName): Repositories {
     [Repository.CommandInvalidArgument]: rules_common.createInvalidArgumentRule(scopeName),
     [Repository.MenuItemNameCommandArgument]: rules_common.createMenuNameCommandArgumentRule(scopeName),
     [Repository.UnquotedStringEscapeSequence]: rule_v1.createUnquotedEscapeSequencesRule(scopeName, constants_v1.unquoteEscapeSequences),
-    [Repository.CommandArgumentText]: rule_v1.createUnquotedStringRule(scopeName, {
+    [Repository.CommandArgumentText]: rules_common.createUnquotedStringRule(scopeName, {
       stringRuleName: RuleName.UnquotedString,
       stringPattern: patterns_common.unquotedArgumentPattern,
     }),
-    [Repository.CommandArgumentNumber]: rule_v1.createNumberRule(scopeName),
-    [Repository.CommandLastArgumentText]: rule_v1.createUnquotedStringRule(scopeName, {
+    [Repository.CommandArgumentNumber]: rules_common.createNumberRule(scopeName),
+    [Repository.CommandLastArgumentText]: rules_common.createUnquotedStringRule(scopeName, {
       stringRuleName: RuleName.UnquotedString,
       stringPattern: patterns_common.unquotedLastArgumentPattern,
     }),
@@ -458,7 +458,7 @@ export function createRepositories(scopeName: ScopeName): Repositories {
     [Repository.ContinuationSection]: rule_v1.createContinuationSectionRule(scopeName, {
       endAnchor: patterns_common.lineEndAnchor,
     }),
-    [Repository.ContinuationSectionText]: rule_v1.createUnquotedStringRule(scopeName, {
+    [Repository.ContinuationSectionText]: rules_common.createUnquotedStringRule(scopeName, {
       stringRuleName: RuleName.UnquotedString,
       stringPattern: anyChars1(),
       additionalRules: [ rule_v1.createUnquotedEscapeSequencesRule(scopeName, [ '`)' ]) ],
@@ -471,7 +471,7 @@ export function createRepositories(scopeName: ScopeName): Repositories {
       endAnchor: patterns_common.lineEndAnchor,
       definitions: definition_common.compilerDirectives,
     }),
-    [Repository.UnquotedStringInCompilerDirective]: rule_v1.createUnquotedStringRule(scopeName, {
+    [Repository.UnquotedStringInCompilerDirective]: rules_common.createUnquotedStringRule(scopeName, {
       stringRuleName: RuleName.UnquotedString,
       stringPattern: patterns_common.unquotedArgumentPattern,
       escapeSequenceRepository: Repository.UnquotedStringEscapeSequenceInCompilerDirective,

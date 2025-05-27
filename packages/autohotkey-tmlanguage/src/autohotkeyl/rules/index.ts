@@ -6,6 +6,5 @@ export * from './legacy/continuationSection';
 export * from './legacy/escape';
 export * from './legacy/if';
 export * from './legacy/percentExpression';
-export * from './legacy/unquotedString';
 export * from './statement/loop';
 export * from './statement/requires';
