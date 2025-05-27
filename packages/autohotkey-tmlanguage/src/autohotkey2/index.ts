@@ -307,6 +307,10 @@ export function createRepositories(scopeName: ScopeName, placeholder?: Placehold
       ruleName: RuleName.MetaFunctionName,
       identifiers: [ '__ITEM' ],
     }),
+    [Repository.LabelName]: rules_common.createIdentifierRule(scopeName, {
+      ruleName: RuleName.LabelName,
+      identifierPattern: patterns_v2.identifierPattern,
+    }),
     [Repository.KeywordInExpression]: rules_common.createReservedIdentifierRule(scopeName, {
       ruleName: RuleName.KeywordInExpression,
       identifiers: [

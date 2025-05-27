@@ -1,11 +1,11 @@
 import * as rule_common from '../../../common/rules';
-import { RuleName } from '../../../constants';
+import { Repository, RuleName } from '../../../constants';
 import {
   alt, capture, char, group, ignoreCase, inlineSpace, inlineSpaces0, lookahead, lookbehind, optional,
   optseq, ordalt, seq,
 } from '../../../oniguruma';
 import type { MatchRule, PatternsRule, ScopeName } from '../../../types';
-import { nameRule } from '../../../utils';
+import { includeRule, nameRule, patternsRule } from '../../../utils';
 
 interface Placeholder {
   startAnchor: string;
@@ -46,7 +46,7 @@ export function createJumpToLabelStatement(scopeName: ScopeName, placeholder: Pl
     captures: {
       1: nameRule(scopeName, RuleName.JumpCommandName),
       2: nameRule(scopeName, RuleName.Comma),
-      3: nameRule(scopeName, RuleName.LabelName),
+      3: patternsRule(includeRule(Repository.LabelName)),
     },
   };
 }

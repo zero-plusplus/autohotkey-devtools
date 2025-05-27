@@ -1,14 +1,13 @@
 import { hasFlag } from '@zero-plusplus/utilities/src';
 import * as patterns_v2 from '../../../autohotkey2/patterns';
 import { isSubCommandParameter } from '../../../autohotkeyl/definition';
-import * as patterns_v1 from '../../../autohotkeyl/patterns';
 import { createAllowArgumentRule, createNumberRule, createSpacedArgumentTextRule } from '../../../autohotkeyl/rules/legacy/unquotedString';
 import { CommandFlag, HighlightType, Repository, RuleName, StyleName } from '../../../constants';
 import {
   alt, anyChar, anyChars0, anyChars1, capture, char, chars1, endAnchor, group, groupMany0, groupMany1,
   ignoreCase, inlineSpace, inlineSpaces0, inlineSpaces1, keyword, lookahead, lookbehind, negativeLookahead,
   negativeLookbehind, negChar, negChars0, negChars1, numbers1, optional, optseq, ordalt, reluctant, seq, text,
-  textalt, wordBound, wordChar, wordChars0, wordChars1,
+  textalt, wordBound, wordChar, wordChars1,
 } from '../../../oniguruma';
 import type {
   BeginWhileRule, CommandDefinition, CommandParameter, CommandSignature, ElementName, MatchRule,
@@ -476,7 +475,7 @@ function lookaheadOnigurumaByParameters(parameters: CommandParameter[], placehol
           if (parameter.itemPatterns && 0 < parameter.itemPatterns.length) {
             return seq(
               group(optseq(
-                wordChars0(),
+                negChars0(':'),
                 char(':'),
               )),
               wordBound(),
@@ -491,7 +490,7 @@ function lookaheadOnigurumaByParameters(parameters: CommandParameter[], placehol
           return seq(
             inlineSpaces0(),
             optseq(
-              patterns_v1.identifierPattern,
+              negChars0(':'),
               char(':'),
             ),
           );
@@ -587,13 +586,13 @@ function parameterToPatternsRule(scopeName: ScopeName, defenition: CommandDefini
         {
           match: seq(
             optseq(
-              capture(wordChars0()),
+              capture(negChars0(':')),
               capture(char(':')),
             ),
             capture(ignoreCase(ordalt(...parameter.itemPatterns))),
           ),
           captures: {
-            1: nameRule(scopeName, RuleName.LabelName),
+            1: patternsRule(includeRule(Repository.LabelName)),
             2: nameRule(scopeName, RuleName.Colon),
             3: nameRule(scopeName, RuleName.SubCommandName),
           },
@@ -815,7 +814,7 @@ function parameterToPatternsRule(scopeName: ScopeName, defenition: CommandDefini
               ),
               captures: {
                 1: patternsRule(includeRule(Repository.Dereference)),
-                2: nameRule(scopeName, RuleName.LabelName),
+                2: patternsRule(includeRule(Repository.LabelName)),
                 3: nameRule(scopeName, RuleName.Colon),
               },
             },
@@ -914,7 +913,7 @@ function parameterToPatternsRule(scopeName: ScopeName, defenition: CommandDefini
     //     },
     //   );
     // }
-    case HighlightType.LabelName: return patternsRule(nameRule(scopeName, Repository.CommandArgument, RuleName.LabelName));
+    case HighlightType.LabelName: return patternsRule(includeRule(Repository.LabelName));
     case HighlightType.Input:
     case HighlightType.Output:
     case HighlightType.Expression:

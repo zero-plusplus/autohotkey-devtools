@@ -269,6 +269,10 @@ export function createRepositories(scopeName: ScopeName): Repositories {
       ruleName: RuleName.FunctionName,
       identifierPattern: patterns_v1.identifierPattern,
     }),
+    [Repository.LabelName]: rules_common.createIdentifierRule(scopeName, {
+      ruleName: RuleName.LabelName,
+      identifierPattern: patterns_v1.identifierPattern,
+    }),
     [Repository.KeywordInExpression]: rules_common.createReservedIdentifierRule(scopeName, {
       ruleName: RuleName.KeywordInExpression,
       identifiers: [

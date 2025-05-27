@@ -119,7 +119,7 @@ export const enum Repository {
   // #endregion object
   // #endregion literal
 
-  // #region variable
+  // #region name
   Variable = 'Repository.Variable',
   ConstantLikeVariable = 'Repository.ConstantLikeVariable',
   UserDefinedVariable = 'Repository.UserDefinedVariable',
@@ -130,7 +130,8 @@ export const enum Repository {
   MetaPropertyName = 'Repository.MetaPropertyName',
   MetaFunctionName = 'Repository.MetaFunctionName',
   FunctionName = 'Repository.FunctionName',
-  // #endregion variable
+  LabelName = 'Repository.LabelName',
+  // #endregion name
 
   // #region regexp
   StringAsRegExp = 'Repository.StringAsRegExp',
