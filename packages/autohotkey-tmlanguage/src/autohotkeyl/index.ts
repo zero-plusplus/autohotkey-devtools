@@ -373,7 +373,7 @@ export function createRepositories(scopeName: ScopeName): Repositories {
     // #endregion regexp
 
     // #region misc
-    [Repository.CallExpression_FunctionDeclarationHead]: rule_v1.createCallExpressionRule(scopeName, {
+    [Repository.CallExpression_FunctionDeclarationHead]: rules_common.createCallExpressionRule(scopeName, {
       callableNamePattern: patterns_v1.looseCallableNamePattern,
       callableNameRule: namedPatternsRule(
         name(scopeName, RuleName.FunctionName),
@@ -381,7 +381,7 @@ export function createRepositories(scopeName: ScopeName): Repositories {
       ),
       keywordsInArgument: [ 'byref' ],
     }),
-    [Repository.MethodDeclarationHead]: rule_v1.createCallExpressionRule(scopeName, {
+    [Repository.MethodDeclarationHead]: rules_common.createCallExpressionRule(scopeName, {
       callableNamePattern: patterns_v1.identifierPattern,
       callableNameRule: patternsRule(
         includeRule(Repository.MetaFunctionName),

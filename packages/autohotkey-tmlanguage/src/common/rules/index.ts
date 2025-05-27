@@ -7,6 +7,7 @@ export * from './declaration/label';
 export * from './declaration/modifier';
 export * from './declaration/property';
 export * from './expression/array';
+export * from './expression/call';
 export * from './expression/identifier';
 export * from './expression/number';
 export * from './expression/object';

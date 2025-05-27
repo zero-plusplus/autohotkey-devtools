@@ -1,4 +1,3 @@
-export * from './expression/call';
 export * from './expression/dereference';
 export * from './expression/new';
 export * from './expression/parenthesized';
