@@ -15,7 +15,6 @@ export * from './legacy/if';
 export * from './legacy/percentExpression';
 export * from './legacy/unquotedString';
 export * from './misc/regexp';
-export * from './statement/for';
 export * from './statement/loop';
 export * from './statement/requires';
 export * from './statement/throw';
