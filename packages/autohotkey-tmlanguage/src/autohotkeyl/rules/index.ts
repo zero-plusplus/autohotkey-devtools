@@ -1,7 +1,6 @@
 export * from './declaration/assignment';
 export * from './declaration/block';
 export * from './declaration/class';
-export * from './declaration/label';
 export * from './declaration/modifier';
 export * from './declaration/property';
 export * from './expression/array';

@@ -129,7 +129,7 @@ export function createRepositories(scopeName: ScopeName): Repositories {
     [Repository.HotkeyLabelStatement]: rules_common.createHotkeyLabelRule(scopeName, {
       startAnchor: patterns_v1.statementStartAnchor,
     }),
-    [Repository.LabelStatement]: rule_v1.createLabelRule(scopeName, {
+    [Repository.LabelStatement]: rules_common.createLabelRule(scopeName, {
       startAnchor: patterns_common.lineStartAnchor,
       labelPattern: patterns_v1.identifierPattern,
     }),
