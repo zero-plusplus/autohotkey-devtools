@@ -1,7 +1,6 @@
 import * as v2 from '../autohotkey2';
 import * as patterns_v2 from '../autohotkey2/patterns';
 import * as patterns_v1 from '../autohotkeyl/patterns';
-import * as rules_v1 from '../autohotkeyl/rules';
 import * as constants_common from '../common/constants';
 import * as definition_common from '../common/definition';
 import * as patterns_common from '../common/patterns';
@@ -45,7 +44,7 @@ export function createTmLanguage(): TmLanguage {
       [Repository.Export]: rules_vnext.createExportDeclarationRule(scopeName, {
         startAnchor: patterns_common.lineStartAnchor,
       }),
-      [Repository.ClassDeclaration]: rules_v1.createClassDeclarationRule(scopeName, {
+      [Repository.ClassDeclaration]: rules_common.createClassDeclarationRule(scopeName, {
         startAnchor: patterns_vnext.classStartAnchor,
         endAnchor: patterns_common.lineEndAnchor,
         identifierPattern: patterns_v2.identifierPattern,

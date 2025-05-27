@@ -190,7 +190,7 @@ export function createRepositories(scopeName: ScopeName): Repositories {
     [Repository.Block]: rules_common.createBlockRule(scopeName, {
       statementsInBlock: [ includeRule(Repository.Self) ],
     }),
-    [Repository.ClassDeclaration]: rule_v1.createClassDeclarationRule(scopeName, {
+    [Repository.ClassDeclaration]: rules_common.createClassDeclarationRule(scopeName, {
       startAnchor: patterns_v1.statementStartAnchor,
       endAnchor: patterns_common.lineEndAnchor,
       identifierPattern: patterns_v1.identifierPattern,
@@ -203,7 +203,7 @@ export function createRepositories(scopeName: ScopeName): Repositories {
         includeRule(Repository.Statement),
       ],
     }),
-    [Repository.BlockInClassBody]: rule_v1.createBlockInClassBodyRule(scopeName),
+    [Repository.BlockInClassBody]: rules_common.createBlockInClassBodyRule(scopeName),
     [Repository.PropertyDeclaration]: rule_v1.createPropertyDeclarationRule(scopeName, {
       modifiers: constants_common.accessModifiers,
       identifierPattern: patterns_v1.looseLeftHandPattern,

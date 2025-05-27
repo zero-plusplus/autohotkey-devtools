@@ -220,7 +220,7 @@ export function createRepositories(scopeName: ScopeName, placeholder?: Placehold
     [Repository.Block]: rules_common.createBlockRule(scopeName, {
       statementsInBlock: [ includeRule(Repository.Self) ],
     }),
-    [Repository.ClassDeclaration]: rule_v1.createClassDeclarationRule(scopeName, {
+    [Repository.ClassDeclaration]: rules_common.createClassDeclarationRule(scopeName, {
       startAnchor: patterns_v2.statementStartAnchor,
       endAnchor: patterns_common.lineEndAnchor,
       identifierPattern: patterns_v2.identifierPattern,
@@ -235,7 +235,7 @@ export function createRepositories(scopeName: ScopeName, placeholder?: Placehold
         includeRule(Repository.ExpressionStatement),
       ],
     }),
-    [Repository.BlockInClassBody]: rule_v1.createBlockInClassBodyRule(scopeName),
+    [Repository.BlockInClassBody]: rules_common.createBlockInClassBodyRule(scopeName),
     [Repository.PropertyDeclaration]: rule_v1.createPropertyDeclarationRule(scopeName, {
       modifiers: constants_common.accessModifiers,
       identifierPattern: patterns_v2.identifierPattern,

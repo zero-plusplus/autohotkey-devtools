@@ -1,4 +1,3 @@
-export * from './declaration/class';
 export * from './declaration/property';
 export * from './expression/array';
 export * from './expression/call';
