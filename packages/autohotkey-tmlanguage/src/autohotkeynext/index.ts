@@ -3,6 +3,7 @@ import * as patterns_v2 from '../autohotkey2/patterns';
 import * as patterns_v1 from '../autohotkeyl/patterns';
 import * as rules_v1 from '../autohotkeyl/rules';
 import * as constants_common from '../common/constants';
+import * as definition_common from '../common/definition';
 import * as patterns_common from '../common/patterns';
 import { Repository, RuleName } from '../constants';
 import type { ScopeName, TmLanguage } from '../types';
@@ -69,11 +70,18 @@ export function createTmLanguage(): TmLanguage {
       // #endregion declaration
 
       // #region statement
-      [Repository.DirectiveStatement]: rules_v1.createCommandLikeStatementRule(scopeName, definition_vnext.directiveDefinitions, {
-        startAnchor: patterns_v1.statementStartAnchor,
-        endAnchor: patterns_v1.lineEndAnchor,
-        commandElementName: RuleName.DirectiveName,
-      }),
+      [Repository.DirectiveStatement]: patternsRule(
+        rules_v1.createCommandLikeStatementRule(scopeName, definition_vnext.directiveDefinitions, {
+          startAnchor: patterns_v1.statementStartAnchor,
+          endAnchor: patterns_v1.lineEndAnchor,
+          commandElementName: RuleName.DirectiveName,
+        }),
+        rules_v1.createCommandLikeStatementRule(scopeName, [ definition_common.undefinedDirective ], {
+          startAnchor: patterns_v2.statementStartAnchor,
+          endAnchor: patterns_v1.lineEndAnchor,
+          commandElementName: RuleName.DirectiveName,
+        }),
+      ),
       // #endregion statement
 
       // #region expression

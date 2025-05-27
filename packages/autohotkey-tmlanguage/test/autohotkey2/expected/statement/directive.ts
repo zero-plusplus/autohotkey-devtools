@@ -87,5 +87,23 @@ export function createDirectiveStatementExpectedData(scopeName: ScopeName): Expe
         ],
       ];
     })(),
+
+    // Example of highlighting invalid directive syntax
+    [
+      dedent`
+        # invalid                 ; comment
+
+        #NotDirective invalid     ; comment
+      `,
+      [
+        { text: '#', scopes: name(scopeName, RuleName.DirectiveName) },
+        { text: 'invalid', scopes: name(scopeName, RuleName.UnquotedString, StyleName.Invalid) },
+        { text: '; comment', scopes: name(scopeName, RuleName.InLineComment) },
+
+        { text: '#NotDirective', scopes: name(scopeName, RuleName.DirectiveName) },
+        { text: 'invalid', scopes: name(scopeName, RuleName.UnquotedString, StyleName.Invalid) },
+        { text: '; comment', scopes: name(scopeName, RuleName.InLineComment) },
+      ],
+    ],
   ];
 }
