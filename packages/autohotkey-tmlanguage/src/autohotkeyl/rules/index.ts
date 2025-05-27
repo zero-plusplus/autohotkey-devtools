@@ -21,4 +21,3 @@ export * from './statement/requires';
 export * from './statement/throw';
 export * from './statement/try';
 export * from './statement/until';
-export * from './statement/while';

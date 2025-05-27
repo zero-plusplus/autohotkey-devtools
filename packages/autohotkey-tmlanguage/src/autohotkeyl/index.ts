@@ -142,7 +142,7 @@ export function createRepositories(scopeName: ScopeName): Repositories {
       endAnchor: patterns_common.lineEndAnchor,
       identifierPattern: patterns_v1.identifierPattern,
     }),
-    [Repository.WhileStatement]: rule_v1.createWhileStatementRule(scopeName, {
+    [Repository.WhileStatement]: rules_common.createWhileStatementRule(scopeName, {
       startAnchor: patterns_v1.statementStartAnchor,
     }),
     [Repository.LoopStatement]: rule_v1.createLoopStatementRule(scopeName, {
