@@ -11,6 +11,7 @@ export * from './statement/call';
 export * from './statement/command';
 export * from './statement/if';
 export * from './statement/jump';
+export * from './statement/switch';
 export * from './trivia/directive';
 export * from './trivia/document';
 export * from './trivia/multiLine';
