@@ -40,27 +40,34 @@ export const unquotedCharPattern: string = seq(
   )),
   anyChar(),
 );
-export const expressionArgumentPattern: string = groupMany0(alt(
+export const unquotedExpressionArgumentPattern: string = groupMany0(alt(
   unquotedPairStringPattern,
   seq(inlineSpaces1(), negativeLookahead(char(';'))),
   negChar(',', '\\s'),
+));
+export const unquotedExpressionLastArgumentPattern: string = groupMany1(alt(
+  negChar('\\s'),
+  seq(inlineSpaces1(), negativeLookahead(char(';'))),
 ));
 export const percentExpressionArgumentPattern: string = seq(
   char('%'),
   inlineSpaces1(),
   negativeLookahead(char(';')),
-  expressionArgumentPattern,
+  unquotedExpressionArgumentPattern,
 );
-export const expressionLastArgumentPattern: string = groupMany1(alt(
-  negChar('\\s'),
-  seq(inlineSpaces1(), negativeLookahead(char(';'))),
-));
 export const percentExpressionLastArgumentPattern: string = group(seq(
   char('%'),
   inlineSpaces1(),
-  optional(expressionLastArgumentPattern),
+  optional(unquotedExpressionLastArgumentPattern),
 ));
-export const lastArgumentPattern: string = group(alt(
+export const unquotedArgumentPattern: string = group(alt(
+  percentExpressionArgumentPattern,
+  groupMany0(alt(
+    unquotedPairStringPattern,
+    unquotedCharPattern,
+  )),
+));
+export const unquotedLastArgumentPattern: string = group(alt(
   percentExpressionLastArgumentPattern,
   groupMany1(alt(
     unquotedPairStringPattern,
@@ -68,15 +75,9 @@ export const lastArgumentPattern: string = group(alt(
     unquotedCharPattern,
   )),
 ));
-export const expressionWithOneTrueBraceArgumentPattern: string = groupMany0(alt(
+// #endregion command / directive
+
+export const controlFlowExpressionLastArgumentPattern: string = groupMany0(alt(
   unquotedPairStringPattern,
   negChar('\\r', '\\n', ',', '{'),
 ));
-export const commandArgumentPattern: string = group(alt(
-  percentExpressionArgumentPattern,
-  groupMany0(alt(
-    unquotedPairStringPattern,
-    unquotedCharPattern,
-  )),
-));
-// #endregion command / directive

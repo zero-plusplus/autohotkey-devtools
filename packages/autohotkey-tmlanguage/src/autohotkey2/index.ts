@@ -493,17 +493,17 @@ export function createRepositories(scopeName: ScopeName, placeholder?: Placehold
     ),
     [Repository.CommandInvalidArgument]: rule_v1.createInvalidArgumentRule(scopeName),
     [Repository.PercentExpressionInLastArgument]: rule_v1.createPercentExpressionRule(scopeName, {
-      expressionPattern: patterns_common.expressionLastArgumentPattern,
+      expressionPattern: patterns_common.unquotedExpressionLastArgumentPattern,
     }),
     [Repository.UnquotedStringEscapeSequence]: rule_v1.createUnquotedEscapeSequencesRule(scopeName, constants_v2.unquoteEscapeSequences),
     [Repository.CommandArgumentText]: rule_v1.createUnquotedStringRule(scopeName, {
       stringRuleName: RuleName.UnquotedString,
-      stringPattern: patterns_common.commandArgumentPattern,
+      stringPattern: patterns_common.unquotedArgumentPattern,
     }),
     [Repository.CommandArgumentNumber]: rule_v1.createNumberRule(scopeName),
     [Repository.CommandLastArgumentText]: rule_v1.createUnquotedStringRule(scopeName, {
       stringRuleName: RuleName.UnquotedString,
-      stringPattern: patterns_common.lastArgumentPattern,
+      stringPattern: patterns_common.unquotedLastArgumentPattern,
     }),
     // #endregion misc
 
@@ -515,7 +515,7 @@ export function createRepositories(scopeName: ScopeName, placeholder?: Placehold
     }),
     [Repository.UnquotedStringInCompilerDirective]: rule_v1.createUnquotedStringRule(scopeName, {
       stringRuleName: RuleName.UnquotedString,
-      stringPattern: patterns_common.commandArgumentPattern,
+      stringPattern: patterns_common.unquotedArgumentPattern,
       escapeSequenceRepository: Repository.UnquotedStringEscapeSequenceInCompilerDirective,
       additionalRules: [ includeRule(Repository.DereferenceInCompilerDirective) ],
     }),

@@ -424,12 +424,12 @@ export function createRepositories(scopeName: ScopeName): Repositories {
     [Repository.UnquotedStringEscapeSequence]: rule_v1.createUnquotedEscapeSequencesRule(scopeName, constants_v1.unquoteEscapeSequences),
     [Repository.CommandArgumentText]: rule_v1.createUnquotedStringRule(scopeName, {
       stringRuleName: RuleName.UnquotedString,
-      stringPattern: patterns_common.commandArgumentPattern,
+      stringPattern: patterns_common.unquotedArgumentPattern,
     }),
     [Repository.CommandArgumentNumber]: rule_v1.createNumberRule(scopeName),
     [Repository.CommandLastArgumentText]: rule_v1.createUnquotedStringRule(scopeName, {
       stringRuleName: RuleName.UnquotedString,
-      stringPattern: patterns_common.lastArgumentPattern,
+      stringPattern: patterns_common.unquotedLastArgumentPattern,
     }),
     [Repository.CommandArgumentSendKeyName]: rule_v1.createSendKeyCommandArgumentRule(scopeName),
     // #endregion command
@@ -446,10 +446,10 @@ export function createRepositories(scopeName: ScopeName): Repositories {
       leftHandPattern: patterns_v1.looseLeftHandPattern,
     }),
     [Repository.PercentExpression]: rule_v1.createPercentExpressionRule(scopeName, {
-      expressionPattern: patterns_common.expressionArgumentPattern,
+      expressionPattern: patterns_common.unquotedExpressionArgumentPattern,
     }),
     [Repository.PercentExpressionInLastArgument]: rule_v1.createPercentExpressionRule(scopeName, {
-      expressionPattern: patterns_common.expressionLastArgumentPattern,
+      expressionPattern: patterns_common.unquotedExpressionLastArgumentPattern,
     }),
     [Repository.ContinuationSection]: rule_v1.createContinuationSectionRule(scopeName, {
       endAnchor: patterns_common.lineEndAnchor,
@@ -469,7 +469,7 @@ export function createRepositories(scopeName: ScopeName): Repositories {
     }),
     [Repository.UnquotedStringInCompilerDirective]: rule_v1.createUnquotedStringRule(scopeName, {
       stringRuleName: RuleName.UnquotedString,
-      stringPattern: patterns_common.commandArgumentPattern,
+      stringPattern: patterns_common.unquotedArgumentPattern,
       escapeSequenceRepository: Repository.UnquotedStringEscapeSequenceInCompilerDirective,
       additionalRules: [ includeRule(Repository.DereferenceInCompilerDirective) ],
     }),

@@ -69,7 +69,7 @@ export function createCommandLikeStatementRule(scopeName: ScopeName, definitions
         inlineSpaces0(),
         char(','),
         inlineSpaces0(),
-        optional(patterns_common.commandArgumentPattern),
+        optional(patterns_common.unquotedArgumentPattern),
       )))),
       inlineSpaces0(),
       capture(optional(char(','))),
@@ -515,42 +515,42 @@ function parameterToOniguruma(parameter: CommandParameter, isLastParameter: bool
     case HighlightType.Output:
     case HighlightType.Expression:
       return isLastParameter
-        ? patterns_common.expressionLastArgumentPattern
-        : patterns_common.expressionArgumentPattern;
+        ? patterns_common.unquotedExpressionLastArgumentPattern
+        : patterns_common.unquotedExpressionArgumentPattern;
     case HighlightType.ExpressionWithOneTrueBrace:
       return isLastParameter
-        ? patterns_common.expressionWithOneTrueBraceArgumentPattern
-        : patterns_common.commandArgumentPattern;
+        ? patterns_common.controlFlowExpressionLastArgumentPattern
+        : patterns_common.unquotedArgumentPattern;
     case HighlightType.RestParams:
     case HighlightType.UnquotedStringShouldEscapeComma: {
       if (isLastParameter) {
         return seq(groupMany1(seq(
-          patterns_common.commandArgumentPattern,
+          patterns_common.unquotedArgumentPattern,
           optseq(
             inlineSpaces0(),
             char(','),
             optseq(
               negativeLookahead(seq(inlineSpaces1(), char(';'))),
               inlineSpaces0(),
-              patterns_common.commandArgumentPattern,
+              patterns_common.unquotedArgumentPattern,
             ),
           ),
         )));
       }
-      return patterns_common.commandArgumentPattern;
+      return patterns_common.unquotedArgumentPattern;
     }
     case HighlightType.Namespace:
     case HighlightType.IncludeLibrary:
     {
-      return patterns_common.lastArgumentPattern;
+      return patterns_common.unquotedLastArgumentPattern;
     }
     case HighlightType.UnquotedStringInCompilerDirective:
     case HighlightType.ExpressionInCompilerDirective:
-      return patterns_common.commandArgumentPattern;
+      return patterns_common.unquotedArgumentPattern;
     default:
       return isLastParameter
-        ? patterns_common.lastArgumentPattern
-        : patterns_common.commandArgumentPattern;
+        ? patterns_common.unquotedLastArgumentPattern
+        : patterns_common.unquotedArgumentPattern;
   }
 }
 function parameterToPatternsRule(scopeName: ScopeName, defenition: CommandDefinition, parameter: CommandParameter, isLastParameter: boolean, placeholder: Placeholder): PatternsRule {
@@ -780,7 +780,7 @@ function parameterToPatternsRule(scopeName: ScopeName, defenition: CommandDefini
         includeRule(isLastParameter ? Repository.PercentExpressionInLastArgument : Repository.PercentExpression),
 
         createAllowArgumentRule(scopeName, {
-          stringPattern: patterns_common.commandArgumentPattern,
+          stringPattern: patterns_common.unquotedArgumentPattern,
           stringRuleName: RuleName.UnquotedString,
           allowRules: optionItemPatternsToRules(scopeName, parameter.itemPatterns),
         }),
