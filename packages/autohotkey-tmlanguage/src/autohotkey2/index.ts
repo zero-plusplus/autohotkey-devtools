@@ -1,7 +1,6 @@
 import * as markdown from '../__injection__/markdown';
 import * as constants_v1 from '../autohotkeyl/constants';
 import * as patterns_v1 from '../autohotkeyl/patterns';
-import * as rule_v1 from '../autohotkeyl/rules';
 import * as constants_common from '../common/constants';
 import * as definition_common from '../common/definition';
 import * as patterns_common from '../common/patterns';
@@ -492,7 +491,7 @@ export function createRepositories(scopeName: ScopeName, placeholder?: Placehold
       includeRule(Repository.AllInLineComments),
     ),
     [Repository.CommandInvalidArgument]: rules_common.createInvalidArgumentRule(scopeName),
-    [Repository.UnquotedStringEscapeSequence]: rule_v1.createUnquotedEscapeSequencesRule(scopeName, constants_v2.unquoteEscapeSequences),
+    [Repository.UnquotedStringEscapeSequence]: rules_common.createUnquotedEscapeSequencesRule(scopeName, constants_v2.unquoteEscapeSequences),
     [Repository.CommandArgumentText]: rules_common.createUnquotedStringRule(scopeName, {
       stringRuleName: RuleName.UnquotedString,
       stringPattern: patterns_common.unquotedArgumentPattern,
@@ -516,7 +515,7 @@ export function createRepositories(scopeName: ScopeName, placeholder?: Placehold
       escapeSequenceRepository: Repository.UnquotedStringEscapeSequenceInCompilerDirective,
       additionalRules: [ includeRule(Repository.DereferenceInCompilerDirective) ],
     }),
-    [Repository.UnquotedStringEscapeSequenceInCompilerDirective]: rule_v1.createUnquotedEscapeSequencesRule(
+    [Repository.UnquotedStringEscapeSequenceInCompilerDirective]: rules_common.createUnquotedEscapeSequencesRule(
       scopeName,
       constants_common.compilerDirectiveEscapeSequences,
     ),

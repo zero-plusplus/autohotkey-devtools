@@ -425,7 +425,7 @@ export function createRepositories(scopeName: ScopeName): Repositories {
     [Repository.CommandRestArguments]: rules_common.createCommandRestArgumentsRule(scopeName),
     [Repository.CommandInvalidArgument]: rules_common.createInvalidArgumentRule(scopeName),
     [Repository.MenuItemNameCommandArgument]: rules_common.createMenuNameCommandArgumentRule(scopeName),
-    [Repository.UnquotedStringEscapeSequence]: rule_v1.createUnquotedEscapeSequencesRule(scopeName, constants_v1.unquoteEscapeSequences),
+    [Repository.UnquotedStringEscapeSequence]: rules_common.createUnquotedEscapeSequencesRule(scopeName, constants_v1.unquoteEscapeSequences),
     [Repository.CommandArgumentText]: rules_common.createUnquotedStringRule(scopeName, {
       stringRuleName: RuleName.UnquotedString,
       stringPattern: patterns_common.unquotedArgumentPattern,
@@ -461,7 +461,7 @@ export function createRepositories(scopeName: ScopeName): Repositories {
     [Repository.ContinuationSectionText]: rules_common.createUnquotedStringRule(scopeName, {
       stringRuleName: RuleName.UnquotedString,
       stringPattern: anyChars1(),
-      additionalRules: [ rule_v1.createUnquotedEscapeSequencesRule(scopeName, [ '`)' ]) ],
+      additionalRules: [ rules_common.createUnquotedEscapeSequencesRule(scopeName, [ '`)' ]) ],
     }),
     // #endregion legacy
 
@@ -477,7 +477,7 @@ export function createRepositories(scopeName: ScopeName): Repositories {
       escapeSequenceRepository: Repository.UnquotedStringEscapeSequenceInCompilerDirective,
       additionalRules: [ includeRule(Repository.DereferenceInCompilerDirective) ],
     }),
-    [Repository.UnquotedStringEscapeSequenceInCompilerDirective]: rule_v1.createUnquotedEscapeSequencesRule(
+    [Repository.UnquotedStringEscapeSequenceInCompilerDirective]: rules_common.createUnquotedEscapeSequencesRule(
       scopeName,
       constants_common.compilerDirectiveEscapeSequences,
     ),
