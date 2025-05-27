@@ -391,14 +391,14 @@ export function createRepositories(scopeName: ScopeName, placeholder?: Placehold
 
     // #region regexp
     [Repository.ShorthandRegexpMatch]: patternsRule(
-      rule_v1.createShorthandRegExpMatchRule(scopeName, {
+      rules_common.createShorthandRegExpMatchRule(scopeName, {
         quoteChar: '"',
         escapedQuotePattern: patterns_v2.escapedDoubleQuotePattern,
         regexpOptionsPattern: patterns_common.regexpOptionsPattern,
         contentRuleName: RuleName.RegExpString,
         contentRepository: Repository.DoubleStringAsRegExpContent,
       }),
-      rule_v1.createShorthandRegExpMatchRule(scopeName, {
+      rules_common.createShorthandRegExpMatchRule(scopeName, {
         quoteChar: `'`,
         escapedQuotePattern: patterns_v2.escapedSingleQuotePattern,
         regexpOptionsPattern: patterns_common.regexpOptionsPattern,
@@ -410,37 +410,37 @@ export function createRepositories(scopeName: ScopeName, placeholder?: Placehold
       includeRule(Repository.DoubleStringAsRegexp),
       includeRule(Repository.SingleStringAsRegexp),
     ),
-    [Repository.DoubleStringAsRegexp]: rule_v1.createStringAsRegExpRule(scopeName, {
+    [Repository.DoubleStringAsRegexp]: rules_common.createStringAsRegExpRule(scopeName, {
       quoteChar: '"',
       escapedQuotePattern: patterns_v2.escapedDoubleQuotePattern,
       regexpOptionsPattern: patterns_common.regexpOptionsPattern,
       contentRuleName: RuleName.RegExpString,
       contentRepository: Repository.DoubleStringAsRegExpContent,
     }),
-    [Repository.DoubleStringAsRegExpContent]: rule_v1.createStringAsRegExpContentRule(scopeName, {
+    [Repository.DoubleStringAsRegExpContent]: rules_common.createStringAsRegExpContentRule(scopeName, {
       regexpOptions: constants_common.regexpOptions,
       contentRepository: Repository.DoubleStringAsRegExpContent,
       commonContentRepository: Repository.DoubleStringAsRegExpCommonContent,
     }),
-    [Repository.DoubleStringAsRegExpCommonContent]: rule_v1.createRegExpCommonContentRule(scopeName, {
+    [Repository.DoubleStringAsRegExpCommonContent]: rules_common.createRegExpCommonContentRule(scopeName, {
       regexpEscapeSequences: constants_common.regexpEscapeSequences,
       stringEscapeSequences: constants_v2.doubleQuoteEscapeSequences,
       pcreUnicodePropertyCodes: constants_common.pcreUnicodePropertyCodes,
       pcreUnicodePropertyScripts: constants_common.pcreUnicodePropertyScripts,
     }),
-    [Repository.SingleStringAsRegexp]: rule_v1.createStringAsRegExpRule(scopeName, {
+    [Repository.SingleStringAsRegexp]: rules_common.createStringAsRegExpRule(scopeName, {
       quoteChar: `'`,
       escapedQuotePattern: patterns_v2.escapedSingleQuotePattern,
       regexpOptionsPattern: patterns_common.regexpOptionsPattern,
       contentRuleName: RuleName.RegExpString,
       contentRepository: Repository.SingleStringAsRegExpContent,
     }),
-    [Repository.SingleStringAsRegExpContent]: rule_v1.createStringAsRegExpContentRule(scopeName, {
+    [Repository.SingleStringAsRegExpContent]: rules_common.createStringAsRegExpContentRule(scopeName, {
       regexpOptions: constants_v1.regexpOptions,
       contentRepository: Repository.SingleStringAsRegExpContent,
       commonContentRepository: Repository.SingleStringAsRegExpCommonContent,
     }),
-    [Repository.SingleStringAsRegExpCommonContent]: rule_v1.createRegExpCommonContentRule(scopeName, {
+    [Repository.SingleStringAsRegExpCommonContent]: rules_common.createRegExpCommonContentRule(scopeName, {
       regexpEscapeSequences: constants_common.regexpEscapeSequences,
       stringEscapeSequences: constants_v2.singleQuoteEscapeSequences,
       pcreUnicodePropertyCodes: constants_common.pcreUnicodePropertyCodes,
