@@ -470,35 +470,28 @@ export function createRepositories(scopeName: ScopeName, placeholder?: Placehold
 
     // #region misc
     [Repository.CommandArgument]: patternsRule(
-      includeRule(Repository.PercentExpression),
       includeRule(Repository.Dereference),
       includeRule(Repository.CommandArgumentText),
       includeRule(Repository.AllInLineComments),
     ),
     [Repository.CommandArgumentWithNumber]: patternsRule(
-      includeRule(Repository.PercentExpression),
       includeRule(Repository.Dereference),
       includeRule(Repository.CommandArgumentNumber),
       includeRule(Repository.CommandArgumentText),
       includeRule(Repository.AllInLineComments),
     ),
     [Repository.CommandLastArgument]: patternsRule(
-      includeRule(Repository.PercentExpressionInLastArgument),
       includeRule(Repository.Dereference),
       includeRule(Repository.CommandLastArgumentText),
       includeRule(Repository.AllInLineComments),
     ),
     [Repository.CommandLastArgumentWithNumber]: patternsRule(
-      includeRule(Repository.PercentExpressionInLastArgument),
       includeRule(Repository.Dereference),
       includeRule(Repository.CommandArgumentNumber),
       includeRule(Repository.CommandLastArgumentText),
       includeRule(Repository.AllInLineComments),
     ),
     [Repository.CommandInvalidArgument]: rules_common.createInvalidArgumentRule(scopeName),
-    [Repository.PercentExpressionInLastArgument]: rule_v1.createPercentExpressionRule(scopeName, {
-      expressionPattern: patterns_common.unquotedExpressionLastArgumentPattern,
-    }),
     [Repository.UnquotedStringEscapeSequence]: rule_v1.createUnquotedEscapeSequencesRule(scopeName, constants_v2.unquoteEscapeSequences),
     [Repository.CommandArgumentText]: rule_v1.createUnquotedStringRule(scopeName, {
       stringRuleName: RuleName.UnquotedString,
