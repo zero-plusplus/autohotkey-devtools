@@ -1,3 +1,4 @@
+export * from './declaration/hotkeyLabel';
 export * from './expression/identifier';
 export * from './expression/number';
 export * from './expression/object';

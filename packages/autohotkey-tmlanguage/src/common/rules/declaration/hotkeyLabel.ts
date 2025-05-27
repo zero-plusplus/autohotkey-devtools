@@ -1,4 +1,3 @@
-import * as constants_common from '../../../common/constants';
 import { RuleName, StyleName } from '../../../constants';
 import {
   capture, char, groupMany0, groupMany1, inlineSpace, inlineSpaces0, keyword, lookbehind, negChars1,
@@ -6,6 +5,7 @@ import {
 } from '../../../oniguruma';
 import type { MatchRule, ScopeName } from '../../../types';
 import { name, nameRule, patternsRule } from '../../../utils';
+import * as constants_common from '../../constants';
 
 interface Placeholder {
   startAnchor: string;
