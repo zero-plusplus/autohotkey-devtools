@@ -76,8 +76,3 @@ export const unquotedLastArgumentPattern: string = group(alt(
   )),
 ));
 // #endregion command / directive
-
-export const controlFlowExpressionLastArgumentPattern: string = groupMany0(alt(
-  unquotedPairStringPattern,
-  negChar('\\r', '\\n', ',', '{'),
-));

@@ -370,7 +370,6 @@ export const enum HighlightType {
   None = 'none',
   Blank = 'blank',
   Expression = 'expression',
-  ExpressionWithOneTrueBrace = 'expressionwithonetruebrace',
   UnquotedString = 'unquotedstring',
   UnquotedStringShouldEscapeComma = 'unquoted_string_should_escapecomma',
   UnquotedStringWithNumber = 'unquotedstring_with_number',

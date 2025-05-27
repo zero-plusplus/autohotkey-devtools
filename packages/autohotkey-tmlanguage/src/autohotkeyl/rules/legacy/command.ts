@@ -517,10 +517,6 @@ function parameterToOniguruma(parameter: CommandParameter, isLastParameter: bool
       return isLastParameter
         ? patterns_common.unquotedExpressionLastArgumentPattern
         : patterns_common.unquotedExpressionArgumentPattern;
-    case HighlightType.ExpressionWithOneTrueBrace:
-      return isLastParameter
-        ? patterns_common.controlFlowExpressionLastArgumentPattern
-        : patterns_common.unquotedArgumentPattern;
     case HighlightType.RestParams:
     case HighlightType.UnquotedStringShouldEscapeComma: {
       if (isLastParameter) {
