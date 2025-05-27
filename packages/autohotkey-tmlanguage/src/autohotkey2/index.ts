@@ -217,7 +217,7 @@ export function createRepositories(scopeName: ScopeName, placeholder?: Placehold
       namePattern: patterns_v2.looseLeftHandPattern,
       operators: constants_common.assignmentOperators,
     }),
-    [Repository.Block]: rule_v1.createBlockRule(scopeName, {
+    [Repository.Block]: rules_common.createBlockRule(scopeName, {
       statementsInBlock: [ includeRule(Repository.Self) ],
     }),
     [Repository.ClassDeclaration]: rule_v1.createClassDeclarationRule(scopeName, {

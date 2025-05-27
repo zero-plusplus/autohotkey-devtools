@@ -1,3 +1,4 @@
+import * as rules_common from '../../../common/rules';
 import { Repository, RuleName } from '../../../constants';
 import {
   alt, capture, char, endAnchor, group, inlineSpaces0, inlineSpaces1, keyword, lookahead,
@@ -5,7 +6,6 @@ import {
 } from '../../../oniguruma';
 import type { BeginEndRule, Rule, ScopeName } from '../../../types';
 import { includeRule, name, nameRule } from '../../../utils';
-import { createBlockRule } from './block';
 
 interface Placeholder {
   startAnchor: string;
@@ -69,7 +69,7 @@ export function createClassDeclarationRule(scopeName: ScopeName, placeholder: Pl
   };
 }
 export function createBlockInClassBodyRule(scopeName: ScopeName): BeginEndRule {
-  return createBlockRule(scopeName, {
+  return rules_common.createBlockRule(scopeName, {
     statementsInBlock: [
       // get-set
       {
