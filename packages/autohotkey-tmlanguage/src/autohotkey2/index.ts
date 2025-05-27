@@ -1,5 +1,4 @@
 import * as markdown from '../__injection__/markdown';
-import * as constants_v1 from '../autohotkeyl/constants';
 import * as constants_common from '../common/constants';
 import * as definition_common from '../common/definition';
 import * as patterns_common from '../common/patterns';
@@ -434,7 +433,7 @@ export function createRepositories(scopeName: ScopeName, placeholder?: Placehold
       contentRepository: Repository.SingleStringAsRegExpContent,
     }),
     [Repository.SingleStringAsRegExpContent]: rules_common.createStringAsRegExpContentRule(scopeName, {
-      regexpOptions: constants_v1.regexpOptions,
+      regexpOptions: constants_common.regexpOptions,
       contentRepository: Repository.SingleStringAsRegExpContent,
       commonContentRepository: Repository.SingleStringAsRegExpCommonContent,
     }),
