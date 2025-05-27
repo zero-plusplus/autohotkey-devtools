@@ -24,7 +24,7 @@ export const regexpOptionsPattern: string = seq(
 );
 
 // #region command / directive
-export const unquotedPairsString: string = group(alt(
+export const unquotedPairsStringPattern: string = group(alt(
   seq(char('"'), group(alt(negChars0('\\r', '\\n', '"'), group(seq(char('`'), char('"'))))), char('"')),
   seq(char('('), negChars0('\\r', '\\n', ')'), char(')')),
   seq(char('['), negChars0('\\r', '\\n', ']'), char(']')),
@@ -41,7 +41,7 @@ export const unquotedCharPattern: string = seq(
   anyChar(),
 );
 export const expressionArgumentPattern: string = groupMany0(alt(
-  unquotedPairsString,
+  unquotedPairsStringPattern,
   seq(inlineSpaces1(), negativeLookahead(char(';'))),
   negChar(',', '\\s'),
 ));
@@ -63,19 +63,19 @@ export const percentExpressionLastArgumentPattern: string = group(seq(
 export const lastArgumentPattern: string = group(alt(
   percentExpressionLastArgumentPattern,
   groupMany1(alt(
-    unquotedPairsString,
+    unquotedPairsStringPattern,
     char(','),
     unquotedCharPattern,
   )),
 ));
 export const expressionWithOneTrueBraceArgumentPattern: string = groupMany0(alt(
-  unquotedPairsString,
+  unquotedPairsStringPattern,
   negChar('\\r', '\\n', ',', '{'),
 ));
 export const commandArgumentPattern: string = group(alt(
   percentExpressionArgumentPattern,
   groupMany0(alt(
-    unquotedPairsString,
+    unquotedPairsStringPattern,
     unquotedCharPattern,
   )),
 ));
