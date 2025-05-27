@@ -46,7 +46,7 @@ export function createTmLanguage(): TmLanguage {
       }),
       [Repository.ClassDeclaration]: rules_v1.createClassDeclarationRule(scopeName, {
         startAnchor: patterns_vnext.classStartAnchor,
-        endAnchor: patterns_v1.lineEndAnchor,
+        endAnchor: patterns_common.lineEndAnchor,
         identifierPattern: patterns_v2.identifierPattern,
         rulesInBody: [
           includeRule(Repository.Meta),
@@ -73,12 +73,12 @@ export function createTmLanguage(): TmLanguage {
       [Repository.DirectiveStatement]: patternsRule(
         rules_v1.createCommandLikeStatementRule(scopeName, definition_vnext.directiveDefinitions, {
           startAnchor: patterns_v1.statementStartAnchor,
-          endAnchor: patterns_v1.lineEndAnchor,
+          endAnchor: patterns_common.lineEndAnchor,
           commandElementName: RuleName.DirectiveName,
         }),
         rules_v1.createCommandLikeStatementRule(scopeName, [ definition_common.undefinedDirective ], {
           startAnchor: patterns_v2.statementStartAnchor,
-          endAnchor: patterns_v1.lineEndAnchor,
+          endAnchor: patterns_common.lineEndAnchor,
           commandElementName: RuleName.DirectiveName,
         }),
       ),

@@ -49,10 +49,6 @@ export const statementStartAnchor: string = alt(
   seq(lineStartAnchor, inlineSpaces0(), char('}')),
 );
 export const expressionContinuationStartAnchor: string = group(ordalt(...escapeOnigurumaTexts(constants_v1.continuationOperators)));
-export const lineEndAnchor: string = alt(
-  seq(inlineSpaces1(), negativeLookahead(char('`')), char(';')),
-  seq(inlineSpaces0(), endAnchor()),
-);
 export const controlFlowEndAnchor: string = alt(
   seq(inlineSpaces1(), negativeLookahead(char('`')), char(';')),
   seq(inlineSpaces0(), char('{')),

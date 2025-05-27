@@ -103,24 +103,24 @@ export function createRepositories(scopeName: ScopeName, placeholder?: Placehold
     [Repository.DirectiveStatement]: patternsRule(
       rule_v1.createCommandLikeStatementRule(scopeName, definition_v2.directiveDefinitions, {
         startAnchor: patterns_v2.statementStartAnchor,
-        endAnchor: patterns_v1.lineEndAnchor,
+        endAnchor: patterns_common.lineEndAnchor,
         commandElementName: RuleName.DirectiveName,
       }),
       rule_v1.createCommandLikeStatementRule(scopeName, [ definition_common.undefinedDirective ], {
         startAnchor: patterns_v2.statementStartAnchor,
-        endAnchor: patterns_v1.lineEndAnchor,
+        endAnchor: patterns_common.lineEndAnchor,
         commandElementName: RuleName.DirectiveName,
       }),
     ),
     [Repository.JumpStatement]: rule_v1.createJumpStatement(scopeName, {
       startAnchor: patterns_v2.statementStartAnchor,
       assignmentOperators: constants_common.assignmentOperators,
-      endAnchor: patterns_v1.lineEndAnchor,
+      endAnchor: patterns_common.lineEndAnchor,
       identifierPattern: ordalt('Exit', 'ExitApp', 'Return'),
     }),
     [Repository.JumpToLabelStatement]: rule_v1.createJumpToLabelStatement(scopeName, {
       startAnchor: patterns_v2.statementStartAnchor,
-      endAnchor: patterns_v1.lineEndAnchor,
+      endAnchor: patterns_common.lineEndAnchor,
       names: [
         'Break',
         'Continue',
@@ -131,7 +131,7 @@ export function createRepositories(scopeName: ScopeName, placeholder?: Placehold
     }),
     [Repository.HotstringLabelStatement]: rule_v1.createHotstringLabelRule(scopeName, {
       startAnchor: patterns_v2.statementStartAnchor,
-      endAnchor: patterns_v1.lineEndAnchor,
+      endAnchor: patterns_common.lineEndAnchor,
     }),
     [Repository.HotkeyLabelStatement]: rule_v1.createHotkeyLabelRule(scopeName, {
       startAnchor: patterns_v2.statementStartAnchor,
@@ -146,7 +146,7 @@ export function createRepositories(scopeName: ScopeName, placeholder?: Placehold
     }),
     [Repository.SwitchStatement]: rule_v1.createSwitchStatementRule(scopeName, {
       startAnchor: patterns_v2.statementStartAnchor,
-      endAnchor: patterns_v1.lineEndAnchor,
+      endAnchor: patterns_common.lineEndAnchor,
       identifierPattern: patterns_v2.identifierPattern,
     }),
     [Repository.WhileStatement]: rule_v1.createWhileStatementRule(scopeName, {
@@ -222,7 +222,7 @@ export function createRepositories(scopeName: ScopeName, placeholder?: Placehold
     }),
     [Repository.ClassDeclaration]: rule_v1.createClassDeclarationRule(scopeName, {
       startAnchor: patterns_v2.statementStartAnchor,
-      endAnchor: patterns_v1.lineEndAnchor,
+      endAnchor: patterns_common.lineEndAnchor,
       identifierPattern: patterns_v2.identifierPattern,
       rulesInBody: [
         includeRule(Repository.Meta),
@@ -363,12 +363,12 @@ export function createRepositories(scopeName: ScopeName, placeholder?: Placehold
       includeRule(Repository.ContinuationSingleString),
     ),
     ...rule_common.createDoubleStringRepositories(scopeName, {
-      endAnchor: patterns_v1.lineEndAnchor,
+      endAnchor: patterns_common.lineEndAnchor,
       escapedQuotePattern: patterns_v2.escapedDoubleQuotePattern,
       escapeSequences: constants_v2.doubleQuoteEscapeSequences,
     }),
     ...rule_common.createSingleStringRepositories(scopeName, {
-      endAnchor: patterns_v1.lineEndAnchor,
+      endAnchor: patterns_common.lineEndAnchor,
       escapedQuotePattern: patterns_v2.escapedSingleQuotePattern,
       escapeSequences: constants_v2.singleQuoteEscapeSequences,
     }),
@@ -510,7 +510,7 @@ export function createRepositories(scopeName: ScopeName, placeholder?: Placehold
     // #region compiler directive
     [Repository.CompilerDirectiveComment]: rule_common.createDirectiveCommentPatternsRule(scopeName, {
       startAnchor: patterns_common.lineStartAnchor,
-      endAnchor: patterns_v1.lineEndAnchor,
+      endAnchor: patterns_common.lineEndAnchor,
       definitions: definition_common.compilerDirectives,
     }),
     [Repository.UnquotedStringInCompilerDirective]: rule_v1.createUnquotedStringRule(scopeName, {
