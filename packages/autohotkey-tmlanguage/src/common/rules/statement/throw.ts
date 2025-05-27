@@ -1,4 +1,4 @@
-import * as rule_common from '../../../common/rules';
+import * as rule_common from '..';
 import { RuleName } from '../../../constants';
 import type { PatternsRule, ScopeName } from '../../../types';
 

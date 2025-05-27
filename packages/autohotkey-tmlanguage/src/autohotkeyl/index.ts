@@ -158,7 +158,7 @@ export function createRepositories(scopeName: ScopeName): Repositories {
     [Repository.TryStatement]: rules_common.createTryStatementRule(scopeName, {
       startAnchor: patterns_v1.statementStartAnchor,
     }),
-    [Repository.ThrowStatement]: rule_v1.createThrowStatementRule(scopeName, {
+    [Repository.ThrowStatement]: rules_common.createThrowStatementRule(scopeName, {
       startAnchor: patterns_v1.statementStartAnchor,
       assignmentOperators: constants_common.assignmentOperators,
     }),
