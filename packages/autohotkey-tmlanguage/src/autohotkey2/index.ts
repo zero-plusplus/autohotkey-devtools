@@ -212,7 +212,7 @@ export function createRepositories(scopeName: ScopeName, placeholder?: Placehold
       startAnchor: patterns_v2.statementStartAnchor,
       modifiers: constants_common.accessModifiers,
     }),
-    [Repository.AssignmentDeclaration]: rule_v1.createAssignmentDeclarationRule(scopeName, {
+    [Repository.AssignmentDeclaration]: rules_common.createAssignmentDeclarationRule(scopeName, {
       startAnchor: patterns_v2.statementStartAnchor,
       namePattern: patterns_v2.looseLeftHandPattern,
       operators: constants_common.assignmentOperators,
