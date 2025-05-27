@@ -204,7 +204,7 @@ export function createRepositories(scopeName: ScopeName): Repositories {
       ],
     }),
     [Repository.BlockInClassBody]: rules_common.createBlockInClassBodyRule(scopeName),
-    [Repository.PropertyDeclaration]: rule_v1.createPropertyDeclarationRule(scopeName, {
+    [Repository.PropertyDeclaration]: rules_common.createPropertyDeclarationRule(scopeName, {
       modifiers: constants_common.accessModifiers,
       identifierPattern: patterns_v1.looseLeftHandPattern,
       identifierNameRule: patternsRule(includeRule(Repository.Variable)),
