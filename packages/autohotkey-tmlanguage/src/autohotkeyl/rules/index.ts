@@ -12,7 +12,6 @@ export * from './expression/dereference';
 export * from './expression/new';
 export * from './expression/parenthesized';
 export * from './legacy/assignment';
-export * from './legacy/command';
 export * from './legacy/continuationSection';
 export * from './legacy/escape';
 export * from './legacy/if';

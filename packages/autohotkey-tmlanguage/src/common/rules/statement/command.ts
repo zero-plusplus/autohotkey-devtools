@@ -1,7 +1,8 @@
 import { hasFlag } from '@zero-plusplus/utilities/src';
 import * as patterns_v2 from '../../../autohotkey2/patterns';
-import * as constants_common from '../../../common/constants';
-import * as patterns_common from '../../../common/patterns';
+import { isSubCommandParameter } from '../../../autohotkeyl/definition';
+import * as patterns_v1 from '../../../autohotkeyl/patterns';
+import { createAllowArgumentRule, createNumberRule, createSpacedArgumentTextRule } from '../../../autohotkeyl/rules/legacy/unquotedString';
 import { CommandFlag, HighlightType, Repository, RuleName, StyleName } from '../../../constants';
 import {
   alt, anyChar, anyChars0, anyChars1, capture, char, chars1, endAnchor, group, groupMany0, groupMany1,
@@ -14,9 +15,8 @@ import type {
   PatternsRule, Rule, ScopeName,
 } from '../../../types';
 import { includeRule, name, nameRule, patternsRule } from '../../../utils';
-import { isSubCommandParameter } from '../../definition';
-import * as patterns_v1 from '../../patterns';
-import { createAllowArgumentRule, createNumberRule, createSpacedArgumentTextRule } from './unquotedString';
+import * as constants_common from '../../constants';
+import * as patterns_common from '../../patterns';
 
 interface Placeholder {
   startAnchor: string;

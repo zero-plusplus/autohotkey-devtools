@@ -94,13 +94,13 @@ export function createRepositories(scopeName: ScopeName): Repositories {
       includeRule(Repository.ExpressionStatement),
     ),
     [Repository.LegacyStatement]: patternsRule(includeRule(Repository.Legacy)),
-    [Repository.CommandStatement]: rule_v1.createCommandLikeStatementRule(scopeName, definition_v1.commandDefinitions, {
+    [Repository.CommandStatement]: rules_common.createCommandLikeStatementRule(scopeName, definition_v1.commandDefinitions, {
       startAnchor: patterns_v1.statementStartAnchor,
       endAnchor: patterns_common.lineEndAnchor,
       commandElementName: RuleName.CommandName,
       argumentStartPattern: patterns_v1.commandArgumentStartPattern,
     }),
-    [Repository.DirectiveStatement]: rule_v1.createCommandLikeStatementRule(scopeName, definition_v1.directiveDefinitions, {
+    [Repository.DirectiveStatement]: rules_common.createCommandLikeStatementRule(scopeName, definition_v1.directiveDefinitions, {
       startAnchor: patterns_common.lineStartAnchor,
       endAnchor: patterns_common.lineEndAnchor,
       commandElementName: RuleName.DirectiveName,
@@ -418,9 +418,9 @@ export function createRepositories(scopeName: ScopeName): Repositories {
       includeRule(Repository.CommandLastArgumentText),
       includeRule(Repository.AllInLineComments),
     ),
-    [Repository.CommandRestArguments]: rule_v1.createCommandRestArgumentsRule(scopeName),
-    [Repository.CommandInvalidArgument]: rule_v1.createInvalidArgumentRule(scopeName),
-    [Repository.MenuItemNameCommandArgument]: rule_v1.createMenuNameCommandArgumentRule(scopeName),
+    [Repository.CommandRestArguments]: rules_common.createCommandRestArgumentsRule(scopeName),
+    [Repository.CommandInvalidArgument]: rules_common.createInvalidArgumentRule(scopeName),
+    [Repository.MenuItemNameCommandArgument]: rules_common.createMenuNameCommandArgumentRule(scopeName),
     [Repository.UnquotedStringEscapeSequence]: rule_v1.createUnquotedEscapeSequencesRule(scopeName, constants_v1.unquoteEscapeSequences),
     [Repository.CommandArgumentText]: rule_v1.createUnquotedStringRule(scopeName, {
       stringRuleName: RuleName.UnquotedString,
@@ -431,7 +431,7 @@ export function createRepositories(scopeName: ScopeName): Repositories {
       stringRuleName: RuleName.UnquotedString,
       stringPattern: patterns_common.unquotedLastArgumentPattern,
     }),
-    [Repository.CommandArgumentSendKeyName]: rule_v1.createSendKeyCommandArgumentRule(scopeName),
+    [Repository.CommandArgumentSendKeyName]: rules_common.createSendKeyCommandArgumentRule(scopeName),
     // #endregion command
 
     // #region legacy

@@ -5,7 +5,7 @@ import * as rule_v1 from '../autohotkeyl/rules';
 import * as constants_common from '../common/constants';
 import * as definition_common from '../common/definition';
 import * as patterns_common from '../common/patterns';
-import * as rule_common from '../common/rules';
+import * as rules_common from '../common/rules';
 import { Repository, RuleName } from '../constants';
 import { ordalt } from '../oniguruma';
 import type { Repositories, ScopeName, TmLanguage } from '../types';
@@ -52,8 +52,8 @@ export function createRepositories(scopeName: ScopeName, placeholder?: Placehold
       includeRule(Repository.MultiLineDocumentComment),
       includeRule(Repository.MultiLineComment),
     ),
-    [Repository.MultiLineComment]: rule_common.createMultiLineCommentRule(scopeName),
-    [Repository.MultiLineDocumentComment]: rule_common.createDocumentCommentRule(scopeName, {
+    [Repository.MultiLineComment]: rules_common.createMultiLineCommentRule(scopeName),
+    [Repository.MultiLineDocumentComment]: rules_common.createDocumentCommentRule(scopeName, {
       leftHandPattern: patterns_v2.looseLeftHandPattern,
     }),
     [Repository.AllSingleLineComments]: patternsRule(
@@ -61,20 +61,20 @@ export function createRepositories(scopeName: ScopeName, placeholder?: Placehold
       includeRule(Repository.SingleLineDocumentComment),
       includeRule(Repository.SingleLineComment),
     ),
-    [Repository.SingleLineComment]: rule_common.createSingleLineCommentRule(scopeName),
-    [Repository.SingleLineDocumentComment]: rule_common.createSinglelineDocumentCommentRule(scopeName, {
+    [Repository.SingleLineComment]: rules_common.createSingleLineCommentRule(scopeName),
+    [Repository.SingleLineDocumentComment]: rules_common.createSinglelineDocumentCommentRule(scopeName, {
       leftHandPattern: patterns_v2.looseLeftHandPattern,
     }),
     [Repository.AllInLineComments]: patternsRule(
       includeRule(Repository.InLineComment),
       includeRule(Repository.InlineDocumentComment),
     ),
-    [Repository.InLineComment]: rule_common.createInLineCommentRule(scopeName),
-    [Repository.InlineDocumentComment]: rule_common.createInlineDocumentCommentRule(scopeName, {
+    [Repository.InLineComment]: rules_common.createInLineCommentRule(scopeName),
+    [Repository.InlineDocumentComment]: rules_common.createInlineDocumentCommentRule(scopeName, {
       leftHandPattern: patterns_v2.looseLeftHandPattern,
     }),
-    [Repository.TypeInDocument]: rule_common.createDocumentTypeRule(scopeName),
-    [Repository.InlineTextInDocument]: rule_common.createInlineTextInDocumentRule(scopeName),
+    [Repository.TypeInDocument]: rules_common.createDocumentTypeRule(scopeName),
+    [Repository.InlineTextInDocument]: rules_common.createInlineTextInDocumentRule(scopeName),
     // #endregion trivia
 
     // #region statement
@@ -101,12 +101,12 @@ export function createRepositories(scopeName: ScopeName, placeholder?: Placehold
       includeRule(Repository.ThrowStatement),
     ),
     [Repository.DirectiveStatement]: patternsRule(
-      rule_v1.createCommandLikeStatementRule(scopeName, definition_v2.directiveDefinitions, {
+      rules_common.createCommandLikeStatementRule(scopeName, definition_v2.directiveDefinitions, {
         startAnchor: patterns_v2.statementStartAnchor,
         endAnchor: patterns_common.lineEndAnchor,
         commandElementName: RuleName.DirectiveName,
       }),
-      rule_v1.createCommandLikeStatementRule(scopeName, [ definition_common.undefinedDirective ], {
+      rules_common.createCommandLikeStatementRule(scopeName, [ definition_common.undefinedDirective ], {
         startAnchor: patterns_v2.statementStartAnchor,
         endAnchor: patterns_common.lineEndAnchor,
         commandElementName: RuleName.DirectiveName,
@@ -174,13 +174,13 @@ export function createRepositories(scopeName: ScopeName, placeholder?: Placehold
       includeRule(Repository.UserDefinedCallStatement),
     ),
     [Repository.BuiltInCallStatement]: patternsRule(
-      rule_common.createCallStatementRule(scopeName, {
+      rules_common.createCallStatementRule(scopeName, {
         commandRuleName: RuleName.FunctionName,
         startAnchor: patterns_v2.statementStartAnchor,
         identifierPattern: ordalt(...(placeholder?.builtInFunctionNames ?? constants_v2.builtInFunctionNames)),
         assignmentOperators: constants_v2.expressionOperators,
       }),
-      rule_common.createCallStatementRule(scopeName, {
+      rules_common.createCallStatementRule(scopeName, {
         commandRuleName: RuleName.FunctionName,
         startAnchor: patterns_v2.statementStartAnchor,
         identifierPattern: ordalt(...(placeholder?.deprecatedBuiltinFunctionNames ?? constants_v2.deprecatedBuiltinFunctionNames)),
@@ -188,7 +188,7 @@ export function createRepositories(scopeName: ScopeName, placeholder?: Placehold
         isDeprecated: true,
       }),
     ),
-    [Repository.UserDefinedCallStatement]: rule_common.createCallStatementRule(scopeName, {
+    [Repository.UserDefinedCallStatement]: rules_common.createCallStatementRule(scopeName, {
       commandRuleName: RuleName.FunctionName,
       startAnchor: patterns_v2.statementStartAnchor,
       identifierPattern: patterns_v2.identifierPattern,
@@ -275,39 +275,39 @@ export function createRepositories(scopeName: ScopeName, placeholder?: Placehold
       includeRule(Repository.ConstantLikeVariable),
       includeRule(Repository.UserDefinedVariable),
     ),
-    [Repository.ConstantLikeVariable]: rule_common.createIdentifierRule(scopeName, {
+    [Repository.ConstantLikeVariable]: rules_common.createIdentifierRule(scopeName, {
       ruleName: RuleName.ConstantLikeVariable,
       identifierPattern: patterns_v2.upperIdentifierPattern,
     }),
-    [Repository.UserDefinedVariable]: rule_common.createIdentifierRule(scopeName, {
+    [Repository.UserDefinedVariable]: rules_common.createIdentifierRule(scopeName, {
       ruleName: RuleName.Variable,
       identifierPattern: patterns_v2.identifierPattern,
     }),
-    [Repository.KeywordLikeBuiltInVariable]: rule_common.createReservedIdentifierRule(scopeName, {
+    [Repository.KeywordLikeBuiltInVariable]: rules_common.createReservedIdentifierRule(scopeName, {
       ruleName: RuleName.KeywordLikeBuiltInVariable,
       identifiers: constants_v2.keywordLikeBuiltinVariables,
     }),
-    [Repository.BuiltInVariable]: rule_common.createReservedIdentifierRule(scopeName, {
+    [Repository.BuiltInVariable]: rules_common.createReservedIdentifierRule(scopeName, {
       ruleName: RuleName.BuiltInVariable,
       identifiers: placeholder?.builtinVaribles ?? constants_v2.builtinVaribles,
     }),
-    [Repository.BuiltInClass]: rule_common.createReservedIdentifierRule(scopeName, {
+    [Repository.BuiltInClass]: rules_common.createReservedIdentifierRule(scopeName, {
       ruleName: RuleName.ClassName,
       identifiers: placeholder?.builtInClassNames ?? constants_v2.builtInClassNames,
     }),
-    [Repository.FunctionName]: rule_common.createIdentifierRule(scopeName, {
+    [Repository.FunctionName]: rules_common.createIdentifierRule(scopeName, {
       ruleName: RuleName.FunctionName,
       identifierPattern: patterns_v2.identifierPattern,
     }),
-    [Repository.MetaFunctionName]: rule_common.createReservedIdentifierRule(scopeName, {
+    [Repository.MetaFunctionName]: rules_common.createReservedIdentifierRule(scopeName, {
       ruleName: RuleName.MetaFunctionName,
       identifiers: [ '__NEW', '__DELETE', '__ENUM', '__GET', '__SET', '__CALL' ],
     }),
-    [Repository.MetaPropertyName]: rule_common.createReservedIdentifierRule(scopeName, {
+    [Repository.MetaPropertyName]: rules_common.createReservedIdentifierRule(scopeName, {
       ruleName: RuleName.MetaFunctionName,
       identifiers: [ '__ITEM' ],
     }),
-    [Repository.KeywordInExpression]: rule_common.createReservedIdentifierRule(scopeName, {
+    [Repository.KeywordInExpression]: rules_common.createReservedIdentifierRule(scopeName, {
       ruleName: RuleName.KeywordInExpression,
       identifiers: [
         ...constants_v2.expressionKeywords,
@@ -338,10 +338,10 @@ export function createRepositories(scopeName: ScopeName, placeholder?: Placehold
     ),
 
     // #region object
-    [Repository.ObjectInBrackets]: rule_common.createObjectRule(scopeName, {
+    [Repository.ObjectInBrackets]: rules_common.createObjectRule(scopeName, {
       startAnchor: patterns_common.lineStartAnchor,
     }),
-    ...rule_common.createObjectRepositories(scopeName, {
+    ...rules_common.createObjectRepositories(scopeName, {
       startAnchor: patterns_v2.expressionContinuationStartAnchor,
       keyName: patterns_v2.keyName,
       contents: [
@@ -362,12 +362,12 @@ export function createRepositories(scopeName: ScopeName, placeholder?: Placehold
       includeRule(Repository.ContinuationDoubleString),
       includeRule(Repository.ContinuationSingleString),
     ),
-    ...rule_common.createDoubleStringRepositories(scopeName, {
+    ...rules_common.createDoubleStringRepositories(scopeName, {
       endAnchor: patterns_common.lineEndAnchor,
       escapedQuotePattern: patterns_v2.escapedDoubleQuotePattern,
       escapeSequences: constants_v2.doubleQuoteEscapeSequences,
     }),
-    ...rule_common.createSingleStringRepositories(scopeName, {
+    ...rules_common.createSingleStringRepositories(scopeName, {
       endAnchor: patterns_common.lineEndAnchor,
       escapedQuotePattern: patterns_v2.escapedSingleQuotePattern,
       escapeSequences: constants_v2.singleQuoteEscapeSequences,
@@ -375,12 +375,12 @@ export function createRepositories(scopeName: ScopeName, placeholder?: Placehold
     // #endregion string
 
     // #region number
-    ...rule_common.createNumberRepositories(scopeName),
+    ...rules_common.createNumberRepositories(scopeName),
     // #endregion number
     // #endregion literal
 
     // #region operator
-    ...rule_common.createOperatorRepositories(scopeName, {
+    ...rules_common.createOperatorRepositories(scopeName, {
       expressionOperators: constants_v2.expressionOperators,
     }),
     // #endregion operator
@@ -491,7 +491,7 @@ export function createRepositories(scopeName: ScopeName, placeholder?: Placehold
       includeRule(Repository.CommandLastArgumentText),
       includeRule(Repository.AllInLineComments),
     ),
-    [Repository.CommandInvalidArgument]: rule_v1.createInvalidArgumentRule(scopeName),
+    [Repository.CommandInvalidArgument]: rules_common.createInvalidArgumentRule(scopeName),
     [Repository.PercentExpressionInLastArgument]: rule_v1.createPercentExpressionRule(scopeName, {
       expressionPattern: patterns_common.unquotedExpressionLastArgumentPattern,
     }),
@@ -508,7 +508,7 @@ export function createRepositories(scopeName: ScopeName, placeholder?: Placehold
     // #endregion misc
 
     // #region compiler directive
-    [Repository.CompilerDirectiveComment]: rule_common.createDirectiveCommentPatternsRule(scopeName, {
+    [Repository.CompilerDirectiveComment]: rules_common.createDirectiveCommentPatternsRule(scopeName, {
       startAnchor: patterns_common.lineStartAnchor,
       endAnchor: patterns_common.lineEndAnchor,
       definitions: definition_common.compilerDirectives,
@@ -523,11 +523,11 @@ export function createRepositories(scopeName: ScopeName, placeholder?: Placehold
       scopeName,
       constants_common.compilerDirectiveEscapeSequences,
     ),
-    [Repository.BuiltInVariableInCompilerDirective]: rule_common.createReservedIdentifierRule(scopeName, {
+    [Repository.BuiltInVariableInCompilerDirective]: rules_common.createReservedIdentifierRule(scopeName, {
       ruleName: RuleName.KeywordLikeBuiltInVariable,
       identifiers: constants_common.compilerDirectiveVariables,
     }),
-    [Repository.DereferenceInCompilerDirective]: rule_common.createCompilerDirectiveDereferenceMatchRule(scopeName),
+    [Repository.DereferenceInCompilerDirective]: rules_common.createCompilerDirectiveDereferenceMatchRule(scopeName),
     [Repository.ExpressionInCompilerDirective]: patternsRule(
       includeRule(Repository.KeywordInExpression),
       includeRule(Repository.Dereference),
@@ -541,8 +541,8 @@ export function createRepositories(scopeName: ScopeName, placeholder?: Placehold
       includeRule(Repository.Dot),
       includeRule(Repository.Operator),
     ),
-    [Repository.DoubleStringInCompilerDirective]: rule_common.createDoubleStringInCompilerDirectiveRule(scopeName),
-    [Repository.DoubleStringContentInCompilerDirective]: rule_common.createDoubleStringContentInCompilerDirectiveRule(scopeName),
+    [Repository.DoubleStringInCompilerDirective]: rules_common.createDoubleStringInCompilerDirectiveRule(scopeName),
+    [Repository.DoubleStringContentInCompilerDirective]: rules_common.createDoubleStringContentInCompilerDirectiveRule(scopeName),
     // #endregion compiler directive
   };
 }

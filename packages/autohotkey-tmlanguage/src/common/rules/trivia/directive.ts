@@ -1,7 +1,7 @@
-import { createDirectiveCommentRule } from '../../../autohotkeyl/rules/legacy/command';
 import { RuleName } from '../../../constants';
 import type { CommandDefinition, PatternsRule, ScopeName } from '../../../types';
 import { patternsRule } from '../../../utils';
+import { createDirectiveCommentRule } from '../statement/command';
 
 interface Placeholder {
   startAnchor: string;
