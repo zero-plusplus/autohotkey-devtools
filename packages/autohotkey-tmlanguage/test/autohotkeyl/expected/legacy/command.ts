@@ -2127,6 +2127,24 @@ export function createCommandStatementExpectedData(scopeName: ScopeName): Expect
     })(),
     // #endregion continuation
 
+    // command or expression
+    [
+      dedent`
+        Control += var
+        Control, += var
+      `,
+      [
+        { text: 'Control', scopes: name(scopeName, RuleName.Variable) },
+        { text: '+=', scopes: name(scopeName, RuleName.Operator) },
+        { text: 'var', scopes: name(scopeName, RuleName.Variable) },
+
+        { text: 'Control', scopes: name(scopeName, RuleName.CommandName) },
+        { text: ',', scopes: name(scopeName, RuleName.Comma) },
+        { text: '+=', scopes: name(scopeName, RuleName.UnquotedString) },
+        { text: 'var', scopes: name(scopeName, RuleName.UnquotedString) },
+      ],
+    ],
+
     // Fix: If the last argument is a percent expression, the comma after is highlighted as a string
     [
       dedent`

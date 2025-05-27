@@ -6,7 +6,7 @@ import {
   alt, anyChar, anyChars0, anyChars1, capture, char, chars1, endAnchor, group, groupMany0, groupMany1,
   ignoreCase, inlineSpace, inlineSpaces0, inlineSpaces1, keyword, lookahead, lookbehind, negativeLookahead,
   negativeLookbehind, negChar, negChars0, negChars1, numbers1, optional, optseq, ordalt, reluctant, seq, text,
-  textalt, wordBound, wordChars0, wordChars1,
+  textalt, wordBound, wordChar, wordChars0, wordChars1,
 } from '../../../oniguruma';
 import type {
   BeginWhileRule, CommandDefinition, CommandParameter, CommandSignature, ElementName, MatchRule,
@@ -21,6 +21,7 @@ interface Placeholder {
   startAnchor: string;
   endAnchor: string;
   commandElementName: ElementName;
+  argumentStartPattern?: string;
 }
 export function createCommandLikeStatementRule(scopeName: ScopeName, definitions: CommandDefinition[], placeholder: Placeholder): BeginWhileRule {
   const sortedDefinitions = definitions.sort((a, b) => b.name.length - a.name.length);
@@ -31,10 +32,16 @@ export function createCommandLikeStatementRule(scopeName: ScopeName, definitions
       lookbehind(placeholder.startAnchor),
       inlineSpaces0(),
       ignoreCase(alt(...sortedDefinitions.map((definition) => definition.name))),
-      lookahead(alt(
-        seq(inlineSpaces1()),
-        seq(inlineSpaces0(), char(',')),
-      )),
+      negativeLookahead(alt(char('(', '['), wordChar())),
+      ...(
+        placeholder.argumentStartPattern
+          ? [ placeholder.argumentStartPattern ]
+          : [
+            lookahead(alt(
+              seq(inlineSpaces1()),
+              seq(inlineSpaces0(), char(',')),
+            )),
+          ]),
       optional(anyChars0()),
       lookahead(placeholder.endAnchor),
     )),

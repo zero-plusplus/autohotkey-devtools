@@ -98,19 +98,13 @@ export function createRepositories(scopeName: ScopeName): Repositories {
       startAnchor: patterns_v1.statementStartAnchor,
       endAnchor: patterns_v1.lineEndAnchor,
       commandElementName: RuleName.CommandName,
+      argumentStartPattern: patterns_v1.commandArgumentStartPattern,
     }),
-    [Repository.DirectiveStatement]: patternsRule(
-      rule_v1.createCommandLikeStatementRule(scopeName, definition_v1.directiveDefinitions, {
-        startAnchor: patterns_common.lineStartAnchor,
-        endAnchor: patterns_v1.lineEndAnchor,
-        commandElementName: RuleName.DirectiveName,
-      }),
-      rule_v1.createCommandLikeStatementRule(scopeName, [ definition_common.undefinedDirective ], {
-        startAnchor: patterns_common.lineStartAnchor,
-        endAnchor: patterns_v1.lineEndAnchor,
-        commandElementName: RuleName.DirectiveName,
-      }),
-    ),
+    [Repository.DirectiveStatement]: rule_v1.createCommandLikeStatementRule(scopeName, definition_v1.directiveDefinitions, {
+      startAnchor: patterns_common.lineStartAnchor,
+      endAnchor: patterns_v1.lineEndAnchor,
+      commandElementName: RuleName.DirectiveName,
+    }),
     [Repository.JumpStatement]: rule_v1.createJumpStatement(scopeName, {
       startAnchor: patterns_v1.statementStartAnchor,
       assignmentOperators: constants_common.assignmentOperators,

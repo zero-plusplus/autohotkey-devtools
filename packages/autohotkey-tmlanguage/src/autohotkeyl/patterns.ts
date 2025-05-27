@@ -2,7 +2,7 @@ import { lineStartAnchor } from '../common/patterns';
 import {
   alt, anyChar, anyChars1, char, endAnchor, escapeOnigurumaTexts, group, groupMany0, groupMany1, inlineSpace,
   inlineSpaces0, inlineSpaces1, lookahead, manyLimit, manyRange, negativeLookahead, negativeLookbehind, negChar,
-  negChars0, number, optional, ordalt, reluctant, seq, text, wordChar,
+  negChars0, number, optional, ordalt, reluctant, seq, text, textalt, wordChar,
 } from '../oniguruma';
 import * as constants_v1 from './constants';
 
@@ -134,6 +134,11 @@ export const lastArgumentPattern: string = group(alt(
 export const expressionWithOneTrueBraceArgumentPattern: string = groupMany0(alt(
   pairs,
   negChar('\\r', '\\n', ',', '{'),
+));
+export const commandArgumentStartPattern: string = lookahead(alt(
+  seq(inlineSpaces0(), negativeLookahead(textalt(...constants_v1.expressionOperators))),
+  seq(inlineSpaces1()),
+  seq(inlineSpaces0(), char(',')),
 ));
 // #endregion command
 
