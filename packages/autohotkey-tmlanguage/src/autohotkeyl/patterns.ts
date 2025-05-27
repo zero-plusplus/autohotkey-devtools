@@ -1,8 +1,8 @@
 import { lineStartAnchor } from '../common/patterns';
 import {
   alt, anyChars1, char, endAnchor, escapeOnigurumaTexts, group, groupMany0, groupMany1, inlineSpace,
-  inlineSpaces0, inlineSpaces1, lookahead, manyLimit, manyRange, negativeLookahead, negativeLookbehind, negChar,
-  number, ordalt, reluctant, seq, text, textalt, wordChar,
+  inlineSpaces0, inlineSpaces1, lookahead, manyLimit, manyRange, negativeLookahead, negChar, number,
+  ordalt, reluctant, seq, text, textalt, wordChar,
 } from '../oniguruma';
 import * as constants_v1 from './constants';
 
@@ -58,11 +58,6 @@ export const expressionEndAnchor: string = alt(
   seq(inlineSpaces1(), char(';')),
   seq(inlineSpaces0(), endAnchor()),
 );
-export const unquotedStringChar: string = group(alt(
-  negChar('\\s', ',', '%', '`', ';', ':'),
-  seq(negativeLookbehind(inlineSpace()), char(';')),
-  seq(inlineSpace(), negativeLookahead(';')),
-));
 export const escapedDoubleQuotePattern: string = text('""');
 
 // https://www.autohotkey.com/docs/v1/misc/RegEx-QuickRef.htm#Options

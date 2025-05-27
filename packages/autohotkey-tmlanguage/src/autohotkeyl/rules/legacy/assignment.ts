@@ -2,12 +2,11 @@ import * as patterns_common from '../../../common/patterns';
 import { Repository, RuleName } from '../../../constants';
 import {
   alt, capture, char, endAnchor, escapeOnigurumaTexts, group, groupMany0, inlineSpaces0, inlineSpaces1,
-  lookahead, lookbehind, many1, negativeLookahead, ordalt, seq,
+  lookahead, lookbehind, negativeLookahead, negChars1, ordalt, seq,
 } from '../../../oniguruma';
 import type { MatchRule, ScopeName } from '../../../types';
 import { includeRule, name, nameRule } from '../../../utils';
 import * as constants_v1 from '../../constants';
-import * as patterns_v1 from '../../patterns';
 
 interface Placeholder {
   startAnchor: string;
@@ -28,7 +27,7 @@ export function createLegacyAssignmentRule(scopeName: ScopeName, placeholder: Pl
       inlineSpaces0(),
       capture(groupMany0(alt(
         patterns_common.unquotedPairsStringPattern,
-        patterns_v1.unquotedStringChar,
+        patterns_common.unquotedCharPattern,
         group(ordalt(...constants_v1.unquoteEscapeSequences)),
         char('%'),
       ))),
@@ -55,7 +54,7 @@ export function createLegacyAssignmentRule(scopeName: ScopeName, placeholder: Pl
           },
           {
             name: name(scopeName, RuleName.UnquotedString),
-            match: many1(patterns_v1.unquotedStringChar),
+            match: negChars1('`', '%'),
           },
         ],
       },
