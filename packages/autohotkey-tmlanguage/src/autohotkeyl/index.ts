@@ -178,7 +178,7 @@ export function createRepositories(scopeName: ScopeName): Repositories {
       includeRule(Repository.ClassDeclaration),
       includeRule(Repository.Block),
     ),
-    [Repository.Modifier]: rule_v1.createModifierRule(scopeName, {
+    [Repository.Modifier]: rules_common.createModifierRule(scopeName, {
       startAnchor: patterns_v1.statementStartAnchor,
       modifiers: constants_common.accessModifiers,
     }),

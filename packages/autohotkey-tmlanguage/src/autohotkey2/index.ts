@@ -208,7 +208,7 @@ export function createRepositories(scopeName: ScopeName, placeholder?: Placehold
       includeRule(Repository.ClassDeclaration),
       includeRule(Repository.Block),
     ),
-    [Repository.Modifier]: rule_v1.createModifierRule(scopeName, {
+    [Repository.Modifier]: rules_common.createModifierRule(scopeName, {
       startAnchor: patterns_v2.statementStartAnchor,
       modifiers: constants_common.accessModifiers,
     }),
