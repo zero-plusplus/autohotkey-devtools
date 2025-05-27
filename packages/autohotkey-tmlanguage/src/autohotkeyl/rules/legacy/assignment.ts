@@ -1,3 +1,4 @@
+import * as patterns_common from '../../../common/patterns';
 import { Repository, RuleName } from '../../../constants';
 import {
   alt, capture, char, endAnchor, escapeOnigurumaTexts, group, groupMany0, inlineSpaces0, inlineSpaces1,
@@ -26,7 +27,7 @@ export function createLegacyAssignmentRule(scopeName: ScopeName, placeholder: Pl
       capture(char('=')),
       inlineSpaces0(),
       capture(groupMany0(alt(
-        patterns_v1.pairs,
+        patterns_common.pairs,
         patterns_v1.unquotedStringChar,
         group(ordalt(...constants_v1.unquoteEscapeSequences)),
         char('%'),
@@ -38,7 +39,7 @@ export function createLegacyAssignmentRule(scopeName: ScopeName, placeholder: Pl
         name: name(scopeName, Repository.LegacyAssignmentDeclaration),
         patterns: [
           includeRule(Repository.Comma),
-          includeRule(Repository.Expression), 
+          includeRule(Repository.Expression),
         ],
       },
       2: nameRule(scopeName, Repository.LegacyAssignmentDeclaration, RuleName.Operator),

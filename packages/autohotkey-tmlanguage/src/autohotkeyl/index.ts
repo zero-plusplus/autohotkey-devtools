@@ -429,7 +429,7 @@ export function createRepositories(scopeName: ScopeName): Repositories {
     [Repository.CommandArgumentNumber]: rule_v1.createNumberRule(scopeName),
     [Repository.CommandLastArgumentText]: rule_v1.createUnquotedStringRule(scopeName, {
       stringRuleName: RuleName.UnquotedString,
-      stringPattern: patterns_v1.lastArgumentPattern,
+      stringPattern: patterns_common.lastArgumentPattern,
     }),
     [Repository.CommandArgumentSendKeyName]: rule_v1.createSendKeyCommandArgumentRule(scopeName),
     // #endregion command
@@ -446,10 +446,10 @@ export function createRepositories(scopeName: ScopeName): Repositories {
       leftHandPattern: patterns_v1.looseLeftHandPattern,
     }),
     [Repository.PercentExpression]: rule_v1.createPercentExpressionRule(scopeName, {
-      expressionPattern: patterns_v1.expressionArgumentPattern,
+      expressionPattern: patterns_common.expressionArgumentPattern,
     }),
     [Repository.PercentExpressionInLastArgument]: rule_v1.createPercentExpressionRule(scopeName, {
-      expressionPattern: patterns_v1.expressionLastArgumentPattern,
+      expressionPattern: patterns_common.expressionLastArgumentPattern,
     }),
     [Repository.ContinuationSection]: rule_v1.createContinuationSectionRule(scopeName, {
       endAnchor: patterns_common.lineEndAnchor,

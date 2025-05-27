@@ -515,11 +515,11 @@ function parameterToOniguruma(parameter: CommandParameter, isLastParameter: bool
     case HighlightType.Output:
     case HighlightType.Expression:
       return isLastParameter
-        ? patterns_v1.expressionLastArgumentPattern
-        : patterns_v1.expressionArgumentPattern;
+        ? patterns_common.expressionLastArgumentPattern
+        : patterns_common.expressionArgumentPattern;
     case HighlightType.ExpressionWithOneTrueBrace:
       return isLastParameter
-        ? patterns_v1.expressionWithOneTrueBraceArgumentPattern
+        ? patterns_common.expressionWithOneTrueBraceArgumentPattern
         : patterns_common.commandArgumentPattern;
     case HighlightType.RestParams:
     case HighlightType.UnquotedStringShouldEscapeComma: {
@@ -542,14 +542,14 @@ function parameterToOniguruma(parameter: CommandParameter, isLastParameter: bool
     case HighlightType.Namespace:
     case HighlightType.IncludeLibrary:
     {
-      return patterns_v1.lastArgumentPattern;
+      return patterns_common.lastArgumentPattern;
     }
     case HighlightType.UnquotedStringInCompilerDirective:
     case HighlightType.ExpressionInCompilerDirective:
       return patterns_common.commandArgumentPattern;
     default:
       return isLastParameter
-        ? patterns_v1.lastArgumentPattern
+        ? patterns_common.lastArgumentPattern
         : patterns_common.commandArgumentPattern;
   }
 }
