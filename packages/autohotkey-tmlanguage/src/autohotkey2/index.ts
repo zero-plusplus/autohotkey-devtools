@@ -156,7 +156,7 @@ export function createRepositories(scopeName: ScopeName, placeholder?: Placehold
       startAnchor: patterns_v2.statementStartAnchor,
       endAnchor: patterns_v1.controlFlowEndAnchor,
     }),
-    [Repository.UntilStatement]: rule_v1.createUntilStatementRule(scopeName, {
+    [Repository.UntilStatement]: rules_common.createUntilStatementRule(scopeName, {
       startAnchor: patterns_v2.statementStartAnchor,
     }),
     [Repository.ForStatement]: rule_v1.createForStatementRule(scopeName, {
