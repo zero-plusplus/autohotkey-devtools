@@ -1,6 +1,5 @@
 import * as markdown from '../__injection__/markdown';
 import * as constants_v1 from '../autohotkeyl/constants';
-import * as patterns_v1 from '../autohotkeyl/patterns';
 import * as constants_common from '../common/constants';
 import * as definition_common from '../common/definition';
 import * as patterns_common from '../common/patterns';
@@ -153,7 +152,7 @@ export function createRepositories(scopeName: ScopeName, placeholder?: Placehold
     }),
     [Repository.LoopStatement]: rule_v2.createLoopStatementRule(scopeName, {
       startAnchor: patterns_v2.statementStartAnchor,
-      endAnchor: patterns_v1.controlFlowEndAnchor,
+      endAnchor: patterns_common.controlFlowEndAnchor,
     }),
     [Repository.UntilStatement]: rules_common.createUntilStatementRule(scopeName, {
       startAnchor: patterns_v2.statementStartAnchor,
