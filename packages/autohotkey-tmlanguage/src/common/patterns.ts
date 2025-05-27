@@ -1,3 +1,4 @@
+import { pairs, percentExpressionArgumentPattern, unquotedCharPattern } from '../autohotkeyl/patterns';
 import {
   alt, char, endAnchor, escapeOnigurumaTexts, group, groupMany0, inlineSpace, inlineSpaces0, inlineSpaces1,
   negativeLookahead, ordalt, seq, startAnchor,
@@ -22,3 +23,11 @@ export const regexpOptionsPattern: string = seq(
   negativeLookahead(char('`')),
   char(')'),
 );
+
+export const commandArgumentPattern: string = group(alt(
+  percentExpressionArgumentPattern,
+  groupMany0(alt(
+    pairs,
+    unquotedCharPattern,
+  )),
+));

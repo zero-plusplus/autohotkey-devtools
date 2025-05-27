@@ -1,6 +1,7 @@
 import { hasFlag } from '@zero-plusplus/utilities/src';
 import * as patterns_v2 from '../../../autohotkey2/patterns';
 import * as constants_common from '../../../common/constants';
+import * as patterns_common from '../../../common/patterns';
 import { CommandFlag, HighlightType, Repository, RuleName, StyleName } from '../../../constants';
 import {
   alt, anyChar, anyChars0, anyChars1, capture, char, chars1, endAnchor, group, groupMany0, groupMany1,
@@ -68,7 +69,7 @@ export function createCommandLikeStatementRule(scopeName: ScopeName, definitions
         inlineSpaces0(),
         char(','),
         inlineSpaces0(),
-        optional(patterns_v1.commandArgumentPattern),
+        optional(patterns_common.commandArgumentPattern),
       )))),
       inlineSpaces0(),
       capture(optional(char(','))),
@@ -519,24 +520,24 @@ function parameterToOniguruma(parameter: CommandParameter, isLastParameter: bool
     case HighlightType.ExpressionWithOneTrueBrace:
       return isLastParameter
         ? patterns_v1.expressionWithOneTrueBraceArgumentPattern
-        : patterns_v1.commandArgumentPattern;
+        : patterns_common.commandArgumentPattern;
     case HighlightType.RestParams:
     case HighlightType.UnquotedStringShouldEscapeComma: {
       if (isLastParameter) {
         return seq(groupMany1(seq(
-          patterns_v1.commandArgumentPattern,
+          patterns_common.commandArgumentPattern,
           optseq(
             inlineSpaces0(),
             char(','),
             optseq(
               negativeLookahead(seq(inlineSpaces1(), char(';'))),
               inlineSpaces0(),
-              patterns_v1.commandArgumentPattern,
+              patterns_common.commandArgumentPattern,
             ),
           ),
         )));
       }
-      return patterns_v1.commandArgumentPattern;
+      return patterns_common.commandArgumentPattern;
     }
     case HighlightType.Namespace:
     case HighlightType.IncludeLibrary:
@@ -545,11 +546,11 @@ function parameterToOniguruma(parameter: CommandParameter, isLastParameter: bool
     }
     case HighlightType.UnquotedStringInCompilerDirective:
     case HighlightType.ExpressionInCompilerDirective:
-      return patterns_v1.commandArgumentPattern;
+      return patterns_common.commandArgumentPattern;
     default:
       return isLastParameter
         ? patterns_v1.lastArgumentPattern
-        : patterns_v1.commandArgumentPattern;
+        : patterns_common.commandArgumentPattern;
   }
 }
 function parameterToPatternsRule(scopeName: ScopeName, defenition: CommandDefinition, parameter: CommandParameter, isLastParameter: boolean, placeholder: Placeholder): PatternsRule {
@@ -779,7 +780,7 @@ function parameterToPatternsRule(scopeName: ScopeName, defenition: CommandDefini
         includeRule(isLastParameter ? Repository.PercentExpressionInLastArgument : Repository.PercentExpression),
 
         createAllowArgumentRule(scopeName, {
-          stringPattern: patterns_v1.commandArgumentPattern,
+          stringPattern: patterns_common.commandArgumentPattern,
           stringRuleName: RuleName.UnquotedString,
           allowRules: optionItemPatternsToRules(scopeName, parameter.itemPatterns),
         }),

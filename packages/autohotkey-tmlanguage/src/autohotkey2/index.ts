@@ -498,7 +498,7 @@ export function createRepositories(scopeName: ScopeName, placeholder?: Placehold
     [Repository.UnquotedStringEscapeSequence]: rule_v1.createUnquotedEscapeSequencesRule(scopeName, constants_v2.unquoteEscapeSequences),
     [Repository.CommandArgumentText]: rule_v1.createUnquotedStringRule(scopeName, {
       stringRuleName: RuleName.UnquotedString,
-      stringPattern: patterns_v1.commandArgumentPattern,
+      stringPattern: patterns_common.commandArgumentPattern,
     }),
     [Repository.CommandArgumentNumber]: rule_v1.createNumberRule(scopeName),
     [Repository.CommandLastArgumentText]: rule_v1.createUnquotedStringRule(scopeName, {
@@ -515,7 +515,7 @@ export function createRepositories(scopeName: ScopeName, placeholder?: Placehold
     }),
     [Repository.UnquotedStringInCompilerDirective]: rule_v1.createUnquotedStringRule(scopeName, {
       stringRuleName: RuleName.UnquotedString,
-      stringPattern: patterns_v1.commandArgumentPattern,
+      stringPattern: patterns_common.commandArgumentPattern,
       escapeSequenceRepository: Repository.UnquotedStringEscapeSequenceInCompilerDirective,
       additionalRules: [ includeRule(Repository.DereferenceInCompilerDirective) ],
     }),

@@ -103,13 +103,6 @@ export const percentExpressionArgumentPattern: string = seq(
   negativeLookahead(char(';')),
   expressionArgumentPattern,
 );
-export const commandArgumentPattern: string = group(alt(
-  percentExpressionArgumentPattern,
-  groupMany0(alt(
-    pairs,
-    unquotedCharPattern,
-  )),
-));
 export const expressionLastArgumentPattern: string = groupMany1(alt(
   negChar('\\s'),
   seq(inlineSpaces1(), negativeLookahead(char(';'))),
