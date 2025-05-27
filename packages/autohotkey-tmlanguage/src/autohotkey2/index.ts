@@ -356,7 +356,7 @@ export function createRepositories(scopeName: ScopeName, placeholder?: Placehold
         includeRule(Repository.ExpressionInBrackets),
       ],
     }),
-    [Repository.Array]: rule_v1.createArrayRule(scopeName),
+    [Repository.Array]: rules_common.createArrayRule(scopeName),
     // #endregion object
 
     // #region string
