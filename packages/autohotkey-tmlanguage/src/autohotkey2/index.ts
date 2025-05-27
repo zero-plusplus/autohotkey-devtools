@@ -141,7 +141,7 @@ export function createRepositories(scopeName: ScopeName, placeholder?: Placehold
       labelPattern: patterns_v2.identifierPattern,
     }),
 
-    [Repository.IfStatement]: rule_v1.createIfStatementRule(scopeName, {
+    [Repository.IfStatement]: rules_common.createIfStatementRule(scopeName, {
       startAnchor: patterns_v2.statementStartAnchor,
     }),
     [Repository.SwitchStatement]: rule_v1.createSwitchStatementRule(scopeName, {
