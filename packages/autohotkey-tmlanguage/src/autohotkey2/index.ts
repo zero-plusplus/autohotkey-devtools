@@ -414,7 +414,7 @@ export function createRepositories(scopeName: ScopeName, placeholder?: Placehold
       contentRepository: Repository.DoubleStringAsRegExpContent,
     }),
     [Repository.DoubleStringAsRegExpContent]: rule_v1.createStringAsRegExpContentRule(scopeName, {
-      regexpOptions: constants_v1.regexpOptions,
+      regexpOptions: constants_common.regexpOptions,
       contentRepository: Repository.DoubleStringAsRegExpContent,
       commonContentRepository: Repository.DoubleStringAsRegExpCommonContent,
     }),
@@ -446,7 +446,7 @@ export function createRepositories(scopeName: ScopeName, placeholder?: Placehold
 
     // #region misc
     [Repository.CallExpression_FunctionDeclarationHead]: rule_v1.createCallExpressionRule(scopeName, {
-      callableNamePattern: patterns_v1.identifierPattern,
+      callableNamePattern: patterns_v2.identifierPattern,
       callableNameRule: namedPatternsRule(
         name(scopeName, RuleName.FunctionName),
         [ includeRule(Repository.BuiltInClass) ],
@@ -454,7 +454,7 @@ export function createRepositories(scopeName: ScopeName, placeholder?: Placehold
       keywordsInArgument: [],
     }),
     [Repository.MethodDeclarationHead]: rule_v1.createCallExpressionRule(scopeName, {
-      callableNamePattern: patterns_v1.identifierPattern,
+      callableNamePattern: patterns_v2.identifierPattern,
       callableNameRule: patternsRule(
         includeRule(Repository.MetaFunctionName),
         includeRule(Repository.FunctionName),
