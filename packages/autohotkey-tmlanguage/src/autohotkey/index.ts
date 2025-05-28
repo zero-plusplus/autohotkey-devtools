@@ -1,8 +1,6 @@
-import * as constants_v2 from '../autohotkey2/constants';
-import * as constants_v1 from '../autohotkeyl/constants';
 import {
-  alt, anyChars0, capture, char, charRange, endAnchor, escapeOnigurumaTexts, group, ignoreCase, inlineSpaces0,
-  inlineSpaces1, lookahead, lookbehind, negativeLookahead, optional, optseq, ordalt, reluctant, seq, startAnchor,
+  alt, anyChars0, capture, char, charRange, endAnchor, group, ignoreCase, inlineSpaces0, inlineSpaces1,
+  lookahead, lookbehind, negativeLookahead, optional, optseq, reluctant, seq, startAnchor, wordBound,
 } from '../oniguruma';
 import type { Rule, ScopeName, TmLanguage } from '../types';
 import { includeScope, patternsRule } from '../utils';
@@ -27,7 +25,6 @@ export function createTmLanguage(): TmLanguage {
       },
       autohotkeynext: createAutoHotkeyRule('autohotkeynext', {
         startPattern,
-        expressionOperators: constants_v2.expressionOperators,
         versionPattern: seq(
           ignoreCase('v2'),
           char('.'),
@@ -36,7 +33,6 @@ export function createTmLanguage(): TmLanguage {
       }),
       autohotkey2: createAutoHotkeyRule('autohotkey2', {
         startPattern,
-        expressionOperators: constants_v2.expressionOperators,
         versionPattern: seq(
           ignoreCase('v2'),
           optseq(
@@ -47,12 +43,10 @@ export function createTmLanguage(): TmLanguage {
       }),
       autohotkeyl: createAutoHotkeyRule('autohotkeyl', {
         startPattern,
-        expressionOperators: constants_v1.expressionOperators,
         versionPattern: seq(ignoreCase('v1')),
       }),
       default: createDefaultAutoHotkeyRule('autohotkey2', {
         startPattern,
-        expressionOperators: constants_v2.expressionOperators,
       }),
     },
   };
@@ -61,7 +55,6 @@ export function createTmLanguage(): TmLanguage {
 // #region helpers
 interface Placeholder_AutoHotkeyRule {
   startPattern: string;
-  expressionOperators: readonly string[];
   versionPattern: string;
 }
 function createAutoHotkeyRule(scopeName: ScopeName, placeholder: Placeholder_AutoHotkeyRule): Rule {
@@ -94,14 +87,14 @@ function createAutoHotkeyRule(scopeName: ScopeName, placeholder: Placeholder_Aut
       inlineSpaces0(),
       ignoreCase('#Requires'),
       inlineSpaces1(),
-      negativeLookahead(ordalt(...escapeOnigurumaTexts(placeholder.expressionOperators))),
+      ignoreCase('AutoHotkey'),
+      lookahead(wordBound()),
     )),
     patterns: [ includeScope(scopeName) ],
   };
 }
 interface Placeholder_DefaultAutoHotkeyRule {
   startPattern: string;
-  expressionOperators: readonly string[];
 }
 function createDefaultAutoHotkeyRule(scopeName: ScopeName, placeholder: Placeholder_DefaultAutoHotkeyRule): Rule {
   return {
@@ -111,7 +104,8 @@ function createDefaultAutoHotkeyRule(scopeName: ScopeName, placeholder: Placehol
         inlineSpaces0(),
         ignoreCase('#Requires'),
         inlineSpaces1(),
-        negativeLookahead(ordalt(...escapeOnigurumaTexts(placeholder.expressionOperators))),
+        ignoreCase('AutoHotkey'),
+        lookahead(wordBound()),
         anyChars0(),
         endAnchor(),
       )),
@@ -121,6 +115,7 @@ function createDefaultAutoHotkeyRule(scopeName: ScopeName, placeholder: Placehol
         ignoreCase('#Requires'),
         inlineSpaces1(),
         ignoreCase('AutoHotkey'),
+        lookahead(wordBound()),
       )),
     ),
     beginCaptures: {
@@ -132,6 +127,7 @@ function createDefaultAutoHotkeyRule(scopeName: ScopeName, placeholder: Placehol
       ignoreCase('#Requires'),
       inlineSpaces1(),
       ignoreCase('AutoHotkey'),
+      lookahead(wordBound()),
     )),
     patterns: [ includeScope(scopeName) ],
   };
