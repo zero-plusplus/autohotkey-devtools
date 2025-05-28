@@ -1,8 +1,8 @@
 import * as patterns_common from '../../../common/patterns';
 import { Repository, RuleName } from '../../../constants';
 import {
-  alt, capture, char, endAnchor, escapeOnigurumaTexts, group, groupMany0, inlineSpaces0, inlineSpaces1,
-  lookahead, lookbehind, negativeLookahead, negChars1, ordalt, seq,
+  alt, capture, char, endAnchor, group, groupMany0, inlineSpaces0, inlineSpaces1, lookahead,
+  lookbehind, negativeLookahead, negChars1, ordalt, seq, textalt,
 } from '../../../oniguruma';
 import type { MatchRule, ScopeName } from '../../../types';
 import { includeRule, name, nameRule } from '../../../utils';
@@ -50,7 +50,7 @@ export function createLegacyAssignmentRule(scopeName: ScopeName, placeholder: Pl
           // escape sequences
           {
             name: name(scopeName, RuleName.EscapeSequence),
-            match: ordalt(...escapeOnigurumaTexts(constants_v1.unquoteEscapeSequences)),
+            match: textalt(...constants_v1.unquoteEscapeSequences),
           },
           {
             name: name(scopeName, RuleName.UnquotedString),
