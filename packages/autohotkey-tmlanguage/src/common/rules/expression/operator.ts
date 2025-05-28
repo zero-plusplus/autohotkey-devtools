@@ -1,5 +1,5 @@
 import { Repository, RuleName } from '../../../constants';
-import { alt, char, escapeOnigurumaTexts, inlineSpace, negativeLookahead, ordalt, seq } from '../../../oniguruma';
+import { alt, char, inlineSpace, negativeLookahead, seq, textalt } from '../../../oniguruma';
 import type { MatchRule, Repositories, ScopeName } from '../../../types';
 import { name } from '../../../utils';
 
@@ -27,7 +27,7 @@ interface Placeholder_OperatorRule {
 export function createOperatorRule(scopeName: ScopeName, placeholder: Placeholder_OperatorRule): MatchRule {
   return {
     name: name(scopeName, placeholder.operatorRuleName),
-    match: ordalt(...escapeOnigurumaTexts(placeholder.operators)),
+    match: textalt(...placeholder.operators),
   };
 }
 export function createDotOperatorRule(scopeName: ScopeName): MatchRule {
