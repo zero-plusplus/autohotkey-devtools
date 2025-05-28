@@ -52,15 +52,17 @@ export function createRepositories(scopeName: ScopeName): Repositories {
       includeRule(Repository.MultiLineDocumentComment),
       includeRule(Repository.MultiLineComment),
     ),
+
+    [Repository.SingleLineComment]: rules_common.createSingleLineCommentRule(scopeName),
+    [Repository.InLineComment]: rules_common.createInLineCommentRule(scopeName),
     [Repository.MultiLineComment]: rules_common.createMultiLineCommentRule(scopeName),
+
     [Repository.MultiLineDocumentComment]: rules_common.createDocumentCommentRule(scopeName, {
       leftHandPattern: patterns_v1.looseLeftHandPattern,
     }),
-    [Repository.SingleLineComment]: rules_common.createSingleLineCommentRule(scopeName),
     [Repository.SingleLineDocumentComment]: rules_common.createSinglelineDocumentCommentRule(scopeName, {
       leftHandPattern: patterns_v1.looseLeftHandPattern,
     }),
-    [Repository.InLineComment]: rules_common.createInLineCommentRule(scopeName),
     [Repository.InlineDocumentComment]: rules_common.createInlineDocumentCommentRule(scopeName, {
       leftHandPattern: patterns_v1.looseLeftHandPattern,
     }),
