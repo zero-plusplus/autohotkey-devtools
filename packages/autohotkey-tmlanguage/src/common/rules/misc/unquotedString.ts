@@ -1,7 +1,7 @@
 import { Repository, RuleName, StyleName } from '../../../constants';
 import {
-  alt, capture, char, chars0, endAnchor, escapeOnigurumaTexts, ignoreCase, inlineSpace, inlineSpaces0, lookahead, lookbehind,
-  negChars0, negChars1, numbers1, optional, optseq, ordalt, seq,
+  alt, capture, char, chars0, endAnchor, ignoreCase, inlineSpace, inlineSpaces0, lookahead, lookbehind,
+  negChars0, negChars1, numbers1, optional, optseq, seq, textalt,
 } from '../../../oniguruma';
 import type { MatchRule, Rule, ScopeName } from '../../../types';
 import { includeRule, name, patternsRule } from '../../../utils';
@@ -32,7 +32,7 @@ export function createUnquotedStringRule(scopeName: ScopeName, placeholder: Plac
 export function createUnquotedEscapeSequencesRule(scopeName: ScopeName, escapeSequences: readonly string[]): MatchRule {
   return {
     name: name(scopeName, RuleName.UnquotedString, StyleName.Escape),
-    match: ordalt(...escapeOnigurumaTexts(escapeSequences)),
+    match: textalt(...escapeSequences),
   };
 }
 
