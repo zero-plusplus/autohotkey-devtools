@@ -53,22 +53,25 @@ export function createRepositories(scopeName: ScopeName): Repositories {
       includeRule(Repository.MultiLineComment),
     ),
 
+    // #region comment
     [Repository.SingleLineComment]: rules_common.createSingleLineCommentRule(scopeName),
     [Repository.InLineComment]: rules_common.createInLineCommentRule(scopeName),
     [Repository.MultiLineComment]: rules_common.createMultiLineCommentRule(scopeName),
+    // #endregion comment
 
-    [Repository.MultiLineDocumentComment]: rules_common.createDocumentCommentRule(scopeName, {
-      leftHandPattern: patterns_v1.looseLeftHandPattern,
-    }),
+    // #region document
     [Repository.SingleLineDocumentComment]: rules_common.createSinglelineDocumentCommentRule(scopeName, {
       leftHandPattern: patterns_v1.looseLeftHandPattern,
     }),
     [Repository.InlineDocumentComment]: rules_common.createInlineDocumentCommentRule(scopeName, {
       leftHandPattern: patterns_v1.looseLeftHandPattern,
     }),
-
-    [Repository.TypeInDocument]: rules_common.createDocumentTypeRule(scopeName),
     [Repository.InlineTextInDocument]: rules_common.createInlineTextInDocumentRule(scopeName),
+    [Repository.MultiLineDocumentComment]: rules_common.createDocumentCommentRule(scopeName, {
+      leftHandPattern: patterns_v1.looseLeftHandPattern,
+    }),
+    [Repository.TypeInDocument]: rules_common.createDocumentTypeRule(scopeName),
+    // #endregion document
     // #endregion trivia
 
     // #region statement
