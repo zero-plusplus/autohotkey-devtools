@@ -53,6 +53,11 @@ export const expressionEndAnchor: string = alt(
   seq(inlineSpaces1(), char(';')),
   seq(inlineSpaces0(), endAnchor()),
 );
+export const controlFlowEndAnchor: string = alt(
+  seq(inlineSpaces1(), negativeLookahead(char('`')), char(';')),
+  seq(inlineSpaces0(), char('{')),
+  seq(inlineSpaces0(), endAnchor()),
+);
 export const escapedDoubleQuotePattern: string = text('""');
 
 // https://www.autohotkey.com/docs/v1/misc/RegEx-QuickRef.htm#Options

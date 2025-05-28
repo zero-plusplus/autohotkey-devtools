@@ -5,7 +5,6 @@ import { nameRule } from '../../../utils';
 
 interface Placeholder {
   startAnchor: string;
-  endAnchor: string;
 }
 export function createLoopStatementRule(scopeName: ScopeName, placeholder: Placeholder): MatchRule {
   return {

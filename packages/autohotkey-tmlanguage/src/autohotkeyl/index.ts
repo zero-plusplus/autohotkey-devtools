@@ -147,7 +147,7 @@ export function createRepositories(scopeName: ScopeName): Repositories {
     }),
     [Repository.LoopStatement]: rule_v1.createLoopStatementRule(scopeName, {
       startAnchor: patterns_v1.statementStartAnchor,
-      endAnchor: patterns_common.controlFlowEndAnchor,
+      endAnchor: patterns_v1.controlFlowEndAnchor,
     }),
     [Repository.UntilStatement]: rules_common.createUntilStatementRule(scopeName, {
       startAnchor: patterns_v1.statementStartAnchor,

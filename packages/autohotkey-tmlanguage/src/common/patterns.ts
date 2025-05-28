@@ -12,11 +12,6 @@ export const lineEndAnchor: string = alt(
   seq(inlineSpaces1(), negativeLookahead(char('`')), char(';')),
   seq(inlineSpaces0(), endAnchor()),
 );
-export const controlFlowEndAnchor: string = alt(
-  seq(inlineSpaces1(), negativeLookahead(char('`')), char(';')),
-  seq(inlineSpaces0(), char('{')),
-  seq(inlineSpaces0(), endAnchor()),
-);
 
 // https://www.autohotkey.com/docs/v2/misc/RegEx-QuickRef.htm#Options
 export const regexpOptionsPattern: string = seq(
