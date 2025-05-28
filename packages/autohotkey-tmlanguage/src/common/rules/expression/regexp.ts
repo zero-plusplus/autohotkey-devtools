@@ -1,8 +1,8 @@
 import { Repository, RuleDescriptor, RuleName, StyleName, TokenType } from '../../../constants';
 import {
-  alt, anyChar, backslash, capture, char, endAnchor, escapeOnigurumaTexts, group, ignoreCase, inlineSpaces0,
-  inlineSpaces1, lookahead, lookbehind, many0, many1, negativeLookahead, negChar, negChars1, numbers1, optional,
-  optseq, ordalt, reluctant, seq, text, wordBound, wordChars0,
+  alt, anyChar, backslash, capture, char, endAnchor, group, ignoreCase, inlineSpaces0, inlineSpaces1,
+  lookahead, lookbehind, many0, many1, negativeLookahead, negChar, negChars1, numbers1, optional, optseq,
+  reluctant, seq, text, textalt, wordBound, wordChars0,
 } from '../../../oniguruma';
 import type { MatchRule, PatternsRule, ScopeName } from '../../../types';
 import { includeRule, name, nameRule, patternsRule } from '../../../utils';
@@ -125,7 +125,7 @@ export function createStringAsRegExpContentRule(scopeName: ScopeName, placeholde
         5: patternsRule(
           {
             name: name(scopeName, TokenType.Other, RuleName.RegExpGroup, RuleName.RegExpOption, RuleDescriptor.Begin),
-            match: ordalt(...escapeOnigurumaTexts(placeholder.regexpOptions)),
+            match: textalt(...placeholder.regexpOptions),
           },
           {
             name: name(scopeName, TokenType.Other, RuleName.RegExpGroup, RuleName.RegExpOption, RuleDescriptor.Begin),
@@ -242,7 +242,7 @@ export function createRegExpCommonContentRule(scopeName: ScopeName, placeholder:
       match: capture(seq(
         backslash(),
         char('p', 'P'),
-        group(ordalt(...escapeOnigurumaTexts(placeholder.pcreUnicodePropertyCodes.filter((code) => code.length === 1)))),
+        group(textalt(...placeholder.pcreUnicodePropertyCodes.filter((code) => code.length === 1))),
         lookahead(wordBound()),
       )),
     },
@@ -255,10 +255,10 @@ export function createRegExpCommonContentRule(scopeName: ScopeName, placeholder:
           char('{'),
         )),
         group(alt(
-          capture(ordalt(...escapeOnigurumaTexts([
+          capture(textalt(
             ...placeholder.pcreUnicodePropertyCodes,
             ...placeholder.pcreUnicodePropertyScripts,
-          ]))),
+          )),
           wordChars0(),
         )),
         capture(char('}')),
@@ -278,7 +278,7 @@ export function createRegExpCommonContentRule(scopeName: ScopeName, placeholder:
     {
       // regexp escape sequences
       name: name(scopeName, StyleName.Escape),
-      match: ordalt(...escapeOnigurumaTexts(placeholder.regexpEscapeSequences)),
+      match: textalt(...placeholder.regexpEscapeSequences),
     },
     {
       name: name(scopeName, StyleName.Escape),
@@ -287,7 +287,7 @@ export function createRegExpCommonContentRule(scopeName: ScopeName, placeholder:
     {
       // string escape sequences
       name: name(scopeName, StyleName.Escape),
-      match: ordalt(...escapeOnigurumaTexts(placeholder.stringEscapeSequences)),
+      match: textalt(...placeholder.stringEscapeSequences),
     },
     {
       name: name(scopeName, StyleName.Escape),
