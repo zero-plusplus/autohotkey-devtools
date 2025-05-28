@@ -59,17 +59,9 @@ export function createRepositories(scopeName: ScopeName): Repositories {
     // #endregion comment
 
     // #region document
-    [Repository.SingleLineDocumentComment]: rules_common.createSinglelineDocumentCommentRule(scopeName, {
+    ...rules_common.createDocumentCommentRepositories(scopeName, {
       leftHandPattern: patterns_v1.looseLeftHandPattern,
     }),
-    [Repository.InlineDocumentComment]: rules_common.createInlineDocumentCommentRule(scopeName, {
-      leftHandPattern: patterns_v1.looseLeftHandPattern,
-    }),
-    [Repository.InlineTextInDocument]: rules_common.createInlineTextInDocumentRule(scopeName),
-    [Repository.MultiLineDocumentComment]: rules_common.createDocumentCommentRule(scopeName, {
-      leftHandPattern: patterns_v1.looseLeftHandPattern,
-    }),
-    [Repository.TypeInDocument]: rules_common.createDocumentTypeRule(scopeName),
     // #endregion document
 
     // #region compiler directive
