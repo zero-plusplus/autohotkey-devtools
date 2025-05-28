@@ -1,8 +1,8 @@
 import { lineStartAnchor } from '../common/patterns';
 import {
-  alt, anyChars1, char, endAnchor, escapeOnigurumaTexts, group, groupMany0, groupMany1, inlineSpace,
-  inlineSpaces0, inlineSpaces1, lookahead, manyLimit, manyRange, negativeLookahead, negChar, number,
-  ordalt, reluctant, seq, text, textalt, wordChar,
+  alt, anyChars1, char, endAnchor, group, groupMany0, groupMany1, inlineSpace, inlineSpaces0,
+  inlineSpaces1, lookahead, manyLimit, manyRange, negativeLookahead, negChar, number, reluctant,
+  seq, text, textalt, wordChar,
 } from '../oniguruma';
 import * as constants_v1 from './constants';
 
@@ -48,7 +48,7 @@ export const statementStartAnchor: string = alt(
   seq(lineStartAnchor, inlineSpaces0(), identifierPattern, char(':'), inlineSpaces0()),
   seq(lineStartAnchor, inlineSpaces0(), char('}')),
 );
-export const expressionContinuationStartAnchor: string = group(ordalt(...escapeOnigurumaTexts(constants_v1.continuationOperators)));
+export const expressionContinuationStartAnchor: string = group(textalt(...constants_v1.continuationOperators));
 export const expressionEndAnchor: string = alt(
   seq(inlineSpaces1(), char(';')),
   seq(inlineSpaces0(), endAnchor()),
@@ -63,7 +63,7 @@ export const escapedDoubleQuotePattern: string = text('""');
 // https://www.autohotkey.com/docs/v1/misc/RegEx-QuickRef.htm#Options
 export const regexpOptionsPattern: string = seq(
   groupMany0(alt(
-    ordalt(...escapeOnigurumaTexts(constants_v1.regexpOptions)),
+    textalt(...constants_v1.regexpOptions),
     inlineSpace(),
   )),
   negativeLookahead(char('`')),
