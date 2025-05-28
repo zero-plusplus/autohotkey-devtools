@@ -1,7 +1,7 @@
 import { Repository, RuleName, StyleName } from '../../../constants';
 import {
-  alt, capture, char, endAnchor, escapeOnigurumaTexts, group, ignoreCase, inlineSpace, inlineSpaces0,
-  inlineSpaces1, lookahead, lookbehind, negativeLookahead, ordalt, seq,
+  alt, capture, char, endAnchor, group, ignoreCase, inlineSpace, inlineSpaces0, inlineSpaces1,
+  lookahead, lookbehind, negativeLookahead, seq, textalt,
 } from '../../../oniguruma';
 import type { ElementName, PatternsRule, ScopeName } from '../../../types';
 import { includeRule, nameRule, patternsRule } from '../../../utils';
@@ -66,7 +66,7 @@ export function createCallStatementRule(scopeName: ScopeName, placeholder: Place
           // Not assign (e.g. var := "")
           group(seq(
             inlineSpace(),
-            negativeLookahead(seq(inlineSpaces0(), ordalt(...escapeOnigurumaTexts(placeholder.assignmentOperators)))),
+            negativeLookahead(seq(inlineSpaces0(), textalt(...placeholder.assignmentOperators))),
           )),
           // Explicit syntax with commas
           group(seq(
