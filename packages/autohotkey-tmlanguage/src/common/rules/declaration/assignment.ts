@@ -1,5 +1,5 @@
 import { Repository, RuleName } from '../../../constants';
-import { capture, escapeOnigurumaTexts, inlineSpaces0, keyword, lookbehind, optional, ordalt, seq } from '../../../oniguruma';
+import { capture, inlineSpaces0, keyword, lookbehind, optional, seq, textalt } from '../../../oniguruma';
 import type { MatchRule, ScopeName } from '../../../types';
 import { includeRule, nameRule, patternsRule } from '../../../utils';
 
@@ -17,7 +17,7 @@ export function createAssignmentDeclarationRule(scopeName: ScopeName, placeholde
       inlineSpaces0(),
       capture(seq(placeholder.namePattern)),
       inlineSpaces0(),
-      capture(ordalt(...escapeOnigurumaTexts(placeholder.operators))),
+      capture(textalt(...placeholder.operators)),
     ),
     captures: {
       1: patternsRule(includeRule(Repository.Modifier)),
