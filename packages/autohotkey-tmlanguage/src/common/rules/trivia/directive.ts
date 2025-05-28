@@ -5,8 +5,8 @@ import * as patterns_common from '../../../common/patterns';
 import * as rules_common from '../../../common/rules';
 import { Repository, RuleDescriptor, RuleName, StyleName, TokenType } from '../../../constants';
 import {
-  alt, anyChars0, capture, char, escapeOnigurumaTexts, group, ignoreCase, many0, negChar, negChars1,
-  number, numbers0, optional, optseq, ordalt, seq, text,
+  alt, anyChars0, capture, char, group, ignoreCase, many0, negChar, negChars1, number, numbers0,
+  optional, optseq, seq, text, textalt,
 } from '../../../oniguruma';
 import type { CommandDefinition, MatchRule, PatternsRule, Repositories, ScopeName } from '../../../types';
 import { includeRule, name, namedPatternsRule, nameRule, patternsRule } from '../../../utils';
@@ -91,7 +91,7 @@ export function createDoubleStringContentInCompilerDirectiveRule(scopeName: Scop
     includeRule(Repository.DereferenceInCompilerDirective),
     {
       name: name(scopeName, RuleName.DoubleString, StyleName.Escape),
-      match: ordalt(...escapeOnigurumaTexts(constants_common.compilerDirectiveEscapeSequences)),
+      match: textalt(...constants_common.compilerDirectiveEscapeSequences),
     },
     {
       name: name(scopeName, RuleName.DoubleString, StyleName.Invalid),
