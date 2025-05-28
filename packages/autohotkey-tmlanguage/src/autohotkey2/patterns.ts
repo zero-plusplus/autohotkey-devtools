@@ -1,7 +1,7 @@
 import * as constants_common from '../common/patterns';
 import {
-  alt, anyChars1, char, escapeOnigurumaTexts, group, groupMany1, inlineSpaces0, manyLimit, manyXtoY, negChar,
-  optional, ordalt, reluctant, seq, text, wordChar,
+  alt, anyChars1, char, group, groupMany1, inlineSpaces0, manyLimit, manyXtoY, negChar, optional,
+  reluctant, seq, text, textalt, wordChar,
 } from '../oniguruma';
 import * as constants_v2 from './constants';
 
@@ -33,10 +33,7 @@ export const looseLeftHandPattern: string = manyXtoY(1, nameLimitLength)(group(a
   nameBody,
   char('%', '[', ']', '.'),
 )));
-export const expressionContinuationStartAnchor: string = group(ordalt(
-  ...escapeOnigurumaTexts(constants_v2.continuationOperators),
-  char('('),
-));
+export const expressionContinuationStartAnchor: string = group(textalt(...constants_v2.continuationOperators, '('));
 export const statementStartAnchor: string = alt(
   constants_common.lineStartAnchor,
   reluctant(seq(constants_common.lineStartAnchor, inlineSpaces0(), groupMany1(alt(negChar(':', seq(char('`'), char(':'))))), text('::'), inlineSpaces0())),
