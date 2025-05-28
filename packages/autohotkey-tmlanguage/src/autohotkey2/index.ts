@@ -45,33 +45,77 @@ export function createRepositories(scopeName: ScopeName, placeholder?: Placehold
       includeRule(Repository.AllSingleLineComments),
       includeRule(Repository.AllInLineComments),
     ),
-    [Repository.AllMultiLineComments]: patternsRule(
-      includeRule(Repository.MultiLineDocumentComment),
-      includeRule(Repository.MultiLineComment),
-    ),
-    [Repository.MultiLineComment]: rules_common.createMultiLineCommentRule(scopeName),
-    [Repository.MultiLineDocumentComment]: rules_common.createDocumentCommentRule(scopeName, {
-      leftHandPattern: patterns_v2.looseLeftHandPattern,
-    }),
     [Repository.AllSingleLineComments]: patternsRule(
       includeRule(Repository.CompilerDirectiveComment),
       includeRule(Repository.SingleLineDocumentComment),
       includeRule(Repository.SingleLineComment),
     ),
-    [Repository.SingleLineComment]: rules_common.createSingleLineCommentRule(scopeName),
-    [Repository.SingleLineDocumentComment]: rules_common.createSinglelineDocumentCommentRule(scopeName, {
-      leftHandPattern: patterns_v2.looseLeftHandPattern,
-    }),
     [Repository.AllInLineComments]: patternsRule(
       includeRule(Repository.InLineComment),
       includeRule(Repository.InlineDocumentComment),
     ),
+    [Repository.AllMultiLineComments]: patternsRule(
+      includeRule(Repository.MultiLineDocumentComment),
+      includeRule(Repository.MultiLineComment),
+    ),
+
+    // #region comment
+    [Repository.SingleLineComment]: rules_common.createSingleLineCommentRule(scopeName),
     [Repository.InLineComment]: rules_common.createInLineCommentRule(scopeName),
+    [Repository.MultiLineComment]: rules_common.createMultiLineCommentRule(scopeName),
+    // #endregion comment
+
+    // #region document
+    [Repository.SingleLineDocumentComment]: rules_common.createSinglelineDocumentCommentRule(scopeName, {
+      leftHandPattern: patterns_v2.looseLeftHandPattern,
+    }),
     [Repository.InlineDocumentComment]: rules_common.createInlineDocumentCommentRule(scopeName, {
       leftHandPattern: patterns_v2.looseLeftHandPattern,
     }),
-    [Repository.TypeInDocument]: rules_common.createDocumentTypeRule(scopeName),
     [Repository.InlineTextInDocument]: rules_common.createInlineTextInDocumentRule(scopeName),
+    [Repository.MultiLineDocumentComment]: rules_common.createDocumentCommentRule(scopeName, {
+      leftHandPattern: patterns_v2.looseLeftHandPattern,
+    }),
+    [Repository.TypeInDocument]: rules_common.createDocumentTypeRule(scopeName),
+    // #endregion document
+
+    // #region compiler directive
+    [Repository.CompilerDirectiveComment]: rules_common.createDirectiveCommentPatternsRule(scopeName, {
+      startAnchor: patterns_common.lineStartAnchor,
+      endAnchor: patterns_common.lineEndAnchor,
+      definitions: definition_common.compilerDirectives,
+    }),
+    [Repository.UnquotedStringInCompilerDirective]: rules_common.createUnquotedStringRule(scopeName, {
+      stringRuleName: RuleName.UnquotedString,
+      stringPattern: patterns_common.unquotedArgumentPattern,
+      escapeSequenceRepository: Repository.UnquotedStringEscapeSequenceInCompilerDirective,
+      additionalRules: [ includeRule(Repository.DereferenceInCompilerDirective) ],
+    }),
+    [Repository.UnquotedStringEscapeSequenceInCompilerDirective]: rules_common.createUnquotedEscapeSequencesRule(
+      scopeName,
+      constants_common.compilerDirectiveEscapeSequences,
+    ),
+    [Repository.BuiltInVariableInCompilerDirective]: rules_common.createReservedIdentifierRule(scopeName, {
+      ruleName: RuleName.KeywordLikeBuiltInVariable,
+      identifiers: constants_common.compilerDirectiveVariables,
+    }),
+    [Repository.DereferenceInCompilerDirective]: rules_common.createCompilerDirectiveDereferenceMatchRule(scopeName),
+    [Repository.ExpressionInCompilerDirective]: patternsRule(
+      includeRule(Repository.KeywordInExpression),
+      includeRule(Repository.Dereference),
+      includeRule(Repository.ParenthesizedExpression),
+      includeRule(Repository.DereferenceInCompilerDirective),
+      includeRule(Repository.DoubleStringInCompilerDirective),
+      includeRule(Repository.Literal),
+      includeRule(Repository.BuiltInVariableInCompilerDirective),
+      includeRule(Repository.Variable),
+
+      includeRule(Repository.Dot),
+      includeRule(Repository.Operator),
+    ),
+    [Repository.DoubleStringInCompilerDirective]: rules_common.createDoubleStringInCompilerDirectiveRule(scopeName),
+    [Repository.DoubleStringContentInCompilerDirective]: rules_common.createDoubleStringContentInCompilerDirectiveRule(scopeName),
+    // #endregion compiler directive
     // #endregion trivia
 
     // #region statement
@@ -499,43 +543,5 @@ export function createRepositories(scopeName: ScopeName, placeholder?: Placehold
       stringPattern: patterns_common.unquotedLastArgumentPattern,
     }),
     // #endregion misc
-
-    // #region compiler directive
-    [Repository.CompilerDirectiveComment]: rules_common.createDirectiveCommentPatternsRule(scopeName, {
-      startAnchor: patterns_common.lineStartAnchor,
-      endAnchor: patterns_common.lineEndAnchor,
-      definitions: definition_common.compilerDirectives,
-    }),
-    [Repository.UnquotedStringInCompilerDirective]: rules_common.createUnquotedStringRule(scopeName, {
-      stringRuleName: RuleName.UnquotedString,
-      stringPattern: patterns_common.unquotedArgumentPattern,
-      escapeSequenceRepository: Repository.UnquotedStringEscapeSequenceInCompilerDirective,
-      additionalRules: [ includeRule(Repository.DereferenceInCompilerDirective) ],
-    }),
-    [Repository.UnquotedStringEscapeSequenceInCompilerDirective]: rules_common.createUnquotedEscapeSequencesRule(
-      scopeName,
-      constants_common.compilerDirectiveEscapeSequences,
-    ),
-    [Repository.BuiltInVariableInCompilerDirective]: rules_common.createReservedIdentifierRule(scopeName, {
-      ruleName: RuleName.KeywordLikeBuiltInVariable,
-      identifiers: constants_common.compilerDirectiveVariables,
-    }),
-    [Repository.DereferenceInCompilerDirective]: rules_common.createCompilerDirectiveDereferenceMatchRule(scopeName),
-    [Repository.ExpressionInCompilerDirective]: patternsRule(
-      includeRule(Repository.KeywordInExpression),
-      includeRule(Repository.Dereference),
-      includeRule(Repository.ParenthesizedExpression),
-      includeRule(Repository.DereferenceInCompilerDirective),
-      includeRule(Repository.DoubleStringInCompilerDirective),
-      includeRule(Repository.Literal),
-      includeRule(Repository.BuiltInVariableInCompilerDirective),
-      includeRule(Repository.Variable),
-
-      includeRule(Repository.Dot),
-      includeRule(Repository.Operator),
-    ),
-    [Repository.DoubleStringInCompilerDirective]: rules_common.createDoubleStringInCompilerDirectiveRule(scopeName),
-    [Repository.DoubleStringContentInCompilerDirective]: rules_common.createDoubleStringContentInCompilerDirectiveRule(scopeName),
-    // #endregion compiler directive
   };
 }
