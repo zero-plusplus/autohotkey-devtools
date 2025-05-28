@@ -14,7 +14,6 @@ export * from './expression/object';
 export * from './expression/operator';
 export * from './expression/regexp';
 export * from './expression/string';
-export * from './misc/compilerDirectiveRegExp';
 export * from './misc/unquotedString';
 export * from './statement/call';
 export * from './statement/command';

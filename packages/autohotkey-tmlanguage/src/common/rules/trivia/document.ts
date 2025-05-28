@@ -6,18 +6,17 @@ import {
 } from '../../../oniguruma';
 import type { BeginEndRule, BeginWhileRule, ElementName, MatchRule, PatternsRule, Repositories, Rule, ScopeName } from '../../../types';
 import { includeRule, name, nameRule, patternsRule } from '../../../utils';
-import * as rules_common from '../../rules';
 
 interface Placeholder {
   leftHandPattern: string;
 }
 export function createDocumentCommentRepositories(scopeName: ScopeName, placeholder: Placeholder): Repositories {
   return {
-    [Repository.SingleLineDocumentComment]: rules_common.createSinglelineDocumentCommentRule(scopeName, placeholder),
-    [Repository.InlineDocumentComment]: rules_common.createInlineDocumentCommentRule(scopeName, placeholder),
-    [Repository.InlineTextInDocument]: rules_common.createInlineTextInDocumentRule(scopeName),
-    [Repository.MultiLineDocumentComment]: rules_common.createDocumentCommentRule(scopeName, placeholder),
-    [Repository.TypeInDocument]: rules_common.createDocumentTypeRule(scopeName),
+    [Repository.SingleLineDocumentComment]: createSinglelineDocumentCommentRule(scopeName, placeholder),
+    [Repository.InlineDocumentComment]: createInlineDocumentCommentRule(scopeName, placeholder),
+    [Repository.InlineTextInDocument]: createInlineTextInDocumentRule(scopeName),
+    [Repository.MultiLineDocumentComment]: createDocumentCommentRule(scopeName, placeholder),
+    [Repository.TypeInDocument]: createDocumentTypeRule(scopeName),
   };
 }
 export function createDocumentCommentRule(scopeName: ScopeName, placeholder: Placeholder): BeginEndRule {

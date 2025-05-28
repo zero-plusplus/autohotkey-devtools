@@ -1,15 +1,20 @@
+import * as patterns_v1 from '../../../autohotkeyl/patterns';
 import * as constants_common from '../../../common/constants';
 import * as definition_common from '../../../common/definition';
 import * as patterns_common from '../../../common/patterns';
 import * as rules_common from '../../../common/rules';
-import { Repository, RuleName } from '../../../constants';
-import type { CommandDefinition, PatternsRule, Repositories, ScopeName } from '../../../types';
-import { includeRule, patternsRule } from '../../../utils';
+import { Repository, RuleDescriptor, RuleName, StyleName, TokenType } from '../../../constants';
+import {
+  alt, anyChars0, capture, char, escapeOnigurumaTexts, group, ignoreCase, many0, negChar, negChars1,
+  number, numbers0, optional, optseq, ordalt, seq, text,
+} from '../../../oniguruma';
+import type { CommandDefinition, MatchRule, PatternsRule, Repositories, ScopeName } from '../../../types';
+import { includeRule, name, namedPatternsRule, nameRule, patternsRule } from '../../../utils';
 import { createDirectiveCommentRule } from '../statement/command';
 
 export function createDirectiveCommentRepositories(scopeName: ScopeName): Repositories {
   return {
-    [Repository.CompilerDirectiveComment]: rules_common.createDirectiveCommentPatternsRule(scopeName, {
+    [Repository.CompilerDirectiveComment]: createDirectiveCommentPatternsRule(scopeName, {
       startAnchor: patterns_common.lineStartAnchor,
       endAnchor: patterns_common.lineEndAnchor,
       definitions: definition_common.compilerDirectives,
@@ -28,7 +33,7 @@ export function createDirectiveCommentRepositories(scopeName: ScopeName): Reposi
       ruleName: RuleName.KeywordLikeBuiltInVariable,
       identifiers: constants_common.compilerDirectiveVariables,
     }),
-    [Repository.DereferenceInCompilerDirective]: rules_common.createCompilerDirectiveDereferenceMatchRule(scopeName),
+    [Repository.DereferenceInCompilerDirective]: createCompilerDirectiveDereferenceMatchRule(scopeName),
     [Repository.ExpressionInCompilerDirective]: patternsRule(
       includeRule(Repository.KeywordInExpression),
       includeRule(Repository.Dereference),
@@ -42,8 +47,8 @@ export function createDirectiveCommentRepositories(scopeName: ScopeName): Reposi
       includeRule(Repository.Dot),
       includeRule(Repository.Operator),
     ),
-    [Repository.DoubleStringInCompilerDirective]: rules_common.createDoubleStringInCompilerDirectiveRule(scopeName),
-    [Repository.DoubleStringContentInCompilerDirective]: rules_common.createDoubleStringContentInCompilerDirectiveRule(scopeName),
+    [Repository.DoubleStringInCompilerDirective]: createDoubleStringInCompilerDirectiveRule(scopeName),
+    [Repository.DoubleStringContentInCompilerDirective]: createDoubleStringContentInCompilerDirectiveRule(scopeName),
   };
 }
 
@@ -62,4 +67,105 @@ export function createDirectiveCommentPatternsRule(scopeName: ScopeName, placeho
       })),
     ];
   }));
+}
+
+export function createDoubleStringInCompilerDirectiveRule(scopeName: ScopeName): MatchRule {
+  return {
+    match: seq(
+      capture(char('"')),
+      capture(many0(alt(
+        text('""'),
+        negChar('"'),
+      ))),
+      capture(char('"')),
+    ),
+    captures: {
+      1: nameRule(scopeName, RuleName.DoubleString, RuleDescriptor.Begin),
+      2: createDoubleStringContentInCompilerDirectiveRule(scopeName),
+      3: nameRule(scopeName, RuleName.DoubleString, RuleDescriptor.End),
+    },
+  };
+}
+export function createDoubleStringContentInCompilerDirectiveRule(scopeName: ScopeName): PatternsRule {
+  return patternsRule(
+    includeRule(Repository.DereferenceInCompilerDirective),
+    {
+      name: name(scopeName, RuleName.DoubleString, StyleName.Escape),
+      match: ordalt(...escapeOnigurumaTexts(constants_common.compilerDirectiveEscapeSequences)),
+    },
+    {
+      name: name(scopeName, RuleName.DoubleString, StyleName.Invalid),
+      match: char('`'),
+    },
+    {
+      name: name(scopeName, RuleName.DoubleString),
+      match: negChars1('`', '%'),
+    },
+  );
+}
+export function createCompilerDirectiveDereferenceMatchRule(scopeName: ScopeName): MatchRule {
+  return {
+    match: seq(
+      capture(char('%')),
+      capture(patterns_v1.identifierPattern),
+      optseq(
+        capture(char('~')),
+        capture(many0(alt(
+          text('`~'),
+          negChar('~'),
+        ))),
+        optseq(
+          capture(char('~')),
+          capture(anyChars0()),
+        ),
+      ),
+      capture(char('%')),
+    ),
+    captures: {
+      1: nameRule(scopeName, TokenType.Other, RuleName.PercentBegin),
+      2: patternsRule(includeRule(Repository.Variable)),
+      3: nameRule(scopeName, TokenType.Other, RuleName.Operator),
+      4: namedPatternsRule(name(scopeName, RuleName.RegExpString), [ includeRule(Repository.DoubleStringAsRegExpContent) ]),
+      5: nameRule(scopeName, TokenType.Other, RuleName.Operator),
+      6: patternsRule(
+        {
+          name: name(scopeName, RuleName.DoubleString, StyleName.Escape),
+          match: text('$$'),
+        },
+        {
+          name: name(scopeName, RuleName.DoubleString, StyleName.Strong),
+          match: seq(
+            char('$'),
+            optional(ignoreCase(char('U', 'L'))),
+            number(),
+          ),
+        },
+        {
+          name: name(scopeName, RuleName.DoubleString, StyleName.Strong),
+          match: seq(
+            char('$'),
+            optional(ignoreCase(char('U', 'L'))),
+            char('{'),
+            group(alt(
+              patterns_v1.identifierPattern,
+              numbers0(),
+            )),
+            char('}'),
+          ),
+        },
+        {
+          name: name(scopeName, RuleName.DoubleString),
+          match: negChars1('`', '$'),
+        },
+        {
+          name: name(scopeName, RuleName.DoubleString, StyleName.Invalid),
+          match: seq(
+            char('$'),
+            optional(ignoreCase(char('U', 'L'))),
+          ),
+        },
+      ),
+      7: nameRule(scopeName, TokenType.Other, RuleName.PercentEnd),
+    },
+  };
 }
