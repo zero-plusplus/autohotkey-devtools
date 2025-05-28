@@ -1,6 +1,7 @@
 import {
-  alt, anyChar, char, endAnchor, escapeOnigurumaTexts, group, groupMany0, groupMany1, inlineSpace, inlineSpaces0, inlineSpaces1,
-  negativeLookahead, negativeLookbehind, negChar, negChars0, optional, ordalt, seq, startAnchor,
+  alt, anyChar, char, endAnchor, group, groupMany0, groupMany1, inlineSpace, inlineSpaces0,
+  inlineSpaces1, negativeLookahead, negativeLookbehind, negChar, negChars0, optional, seq,
+  startAnchor, textalt,
 } from '../oniguruma';
 import * as constants_common from './constants';
 
@@ -16,7 +17,7 @@ export const lineEndAnchor: string = alt(
 // https://www.autohotkey.com/docs/v2/misc/RegEx-QuickRef.htm#Options
 export const regexpOptionsPattern: string = seq(
   groupMany0(alt(
-    ordalt(...escapeOnigurumaTexts(constants_common.regexpOptions)),
+    textalt(...constants_common.regexpOptions),
     inlineSpace(),
   )),
   negativeLookahead(char('`')),
