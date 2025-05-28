@@ -39,6 +39,15 @@ export function createRepositories(scopeName: ScopeName): Repositories {
       includeRule(Repository.AllInLineComments),
       includeRule(Repository.AllSingleLineComments),
     ),
+    [Repository.AllSingleLineComments]: patternsRule(
+      includeRule(Repository.CompilerDirectiveComment),
+      includeRule(Repository.SingleLineDocumentComment),
+      includeRule(Repository.SingleLineComment),
+    ),
+    [Repository.AllInLineComments]: patternsRule(
+      includeRule(Repository.InlineDocumentComment),
+      includeRule(Repository.InLineComment),
+    ),
     [Repository.AllMultiLineComments]: patternsRule(
       includeRule(Repository.MultiLineDocumentComment),
       includeRule(Repository.MultiLineComment),
@@ -47,19 +56,10 @@ export function createRepositories(scopeName: ScopeName): Repositories {
     [Repository.MultiLineDocumentComment]: rules_common.createDocumentCommentRule(scopeName, {
       leftHandPattern: patterns_v1.looseLeftHandPattern,
     }),
-    [Repository.AllSingleLineComments]: patternsRule(
-      includeRule(Repository.CompilerDirectiveComment),
-      includeRule(Repository.SingleLineDocumentComment),
-      includeRule(Repository.SingleLineComment),
-    ),
     [Repository.SingleLineComment]: rules_common.createSingleLineCommentRule(scopeName),
     [Repository.SingleLineDocumentComment]: rules_common.createSinglelineDocumentCommentRule(scopeName, {
       leftHandPattern: patterns_v1.looseLeftHandPattern,
     }),
-    [Repository.AllInLineComments]: patternsRule(
-      includeRule(Repository.InlineDocumentComment),
-      includeRule(Repository.InLineComment),
-    ),
     [Repository.InLineComment]: rules_common.createInLineCommentRule(scopeName),
     [Repository.InlineDocumentComment]: rules_common.createInlineDocumentCommentRule(scopeName, {
       leftHandPattern: patterns_v1.looseLeftHandPattern,
