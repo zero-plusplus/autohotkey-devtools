@@ -3,8 +3,7 @@ import * as constants_v2 from './autohotkey2/constants';
 import * as constants_v1 from './autohotkeyl/constants';
 import { Repository } from './constants';
 import {
-  alt, asciiChar, char, escapeOnigurumaText, group, inlineSpaces0, lookbehind, negChar, opt,
-  ordalt, seq, startAnchor,
+  alt, asciiChar, char, group, inlineSpaces0, lookbehind, negChar, opt, seq, startAnchor, textalt,
 } from './oniguruma';
 import type {
   ElementName, EscapeSequencesInfo, IncludeRule, NameRule, PatternsRule, Rule, ScopeName,
@@ -97,7 +96,7 @@ export function getContinuationBegin(scopeName: ScopeName): string {
       case '--': return false;
       default: return true;
     }
-  }).map((operator) => escapeOnigurumaText(operator));
+  });
 
   switch (scopeName) {
     case 'autohotkeynext':
@@ -106,7 +105,7 @@ export function getContinuationBegin(scopeName: ScopeName): string {
       return lookbehind(seq(
         startAnchor(),
         inlineSpaces0(),
-        group(ordalt(...operators)),
+        group(textalt(...operators)),
       ));
     }
   }
