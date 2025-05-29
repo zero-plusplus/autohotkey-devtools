@@ -1,8 +1,9 @@
 import * as rules_common from '../../../common/rules';
-import { RuleName } from '../../../constants';
 import { alt, capture, char, inlineSpace, inlineSpaces0, keyword, lookahead, lookbehind, seq } from '../../../oniguruma';
-import { nameRule, patternsRule } from '../../../tmlanguage';
-import type { PatternsRule, ScopeName } from '../../../types';
+import {
+  nameRule, patternsRule, RuleName,
+  type PatternsRule, type ScopeName,
+} from '../../../tmlanguage';
 import * as definition_v1 from '../../definition';
 
 interface Placeholder {

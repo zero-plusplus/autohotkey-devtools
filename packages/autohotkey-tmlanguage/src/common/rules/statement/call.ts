@@ -1,10 +1,11 @@
-import { Repository, RuleName, StyleName } from '../../../constants';
 import {
   alt, capture, char, endAnchor, group, ignoreCase, inlineSpace, inlineSpaces0, inlineSpaces1,
   lookahead, lookbehind, negativeLookahead, seq, textalt,
 } from '../../../oniguruma';
-import { includeRule, nameRule, patternsRule } from '../../../tmlanguage';
-import type { ElementName, PatternsRule, ScopeName } from '../../../types';
+import {
+  includeRule, nameRule, patternsRule, Repository, RuleName, StyleName,
+  type ElementName, type PatternsRule, type ScopeName,
+} from '../../../tmlanguage';
 
 type Placeholder = {
   startAnchor: string;

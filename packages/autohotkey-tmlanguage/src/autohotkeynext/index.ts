@@ -5,9 +5,10 @@ import * as constants_common from '../common/constants';
 import * as definition_common from '../common/definition';
 import * as patterns_common from '../common/patterns';
 import * as rules_common from '../common/rules';
-import { Repository, RuleName } from '../constants';
-import { includeRule, patternsRule } from '../tmlanguage';
-import type { ScopeName, TmLanguage } from '../types';
+import {
+  includeRule, patternsRule, Repository, RuleName,
+  type ScopeName, type TmLanguage,
+} from '../tmlanguage';
 import * as constants_vnext from './constants';
 import * as definition_vnext from './definition';
 import * as patterns_vnext from './patterns';

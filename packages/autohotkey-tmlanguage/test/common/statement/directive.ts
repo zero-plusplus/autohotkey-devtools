@@ -1,7 +1,10 @@
 import { hasFlag } from '@zero-plusplus/utilities/src';
-import { CommandFlag, RuleName, StyleName } from '../../../src/constants';
-import { name } from '../../../src/tmlanguage';
-import type { CommandDefinition, ScopeName } from '../../../src/types';
+import { CommandFlag } from '../../../src/constants';
+import {
+  name, RuleName, StyleName,
+  type ScopeName,
+} from '../../../src/tmlanguage';
+import type { CommandDefinition } from '../../../src/types';
 import type { ExpectedTestData } from '../../types';
 
 interface Placeholder {

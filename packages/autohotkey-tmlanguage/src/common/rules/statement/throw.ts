@@ -1,6 +1,8 @@
 import * as rule_common from '..';
-import { RuleName } from '../../../constants';
-import type { PatternsRule, ScopeName } from '../../../types';
+import {
+  RuleName,
+  type PatternsRule, type ScopeName,
+} from '../../../tmlanguage';
 
 interface Placeholder {
   startAnchor: string;

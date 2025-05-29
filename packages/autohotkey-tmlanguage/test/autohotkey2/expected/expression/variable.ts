@@ -1,8 +1,9 @@
 import { dedent } from '@zero-plusplus/utilities/src';
 import * as constants_v2 from '../../../../src/autohotkey2/constants';
-import { RuleName, StyleName } from '../../../../src/constants';
-import { name } from '../../../../src/tmlanguage';
-import type { ScopeName } from '../../../../src/types';
+import {
+  name, RuleName, StyleName,
+  type ScopeName,
+} from '../../../../src/tmlanguage';
 import * as common from '../../../common/expression/variable';
 import type { ExpectedTestData } from '../../../types';
 

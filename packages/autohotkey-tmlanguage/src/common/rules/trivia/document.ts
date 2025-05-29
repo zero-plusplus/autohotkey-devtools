@@ -1,11 +1,12 @@
-import { Repository, RuleDescriptor, RuleName, TokenType } from '../../../constants';
 import {
   alphaChar, alt, anyChars0, anyChars1, capture, char, endAnchor, group, groupMany0, groupMany1, ignoreCase,
   inlineSpace, inlineSpaces0, inlineSpaces1, keyword, lookahead, lookbehind, negativeLookahead, negChar, negChars0,
   negChars1, optional, optseq, ordalt, seq, startAnchor, text,
 } from '../../../oniguruma';
-import { includeRule, name, nameRule, patternsRule } from '../../../tmlanguage';
-import type { BeginEndRule, BeginWhileRule, ElementName, MatchRule, PatternsRule, Repositories, Rule, ScopeName } from '../../../types';
+import {
+  includeRule, name, nameRule, patternsRule, Repository, RuleDescriptor, RuleName, TokenType,
+  type BeginEndRule, type BeginWhileRule, type ElementName, type MatchRule, type PatternsRule, type Repositories, type Rule, type ScopeName,
+} from '../../../tmlanguage';
 
 interface Placeholder {
   leftHandPattern: string;

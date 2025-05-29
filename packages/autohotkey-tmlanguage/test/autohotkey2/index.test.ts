@@ -1,4 +1,4 @@
-import type { ScopeName } from '../../src/types';
+import type { ScopeName } from '../../src/tmlanguage';
 import { parse } from '../helpers/textmate-parser';
 import { createExpectedDataList } from './expected';
 

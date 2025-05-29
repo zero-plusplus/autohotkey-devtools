@@ -1,4 +1,4 @@
-import type { ScopeName } from '../../../src/types';
+import type { ScopeName } from '../../../src/tmlanguage';
 import type { ExpectedTestData } from '../../types';
 import { createAssignmentDeclarationExpectedData } from './declaration/assignment';
 import { createBlockDeclarationExpectedData } from './declaration/block';

@@ -1,7 +1,8 @@
-import { Repository, RuleName } from '../../../constants';
 import { alt, char, inlineSpace, negativeLookahead, seq, textalt } from '../../../oniguruma';
-import { name } from '../../../tmlanguage';
-import type { MatchRule, Repositories, ScopeName } from '../../../types';
+import {
+  name, Repository, RuleName,
+  type MatchRule, type Repositories, type ScopeName,
+} from '../../../tmlanguage';
 
 interface Placeholder {
   expressionOperators: readonly string[];

@@ -1,8 +1,9 @@
 import { dedent } from '@zero-plusplus/utilities/src';
 import { directiveDefinitions, quotableUnquoted, unquotedAndBoolean, unquotedInteger } from '../../../../src/autohotkey2/definition';
-import { RuleName, StyleName } from '../../../../src/constants';
-import { name } from '../../../../src/tmlanguage';
-import type { ScopeName } from '../../../../src/types';
+import {
+  name, RuleName, StyleName,
+  type ScopeName,
+} from '../../../../src/tmlanguage';
 import * as common from '../../../common';
 import type { ExpectedTestData } from '../../../types';
 

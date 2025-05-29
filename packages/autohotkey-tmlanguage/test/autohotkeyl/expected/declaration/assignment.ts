@@ -1,8 +1,9 @@
 import { dedent } from '@zero-plusplus/utilities/src';
 import * as constants_common from '../../../../src/common/constants';
-import { RuleDescriptor, RuleName } from '../../../../src/constants';
-import { name } from '../../../../src/tmlanguage';
-import type { ScopeName } from '../../../../src/types';
+import {
+  name, RuleDescriptor, RuleName,
+  type ScopeName,
+} from '../../../../src/tmlanguage';
 import * as common from '../../../common/declaration/assignment';
 import type { ExpectedTestData } from '../../../types';
 

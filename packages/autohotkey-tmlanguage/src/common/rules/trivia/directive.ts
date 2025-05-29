@@ -3,13 +3,15 @@ import * as constants_common from '../../../common/constants';
 import * as definition_common from '../../../common/definition';
 import * as patterns_common from '../../../common/patterns';
 import * as rules_common from '../../../common/rules';
-import { Repository, RuleDescriptor, RuleName, StyleName, TokenType } from '../../../constants';
 import {
   alt, anyChars0, capture, char, group, ignoreCase, many0, negChar, negChars1, number, numbers0,
   optional, optseq, seq, text, textalt,
 } from '../../../oniguruma';
-import { includeRule, name, namedPatternsRule, nameRule, patternsRule } from '../../../tmlanguage';
-import type { CommandDefinition, MatchRule, PatternsRule, Repositories, ScopeName } from '../../../types';
+import {
+  includeRule, name, namedPatternsRule, nameRule, patternsRule, Repository, RuleDescriptor, RuleName, StyleName, TokenType,
+  type MatchRule, type PatternsRule, type Repositories, type ScopeName,
+} from '../../../tmlanguage';
+import type { CommandDefinition } from '../../../types';
 import { createDirectiveCommentRule } from '../statement/command';
 
 export function createDirectiveCommentRepositories(scopeName: ScopeName): Repositories {

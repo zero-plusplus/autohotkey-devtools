@@ -3,10 +3,11 @@ import * as constants_common from '../common/constants';
 import * as definition_common from '../common/definition';
 import * as patterns_common from '../common/patterns';
 import * as rules_common from '../common/rules';
-import { Repository, RuleName } from '../constants';
 import { ordalt } from '../oniguruma';
-import { includeRule, name, namedPatternsRule, patternsRule } from '../tmlanguage';
-import type { Repositories, ScopeName, TmLanguage } from '../types';
+import {
+  includeRule, name, namedPatternsRule, patternsRule, Repository, RuleName,
+  type Repositories, type ScopeName, type TmLanguage,
+} from '../tmlanguage';
 import * as constants_v2 from './constants';
 import * as definition_v2 from './definition';
 import * as patterns_v2 from './patterns';

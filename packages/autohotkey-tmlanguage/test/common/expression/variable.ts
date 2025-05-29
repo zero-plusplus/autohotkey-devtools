@@ -1,7 +1,8 @@
 import { dedent } from '@zero-plusplus/utilities/src';
-import { RuleName } from '../../../src/constants';
-import { name } from '../../../src/tmlanguage';
-import type { ElementName, ScopeName } from '../../../src/types';
+import {
+  name, RuleName,
+  type ElementName, type ScopeName,
+} from '../../../src/tmlanguage';
 import type { ExpectedTestData } from '../../types';
 
 interface Placeholder {

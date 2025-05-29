@@ -2,10 +2,11 @@ import * as markdown from '../__injection__/markdown';
 import * as constants_common from '../common/constants';
 import * as patterns_common from '../common/patterns';
 import * as rules_common from '../common/rules';
-import { Repository, RuleName } from '../constants';
 import { anyChars1, ordalt } from '../oniguruma';
-import { includeRule, name, namedPatternsRule, patternsRule } from '../tmlanguage';
-import type { Repositories, ScopeName, TmLanguage } from '../types';
+import {
+  includeRule, name, namedPatternsRule, patternsRule, Repository, RuleName,
+  type Repositories, type ScopeName, type TmLanguage,
+} from '../tmlanguage';
 import * as constants_v1 from './constants';
 import * as definition_v1 from './definition';
 import * as patterns_v1 from './patterns';

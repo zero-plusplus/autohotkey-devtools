@@ -1,10 +1,11 @@
-import { RuleName, StyleName } from '../../../constants';
 import {
   capture, char, groupMany0, groupMany1, inlineSpace, inlineSpaces0, keyword, lookbehind, negChars1,
   seq, text, textalt,
 } from '../../../oniguruma';
-import { name, nameRule, patternsRule } from '../../../tmlanguage';
-import type { MatchRule, ScopeName } from '../../../types';
+import {
+  name, nameRule, patternsRule, RuleName, StyleName,
+  type MatchRule, type ScopeName,
+} from '../../../tmlanguage';
 import * as constants_common from '../../constants';
 
 interface Placeholder {

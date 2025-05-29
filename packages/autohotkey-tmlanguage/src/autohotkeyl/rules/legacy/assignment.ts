@@ -1,11 +1,12 @@
 import * as patterns_common from '../../../common/patterns';
-import { Repository, RuleName } from '../../../constants';
 import {
   alt, capture, char, endAnchor, group, groupMany0, inlineSpaces0, inlineSpaces1, lookahead,
   lookbehind, negativeLookahead, negChars1, ordalt, seq, textalt,
 } from '../../../oniguruma';
-import { includeRule, name, nameRule } from '../../../tmlanguage';
-import type { MatchRule, ScopeName } from '../../../types';
+import {
+  includeRule, name, nameRule, Repository, RuleName,
+  type MatchRule, type ScopeName,
+} from '../../../tmlanguage';
 import * as constants_v1 from '../../constants';
 
 interface Placeholder {

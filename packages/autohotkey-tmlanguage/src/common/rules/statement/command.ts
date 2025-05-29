@@ -1,18 +1,18 @@
 import { hasFlag } from '@zero-plusplus/utilities/src';
 import * as patterns_v2 from '../../../autohotkey2/patterns';
 import { isSubCommandParameter } from '../../../autohotkeyl/definition';
-import { CommandFlag, HighlightType, Repository, RuleName, StyleName } from '../../../constants';
+import { CommandFlag, HighlightType } from '../../../constants';
 import {
   alt, anyChar, anyChars0, anyChars1, capture, char, chars1, endAnchor, group, groupMany0, groupMany1,
   ignoreCase, inlineSpace, inlineSpaces0, inlineSpaces1, keyword, lookahead, lookbehind, negativeLookahead,
   negativeLookbehind, negChar, negChars0, negChars1, numbers1, optional, optseq, ordalt, reluctant, seq, text,
   textalt, wordBound, wordChar, wordChars1,
 } from '../../../oniguruma';
-import { includeRule, name, nameRule, patternsRule } from '../../../tmlanguage';
-import type {
-  BeginWhileRule, CommandDefinition, CommandParameter, CommandSignature, ElementName, MatchRule,
-  PatternsRule, Rule, ScopeName,
-} from '../../../types';
+import {
+  includeRule, name, nameRule, patternsRule, Repository, RuleName, StyleName,
+  type BeginWhileRule, type ElementName, type MatchRule, type PatternsRule, type Rule, type ScopeName,
+} from '../../../tmlanguage';
+import type { CommandDefinition, CommandParameter, CommandSignature } from '../../../types';
 import * as constants_common from '../../constants';
 import * as patterns_common from '../../patterns';
 import { createAllowArgumentRule, createNumberRule, createSpacedArgumentTextRule } from '../misc/unquotedString';

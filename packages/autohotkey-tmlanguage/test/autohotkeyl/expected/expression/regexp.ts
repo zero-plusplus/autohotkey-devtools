@@ -1,5 +1,5 @@
 import * as constants_v1 from '../../../../src/autohotkeyl/constants';
-import type { ScopeName } from '../../../../src/types';
+import type { ScopeName } from '../../../../src/tmlanguage';
 import * as common from '../../../common';
 import type { ExpectedTestData } from '../../../types';
 

@@ -1,10 +1,11 @@
-import { Repository, RuleName, StyleName } from '../../../constants';
 import {
   alt, capture, char, inlineSpace, inlineSpaces1, lookahead, many0, negativeLookahead, negChar,
   seq, whitespace,
 } from '../../../oniguruma';
-import { includeRule, nameRule, patternsRule } from '../../../tmlanguage';
-import type { BeginEndRule, PatternsRule, ScopeName } from '../../../types';
+import {
+  includeRule, nameRule, patternsRule, Repository, RuleName, StyleName,
+  type BeginEndRule, type PatternsRule, type ScopeName,
+} from '../../../tmlanguage';
 import * as patterns_v1 from '../../patterns';
 
 export function createDereferenceRule(scopeName: ScopeName): BeginEndRule {

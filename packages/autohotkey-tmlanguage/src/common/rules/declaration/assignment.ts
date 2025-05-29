@@ -1,7 +1,8 @@
-import { Repository, RuleName } from '../../../constants';
 import { capture, inlineSpaces0, keyword, lookbehind, optional, seq, textalt } from '../../../oniguruma';
-import { includeRule, nameRule, patternsRule } from '../../../tmlanguage';
-import type { MatchRule, ScopeName } from '../../../types';
+import {
+  includeRule, nameRule, patternsRule, Repository, RuleName,
+  type MatchRule, type ScopeName,
+} from '../../../tmlanguage';
 
 interface Placeholder {
   startAnchor: string;

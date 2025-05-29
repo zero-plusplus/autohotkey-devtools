@@ -1,10 +1,11 @@
-import { RuleName, StyleName } from '../../../constants';
 import {
   capture, char, ignoreCase, lookahead, lookbehind, negativeLookbehind, optional, seq,
   textalt, wordBound,
 } from '../../../oniguruma';
-import { nameRule } from '../../../tmlanguage';
-import type { MatchRule, ScopeName } from '../../../types';
+import {
+  nameRule, RuleName, StyleName,
+  type MatchRule, type ScopeName,
+} from '../../../tmlanguage';
 
 interface Placeholder_IdentifierRule {
   ruleName: RuleName;

@@ -1,7 +1,8 @@
-import { RuleName } from '../../../constants';
 import { capture, char } from '../../../oniguruma';
-import { nameRule } from '../../../tmlanguage';
-import type { BeginEndRule, Rule, ScopeName } from '../../../types';
+import {
+  nameRule, RuleName,
+  type BeginEndRule, type Rule, type ScopeName,
+} from '../../../tmlanguage';
 
 interface Placeholder {
   statementsInBlock: Rule[];

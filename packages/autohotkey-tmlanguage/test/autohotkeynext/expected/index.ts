@@ -1,6 +1,6 @@
 import * as constants_v2 from '../../../src/autohotkey2/constants';
 import * as constants_vnext from '../../../src/autohotkeynext/constants';
-import type { ScopeName } from '../../../src/types';
+import type { ScopeName } from '../../../src/tmlanguage';
 import * as autohotkey2 from '../../autohotkey2/expected';
 import type { ExpectedTestData } from '../../types';
 import { createExportDeclarationExpectedData } from './declaration/export';

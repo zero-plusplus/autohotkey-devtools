@@ -1,10 +1,11 @@
-import { Repository, RuleName } from '../../../constants';
 import {
   alt, capture, char, group, inlineSpace, inlineSpaces0, keyword, lookbehind, optseq, ordalt,
   seq, startAnchor,
 } from '../../../oniguruma';
-import { includeRule, nameRule } from '../../../tmlanguage';
-import type { BeginEndRule, MatchRule, Rule, ScopeName } from '../../../types';
+import {
+  includeRule, nameRule, Repository, RuleName,
+  type BeginEndRule, type MatchRule, type Rule, type ScopeName,
+} from '../../../tmlanguage';
 
 interface Placeholder {
   modifiers: readonly string[];

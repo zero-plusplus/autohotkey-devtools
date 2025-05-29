@@ -1,7 +1,8 @@
-import { Repository, RuleName } from '../../../constants';
 import { anyChars0, capture, char, seq } from '../../../oniguruma';
-import { includeRule, nameRule, patternsRule } from '../../../tmlanguage';
-import type { PatternsRule, ScopeName } from '../../../types';
+import {
+  includeRule, nameRule, patternsRule, Repository, RuleName,
+  type PatternsRule, type ScopeName,
+} from '../../../tmlanguage';
 
 export function createParenthesizedExpressionRule(scopeName: ScopeName): PatternsRule {
   return patternsRule(
