@@ -1,7 +1,6 @@
-import type { commandNames } from './autohotkeyl/constants';
 import {
-  CommandArgsType, CommandParameterFlag, CommandSignatureFlag, HighlightType, Repository,
-  RuleName, scopeNames, type CommandFlag, type RuleDescriptor, type StyleName, type TokenType,
+  CommandParameterFlag, CommandSignatureFlag, HighlightType, Repository, RuleName, scopeNames,
+  type CommandFlag, type RuleDescriptor, type StyleName, type TokenType,
 } from './constants';
 
 export type Repositories = { [key in Partial<Repository>[number]]: Rule | undefined };
@@ -50,13 +49,6 @@ export interface BeginWhileRule extends RuleBase {
 export interface IncludeRule extends RuleBase {
   include: string;
 }
-
-export type CommandArgWithKeywords = [ CommandArgsType, ...string[]];
-export type _CommandSignature = CommandArgsType | CommandArgWithKeywords;
-export type CommandInfo =
-  | [ typeof commandNames[number] ]
-  | [ typeof commandNames[number], ..._CommandSignature[] ]
-  | [ typeof commandNames[number], string /* subcommand */, ..._CommandSignature[] ];
 
 export interface CommandParameter {
   readonly type: HighlightType;

@@ -354,19 +354,6 @@ export const enum TokenType {
   String = 'token.string',
 }
 
-export const enum CommandArgsType {
-  None = 0,
-  Expression,
-  Enum,
-  Legacy,
-  SubCommand,
-  Input,
-  Output,
-
-  Parameters, // e.g. `ControlClick x123 y123`, `Click, 100 100 LButton`
-  ControlStyle,
-}
-
 export const enum HighlightType {
   None = 'none',
   Blank = 'blank',
