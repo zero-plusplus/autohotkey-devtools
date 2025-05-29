@@ -10,7 +10,7 @@ import {
   type ScopeName, type TmLanguage,
 } from '../tmlanguage';
 import * as constants_vnext from './constants';
-import * as definition_vnext from './definition';
+import * as definitions_vnext from './definitions';
 import * as patterns_vnext from './patterns';
 import * as rules_vnext from './rules';
 
@@ -72,7 +72,7 @@ export function createTmLanguage(): TmLanguage {
 
       // #region statement
       [Repository.DirectiveStatement]: patternsRule(
-        rules_common.createCommandLikeStatementRule(scopeName, definition_vnext.directiveDefinitions, {
+        rules_common.createCommandLikeStatementRule(scopeName, definitions_vnext.directiveDefinitions, {
           startAnchor: patterns_v1.statementStartAnchor,
           endAnchor: patterns_common.lineEndAnchor,
           commandElementName: RuleName.DirectiveName,
