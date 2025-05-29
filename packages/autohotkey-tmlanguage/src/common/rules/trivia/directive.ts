@@ -1,8 +1,4 @@
 import * as patterns_v1 from '../../../autohotkeyl/patterns';
-import * as constants_common from '../../../common/constants';
-import * as definition_common from '../../../common/definition';
-import * as patterns_common from '../../../common/patterns';
-import * as rules_common from '../../../common/rules';
 import type { CommandDefinition } from '../../../definition';
 import {
   alt, anyChars0, capture, char, group, ignoreCase, many0, negChar, negChars1, number, numbers0,
@@ -12,6 +8,10 @@ import {
   includeRule, name, namedPatternsRule, nameRule, patternsRule, Repository, RuleDescriptor, RuleName, StyleName, TokenType,
   type MatchRule, type PatternsRule, type Repositories, type ScopeName,
 } from '../../../tmlanguage';
+import * as constants_common from '../../constants';
+import * as definitions_common from '../../definitions';
+import * as patterns_common from '../../patterns';
+import * as rules_common from '../../rules';
 import { createDirectiveCommentRule } from '../statement/command';
 
 export function createDirectiveCommentRepositories(scopeName: ScopeName): Repositories {
@@ -19,7 +19,7 @@ export function createDirectiveCommentRepositories(scopeName: ScopeName): Reposi
     [Repository.CompilerDirectiveComment]: createDirectiveCommentPatternsRule(scopeName, {
       startAnchor: patterns_common.lineStartAnchor,
       endAnchor: patterns_common.lineEndAnchor,
-      definitions: definition_common.compilerDirectives,
+      definitions: definitions_common.compilerDirectives,
     }),
     [Repository.UnquotedStringInCompilerDirective]: rules_common.createUnquotedStringRule(scopeName, {
       stringRuleName: RuleName.UnquotedString,

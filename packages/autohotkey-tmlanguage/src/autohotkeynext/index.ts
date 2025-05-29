@@ -2,7 +2,7 @@ import * as v2 from '../autohotkey2';
 import * as patterns_v2 from '../autohotkey2/patterns';
 import * as patterns_v1 from '../autohotkeyl/patterns';
 import * as constants_common from '../common/constants';
-import * as definition_common from '../common/definition';
+import * as definitions_common from '../common/definitions';
 import * as patterns_common from '../common/patterns';
 import * as rules_common from '../common/rules';
 import {
@@ -77,7 +77,7 @@ export function createTmLanguage(): TmLanguage {
           endAnchor: patterns_common.lineEndAnchor,
           commandElementName: RuleName.DirectiveName,
         }),
-        rules_common.createCommandLikeStatementRule(scopeName, [ definition_common.undefinedDirective ], {
+        rules_common.createCommandLikeStatementRule(scopeName, [ definitions_common.undefinedDirective ], {
           startAnchor: patterns_v2.statementStartAnchor,
           endAnchor: patterns_common.lineEndAnchor,
           commandElementName: RuleName.DirectiveName,
