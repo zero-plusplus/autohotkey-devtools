@@ -57,10 +57,6 @@ export type CommandInfo =
   | [ typeof commandNames[number] ]
   | [ typeof commandNames[number], ..._CommandSignature[] ]
   | [ typeof commandNames[number], string /* subcommand */, ..._CommandSignature[] ];
-export interface VariableParts {
-  headChar: string;
-  tailChar: string;
-}
 export interface EscapeSequencesInfo {
   doubleQuote: string[];
   singleQuote: string[];

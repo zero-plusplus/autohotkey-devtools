@@ -3,43 +3,12 @@ import * as constants_v2 from './autohotkey2/constants';
 import * as constants_v1 from './autohotkeyl/constants';
 import { Repository } from './constants';
 import {
-  alt, asciiChar, char, group, inlineSpaces0, lookbehind, negChar, opt, seq, startAnchor, textalt,
+  alt, char, group, inlineSpaces0, lookbehind, opt, seq, startAnchor, textalt,
 } from './oniguruma';
 import type {
-  ElementName, EscapeSequencesInfo, IncludeRule, NameRule, PatternsRule, Rule, ScopeName,
-  Utilities, VariableParts,
+  ElementName, EscapeSequencesInfo, IncludeRule, NameRule, PatternsRule, Rule, ScopeName, Utilities,
 } from './types';
 
-export function getVariableParts(scopeName: ScopeName): VariableParts {
-  const letter = '[a-zA-Z]';
-  const numberChar = '\\d';
-  const nonAsciiChar = negChar(asciiChar());
-
-  switch (scopeName) {
-    // https://www.autohotkey.com/docs/v2/Concepts.htm#names
-    case 'autohotkeynext':
-    case 'autohotkey2': {
-      const sign = char('_');
-      const headChar = group(alt(letter, nonAsciiChar, sign));
-      const tailChar = group(alt(letter, nonAsciiChar, sign, numberChar));
-      return {
-        headChar,
-        tailChar,
-      };
-    }
-    // https://www.autohotkey.com/docs/v1/Concepts.htm#names
-    case 'autohotkeyl': {
-      const sign = char('_', '#', '@', '$');
-      const headChar = group(alt(letter, nonAsciiChar, sign));
-      const tailChar = group(alt(letter, nonAsciiChar, sign, numberChar));
-      return {
-        headChar,
-        tailChar,
-      };
-    }
-  }
-  throw Error(`Scope "${scopeName}" not found`);
-}
 export function getEscapeSequencesInfo(scopeName: ScopeName): EscapeSequencesInfo {
   switch (scopeName) {
     case 'autohotkeynext':
