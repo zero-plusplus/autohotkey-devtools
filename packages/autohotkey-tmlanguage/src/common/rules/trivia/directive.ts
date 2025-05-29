@@ -3,7 +3,7 @@ import * as constants_common from '../../../common/constants';
 import * as definition_common from '../../../common/definition';
 import * as patterns_common from '../../../common/patterns';
 import * as rules_common from '../../../common/rules';
-import type { CommandDefinition } from '../../../definitions';
+import type { CommandDefinition } from '../../../definition';
 import {
   alt, anyChars0, capture, char, group, ignoreCase, many0, negChar, negChars1, number, numbers0,
   optional, optseq, seq, text, textalt,

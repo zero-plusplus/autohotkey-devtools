@@ -1,5 +1,5 @@
 import type { LiteralUnion } from 'type-fest';
-import type { scopeNames } from './definitions';
+import type { scopeNames } from './definition';
 
 // #region rule combinators
 export function includeRule(repositoryName: Repository): IncludeRule {

@@ -2,7 +2,7 @@ import { hasFlag } from '@zero-plusplus/utilities/src';
 import {
   CommandFlag,
   type CommandDefinition,
-} from '../../../src/definitions';
+} from '../../../src/definition';
 import {
   name, RuleName, StyleName,
   type ScopeName,

@@ -1,7 +1,9 @@
 import * as patterns_v1 from '../autohotkeyl/patterns';
 import * as constants_common from '../common/constants';
-import type { CommandDefinition, CommandParameter, CommandSignature, SubCommandParameter } from '../definitions';
-import { CommandFlag, CommandParameterFlag, CommandSignatureFlag, HighlightType } from '../definitions';
+import {
+  CommandFlag, CommandParameterFlag, CommandSignatureFlag, HighlightType,
+  type CommandDefinition, type CommandParameter, type CommandSignature, type SubCommandParameter,
+} from '../definition';
 import {
   alt, char, endAnchor, group, groupMany1, ignoreCase, inlineSpace, inlineSpaces0, lookahead, lookbehind,
   negChars0, negChars1, numbers0, numbers1, optional, optseq, ordalt, seq, textalt, wordBound,

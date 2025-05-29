@@ -4,7 +4,7 @@ import { isSubCommandParameter } from '../../../autohotkeyl/definition';
 import {
   CommandFlag, HighlightType,
   type CommandDefinition, type CommandParameter, type CommandSignature,
-} from '../../../definitions';
+} from '../../../definition';
 import {
   alt, anyChar, anyChars0, anyChars1, capture, char, chars1, endAnchor, group, groupMany0, groupMany1,
   ignoreCase, inlineSpace, inlineSpaces0, inlineSpaces1, keyword, lookahead, lookbehind, negativeLookahead,
