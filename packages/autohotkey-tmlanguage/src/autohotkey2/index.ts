@@ -9,7 +9,7 @@ import {
   type Repositories, type ScopeName, type TmLanguage,
 } from '../tmlanguage';
 import * as constants_v2 from './constants';
-import * as definition_v2 from './definition';
+import * as definitions_v2 from './definitions';
 import * as patterns_v2 from './patterns';
 import * as rule_v2 from './rules';
 
@@ -101,7 +101,7 @@ export function createRepositories(scopeName: ScopeName, placeholder?: Placehold
       includeRule(Repository.ThrowStatement),
     ),
     [Repository.DirectiveStatement]: patternsRule(
-      rules_common.createCommandLikeStatementRule(scopeName, definition_v2.directiveDefinitions, {
+      rules_common.createCommandLikeStatementRule(scopeName, definitions_v2.directiveDefinitions, {
         startAnchor: patterns_v2.statementStartAnchor,
         endAnchor: patterns_common.lineEndAnchor,
         commandElementName: RuleName.DirectiveName,

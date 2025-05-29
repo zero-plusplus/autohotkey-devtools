@@ -1,4 +1,4 @@
-import * as definition_v2 from '../autohotkey2/definition';
+import * as definitions_v2 from '../autohotkey2/definitions';
 import { command, signature } from '../autohotkeyl/definition';
 import {
   CommandParameterFlag, HighlightType,
@@ -6,7 +6,7 @@ import {
 } from '../definition';
 
 export const directiveDefinitions: CommandDefinition[] = [
-  ...definition_v2.directiveDefinitions,
+  ...definitions_v2.directiveDefinitions,
 
   // [v2.1-alpha.11](https://www.autohotkey.com/docs/alpha/ChangeLog.htm#v2.1-alpha.11)
   // https://www.autohotkey.com/docs/alpha/lib/_Module.htm
