@@ -1,8 +1,7 @@
 import { hasFlag } from '@zero-plusplus/utilities/src';
 import * as patterns_v2 from '../../../autohotkey2/patterns';
-import { isSubCommandParameter } from '../../../autohotkeyl/definitions';
 import {
-  CommandFlag, HighlightType,
+  CommandFlag, HighlightType, isSubCommandParameter,
   type CommandDefinition, type CommandParameter, type CommandSignature,
 } from '../../../definition';
 import {

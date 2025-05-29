@@ -1,8 +1,8 @@
 import { dedent } from '@zero-plusplus/utilities/src';
 import {
-  blank, control, expression, fileAttributes, flagedGuiControlOptions, guiControlOptions, guiOptions, keywordOnly,
-  onOff, output, restParams, sendKeys, unquoted, winTitle,
-} from '../../../../src/autohotkeyl/definitions';
+  blank, control, expression, fileAttributes, flagedGuiControlOptions, guiControlOptions, guiOptions,
+  keywordOnly, onOff, output, restParams, sendKeys, unquoted, winTitle,
+} from '../../../../src/definition';
 import {
   name, RuleDescriptor, RuleName, StyleName,
   type ScopeName,

@@ -1,6 +1,6 @@
-import { command, encoding, invalid, keywordOnly, optionItem, output, signature, unquotedNumber, unquotedWithNumber } from '../autohotkeyl/definitions';
 import {
-  CommandFlag, CommandParameterFlag, HighlightType,
+  command, CommandFlag, CommandParameterFlag, encoding, HighlightType, invalid, keywordOnly, optionItem,
+  output, signature, unquotedNumber, unquotedWithNumber,
   type CommandDefinition, type CommandParameter,
 } from '../definition';
 import { seq, wordChars0 } from '../oniguruma';

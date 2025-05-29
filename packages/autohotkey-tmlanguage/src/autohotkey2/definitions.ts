@@ -1,8 +1,8 @@
 import {
-  command, decimalOptionItem, encoding, expression, includeLib, keywordOnly, optionItem, requiresVersion,
-  signature, signedNumberOptionItem, toggleOptionItem, unquoted, unquotedNumber,
-} from '../autohotkeyl/definitions';
-import type { CommandDefinition, CommandParameter } from '../definition';
+  command, decimalOptionItem, encoding, expression, includeLib, keywordOnly, optionItem, quotableUnquoted, requiresVersion,
+  signature, signedNumberOptionItem, toggleOptionItem, unquoted, unquotedAndBoolean, unquotedInteger,
+  type CommandDefinition,
+} from '../definition';
 
 // #region directives
 export const directiveDefinitions: CommandDefinition[] = [
@@ -61,16 +61,4 @@ export const directiveDefinitions: CommandDefinition[] = [
   // https://www.autohotkey.com/docs/v2/lib/_WinActivateForce.htm
   command('#WinActivateForce', signature([])),
 ];
-// #endregion commands
-
-// #region helpers
-export function quotableUnquoted(...optionItems: string[]): CommandParameter {
-  return unquoted(optionItems);
-}
-export function unquotedInteger(...optionItems: string[]): CommandParameter {
-  return unquotedNumber(...optionItems);
-}
-export function unquotedAndBoolean(...optionItems: string[]): CommandParameter {
-  return unquoted([ optionItem('0', '1', 'true', 'false'), ...optionItems ]);
-}
-// #endregion helpers
+// #endregion directives

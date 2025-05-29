@@ -1,8 +1,7 @@
 import * as definitions_v2 from '../autohotkey2/definitions';
-import { command, signature } from '../autohotkeyl/definitions';
 import {
-  CommandParameterFlag, HighlightType,
-  type CommandDefinition, type CommandParameter,
+  command, namespace, signature,
+  type CommandDefinition,
 } from '../definition';
 
 export const directiveDefinitions: CommandDefinition[] = [
@@ -13,10 +12,3 @@ export const directiveDefinitions: CommandDefinition[] = [
   command('#Module', signature([ namespace() ])),
 ];
 
-export function namespace(): CommandParameter {
-  return {
-    type: HighlightType.Namespace,
-    flags: CommandParameterFlag.None,
-    itemPatterns: [],
-  };
-}
