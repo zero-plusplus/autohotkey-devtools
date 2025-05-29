@@ -1,11 +1,10 @@
+import * as constants_v1 from '../../../../src/autohotkeyl/constants';
 import { Repository, RuleName } from '../../../../src/constants';
 import type { ScopeName } from '../../../../src/types';
-import { getEscapeSequencesInfo, name } from '../../../../src/utils';
+import { name } from '../../../../src/utils';
 import type { ExpectedTestData } from '../../../types';
 
 export function createLegacyAssignmentStatementExpectedData(scopeName: ScopeName): ExpectedTestData[] {
-  const escapeSequencesInfo = getEscapeSequencesInfo(scopeName);
-
   return [
     [
       'var = text', [
@@ -15,10 +14,10 @@ export function createLegacyAssignmentStatementExpectedData(scopeName: ScopeName
       ],
     ],
     [
-      `var = ${escapeSequencesInfo.legacyText.join('')}`, [
+      `var = ${constants_v1.unquoteEscapeSequences.join('')}`, [
         { text: 'var', scopes: name(scopeName, Repository.LegacyAssignmentDeclaration, RuleName.Variable) },
         { text: '=', scopes: name(scopeName, Repository.LegacyAssignmentDeclaration, RuleName.Operator) },
-        ...escapeSequencesInfo.legacyText.map((escapeSequence) => {
+        ...constants_v1.unquoteEscapeSequences.map((escapeSequence) => {
           return { text: escapeSequence, scopes: name(scopeName, Repository.LegacyAssignmentDeclaration, RuleName.EscapeSequence) };
         }),
       ],

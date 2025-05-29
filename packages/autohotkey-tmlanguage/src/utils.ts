@@ -6,33 +6,9 @@ import {
   alt, char, group, inlineSpaces0, lookbehind, opt, seq, startAnchor, textalt,
 } from './oniguruma';
 import type {
-  ElementName, EscapeSequencesInfo, IncludeRule, NameRule, PatternsRule, Rule, ScopeName, Utilities,
+  ElementName, IncludeRule, NameRule, PatternsRule, Rule, ScopeName, Utilities,
 } from './types';
 
-export function getEscapeSequencesInfo(scopeName: ScopeName): EscapeSequencesInfo {
-  switch (scopeName) {
-    case 'autohotkeynext':
-    case 'autohotkey2': {
-      // [Escape Sequences](https://www.autohotkey.com/docs/v2/misc/EscapeChar.htm)
-      const commonEscapeSequences: string[] = [ '``', '`;', '`:', '`{', '`n', '`r', '`b', '`t', '`s', '`v', '`a', '`f' ];
-      return {
-        doubleQuote: [ ...commonEscapeSequences, '`\"' ],
-        singleQuote: [ ...commonEscapeSequences, `\`'` ],
-        legacyText: [],
-      };
-    }
-    case 'autohotkeyl': {
-      // [Escape Sequences](https://www.autohotkey.com/docs/v1/misc/EscapeChar.htm)
-      const commonEscapeSequences: string[] = [ '`,', '`%', '``', '`;', '`::', '`r', '`n', '`b', '`t', '`v', '`a', '`f' ];
-      return {
-        doubleQuote: [ ...commonEscapeSequences, `""` ],
-        singleQuote: [],
-        legacyText: commonEscapeSequences,
-      };
-    }
-  }
-  throw Error(`Scope "${scopeName}" not found`);
-}
 export function getStatementBegin(scopeName: ScopeName): string {
   switch (scopeName) {
     case 'autohotkeynext':
