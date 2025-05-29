@@ -1,5 +1,5 @@
 import { dedent } from '@zero-plusplus/utilities/src';
-import { directiveDefinitions } from '../../../../src/autohotkeyl/definition';
+import { directiveDefinitions } from '../../../../src/autohotkeyl/definitions';
 import {
   name, RuleName,
   type ScopeName,

@@ -2,7 +2,7 @@ import { dedent } from '@zero-plusplus/utilities/src';
 import {
   blank, control, expression, fileAttributes, flagedGuiControlOptions, guiControlOptions, guiOptions, keywordOnly,
   onOff, output, restParams, sendKeys, unquoted, winTitle,
-} from '../../../../src/autohotkeyl/definition';
+} from '../../../../src/autohotkeyl/definitions';
 import {
   name, RuleDescriptor, RuleName, StyleName,
   type ScopeName,

@@ -1,7 +1,7 @@
 import {
   command, decimalOptionItem, encoding, expression, includeLib, keywordOnly, optionItem, requiresVersion,
   signature, signedNumberOptionItem, toggleOptionItem, unquoted, unquotedNumber,
-} from '../autohotkeyl/definition';
+} from '../autohotkeyl/definitions';
 import type { CommandDefinition, CommandParameter } from '../definition';
 
 // #region directives

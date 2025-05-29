@@ -1,4 +1,3 @@
-import * as patterns_v1 from '../autohotkeyl/patterns';
 import * as constants_common from '../common/constants';
 import {
   CommandFlag, CommandParameterFlag, CommandSignatureFlag, HighlightType,
@@ -8,6 +7,7 @@ import {
   alt, char, endAnchor, group, groupMany1, ignoreCase, inlineSpace, inlineSpaces0, lookahead, lookbehind,
   negChars0, negChars1, numbers0, numbers1, optional, optseq, ordalt, seq, textalt, wordBound,
 } from '../oniguruma';
+import * as patterns_v1 from './patterns';
 
 // #region common parameter(s)
 export const winParams: CommandParameter[] = [

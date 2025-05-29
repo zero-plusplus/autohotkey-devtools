@@ -4,7 +4,7 @@ import {
   nameRule, patternsRule, RuleName,
   type PatternsRule, type ScopeName,
 } from '../../../tmlanguage';
-import * as definition_v1 from '../../definition';
+import * as definitions_v1 from '../../definitions';
 
 interface Placeholder {
   startAnchor: string;
@@ -12,7 +12,7 @@ interface Placeholder {
 }
 export function createLoopStatementRule(scopeName: ScopeName, placeholder: Placeholder): PatternsRule {
   return patternsRule(
-    ...definition_v1.loopCommandDefenitions.flatMap((definition) => {
+    ...definitions_v1.loopCommandDefenitions.flatMap((definition) => {
       return definition.signatures.map((signature) => {
         return rules_common.createCommandLikeRule(scopeName, definition, signature, {
           startAnchor: placeholder.startAnchor,

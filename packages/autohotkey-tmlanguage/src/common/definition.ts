@@ -1,4 +1,4 @@
-import { command, encoding, invalid, keywordOnly, optionItem, output, signature, unquotedNumber, unquotedWithNumber } from '../autohotkeyl/definition';
+import { command, encoding, invalid, keywordOnly, optionItem, output, signature, unquotedNumber, unquotedWithNumber } from '../autohotkeyl/definitions';
 import {
   CommandFlag, CommandParameterFlag, HighlightType,
   type CommandDefinition, type CommandParameter,

@@ -1,5 +1,5 @@
 import * as definitions_v2 from '../autohotkey2/definitions';
-import { command, signature } from '../autohotkeyl/definition';
+import { command, signature } from '../autohotkeyl/definitions';
 import {
   CommandParameterFlag, HighlightType,
   type CommandDefinition, type CommandParameter,
