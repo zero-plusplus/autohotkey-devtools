@@ -1,5 +1,5 @@
 import { command, encoding, invalid, keywordOnly, optionItem, output, signature, unquotedNumber, unquotedWithNumber } from '../autohotkeyl/definition';
-import { CommandFlag, CommandParameterFlag, HighlightType } from '../constants';
+import { CommandFlag, CommandParameterFlag, HighlightType } from '../definitions';
 import { seq, wordChars0 } from '../oniguruma';
 import type { CommandDefinition, CommandParameter } from '../types';
 

@@ -1,7 +1,7 @@
 import {
   CommandParameterFlag, CommandSignatureFlag, HighlightType,
   type CommandFlag,
-} from './constants';
+} from './definitions';
 
 export interface CommandParameter {
   readonly type: HighlightType;

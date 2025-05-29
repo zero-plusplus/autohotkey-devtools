@@ -1,5 +1,5 @@
 import { hasFlag } from '@zero-plusplus/utilities/src';
-import { CommandFlag } from '../../../src/constants';
+import { CommandFlag } from '../../../src/definitions';
 import {
   name, RuleName, StyleName,
   type ScopeName,
