@@ -4,7 +4,6 @@ import {
 } from './constants';
 
 export type Repositories = { [key in Partial<Repository>[number]]: Rule | undefined };
-export type Captures = Record<string | number, Rule | undefined>;
 
 export type ScopeName = typeof scopeNames[number];
 export type ElementName = Repository | RuleName | RuleDescriptor | StyleName | TokenType;
@@ -35,15 +34,15 @@ export interface MatchRule extends RuleBase {
   captures?: Repositories;
 }
 export interface BeginEndRule extends RuleBase {
-  begin?: string;
+  begin: string;
   beginCaptures?: Repositories;
-  end?: string;
+  end: string;
   endCaptures?: Repositories;
 }
 export interface BeginWhileRule extends RuleBase {
-  begin?: string;
+  begin: string;
   beginCaptures?: Repositories;
-  while?: string;
+  while: string;
   whileCaptures?: Repositories;
 }
 export interface IncludeRule extends RuleBase {
