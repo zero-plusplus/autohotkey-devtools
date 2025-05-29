@@ -1,7 +1,7 @@
 import { RuleName } from '../../../constants';
 import { anyChars0, capture, char, endAnchor, inlineSpace, inlineSpaces0, lookbehind, seq, startAnchor } from '../../../oniguruma';
+import { nameRule } from '../../../tmlanguage';
 import type { MatchRule, ScopeName } from '../../../types';
-import { nameRule } from '../../../utils';
 
 export function createSingleLineCommentRule(scopeName: ScopeName): MatchRule {
   return {

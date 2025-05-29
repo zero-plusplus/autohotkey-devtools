@@ -1,7 +1,7 @@
 import { Repository, RuleName } from '../../../constants';
 import { capture, char } from '../../../oniguruma';
+import { includeRule, nameRule } from '../../../tmlanguage';
 import type { BeginEndRule, ScopeName } from '../../../types';
-import { includeRule, nameRule } from '../../../utils';
 
 export function createParenthesizedExpressionRule(scopeName: ScopeName): BeginEndRule {
   return {
@@ -15,7 +15,7 @@ export function createParenthesizedExpressionRule(scopeName: ScopeName): BeginEn
     },
     patterns: [
       includeRule(Repository.Comma),
-      includeRule(Repository.ExpressionInBrackets), 
+      includeRule(Repository.ExpressionInBrackets),
     ],
   };
 }

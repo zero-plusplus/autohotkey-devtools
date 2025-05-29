@@ -8,11 +8,11 @@ import {
   negativeLookbehind, negChar, negChars0, negChars1, numbers1, optional, optseq, ordalt, reluctant, seq, text,
   textalt, wordBound, wordChar, wordChars1,
 } from '../../../oniguruma';
+import { includeRule, name, nameRule, patternsRule } from '../../../tmlanguage';
 import type {
   BeginWhileRule, CommandDefinition, CommandParameter, CommandSignature, ElementName, MatchRule,
   PatternsRule, Rule, ScopeName,
 } from '../../../types';
-import { includeRule, name, nameRule, patternsRule } from '../../../utils';
 import * as constants_common from '../../constants';
 import * as patterns_common from '../../patterns';
 import { createAllowArgumentRule, createNumberRule, createSpacedArgumentTextRule } from '../misc/unquotedString';

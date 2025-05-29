@@ -4,8 +4,8 @@ import {
   inlineSpace, inlineSpaces0, inlineSpaces1, keyword, lookahead, lookbehind, negativeLookahead, negChar, negChars0,
   negChars1, optional, optseq, ordalt, seq, startAnchor, text,
 } from '../../../oniguruma';
+import { includeRule, name, nameRule, patternsRule } from '../../../tmlanguage';
 import type { BeginEndRule, BeginWhileRule, ElementName, MatchRule, PatternsRule, Repositories, Rule, ScopeName } from '../../../types';
-import { includeRule, name, nameRule, patternsRule } from '../../../utils';
 
 interface Placeholder {
   leftHandPattern: string;

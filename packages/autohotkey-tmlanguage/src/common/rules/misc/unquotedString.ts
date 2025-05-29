@@ -3,8 +3,8 @@ import {
   alt, capture, char, chars0, endAnchor, ignoreCase, inlineSpace, inlineSpaces0, lookahead, lookbehind,
   negChars0, negChars1, numbers1, optional, optseq, seq, textalt,
 } from '../../../oniguruma';
+import { includeRule, name, patternsRule } from '../../../tmlanguage';
 import type { MatchRule, Rule, ScopeName } from '../../../types';
-import { includeRule, name, patternsRule } from '../../../utils';
 
 interface Placeholder_UnquotedStringRule {
   stringRuleName: RuleName;

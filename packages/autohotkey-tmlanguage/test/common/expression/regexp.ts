@@ -1,8 +1,8 @@
 import { dedent } from '@zero-plusplus/utilities/src';
 import * as constants_common from '../../../src/common/constants';
 import { RuleDescriptor, RuleName, StyleName, TokenType } from '../../../src/constants';
+import { name } from '../../../src/tmlanguage';
 import type { ScopeName } from '../../../src/types';
-import { name } from '../../../src/utils';
 import type { ExpectedTestData, ParsedResult } from '../../types';
 
 interface Placeholder {

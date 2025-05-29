@@ -2,8 +2,8 @@ import {
   alt, anyChars0, capture, char, charRange, endAnchor, group, ignoreCase, inlineSpaces0, inlineSpaces1,
   lookahead, lookbehind, negativeLookahead, optional, optseq, reluctant, seq, startAnchor, wordBound,
 } from '../oniguruma';
+import { includeScope, patternsRule } from '../tmlanguage';
 import type { Rule, ScopeName, TmLanguage } from '../types';
-import { includeScope, patternsRule } from '../utils';
 
 export function createTmLanguage(): TmLanguage {
   const scopeName: ScopeName = 'autohotkey';

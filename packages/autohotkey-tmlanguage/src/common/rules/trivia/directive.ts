@@ -8,8 +8,8 @@ import {
   alt, anyChars0, capture, char, group, ignoreCase, many0, negChar, negChars1, number, numbers0,
   optional, optseq, seq, text, textalt,
 } from '../../../oniguruma';
+import { includeRule, name, namedPatternsRule, nameRule, patternsRule } from '../../../tmlanguage';
 import type { CommandDefinition, MatchRule, PatternsRule, Repositories, ScopeName } from '../../../types';
-import { includeRule, name, namedPatternsRule, nameRule, patternsRule } from '../../../utils';
 import { createDirectiveCommentRule } from '../statement/command';
 
 export function createDirectiveCommentRepositories(scopeName: ScopeName): Repositories {

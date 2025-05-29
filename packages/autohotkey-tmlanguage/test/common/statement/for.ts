@@ -1,7 +1,7 @@
 import { dedent } from '@zero-plusplus/utilities/src';
 import { RuleName } from '../../../src/constants';
+import { name } from '../../../src/tmlanguage';
 import type { ScopeName } from '../../../src/types';
-import { name } from '../../../src/utils';
 import type { ExpectedTestData } from '../../types';
 
 export function createForStatementExpectedData(scopeName: ScopeName): ExpectedTestData[] {

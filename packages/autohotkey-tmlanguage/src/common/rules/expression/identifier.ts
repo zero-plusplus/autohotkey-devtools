@@ -3,8 +3,8 @@ import {
   capture, char, ignoreCase, lookahead, lookbehind, negativeLookbehind, optional, seq,
   textalt, wordBound,
 } from '../../../oniguruma';
+import { nameRule } from '../../../tmlanguage';
 import type { MatchRule, ScopeName } from '../../../types';
-import { nameRule } from '../../../utils';
 
 interface Placeholder_IdentifierRule {
   ruleName: RuleName;

@@ -1,8 +1,8 @@
 import * as constant_v2 from '../../../../src/autohotkey2/constants';
 import * as constant_common from '../../../../src/common/constants';
 import { RuleName } from '../../../../src/constants';
+import { name } from '../../../../src/tmlanguage';
 import type { ScopeName } from '../../../../src/types';
-import { name } from '../../../../src/utils';
 import * as common from '../../../common';
 import type { ExpectedTestData } from '../../../types';
 

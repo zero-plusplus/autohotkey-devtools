@@ -4,8 +4,8 @@ import {
   alt, capture, char, endAnchor, group, groupMany0, inlineSpaces0, inlineSpaces1, lookahead,
   lookbehind, negativeLookahead, negChars1, ordalt, seq, textalt,
 } from '../../../oniguruma';
+import { includeRule, name, nameRule } from '../../../tmlanguage';
 import type { MatchRule, ScopeName } from '../../../types';
-import { includeRule, name, nameRule } from '../../../utils';
 import * as constants_v1 from '../../constants';
 
 interface Placeholder {

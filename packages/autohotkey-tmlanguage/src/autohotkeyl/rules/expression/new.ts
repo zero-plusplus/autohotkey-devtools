@@ -3,8 +3,8 @@ import {
   alt, anyChars0, capture, char, group, ignoreCase, inlineSpaces0, inlineSpaces1, lookbehind,
   optseq, seq, wordBound,
 } from '../../../oniguruma';
+import { includeRule, nameRule, patternsRule } from '../../../tmlanguage';
 import type { BeginEndRule, ScopeName } from '../../../types';
-import { includeRule, nameRule, patternsRule } from '../../../utils';
 
 interface Placeholder {
   callableNamePattern: string;

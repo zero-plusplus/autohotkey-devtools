@@ -3,8 +3,8 @@ import {
   alt, capture, char, group, hexPrefix, hexValue, ignoreCase, integer, lookahead, lookbehind, negativeLookahead,
   number, numbers0, numbers1, opt, seq, wordBound,
 } from '../../../oniguruma';
+import { includeRule, name, nameRule, patternsRule } from '../../../tmlanguage';
 import type { MatchRule, PatternsRule, Repositories, ScopeName } from '../../../types';
-import { includeRule, name, nameRule, patternsRule } from '../../../utils';
 
 export function createNumberRepositories(scopeName: ScopeName): Repositories {
   return {

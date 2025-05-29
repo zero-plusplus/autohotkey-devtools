@@ -4,8 +4,8 @@ import {
   alt, capture, char, group, ignoreCase, inlineSpaces0, keyword, lookahead, lookbehind, optseq,
   ordalt, seq, startAnchor,
 } from '../../../oniguruma';
+import { includeRule, nameRule } from '../../../tmlanguage';
 import type { BeginEndRule, ScopeName } from '../../../types';
-import { includeRule, nameRule } from '../../../utils';
 
 interface Placeholder {
   startAnchor: string;

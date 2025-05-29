@@ -4,8 +4,8 @@ import {
   lookahead, lookbehind, many0, many1, negativeLookahead, negChar, negChars1, numbers1, optional, optseq,
   reluctant, seq, text, textalt, wordBound, wordChars0,
 } from '../../../oniguruma';
+import { includeRule, name, nameRule, patternsRule } from '../../../tmlanguage';
 import type { MatchRule, PatternsRule, ScopeName } from '../../../types';
-import { includeRule, name, nameRule, patternsRule } from '../../../utils';
 
 interface Placeholder {
   quoteChar: string;

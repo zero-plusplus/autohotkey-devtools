@@ -3,8 +3,8 @@ import {
   alt, capture, char, group, inlineSpace, inlineSpaces0, keyword, lookbehind, optseq, ordalt,
   seq, startAnchor,
 } from '../../../oniguruma';
+import { includeRule, nameRule } from '../../../tmlanguage';
 import type { BeginEndRule, MatchRule, Rule, ScopeName } from '../../../types';
-import { includeRule, nameRule } from '../../../utils';
 
 interface Placeholder {
   modifiers: readonly string[];

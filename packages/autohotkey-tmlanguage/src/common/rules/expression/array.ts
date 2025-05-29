@@ -1,7 +1,7 @@
 import { Repository, RuleName } from '../../../constants';
 import { capture, char } from '../../../oniguruma';
+import { includeRule, nameRule } from '../../../tmlanguage';
 import type { BeginEndRule, ScopeName } from '../../../types';
-import { includeRule, nameRule } from '../../../utils';
 
 export function createArrayRule(scopeName: ScopeName): BeginEndRule {
   return {
