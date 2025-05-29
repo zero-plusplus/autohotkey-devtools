@@ -58,13 +58,6 @@ export type CommandInfo =
   | [ typeof commandNames[number], ..._CommandSignature[] ]
   | [ typeof commandNames[number], string /* subcommand */, ..._CommandSignature[] ];
 
-export interface Utilities {
-  name: (...ruleNames: ElementName[]) => string;
-  nameRule: (...ruleNames: ElementName[]) => NameRule;
-  includeRule: (repositoryName: Repository) => IncludeRule;
-  includeScope: (scopeName: ScopeName) => IncludeRule;
-}
-
 export interface CommandParameter {
   readonly type: HighlightType;
   readonly flags: CommandParameterFlag;
