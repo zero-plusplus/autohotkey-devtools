@@ -1,7 +1,7 @@
 import * as definition_v2 from '../autohotkey2/definition';
 import { command, signature } from '../autohotkeyl/definition';
+import type { CommandDefinition, CommandParameter } from '../definitions';
 import { CommandParameterFlag, HighlightType } from '../definitions';
-import type { CommandDefinition, CommandParameter } from '../types';
 
 export const directiveDefinitions: CommandDefinition[] = [
   ...definition_v2.directiveDefinitions,

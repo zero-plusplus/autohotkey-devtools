@@ -2,7 +2,7 @@ import {
   command, decimalOptionItem, encoding, expression, includeLib, keywordOnly, optionItem, requiresVersion,
   signature, signedNumberOptionItem, toggleOptionItem, unquoted, unquotedNumber,
 } from '../autohotkeyl/definition';
-import type { CommandDefinition, CommandParameter } from '../types';
+import type { CommandDefinition, CommandParameter } from '../definitions';
 
 // #region directives
 export const directiveDefinitions: CommandDefinition[] = [

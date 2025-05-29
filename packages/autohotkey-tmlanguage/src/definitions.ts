@@ -119,3 +119,24 @@ export const enum CommandFlag {
   Deprecated = 1 << 0,
 }
 // #endregion enum
+
+// #region type
+export interface CommandParameter {
+  readonly type: HighlightType;
+  readonly flags: CommandParameterFlag;
+  readonly itemPatterns?: string[];
+}
+export interface SubCommandParameter extends CommandParameter {
+  readonly type: HighlightType.SubCommand | HighlightType.SubCommandLike | HighlightType.FlowSubCommand | HighlightType.GuiSubCommand;
+  readonly itemPatterns: string[];
+}
+export interface CommandSignature {
+  readonly flags: CommandSignatureFlag;
+  readonly parameters: CommandParameter[];
+}
+export interface CommandDefinition {
+  readonly name: string;
+  readonly flags: CommandFlag;
+  readonly signatures: CommandSignature[];
+}
+// #endregion type

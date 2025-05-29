@@ -1,10 +1,12 @@
 import { hasFlag } from '@zero-plusplus/utilities/src';
-import { CommandFlag } from '../../../src/definitions';
+import {
+  CommandFlag,
+  type CommandDefinition,
+} from '../../../src/definitions';
 import {
   name, RuleName, StyleName,
   type ScopeName,
 } from '../../../src/tmlanguage';
-import type { CommandDefinition } from '../../../src/types';
 import type { ExpectedTestData } from '../../types';
 
 interface Placeholder {

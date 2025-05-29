@@ -1,7 +1,10 @@
 import { hasFlag } from '@zero-plusplus/utilities/src';
 import * as patterns_v2 from '../../../autohotkey2/patterns';
 import { isSubCommandParameter } from '../../../autohotkeyl/definition';
-import { CommandFlag, HighlightType } from '../../../definitions';
+import {
+  CommandFlag, HighlightType,
+  type CommandDefinition, type CommandParameter, type CommandSignature,
+} from '../../../definitions';
 import {
   alt, anyChar, anyChars0, anyChars1, capture, char, chars1, endAnchor, group, groupMany0, groupMany1,
   ignoreCase, inlineSpace, inlineSpaces0, inlineSpaces1, keyword, lookahead, lookbehind, negativeLookahead,
@@ -12,7 +15,6 @@ import {
   includeRule, name, nameRule, patternsRule, Repository, RuleName, StyleName,
   type BeginWhileRule, type ElementName, type MatchRule, type PatternsRule, type Rule, type ScopeName,
 } from '../../../tmlanguage';
-import type { CommandDefinition, CommandParameter, CommandSignature } from '../../../types';
 import * as constants_common from '../../constants';
 import * as patterns_common from '../../patterns';
 import { createAllowArgumentRule, createNumberRule, createSpacedArgumentTextRule } from '../misc/unquotedString';

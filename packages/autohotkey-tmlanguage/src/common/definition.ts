@@ -1,7 +1,7 @@
 import { command, encoding, invalid, keywordOnly, optionItem, output, signature, unquotedNumber, unquotedWithNumber } from '../autohotkeyl/definition';
+import type { CommandDefinition, CommandParameter } from '../definitions';
 import { CommandFlag, CommandParameterFlag, HighlightType } from '../definitions';
 import { seq, wordChars0 } from '../oniguruma';
-import type { CommandDefinition, CommandParameter } from '../types';
 
 export const undefinedDirective: CommandDefinition = command(seq('#', wordChars0()), signature([ invalid() ]));
 export const compilerDirectives: CommandDefinition[] = [
