@@ -79,12 +79,12 @@ export function createRepositories(scopeName: ScopeName, placeholder?: Placehold
 
     // #region statement
     [Repository.Statement]: patternsRule(
-      includeRule(Repository.StatementCommon),
+      includeRule(Repository.StatementInClassBlock),
 
       includeRule(Repository.CallStatement),
       includeRule(Repository.ExpressionStatement),
     ),
-    [Repository.StatementCommon]: patternsRule(
+    [Repository.StatementInClassBlock]: patternsRule(
       includeRule(Repository.Declaration),
       includeRule(Repository.JumpStatement),
       includeRule(Repository.JumpToLabelStatement),
@@ -230,7 +230,7 @@ export function createRepositories(scopeName: ScopeName, placeholder?: Placehold
         includeRule(Repository.MethodDeclarationHead),
         includeRule(Repository.PropertyDeclaration),
         includeRule(Repository.BlockInClassBody),
-        includeRule(Repository.StatementCommon),
+        includeRule(Repository.StatementInClassBlock),
         includeRule(Repository.ExpressionStatement),
       ],
     }),

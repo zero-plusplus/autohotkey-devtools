@@ -58,7 +58,7 @@ export const enum Repository {
   // #endregion trivas
   // #region statements
   Statement = 'Repository.Statement',
-  StatementCommon = 'Repository.StatementCommon',
+  StatementInClassBlock = 'Repository.StatementInClassBlock',
   Import = 'Repository.Import',
   Export = 'Repository.Export',
   ExpressionStatement = 'Repository.ExpressionStatement',
