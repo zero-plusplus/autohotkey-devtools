@@ -1,6 +1,6 @@
 import { capture, char, inlineSpaces0, lookbehind, negativeLookahead, seq } from '../../../oniguruma';
 import {
-  includeRule, name, nameRule, patternsRule, Repository, RuleName,
+  includeRule, nameRule, patternsRule, Repository, RuleName,
   type MatchRule, type ScopeName,
 } from '../../../tmlanguage';
 
@@ -10,7 +10,6 @@ interface Placeholder {
 }
 export function createLabelRule(scopeName: ScopeName, placeholder: Placeholder): MatchRule {
   return {
-    name: name(scopeName, Repository.LabelStatement),
     match: seq(
       lookbehind(placeholder.startAnchor),
       inlineSpaces0(),
