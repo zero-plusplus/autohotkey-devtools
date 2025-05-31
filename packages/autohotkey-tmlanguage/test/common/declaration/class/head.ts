@@ -162,22 +162,33 @@ export function createClassHeadDeclarationExpectedData(scopeName: ScopeName): Ex
     })(),
 
     // nested class
-    [
-      dedent`
-        class {
-          class {
-          }
-        }
-      `,
-      [
-        { text: 'class', scopes: name(scopeName, RuleName.ClassKeyword) },
-        { text: '{', scopes: name(scopeName, RuleName.ClassBlockBegin) },
-        { text: 'class', scopes: name(scopeName, RuleName.ClassKeyword) },
-        { text: '{', scopes: name(scopeName, RuleName.ClassBlockBegin) },
-        { text: '}', scopes: name(scopeName, RuleName.ClassBlockEnd) },
-        { text: '}', scopes: name(scopeName, RuleName.ClassBlockEnd) },
-      ],
-    ],
+    ...((): ExpectedTestData[] => {
+      return [
+        [
+          dedent`
+            class {         ; comment
+              class {       ; comment
+              }             ; comment
+            }               ; comment
+          `,
+          [
+            { text: 'class', scopes: name(scopeName, RuleName.ClassKeyword) },
+            { text: '{', scopes: name(scopeName, RuleName.ClassBlockBegin) },
+            { text: '; comment', scopes: name(scopeName, RuleName.InLineComment) },
+
+            { text: 'class', scopes: name(scopeName, RuleName.ClassKeyword) },
+            { text: '{', scopes: name(scopeName, RuleName.ClassBlockBegin) },
+            { text: '; comment', scopes: name(scopeName, RuleName.InLineComment) },
+
+            { text: '}', scopes: name(scopeName, RuleName.ClassBlockEnd) },
+            { text: '; comment', scopes: name(scopeName, RuleName.InLineComment) },
+
+            { text: '}', scopes: name(scopeName, RuleName.ClassBlockEnd) },
+            { text: '; comment', scopes: name(scopeName, RuleName.InLineComment) },
+          ],
+        ],
+      ];
+    })(),
 
     // invalid
     ...((): ExpectedTestData[] => {
