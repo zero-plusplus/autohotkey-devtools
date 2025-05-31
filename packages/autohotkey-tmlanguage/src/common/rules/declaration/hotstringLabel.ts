@@ -3,7 +3,7 @@ import {
   reluctant, seq, text,
 } from '../../../oniguruma';
 import {
-  name, nameRule, patternsRule, Repository, RuleName, StyleName,
+  name, nameRule, patternsRule, RuleName, StyleName,
   type MatchRule, type ScopeName,
 } from '../../../tmlanguage';
 
@@ -13,7 +13,6 @@ interface Placeholder {
 }
 export function createHotstringLabelRule(scopeName: ScopeName, placeholder: Placeholder): MatchRule {
   return {
-    name: name(scopeName, Repository.HotstringLabelStatement),
     match: seq(
       lookbehind(placeholder.startAnchor),
       capture(char(':')),
