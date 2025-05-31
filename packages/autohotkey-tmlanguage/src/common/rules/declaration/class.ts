@@ -1,10 +1,10 @@
 import * as rules_common from '..';
 import {
-  alt, capture, char, endAnchor, group, inlineSpaces0, inlineSpaces1, keyword, lookahead,
-  lookbehind, seq, startAnchor,
+  alt, capture, char, endAnchor, group, inlineSpace, inlineSpaces0, inlineSpaces1, keyword, lookahead,
+  lookbehind, negChars1, seq, startAnchor,
 } from '../../../oniguruma';
 import {
-  includeRule, name, nameRule, Repository, RuleName,
+  includeRule, name, nameRule, Repository, RuleName, StyleName,
   type BeginEndRule, type Rule, type ScopeName,
 } from '../../../tmlanguage';
 
@@ -65,6 +65,12 @@ export function createClassDeclarationRule(scopeName: ScopeName, placeholder: Pl
           1: nameRule(scopeName, RuleName.ClassBlockEnd),
         },
         patterns: placeholder.rulesInBody,
+      },
+
+      // unknown tokens
+      {
+        name: name(scopeName, RuleName.Unknown, StyleName.Invalid),
+        match: negChars1('{', inlineSpace()),
       },
     ],
   };

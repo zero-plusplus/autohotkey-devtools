@@ -84,6 +84,7 @@
           "token.string.autohotkeyl": "string"
         },
         "unbalancedBracketScopes": [
+          "unknown",
           "token.string",
           "string.regexp keyword.other.regexp.option"
         ]
@@ -99,6 +100,7 @@
           "token.string.autohotkeynext": "string"
         },
         "unbalancedBracketScopes": [
+          "unknown",
           "token.string",
           "string.regexp keyword.other.regexp.option"
         ]
@@ -114,6 +116,7 @@
           "token.string.autohotkey2": "string"
         },
         "unbalancedBracketScopes": [
+          "unknown",
           "token.string",
           "string.regexp keyword.other.regexp.option"
         ]
@@ -129,6 +132,7 @@
           "token.string.autohotkeyl": "string"
         },
         "unbalancedBracketScopes": [
+          "unknown",
           "token.string",
           "string.regexp keyword.other.regexp.option"
         ]

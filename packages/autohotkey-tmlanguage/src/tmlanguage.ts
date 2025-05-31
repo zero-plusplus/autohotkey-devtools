@@ -333,6 +333,11 @@ export const enum RuleName {
   JumpCommandName = 'keyword.control.jump',
   SubCommandName = 'support.function.subcommand',
   FlowSubCommandName = 'keyword.control.flow.subcommand',
+  // #endregion legacy
+
+  // #region misc
+  Unknown = 'unknown',
+  // #endregion misc
 }
 export const enum RuleDescriptor {
   Begin = 'description.begin',
