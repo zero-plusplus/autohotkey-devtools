@@ -1,6 +1,6 @@
 import {
   alt, anyChars0, anyChars1, capture, char, ignoreCase, lookahead, lookbehind, numbers1, optional,
-  seq, text,
+  reluctant, seq, text,
 } from '../../../oniguruma';
 import {
   name, nameRule, patternsRule, Repository, RuleName, StyleName,
@@ -21,7 +21,7 @@ export function createHotstringLabelRule(scopeName: ScopeName, placeholder: Plac
       capture(char(':')),
       capture(anyChars1()),
       capture(text('::')),
-      capture(anyChars0()),
+      capture(reluctant(anyChars0())),
       lookahead(placeholder.endAnchor),
     ),
     captures: {

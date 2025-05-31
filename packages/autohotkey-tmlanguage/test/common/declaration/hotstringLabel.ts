@@ -1,3 +1,4 @@
+import { dedent } from '@zero-plusplus/utilities/src';
 import {
   name, Repository, RuleName, StyleName,
   type ScopeName,
@@ -7,7 +8,9 @@ import type { ExpectedTestData } from '../../types';
 export function createHotstringLabelStatementExpectedData(scopeName: ScopeName): ExpectedTestData[] {
   return [
     [
-      ':*?0?B0bC1C0cK10k-1O0oP1p-1R0rSISPSETXZ:abc::text',
+      dedent`
+        :*?0?B0bC1C0cK10k-1O0oP1p-1R0rSISPSETXZ:abc::text     ; comment
+      `,
       [
         { text: ':', scopes: name(scopeName, Repository.HotstringLabelStatement, RuleName.Colon) },
         { text: '*', scopes: name(scopeName, Repository.HotstringLabelStatement, RuleName.HotstringOption, StyleName.Strong) },
@@ -36,6 +39,7 @@ export function createHotstringLabelStatementExpectedData(scopeName: ScopeName):
         { text: 'abc', scopes: name(scopeName, Repository.HotstringLabelStatement, RuleName.HotstringLabelName) },
         { text: '::', scopes: name(scopeName, Repository.HotstringLabelStatement, RuleName.ColonColon) },
         { text: 'text', scopes: name(scopeName, Repository.HotstringLabelStatement, RuleName.UnquotedString) },
+        { text: '; comment', scopes: name(scopeName, RuleName.InLineComment) },
       ],
     ],
   ];
