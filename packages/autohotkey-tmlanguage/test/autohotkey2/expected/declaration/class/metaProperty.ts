@@ -1,4 +1,4 @@
-import { dedent, repeatArray } from '@zero-plusplus/utilities/src';
+import { dedent } from '@zero-plusplus/utilities/src';
 import {
   name, RuleName,
   type ScopeName,
@@ -7,35 +7,152 @@ import type { ExpectedTestData } from '../../../../types';
 
 export function createMetaPropertyDeclarationExpectedData(scopeName: ScopeName): ExpectedTestData[] {
   return [
-    [
-      dedent`
-          class {
-            __ITEM {
-            }
-            __ITEM
-            {
-            }
-            __ITEM[] {
-            }
-          }
+    // one true brace style
+    ...((): ExpectedTestData[] => {
+      return [
+        [
+          dedent`
+          class {             ; comment
+            __ITEM {          ; comment
+            }                 ; comment
+          }                   ; comment
         `, [
-        { text: 'class', scopes: name(scopeName, RuleName.ClassKeyword) },
-        { text: '{', scopes: name(scopeName, RuleName.ClassBlockBegin) },
+            { text: 'class', scopes: name(scopeName, RuleName.ClassKeyword) },
+            { text: '{', scopes: name(scopeName, RuleName.ClassBlockBegin) },
+            { text: '; comment', scopes: name(scopeName, RuleName.InLineComment) },
 
-        ...repeatArray(2, [
-          { text: '__ITEM', scopes: name(scopeName, RuleName.MetaFunctionName) },
-          { text: '{', scopes: name(scopeName, RuleName.BlockBegin) },
-          { text: '}', scopes: name(scopeName, RuleName.BlockEnd) },
-        ]),
+            { text: '__ITEM', scopes: name(scopeName, RuleName.MetaFunctionName) },
+            { text: '{', scopes: name(scopeName, RuleName.BlockBegin) },
+            { text: '; comment', scopes: name(scopeName, RuleName.InLineComment) },
 
-        { text: '__ITEM', scopes: name(scopeName, RuleName.MetaFunctionName) },
-        { text: '[', scopes: name(scopeName, RuleName.OpenBracket) },
-        { text: ']', scopes: name(scopeName, RuleName.CloseBracket) },
-        { text: '{', scopes: name(scopeName, RuleName.BlockBegin) },
-        { text: '}', scopes: name(scopeName, RuleName.BlockEnd) },
+            { text: '}', scopes: name(scopeName, RuleName.BlockEnd) },
+            { text: '; comment', scopes: name(scopeName, RuleName.InLineComment) },
 
-        { text: '}', scopes: name(scopeName, RuleName.ClassBlockEnd) },
-      ],
-    ],
+            { text: '}', scopes: name(scopeName, RuleName.ClassBlockEnd) },
+            { text: '; comment', scopes: name(scopeName, RuleName.InLineComment) },
+          ],
+        ],
+        [
+          dedent`
+          class {             ; comment
+            __ITEM[] {        ; comment
+            }                 ; comment
+          }                   ; comment
+        `, [
+            { text: 'class', scopes: name(scopeName, RuleName.ClassKeyword) },
+            { text: '{', scopes: name(scopeName, RuleName.ClassBlockBegin) },
+            { text: '; comment', scopes: name(scopeName, RuleName.InLineComment) },
+
+            { text: '__ITEM', scopes: name(scopeName, RuleName.MetaFunctionName) },
+            { text: '[', scopes: name(scopeName, RuleName.OpenBracket) },
+            { text: ']', scopes: name(scopeName, RuleName.CloseBracket) },
+            { text: '{', scopes: name(scopeName, RuleName.BlockBegin) },
+            { text: '; comment', scopes: name(scopeName, RuleName.InLineComment) },
+
+            { text: '}', scopes: name(scopeName, RuleName.BlockEnd) },
+            { text: '; comment', scopes: name(scopeName, RuleName.InLineComment) },
+
+            { text: '}', scopes: name(scopeName, RuleName.ClassBlockEnd) },
+            { text: '; comment', scopes: name(scopeName, RuleName.InLineComment) },
+          ],
+        ],
+        [
+          dedent`
+          class {             ; comment
+            __ITEM[ a         ; comment
+              , b,            ; comment
+              c               ; comment
+            ] {               ; comment
+            }                 ; comment
+          }                   ; comment
+        `, [
+            { text: 'class', scopes: name(scopeName, RuleName.ClassKeyword) },
+            { text: '{', scopes: name(scopeName, RuleName.ClassBlockBegin) },
+            { text: '; comment', scopes: name(scopeName, RuleName.InLineComment) },
+
+            { text: '__ITEM', scopes: name(scopeName, RuleName.MetaFunctionName) },
+            { text: '[', scopes: name(scopeName, RuleName.OpenBracket) },
+            { text: 'a', scopes: name(scopeName, RuleName.Variable) },
+            { text: '; comment', scopes: name(scopeName, RuleName.InLineComment) },
+
+            { text: ',', scopes: name(scopeName, RuleName.Comma) },
+            { text: 'b', scopes: name(scopeName, RuleName.Variable) },
+            { text: ',', scopes: name(scopeName, RuleName.Comma) },
+            { text: '; comment', scopes: name(scopeName, RuleName.InLineComment) },
+
+            { text: 'c', scopes: name(scopeName, RuleName.Variable) },
+            { text: '; comment', scopes: name(scopeName, RuleName.InLineComment) },
+
+            { text: ']', scopes: name(scopeName, RuleName.CloseBracket) },
+            { text: '{', scopes: name(scopeName, RuleName.BlockBegin) },
+            { text: '; comment', scopes: name(scopeName, RuleName.InLineComment) },
+
+            { text: '}', scopes: name(scopeName, RuleName.BlockEnd) },
+            { text: '; comment', scopes: name(scopeName, RuleName.InLineComment) },
+
+            { text: '}', scopes: name(scopeName, RuleName.ClassBlockEnd) },
+            { text: '; comment', scopes: name(scopeName, RuleName.InLineComment) },
+          ],
+        ],
+      ];
+    })(),
+
+    // K&R style
+    ...((): ExpectedTestData[] => {
+      return [
+        [
+          dedent`
+          class {             ; comment
+            __ITEM            ; comment
+            {                 ; comment
+            }                 ; comment
+          }                   ; comment
+        `, [
+            { text: 'class', scopes: name(scopeName, RuleName.ClassKeyword) },
+            { text: '{', scopes: name(scopeName, RuleName.ClassBlockBegin) },
+            { text: '; comment', scopes: name(scopeName, RuleName.InLineComment) },
+
+            { text: '__ITEM', scopes: name(scopeName, RuleName.MetaFunctionName) },
+            { text: '; comment', scopes: name(scopeName, RuleName.InLineComment) },
+
+            { text: '{', scopes: name(scopeName, RuleName.BlockBegin) },
+            { text: '; comment', scopes: name(scopeName, RuleName.InLineComment) },
+
+            { text: '}', scopes: name(scopeName, RuleName.BlockEnd) },
+            { text: '; comment', scopes: name(scopeName, RuleName.InLineComment) },
+
+            { text: '}', scopes: name(scopeName, RuleName.ClassBlockEnd) },
+            { text: '; comment', scopes: name(scopeName, RuleName.InLineComment) },
+          ],
+        ],
+        [
+          dedent`
+          class {             ; comment
+            __ITEM[]          ; comment
+            {                 ; comment
+            }                 ; comment
+          }                   ; comment
+        `, [
+            { text: 'class', scopes: name(scopeName, RuleName.ClassKeyword) },
+            { text: '{', scopes: name(scopeName, RuleName.ClassBlockBegin) },
+            { text: '; comment', scopes: name(scopeName, RuleName.InLineComment) },
+
+            { text: '__ITEM', scopes: name(scopeName, RuleName.MetaFunctionName) },
+            { text: '[', scopes: name(scopeName, RuleName.OpenBracket) },
+            { text: ']', scopes: name(scopeName, RuleName.CloseBracket) },
+            { text: '; comment', scopes: name(scopeName, RuleName.InLineComment) },
+
+            { text: '{', scopes: name(scopeName, RuleName.BlockBegin) },
+            { text: '; comment', scopes: name(scopeName, RuleName.InLineComment) },
+
+            { text: '}', scopes: name(scopeName, RuleName.BlockEnd) },
+            { text: '; comment', scopes: name(scopeName, RuleName.InLineComment) },
+
+            { text: '}', scopes: name(scopeName, RuleName.ClassBlockEnd) },
+            { text: '; comment', scopes: name(scopeName, RuleName.InLineComment) },
+          ],
+        ],
+      ];
+    })(),
   ];
 }
