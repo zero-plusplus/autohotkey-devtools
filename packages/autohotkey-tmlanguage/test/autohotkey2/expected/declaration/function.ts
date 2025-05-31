@@ -10,10 +10,11 @@ export function createFunctionDeclarationExpectedData(scopeName: ScopeName): Exp
   return [
     ...common.createFunctionDeclarationExpectedData(scopeName),
 
+    // byref parameter (&)
     [
       dedent`
-        abc(&a, b := 123, c*) {
-        }
+        abc(&a, b := 123, c*) {   ; comment
+        }                         ; comment
       `, [
         { text: 'abc', scopes: name(scopeName, RuleName.FunctionName) },
         { text: '(', scopes: name(scopeName, RuleName.OpenParen) },
@@ -28,7 +29,10 @@ export function createFunctionDeclarationExpectedData(scopeName: ScopeName): Exp
         { text: '*', scopes: name(scopeName, RuleName.Operator) },
         { text: ')', scopes: name(scopeName, RuleName.CloseParen) },
         { text: '{', scopes: name(scopeName, RuleName.BlockBegin) },
+        { text: '; comment', scopes: name(scopeName, RuleName.InLineComment) },
+
         { text: '}', scopes: name(scopeName, RuleName.BlockEnd) },
+        { text: '; comment', scopes: name(scopeName, RuleName.InLineComment) },
       ],
     ],
   ];
