@@ -3,9 +3,7 @@ import * as common from '../../common';
 import type { ExpectedTestData } from '../../types';
 import { createAssignmentDeclarationExpectedData } from './declaration/assignment';
 import { createClassDeclarationExpectedData } from './declaration/class';
-import { createFieldDeclarationExpectedData } from './declaration/class/field';
 import { createMetaFunctionDeclarationExpectedData } from './declaration/class/metaFunction';
-import { createMetaPropertyDeclarationExpectedData } from './declaration/class/metaProperty';
 import { createFunctionDeclarationExpectedData } from './declaration/function';
 import { createHotkeyLabelStatementExpectedData } from './declaration/hotkeyLabel';
 import { createHotstringLabelStatementExpectedData } from './declaration/hotstringLabel';
@@ -54,7 +52,6 @@ export function createExpectedDataList(scopeName: ScopeName, placeholder?: Place
     ...createDereferenceExpressionExpectedData(scopeName),
     ...createDirectiveCommentExpectedData(scopeName),
     ...createDirectiveStatementExpectedData(scopeName),
-    ...createFieldDeclarationExpectedData(scopeName),
     ...createForStatementExpectedData(scopeName),
     ...createFunctionDeclarationExpectedData(scopeName),
     ...createHotkeyLabelStatementExpectedData(scopeName),
@@ -64,7 +61,6 @@ export function createExpectedDataList(scopeName: ScopeName, placeholder?: Place
     ...createLabelStatementExpectedData(scopeName),
     ...createLoopStatementExpectedData(scopeName),
     ...createMetaFunctionDeclarationExpectedData(scopeName),
-    ...createMetaPropertyDeclarationExpectedData(scopeName),
     ...createNumberLiteralExpectedData(scopeName),
     ...createObjectLiteralExpectedData(scopeName),
     ...createOperatorInExpressionExpectedData(scopeName),
