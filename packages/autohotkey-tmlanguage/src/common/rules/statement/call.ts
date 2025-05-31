@@ -1,6 +1,6 @@
 import {
   alt, capture, char, endAnchor, group, ignoreCase, inlineSpace, inlineSpaces0, inlineSpaces1,
-  lookahead, lookbehind, negativeLookahead, seq, textalt,
+  lookahead, lookbehind, negativeLookahead, number, seq, textalt,
 } from '../../../oniguruma';
 import {
   includeRule, nameRule, patternsRule, Repository, RuleName, StyleName,
@@ -21,6 +21,7 @@ export function createCallStatementRule(scopeName: ScopeName, placeholder: Place
       match: seq(
         lookbehind(placeholder.startAnchor),
         inlineSpaces0(),
+        negativeLookahead(number()),
         capture(ignoreCase(placeholder.identifierPattern)),
         inlineSpaces0(),
         endAnchor(),
@@ -36,6 +37,7 @@ export function createCallStatementRule(scopeName: ScopeName, placeholder: Place
       begin: seq(
         lookbehind(placeholder.startAnchor),
         inlineSpaces0(),
+        negativeLookahead(number()),
         capture(ignoreCase(placeholder.identifierPattern)),
         group(alt(
           inlineSpaces1(),
@@ -62,6 +64,7 @@ export function createCallStatementRule(scopeName: ScopeName, placeholder: Place
       match: seq(
         lookbehind(placeholder.startAnchor),
         inlineSpaces0(),
+        negativeLookahead(number()),
         capture(ignoreCase(placeholder.identifierPattern)),
         group(alt(
           // Not assign (e.g. var := "")

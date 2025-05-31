@@ -1,3 +1,4 @@
+import { dedent } from '@zero-plusplus/utilities/src';
 import {
   name, RuleName,
   type ScopeName,
@@ -11,14 +12,37 @@ interface Placeholder {
 export function createAssignmentDeclarationExpectedData(scopeName: ScopeName, placeholder: Placeholder): ExpectedTestData[] {
   return [
     ...placeholder.modifiers.flatMap((modifier): ExpectedTestData[] => {
-      return placeholder.operators.map((operator): ExpectedTestData => {
+      return placeholder.operators.flatMap((operator): ExpectedTestData[] => {
         return [
-          `${modifier} var ${operator} 123`,
           [
-            { text: modifier, scopes: name(scopeName, RuleName.Modifier) },
-            { text: 'var', scopes: name(scopeName, RuleName.Variable) },
-            { text: operator, scopes: name(scopeName, RuleName.Operator) },
-            { text: '123', scopes: name(scopeName, RuleName.Integer) },
+            dedent`
+              ${modifier} var ${operator} 123     ; comment
+            `,
+            [
+              { text: modifier, scopes: name(scopeName, RuleName.Modifier) },
+              { text: 'var', scopes: name(scopeName, RuleName.Variable) },
+              { text: operator, scopes: name(scopeName, RuleName.Operator) },
+              { text: '123', scopes: name(scopeName, RuleName.Integer) },
+              { text: '; comment', scopes: name(scopeName, RuleName.InLineComment) },
+            ],
+          ],
+          [
+            dedent`
+              ${modifier}           ; comment
+                var ${operator}     ; comment
+                    123             ; comment
+            `,
+            [
+              { text: modifier, scopes: name(scopeName, RuleName.Modifier) },
+              { text: '; comment', scopes: name(scopeName, RuleName.InLineComment) },
+
+              { text: 'var', scopes: name(scopeName, RuleName.Variable) },
+              { text: operator, scopes: name(scopeName, RuleName.Operator) },
+              { text: '; comment', scopes: name(scopeName, RuleName.InLineComment) },
+
+              { text: '123', scopes: name(scopeName, RuleName.Integer) },
+              { text: '; comment', scopes: name(scopeName, RuleName.InLineComment) },
+            ],
           ],
         ];
       });
