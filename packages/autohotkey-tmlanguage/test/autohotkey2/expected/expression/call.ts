@@ -12,14 +12,15 @@ export function createCallExpressionExpectedData(scopeName: ScopeName): Expected
 
     [
       dedent`
-        %abc%()
-        %abc%edf()
+        %abc%()               ; comment
+        %abc%edf()            ; comment
       `, [
         { text: '%', scopes: name(scopeName, RuleName.PercentBegin) },
         { text: 'abc', scopes: name(scopeName, RuleName.Variable) },
         { text: '%', scopes: name(scopeName, RuleName.PercentEnd) },
         { text: '(', scopes: name(scopeName, RuleName.OpenParen) },
         { text: ')', scopes: name(scopeName, RuleName.CloseParen) },
+        { text: '; comment', scopes: name(scopeName, RuleName.InLineComment) },
 
         { text: '%', scopes: name(scopeName, RuleName.PercentBegin) },
         { text: 'abc', scopes: name(scopeName, RuleName.Variable) },
@@ -27,21 +28,30 @@ export function createCallExpressionExpectedData(scopeName: ScopeName): Expected
         { text: 'edf', scopes: name(scopeName, RuleName.FunctionName) },
         { text: '(', scopes: name(scopeName, RuleName.OpenParen) },
         { text: ')', scopes: name(scopeName, RuleName.CloseParen) },
+        { text: '; comment', scopes: name(scopeName, RuleName.InLineComment) },
       ],
     ],
     [
       dedent`
-        Class()
-      `, [
+        Class()           ; comment
+        Map()             ; comment
+      `,
+      [
         { text: 'Class', scopes: name(scopeName, RuleName.FunctionName, RuleName.ClassName) },
         { text: '(', scopes: name(scopeName, RuleName.OpenParen) },
         { text: ')', scopes: name(scopeName, RuleName.CloseParen) },
+        { text: '; comment', scopes: name(scopeName, RuleName.InLineComment) },
+
+        { text: 'Map', scopes: name(scopeName, RuleName.FunctionName, RuleName.ClassName) },
+        { text: '(', scopes: name(scopeName, RuleName.OpenParen) },
+        { text: ')', scopes: name(scopeName, RuleName.CloseParen) },
+        { text: '; comment', scopes: name(scopeName, RuleName.InLineComment) },
       ],
     ],
     [
       dedent`
-        (() => 123)()
-        ((&a, b := 10) => 123)()
+        (() => 123)()               ; comment
+        ((&a, b := 10) => 123)()    ; comment
       `,
       [
         { text: '(', scopes: name(scopeName, RuleName.OpenParen) },
@@ -52,6 +62,7 @@ export function createCallExpressionExpectedData(scopeName: ScopeName): Expected
         { text: ')', scopes: name(scopeName, RuleName.CloseParen) },
         { text: '(', scopes: name(scopeName, RuleName.OpenParen) },
         { text: ')', scopes: name(scopeName, RuleName.CloseParen) },
+        { text: '; comment', scopes: name(scopeName, RuleName.InLineComment) },
 
         { text: '(', scopes: name(scopeName, RuleName.OpenParen) },
         { text: '(', scopes: name(scopeName, RuleName.OpenParen) },
@@ -67,12 +78,13 @@ export function createCallExpressionExpectedData(scopeName: ScopeName): Expected
         { text: ')', scopes: name(scopeName, RuleName.CloseParen) },
         { text: '(', scopes: name(scopeName, RuleName.OpenParen) },
         { text: ')', scopes: name(scopeName, RuleName.CloseParen) },
+        { text: '; comment', scopes: name(scopeName, RuleName.InLineComment) },
       ],
     ],
     [
       dedent`
-        abc := { key: %abc()% }
-        return
+        abc := { key: %abc()% }     ; comment
+        return                      ; comment
       `,
       [
         { text: 'abc', scopes: name(scopeName, RuleName.Variable) },
@@ -86,8 +98,10 @@ export function createCallExpressionExpectedData(scopeName: ScopeName): Expected
         { text: ')', scopes: name(scopeName, RuleName.CloseParen) },
         { text: '%', scopes: name(scopeName, RuleName.PercentEnd) },
         { text: '}', scopes: name(scopeName, RuleName.CloseBrace) },
+        { text: '; comment', scopes: name(scopeName, RuleName.InLineComment) },
 
         { text: 'return', scopes: name(scopeName, RuleName.JumpCommandName) },
+        { text: '; comment', scopes: name(scopeName, RuleName.InLineComment) },
       ],
     ],
   ];

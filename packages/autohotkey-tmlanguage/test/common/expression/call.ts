@@ -7,157 +7,119 @@ import type { ExpectedTestData } from '../../types';
 
 export function createCallExpressionExpectedData(scopeName: ScopeName): ExpectedTestData[] {
   return [
-    [
-      dedent`
-        abc()
-      `, [
-        { text: 'abc', scopes: name(scopeName, RuleName.FunctionName) },
-        { text: '(', scopes: name(scopeName, RuleName.OpenParen) },
-        { text: ')', scopes: name(scopeName, RuleName.CloseParen) },
-      ],
-    ],
-    [
-      dedent`
-        abc(
-          1,
-          2,
-          abc(
-            3,
-            4,
-          )
-        )
-      `, [
-        { text: 'abc', scopes: name(scopeName, RuleName.FunctionName) },
-        { text: '(', scopes: name(scopeName, RuleName.OpenParen) },
-        { text: '1', scopes: name(scopeName, RuleName.Integer) },
-        { text: ',', scopes: name(scopeName, RuleName.Comma) },
-        { text: '2', scopes: name(scopeName, RuleName.Integer) },
-        { text: ',', scopes: name(scopeName, RuleName.Comma) },
-        { text: 'abc', scopes: name(scopeName, RuleName.FunctionName) },
-        { text: '(', scopes: name(scopeName, RuleName.OpenParen) },
-        { text: '3', scopes: name(scopeName, RuleName.Integer) },
-        { text: ',', scopes: name(scopeName, RuleName.Comma) },
-        { text: '4', scopes: name(scopeName, RuleName.Integer) },
-        { text: ',', scopes: name(scopeName, RuleName.Comma) },
-        { text: ')', scopes: name(scopeName, RuleName.CloseParen) },
-        { text: ')', scopes: name(scopeName, RuleName.CloseParen) },
-      ],
-    ],
+    // one line
+    ...((): ExpectedTestData[] => {
+      return [
+        [
+          dedent`
+            abc()       ; comment
+            abc(a)      ; comment
+            abc(a, (b * c), d)
+          `,
+          [
+            { text: 'abc', scopes: name(scopeName, RuleName.FunctionName) },
+            { text: '(', scopes: name(scopeName, RuleName.OpenParen) },
+            { text: ')', scopes: name(scopeName, RuleName.CloseParen) },
+            { text: '; comment', scopes: name(scopeName, RuleName.InLineComment) },
 
-    [
-      dedent`
-        thread()
-        threadABC()
-      `, [
-        { text: 'thread', scopes: name(scopeName, RuleName.FunctionName) },
-        { text: '(', scopes: name(scopeName, RuleName.OpenParen) },
-        { text: ')', scopes: name(scopeName, RuleName.CloseParen) },
-        { text: 'threadABC', scopes: name(scopeName, RuleName.FunctionName) },
-        { text: '(', scopes: name(scopeName, RuleName.OpenParen) },
-        { text: ')', scopes: name(scopeName, RuleName.CloseParen) },
-      ],
-    ],
+            { text: 'abc', scopes: name(scopeName, RuleName.FunctionName) },
+            { text: '(', scopes: name(scopeName, RuleName.OpenParen) },
+            { text: 'a', scopes: name(scopeName, RuleName.Variable) },
+            { text: ')', scopes: name(scopeName, RuleName.CloseParen) },
+            { text: '; comment', scopes: name(scopeName, RuleName.InLineComment) },
 
-    [
-      dedent`
-        abc(a)
-        abc(a, (b * c), d)
-      `, [
-        { text: 'abc', scopes: name(scopeName, RuleName.FunctionName) },
-        { text: '(', scopes: name(scopeName, RuleName.OpenParen) },
-        { text: 'a', scopes: name(scopeName, RuleName.Variable) },
-        { text: ')', scopes: name(scopeName, RuleName.CloseParen) },
+            { text: 'abc', scopes: name(scopeName, RuleName.FunctionName) },
+            { text: '(', scopes: name(scopeName, RuleName.OpenParen) },
+            { text: 'a', scopes: name(scopeName, RuleName.Variable) },
+            { text: ',', scopes: name(scopeName, RuleName.Comma) },
+            { text: '(', scopes: name(scopeName, RuleName.OpenParen) },
+            { text: 'b', scopes: name(scopeName, RuleName.Variable) },
+            { text: '*', scopes: name(scopeName, RuleName.Operator) },
+            { text: 'c', scopes: name(scopeName, RuleName.Variable) },
+            { text: ')', scopes: name(scopeName, RuleName.CloseParen) },
+            { text: ',', scopes: name(scopeName, RuleName.Comma) },
+            { text: 'd', scopes: name(scopeName, RuleName.Variable) },
+            { text: ')', scopes: name(scopeName, RuleName.CloseParen) },
+          ],
+        ],
+      ];
+    })(),
 
-        { text: 'abc', scopes: name(scopeName, RuleName.FunctionName) },
-        { text: '(', scopes: name(scopeName, RuleName.OpenParen) },
-        { text: 'a', scopes: name(scopeName, RuleName.Variable) },
-        { text: ',', scopes: name(scopeName, RuleName.Comma) },
-        { text: '(', scopes: name(scopeName, RuleName.OpenParen) },
-        { text: 'b', scopes: name(scopeName, RuleName.Variable) },
-        { text: '*', scopes: name(scopeName, RuleName.Operator) },
-        { text: 'c', scopes: name(scopeName, RuleName.Variable) },
-        { text: ')', scopes: name(scopeName, RuleName.CloseParen) },
-        { text: ',', scopes: name(scopeName, RuleName.Comma) },
-        { text: 'd', scopes: name(scopeName, RuleName.Variable) },
-        { text: ')', scopes: name(scopeName, RuleName.CloseParen) },
-      ],
-    ],
+    // continuation
+    ...((): ExpectedTestData[] => {
+      return [
+        [
+          dedent`
+            abc(              ; comment
+                              ; comment
+              1,              ; comment
+              2               ; comment
+              , abc(          ; comment
+                3,            ; comment
+                4,            ; comment
+              )               ; comment
+            )                 ; comment
+          `,
+          [
+            { text: 'abc', scopes: name(scopeName, RuleName.FunctionName) },
+            { text: '(', scopes: name(scopeName, RuleName.OpenParen) },
+            { text: '; comment', scopes: name(scopeName, RuleName.InLineComment) },
 
-    [
-      dedent`
-        XXX(
-          { key: value }
-        )
-      `,
-      [
-        { text: 'XXX', scopes: name(scopeName, RuleName.FunctionName) },
-        { text: '(', scopes: name(scopeName, RuleName.OpenParen) },
-        { text: '{', scopes: name(scopeName, RuleName.OpenBrace) },
-        { text: 'key', scopes: name(scopeName, RuleName.Variable) },
-        { text: ':', scopes: name(scopeName, RuleName.Colon) },
-        { text: 'value', scopes: name(scopeName, RuleName.Variable) },
-        { text: '}', scopes: name(scopeName, RuleName.CloseBrace) },
-        { text: ')', scopes: name(scopeName, RuleName.CloseParen) },
-      ],
-    ],
+            { text: '; comment', scopes: name(scopeName, RuleName.SingleLineComment) },
 
-    // comment
-    [
-      dedent`
-        abc(a, b, c) ; comment
-        abc(
-          ; comment
-          a, ; comment
-          b, ; comment
-          c, ; comment
-        ) ; comment
-        abc(
-          ; comment
-          , a ; comment
-          , b ; comment
-          , c ; comment
-        ) ; comment
-      `, [
-        { text: 'abc', scopes: name(scopeName, RuleName.FunctionName) },
-        { text: '(', scopes: name(scopeName, RuleName.OpenParen) },
-        { text: 'a', scopes: name(scopeName, RuleName.Variable) },
-        { text: ',', scopes: name(scopeName, RuleName.Comma) },
-        { text: 'b', scopes: name(scopeName, RuleName.Variable) },
-        { text: ',', scopes: name(scopeName, RuleName.Comma) },
-        { text: 'c', scopes: name(scopeName, RuleName.Variable) },
-        { text: ')', scopes: name(scopeName, RuleName.CloseParen) },
-        { text: '; comment', scopes: name(scopeName, RuleName.InLineComment) },
+            { text: '1', scopes: name(scopeName, RuleName.Integer) },
+            { text: ',', scopes: name(scopeName, RuleName.Comma) },
+            { text: '; comment', scopes: name(scopeName, RuleName.InLineComment) },
 
-        { text: 'abc', scopes: name(scopeName, RuleName.FunctionName) },
-        { text: '(', scopes: name(scopeName, RuleName.OpenParen) },
-        { text: '; comment', scopes: name(scopeName, RuleName.SingleLineComment) },
-        { text: 'a', scopes: name(scopeName, RuleName.Variable) },
-        { text: ',', scopes: name(scopeName, RuleName.Comma) },
-        { text: '; comment', scopes: name(scopeName, RuleName.InLineComment) },
-        { text: 'b', scopes: name(scopeName, RuleName.Variable) },
-        { text: ',', scopes: name(scopeName, RuleName.Comma) },
-        { text: '; comment', scopes: name(scopeName, RuleName.InLineComment) },
-        { text: 'c', scopes: name(scopeName, RuleName.Variable) },
-        { text: ',', scopes: name(scopeName, RuleName.Comma) },
-        { text: '; comment', scopes: name(scopeName, RuleName.InLineComment) },
-        { text: ')', scopes: name(scopeName, RuleName.CloseParen) },
-        { text: '; comment', scopes: name(scopeName, RuleName.InLineComment) },
+            { text: '2', scopes: name(scopeName, RuleName.Integer) },
+            { text: '; comment', scopes: name(scopeName, RuleName.InLineComment) },
 
-        { text: 'abc', scopes: name(scopeName, RuleName.FunctionName) },
-        { text: '(', scopes: name(scopeName, RuleName.OpenParen) },
-        { text: '; comment', scopes: name(scopeName, RuleName.SingleLineComment) },
-        { text: ',', scopes: name(scopeName, RuleName.Comma) },
-        { text: 'a', scopes: name(scopeName, RuleName.Variable) },
-        { text: '; comment', scopes: name(scopeName, RuleName.InLineComment) },
-        { text: ',', scopes: name(scopeName, RuleName.Comma) },
-        { text: 'b', scopes: name(scopeName, RuleName.Variable) },
-        { text: '; comment', scopes: name(scopeName, RuleName.InLineComment) },
-        { text: ',', scopes: name(scopeName, RuleName.Comma) },
-        { text: 'c', scopes: name(scopeName, RuleName.Variable) },
-        { text: '; comment', scopes: name(scopeName, RuleName.InLineComment) },
-        { text: ')', scopes: name(scopeName, RuleName.CloseParen) },
-        { text: '; comment', scopes: name(scopeName, RuleName.InLineComment) },
-      ],
-    ],
+            { text: ',', scopes: name(scopeName, RuleName.Comma) },
+            { text: 'abc', scopes: name(scopeName, RuleName.FunctionName) },
+            { text: '(', scopes: name(scopeName, RuleName.OpenParen) },
+            { text: '; comment', scopes: name(scopeName, RuleName.InLineComment) },
+
+            { text: '3', scopes: name(scopeName, RuleName.Integer) },
+            { text: ',', scopes: name(scopeName, RuleName.Comma) },
+            { text: '; comment', scopes: name(scopeName, RuleName.InLineComment) },
+
+            { text: '4', scopes: name(scopeName, RuleName.Integer) },
+            { text: ',', scopes: name(scopeName, RuleName.Comma) },
+            { text: '; comment', scopes: name(scopeName, RuleName.InLineComment) },
+
+            { text: ')', scopes: name(scopeName, RuleName.CloseParen) },
+            { text: '; comment', scopes: name(scopeName, RuleName.InLineComment) },
+
+            { text: ')', scopes: name(scopeName, RuleName.CloseParen) },
+            { text: '; comment', scopes: name(scopeName, RuleName.InLineComment) },
+          ],
+        ],
+        [
+          dedent`
+            XXX(                  ; comment
+              { key:              ; comment
+                value }           ; comment
+            )                     ; comment
+          `,
+          [
+            { text: 'XXX', scopes: name(scopeName, RuleName.FunctionName) },
+            { text: '(', scopes: name(scopeName, RuleName.OpenParen) },
+            { text: '; comment', scopes: name(scopeName, RuleName.InLineComment) },
+
+            { text: '{', scopes: name(scopeName, RuleName.OpenBrace) },
+            { text: 'key', scopes: name(scopeName, RuleName.Variable) },
+            { text: ':', scopes: name(scopeName, RuleName.Colon) },
+            { text: '; comment', scopes: name(scopeName, RuleName.InLineComment) },
+
+            { text: 'value', scopes: name(scopeName, RuleName.Variable) },
+            { text: '}', scopes: name(scopeName, RuleName.CloseBrace) },
+            { text: '; comment', scopes: name(scopeName, RuleName.InLineComment) },
+
+            { text: ')', scopes: name(scopeName, RuleName.CloseParen) },
+            { text: '; comment', scopes: name(scopeName, RuleName.InLineComment) },
+          ],
+        ],
+      ];
+    })(),
   ];
 }
