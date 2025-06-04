@@ -1,3 +1,4 @@
+import { dedent } from '@zero-plusplus/utilities/src';
 import {
   name, RuleName,
   type ElementName, type ScopeName,
@@ -12,12 +13,15 @@ export function createOperatorInExpressionExpectedData(scopeName: ScopeName, pla
   return [
     ...placeholder.operators.map((operator): ExpectedTestData => {
       return [
-        `(a ${operator} b)`, [
+        dedent`
+          (a ${operator} b)       ; comment
+        `, [
           { text: '(', scopes: name(scopeName, RuleName.OpenParen) },
           { text: 'a', scopes: name(scopeName, RuleName.Variable) },
           { text: operator, scopes: placeholder.name },
           { text: 'b', scopes: name(scopeName, RuleName.Variable) },
           { text: ')', scopes: name(scopeName, RuleName.CloseParen) },
+          { text: '; comment', scopes: name(scopeName, RuleName.InLineComment) },
         ],
       ];
     }),
