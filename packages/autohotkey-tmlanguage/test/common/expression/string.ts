@@ -12,109 +12,153 @@ interface Placeholder {
 }
 export function createStringLiteralExpectedData(scopeName: ScopeName, placeholder: Placeholder): ExpectedTestData[] {
   const q = placeholder.quote;
+
   return [
-    [
-      dedent`
-        ${q}${q}
-        ${q}${q}, ${q}${q}
-        ${q}string${q}
-      `, [
-        { text: q, scopes: name(scopeName, placeholder.ruleName, RuleDescriptor.Begin) },
-        { text: q, scopes: name(scopeName, placeholder.ruleName, RuleDescriptor.End) },
+    ...((): ExpectedTestData[] => {
+      return [
+        [
+          dedent`
+            ${q}${q}                ; comment
+            ${q}${q}, ${q}${q}      ; comment
+            ${q}string${q}          ; comment
+          `,
+          [
+            { text: q, scopes: name(scopeName, placeholder.ruleName, RuleDescriptor.Begin) },
+            { text: q, scopes: name(scopeName, placeholder.ruleName, RuleDescriptor.End) },
+            { text: '; comment', scopes: name(scopeName, RuleName.InLineComment) },
 
-        { text: q, scopes: name(scopeName, placeholder.ruleName, RuleDescriptor.Begin) },
-        { text: q, scopes: name(scopeName, placeholder.ruleName, RuleDescriptor.End) },
-        { text: ',', scopes: name(scopeName, RuleName.Comma) },
-        { text: q, scopes: name(scopeName, placeholder.ruleName, RuleDescriptor.Begin) },
-        { text: q, scopes: name(scopeName, placeholder.ruleName, RuleDescriptor.End) },
+            { text: q, scopes: name(scopeName, placeholder.ruleName, RuleDescriptor.Begin) },
+            { text: q, scopes: name(scopeName, placeholder.ruleName, RuleDescriptor.End) },
+            { text: ',', scopes: name(scopeName, RuleName.Comma) },
+            { text: q, scopes: name(scopeName, placeholder.ruleName, RuleDescriptor.Begin) },
+            { text: q, scopes: name(scopeName, placeholder.ruleName, RuleDescriptor.End) },
+            { text: '; comment', scopes: name(scopeName, RuleName.InLineComment) },
 
-        { text: q, scopes: name(scopeName, placeholder.ruleName, RuleDescriptor.Begin) },
-        { text: 'string', scopes: name(scopeName, placeholder.ruleName) },
-        { text: q, scopes: name(scopeName, placeholder.ruleName, RuleDescriptor.End) },
-      ],
-    ],
+            { text: q, scopes: name(scopeName, placeholder.ruleName, RuleDescriptor.Begin) },
+            { text: 'string', scopes: name(scopeName, placeholder.ruleName) },
+            { text: q, scopes: name(scopeName, placeholder.ruleName, RuleDescriptor.End) },
+            { text: '; comment', scopes: name(scopeName, RuleName.InLineComment) },
+          ],
+        ],
+      ];
+    })(),
 
     // escape sequences
-    ...placeholder.escapeSequences.map((escapeSequence): ExpectedTestData => {
+    ...((): ExpectedTestData[] => {
       return [
-        `${q}${escapeSequence}${q}`, [
-          { text: q, scopes: name(scopeName, placeholder.ruleName, RuleDescriptor.Begin) },
-          { text: escapeSequence, scopes: name(scopeName, placeholder.ruleName, StyleName.Escape) },
-          { text: q, scopes: name(scopeName, placeholder.ruleName, RuleDescriptor.End) },
-        ],
+        ...placeholder.escapeSequences.map((escapeSequence): ExpectedTestData => {
+          return [
+            dedent`
+              ${q}${escapeSequence}${q}     ; comment
+            `,
+            [
+              { text: q, scopes: name(scopeName, placeholder.ruleName, RuleDescriptor.Begin) },
+              { text: escapeSequence, scopes: name(scopeName, placeholder.ruleName, StyleName.Escape) },
+              { text: q, scopes: name(scopeName, placeholder.ruleName, RuleDescriptor.End) },
+              { text: '; comment', scopes: name(scopeName, RuleName.InLineComment) },
+            ],
+          ];
+        }),
+        ...placeholder.escapeSequences.map((escapeSequence): ExpectedTestData => {
+          const count = 5;
+
+          return [
+            dedent`
+              ${q}${escapeSequence.repeat(count)}${q}     ; comment
+            `,
+            [
+              { text: q, scopes: name(scopeName, placeholder.ruleName, RuleDescriptor.Begin) },
+              ...repeatArray(count, [ { text: escapeSequence, scopes: name(scopeName, placeholder.ruleName, StyleName.Escape) } ]),
+              { text: q, scopes: name(scopeName, placeholder.ruleName, RuleDescriptor.End) },
+              { text: '; comment', scopes: name(scopeName, RuleName.InLineComment) },
+            ],
+          ];
+        }),
       ];
-    }),
-    ...placeholder.escapeSequences.map((escapeSequence): ExpectedTestData => {
-      const count = 5;
-      return [
-        `${q}${escapeSequence.repeat(count)}${q}`, [
-          { text: q, scopes: name(scopeName, placeholder.ruleName, RuleDescriptor.Begin) },
-          ...repeatArray(count, [ { text: escapeSequence, scopes: name(scopeName, placeholder.ruleName, StyleName.Escape) } ]),
-          { text: q, scopes: name(scopeName, placeholder.ruleName, RuleDescriptor.End) },
-        ],
-      ];
-    }),
+    })(),
 
     // String not treated as a regexp
-    [
-      dedent`
-        ${q}i)${q}
-        ${q}i\`)text${q}
-      `, [
-        // If only the regexp options, it is highlighted as a string
-        { text: q, scopes: name(scopeName, placeholder.ruleName, RuleDescriptor.Begin) },
-        { text: 'i)', scopes: name(scopeName, placeholder.ruleName) },
-        { text: q, scopes: name(scopeName, placeholder.ruleName, RuleDescriptor.End) },
+    ...((): ExpectedTestData[] => {
+      return [
+        [
+          dedent`
+            ${q}i)${q}              ; comment
+            ${q}i\`)text${q}        ; comment
+          `,
+          [
+            // If only the regexp options, it is highlighted as a string
+            { text: q, scopes: name(scopeName, placeholder.ruleName, RuleDescriptor.Begin) },
+            { text: 'i)', scopes: name(scopeName, placeholder.ruleName) },
+            { text: q, scopes: name(scopeName, placeholder.ruleName, RuleDescriptor.End) },
+            { text: '; comment', scopes: name(scopeName, RuleName.InLineComment) },
 
-        // If the closing character of the regexp options is escaped, it is highlighted as a string
-        { text: q, scopes: name(scopeName, placeholder.ruleName, RuleDescriptor.Begin) },
-        { text: 'i', scopes: name(scopeName, placeholder.ruleName) },
-        { text: '`)', scopes: name(scopeName, placeholder.ruleName, StyleName.Escape) },
-        { text: 'text', scopes: name(scopeName, placeholder.ruleName) },
-        { text: q, scopes: name(scopeName, placeholder.ruleName, RuleDescriptor.End) },
-      ],
-    ],
+            // If the closing character of the regexp options is escaped, it is highlighted as a string
+            { text: q, scopes: name(scopeName, placeholder.ruleName, RuleDescriptor.Begin) },
+            { text: 'i', scopes: name(scopeName, placeholder.ruleName) },
+            { text: '`)', scopes: name(scopeName, placeholder.ruleName, StyleName.Escape) },
+            { text: 'text', scopes: name(scopeName, placeholder.ruleName) },
+            { text: q, scopes: name(scopeName, placeholder.ruleName, RuleDescriptor.End) },
+            { text: '; comment', scopes: name(scopeName, RuleName.InLineComment) },
+          ],
+        ],
+      ];
+    })(),
 
     // continuation section
-    [
-      dedent`
-        abc := ${q}
-        (LTrim
-          1-line
-          2-line
-        )${q}
-      `, [
-        { text: 'abc', scopes: name(scopeName, RuleName.Variable) },
-        { text: ':=', scopes: name(scopeName, RuleName.Operator) },
-        { text: q, scopes: name(scopeName, placeholder.ruleName, RuleDescriptor.Begin) },
-        { text: '(', scopes: name(scopeName, placeholder.ruleName) },
-        { text: 'LTrim', scopes: name(scopeName, placeholder.ruleName, RuleName.ContinuationOption, StyleName.Strong) },
-        { text: '  1-line', scopes: name(scopeName, placeholder.ruleName) },
-        { text: '  2-line', scopes: name(scopeName, placeholder.ruleName) },
-        { text: `)${q}`, scopes: name(scopeName, placeholder.ruleName, RuleDescriptor.End) },
-      ],
-    ],
+    ...((): ExpectedTestData[] => {
+      return [
+        [
+          dedent`
+            abc := ${q}             ; comment
+            (LTrim                  ; comment
+              1-line                ; text
+              2-line                ; text
+            )${q}                   ; comment
+          `,
+          [
+            { text: 'abc', scopes: name(scopeName, RuleName.Variable) },
+            { text: ':=', scopes: name(scopeName, RuleName.Operator) },
+            { text: q, scopes: name(scopeName, placeholder.ruleName, RuleDescriptor.Begin) },
+            { text: '; comment', scopes: name(scopeName, RuleName.InLineComment) },
+
+            { text: '(', scopes: name(scopeName, placeholder.ruleName) },
+            { text: 'LTrim', scopes: name(scopeName, placeholder.ruleName, RuleName.ContinuationOption, StyleName.Strong) },
+            { text: '; comment', scopes: name(scopeName, placeholder.ruleName, RuleName.InLineComment) },
+
+            { text: '  1-line                ; text', scopes: name(scopeName, placeholder.ruleName) },
+            { text: '  2-line                ; text', scopes: name(scopeName, placeholder.ruleName) },
+            { text: `)${q}`, scopes: name(scopeName, placeholder.ruleName, RuleDescriptor.End) },
+            { text: '; comment', scopes: name(scopeName, RuleName.InLineComment) },
+          ],
+        ],
+      ];
+    })(),
 
     // Do not conflict with labels
     [
       dedent`
-        ${q}:${q}
-        ${q}::${q}
-      `, [
+        ${q}:${q}             ; comment
+        ${q}::${q}            ; comment
+      `,
+      [
         { text: q, scopes: name(scopeName, placeholder.ruleName, RuleDescriptor.Begin) },
         { text: ':', scopes: name(scopeName, placeholder.ruleName) },
         { text: q, scopes: name(scopeName, placeholder.ruleName, RuleDescriptor.End) },
+        { text: '; comment', scopes: name(scopeName, RuleName.InLineComment) },
 
         { text: q, scopes: name(scopeName, placeholder.ruleName, RuleDescriptor.Begin) },
         { text: '::', scopes: name(scopeName, placeholder.ruleName) },
         { text: q, scopes: name(scopeName, placeholder.ruleName, RuleDescriptor.End) },
+        { text: '; comment', scopes: name(scopeName, RuleName.InLineComment) },
       ],
     ],
+
     // Multiple occurrences of a string on a single line
     [
       dedent`
-        (var ? ${q}  text  ${q} : ${q}  text  ${q})
-      `, [
+        (var ? ${q}  text  ${q} : ${q}  text  ${q})     ; comment
+      `,
+      [
         { text: '(', scopes: name(scopeName, RuleName.OpenParen) },
         { text: 'var', scopes: name(scopeName, RuleName.Variable) },
         { text: '?', scopes: name(scopeName, RuleName.Operator) },
@@ -126,25 +170,32 @@ export function createStringLiteralExpectedData(scopeName: ScopeName, placeholde
         { text: '  text  ', scopes: name(scopeName, placeholder.ruleName) },
         { text: q, scopes: name(scopeName, placeholder.ruleName, RuleDescriptor.End) },
         { text: ')', scopes: name(scopeName, RuleName.CloseParen) },
+        { text: '; comment', scopes: name(scopeName, RuleName.InLineComment) },
       ],
     ],
     // Fix: Beginning with a parenthesis opening is misidentified as a starting position and highlighted as an option
     [
       dedent`
-        var := ${q}
-        (LTrim
-          (text
-          (text)
-        )${q}
-      `, [
+        var := ${q}     ; comment
+        (LTrim          ; comment
+          (text         ; text
+          (text)        ; text
+        )${q}           ; comment
+      `,
+      [
         { text: 'var', scopes: name(scopeName, RuleName.Variable) },
         { text: ':=', scopes: name(scopeName, RuleName.Operator) },
         { text: q, scopes: name(scopeName, placeholder.ruleName, RuleDescriptor.Begin) },
+        { text: '; comment', scopes: name(scopeName, RuleName.InLineComment) },
+
         { text: '(', scopes: name(scopeName, placeholder.ruleName) },
         { text: 'LTrim', scopes: name(scopeName, placeholder.ruleName, RuleName.ContinuationOption, StyleName.Strong) },
-        { text: '  (text', scopes: name(scopeName, placeholder.ruleName) },
-        { text: '  (text)', scopes: name(scopeName, placeholder.ruleName) },
+        { text: '; comment', scopes: name(scopeName, placeholder.ruleName, RuleName.InLineComment) },
+
+        { text: '  (text         ; text', scopes: name(scopeName, placeholder.ruleName) },
+        { text: '  (text)        ; text', scopes: name(scopeName, placeholder.ruleName) },
         { text: `)${q}`, scopes: name(scopeName, placeholder.ruleName, RuleDescriptor.End) },
+        { text: '; comment', scopes: name(scopeName, RuleName.InLineComment) },
       ],
     ],
   ];
