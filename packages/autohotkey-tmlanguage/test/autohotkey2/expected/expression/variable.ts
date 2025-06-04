@@ -38,53 +38,67 @@ export function createVariableExpectedData(scopeName: ScopeName, placeholder?: P
     // Built-in class highlighting does not apply to field and object key
     [
       dedent`
-        (float)
-        (xxx.float)
-        (xxx.FLOAT)
-        ({
-          float: 123,
-          FLOAT: 123,
-        })
+        (float)               ; comment
+        (xxx.float)           ; comment
+        (xxx.FLOAT)           ; comment
+        ({                    ; comment
+          float: 123,         ; comment
+          FLOAT: 123,         ; comment
+        })                    ; comment
       `,
       [
         { text: '(', scopes: name(scopeName, RuleName.OpenParen) },
         { text: 'float', scopes: name(scopeName, RuleName.ClassName) },
         { text: ')', scopes: name(scopeName, RuleName.CloseParen) },
+        { text: '; comment', scopes: name(scopeName, RuleName.InLineComment) },
 
         { text: '(', scopes: name(scopeName, RuleName.OpenParen) },
         { text: 'xxx', scopes: name(scopeName, RuleName.Variable) },
         { text: '.', scopes: name(scopeName, RuleName.Dot) },
         { text: 'float', scopes: name(scopeName, RuleName.Variable) },
         { text: ')', scopes: name(scopeName, RuleName.CloseParen) },
+        { text: '; comment', scopes: name(scopeName, RuleName.InLineComment) },
 
         { text: '(', scopes: name(scopeName, RuleName.OpenParen) },
         { text: 'xxx', scopes: name(scopeName, RuleName.Variable) },
         { text: '.', scopes: name(scopeName, RuleName.Dot) },
         { text: 'FLOAT', scopes: name(scopeName, RuleName.ConstantLikeVariable) },
         { text: ')', scopes: name(scopeName, RuleName.CloseParen) },
+        { text: '; comment', scopes: name(scopeName, RuleName.InLineComment) },
 
         { text: '(', scopes: name(scopeName, RuleName.OpenParen) },
         { text: '{', scopes: name(scopeName, RuleName.OpenBrace) },
+        { text: '; comment', scopes: name(scopeName, RuleName.InLineComment) },
+
         { text: 'float', scopes: name(scopeName, RuleName.Variable) },
         { text: ':', scopes: name(scopeName, RuleName.Colon) },
         { text: '123', scopes: name(scopeName, RuleName.Integer) },
         { text: ',', scopes: name(scopeName, RuleName.Comma) },
+        { text: '; comment', scopes: name(scopeName, RuleName.InLineComment) },
+
         { text: 'FLOAT', scopes: name(scopeName, RuleName.ConstantLikeVariable) },
         { text: ':', scopes: name(scopeName, RuleName.Colon) },
         { text: '123', scopes: name(scopeName, RuleName.Integer) },
         { text: ',', scopes: name(scopeName, RuleName.Comma) },
+        { text: '; comment', scopes: name(scopeName, RuleName.InLineComment) },
+
         { text: '}', scopes: name(scopeName, RuleName.CloseBrace) },
         { text: ')', scopes: name(scopeName, RuleName.CloseParen) },
+        { text: '; comment', scopes: name(scopeName, RuleName.InLineComment) },
       ],
     ],
 
     // invalid
     [
-      `(${'v'.repeat(255)})`, [
+      dedent`
+        (${'v'.repeat(255)})            ; comment
+      `,
+      [
         { text: '(', scopes: name(scopeName, RuleName.OpenParen) },
         { text: 'v'.repeat(253), scopes: name(scopeName, RuleName.Variable) },
         { text: 'v'.repeat(2), scopes: name(scopeName, RuleName.Variable, StyleName.Invalid) },
         { text: ')', scopes: name(scopeName, RuleName.CloseParen) },
+        { text: '; comment', scopes: name(scopeName, RuleName.InLineComment) },
       ],
     ],
   ];

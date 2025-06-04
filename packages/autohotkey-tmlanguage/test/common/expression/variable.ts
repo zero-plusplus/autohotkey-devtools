@@ -14,26 +14,35 @@ export function createVariableExpectedData(scopeName: ScopeName, placeholder: Pl
     ...placeholder.variables.flatMap((variable): ExpectedTestData[] => {
       return [
         [
-          `(${variable})`, [
+          dedent`
+            (${variable})        ; comment
+          `,
+          [
             { text: '(', scopes: name(scopeName, RuleName.OpenParen) },
             { text: variable, scopes: name(scopeName, placeholder.ruleName) },
             { text: ')', scopes: name(scopeName, RuleName.CloseParen) },
+            { text: '; comment', scopes: name(scopeName, RuleName.InLineComment) },
           ],
         ],
         [
           dedent`
-            a := b
-              ? c
-              : ${variable}
+            a := b                ; comment
+              ? c                 ; comment
+              : ${variable}       ; comment
           `,
           [
             { text: 'a', scopes: name(scopeName, RuleName.Variable) },
             { text: ':=', scopes: name(scopeName, RuleName.Operator) },
             { text: 'b', scopes: name(scopeName, RuleName.Variable) },
+            { text: '; comment', scopes: name(scopeName, RuleName.InLineComment) },
+
             { text: '?', scopes: name(scopeName, RuleName.Operator) },
             { text: 'c', scopes: name(scopeName, RuleName.Variable) },
+            { text: '; comment', scopes: name(scopeName, RuleName.InLineComment) },
+
             { text: ':', scopes: name(scopeName, RuleName.Operator) },
             { text: variable, scopes: name(scopeName, placeholder.ruleName) },
+            { text: '; comment', scopes: name(scopeName, RuleName.InLineComment) },
           ],
         ],
       ];
