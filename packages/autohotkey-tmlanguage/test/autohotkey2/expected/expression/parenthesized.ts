@@ -12,16 +12,21 @@ export function createParenthesizedExpressionExpectedData(scopeName: ScopeName):
 
     [
       dedent`
-        (
-          a + b
-        )
+        (             ; comment
+          a + b       ; comment
+        )             ; comment
       `,
       [
         { text: '(', scopes: name(scopeName, RuleName.OpenParen) },
+        { text: '; comment', scopes: name(scopeName, RuleName.InLineComment) },
+
         { text: 'a', scopes: name(scopeName, RuleName.Variable) },
         { text: '+', scopes: name(scopeName, RuleName.Operator) },
         { text: 'b', scopes: name(scopeName, RuleName.Variable) },
+        { text: '; comment', scopes: name(scopeName, RuleName.InLineComment) },
+
         { text: ')', scopes: name(scopeName, RuleName.CloseParen) },
+        { text: '; comment', scopes: name(scopeName, RuleName.InLineComment) },
       ],
     ],
   ];
