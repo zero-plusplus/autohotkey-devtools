@@ -1,5 +1,5 @@
 import * as tmLanguages from '@zero-plusplus/autohotkey-tmlanguage/src';
-import { ScopeName } from '@zero-plusplus/autohotkey-tmlanguage/src/types';
+import type { ScopeName } from '@zero-plusplus/autohotkey-tmlanguage/src/tmlanguage';
 import * as autohotkey from '@zero-plusplus/autohotkey-tmlanguage/test/autohotkey/expected';
 import * as autohotkey2 from '@zero-plusplus/autohotkey-tmlanguage/test/autohotkey2/expected';
 import * as autohotkeyl from '@zero-plusplus/autohotkey-tmlanguage/test/autohotkeyl/expected';
