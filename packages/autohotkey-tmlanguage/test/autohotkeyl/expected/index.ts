@@ -1,4 +1,5 @@
 import type { ScopeName } from '../../../src/tmlanguage';
+import * as common from '../../common';
 import type { ExpectedTestData } from '../../types';
 import { createAssignmentDeclarationExpectedData } from './declaration/assignment';
 import { createBlockDeclarationExpectedData } from './declaration/block';
@@ -33,13 +34,16 @@ import { createSwitchStatementExpectedData } from './statement/switch';
 import { createThrowStatementExpectedData } from './statement/throw';
 import { createTryStatementExpectedData } from './statement/try';
 import { createWhileStatementExpectedData } from './statement/while';
-import { createDirectiveCommentExpectedData } from './trivia/directiveComment';
-import { createDocumentCommentExpectedData } from './trivia/documentComment';
-import { createMultiLineCommentExpectedData } from './trivia/multiLineComment';
-import { createSingleLineCommentExpectedData } from './trivia/singleLineComment';
 
 export function createExpectedDataList(scopeName: ScopeName): ExpectedTestData[] {
   return [
+    // #region common
+    ...common.createDirectiveCommentExpectedData(scopeName),
+    ...common.createDocumentCommentExpectedData(scopeName),
+    ...common.createMultiLineCommentExpectedData(scopeName),
+    ...common.createSingleLineCommentExpectedData(scopeName),
+    // #endregion common
+
     ...createArrayLiteralExpectedData(scopeName),
     ...createAssignmentDeclarationExpectedData(scopeName),
     ...createBlockDeclarationExpectedData(scopeName),
@@ -48,9 +52,7 @@ export function createExpectedDataList(scopeName: ScopeName): ExpectedTestData[]
     ...createCommandStatementExpectedData(scopeName),
     ...createContinuationSectionExpectedData(scopeName),
     ...createDereferenceExpressionExpectedData(scopeName),
-    ...createDirectiveCommentExpectedData(scopeName),
     ...createDirectiveStatementExpectedData(scopeName),
-    ...createDocumentCommentExpectedData(scopeName),
     ...createFieldDeclarationExpectedData(scopeName),
     ...createForStatementExpectedData(scopeName),
     ...createFunctionDeclarationExpectedData(scopeName),
@@ -63,14 +65,12 @@ export function createExpectedDataList(scopeName: ScopeName): ExpectedTestData[]
     ...createLegacyIfStatementExpectedData(scopeName),
     ...createLoopStatementExpectedData(scopeName),
     ...createMetaFunctionDeclarationExpectedData(scopeName),
-    ...createMultiLineCommentExpectedData(scopeName),
     ...createNewExpressionExpectedData(scopeName),
     ...createNumberLiteralExpectedData(scopeName),
     ...createObjectLiteralExpectedData(scopeName),
     ...createOperatorInExpressionExpectedData(scopeName),
     ...createParenthesizedExpressionExpectedData(scopeName),
     ...createRegExpExpectedData(scopeName),
-    ...createSingleLineCommentExpectedData(scopeName),
     ...createStringLiteralExpectedData(scopeName),
     ...createSwitchStatementExpectedData(scopeName),
     ...createThrowStatementExpectedData(scopeName),
