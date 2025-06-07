@@ -40,5 +40,62 @@ export function createHotkeyLabelStatementExpectedData(scopeName: ScopeName): Ex
         { text: '; comment', scopes: name(scopeName, RuleName.InLineComment) },
       ],
     ],
+    [
+      dedent`
+        a::                                   ; comment
+          return                              ; comment
+      `,
+      [
+        { text: 'a', scopes: name(scopeName, RuleName.HotkeyLabelName) },
+        { text: '::', scopes: name(scopeName, RuleName.ColonColon) },
+        { text: '; comment', scopes: name(scopeName, RuleName.InLineComment) },
+
+        { text: 'return', scopes: name(scopeName, RuleName.JumpCommandName) },
+        { text: '; comment', scopes: name(scopeName, RuleName.InLineComment) },
+      ],
+    ],
+    [
+      dedent`
+        a::                                   ; comment
+        {                                     ; comment
+          return                              ; comment
+        }                                     ; comment
+      `,
+      [
+        { text: 'a', scopes: name(scopeName, RuleName.HotkeyLabelName) },
+        { text: '::', scopes: name(scopeName, RuleName.ColonColon) },
+        { text: '; comment', scopes: name(scopeName, RuleName.InLineComment) },
+
+        { text: '{', scopes: name(scopeName, RuleName.BlockBegin) },
+        { text: '; comment', scopes: name(scopeName, RuleName.InLineComment) },
+
+        { text: 'return', scopes: name(scopeName, RuleName.JumpCommandName) },
+        { text: '; comment', scopes: name(scopeName, RuleName.InLineComment) },
+
+        { text: '}', scopes: name(scopeName, RuleName.BlockEnd) },
+        { text: '; comment', scopes: name(scopeName, RuleName.InLineComment) },
+      ],
+    ],
+    [
+      dedent`
+        a::                                   ; comment
+          a() {                               ; comment
+          }                                   ; comment
+      `,
+      [
+        { text: 'a', scopes: name(scopeName, RuleName.HotkeyLabelName) },
+        { text: '::', scopes: name(scopeName, RuleName.ColonColon) },
+        { text: '; comment', scopes: name(scopeName, RuleName.InLineComment) },
+
+        { text: 'a', scopes: name(scopeName, RuleName.FunctionName) },
+        { text: '(', scopes: name(scopeName, RuleName.OpenParen) },
+        { text: ')', scopes: name(scopeName, RuleName.CloseParen) },
+        { text: '{', scopes: name(scopeName, RuleName.BlockBegin) },
+        { text: '; comment', scopes: name(scopeName, RuleName.InLineComment) },
+
+        { text: '}', scopes: name(scopeName, RuleName.BlockEnd) },
+        { text: '; comment', scopes: name(scopeName, RuleName.InLineComment) },
+      ],
+    ],
   ];
 }
