@@ -14,6 +14,36 @@ export function createDirectiveStatementExpectedData(scopeName: ScopeName): Expe
       directiveDefinitions: definitions_v2.directiveDefinitions,
     }),
 
+    // directives
+    ...((): ExpectedTestData[] => {
+      return [
+        [
+          dedent`
+            #ClipboardTimeout 123       ; comment
+          `,
+          [
+            { text: '#ClipboardTimeout', scopes: name(scopeName, RuleName.DirectiveName) },
+            { text: '123', scopes: name(scopeName, RuleName.Integer) },
+            { text: '; comment', scopes: name(scopeName, RuleName.InLineComment) },
+          ],
+        ],
+        [
+          dedent`
+            #DllLoad "*i path\\to\\file.exe"       ; comment
+          `,
+          [
+            { text: '#DllLoad', scopes: name(scopeName, RuleName.DirectiveName) },
+            { text: '"', scopes: name(scopeName, RuleName.UnquotedString) },
+            { text: '*i', scopes: name(scopeName, RuleName.UnquotedString, StyleName.Strong) },
+            { text: 'path\\to\\file.exe', scopes: name(scopeName, RuleName.UnquotedString) },
+            { text: '"', scopes: name(scopeName, RuleName.UnquotedString) },
+            { text: '; comment', scopes: name(scopeName, RuleName.InLineComment) },
+          ],
+        ],
+      ];
+    })(),
+
+    // param
     ...((): ExpectedTestData[] => {
       unquotedInteger;
 
@@ -58,7 +88,9 @@ export function createDirectiveStatementExpectedData(scopeName: ScopeName): Expe
 
             { text: '#ErrorStdOut', scopes: name(scopeName, RuleName.DirectiveName) },
             { text: ',', scopes: name(scopeName, RuleName.Comma) },
-            { text: '"UTF-8"', scopes: name(scopeName, RuleName.UnquotedString) },
+            { text: '"', scopes: name(scopeName, RuleName.UnquotedString) },
+            { text: 'UTF-8', scopes: name(scopeName, RuleName.UnquotedString, StyleName.Strong) },
+            { text: '"', scopes: name(scopeName, RuleName.UnquotedString) },
             { text: '; comment', scopes: name(scopeName, RuleName.InLineComment) },
           ],
         ],

@@ -17,6 +17,7 @@ export const enum HighlightType {
   UnquotedString = 'unquotedstring',
   UnquotedStringShouldEscapeComma = 'unquoted_string_should_escapecomma',
   UnquotedStringWithNumber = 'unquotedstring_with_number',
+  QuotableUnquotedString = 'quotable_unquotedstring',
   NumberInCommandArgument = 'number_in_command_argument',
   // e.g. Send, {LButton 5}
   //            ^^^^^^^^^^^
@@ -196,12 +197,12 @@ export function createSpacedOptionItemPattern(pattern: string): string {
   return seq(
     lookbehind(alt(
       inlineSpace(),
-      char(',', ':'),
+      char(',', ':', '"'),
     )),
     pattern,
     lookahead(alt(
       inlineSpace(),
-      char(',', '%'),
+      char(',', '%', '"'),
       endAnchor(),
     )),
   );
@@ -431,8 +432,8 @@ export function unquotedNumber(...optionItems: string[]): CommandParameter {
 export function unquotedAndBoolean(...optionItems: string[]): CommandParameter {
   return unquoted([ optionItem('0', '1', 'true', 'false'), ...optionItems ]);
 }
-export function quotableUnquoted(...optionItems: string[]): CommandParameter {
-  return unquoted(optionItems);
+export function quotableUnquoted(itemPatterns: string[] = [], flags: CommandParameterFlag = CommandParameterFlag.None): CommandParameter {
+  return { type: HighlightType.QuotableUnquotedString, flags, itemPatterns };
 }
 export function restParams(values: string[] = [], flags: CommandParameterFlag = CommandParameterFlag.None): CommandParameter {
   return { type: HighlightType.RestParams, flags, itemPatterns: values };
@@ -558,6 +559,9 @@ export function glob(flags: CommandParameterFlag = CommandParameterFlag.None): C
 }
 export function encoding(flags: CommandParameterFlag = CommandParameterFlag.None): CommandParameter {
   return unquoted([ optionItem('CP0', 'UTF-8', 'UTF-8-RAW', 'UTF-16', 'UTF-16-RAW'), numberOptionItem('CP') ], flags);
+}
+export function quotableEncoding(flags: CommandParameterFlag = CommandParameterFlag.None): CommandParameter {
+  return quotableUnquoted([ ...encoding().itemPatterns! ], flags);
 }
 export function keyName(flags: CommandParameterFlag = CommandParameterFlag.None): CommandParameter {
   return unquoted([ optionItem(...constants_common.keyNameList), hexOptionItem('sc', 'vk') ], flags);

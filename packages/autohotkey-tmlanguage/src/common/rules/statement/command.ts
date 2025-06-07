@@ -619,6 +619,7 @@ function parameterToPatternsRule(scopeName: ScopeName, defenition: CommandDefini
       );
     }
     case HighlightType.UnquotedString:
+    case HighlightType.QuotableUnquotedString:
     {
       if (parameter.itemPatterns === undefined || parameter.itemPatterns.length === 0) {
         return patternsRule(includeRule(isLastParameter ? Repository.CommandLastArgument : Repository.CommandArgument));
@@ -634,11 +635,26 @@ function parameterToPatternsRule(scopeName: ScopeName, defenition: CommandDefini
               { name: name(scopeName, RuleName.UnquotedString, StyleName.Escape), match: text('`,') },
               { name: name(scopeName, RuleName.UnquotedString), match: seq(char(',')) },
             ] : []),
-            ...optionItemPatternsToRules(scopeName, parameter.itemPatterns),
-            {
-              name: name(scopeName, RuleName.UnquotedString),
-              match: negChars1('`', inlineSpace()),
-            },
+
+            ...parameter.type === HighlightType.QuotableUnquotedString
+              ? [
+                {
+                  name: name(scopeName, RuleName.UnquotedString),
+                  match: char('"'),
+                },
+                ...optionItemPatternsToRules(scopeName, parameter.itemPatterns),
+                {
+                  name: name(scopeName, RuleName.UnquotedString),
+                  match: negChars1('`', '"', inlineSpace()),
+                },
+              ]
+              : [
+                ...optionItemPatternsToRules(scopeName, parameter.itemPatterns),
+                {
+                  name: name(scopeName, RuleName.UnquotedString),
+                  match: negChars1('`', inlineSpace()),
+                },
+              ],
           ],
         }),
       );
