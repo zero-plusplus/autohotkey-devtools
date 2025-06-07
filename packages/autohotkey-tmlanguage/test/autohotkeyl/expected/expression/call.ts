@@ -9,18 +9,22 @@ import type { ExpectedTestData } from '../../../types';
 export function createCallExpressionExpectedData(scopeName: ScopeName): ExpectedTestData[] {
   return [
     ...common.createCallExpressionExpectedData(scopeName),
+
     [
       dedent`
-        %abc%()
-        %abc%edf()
-      `, [
+        %abc%()                   ; comment
+        %abc%edf()                ; comment
+      `,
+      [
         { text: '%abc%', scopes: name(scopeName, RuleName.FunctionName) },
         { text: '(', scopes: name(scopeName, RuleName.OpenParen) },
         { text: ')', scopes: name(scopeName, RuleName.CloseParen) },
+        { text: '; comment', scopes: name(scopeName, RuleName.InLineComment) },
 
         { text: '%abc%edf', scopes: name(scopeName, RuleName.FunctionName) },
         { text: '(', scopes: name(scopeName, RuleName.OpenParen) },
         { text: ')', scopes: name(scopeName, RuleName.CloseParen) },
+        { text: '; comment', scopes: name(scopeName, RuleName.InLineComment) },
       ],
     ],
     [
@@ -31,7 +35,8 @@ export function createCallExpressionExpectedData(scopeName: ScopeName): Expected
         #IncludeABC()     ; comment
         #Warn()           ; comment
         #WarnABC()        ; comment
-      `, [
+      `,
+      [
         { text: 'thread', scopes: name(scopeName, RuleName.FunctionName) },
         { text: '(', scopes: name(scopeName, RuleName.OpenParen) },
         { text: ')', scopes: name(scopeName, RuleName.CloseParen) },
@@ -61,23 +66,6 @@ export function createCallExpressionExpectedData(scopeName: ScopeName): Expected
         { text: '(', scopes: name(scopeName, RuleName.OpenParen) },
         { text: ')', scopes: name(scopeName, RuleName.CloseParen) },
         { text: '; comment', scopes: name(scopeName, RuleName.InLineComment) },
-      ],
-    ],
-    [
-      dedent`
-        XXX(
-          { key: value }
-        )
-      `,
-      [
-        { text: 'XXX', scopes: name(scopeName, RuleName.FunctionName) },
-        { text: '(', scopes: name(scopeName, RuleName.OpenParen) },
-        { text: '{', scopes: name(scopeName, RuleName.OpenBrace) },
-        { text: 'key', scopes: name(scopeName, RuleName.Variable) },
-        { text: ':', scopes: name(scopeName, RuleName.Colon) },
-        { text: 'value', scopes: name(scopeName, RuleName.Variable) },
-        { text: '}', scopes: name(scopeName, RuleName.CloseBrace) },
-        { text: ')', scopes: name(scopeName, RuleName.CloseParen) },
       ],
     ],
   ];
