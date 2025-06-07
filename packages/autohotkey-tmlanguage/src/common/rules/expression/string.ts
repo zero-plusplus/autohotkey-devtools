@@ -1,7 +1,7 @@
 import {
   alt, anyChars0, capture, char, endAnchor, group, groupMany0, ignoreCase, inlineSpace,
   inlineSpaces0, inlineSpaces1, lookahead, lookbehind, many0, negativeLookahead, negChar,
-  negChars0, optseq, ordalt, seq, startAnchor, textalt, whitespace,
+  negChars0, negChars1, optseq, ordalt, seq, startAnchor, textalt, whitespace,
 } from '../../../oniguruma';
 import {
   includeRule, name, nameRule, patternsRule, Repository, RuleDescriptor, RuleName, StyleName,
@@ -207,7 +207,7 @@ export function createContinuationStringOptionsRule(scopeName: ScopeName): Begin
       // invalid options
       {
         name: name(scopeName, RuleName.ContinuationOption, StyleName.Invalid),
-        match: negChar('\\s'),
+        match: negChars1('\\s'),
       },
     ],
   };

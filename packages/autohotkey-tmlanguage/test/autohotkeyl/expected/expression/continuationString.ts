@@ -9,16 +9,21 @@ export function createContinuationStringLiteralExpectedData(scopeName: ScopeName
   return [
     [
       dedent`
-        (LTrim
-          1-line
-          2-line
-        )
+        (LTrim xxx                  ; comment
+          1-line                    ; text
+          2-line                    ; text
+        )                           ; comment
       `, [
         { text: '(', scopes: name(scopeName, RuleName.OpenParen) },
         { text: 'LTrim', scopes: name(scopeName, RuleName.ContinuationOption, StyleName.Strong) },
-        { text: '1-line', scopes: name(scopeName, RuleName.UnquotedString) },
-        { text: '2-line', scopes: name(scopeName, RuleName.UnquotedString) },
+        { text: 'xxx', scopes: name(scopeName, RuleName.ContinuationOption, StyleName.Invalid) },
+        { text: '; comment', scopes: name(scopeName, RuleName.InLineComment) },
+
+        { text: '1-line                    ; text', scopes: name(scopeName, RuleName.UnquotedString) },
+        { text: '2-line                    ; text', scopes: name(scopeName, RuleName.UnquotedString) },
+
         { text: ')', scopes: name(scopeName, RuleName.CloseParen) },
+        { text: '; comment', scopes: name(scopeName, RuleName.InLineComment) },
       ],
     ],
   ];
