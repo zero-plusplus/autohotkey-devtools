@@ -7,153 +7,329 @@ import type { ExpectedTestData } from '../../types';
 
 export function createSwitchStatementExpectedData(scopeName: ScopeName): ExpectedTestData[] {
   return [
-    [
-      dedent`
-        switch {
-        }
-        switch
-        {
-        }
-      `,
-      [
-        ...repeatArray(2, [
-          { text: 'switch', scopes: name(scopeName, RuleName.ControlFlowKeyword) },
-          { text: '{', scopes: name(scopeName, RuleName.BlockBegin) },
-          { text: '}', scopes: name(scopeName, RuleName.BlockEnd) },
-        ]),
-      ],
-    ],
-    [
-      dedent`
-        switch true {
-        }
-        switch true
-        {
-        }
-      `,
-      [
-        ...repeatArray(2, [
-          { text: 'switch', scopes: name(scopeName, RuleName.ControlFlowKeyword) },
-          { text: 'true', scopes: name(scopeName, RuleName.KeywordLikeBuiltInVariable) },
-          { text: '{', scopes: name(scopeName, RuleName.BlockBegin) },
-          { text: '}', scopes: name(scopeName, RuleName.BlockEnd) },
-        ]),
-      ],
-    ],
-    [
-      dedent`
-        switch (true) {
-        }
-        switch (true)
-        {
-        }
-      `,
-      [
-        ...repeatArray(2, [
-          { text: 'switch', scopes: name(scopeName, RuleName.ControlFlowKeyword) },
-          { text: '(', scopes: name(scopeName, RuleName.OpenParen) },
-          { text: 'true', scopes: name(scopeName, RuleName.KeywordLikeBuiltInVariable) },
-          { text: ')', scopes: name(scopeName, RuleName.CloseParen) },
-          { text: '{', scopes: name(scopeName, RuleName.BlockBegin) },
-          { text: '}', scopes: name(scopeName, RuleName.BlockEnd) },
-        ]),
-      ],
-    ],
-    [
-      dedent`
-        switch true {
-          case true: break
-          default: break
-        }
-        switch true {
-          case true:
-            break
-          default:
-            break
-        }
-      `,
-      [
-        ...repeatArray(2, [
-          { text: 'switch', scopes: name(scopeName, RuleName.ControlFlowKeyword) },
-          { text: 'true', scopes: name(scopeName, RuleName.KeywordLikeBuiltInVariable) },
-          { text: '{', scopes: name(scopeName, RuleName.BlockBegin) },
-          { text: 'case', scopes: name(scopeName, RuleName.SwitchLabelKeyword) },
-          { text: 'true', scopes: name(scopeName, RuleName.KeywordLikeBuiltInVariable) },
-          { text: ':', scopes: name(scopeName, RuleName.Colon) },
-          { text: 'break', scopes: name(scopeName, RuleName.JumpCommandName) },
-          { text: 'default', scopes: name(scopeName, RuleName.SwitchLabelKeyword) },
-          { text: ':', scopes: name(scopeName, RuleName.Colon) },
-          { text: 'break', scopes: name(scopeName, RuleName.JumpCommandName) },
-          { text: '}', scopes: name(scopeName, RuleName.BlockEnd) },
-        ]),
-      ],
-    ],
-    [
-      dedent`
-        switch true {
-          case true: {
-            break
-          }
-          default: {
-            break
-          }
-        }
+    ...((): ExpectedTestData[] => {
+      return [
+        // one true brace style
+        ...((): ExpectedTestData[] => {
+          return [
+            [
+              dedent`
+                switch {      ; comment
+                }             ; comment
+              `,
+              [
+                { text: 'switch', scopes: name(scopeName, RuleName.ControlFlowKeyword) },
+                { text: '{', scopes: name(scopeName, RuleName.BlockBegin) },
+                { text: '; comment', scopes: name(scopeName, RuleName.InLineComment) },
 
-        switch true
-        {
-          case true:
-          {
-            break
-          }
-          default:
-          {
-            break
-          }
-        }
-      `,
-      [
-        ...repeatArray(2, [
-          { text: 'switch', scopes: name(scopeName, RuleName.ControlFlowKeyword) },
-          { text: 'true', scopes: name(scopeName, RuleName.KeywordLikeBuiltInVariable) },
-          { text: '{', scopes: name(scopeName, RuleName.BlockBegin) },
-          { text: 'case', scopes: name(scopeName, RuleName.SwitchLabelKeyword) },
-          { text: 'true', scopes: name(scopeName, RuleName.KeywordLikeBuiltInVariable) },
-          { text: ':', scopes: name(scopeName, RuleName.Colon) },
-          { text: '{', scopes: name(scopeName, RuleName.BlockBegin) },
-          { text: 'break', scopes: name(scopeName, RuleName.JumpCommandName) },
-          { text: '}', scopes: name(scopeName, RuleName.BlockEnd) },
-          { text: 'default', scopes: name(scopeName, RuleName.SwitchLabelKeyword) },
-          { text: ':', scopes: name(scopeName, RuleName.Colon) },
-          { text: '{', scopes: name(scopeName, RuleName.BlockBegin) },
-          { text: 'break', scopes: name(scopeName, RuleName.JumpCommandName) },
-          { text: '}', scopes: name(scopeName, RuleName.BlockEnd) },
-          { text: '}', scopes: name(scopeName, RuleName.BlockEnd) },
-        ]),
-      ],
-    ],
-    [
-      dedent`
-        switch true {
-          case true, false: break
-          default: break
-        }
-      `,
-      [
-        { text: 'switch', scopes: name(scopeName, RuleName.ControlFlowKeyword) },
-        { text: 'true', scopes: name(scopeName, RuleName.KeywordLikeBuiltInVariable) },
-        { text: '{', scopes: name(scopeName, RuleName.BlockBegin) },
-        { text: 'case', scopes: name(scopeName, RuleName.SwitchLabelKeyword) },
-        { text: 'true', scopes: name(scopeName, RuleName.KeywordLikeBuiltInVariable) },
-        { text: ',', scopes: name(scopeName, RuleName.Comma) },
-        { text: 'false', scopes: name(scopeName, RuleName.KeywordLikeBuiltInVariable) },
-        { text: ':', scopes: name(scopeName, RuleName.Colon) },
-        { text: 'break', scopes: name(scopeName, RuleName.JumpCommandName) },
-        { text: 'default', scopes: name(scopeName, RuleName.SwitchLabelKeyword) },
-        { text: ':', scopes: name(scopeName, RuleName.Colon) },
-        { text: 'break', scopes: name(scopeName, RuleName.JumpCommandName) },
-        { text: '}', scopes: name(scopeName, RuleName.BlockEnd) },
-      ],
-    ],
+                { text: '}', scopes: name(scopeName, RuleName.BlockEnd) },
+                { text: '; comment', scopes: name(scopeName, RuleName.InLineComment) },
+              ],
+            ],
+            [
+              dedent`
+                Switch {      ; comment
+                }             ; comment
+              `,
+              [
+                { text: 'Switch', scopes: name(scopeName, RuleName.ControlFlowKeyword) },
+                { text: '{', scopes: name(scopeName, RuleName.BlockBegin) },
+                { text: '; comment', scopes: name(scopeName, RuleName.InLineComment) },
+
+                { text: '}', scopes: name(scopeName, RuleName.BlockEnd) },
+                { text: '; comment', scopes: name(scopeName, RuleName.InLineComment) },
+              ],
+            ],
+            [
+              dedent`
+                switch true {     ; comment
+                }                 ; comment
+              `,
+              [
+                { text: 'switch', scopes: name(scopeName, RuleName.ControlFlowKeyword) },
+                { text: 'true', scopes: name(scopeName, RuleName.KeywordLikeBuiltInVariable) },
+                { text: '{', scopes: name(scopeName, RuleName.BlockBegin) },
+                { text: '; comment', scopes: name(scopeName, RuleName.InLineComment) },
+
+                { text: '}', scopes: name(scopeName, RuleName.BlockEnd) },
+                { text: '; comment', scopes: name(scopeName, RuleName.InLineComment) },
+              ],
+            ],
+            [
+              dedent`
+                switch (true) {       ; comment
+                }                     ; comment
+              `,
+              [
+                { text: 'switch', scopes: name(scopeName, RuleName.ControlFlowKeyword) },
+                { text: '(', scopes: name(scopeName, RuleName.OpenParen) },
+                { text: 'true', scopes: name(scopeName, RuleName.KeywordLikeBuiltInVariable) },
+                { text: ')', scopes: name(scopeName, RuleName.CloseParen) },
+                { text: '{', scopes: name(scopeName, RuleName.BlockBegin) },
+                { text: '; comment', scopes: name(scopeName, RuleName.InLineComment) },
+
+                { text: '}', scopes: name(scopeName, RuleName.BlockEnd) },
+                { text: '; comment', scopes: name(scopeName, RuleName.InLineComment) },
+              ],
+            ],
+            [
+              dedent`
+                switch true {           ; comment
+                  case true: break      ; comment
+                  default: break        ; comment
+                }                       ; comment
+              `,
+              [
+                { text: 'switch', scopes: name(scopeName, RuleName.ControlFlowKeyword) },
+                { text: 'true', scopes: name(scopeName, RuleName.KeywordLikeBuiltInVariable) },
+                { text: '{', scopes: name(scopeName, RuleName.BlockBegin) },
+                { text: '; comment', scopes: name(scopeName, RuleName.InLineComment) },
+
+                { text: 'case', scopes: name(scopeName, RuleName.SwitchLabelKeyword) },
+                { text: 'true', scopes: name(scopeName, RuleName.KeywordLikeBuiltInVariable) },
+                { text: ':', scopes: name(scopeName, RuleName.Colon) },
+                { text: 'break', scopes: name(scopeName, RuleName.JumpCommandName) },
+                { text: '; comment', scopes: name(scopeName, RuleName.InLineComment) },
+
+                { text: 'default', scopes: name(scopeName, RuleName.SwitchLabelKeyword) },
+                { text: ':', scopes: name(scopeName, RuleName.Colon) },
+                { text: 'break', scopes: name(scopeName, RuleName.JumpCommandName) },
+                { text: '; comment', scopes: name(scopeName, RuleName.InLineComment) },
+
+                { text: '}', scopes: name(scopeName, RuleName.BlockEnd) },
+                { text: '; comment', scopes: name(scopeName, RuleName.InLineComment) },
+              ],
+            ],
+            [
+              dedent`
+                switch true {         ; comment
+                  case true: {        ; comment
+                    break             ; comment
+                  }                   ; comment
+                  default: {          ; comment
+                    break             ; comment
+                  }                   ; comment
+                }                     ; comment
+              `,
+              [
+                { text: 'switch', scopes: name(scopeName, RuleName.ControlFlowKeyword) },
+                { text: 'true', scopes: name(scopeName, RuleName.KeywordLikeBuiltInVariable) },
+                { text: '{', scopes: name(scopeName, RuleName.BlockBegin) },
+                { text: '; comment', scopes: name(scopeName, RuleName.InLineComment) },
+
+                { text: 'case', scopes: name(scopeName, RuleName.SwitchLabelKeyword) },
+                { text: 'true', scopes: name(scopeName, RuleName.KeywordLikeBuiltInVariable) },
+                { text: ':', scopes: name(scopeName, RuleName.Colon) },
+                { text: '{', scopes: name(scopeName, RuleName.BlockBegin) },
+                { text: '; comment', scopes: name(scopeName, RuleName.InLineComment) },
+
+                { text: 'break', scopes: name(scopeName, RuleName.JumpCommandName) },
+                { text: '; comment', scopes: name(scopeName, RuleName.InLineComment) },
+
+                { text: '}', scopes: name(scopeName, RuleName.BlockEnd) },
+                { text: '; comment', scopes: name(scopeName, RuleName.InLineComment) },
+
+                { text: 'default', scopes: name(scopeName, RuleName.SwitchLabelKeyword) },
+                { text: ':', scopes: name(scopeName, RuleName.Colon) },
+                { text: '{', scopes: name(scopeName, RuleName.BlockBegin) },
+                { text: '; comment', scopes: name(scopeName, RuleName.InLineComment) },
+
+                { text: 'break', scopes: name(scopeName, RuleName.JumpCommandName) },
+                { text: '; comment', scopes: name(scopeName, RuleName.InLineComment) },
+
+                { text: '}', scopes: name(scopeName, RuleName.BlockEnd) },
+                { text: '; comment', scopes: name(scopeName, RuleName.InLineComment) },
+
+                { text: '}', scopes: name(scopeName, RuleName.BlockEnd) },
+                { text: '; comment', scopes: name(scopeName, RuleName.InLineComment) },
+              ],
+            ],
+            [
+              dedent`
+                switch true {                     ; comment
+                  case true, false: break         ; comment
+                  default: break                  ; comment
+                }                                 ; comment
+              `,
+              [
+                { text: 'switch', scopes: name(scopeName, RuleName.ControlFlowKeyword) },
+                { text: 'true', scopes: name(scopeName, RuleName.KeywordLikeBuiltInVariable) },
+                { text: '{', scopes: name(scopeName, RuleName.BlockBegin) },
+                { text: '; comment', scopes: name(scopeName, RuleName.InLineComment) },
+
+                { text: 'case', scopes: name(scopeName, RuleName.SwitchLabelKeyword) },
+                { text: 'true', scopes: name(scopeName, RuleName.KeywordLikeBuiltInVariable) },
+                { text: ',', scopes: name(scopeName, RuleName.Comma) },
+                { text: 'false', scopes: name(scopeName, RuleName.KeywordLikeBuiltInVariable) },
+                { text: ':', scopes: name(scopeName, RuleName.Colon) },
+                { text: 'break', scopes: name(scopeName, RuleName.JumpCommandName) },
+                { text: '; comment', scopes: name(scopeName, RuleName.InLineComment) },
+
+                { text: 'default', scopes: name(scopeName, RuleName.SwitchLabelKeyword) },
+                { text: ':', scopes: name(scopeName, RuleName.Colon) },
+                { text: 'break', scopes: name(scopeName, RuleName.JumpCommandName) },
+                { text: '; comment', scopes: name(scopeName, RuleName.InLineComment) },
+
+                { text: '}', scopes: name(scopeName, RuleName.BlockEnd) },
+                { text: '; comment', scopes: name(scopeName, RuleName.InLineComment) },
+              ],
+            ],
+          ];
+        })(),
+
+        // K&R style
+        ...((): ExpectedTestData[] => {
+          return [
+            [
+              dedent`
+                switch          ; comment
+                {               ; comment
+                }               ; comment
+              `,
+              [
+                { text: 'switch', scopes: name(scopeName, RuleName.ControlFlowKeyword) },
+                { text: '; comment', scopes: name(scopeName, RuleName.InLineComment) },
+
+                { text: '{', scopes: name(scopeName, RuleName.BlockBegin) },
+                { text: '; comment', scopes: name(scopeName, RuleName.InLineComment) },
+
+                { text: '}', scopes: name(scopeName, RuleName.BlockEnd) },
+                { text: '; comment', scopes: name(scopeName, RuleName.InLineComment) },
+              ],
+            ],
+            [
+              dedent`
+                switch true       ; comment
+                {                 ; comment
+                }                 ; comment
+              `,
+              [
+                { text: 'switch', scopes: name(scopeName, RuleName.ControlFlowKeyword) },
+                { text: 'true', scopes: name(scopeName, RuleName.KeywordLikeBuiltInVariable) },
+                { text: '; comment', scopes: name(scopeName, RuleName.InLineComment) },
+
+                { text: '{', scopes: name(scopeName, RuleName.BlockBegin) },
+                { text: '; comment', scopes: name(scopeName, RuleName.InLineComment) },
+
+                { text: '}', scopes: name(scopeName, RuleName.BlockEnd) },
+                { text: '; comment', scopes: name(scopeName, RuleName.InLineComment) },
+              ],
+            ],
+            [
+              dedent`
+                switch (true)       ; comment
+                {                   ; comment
+                }                   ; comment
+              `,
+              [
+                { text: 'switch', scopes: name(scopeName, RuleName.ControlFlowKeyword) },
+                { text: '(', scopes: name(scopeName, RuleName.OpenParen) },
+                { text: 'true', scopes: name(scopeName, RuleName.KeywordLikeBuiltInVariable) },
+                { text: ')', scopes: name(scopeName, RuleName.CloseParen) },
+                { text: '; comment', scopes: name(scopeName, RuleName.InLineComment) },
+
+                { text: '{', scopes: name(scopeName, RuleName.BlockBegin) },
+                { text: '; comment', scopes: name(scopeName, RuleName.InLineComment) },
+
+                { text: '}', scopes: name(scopeName, RuleName.BlockEnd) },
+                { text: '; comment', scopes: name(scopeName, RuleName.InLineComment) },
+              ],
+            ],
+            [
+              dedent`
+                switch true         ; comment
+                {                   ; comment
+                  case true:        ; comment
+                    break           ; comment
+                  default:          ; comment
+                    break           ; comment
+                }                   ; comment
+              `,
+              [
+                { text: 'switch', scopes: name(scopeName, RuleName.ControlFlowKeyword) },
+                { text: 'true', scopes: name(scopeName, RuleName.KeywordLikeBuiltInVariable) },
+                { text: '; comment', scopes: name(scopeName, RuleName.InLineComment) },
+
+                { text: '{', scopes: name(scopeName, RuleName.BlockBegin) },
+                { text: '; comment', scopes: name(scopeName, RuleName.InLineComment) },
+
+                { text: 'case', scopes: name(scopeName, RuleName.SwitchLabelKeyword) },
+                { text: 'true', scopes: name(scopeName, RuleName.KeywordLikeBuiltInVariable) },
+                { text: ':', scopes: name(scopeName, RuleName.Colon) },
+                { text: '; comment', scopes: name(scopeName, RuleName.InLineComment) },
+
+                { text: 'break', scopes: name(scopeName, RuleName.JumpCommandName) },
+                { text: '; comment', scopes: name(scopeName, RuleName.InLineComment) },
+
+                { text: 'default', scopes: name(scopeName, RuleName.SwitchLabelKeyword) },
+                { text: ':', scopes: name(scopeName, RuleName.Colon) },
+                { text: '; comment', scopes: name(scopeName, RuleName.InLineComment) },
+
+                { text: 'break', scopes: name(scopeName, RuleName.JumpCommandName) },
+                { text: '; comment', scopes: name(scopeName, RuleName.InLineComment) },
+
+                { text: '}', scopes: name(scopeName, RuleName.BlockEnd) },
+                { text: '; comment', scopes: name(scopeName, RuleName.InLineComment) },
+              ],
+            ],
+            [
+              dedent`
+                switch true         ; comment
+                {                   ; comment
+                  case true:        ; comment
+                  {                 ; comment
+                    break           ; comment
+                  }                 ; comment
+                  default:          ; comment
+                  {                 ; comment
+                    break           ; comment
+                  }                 ; comment
+                }                   ; comment
+              `,
+              [
+                { text: 'switch', scopes: name(scopeName, RuleName.ControlFlowKeyword) },
+                { text: 'true', scopes: name(scopeName, RuleName.KeywordLikeBuiltInVariable) },
+                { text: '; comment', scopes: name(scopeName, RuleName.InLineComment) },
+
+                { text: '{', scopes: name(scopeName, RuleName.BlockBegin) },
+                { text: '; comment', scopes: name(scopeName, RuleName.InLineComment) },
+
+                { text: 'case', scopes: name(scopeName, RuleName.SwitchLabelKeyword) },
+                { text: 'true', scopes: name(scopeName, RuleName.KeywordLikeBuiltInVariable) },
+                { text: ':', scopes: name(scopeName, RuleName.Colon) },
+                { text: '; comment', scopes: name(scopeName, RuleName.InLineComment) },
+
+                { text: '{', scopes: name(scopeName, RuleName.BlockBegin) },
+                { text: '; comment', scopes: name(scopeName, RuleName.InLineComment) },
+
+                { text: 'break', scopes: name(scopeName, RuleName.JumpCommandName) },
+                { text: '; comment', scopes: name(scopeName, RuleName.InLineComment) },
+
+                { text: '}', scopes: name(scopeName, RuleName.BlockEnd) },
+                { text: '; comment', scopes: name(scopeName, RuleName.InLineComment) },
+
+                { text: 'default', scopes: name(scopeName, RuleName.SwitchLabelKeyword) },
+                { text: ':', scopes: name(scopeName, RuleName.Colon) },
+                { text: '; comment', scopes: name(scopeName, RuleName.InLineComment) },
+
+                { text: '{', scopes: name(scopeName, RuleName.BlockBegin) },
+                { text: '; comment', scopes: name(scopeName, RuleName.InLineComment) },
+
+                { text: 'break', scopes: name(scopeName, RuleName.JumpCommandName) },
+                { text: '; comment', scopes: name(scopeName, RuleName.InLineComment) },
+
+                { text: '}', scopes: name(scopeName, RuleName.BlockEnd) },
+                { text: '; comment', scopes: name(scopeName, RuleName.InLineComment) },
+
+                { text: '}', scopes: name(scopeName, RuleName.BlockEnd) },
+                { text: '; comment', scopes: name(scopeName, RuleName.InLineComment) },
+              ],
+            ],
+          ];
+        })(),
+      ];
+    })(),
+
 
     // Incomplete switch labels
     [
