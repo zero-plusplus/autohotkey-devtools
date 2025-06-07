@@ -612,61 +612,161 @@ export function createLoopStatementExpectedData(scopeName: ScopeName): ExpectedT
       ];
     })(),
 
-    // #region [loop read](https://www.autohotkey.com/docs/v1/lib/LoopReadFile.htm)
-    [
-      dedent`
-        Loop read
-        {
-        }
-        Loop, Read
-        {
-        }
-      `,
-      [
-        { text: 'Loop', scopes: name(scopeName, RuleName.ControlFlowKeyword) },
-        { text: 'read', scopes: name(scopeName, RuleName.FlowSubCommandName) },
-        { text: '{', scopes: name(scopeName, RuleName.BlockBegin) },
-        { text: '}', scopes: name(scopeName, RuleName.BlockEnd) },
+    // [Loop Read](https://www.autohotkey.com/docs/v1/lib/LoopReadFile.htm)
+    ...((): ExpectedTestData[] => {
+      return [
+        [
+          dedent`
+            loop read             ; comment
+            {                     ; comment
+            }                     ; comment
+            loop, read            ; comment
+            {                     ; comment
+            }                     ; comment
+          `,
+          [
+            ...[
+              { text: 'loop', scopes: name(scopeName, RuleName.ControlFlowKeyword) },
+              { text: 'read', scopes: name(scopeName, RuleName.FlowSubCommandName) },
+              { text: '; comment', scopes: name(scopeName, RuleName.InLineComment) },
 
-        { text: 'Loop', scopes: name(scopeName, RuleName.ControlFlowKeyword) },
-        { text: ',', scopes: name(scopeName, RuleName.Comma) },
-        { text: 'Read', scopes: name(scopeName, RuleName.FlowSubCommandName) },
-        { text: '{', scopes: name(scopeName, RuleName.BlockBegin) },
-        { text: '}', scopes: name(scopeName, RuleName.BlockEnd) },
-      ],
-    ],
-    [
-      dedent`
-        Loop Read
-        Loop Read, path\\to
-        Loop Read, path\\to, path\\to
-        Loop Read, path\\to, \`,
-      `,
-      [
-        { text: 'Loop', scopes: name(scopeName, RuleName.ControlFlowKeyword) },
-        { text: 'Read', scopes: name(scopeName, RuleName.FlowSubCommandName) },
+              { text: '{', scopes: name(scopeName, RuleName.BlockBegin) },
+              { text: '; comment', scopes: name(scopeName, RuleName.InLineComment) },
 
-        { text: 'Loop', scopes: name(scopeName, RuleName.ControlFlowKeyword) },
-        { text: 'Read', scopes: name(scopeName, RuleName.FlowSubCommandName) },
-        { text: ',', scopes: name(scopeName, RuleName.Comma) },
-        { text: 'path\\to', scopes: name(scopeName, RuleName.UnquotedString) },
+              { text: '}', scopes: name(scopeName, RuleName.BlockEnd) },
+              { text: '; comment', scopes: name(scopeName, RuleName.InLineComment) },
+            ],
 
-        { text: 'Loop', scopes: name(scopeName, RuleName.ControlFlowKeyword) },
-        { text: 'Read', scopes: name(scopeName, RuleName.FlowSubCommandName) },
-        { text: ',', scopes: name(scopeName, RuleName.Comma) },
-        { text: 'path\\to', scopes: name(scopeName, RuleName.UnquotedString) },
-        { text: ',', scopes: name(scopeName, RuleName.Comma) },
-        { text: 'path\\to', scopes: name(scopeName, RuleName.UnquotedString) },
+            ...[
+              { text: 'loop', scopes: name(scopeName, RuleName.ControlFlowKeyword) },
+              { text: ',', scopes: name(scopeName, RuleName.Comma) },
+              { text: 'read', scopes: name(scopeName, RuleName.FlowSubCommandName) },
+              { text: '; comment', scopes: name(scopeName, RuleName.InLineComment) },
 
-        { text: 'Loop', scopes: name(scopeName, RuleName.ControlFlowKeyword) },
-        { text: 'Read', scopes: name(scopeName, RuleName.FlowSubCommandName) },
-        { text: ',', scopes: name(scopeName, RuleName.Comma) },
-        { text: 'path\\to', scopes: name(scopeName, RuleName.UnquotedString) },
-        { text: ',', scopes: name(scopeName, RuleName.Comma) },
-        { text: '`,', scopes: name(scopeName, RuleName.UnquotedString, StyleName.Escape) },
-      ],
-    ],
-    // #endregion loop read
+              { text: '{', scopes: name(scopeName, RuleName.BlockBegin) },
+              { text: '; comment', scopes: name(scopeName, RuleName.InLineComment) },
+
+              { text: '}', scopes: name(scopeName, RuleName.BlockEnd) },
+              { text: '; comment', scopes: name(scopeName, RuleName.InLineComment) },
+            ],
+          ],
+        ],
+        [
+          dedent`
+            Loop Read             ; comment
+            {                     ; comment
+            }                     ; comment
+            Loop, Read            ; comment
+            {                     ; comment
+            }                     ; comment
+          `,
+          [
+            ...[
+              { text: 'Loop', scopes: name(scopeName, RuleName.ControlFlowKeyword) },
+              { text: 'Read', scopes: name(scopeName, RuleName.FlowSubCommandName) },
+              { text: '; comment', scopes: name(scopeName, RuleName.InLineComment) },
+
+              { text: '{', scopes: name(scopeName, RuleName.BlockBegin) },
+              { text: '; comment', scopes: name(scopeName, RuleName.InLineComment) },
+
+              { text: '}', scopes: name(scopeName, RuleName.BlockEnd) },
+              { text: '; comment', scopes: name(scopeName, RuleName.InLineComment) },
+            ],
+
+            ...[
+              { text: 'Loop', scopes: name(scopeName, RuleName.ControlFlowKeyword) },
+              { text: ',', scopes: name(scopeName, RuleName.Comma) },
+              { text: 'Read', scopes: name(scopeName, RuleName.FlowSubCommandName) },
+              { text: '; comment', scopes: name(scopeName, RuleName.InLineComment) },
+
+              { text: '{', scopes: name(scopeName, RuleName.BlockBegin) },
+              { text: '; comment', scopes: name(scopeName, RuleName.InLineComment) },
+
+              { text: '}', scopes: name(scopeName, RuleName.BlockEnd) },
+              { text: '; comment', scopes: name(scopeName, RuleName.InLineComment) },
+            ],
+          ],
+        ],
+        [
+          dedent`
+            Loop Read                               ; comment
+            {                                       ; comment
+            }                                       ; comment
+
+            Loop Read, path\\to                     ; comment
+            {                                       ; comment
+            }                                       ; comment
+
+            Loop Read, path\\to, path\\to           ; comment
+            {                                       ; comment
+            }                                       ; comment
+
+            Loop Read, path\\to, \`,                ; comment
+            {                                       ; comment
+            }                                       ; comment
+          `,
+          [
+            ...[
+              { text: 'Loop', scopes: name(scopeName, RuleName.ControlFlowKeyword) },
+              { text: 'Read', scopes: name(scopeName, RuleName.FlowSubCommandName) },
+              { text: '; comment', scopes: name(scopeName, RuleName.InLineComment) },
+
+              { text: '{', scopes: name(scopeName, RuleName.BlockBegin) },
+              { text: '; comment', scopes: name(scopeName, RuleName.InLineComment) },
+
+              { text: '}', scopes: name(scopeName, RuleName.BlockEnd) },
+              { text: '; comment', scopes: name(scopeName, RuleName.InLineComment) },
+            ],
+
+            ...[
+              { text: 'Loop', scopes: name(scopeName, RuleName.ControlFlowKeyword) },
+              { text: 'Read', scopes: name(scopeName, RuleName.FlowSubCommandName) },
+              { text: ',', scopes: name(scopeName, RuleName.Comma) },
+              { text: 'path\\to', scopes: name(scopeName, RuleName.UnquotedString) },
+              { text: '; comment', scopes: name(scopeName, RuleName.InLineComment) },
+
+              { text: '{', scopes: name(scopeName, RuleName.BlockBegin) },
+              { text: '; comment', scopes: name(scopeName, RuleName.InLineComment) },
+
+              { text: '}', scopes: name(scopeName, RuleName.BlockEnd) },
+              { text: '; comment', scopes: name(scopeName, RuleName.InLineComment) },
+            ],
+
+            ...[
+              { text: 'Loop', scopes: name(scopeName, RuleName.ControlFlowKeyword) },
+              { text: 'Read', scopes: name(scopeName, RuleName.FlowSubCommandName) },
+              { text: ',', scopes: name(scopeName, RuleName.Comma) },
+              { text: 'path\\to', scopes: name(scopeName, RuleName.UnquotedString) },
+              { text: ',', scopes: name(scopeName, RuleName.Comma) },
+              { text: 'path\\to', scopes: name(scopeName, RuleName.UnquotedString) },
+              { text: '; comment', scopes: name(scopeName, RuleName.InLineComment) },
+
+              { text: '{', scopes: name(scopeName, RuleName.BlockBegin) },
+              { text: '; comment', scopes: name(scopeName, RuleName.InLineComment) },
+
+              { text: '}', scopes: name(scopeName, RuleName.BlockEnd) },
+              { text: '; comment', scopes: name(scopeName, RuleName.InLineComment) },
+            ],
+
+            ...[
+              { text: 'Loop', scopes: name(scopeName, RuleName.ControlFlowKeyword) },
+              { text: 'Read', scopes: name(scopeName, RuleName.FlowSubCommandName) },
+              { text: ',', scopes: name(scopeName, RuleName.Comma) },
+              { text: 'path\\to', scopes: name(scopeName, RuleName.UnquotedString) },
+              { text: ',', scopes: name(scopeName, RuleName.Comma) },
+              { text: '`,', scopes: name(scopeName, RuleName.UnquotedString, StyleName.Escape) },
+              { text: '; comment', scopes: name(scopeName, RuleName.InLineComment) },
+
+              { text: '{', scopes: name(scopeName, RuleName.BlockBegin) },
+              { text: '; comment', scopes: name(scopeName, RuleName.InLineComment) },
+
+              { text: '}', scopes: name(scopeName, RuleName.BlockEnd) },
+              { text: '; comment', scopes: name(scopeName, RuleName.InLineComment) },
+            ],
+          ],
+        ],
+      ];
+    })(),
 
     // #region [loop reg](https://www.autohotkey.com/docs/v1/lib/LoopReg.htm#new)
     [
