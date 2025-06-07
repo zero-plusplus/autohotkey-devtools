@@ -110,6 +110,8 @@ export function createSwitchStatementRule(scopeName: ScopeName, placeholder: Pla
         ],
       },
       // #endregion switch body
+
+      includeRule(Repository.Self),
     ],
   };
 }
