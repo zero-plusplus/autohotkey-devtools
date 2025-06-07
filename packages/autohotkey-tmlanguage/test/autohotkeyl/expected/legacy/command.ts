@@ -1229,622 +1229,625 @@ export function createCommandStatementExpectedData(scopeName: ScopeName): Expect
       ];
     })(),
 
-    // #region arg
-    [
-      dedent`
-        AutoTrim, on                  ; comment
-        AutoTrim, ON                  ; comment
-        AutoTrim, off                 ; comment
-        AutoTrim, OFF                 ; comment
-        AutoTrim, 1                   ; comment
-        AutoTrim, 0                   ; comment
-
-        AutoTrim, % on                ; comment
-        AutoTrim, %o%%f%%f%           ; comment
-        AutoTrim, on,                 ; comment
-
-        BlockInput, Send
-        BlockInput, Mouse
-        BlockInput, SendAndMouse
-        BlockInput, Default
-        BlockInput, MouseMove
-        BlockInput, MouseMoveOff
-        BlockInput, on
-        BlockInput, ON
-        BlockInput, off
-        BlockInput, OFF
-        BlockInput, 1
-        BlockInput, 0
-
-        BlockInput, % on                ; comment
-        BlockInput, %o%%f%%f%           ; comment
-        BlockInput, on,                 ; comment
-      `,
-      [
-        ...[ 'on', 'ON', 'off', 'OFF', '1', '0' ].flatMap((arg) => {
-          onOff;
-
-          return [
-            { text: 'AutoTrim', scopes: name(scopeName, RuleName.CommandName) },
-            { text: ',', scopes: name(scopeName, RuleName.Comma) },
-            { text: arg, scopes: name(scopeName, RuleName.UnquotedString, StyleName.Strong) },
-            { text: '; comment', scopes: name(scopeName, RuleName.InLineComment) },
-          ];
-        }),
-
-        { text: 'AutoTrim', scopes: name(scopeName, RuleName.CommandName) },
-        { text: ',', scopes: name(scopeName, RuleName.Comma) },
-        { text: '%', scopes: name(scopeName, RuleName.PercentExpressionBegin) },
-        { text: 'on', scopes: name(scopeName, RuleName.Variable) },
-        { text: '; comment', scopes: name(scopeName, RuleName.InLineComment) },
-
-        { text: 'AutoTrim', scopes: name(scopeName, RuleName.CommandName) },
-        { text: ',', scopes: name(scopeName, RuleName.Comma) },
-        { text: '%', scopes: name(scopeName, RuleName.PercentBegin) },
-        { text: 'o', scopes: name(scopeName, RuleName.Variable) },
-        { text: '%', scopes: name(scopeName, RuleName.PercentEnd) },
-        { text: '%', scopes: name(scopeName, RuleName.PercentBegin) },
-        { text: 'f', scopes: name(scopeName, RuleName.Variable) },
-        { text: '%', scopes: name(scopeName, RuleName.PercentEnd) },
-        { text: '%', scopes: name(scopeName, RuleName.PercentBegin) },
-        { text: 'f', scopes: name(scopeName, RuleName.Variable) },
-        { text: '%', scopes: name(scopeName, RuleName.PercentEnd) },
-        { text: '; comment', scopes: name(scopeName, RuleName.InLineComment) },
-
-        { text: 'AutoTrim', scopes: name(scopeName, RuleName.CommandName) },
-        { text: ',', scopes: name(scopeName, RuleName.Comma) },
-        { text: 'on', scopes: name(scopeName, RuleName.UnquotedString, StyleName.Strong) },
-        { text: ',', scopes: name(scopeName, RuleName.UnquotedString, StyleName.Invalid) },
-        { text: '; comment', scopes: name(scopeName, RuleName.InLineComment) },
-
-        ...[
-          ...[ // keywords
-            'Send',
-            'Mouse',
-            'SendAndMouse',
-            'Default',
-            'MouseMove',
-            'MouseMoveOff',
-          ],
-          'on',
-          'ON',
-          'off',
-          'OFF',
-          '1',
-          '0',
-        ].flatMap((arg) => {
-          onOff; // with keywords
-
-          return [
-            { text: 'BlockInput', scopes: name(scopeName, RuleName.CommandName) },
-            { text: ',', scopes: name(scopeName, RuleName.Comma) },
-            { text: arg, scopes: name(scopeName, RuleName.UnquotedString, StyleName.Strong) },
-          ];
-        }),
-
-        { text: 'BlockInput', scopes: name(scopeName, RuleName.CommandName) },
-        { text: ',', scopes: name(scopeName, RuleName.Comma) },
-        { text: '%', scopes: name(scopeName, RuleName.PercentExpressionBegin) },
-        { text: 'on', scopes: name(scopeName, RuleName.Variable) },
-        { text: '; comment', scopes: name(scopeName, RuleName.InLineComment) },
-
-        { text: 'BlockInput', scopes: name(scopeName, RuleName.CommandName) },
-        { text: ',', scopes: name(scopeName, RuleName.Comma) },
-        { text: '%', scopes: name(scopeName, RuleName.PercentBegin) },
-        { text: 'o', scopes: name(scopeName, RuleName.Variable) },
-        { text: '%', scopes: name(scopeName, RuleName.PercentEnd) },
-        { text: '%', scopes: name(scopeName, RuleName.PercentBegin) },
-        { text: 'f', scopes: name(scopeName, RuleName.Variable) },
-        { text: '%', scopes: name(scopeName, RuleName.PercentEnd) },
-        { text: '%', scopes: name(scopeName, RuleName.PercentBegin) },
-        { text: 'f', scopes: name(scopeName, RuleName.Variable) },
-        { text: '%', scopes: name(scopeName, RuleName.PercentEnd) },
-        { text: '; comment', scopes: name(scopeName, RuleName.InLineComment) },
-
-        { text: 'BlockInput', scopes: name(scopeName, RuleName.CommandName) },
-        { text: ',', scopes: name(scopeName, RuleName.Comma) },
-        { text: 'on', scopes: name(scopeName, RuleName.UnquotedString, StyleName.Strong) },
-        { text: ',', scopes: name(scopeName, RuleName.UnquotedString, StyleName.Invalid) },
-        { text: '; comment', scopes: name(scopeName, RuleName.InLineComment) },
-      ],
-    ],
+    // arg types
     ...((): ExpectedTestData[] => {
-      unquoted;
-
       return [
         [
           dedent`
-            Click, 100 200 Left       ; comment
-            Click, 100 200 L          ; comment
-            Click, 100 200 Right      ; comment
-            Click, 100 200 R          ; comment
-            Click, 100 200 Middle     ; comment
-            Click, 100 200 M          ; comment
-            Click, 100 200 X1         ; comment
-            Click, 100 200 X2         ; comment
-            Click, 100 200 Up         ; comment
-            Click, 100 200 U          ; comment
-            Click, 100 200 Down       ; comment
-            Click, 100 200 D          ; comment
+            AutoTrim, on                  ; comment
+            AutoTrim, ON                  ; comment
+            AutoTrim, off                 ; comment
+            AutoTrim, OFF                 ; comment
+            AutoTrim, 1                   ; comment
+            AutoTrim, 0                   ; comment
+
+            AutoTrim, % on                ; comment
+            AutoTrim, %o%%f%%f%           ; comment
+            AutoTrim, on,                 ; comment
+
+            BlockInput, Send
+            BlockInput, Mouse
+            BlockInput, SendAndMouse
+            BlockInput, Default
+            BlockInput, MouseMove
+            BlockInput, MouseMoveOff
+            BlockInput, on
+            BlockInput, ON
+            BlockInput, off
+            BlockInput, OFF
+            BlockInput, 1
+            BlockInput, 0
+
+            BlockInput, % on                ; comment
+            BlockInput, %o%%f%%f%           ; comment
+            BlockInput, on,                 ; comment
           `,
           [
-            ...[ 'Left', 'L', 'Right', 'R', 'Middle', 'M', 'X1', 'X2', 'Up', 'U', 'Down', 'D' ].flatMap((keyword) => {
+            ...[ 'on', 'ON', 'off', 'OFF', '1', '0' ].flatMap((arg) => {
+              onOff;
+
               return [
-                { text: 'Click', scopes: name(scopeName, RuleName.CommandName) },
+                { text: 'AutoTrim', scopes: name(scopeName, RuleName.CommandName) },
                 { text: ',', scopes: name(scopeName, RuleName.Comma) },
-                { text: '100', scopes: name(scopeName, RuleName.Integer) },
-                { text: '200', scopes: name(scopeName, RuleName.Integer) },
-                { text: keyword, scopes: name(scopeName, RuleName.UnquotedString, StyleName.Strong) },
+                { text: arg, scopes: name(scopeName, RuleName.UnquotedString, StyleName.Strong) },
                 { text: '; comment', scopes: name(scopeName, RuleName.InLineComment) },
               ];
             }),
+
+            { text: 'AutoTrim', scopes: name(scopeName, RuleName.CommandName) },
+            { text: ',', scopes: name(scopeName, RuleName.Comma) },
+            { text: '%', scopes: name(scopeName, RuleName.PercentExpressionBegin) },
+            { text: 'on', scopes: name(scopeName, RuleName.Variable) },
+            { text: '; comment', scopes: name(scopeName, RuleName.InLineComment) },
+
+            { text: 'AutoTrim', scopes: name(scopeName, RuleName.CommandName) },
+            { text: ',', scopes: name(scopeName, RuleName.Comma) },
+            { text: '%', scopes: name(scopeName, RuleName.PercentBegin) },
+            { text: 'o', scopes: name(scopeName, RuleName.Variable) },
+            { text: '%', scopes: name(scopeName, RuleName.PercentEnd) },
+            { text: '%', scopes: name(scopeName, RuleName.PercentBegin) },
+            { text: 'f', scopes: name(scopeName, RuleName.Variable) },
+            { text: '%', scopes: name(scopeName, RuleName.PercentEnd) },
+            { text: '%', scopes: name(scopeName, RuleName.PercentBegin) },
+            { text: 'f', scopes: name(scopeName, RuleName.Variable) },
+            { text: '%', scopes: name(scopeName, RuleName.PercentEnd) },
+            { text: '; comment', scopes: name(scopeName, RuleName.InLineComment) },
+
+            { text: 'AutoTrim', scopes: name(scopeName, RuleName.CommandName) },
+            { text: ',', scopes: name(scopeName, RuleName.Comma) },
+            { text: 'on', scopes: name(scopeName, RuleName.UnquotedString, StyleName.Strong) },
+            { text: ',', scopes: name(scopeName, RuleName.UnquotedString, StyleName.Invalid) },
+            { text: '; comment', scopes: name(scopeName, RuleName.InLineComment) },
+
+            ...[
+              ...[ // keywords
+                'Send',
+                'Mouse',
+                'SendAndMouse',
+                'Default',
+                'MouseMove',
+                'MouseMoveOff',
+              ],
+              'on',
+              'ON',
+              'off',
+              'OFF',
+              '1',
+              '0',
+            ].flatMap((arg) => {
+              onOff; // with keywords
+
+              return [
+                { text: 'BlockInput', scopes: name(scopeName, RuleName.CommandName) },
+                { text: ',', scopes: name(scopeName, RuleName.Comma) },
+                { text: arg, scopes: name(scopeName, RuleName.UnquotedString, StyleName.Strong) },
+              ];
+            }),
+
+            { text: 'BlockInput', scopes: name(scopeName, RuleName.CommandName) },
+            { text: ',', scopes: name(scopeName, RuleName.Comma) },
+            { text: '%', scopes: name(scopeName, RuleName.PercentExpressionBegin) },
+            { text: 'on', scopes: name(scopeName, RuleName.Variable) },
+            { text: '; comment', scopes: name(scopeName, RuleName.InLineComment) },
+
+            { text: 'BlockInput', scopes: name(scopeName, RuleName.CommandName) },
+            { text: ',', scopes: name(scopeName, RuleName.Comma) },
+            { text: '%', scopes: name(scopeName, RuleName.PercentBegin) },
+            { text: 'o', scopes: name(scopeName, RuleName.Variable) },
+            { text: '%', scopes: name(scopeName, RuleName.PercentEnd) },
+            { text: '%', scopes: name(scopeName, RuleName.PercentBegin) },
+            { text: 'f', scopes: name(scopeName, RuleName.Variable) },
+            { text: '%', scopes: name(scopeName, RuleName.PercentEnd) },
+            { text: '%', scopes: name(scopeName, RuleName.PercentBegin) },
+            { text: 'f', scopes: name(scopeName, RuleName.Variable) },
+            { text: '%', scopes: name(scopeName, RuleName.PercentEnd) },
+            { text: '; comment', scopes: name(scopeName, RuleName.InLineComment) },
+
+            { text: 'BlockInput', scopes: name(scopeName, RuleName.CommandName) },
+            { text: ',', scopes: name(scopeName, RuleName.Comma) },
+            { text: 'on', scopes: name(scopeName, RuleName.UnquotedString, StyleName.Strong) },
+            { text: ',', scopes: name(scopeName, RuleName.UnquotedString, StyleName.Invalid) },
+            { text: '; comment', scopes: name(scopeName, RuleName.InLineComment) },
+          ],
+        ],
+        ...((): ExpectedTestData[] => {
+          unquoted;
+
+          return [
+            [
+              dedent`
+                Click, 100 200 Left       ; comment
+                Click, 100 200 L          ; comment
+                Click, 100 200 Right      ; comment
+                Click, 100 200 R          ; comment
+                Click, 100 200 Middle     ; comment
+                Click, 100 200 M          ; comment
+                Click, 100 200 X1         ; comment
+                Click, 100 200 X2         ; comment
+                Click, 100 200 Up         ; comment
+                Click, 100 200 U          ; comment
+                Click, 100 200 Down       ; comment
+                Click, 100 200 D          ; comment
+              `,
+              [
+                ...[ 'Left', 'L', 'Right', 'R', 'Middle', 'M', 'X1', 'X2', 'Up', 'U', 'Down', 'D' ].flatMap((keyword) => {
+                  return [
+                    { text: 'Click', scopes: name(scopeName, RuleName.CommandName) },
+                    { text: ',', scopes: name(scopeName, RuleName.Comma) },
+                    { text: '100', scopes: name(scopeName, RuleName.Integer) },
+                    { text: '200', scopes: name(scopeName, RuleName.Integer) },
+                    { text: keyword, scopes: name(scopeName, RuleName.UnquotedString, StyleName.Strong) },
+                    { text: '; comment', scopes: name(scopeName, RuleName.InLineComment) },
+                  ];
+                }),
+              ],
+            ],
+            [
+              dedent`
+                Input,,,, Tab,Tab          ; comment
+              `,
+              [
+                { text: 'Input', scopes: name(scopeName, RuleName.CommandName) },
+                { text: ',', scopes: name(scopeName, RuleName.Comma) },
+                { text: ',', scopes: name(scopeName, RuleName.Comma) },
+                { text: ',', scopes: name(scopeName, RuleName.Comma) },
+                { text: ',', scopes: name(scopeName, RuleName.Comma) },
+                { text: 'Tab', scopes: name(scopeName, RuleName.UnquotedString, StyleName.Strong) },
+                { text: ',', scopes: name(scopeName, RuleName.UnquotedString) },
+                { text: 'Tab', scopes: name(scopeName, RuleName.UnquotedString, StyleName.Strong) },
+                { text: '; comment', scopes: name(scopeName, RuleName.InLineComment) },
+              ],
+            ],
+          ];
+        })(),
+        [
+          dedent`
+            ClipWait, 1, 0              ; comment
+            ClipWait, 1 + 1, var, 1     ; comment
+          `,
+          [
+            ...((): ParsedResult[] => {
+              expression;
+
+              return [
+                { text: 'ClipWait', scopes: name(scopeName, RuleName.CommandName) },
+                { text: ',', scopes: name(scopeName, RuleName.Comma) },
+                { text: '1', scopes: name(scopeName, RuleName.Integer) },
+                { text: ',', scopes: name(scopeName, RuleName.Comma) },
+                { text: '0', scopes: name(scopeName, RuleName.Integer) },
+                { text: '; comment', scopes: name(scopeName, RuleName.InLineComment) },
+
+                { text: 'ClipWait', scopes: name(scopeName, RuleName.CommandName) },
+                { text: ',', scopes: name(scopeName, RuleName.Comma) },
+                { text: '1', scopes: name(scopeName, RuleName.Integer) },
+                { text: '+', scopes: name(scopeName, RuleName.Operator) },
+                { text: '1', scopes: name(scopeName, RuleName.Integer) },
+                { text: ',', scopes: name(scopeName, RuleName.Comma) },
+                { text: 'var', scopes: name(scopeName, RuleName.Variable) },
+                { text: ',', scopes: name(scopeName, RuleName.Comma) },
+                { text: '1', scopes: name(scopeName, RuleName.Integer) },
+                { text: '; comment', scopes: name(scopeName, RuleName.InLineComment) },
+              ];
+            })(),
           ],
         ],
         [
           dedent`
-            Input,,,, Tab,Tab          ; comment
+            Control, Check, blank             ; comment
+            Control, Check, %blank%           ; comment
+            Control, Check, % blank           ; comment
           `,
           [
-            { text: 'Input', scopes: name(scopeName, RuleName.CommandName) },
-            { text: ',', scopes: name(scopeName, RuleName.Comma) },
-            { text: ',', scopes: name(scopeName, RuleName.Comma) },
-            { text: ',', scopes: name(scopeName, RuleName.Comma) },
-            { text: ',', scopes: name(scopeName, RuleName.Comma) },
-            { text: 'Tab', scopes: name(scopeName, RuleName.UnquotedString, StyleName.Strong) },
-            { text: ',', scopes: name(scopeName, RuleName.UnquotedString) },
-            { text: 'Tab', scopes: name(scopeName, RuleName.UnquotedString, StyleName.Strong) },
-            { text: '; comment', scopes: name(scopeName, RuleName.InLineComment) },
+            ...((): ParsedResult[] => {
+              blank;
+
+              return [
+                { text: 'Control', scopes: name(scopeName, RuleName.CommandName) },
+                { text: ',', scopes: name(scopeName, RuleName.Comma) },
+                { text: 'Check', scopes: name(scopeName, RuleName.SubCommandName) },
+                { text: ',', scopes: name(scopeName, RuleName.Comma) },
+                { text: 'blank', scopes: name(scopeName, RuleName.UnquotedString, StyleName.Invalid) },
+                { text: '; comment', scopes: name(scopeName, RuleName.InLineComment) },
+
+                { text: 'Control', scopes: name(scopeName, RuleName.CommandName) },
+                { text: ',', scopes: name(scopeName, RuleName.Comma) },
+                { text: 'Check', scopes: name(scopeName, RuleName.SubCommandName) },
+                { text: ',', scopes: name(scopeName, RuleName.Comma) },
+                { text: '%blank%', scopes: name(scopeName, RuleName.UnquotedString, StyleName.Invalid) },
+                { text: '; comment', scopes: name(scopeName, RuleName.InLineComment) },
+
+                { text: 'Control', scopes: name(scopeName, RuleName.CommandName) },
+                { text: ',', scopes: name(scopeName, RuleName.Comma) },
+                { text: 'Check', scopes: name(scopeName, RuleName.SubCommandName) },
+                { text: ',', scopes: name(scopeName, RuleName.Comma) },
+                { text: '%', scopes: name(scopeName, RuleName.UnquotedString, StyleName.Invalid) },
+                { text: 'blank', scopes: name(scopeName, RuleName.UnquotedString, StyleName.Invalid) },
+                { text: '; comment', scopes: name(scopeName, RuleName.InLineComment) },
+              ];
+            })(),
           ],
         ],
-      ];
-    })(),
-    [
-      dedent`
-        ClipWait, 1, 0              ; comment
-        ClipWait, 1 + 1, var, 1     ; comment
-      `,
-      [
-        ...((): ParsedResult[] => {
-          expression;
+        [
+          dedent`
+            Control, Check,, ahk_id %ctrlHwnd%              ; comment
+            Control, Check,, % "ahk_id" ctrlHwnd            ; comment
+          `,
+          [
+            ...((): ParsedResult[] => {
+              control;
 
-          return [
-            { text: 'ClipWait', scopes: name(scopeName, RuleName.CommandName) },
-            { text: ',', scopes: name(scopeName, RuleName.Comma) },
-            { text: '1', scopes: name(scopeName, RuleName.Integer) },
-            { text: ',', scopes: name(scopeName, RuleName.Comma) },
-            { text: '0', scopes: name(scopeName, RuleName.Integer) },
-            { text: '; comment', scopes: name(scopeName, RuleName.InLineComment) },
-
-            { text: 'ClipWait', scopes: name(scopeName, RuleName.CommandName) },
-            { text: ',', scopes: name(scopeName, RuleName.Comma) },
-            { text: '1', scopes: name(scopeName, RuleName.Integer) },
-            { text: '+', scopes: name(scopeName, RuleName.Operator) },
-            { text: '1', scopes: name(scopeName, RuleName.Integer) },
-            { text: ',', scopes: name(scopeName, RuleName.Comma) },
-            { text: 'var', scopes: name(scopeName, RuleName.Variable) },
-            { text: ',', scopes: name(scopeName, RuleName.Comma) },
-            { text: '1', scopes: name(scopeName, RuleName.Integer) },
-            { text: '; comment', scopes: name(scopeName, RuleName.InLineComment) },
-          ];
-        })(),
-      ],
-    ],
-    [
-      dedent`
-        Control, Check, blank             ; comment
-        Control, Check, %blank%           ; comment
-        Control, Check, % blank           ; comment
-      `,
-      [
-        ...((): ParsedResult[] => {
-          blank;
-
-          return [
-            { text: 'Control', scopes: name(scopeName, RuleName.CommandName) },
-            { text: ',', scopes: name(scopeName, RuleName.Comma) },
-            { text: 'Check', scopes: name(scopeName, RuleName.SubCommandName) },
-            { text: ',', scopes: name(scopeName, RuleName.Comma) },
-            { text: 'blank', scopes: name(scopeName, RuleName.UnquotedString, StyleName.Invalid) },
-            { text: '; comment', scopes: name(scopeName, RuleName.InLineComment) },
-
-            { text: 'Control', scopes: name(scopeName, RuleName.CommandName) },
-            { text: ',', scopes: name(scopeName, RuleName.Comma) },
-            { text: 'Check', scopes: name(scopeName, RuleName.SubCommandName) },
-            { text: ',', scopes: name(scopeName, RuleName.Comma) },
-            { text: '%blank%', scopes: name(scopeName, RuleName.UnquotedString, StyleName.Invalid) },
-            { text: '; comment', scopes: name(scopeName, RuleName.InLineComment) },
-
-            { text: 'Control', scopes: name(scopeName, RuleName.CommandName) },
-            { text: ',', scopes: name(scopeName, RuleName.Comma) },
-            { text: 'Check', scopes: name(scopeName, RuleName.SubCommandName) },
-            { text: ',', scopes: name(scopeName, RuleName.Comma) },
-            { text: '%', scopes: name(scopeName, RuleName.UnquotedString, StyleName.Invalid) },
-            { text: 'blank', scopes: name(scopeName, RuleName.UnquotedString, StyleName.Invalid) },
-            { text: '; comment', scopes: name(scopeName, RuleName.InLineComment) },
-          ];
-        })(),
-      ],
-    ],
-    [
-      dedent`
-        Control, Check,, ahk_id %ctrlHwnd%              ; comment
-        Control, Check,, % "ahk_id" ctrlHwnd            ; comment
-      `,
-      [
-        ...((): ParsedResult[] => {
-          control;
-
-          return [
-            { text: 'Control', scopes: name(scopeName, RuleName.CommandName) },
-            { text: ',', scopes: name(scopeName, RuleName.Comma) },
-            { text: 'Check', scopes: name(scopeName, RuleName.SubCommandName) },
-            { text: ',', scopes: name(scopeName, RuleName.Comma) },
-            { text: ',', scopes: name(scopeName, RuleName.Comma) },
-            { text: 'ahk_id', scopes: name(scopeName, RuleName.UnquotedString, StyleName.Strong) },
-            { text: '%', scopes: name(scopeName, RuleName.PercentBegin) },
-            { text: 'ctrlHwnd', scopes: name(scopeName, RuleName.Variable) },
-            { text: '%', scopes: name(scopeName, RuleName.PercentEnd) },
-            { text: '; comment', scopes: name(scopeName, RuleName.InLineComment) },
-
-            { text: 'Control', scopes: name(scopeName, RuleName.CommandName) },
-            { text: ',', scopes: name(scopeName, RuleName.Comma) },
-            { text: 'Check', scopes: name(scopeName, RuleName.SubCommandName) },
-            { text: ',', scopes: name(scopeName, RuleName.Comma) },
-            { text: ',', scopes: name(scopeName, RuleName.Comma) },
-            { text: '%', scopes: name(scopeName, RuleName.PercentExpressionBegin) },
-            { text: '"', scopes: name(scopeName, RuleName.DoubleString, RuleDescriptor.Begin) },
-            { text: 'ahk_id', scopes: name(scopeName, RuleName.DoubleString) },
-            { text: '"', scopes: name(scopeName, RuleName.DoubleString, RuleDescriptor.End) },
-            { text: 'ctrlHwnd', scopes: name(scopeName, RuleName.Variable) },
-            { text: '; comment', scopes: name(scopeName, RuleName.InLineComment) },
-          ];
-        })(),
-      ],
-    ],
-    [
-      dedent`
-        Control, Check,,, ahk_class %winHwnd%               ; comment
-        Control, Check,,, % "ahk_class" winHwnd             ; comment
-      `,
-      [
-        ...((): ParsedResult[] => {
-          winTitle;
-
-          return [
-            { text: 'Control', scopes: name(scopeName, RuleName.CommandName) },
-            { text: ',', scopes: name(scopeName, RuleName.Comma) },
-            { text: 'Check', scopes: name(scopeName, RuleName.SubCommandName) },
-            { text: ',', scopes: name(scopeName, RuleName.Comma) },
-            { text: ',', scopes: name(scopeName, RuleName.Comma) },
-            { text: ',', scopes: name(scopeName, RuleName.Comma) },
-            { text: 'ahk_class', scopes: name(scopeName, RuleName.UnquotedString, StyleName.Strong) },
-            { text: '%', scopes: name(scopeName, RuleName.PercentBegin) },
-            { text: 'winHwnd', scopes: name(scopeName, RuleName.Variable) },
-            { text: '%', scopes: name(scopeName, RuleName.PercentEnd) },
-            { text: '; comment', scopes: name(scopeName, RuleName.InLineComment) },
-
-            { text: 'Control', scopes: name(scopeName, RuleName.CommandName) },
-            { text: ',', scopes: name(scopeName, RuleName.Comma) },
-            { text: 'Check', scopes: name(scopeName, RuleName.SubCommandName) },
-            { text: ',', scopes: name(scopeName, RuleName.Comma) },
-            { text: ',', scopes: name(scopeName, RuleName.Comma) },
-            { text: ',', scopes: name(scopeName, RuleName.Comma) },
-            { text: '%', scopes: name(scopeName, RuleName.PercentExpressionBegin) },
-            { text: '"', scopes: name(scopeName, RuleName.DoubleString, RuleDescriptor.Begin) },
-            { text: 'ahk_class', scopes: name(scopeName, RuleName.DoubleString) },
-            { text: '"', scopes: name(scopeName, RuleName.DoubleString, RuleDescriptor.End) },
-            { text: 'winHwnd', scopes: name(scopeName, RuleName.Variable) },
-            { text: '; comment', scopes: name(scopeName, RuleName.InLineComment) },
-          ];
-        })(),
-      ],
-    ],
-    [
-      dedent`
-        ControlGet, output    ; comment
-      `,
-      [
-        ...((): ParsedResult[] => {
-          output;
-
-          return [
-            { text: 'ControlGet', scopes: name(scopeName, RuleName.CommandName) },
-            { text: ',', scopes: name(scopeName, RuleName.Comma) },
-            { text: 'output', scopes: name(scopeName, RuleName.Variable) },
-            { text: '; comment', scopes: name(scopeName, RuleName.InLineComment) },
-          ];
-        })(),
-      ],
-    ],
-    [
-      dedent`
-        ControlGet,, a, b, c      ; comment
-        ControlGet,, % a, b, c    ; comment
-      `,
-      [
-        ...((): ParsedResult[] => {
-          restParams;
-
-          return [
-            { text: 'ControlGet', scopes: name(scopeName, RuleName.CommandName) },
-            { text: ',', scopes: name(scopeName, RuleName.Comma) },
-            { text: ',', scopes: name(scopeName, RuleName.Comma) },
-            { text: 'a', scopes: name(scopeName, RuleName.UnquotedString) },
-            { text: ',', scopes: name(scopeName, RuleName.Comma) },
-            { text: 'b', scopes: name(scopeName, RuleName.UnquotedString) },
-            { text: ',', scopes: name(scopeName, RuleName.Comma) },
-            { text: 'c', scopes: name(scopeName, RuleName.UnquotedString) },
-            { text: '; comment', scopes: name(scopeName, RuleName.InLineComment) },
-
-            { text: 'ControlGet', scopes: name(scopeName, RuleName.CommandName) },
-            { text: ',', scopes: name(scopeName, RuleName.Comma) },
-            { text: ',', scopes: name(scopeName, RuleName.Comma) },
-            { text: '%', scopes: name(scopeName, RuleName.PercentExpressionBegin) },
-            { text: 'a', scopes: name(scopeName, RuleName.Variable) },
-            { text: ',', scopes: name(scopeName, RuleName.Comma) },
-            { text: 'b', scopes: name(scopeName, RuleName.UnquotedString) },
-            { text: ',', scopes: name(scopeName, RuleName.Comma) },
-            { text: 'c', scopes: name(scopeName, RuleName.UnquotedString) },
-            { text: '; comment', scopes: name(scopeName, RuleName.InLineComment) },
-          ];
-        })(),
-      ],
-    ],
-    [
-      dedent`
-        ControlSend,, +!#{Up}                 ; comment
-        ControlSend,, +!#{Tab Up}             ; comment
-        ControlSend,, +!#{Tab Down}           ; comment
-        ControlSend,, +!#{Tab DownTemp}       ; comment
-        ControlSend,, +!#{Tab 5}              ; comment
-        ControlSend,, {Click 100 100 Left}    ; comment
-        ControlSend,, {Blind}+!#{Up}          ; comment
-        ControlSend,, {Raw}+!#{Up}            ; comment
-        ControlSend,, {Raw}line 1\`nline 2    ; comment
-        ControlSend,, {Raw}%a%bc              ; comment
-        ControlSend,, {Text}+!#{Up}           ; comment
-        ControlSend,, {Text}line 1\`nline 2   ; comment
-        ControlSend,, {Text}%a%bc             ; comment
-      `,
-      [
-        ...((): ParsedResult[] => {
-          sendKeys;
-
-          return [
-            { text: 'ControlSend', scopes: name(scopeName, RuleName.CommandName) },
-            { text: ',', scopes: name(scopeName, RuleName.Comma) },
-            { text: ',', scopes: name(scopeName, RuleName.Comma) },
-            { text: '+!#', scopes: name(scopeName, RuleName.UnquotedString, StyleName.Strong) },
-            { text: '{Up}', scopes: name(scopeName, RuleName.UnquotedString, StyleName.Strong) },
-            { text: '; comment', scopes: name(scopeName, RuleName.InLineComment) },
-
-            ...[ 'Up', 'Down', 'DownTemp' ].flatMap((word) => {
               return [
+                { text: 'Control', scopes: name(scopeName, RuleName.CommandName) },
+                { text: ',', scopes: name(scopeName, RuleName.Comma) },
+                { text: 'Check', scopes: name(scopeName, RuleName.SubCommandName) },
+                { text: ',', scopes: name(scopeName, RuleName.Comma) },
+                { text: ',', scopes: name(scopeName, RuleName.Comma) },
+                { text: 'ahk_id', scopes: name(scopeName, RuleName.UnquotedString, StyleName.Strong) },
+                { text: '%', scopes: name(scopeName, RuleName.PercentBegin) },
+                { text: 'ctrlHwnd', scopes: name(scopeName, RuleName.Variable) },
+                { text: '%', scopes: name(scopeName, RuleName.PercentEnd) },
+                { text: '; comment', scopes: name(scopeName, RuleName.InLineComment) },
+
+                { text: 'Control', scopes: name(scopeName, RuleName.CommandName) },
+                { text: ',', scopes: name(scopeName, RuleName.Comma) },
+                { text: 'Check', scopes: name(scopeName, RuleName.SubCommandName) },
+                { text: ',', scopes: name(scopeName, RuleName.Comma) },
+                { text: ',', scopes: name(scopeName, RuleName.Comma) },
+                { text: '%', scopes: name(scopeName, RuleName.PercentExpressionBegin) },
+                { text: '"', scopes: name(scopeName, RuleName.DoubleString, RuleDescriptor.Begin) },
+                { text: 'ahk_id', scopes: name(scopeName, RuleName.DoubleString) },
+                { text: '"', scopes: name(scopeName, RuleName.DoubleString, RuleDescriptor.End) },
+                { text: 'ctrlHwnd', scopes: name(scopeName, RuleName.Variable) },
+                { text: '; comment', scopes: name(scopeName, RuleName.InLineComment) },
+              ];
+            })(),
+          ],
+        ],
+        [
+          dedent`
+            Control, Check,,, ahk_class %winHwnd%               ; comment
+            Control, Check,,, % "ahk_class" winHwnd             ; comment
+          `,
+          [
+            ...((): ParsedResult[] => {
+              winTitle;
+
+              return [
+                { text: 'Control', scopes: name(scopeName, RuleName.CommandName) },
+                { text: ',', scopes: name(scopeName, RuleName.Comma) },
+                { text: 'Check', scopes: name(scopeName, RuleName.SubCommandName) },
+                { text: ',', scopes: name(scopeName, RuleName.Comma) },
+                { text: ',', scopes: name(scopeName, RuleName.Comma) },
+                { text: ',', scopes: name(scopeName, RuleName.Comma) },
+                { text: 'ahk_class', scopes: name(scopeName, RuleName.UnquotedString, StyleName.Strong) },
+                { text: '%', scopes: name(scopeName, RuleName.PercentBegin) },
+                { text: 'winHwnd', scopes: name(scopeName, RuleName.Variable) },
+                { text: '%', scopes: name(scopeName, RuleName.PercentEnd) },
+                { text: '; comment', scopes: name(scopeName, RuleName.InLineComment) },
+
+                { text: 'Control', scopes: name(scopeName, RuleName.CommandName) },
+                { text: ',', scopes: name(scopeName, RuleName.Comma) },
+                { text: 'Check', scopes: name(scopeName, RuleName.SubCommandName) },
+                { text: ',', scopes: name(scopeName, RuleName.Comma) },
+                { text: ',', scopes: name(scopeName, RuleName.Comma) },
+                { text: ',', scopes: name(scopeName, RuleName.Comma) },
+                { text: '%', scopes: name(scopeName, RuleName.PercentExpressionBegin) },
+                { text: '"', scopes: name(scopeName, RuleName.DoubleString, RuleDescriptor.Begin) },
+                { text: 'ahk_class', scopes: name(scopeName, RuleName.DoubleString) },
+                { text: '"', scopes: name(scopeName, RuleName.DoubleString, RuleDescriptor.End) },
+                { text: 'winHwnd', scopes: name(scopeName, RuleName.Variable) },
+                { text: '; comment', scopes: name(scopeName, RuleName.InLineComment) },
+              ];
+            })(),
+          ],
+        ],
+        [
+          dedent`
+            ControlGet, output    ; comment
+          `,
+          [
+            ...((): ParsedResult[] => {
+              output;
+
+              return [
+                { text: 'ControlGet', scopes: name(scopeName, RuleName.CommandName) },
+                { text: ',', scopes: name(scopeName, RuleName.Comma) },
+                { text: 'output', scopes: name(scopeName, RuleName.Variable) },
+                { text: '; comment', scopes: name(scopeName, RuleName.InLineComment) },
+              ];
+            })(),
+          ],
+        ],
+        [
+          dedent`
+            ControlGet,, a, b, c      ; comment
+            ControlGet,, % a, b, c    ; comment
+          `,
+          [
+            ...((): ParsedResult[] => {
+              restParams;
+
+              return [
+                { text: 'ControlGet', scopes: name(scopeName, RuleName.CommandName) },
+                { text: ',', scopes: name(scopeName, RuleName.Comma) },
+                { text: ',', scopes: name(scopeName, RuleName.Comma) },
+                { text: 'a', scopes: name(scopeName, RuleName.UnquotedString) },
+                { text: ',', scopes: name(scopeName, RuleName.Comma) },
+                { text: 'b', scopes: name(scopeName, RuleName.UnquotedString) },
+                { text: ',', scopes: name(scopeName, RuleName.Comma) },
+                { text: 'c', scopes: name(scopeName, RuleName.UnquotedString) },
+                { text: '; comment', scopes: name(scopeName, RuleName.InLineComment) },
+
+                { text: 'ControlGet', scopes: name(scopeName, RuleName.CommandName) },
+                { text: ',', scopes: name(scopeName, RuleName.Comma) },
+                { text: ',', scopes: name(scopeName, RuleName.Comma) },
+                { text: '%', scopes: name(scopeName, RuleName.PercentExpressionBegin) },
+                { text: 'a', scopes: name(scopeName, RuleName.Variable) },
+                { text: ',', scopes: name(scopeName, RuleName.Comma) },
+                { text: 'b', scopes: name(scopeName, RuleName.UnquotedString) },
+                { text: ',', scopes: name(scopeName, RuleName.Comma) },
+                { text: 'c', scopes: name(scopeName, RuleName.UnquotedString) },
+                { text: '; comment', scopes: name(scopeName, RuleName.InLineComment) },
+              ];
+            })(),
+          ],
+        ],
+        [
+          dedent`
+            ControlSend,, +!#{Up}                 ; comment
+            ControlSend,, +!#{Tab Up}             ; comment
+            ControlSend,, +!#{Tab Down}           ; comment
+            ControlSend,, +!#{Tab DownTemp}       ; comment
+            ControlSend,, +!#{Tab 5}              ; comment
+            ControlSend,, {Click 100 100 Left}    ; comment
+            ControlSend,, {Blind}+!#{Up}          ; comment
+            ControlSend,, {Raw}+!#{Up}            ; comment
+            ControlSend,, {Raw}line 1\`nline 2    ; comment
+            ControlSend,, {Raw}%a%bc              ; comment
+            ControlSend,, {Text}+!#{Up}           ; comment
+            ControlSend,, {Text}line 1\`nline 2   ; comment
+            ControlSend,, {Text}%a%bc             ; comment
+          `,
+          [
+            ...((): ParsedResult[] => {
+              sendKeys;
+
+              return [
+                { text: 'ControlSend', scopes: name(scopeName, RuleName.CommandName) },
+                { text: ',', scopes: name(scopeName, RuleName.Comma) },
+                { text: ',', scopes: name(scopeName, RuleName.Comma) },
+                { text: '+!#', scopes: name(scopeName, RuleName.UnquotedString, StyleName.Strong) },
+                { text: '{Up}', scopes: name(scopeName, RuleName.UnquotedString, StyleName.Strong) },
+                { text: '; comment', scopes: name(scopeName, RuleName.InLineComment) },
+
+                ...[ 'Up', 'Down', 'DownTemp' ].flatMap((word) => {
+                  return [
+                    { text: 'ControlSend', scopes: name(scopeName, RuleName.CommandName) },
+                    { text: ',', scopes: name(scopeName, RuleName.Comma) },
+                    { text: ',', scopes: name(scopeName, RuleName.Comma) },
+                    { text: '+!#', scopes: name(scopeName, RuleName.UnquotedString, StyleName.Strong) },
+                    { text: '{', scopes: name(scopeName, RuleName.UnquotedString, StyleName.Strong) },
+                    { text: 'Tab', scopes: name(scopeName, RuleName.UnquotedString, StyleName.Strong) },
+                    { text: `${word}}`, scopes: name(scopeName, RuleName.UnquotedString, StyleName.Strong) },
+                    { text: '; comment', scopes: name(scopeName, RuleName.InLineComment) },
+                  ];
+                }),
+
                 { text: 'ControlSend', scopes: name(scopeName, RuleName.CommandName) },
                 { text: ',', scopes: name(scopeName, RuleName.Comma) },
                 { text: ',', scopes: name(scopeName, RuleName.Comma) },
                 { text: '+!#', scopes: name(scopeName, RuleName.UnquotedString, StyleName.Strong) },
                 { text: '{', scopes: name(scopeName, RuleName.UnquotedString, StyleName.Strong) },
                 { text: 'Tab', scopes: name(scopeName, RuleName.UnquotedString, StyleName.Strong) },
-                { text: `${word}}`, scopes: name(scopeName, RuleName.UnquotedString, StyleName.Strong) },
-                { text: '; comment', scopes: name(scopeName, RuleName.InLineComment) },
-              ];
-            }),
-
-            { text: 'ControlSend', scopes: name(scopeName, RuleName.CommandName) },
-            { text: ',', scopes: name(scopeName, RuleName.Comma) },
-            { text: ',', scopes: name(scopeName, RuleName.Comma) },
-            { text: '+!#', scopes: name(scopeName, RuleName.UnquotedString, StyleName.Strong) },
-            { text: '{', scopes: name(scopeName, RuleName.UnquotedString, StyleName.Strong) },
-            { text: 'Tab', scopes: name(scopeName, RuleName.UnquotedString, StyleName.Strong) },
-            { text: '5}', scopes: name(scopeName, RuleName.UnquotedString, StyleName.Strong) },
-            { text: '; comment', scopes: name(scopeName, RuleName.InLineComment) },
-
-            { text: 'ControlSend', scopes: name(scopeName, RuleName.CommandName) },
-            { text: ',', scopes: name(scopeName, RuleName.Comma) },
-            { text: ',', scopes: name(scopeName, RuleName.Comma) },
-            { text: '{', scopes: name(scopeName, RuleName.UnquotedString, StyleName.Strong) },
-            { text: 'Click', scopes: name(scopeName, RuleName.UnquotedString, StyleName.Strong) },
-            { text: '100', scopes: name(scopeName, RuleName.UnquotedString, StyleName.Strong) },
-            { text: '100', scopes: name(scopeName, RuleName.UnquotedString, StyleName.Strong) },
-            { text: 'Left', scopes: name(scopeName, RuleName.UnquotedString, StyleName.Strong) },
-            { text: '}', scopes: name(scopeName, RuleName.UnquotedString, StyleName.Strong) },
-            { text: '; comment', scopes: name(scopeName, RuleName.InLineComment) },
-
-            { text: 'ControlSend', scopes: name(scopeName, RuleName.CommandName) },
-            { text: ',', scopes: name(scopeName, RuleName.Comma) },
-            { text: ',', scopes: name(scopeName, RuleName.Comma) },
-            { text: '{Blind}', scopes: name(scopeName, RuleName.UnquotedString, StyleName.Strong) },
-            { text: '+!#', scopes: name(scopeName, RuleName.UnquotedString, StyleName.Strong) },
-            { text: '{Up}', scopes: name(scopeName, RuleName.UnquotedString, StyleName.Strong) },
-            { text: '; comment', scopes: name(scopeName, RuleName.InLineComment) },
-
-            ...[ '{Raw}', '{Text}' ].flatMap((mode) => {
-              return [
-                { text: 'ControlSend', scopes: name(scopeName, RuleName.CommandName) },
-                { text: ',', scopes: name(scopeName, RuleName.Comma) },
-                { text: ',', scopes: name(scopeName, RuleName.Comma) },
-                { text: mode, scopes: name(scopeName, RuleName.UnquotedString, StyleName.Strong) },
-                { text: '+!#{Up}', scopes: name(scopeName, RuleName.UnquotedString) },
+                { text: '5}', scopes: name(scopeName, RuleName.UnquotedString, StyleName.Strong) },
                 { text: '; comment', scopes: name(scopeName, RuleName.InLineComment) },
 
                 { text: 'ControlSend', scopes: name(scopeName, RuleName.CommandName) },
                 { text: ',', scopes: name(scopeName, RuleName.Comma) },
                 { text: ',', scopes: name(scopeName, RuleName.Comma) },
-                { text: mode, scopes: name(scopeName, RuleName.UnquotedString, StyleName.Strong) },
-                { text: `line 1`, scopes: name(scopeName, RuleName.UnquotedString) },
-                { text: `\`n`, scopes: name(scopeName, RuleName.UnquotedString, StyleName.Escape) },
-                { text: `line 2`, scopes: name(scopeName, RuleName.UnquotedString) },
+                { text: '{', scopes: name(scopeName, RuleName.UnquotedString, StyleName.Strong) },
+                { text: 'Click', scopes: name(scopeName, RuleName.UnquotedString, StyleName.Strong) },
+                { text: '100', scopes: name(scopeName, RuleName.UnquotedString, StyleName.Strong) },
+                { text: '100', scopes: name(scopeName, RuleName.UnquotedString, StyleName.Strong) },
+                { text: 'Left', scopes: name(scopeName, RuleName.UnquotedString, StyleName.Strong) },
+                { text: '}', scopes: name(scopeName, RuleName.UnquotedString, StyleName.Strong) },
                 { text: '; comment', scopes: name(scopeName, RuleName.InLineComment) },
 
                 { text: 'ControlSend', scopes: name(scopeName, RuleName.CommandName) },
                 { text: ',', scopes: name(scopeName, RuleName.Comma) },
                 { text: ',', scopes: name(scopeName, RuleName.Comma) },
-                { text: mode, scopes: name(scopeName, RuleName.UnquotedString, StyleName.Strong) },
-                { text: `%`, scopes: name(scopeName, RuleName.PercentBegin) },
-                { text: `a`, scopes: name(scopeName, RuleName.Variable) },
-                { text: `%`, scopes: name(scopeName, RuleName.PercentEnd) },
-                { text: 'bc', scopes: name(scopeName, RuleName.UnquotedString) },
+                { text: '{Blind}', scopes: name(scopeName, RuleName.UnquotedString, StyleName.Strong) },
+                { text: '+!#', scopes: name(scopeName, RuleName.UnquotedString, StyleName.Strong) },
+                { text: '{Up}', scopes: name(scopeName, RuleName.UnquotedString, StyleName.Strong) },
                 { text: '; comment', scopes: name(scopeName, RuleName.InLineComment) },
+
+                ...[ '{Raw}', '{Text}' ].flatMap((mode) => {
+                  return [
+                    { text: 'ControlSend', scopes: name(scopeName, RuleName.CommandName) },
+                    { text: ',', scopes: name(scopeName, RuleName.Comma) },
+                    { text: ',', scopes: name(scopeName, RuleName.Comma) },
+                    { text: mode, scopes: name(scopeName, RuleName.UnquotedString, StyleName.Strong) },
+                    { text: '+!#{Up}', scopes: name(scopeName, RuleName.UnquotedString) },
+                    { text: '; comment', scopes: name(scopeName, RuleName.InLineComment) },
+
+                    { text: 'ControlSend', scopes: name(scopeName, RuleName.CommandName) },
+                    { text: ',', scopes: name(scopeName, RuleName.Comma) },
+                    { text: ',', scopes: name(scopeName, RuleName.Comma) },
+                    { text: mode, scopes: name(scopeName, RuleName.UnquotedString, StyleName.Strong) },
+                    { text: `line 1`, scopes: name(scopeName, RuleName.UnquotedString) },
+                    { text: `\`n`, scopes: name(scopeName, RuleName.UnquotedString, StyleName.Escape) },
+                    { text: `line 2`, scopes: name(scopeName, RuleName.UnquotedString) },
+                    { text: '; comment', scopes: name(scopeName, RuleName.InLineComment) },
+
+                    { text: 'ControlSend', scopes: name(scopeName, RuleName.CommandName) },
+                    { text: ',', scopes: name(scopeName, RuleName.Comma) },
+                    { text: ',', scopes: name(scopeName, RuleName.Comma) },
+                    { text: mode, scopes: name(scopeName, RuleName.UnquotedString, StyleName.Strong) },
+                    { text: `%`, scopes: name(scopeName, RuleName.PercentBegin) },
+                    { text: `a`, scopes: name(scopeName, RuleName.Variable) },
+                    { text: `%`, scopes: name(scopeName, RuleName.PercentEnd) },
+                    { text: 'bc', scopes: name(scopeName, RuleName.UnquotedString) },
+                    { text: '; comment', scopes: name(scopeName, RuleName.InLineComment) },
+                  ];
+                }),
               ];
-            }),
-          ];
-        })(),
-      ],
-    ],
-    [
-      dedent`
-        CoordMode, ToolTip          ; comment
-        CoordMode, Pixel            ; comment
-        CoordMode, Mouse            ; comment
-        CoordMode, Caret            ; comment
-        CoordMode, Menu             ; comment
-        CoordMode, Invalid          ; comment
-        CoordMode, MenuInvalid      ; comment
-
-        CoordMode, %var%            ; comment
-        CoordMode, % expression     ; comment
-      `,
-      [
-        ...((): ParsedResult[] => {
-          keywordOnly;
-          return [
-            ...[ 'ToolTip', 'Pixel', 'Mouse', 'Caret', 'Menu' ].flatMap((word) => {
-              return [
-                { text: 'CoordMode', scopes: name(scopeName, RuleName.CommandName) },
-                { text: ',', scopes: name(scopeName, RuleName.Comma) },
-                { text: word, scopes: name(scopeName, RuleName.UnquotedString, StyleName.Strong) },
-                { text: '; comment', scopes: name(scopeName, RuleName.InLineComment) },
-              ];
-            }),
-
-            ...[ 'Invalid', 'MenuInvalid' ].flatMap((word) => {
-              return [
-                { text: 'CoordMode', scopes: name(scopeName, RuleName.CommandName) },
-                { text: ',', scopes: name(scopeName, RuleName.Comma) },
-                { text: word, scopes: name(scopeName, RuleName.UnquotedString, StyleName.Invalid) },
-                { text: '; comment', scopes: name(scopeName, RuleName.InLineComment) },
-              ];
-            }),
-
-            { text: 'CoordMode', scopes: name(scopeName, RuleName.CommandName) },
-            { text: ',', scopes: name(scopeName, RuleName.Comma) },
-            { text: '%', scopes: name(scopeName, RuleName.PercentBegin) },
-            { text: 'var', scopes: name(scopeName, RuleName.Variable) },
-            { text: '%', scopes: name(scopeName, RuleName.PercentEnd) },
-            { text: '; comment', scopes: name(scopeName, RuleName.InLineComment) },
-
-            { text: 'CoordMode', scopes: name(scopeName, RuleName.CommandName) },
-            { text: ',', scopes: name(scopeName, RuleName.Comma) },
-            { text: '%', scopes: name(scopeName, RuleName.PercentExpressionBegin) },
-            { text: 'expression', scopes: name(scopeName, RuleName.Variable) },
-            { text: '; comment', scopes: name(scopeName, RuleName.InLineComment) },
-          ];
-        })(),
-      ],
-    ],
-    [
-      dedent`
-        FileSetAttrib, RASHNOTU     ; comment
-        FileSetAttrib, +RA-SH^NO+U  ; comment
-      `,
-      [
-        ...((): ParsedResult[] => {
-          fileAttributes;
-
-          return [
-            { text: 'FileSetAttrib', scopes: name(scopeName, RuleName.CommandName) },
-            { text: ',', scopes: name(scopeName, RuleName.Comma) },
-            { text: 'R', scopes: name(scopeName, RuleName.UnquotedString, StyleName.Strong) },
-            { text: 'A', scopes: name(scopeName, RuleName.UnquotedString, StyleName.Strong) },
-            { text: 'S', scopes: name(scopeName, RuleName.UnquotedString, StyleName.Strong) },
-            { text: 'H', scopes: name(scopeName, RuleName.UnquotedString, StyleName.Strong) },
-            { text: 'N', scopes: name(scopeName, RuleName.UnquotedString, StyleName.Strong) },
-            { text: 'O', scopes: name(scopeName, RuleName.UnquotedString, StyleName.Strong) },
-            { text: 'T', scopes: name(scopeName, RuleName.UnquotedString, StyleName.Strong) },
-            { text: 'U', scopes: name(scopeName, RuleName.UnquotedString, StyleName.Invalid) },
-            { text: '; comment', scopes: name(scopeName, RuleName.InLineComment) },
-
-            { text: 'FileSetAttrib', scopes: name(scopeName, RuleName.CommandName) },
-            { text: ',', scopes: name(scopeName, RuleName.Comma) },
-            { text: '+R', scopes: name(scopeName, RuleName.UnquotedString, StyleName.Strong) },
-            { text: 'A', scopes: name(scopeName, RuleName.UnquotedString, StyleName.Strong) },
-            { text: '-S', scopes: name(scopeName, RuleName.UnquotedString, StyleName.Strong) },
-            { text: 'H', scopes: name(scopeName, RuleName.UnquotedString, StyleName.Strong) },
-            { text: '^N', scopes: name(scopeName, RuleName.UnquotedString, StyleName.Strong) },
-            { text: 'O', scopes: name(scopeName, RuleName.UnquotedString, StyleName.Strong) },
-            { text: '+', scopes: name(scopeName, RuleName.UnquotedString, StyleName.Invalid) },
-            { text: 'U', scopes: name(scopeName, RuleName.UnquotedString, StyleName.Invalid) },
-            { text: '; comment', scopes: name(scopeName, RuleName.InLineComment) },
-          ];
-        })(),
-      ],
-    ],
-    ...((): ExpectedTestData[] => {
-      guiOptions;
-
-      return [
-        [
-          dedent`
-            Gui, GuiName:New, +AlwaysOnTop Delimiter\`,   ; comment
-            Gui, GuiName: +AlwaysOnTop Delimiter,         ; comment
-          `,
-          [
-            { text: 'Gui', scopes: name(scopeName, RuleName.CommandName) },
-            { text: ',', scopes: name(scopeName, RuleName.Comma) },
-            { text: 'GuiName', scopes: name(scopeName, RuleName.LabelName) },
-            { text: ':', scopes: name(scopeName, RuleName.Colon) },
-            { text: 'New', scopes: name(scopeName, RuleName.SubCommandName) },
-            { text: ',', scopes: name(scopeName, RuleName.Comma) },
-            { text: '+AlwaysOnTop', scopes: name(scopeName, RuleName.UnquotedString, StyleName.Strong) },
-            { text: 'Delimiter`,', scopes: name(scopeName, RuleName.UnquotedString, StyleName.Strong) },
-            { text: '; comment', scopes: name(scopeName, RuleName.InLineComment) },
-
-            { text: 'Gui', scopes: name(scopeName, RuleName.CommandName) },
-            { text: ',', scopes: name(scopeName, RuleName.Comma) },
-            { text: 'GuiName', scopes: name(scopeName, RuleName.LabelName) },
-            { text: ':', scopes: name(scopeName, RuleName.Colon) },
-            { text: '+AlwaysOnTop', scopes: name(scopeName, RuleName.UnquotedString, StyleName.Strong) },
-            { text: 'Delimiter,', scopes: name(scopeName, RuleName.UnquotedString, StyleName.Strong) },
-            { text: '; comment', scopes: name(scopeName, RuleName.InLineComment) },
+            })(),
           ],
         ],
-      ];
-    })(),
-    ...((): ExpectedTestData[] => {
-      guiControlOptions;
-      flagedGuiControlOptions;
-
-      return [
         [
           dedent`
-            Gui, Add, ActiveX, X+M
-            GuiControl, +X+M
-            GuiControl, GuiName:+X+M
+            CoordMode, ToolTip          ; comment
+            CoordMode, Pixel            ; comment
+            CoordMode, Mouse            ; comment
+            CoordMode, Caret            ; comment
+            CoordMode, Menu             ; comment
+            CoordMode, Invalid          ; comment
+            CoordMode, MenuInvalid      ; comment
+
+            CoordMode, %var%            ; comment
+            CoordMode, % expression     ; comment
           `,
           [
-            { text: 'Gui', scopes: name(scopeName, RuleName.CommandName) },
-            { text: ',', scopes: name(scopeName, RuleName.Comma) },
-            { text: 'Add', scopes: name(scopeName, RuleName.SubCommandName) },
-            { text: ',', scopes: name(scopeName, RuleName.Comma) },
-            { text: 'ActiveX', scopes: name(scopeName, RuleName.UnquotedString, StyleName.Strong) },
-            { text: ',', scopes: name(scopeName, RuleName.Comma) },
-            { text: 'X+M', scopes: name(scopeName, RuleName.UnquotedString, StyleName.Strong) },
+            ...((): ParsedResult[] => {
+              keywordOnly;
+              return [
+                ...[ 'ToolTip', 'Pixel', 'Mouse', 'Caret', 'Menu' ].flatMap((word) => {
+                  return [
+                    { text: 'CoordMode', scopes: name(scopeName, RuleName.CommandName) },
+                    { text: ',', scopes: name(scopeName, RuleName.Comma) },
+                    { text: word, scopes: name(scopeName, RuleName.UnquotedString, StyleName.Strong) },
+                    { text: '; comment', scopes: name(scopeName, RuleName.InLineComment) },
+                  ];
+                }),
 
-            { text: 'GuiControl', scopes: name(scopeName, RuleName.CommandName) },
-            { text: ',', scopes: name(scopeName, RuleName.Comma) },
-            { text: '+X+M', scopes: name(scopeName, RuleName.UnquotedString, StyleName.Strong) },
+                ...[ 'Invalid', 'MenuInvalid' ].flatMap((word) => {
+                  return [
+                    { text: 'CoordMode', scopes: name(scopeName, RuleName.CommandName) },
+                    { text: ',', scopes: name(scopeName, RuleName.Comma) },
+                    { text: word, scopes: name(scopeName, RuleName.UnquotedString, StyleName.Invalid) },
+                    { text: '; comment', scopes: name(scopeName, RuleName.InLineComment) },
+                  ];
+                }),
 
-            { text: 'GuiControl', scopes: name(scopeName, RuleName.CommandName) },
-            { text: ',', scopes: name(scopeName, RuleName.Comma) },
-            { text: 'GuiName', scopes: name(scopeName, RuleName.LabelName) },
-            { text: ':', scopes: name(scopeName, RuleName.Colon) },
-            { text: '+X+M', scopes: name(scopeName, RuleName.UnquotedString, StyleName.Strong) },
+                { text: 'CoordMode', scopes: name(scopeName, RuleName.CommandName) },
+                { text: ',', scopes: name(scopeName, RuleName.Comma) },
+                { text: '%', scopes: name(scopeName, RuleName.PercentBegin) },
+                { text: 'var', scopes: name(scopeName, RuleName.Variable) },
+                { text: '%', scopes: name(scopeName, RuleName.PercentEnd) },
+                { text: '; comment', scopes: name(scopeName, RuleName.InLineComment) },
+
+                { text: 'CoordMode', scopes: name(scopeName, RuleName.CommandName) },
+                { text: ',', scopes: name(scopeName, RuleName.Comma) },
+                { text: '%', scopes: name(scopeName, RuleName.PercentExpressionBegin) },
+                { text: 'expression', scopes: name(scopeName, RuleName.Variable) },
+                { text: '; comment', scopes: name(scopeName, RuleName.InLineComment) },
+              ];
+            })(),
           ],
         ],
+        [
+          dedent`
+            FileSetAttrib, RASHNOTU     ; comment
+            FileSetAttrib, +RA-SH^NO+U  ; comment
+          `,
+          [
+            ...((): ParsedResult[] => {
+              fileAttributes;
+
+              return [
+                { text: 'FileSetAttrib', scopes: name(scopeName, RuleName.CommandName) },
+                { text: ',', scopes: name(scopeName, RuleName.Comma) },
+                { text: 'R', scopes: name(scopeName, RuleName.UnquotedString, StyleName.Strong) },
+                { text: 'A', scopes: name(scopeName, RuleName.UnquotedString, StyleName.Strong) },
+                { text: 'S', scopes: name(scopeName, RuleName.UnquotedString, StyleName.Strong) },
+                { text: 'H', scopes: name(scopeName, RuleName.UnquotedString, StyleName.Strong) },
+                { text: 'N', scopes: name(scopeName, RuleName.UnquotedString, StyleName.Strong) },
+                { text: 'O', scopes: name(scopeName, RuleName.UnquotedString, StyleName.Strong) },
+                { text: 'T', scopes: name(scopeName, RuleName.UnquotedString, StyleName.Strong) },
+                { text: 'U', scopes: name(scopeName, RuleName.UnquotedString, StyleName.Invalid) },
+                { text: '; comment', scopes: name(scopeName, RuleName.InLineComment) },
+
+                { text: 'FileSetAttrib', scopes: name(scopeName, RuleName.CommandName) },
+                { text: ',', scopes: name(scopeName, RuleName.Comma) },
+                { text: '+R', scopes: name(scopeName, RuleName.UnquotedString, StyleName.Strong) },
+                { text: 'A', scopes: name(scopeName, RuleName.UnquotedString, StyleName.Strong) },
+                { text: '-S', scopes: name(scopeName, RuleName.UnquotedString, StyleName.Strong) },
+                { text: 'H', scopes: name(scopeName, RuleName.UnquotedString, StyleName.Strong) },
+                { text: '^N', scopes: name(scopeName, RuleName.UnquotedString, StyleName.Strong) },
+                { text: 'O', scopes: name(scopeName, RuleName.UnquotedString, StyleName.Strong) },
+                { text: '+', scopes: name(scopeName, RuleName.UnquotedString, StyleName.Invalid) },
+                { text: 'U', scopes: name(scopeName, RuleName.UnquotedString, StyleName.Invalid) },
+                { text: '; comment', scopes: name(scopeName, RuleName.InLineComment) },
+              ];
+            })(),
+          ],
+        ],
+        ...((): ExpectedTestData[] => {
+          guiOptions;
+
+          return [
+            [
+              dedent`
+                Gui, GuiName:New, +AlwaysOnTop Delimiter\`,   ; comment
+                Gui, GuiName: +AlwaysOnTop Delimiter,         ; comment
+              `,
+              [
+                { text: 'Gui', scopes: name(scopeName, RuleName.CommandName) },
+                { text: ',', scopes: name(scopeName, RuleName.Comma) },
+                { text: 'GuiName', scopes: name(scopeName, RuleName.LabelName) },
+                { text: ':', scopes: name(scopeName, RuleName.Colon) },
+                { text: 'New', scopes: name(scopeName, RuleName.SubCommandName) },
+                { text: ',', scopes: name(scopeName, RuleName.Comma) },
+                { text: '+AlwaysOnTop', scopes: name(scopeName, RuleName.UnquotedString, StyleName.Strong) },
+                { text: 'Delimiter`,', scopes: name(scopeName, RuleName.UnquotedString, StyleName.Strong) },
+                { text: '; comment', scopes: name(scopeName, RuleName.InLineComment) },
+
+                { text: 'Gui', scopes: name(scopeName, RuleName.CommandName) },
+                { text: ',', scopes: name(scopeName, RuleName.Comma) },
+                { text: 'GuiName', scopes: name(scopeName, RuleName.LabelName) },
+                { text: ':', scopes: name(scopeName, RuleName.Colon) },
+                { text: '+AlwaysOnTop', scopes: name(scopeName, RuleName.UnquotedString, StyleName.Strong) },
+                { text: 'Delimiter,', scopes: name(scopeName, RuleName.UnquotedString, StyleName.Strong) },
+                { text: '; comment', scopes: name(scopeName, RuleName.InLineComment) },
+              ],
+            ],
+          ];
+        })(),
+        ...((): ExpectedTestData[] => {
+          guiControlOptions;
+          flagedGuiControlOptions;
+
+          return [
+            [
+              dedent`
+                Gui, Add, ActiveX, X+M
+                GuiControl, +X+M
+                GuiControl, GuiName:+X+M
+              `,
+              [
+                { text: 'Gui', scopes: name(scopeName, RuleName.CommandName) },
+                { text: ',', scopes: name(scopeName, RuleName.Comma) },
+                { text: 'Add', scopes: name(scopeName, RuleName.SubCommandName) },
+                { text: ',', scopes: name(scopeName, RuleName.Comma) },
+                { text: 'ActiveX', scopes: name(scopeName, RuleName.UnquotedString, StyleName.Strong) },
+                { text: ',', scopes: name(scopeName, RuleName.Comma) },
+                { text: 'X+M', scopes: name(scopeName, RuleName.UnquotedString, StyleName.Strong) },
+
+                { text: 'GuiControl', scopes: name(scopeName, RuleName.CommandName) },
+                { text: ',', scopes: name(scopeName, RuleName.Comma) },
+                { text: '+X+M', scopes: name(scopeName, RuleName.UnquotedString, StyleName.Strong) },
+
+                { text: 'GuiControl', scopes: name(scopeName, RuleName.CommandName) },
+                { text: ',', scopes: name(scopeName, RuleName.Comma) },
+                { text: 'GuiName', scopes: name(scopeName, RuleName.LabelName) },
+                { text: ':', scopes: name(scopeName, RuleName.Colon) },
+                { text: '+X+M', scopes: name(scopeName, RuleName.UnquotedString, StyleName.Strong) },
+              ],
+            ],
+          ];
+        })(),
       ];
     })(),
-    // #endregion arg
 
     // #region continuation
     ...((): ExpectedTestData[] => {
