@@ -36,17 +36,20 @@ export function createDirectiveStatementExpectedData(scopeName: ScopeName): Expe
     // (Fixed) Parenthesized expression containing directive names do not highlight subsequent statement correctly
     [
       dedent`
-        (#Requires )
-        local var := 1
+        (#Requires )                          ; comment
+        local var := 1                        ; comment
       `,
       [
         { text: '(', scopes: name(scopeName, RuleName.OpenParen) },
         { text: '#Requires', scopes: name(scopeName, RuleName.Variable) },
         { text: ')', scopes: name(scopeName, RuleName.CloseParen) },
+        { text: '; comment', scopes: name(scopeName, RuleName.InLineComment) },
+
         { text: 'local', scopes: name(scopeName, RuleName.Modifier) },
         { text: 'var', scopes: name(scopeName, RuleName.Variable) },
         { text: ':=', scopes: name(scopeName, RuleName.Operator) },
         { text: '1', scopes: name(scopeName, RuleName.Integer) },
+        { text: '; comment', scopes: name(scopeName, RuleName.InLineComment) },
       ],
     ],
   ];
