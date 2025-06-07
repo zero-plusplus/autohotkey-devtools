@@ -332,79 +332,238 @@ export function createLoopStatementExpectedData(scopeName: ScopeName): ExpectedT
       ];
     })(),
 
-    // #region [loop parse](https://www.autohotkey.com/docs/v2/lib/LoopParse.htm)
-    [
-      dedent`
-        Loop parse
-        {
-        }
-        Loop, Parse
-        {
-        }
-      `,
-      [
-        { text: 'Loop', scopes: name(scopeName, RuleName.ControlFlowKeyword) },
-        { text: 'parse', scopes: name(scopeName, RuleName.FlowSubCommandName) },
-        { text: '{', scopes: name(scopeName, RuleName.BlockBegin) },
-        { text: '}', scopes: name(scopeName, RuleName.BlockEnd) },
+    // [Loop Parse](https://www.autohotkey.com/docs/v2/lib/LoopParse.htm)
+    ...((): ExpectedTestData[] => {
+      return [
+        // one line
+        ...((): ExpectedTestData[] => {
+          return [
+            [
+              dedent`
+                loop parse {          ; comment
+                }                     ; comment
+              `,
+              [
+                { text: 'loop', scopes: name(scopeName, RuleName.ControlFlowKeyword) },
+                { text: 'parse', scopes: name(scopeName, RuleName.FlowSubCommandName) },
+                { text: '{', scopes: name(scopeName, RuleName.BlockBegin) },
+                { text: '; comment', scopes: name(scopeName, RuleName.InLineComment) },
 
-        { text: 'Loop', scopes: name(scopeName, RuleName.ControlFlowKeyword) },
-        { text: ',', scopes: name(scopeName, RuleName.Comma) },
-        { text: 'Parse', scopes: name(scopeName, RuleName.FlowSubCommandName) },
-        { text: '{', scopes: name(scopeName, RuleName.BlockBegin) },
-        { text: '}', scopes: name(scopeName, RuleName.BlockEnd) },
-      ],
-    ],
-    [
-      dedent`
-        Loop Parse
-        Loop Parse, input
-        Loop Parse, input, "CSV"
-        Loop Parse, input, "|"
-        Loop Parse, input, "CSV", "|"
-      `,
-      [
-        { text: 'Loop', scopes: name(scopeName, RuleName.ControlFlowKeyword) },
-        { text: 'Parse', scopes: name(scopeName, RuleName.FlowSubCommandName) },
+                { text: '}', scopes: name(scopeName, RuleName.BlockEnd) },
+                { text: '; comment', scopes: name(scopeName, RuleName.InLineComment) },
+              ],
+            ],
+            [
+              dedent`
+                Loop Parse {          ; comment
+                }                     ; comment
+              `,
+              [
+                { text: 'Loop', scopes: name(scopeName, RuleName.ControlFlowKeyword) },
+                { text: 'Parse', scopes: name(scopeName, RuleName.FlowSubCommandName) },
+                { text: '{', scopes: name(scopeName, RuleName.BlockBegin) },
+                { text: '; comment', scopes: name(scopeName, RuleName.InLineComment) },
 
-        { text: 'Loop', scopes: name(scopeName, RuleName.ControlFlowKeyword) },
-        { text: 'Parse', scopes: name(scopeName, RuleName.FlowSubCommandName) },
-        { text: ',', scopes: name(scopeName, RuleName.Comma) },
-        { text: 'input', scopes: name(scopeName, RuleName.Variable) },
+                { text: '}', scopes: name(scopeName, RuleName.BlockEnd) },
+                { text: '; comment', scopes: name(scopeName, RuleName.InLineComment) },
+              ],
+            ],
+            [
+              dedent`
+                Loop Parse, input {                     ; comment
+                }                                       ; comment
+                Loop Parse, input, "CSV" {              ; comment
+                }                                       ; comment
+                Loop Parse, input, "|" {                ; comment
+                }                                       ; comment
+                Loop Parse, input, "CSV", "|" {         ; comment
+                }                                       ; comment
+              `,
+              [
+                { text: 'Loop', scopes: name(scopeName, RuleName.ControlFlowKeyword) },
+                { text: 'Parse', scopes: name(scopeName, RuleName.FlowSubCommandName) },
+                { text: ',', scopes: name(scopeName, RuleName.Comma) },
+                { text: 'input', scopes: name(scopeName, RuleName.Variable) },
+                { text: '{', scopes: name(scopeName, RuleName.BlockBegin) },
+                { text: '; comment', scopes: name(scopeName, RuleName.InLineComment) },
 
-        { text: 'Loop', scopes: name(scopeName, RuleName.ControlFlowKeyword) },
-        { text: 'Parse', scopes: name(scopeName, RuleName.FlowSubCommandName) },
-        { text: ',', scopes: name(scopeName, RuleName.Comma) },
-        { text: 'input', scopes: name(scopeName, RuleName.Variable) },
-        { text: ',', scopes: name(scopeName, RuleName.Comma) },
-        { text: '"', scopes: name(scopeName, RuleName.DoubleString, RuleDescriptor.Begin) },
-        { text: 'CSV', scopes: name(scopeName, RuleName.DoubleString) },
-        { text: '"', scopes: name(scopeName, RuleName.DoubleString, RuleDescriptor.End) },
+                { text: '}', scopes: name(scopeName, RuleName.BlockEnd) },
+                { text: '; comment', scopes: name(scopeName, RuleName.InLineComment) },
 
-        { text: 'Loop', scopes: name(scopeName, RuleName.ControlFlowKeyword) },
-        { text: 'Parse', scopes: name(scopeName, RuleName.FlowSubCommandName) },
-        { text: ',', scopes: name(scopeName, RuleName.Comma) },
-        { text: 'input', scopes: name(scopeName, RuleName.Variable) },
-        { text: ',', scopes: name(scopeName, RuleName.Comma) },
-        { text: '"', scopes: name(scopeName, RuleName.DoubleString, RuleDescriptor.Begin) },
-        { text: '|', scopes: name(scopeName, RuleName.DoubleString) },
-        { text: '"', scopes: name(scopeName, RuleName.DoubleString, RuleDescriptor.End) },
+                { text: 'Loop', scopes: name(scopeName, RuleName.ControlFlowKeyword) },
+                { text: 'Parse', scopes: name(scopeName, RuleName.FlowSubCommandName) },
+                { text: ',', scopes: name(scopeName, RuleName.Comma) },
+                { text: 'input', scopes: name(scopeName, RuleName.Variable) },
+                { text: ',', scopes: name(scopeName, RuleName.Comma) },
+                { text: '"', scopes: name(scopeName, RuleName.DoubleString, RuleDescriptor.Begin) },
+                { text: 'CSV', scopes: name(scopeName, RuleName.DoubleString) },
+                { text: '"', scopes: name(scopeName, RuleName.DoubleString, RuleDescriptor.End) },
+                { text: '{', scopes: name(scopeName, RuleName.BlockBegin) },
+                { text: '; comment', scopes: name(scopeName, RuleName.InLineComment) },
 
-        { text: 'Loop', scopes: name(scopeName, RuleName.ControlFlowKeyword) },
-        { text: 'Parse', scopes: name(scopeName, RuleName.FlowSubCommandName) },
-        { text: ',', scopes: name(scopeName, RuleName.Comma) },
-        { text: 'input', scopes: name(scopeName, RuleName.Variable) },
-        { text: ',', scopes: name(scopeName, RuleName.Comma) },
-        { text: '"', scopes: name(scopeName, RuleName.DoubleString, RuleDescriptor.Begin) },
-        { text: 'CSV', scopes: name(scopeName, RuleName.DoubleString) },
-        { text: '"', scopes: name(scopeName, RuleName.DoubleString, RuleDescriptor.End) },
-        { text: ',', scopes: name(scopeName, RuleName.Comma) },
-        { text: '"', scopes: name(scopeName, RuleName.DoubleString, RuleDescriptor.Begin) },
-        { text: '|', scopes: name(scopeName, RuleName.DoubleString) },
-        { text: '"', scopes: name(scopeName, RuleName.DoubleString, RuleDescriptor.End) },
-      ],
-    ],
-    // #endregion loop parse
+                { text: '}', scopes: name(scopeName, RuleName.BlockEnd) },
+                { text: '; comment', scopes: name(scopeName, RuleName.InLineComment) },
+
+                { text: 'Loop', scopes: name(scopeName, RuleName.ControlFlowKeyword) },
+                { text: 'Parse', scopes: name(scopeName, RuleName.FlowSubCommandName) },
+                { text: ',', scopes: name(scopeName, RuleName.Comma) },
+                { text: 'input', scopes: name(scopeName, RuleName.Variable) },
+                { text: ',', scopes: name(scopeName, RuleName.Comma) },
+                { text: '"', scopes: name(scopeName, RuleName.DoubleString, RuleDescriptor.Begin) },
+                { text: '|', scopes: name(scopeName, RuleName.DoubleString) },
+                { text: '"', scopes: name(scopeName, RuleName.DoubleString, RuleDescriptor.End) },
+                { text: '{', scopes: name(scopeName, RuleName.BlockBegin) },
+                { text: '; comment', scopes: name(scopeName, RuleName.InLineComment) },
+
+                { text: '}', scopes: name(scopeName, RuleName.BlockEnd) },
+                { text: '; comment', scopes: name(scopeName, RuleName.InLineComment) },
+
+                { text: 'Loop', scopes: name(scopeName, RuleName.ControlFlowKeyword) },
+                { text: 'Parse', scopes: name(scopeName, RuleName.FlowSubCommandName) },
+                { text: ',', scopes: name(scopeName, RuleName.Comma) },
+                { text: 'input', scopes: name(scopeName, RuleName.Variable) },
+                { text: ',', scopes: name(scopeName, RuleName.Comma) },
+                { text: '"', scopes: name(scopeName, RuleName.DoubleString, RuleDescriptor.Begin) },
+                { text: 'CSV', scopes: name(scopeName, RuleName.DoubleString) },
+                { text: '"', scopes: name(scopeName, RuleName.DoubleString, RuleDescriptor.End) },
+                { text: ',', scopes: name(scopeName, RuleName.Comma) },
+                { text: '"', scopes: name(scopeName, RuleName.DoubleString, RuleDescriptor.Begin) },
+                { text: '|', scopes: name(scopeName, RuleName.DoubleString) },
+                { text: '"', scopes: name(scopeName, RuleName.DoubleString, RuleDescriptor.End) },
+                { text: '{', scopes: name(scopeName, RuleName.BlockBegin) },
+                { text: '; comment', scopes: name(scopeName, RuleName.InLineComment) },
+
+                { text: '}', scopes: name(scopeName, RuleName.BlockEnd) },
+                { text: '; comment', scopes: name(scopeName, RuleName.InLineComment) },
+              ],
+            ],
+          ];
+        })(),
+
+        // continuation
+        ...((): ExpectedTestData[] => {
+          return [
+            [
+              dedent`
+                loop parse        ; comment
+                {                 ; comment
+                }                 ; comment
+              `,
+              [
+                { text: 'loop', scopes: name(scopeName, RuleName.ControlFlowKeyword) },
+                { text: 'parse', scopes: name(scopeName, RuleName.FlowSubCommandName) },
+                { text: '; comment', scopes: name(scopeName, RuleName.InLineComment) },
+
+                { text: '{', scopes: name(scopeName, RuleName.BlockBegin) },
+                { text: '; comment', scopes: name(scopeName, RuleName.InLineComment) },
+
+                { text: '}', scopes: name(scopeName, RuleName.BlockEnd) },
+                { text: '; comment', scopes: name(scopeName, RuleName.InLineComment) },
+              ],
+            ],
+            [
+              dedent`
+                Loop Parse        ; comment
+                {                 ; comment
+                }                 ; comment
+              `,
+              [
+                { text: 'Loop', scopes: name(scopeName, RuleName.ControlFlowKeyword) },
+                { text: 'Parse', scopes: name(scopeName, RuleName.FlowSubCommandName) },
+                { text: '; comment', scopes: name(scopeName, RuleName.InLineComment) },
+
+                { text: '{', scopes: name(scopeName, RuleName.BlockBegin) },
+                { text: '; comment', scopes: name(scopeName, RuleName.InLineComment) },
+
+                { text: '}', scopes: name(scopeName, RuleName.BlockEnd) },
+                { text: '; comment', scopes: name(scopeName, RuleName.InLineComment) },
+              ],
+            ],
+            [
+              dedent`
+                Loop Parse, input                 ; comment
+                {                                 ; comment
+                }                                 ; comment
+                Loop Parse, input, "CSV"          ; comment
+                {                                 ; comment
+                }                                 ; comment
+                Loop Parse, input, "|"            ; comment
+                {                                 ; comment
+                }                                 ; comment
+                Loop Parse, input, "CSV", "|"     ; comment
+                {                                 ; comment
+                }                                 ; comment
+              `,
+              [
+                { text: 'Loop', scopes: name(scopeName, RuleName.ControlFlowKeyword) },
+                { text: 'Parse', scopes: name(scopeName, RuleName.FlowSubCommandName) },
+                { text: ',', scopes: name(scopeName, RuleName.Comma) },
+                { text: 'input', scopes: name(scopeName, RuleName.Variable) },
+                { text: '; comment', scopes: name(scopeName, RuleName.InLineComment) },
+
+                { text: '{', scopes: name(scopeName, RuleName.BlockBegin) },
+                { text: '; comment', scopes: name(scopeName, RuleName.InLineComment) },
+
+                { text: '}', scopes: name(scopeName, RuleName.BlockEnd) },
+                { text: '; comment', scopes: name(scopeName, RuleName.InLineComment) },
+
+                { text: 'Loop', scopes: name(scopeName, RuleName.ControlFlowKeyword) },
+                { text: 'Parse', scopes: name(scopeName, RuleName.FlowSubCommandName) },
+                { text: ',', scopes: name(scopeName, RuleName.Comma) },
+                { text: 'input', scopes: name(scopeName, RuleName.Variable) },
+                { text: ',', scopes: name(scopeName, RuleName.Comma) },
+                { text: '"', scopes: name(scopeName, RuleName.DoubleString, RuleDescriptor.Begin) },
+                { text: 'CSV', scopes: name(scopeName, RuleName.DoubleString) },
+                { text: '"', scopes: name(scopeName, RuleName.DoubleString, RuleDescriptor.End) },
+                { text: '; comment', scopes: name(scopeName, RuleName.InLineComment) },
+
+                { text: '{', scopes: name(scopeName, RuleName.BlockBegin) },
+                { text: '; comment', scopes: name(scopeName, RuleName.InLineComment) },
+
+                { text: '}', scopes: name(scopeName, RuleName.BlockEnd) },
+                { text: '; comment', scopes: name(scopeName, RuleName.InLineComment) },
+
+                { text: 'Loop', scopes: name(scopeName, RuleName.ControlFlowKeyword) },
+                { text: 'Parse', scopes: name(scopeName, RuleName.FlowSubCommandName) },
+                { text: ',', scopes: name(scopeName, RuleName.Comma) },
+                { text: 'input', scopes: name(scopeName, RuleName.Variable) },
+                { text: ',', scopes: name(scopeName, RuleName.Comma) },
+                { text: '"', scopes: name(scopeName, RuleName.DoubleString, RuleDescriptor.Begin) },
+                { text: '|', scopes: name(scopeName, RuleName.DoubleString) },
+                { text: '"', scopes: name(scopeName, RuleName.DoubleString, RuleDescriptor.End) },
+                { text: '; comment', scopes: name(scopeName, RuleName.InLineComment) },
+
+                { text: '{', scopes: name(scopeName, RuleName.BlockBegin) },
+                { text: '; comment', scopes: name(scopeName, RuleName.InLineComment) },
+
+                { text: '}', scopes: name(scopeName, RuleName.BlockEnd) },
+                { text: '; comment', scopes: name(scopeName, RuleName.InLineComment) },
+
+                { text: 'Loop', scopes: name(scopeName, RuleName.ControlFlowKeyword) },
+                { text: 'Parse', scopes: name(scopeName, RuleName.FlowSubCommandName) },
+                { text: ',', scopes: name(scopeName, RuleName.Comma) },
+                { text: 'input', scopes: name(scopeName, RuleName.Variable) },
+                { text: ',', scopes: name(scopeName, RuleName.Comma) },
+                { text: '"', scopes: name(scopeName, RuleName.DoubleString, RuleDescriptor.Begin) },
+                { text: 'CSV', scopes: name(scopeName, RuleName.DoubleString) },
+                { text: '"', scopes: name(scopeName, RuleName.DoubleString, RuleDescriptor.End) },
+                { text: ',', scopes: name(scopeName, RuleName.Comma) },
+                { text: '"', scopes: name(scopeName, RuleName.DoubleString, RuleDescriptor.Begin) },
+                { text: '|', scopes: name(scopeName, RuleName.DoubleString) },
+                { text: '"', scopes: name(scopeName, RuleName.DoubleString, RuleDescriptor.End) },
+                { text: '; comment', scopes: name(scopeName, RuleName.InLineComment) },
+
+                { text: '{', scopes: name(scopeName, RuleName.BlockBegin) },
+                { text: '; comment', scopes: name(scopeName, RuleName.InLineComment) },
+
+                { text: '}', scopes: name(scopeName, RuleName.BlockEnd) },
+                { text: '; comment', scopes: name(scopeName, RuleName.InLineComment) },
+              ],
+            ],
+          ];
+        })(),
+      ];
+    })(),
 
     // #region [loop read](https://www.autohotkey.com/docs/v2/lib/LoopRead.htm)
     [
