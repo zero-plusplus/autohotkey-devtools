@@ -10,7 +10,7 @@ export function createLoopStatementExpectedData(scopeName: ScopeName): ExpectedT
     // [Loop Until](https://www.autohotkey.com/docs/v2/lib/Until.htm)
     ...((): ExpectedTestData[] => {
       return [
-        // one line
+        // one true brace style
         ...((): ExpectedTestData[] => {
           return [
             [
@@ -67,7 +67,7 @@ export function createLoopStatementExpectedData(scopeName: ScopeName): ExpectedT
           ];
         })(),
 
-        // continuation
+        // K&R style
         ...((): ExpectedTestData[] => {
           return [
             [
@@ -119,7 +119,7 @@ export function createLoopStatementExpectedData(scopeName: ScopeName): ExpectedT
     // [Loop Files](https://www.autohotkey.com/docs/v2/lib/LoopFiles.htm)
     ...((): ExpectedTestData[] => {
       return [
-        // one line
+        // one true brace style
         ...((): ExpectedTestData[] => {
           return [
             [
@@ -211,7 +211,7 @@ export function createLoopStatementExpectedData(scopeName: ScopeName): ExpectedT
           ];
         })(),
 
-        // continuation
+        // K&R style
         ...((): ExpectedTestData[] => {
           return [
             [
@@ -335,7 +335,7 @@ export function createLoopStatementExpectedData(scopeName: ScopeName): ExpectedT
     // [Loop Parse](https://www.autohotkey.com/docs/v2/lib/LoopParse.htm)
     ...((): ExpectedTestData[] => {
       return [
-        // one line
+        // one true brace style
         ...((): ExpectedTestData[] => {
           return [
             [
@@ -440,7 +440,7 @@ export function createLoopStatementExpectedData(scopeName: ScopeName): ExpectedT
           ];
         })(),
 
-        // continuation
+        // K&R style
         ...((): ExpectedTestData[] => {
           return [
             [
@@ -568,7 +568,7 @@ export function createLoopStatementExpectedData(scopeName: ScopeName): ExpectedT
     // [Loop read](https://www.autohotkey.com/docs/v2/lib/LoopRead.htm)
     ...((): ExpectedTestData[] => {
       return [
-        // one line
+        // one true brace style
         ...((): ExpectedTestData[] => {
           return [
             [
@@ -654,7 +654,7 @@ export function createLoopStatementExpectedData(scopeName: ScopeName): ExpectedT
           ];
         })(),
 
-        // continuation
+        // K&R style
         ...((): ExpectedTestData[] => {
           return [
             [
@@ -757,70 +757,237 @@ export function createLoopStatementExpectedData(scopeName: ScopeName): ExpectedT
       ];
     })(),
 
-    // #region [loop reg](https://www.autohotkey.com/docs/v2/lib/LoopReg.htm)
-    [
-      dedent`
-        Loop reg
-        {
-        }
-        Loop, Reg
-        {
-        }
-      `,
-      [
-        { text: 'Loop', scopes: name(scopeName, RuleName.ControlFlowKeyword) },
-        { text: 'reg', scopes: name(scopeName, RuleName.FlowSubCommandName) },
-        { text: '{', scopes: name(scopeName, RuleName.BlockBegin) },
-        { text: '}', scopes: name(scopeName, RuleName.BlockEnd) },
+    // [Loop Reg](https://www.autohotkey.com/docs/v2/lib/LoopReg.htm)
+    ...((): ExpectedTestData[] => {
+      return [
+        // one true brace style
+        ...((): ExpectedTestData[] => {
+          return [
+            [
+              dedent`
+                loop reg {          ; comment
+                }                   ; comment
+              `,
+              [
+                { text: 'loop', scopes: name(scopeName, RuleName.ControlFlowKeyword) },
+                { text: 'reg', scopes: name(scopeName, RuleName.FlowSubCommandName) },
+                { text: '{', scopes: name(scopeName, RuleName.BlockBegin) },
+                { text: '; comment', scopes: name(scopeName, RuleName.InLineComment) },
 
-        { text: 'Loop', scopes: name(scopeName, RuleName.ControlFlowKeyword) },
-        { text: ',', scopes: name(scopeName, RuleName.Comma) },
-        { text: 'Reg', scopes: name(scopeName, RuleName.FlowSubCommandName) },
-        { text: '{', scopes: name(scopeName, RuleName.BlockBegin) },
-        { text: '}', scopes: name(scopeName, RuleName.BlockEnd) },
-      ],
-    ],
-    [
-      dedent`
-        Loop Reg
-        Loop Reg, "HKLM\\path\\to"
-        Loop Reg, "HKLM\\path\\to", "KVR"
-        Loop Reg, "HKLM\\path\\to", "_"
-      `,
-      [
-        { text: 'Loop', scopes: name(scopeName, RuleName.ControlFlowKeyword) },
-        { text: 'Reg', scopes: name(scopeName, RuleName.FlowSubCommandName) },
+                { text: '}', scopes: name(scopeName, RuleName.BlockEnd) },
+                { text: '; comment', scopes: name(scopeName, RuleName.InLineComment) },
+              ],
+            ],
+            [
+              dedent`
+                Loop Reg {          ; comment
+                }                   ; comment
+              `,
+              [
+                { text: 'Loop', scopes: name(scopeName, RuleName.ControlFlowKeyword) },
+                { text: 'Reg', scopes: name(scopeName, RuleName.FlowSubCommandName) },
+                { text: '{', scopes: name(scopeName, RuleName.BlockBegin) },
+                { text: '; comment', scopes: name(scopeName, RuleName.InLineComment) },
 
-        { text: 'Loop', scopes: name(scopeName, RuleName.ControlFlowKeyword) },
-        { text: 'Reg', scopes: name(scopeName, RuleName.FlowSubCommandName) },
-        { text: ',', scopes: name(scopeName, RuleName.Comma) },
-        { text: '"', scopes: name(scopeName, RuleName.DoubleString, RuleDescriptor.Begin) },
-        { text: 'HKLM\\path\\to', scopes: name(scopeName, RuleName.DoubleString) },
-        { text: '"', scopes: name(scopeName, RuleName.DoubleString, RuleDescriptor.End) },
+                { text: '}', scopes: name(scopeName, RuleName.BlockEnd) },
+                { text: '; comment', scopes: name(scopeName, RuleName.InLineComment) },
+              ],
+            ],
+            [
+              dedent`
+                Loop, Reg {                                 ; comment
+                }                                           ; comment
+                Loop, Reg, "HKLM\\path\\to" {               ; comment
+                }                                           ; comment
+                Loop, Reg, "HKLM\\path\\to", "KVR" {        ; comment
+                }                                           ; comment
+                Loop, Reg, "HKLM\\path\\to", "_" {          ; comment
+                }                                           ; comment
+              `,
+              [
+                { text: 'Loop', scopes: name(scopeName, RuleName.ControlFlowKeyword) },
+                { text: ',', scopes: name(scopeName, RuleName.Comma) },
+                { text: 'Reg', scopes: name(scopeName, RuleName.FlowSubCommandName) },
+                { text: '{', scopes: name(scopeName, RuleName.BlockBegin) },
+                { text: '; comment', scopes: name(scopeName, RuleName.InLineComment) },
 
-        { text: 'Loop', scopes: name(scopeName, RuleName.ControlFlowKeyword) },
-        { text: 'Reg', scopes: name(scopeName, RuleName.FlowSubCommandName) },
-        { text: ',', scopes: name(scopeName, RuleName.Comma) },
-        { text: '"', scopes: name(scopeName, RuleName.DoubleString, RuleDescriptor.Begin) },
-        { text: 'HKLM\\path\\to', scopes: name(scopeName, RuleName.DoubleString) },
-        { text: '"', scopes: name(scopeName, RuleName.DoubleString, RuleDescriptor.End) },
-        { text: ',', scopes: name(scopeName, RuleName.Comma) },
-        { text: '"', scopes: name(scopeName, RuleName.DoubleString, RuleDescriptor.Begin) },
-        { text: 'KVR', scopes: name(scopeName, RuleName.DoubleString) },
-        { text: '"', scopes: name(scopeName, RuleName.DoubleString, RuleDescriptor.End) },
+                { text: '}', scopes: name(scopeName, RuleName.BlockEnd) },
+                { text: '; comment', scopes: name(scopeName, RuleName.InLineComment) },
 
-        { text: 'Loop', scopes: name(scopeName, RuleName.ControlFlowKeyword) },
-        { text: 'Reg', scopes: name(scopeName, RuleName.FlowSubCommandName) },
-        { text: ',', scopes: name(scopeName, RuleName.Comma) },
-        { text: '"', scopes: name(scopeName, RuleName.DoubleString, RuleDescriptor.Begin) },
-        { text: 'HKLM\\path\\to', scopes: name(scopeName, RuleName.DoubleString) },
-        { text: '"', scopes: name(scopeName, RuleName.DoubleString, RuleDescriptor.End) },
-        { text: ',', scopes: name(scopeName, RuleName.Comma) },
-        { text: '"', scopes: name(scopeName, RuleName.DoubleString, RuleDescriptor.Begin) },
-        { text: '_', scopes: name(scopeName, RuleName.DoubleString) },
-        { text: '"', scopes: name(scopeName, RuleName.DoubleString, RuleDescriptor.End) },
-      ],
-    ],
-    // #endregion loop reg
+                { text: 'Loop', scopes: name(scopeName, RuleName.ControlFlowKeyword) },
+                { text: ',', scopes: name(scopeName, RuleName.Comma) },
+                { text: 'Reg', scopes: name(scopeName, RuleName.FlowSubCommandName) },
+                { text: ',', scopes: name(scopeName, RuleName.Comma) },
+                { text: '"', scopes: name(scopeName, RuleName.DoubleString, RuleDescriptor.Begin) },
+                { text: 'HKLM\\path\\to', scopes: name(scopeName, RuleName.DoubleString) },
+                { text: '"', scopes: name(scopeName, RuleName.DoubleString, RuleDescriptor.End) },
+                { text: '{', scopes: name(scopeName, RuleName.BlockBegin) },
+                { text: '; comment', scopes: name(scopeName, RuleName.InLineComment) },
+
+                { text: '}', scopes: name(scopeName, RuleName.BlockEnd) },
+                { text: '; comment', scopes: name(scopeName, RuleName.InLineComment) },
+
+                { text: 'Loop', scopes: name(scopeName, RuleName.ControlFlowKeyword) },
+                { text: ',', scopes: name(scopeName, RuleName.Comma) },
+                { text: 'Reg', scopes: name(scopeName, RuleName.FlowSubCommandName) },
+                { text: ',', scopes: name(scopeName, RuleName.Comma) },
+                { text: '"', scopes: name(scopeName, RuleName.DoubleString, RuleDescriptor.Begin) },
+                { text: 'HKLM\\path\\to', scopes: name(scopeName, RuleName.DoubleString) },
+                { text: '"', scopes: name(scopeName, RuleName.DoubleString, RuleDescriptor.End) },
+                { text: ',', scopes: name(scopeName, RuleName.Comma) },
+                { text: '"', scopes: name(scopeName, RuleName.DoubleString, RuleDescriptor.Begin) },
+                { text: 'KVR', scopes: name(scopeName, RuleName.DoubleString) },
+                { text: '"', scopes: name(scopeName, RuleName.DoubleString, RuleDescriptor.End) },
+                { text: '{', scopes: name(scopeName, RuleName.BlockBegin) },
+                { text: '; comment', scopes: name(scopeName, RuleName.InLineComment) },
+
+                { text: '}', scopes: name(scopeName, RuleName.BlockEnd) },
+                { text: '; comment', scopes: name(scopeName, RuleName.InLineComment) },
+
+                { text: 'Loop', scopes: name(scopeName, RuleName.ControlFlowKeyword) },
+                { text: ',', scopes: name(scopeName, RuleName.Comma) },
+                { text: 'Reg', scopes: name(scopeName, RuleName.FlowSubCommandName) },
+                { text: ',', scopes: name(scopeName, RuleName.Comma) },
+                { text: '"', scopes: name(scopeName, RuleName.DoubleString, RuleDescriptor.Begin) },
+                { text: 'HKLM\\path\\to', scopes: name(scopeName, RuleName.DoubleString) },
+                { text: '"', scopes: name(scopeName, RuleName.DoubleString, RuleDescriptor.End) },
+                { text: ',', scopes: name(scopeName, RuleName.Comma) },
+                { text: '"', scopes: name(scopeName, RuleName.DoubleString, RuleDescriptor.Begin) },
+                { text: '_', scopes: name(scopeName, RuleName.DoubleString) },
+                { text: '"', scopes: name(scopeName, RuleName.DoubleString, RuleDescriptor.End) },
+                { text: '{', scopes: name(scopeName, RuleName.BlockBegin) },
+                { text: '; comment', scopes: name(scopeName, RuleName.InLineComment) },
+
+                { text: '}', scopes: name(scopeName, RuleName.BlockEnd) },
+                { text: '; comment', scopes: name(scopeName, RuleName.InLineComment) },
+              ],
+            ],
+          ];
+        })(),
+
+        // K&R style
+        ...((): ExpectedTestData[] => {
+          return [
+            [
+              dedent`
+                loop reg        ; comment
+                {               ; comment
+                }               ; comment
+              `,
+              [
+                { text: 'loop', scopes: name(scopeName, RuleName.ControlFlowKeyword) },
+                { text: 'reg', scopes: name(scopeName, RuleName.FlowSubCommandName) },
+                { text: '; comment', scopes: name(scopeName, RuleName.InLineComment) },
+
+                { text: '{', scopes: name(scopeName, RuleName.BlockBegin) },
+                { text: '; comment', scopes: name(scopeName, RuleName.InLineComment) },
+
+                { text: '}', scopes: name(scopeName, RuleName.BlockEnd) },
+                { text: '; comment', scopes: name(scopeName, RuleName.InLineComment) },
+              ],
+            ],
+            [
+              dedent`
+                Loop Reg        ; comment
+                {               ; comment
+                }               ; comment
+              `,
+              [
+                { text: 'Loop', scopes: name(scopeName, RuleName.ControlFlowKeyword) },
+                { text: 'Reg', scopes: name(scopeName, RuleName.FlowSubCommandName) },
+                { text: '; comment', scopes: name(scopeName, RuleName.InLineComment) },
+
+                { text: '{', scopes: name(scopeName, RuleName.BlockBegin) },
+                { text: '; comment', scopes: name(scopeName, RuleName.InLineComment) },
+
+                { text: '}', scopes: name(scopeName, RuleName.BlockEnd) },
+                { text: '; comment', scopes: name(scopeName, RuleName.InLineComment) },
+              ],
+            ],
+            [
+              dedent`
+                Loop, Reg                                     ; comment
+                {                                             ; comment
+                }                                             ; comment
+                Loop, Reg, "HKLM\\path\\to"                   ; comment
+                {                                             ; comment
+                }                                             ; comment
+                Loop, Reg, "HKLM\\path\\to", "KVR"            ; comment
+                {                                             ; comment
+                }                                             ; comment
+                Loop, Reg, "HKLM\\path\\to", "_"              ; comment
+                {                                             ; comment
+                }                                             ; comment
+              `,
+              [
+                { text: 'Loop', scopes: name(scopeName, RuleName.ControlFlowKeyword) },
+                { text: ',', scopes: name(scopeName, RuleName.Comma) },
+                { text: 'Reg', scopes: name(scopeName, RuleName.FlowSubCommandName) },
+                { text: '; comment', scopes: name(scopeName, RuleName.InLineComment) },
+
+                { text: '{', scopes: name(scopeName, RuleName.BlockBegin) },
+                { text: '; comment', scopes: name(scopeName, RuleName.InLineComment) },
+
+                { text: '}', scopes: name(scopeName, RuleName.BlockEnd) },
+                { text: '; comment', scopes: name(scopeName, RuleName.InLineComment) },
+
+                { text: 'Loop', scopes: name(scopeName, RuleName.ControlFlowKeyword) },
+                { text: ',', scopes: name(scopeName, RuleName.Comma) },
+                { text: 'Reg', scopes: name(scopeName, RuleName.FlowSubCommandName) },
+                { text: ',', scopes: name(scopeName, RuleName.Comma) },
+                { text: '"', scopes: name(scopeName, RuleName.DoubleString, RuleDescriptor.Begin) },
+                { text: 'HKLM\\path\\to', scopes: name(scopeName, RuleName.DoubleString) },
+                { text: '"', scopes: name(scopeName, RuleName.DoubleString, RuleDescriptor.End) },
+                { text: '; comment', scopes: name(scopeName, RuleName.InLineComment) },
+
+                { text: '{', scopes: name(scopeName, RuleName.BlockBegin) },
+                { text: '; comment', scopes: name(scopeName, RuleName.InLineComment) },
+
+                { text: '}', scopes: name(scopeName, RuleName.BlockEnd) },
+                { text: '; comment', scopes: name(scopeName, RuleName.InLineComment) },
+
+                { text: 'Loop', scopes: name(scopeName, RuleName.ControlFlowKeyword) },
+                { text: ',', scopes: name(scopeName, RuleName.Comma) },
+                { text: 'Reg', scopes: name(scopeName, RuleName.FlowSubCommandName) },
+                { text: ',', scopes: name(scopeName, RuleName.Comma) },
+                { text: '"', scopes: name(scopeName, RuleName.DoubleString, RuleDescriptor.Begin) },
+                { text: 'HKLM\\path\\to', scopes: name(scopeName, RuleName.DoubleString) },
+                { text: '"', scopes: name(scopeName, RuleName.DoubleString, RuleDescriptor.End) },
+                { text: ',', scopes: name(scopeName, RuleName.Comma) },
+                { text: '"', scopes: name(scopeName, RuleName.DoubleString, RuleDescriptor.Begin) },
+                { text: 'KVR', scopes: name(scopeName, RuleName.DoubleString) },
+                { text: '"', scopes: name(scopeName, RuleName.DoubleString, RuleDescriptor.End) },
+                { text: '; comment', scopes: name(scopeName, RuleName.InLineComment) },
+
+                { text: '{', scopes: name(scopeName, RuleName.BlockBegin) },
+                { text: '; comment', scopes: name(scopeName, RuleName.InLineComment) },
+
+                { text: '}', scopes: name(scopeName, RuleName.BlockEnd) },
+                { text: '; comment', scopes: name(scopeName, RuleName.InLineComment) },
+
+                { text: 'Loop', scopes: name(scopeName, RuleName.ControlFlowKeyword) },
+                { text: ',', scopes: name(scopeName, RuleName.Comma) },
+                { text: 'Reg', scopes: name(scopeName, RuleName.FlowSubCommandName) },
+                { text: ',', scopes: name(scopeName, RuleName.Comma) },
+                { text: '"', scopes: name(scopeName, RuleName.DoubleString, RuleDescriptor.Begin) },
+                { text: 'HKLM\\path\\to', scopes: name(scopeName, RuleName.DoubleString) },
+                { text: '"', scopes: name(scopeName, RuleName.DoubleString, RuleDescriptor.End) },
+                { text: ',', scopes: name(scopeName, RuleName.Comma) },
+                { text: '"', scopes: name(scopeName, RuleName.DoubleString, RuleDescriptor.Begin) },
+                { text: '_', scopes: name(scopeName, RuleName.DoubleString) },
+                { text: '"', scopes: name(scopeName, RuleName.DoubleString, RuleDescriptor.End) },
+                { text: '; comment', scopes: name(scopeName, RuleName.InLineComment) },
+
+                { text: '{', scopes: name(scopeName, RuleName.BlockBegin) },
+                { text: '; comment', scopes: name(scopeName, RuleName.InLineComment) },
+
+                { text: '}', scopes: name(scopeName, RuleName.BlockEnd) },
+                { text: '; comment', scopes: name(scopeName, RuleName.InLineComment) },
+              ],
+            ],
+          ];
+        })(),
+      ];
+    })(),
   ];
 }
