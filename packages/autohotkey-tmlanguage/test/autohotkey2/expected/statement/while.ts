@@ -1,4 +1,4 @@
-import { dedent, repeatArray } from '@zero-plusplus/utilities/src';
+import { dedent } from '@zero-plusplus/utilities/src';
 import {
   name, RuleName,
   type ScopeName,
@@ -10,30 +10,96 @@ export function createWhileStatementExpectedData(scopeName: ScopeName): Expected
   return [
     ...common.createWhileStatementExpectedData(scopeName),
 
-    [
-      dedent`
-        while true {
-        }
-        else {
-        }
-        while true
-        {
-        }
-        else
-        {
-        }
-      `,
-      [
-        ...repeatArray(2, [
-          { text: 'while', scopes: name(scopeName, RuleName.ControlFlowKeyword) },
-          { text: 'true', scopes: name(scopeName, RuleName.KeywordLikeBuiltInVariable) },
-          { text: '{', scopes: name(scopeName, RuleName.BlockBegin) },
-          { text: '}', scopes: name(scopeName, RuleName.BlockEnd) },
-          { text: 'else', scopes: name(scopeName, RuleName.ControlFlowKeyword) },
-          { text: '{', scopes: name(scopeName, RuleName.BlockBegin) },
-          { text: '}', scopes: name(scopeName, RuleName.BlockEnd) },
-        ]),
-      ],
-    ],
+    // while-else
+    ...((): ExpectedTestData[] => {
+      return [
+        // one true brace style
+        ...((): ExpectedTestData[] => {
+          return [
+            [
+              dedent`
+                while true {        ; comment
+                } else {            ; comment
+                }                   ; comment
+              `,
+              [
+                { text: 'while', scopes: name(scopeName, RuleName.ControlFlowKeyword) },
+                { text: 'true', scopes: name(scopeName, RuleName.KeywordLikeBuiltInVariable) },
+                { text: '{', scopes: name(scopeName, RuleName.BlockBegin) },
+                { text: '; comment', scopes: name(scopeName, RuleName.InLineComment) },
+
+                { text: '}', scopes: name(scopeName, RuleName.BlockEnd) },
+                { text: 'else', scopes: name(scopeName, RuleName.ControlFlowKeyword) },
+                { text: '{', scopes: name(scopeName, RuleName.BlockBegin) },
+                { text: '; comment', scopes: name(scopeName, RuleName.InLineComment) },
+
+                { text: '}', scopes: name(scopeName, RuleName.BlockEnd) },
+                { text: '; comment', scopes: name(scopeName, RuleName.InLineComment) },
+              ],
+            ],
+            [
+              dedent`
+                while true {        ; comment
+                }                   ; comment
+                else {              ; comment
+                }                   ; comment
+              `,
+              [
+                { text: 'while', scopes: name(scopeName, RuleName.ControlFlowKeyword) },
+                { text: 'true', scopes: name(scopeName, RuleName.KeywordLikeBuiltInVariable) },
+                { text: '{', scopes: name(scopeName, RuleName.BlockBegin) },
+                { text: '; comment', scopes: name(scopeName, RuleName.InLineComment) },
+
+                { text: '}', scopes: name(scopeName, RuleName.BlockEnd) },
+                { text: '; comment', scopes: name(scopeName, RuleName.InLineComment) },
+
+                { text: 'else', scopes: name(scopeName, RuleName.ControlFlowKeyword) },
+                { text: '{', scopes: name(scopeName, RuleName.BlockBegin) },
+                { text: '; comment', scopes: name(scopeName, RuleName.InLineComment) },
+
+                { text: '}', scopes: name(scopeName, RuleName.BlockEnd) },
+                { text: '; comment', scopes: name(scopeName, RuleName.InLineComment) },
+              ],
+            ],
+          ];
+        })(),
+
+        // K&R style
+        ...((): ExpectedTestData[] => {
+          return [
+            [
+              dedent`
+                while true        ; comment
+                {                 ; comment
+                }                 ; comment
+                else              ; comment
+                {                 ; comment
+                }                 ; comment
+              `,
+              [
+                { text: 'while', scopes: name(scopeName, RuleName.ControlFlowKeyword) },
+                { text: 'true', scopes: name(scopeName, RuleName.KeywordLikeBuiltInVariable) },
+                { text: '; comment', scopes: name(scopeName, RuleName.InLineComment) },
+
+                { text: '{', scopes: name(scopeName, RuleName.BlockBegin) },
+                { text: '; comment', scopes: name(scopeName, RuleName.InLineComment) },
+
+                { text: '}', scopes: name(scopeName, RuleName.BlockEnd) },
+                { text: '; comment', scopes: name(scopeName, RuleName.InLineComment) },
+
+                { text: 'else', scopes: name(scopeName, RuleName.ControlFlowKeyword) },
+                { text: '; comment', scopes: name(scopeName, RuleName.InLineComment) },
+
+                { text: '{', scopes: name(scopeName, RuleName.BlockBegin) },
+                { text: '; comment', scopes: name(scopeName, RuleName.InLineComment) },
+
+                { text: '}', scopes: name(scopeName, RuleName.BlockEnd) },
+                { text: '; comment', scopes: name(scopeName, RuleName.InLineComment) },
+              ],
+            ],
+          ];
+        })(),
+      ];
+    })(),
   ];
 }
