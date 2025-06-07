@@ -314,14 +314,14 @@ export function createCommandStatementExpectedData(scopeName: ScopeName): Expect
         // https://www.autohotkey.com/docs/v1/lib/FormatTime.htm
         [
           dedent`
-            FormatTime, output, unquoted, Time
-            FormatTime, output, unquoted, ShortDate
-            FormatTime, output, unquoted, LongDate
-            FormatTime, output, unquoted, YearMonth
-            FormatTime, output, unquoted, YDay
-            FormatTime, output, unquoted, YDay0
-            FormatTime, output, unquoted, WDay
-            FormatTime, output, unquoted, YWeek
+            FormatTime, output, unquoted, Time                  ; comment
+            FormatTime, output, unquoted, ShortDate             ; comment
+            FormatTime, output, unquoted, LongDate              ; comment
+            FormatTime, output, unquoted, YearMonth             ; comment
+            FormatTime, output, unquoted, YDay                  ; comment
+            FormatTime, output, unquoted, YDay0                 ; comment
+            FormatTime, output, unquoted, WDay                  ; comment
+            FormatTime, output, unquoted, YWeek                 ; comment
           `,
           [
             ...[ 'Time', 'ShortDate', 'LongDate', 'YearMonth', 'YDay', 'YDay0', 'WDay', 'YWeek' ].flatMap((subcommand) => {
@@ -333,6 +333,7 @@ export function createCommandStatementExpectedData(scopeName: ScopeName): Expect
                 { text: 'unquoted', scopes: name(scopeName, RuleName.UnquotedString) },
                 { text: ',', scopes: name(scopeName, RuleName.Comma) },
                 { text: subcommand, scopes: name(scopeName, RuleName.UnquotedString, StyleName.Strong) },
+                { text: '; comment', scopes: name(scopeName, RuleName.InLineComment) },
               ];
             }),
           ],
@@ -1821,9 +1822,9 @@ export function createCommandStatementExpectedData(scopeName: ScopeName): Expect
           return [
             [
               dedent`
-                Gui, Add, ActiveX, X+M
-                GuiControl, +X+M
-                GuiControl, GuiName:+X+M
+                Gui, Add, ActiveX, X+M            ; comment
+                GuiControl, +X+M                  ; comment
+                GuiControl, GuiName:+X+M          ; comment
               `,
               [
                 { text: 'Gui', scopes: name(scopeName, RuleName.CommandName) },
@@ -1833,16 +1834,19 @@ export function createCommandStatementExpectedData(scopeName: ScopeName): Expect
                 { text: 'ActiveX', scopes: name(scopeName, RuleName.UnquotedString, StyleName.Strong) },
                 { text: ',', scopes: name(scopeName, RuleName.Comma) },
                 { text: 'X+M', scopes: name(scopeName, RuleName.UnquotedString, StyleName.Strong) },
+                { text: '; comment', scopes: name(scopeName, RuleName.InLineComment) },
 
                 { text: 'GuiControl', scopes: name(scopeName, RuleName.CommandName) },
                 { text: ',', scopes: name(scopeName, RuleName.Comma) },
                 { text: '+X+M', scopes: name(scopeName, RuleName.UnquotedString, StyleName.Strong) },
+                { text: '; comment', scopes: name(scopeName, RuleName.InLineComment) },
 
                 { text: 'GuiControl', scopes: name(scopeName, RuleName.CommandName) },
                 { text: ',', scopes: name(scopeName, RuleName.Comma) },
                 { text: 'GuiName', scopes: name(scopeName, RuleName.LabelName) },
                 { text: ':', scopes: name(scopeName, RuleName.Colon) },
                 { text: '+X+M', scopes: name(scopeName, RuleName.UnquotedString, StyleName.Strong) },
+                { text: '; comment', scopes: name(scopeName, RuleName.InLineComment) },
               ],
             ],
           ];
@@ -2138,25 +2142,27 @@ export function createCommandStatementExpectedData(scopeName: ScopeName): Expect
     // command or expression
     [
       dedent`
-        Control += var
-        Control, += var
+        Control += var                  ; comment
+        Control, += var                 ; comment
       `,
       [
         { text: 'Control', scopes: name(scopeName, RuleName.Variable) },
         { text: '+=', scopes: name(scopeName, RuleName.Operator) },
         { text: 'var', scopes: name(scopeName, RuleName.Variable) },
+        { text: '; comment', scopes: name(scopeName, RuleName.InLineComment) },
 
         { text: 'Control', scopes: name(scopeName, RuleName.CommandName) },
         { text: ',', scopes: name(scopeName, RuleName.Comma) },
         { text: '+=', scopes: name(scopeName, RuleName.UnquotedString) },
         { text: 'var', scopes: name(scopeName, RuleName.UnquotedString) },
+        { text: '; comment', scopes: name(scopeName, RuleName.InLineComment) },
       ],
     ],
 
     // Fix: If the last argument is a percent expression, the comma after is highlighted as a string
     [
       dedent`
-        Click, % abc, d ; comment
+        Click, % abc, d           ; comment
       `,
       [
         { text: 'Click', scopes: name(scopeName, RuleName.CommandName) },
