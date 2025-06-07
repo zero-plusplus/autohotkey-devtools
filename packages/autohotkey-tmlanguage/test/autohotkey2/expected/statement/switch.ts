@@ -1,4 +1,4 @@
-import { dedent, repeatArray } from '@zero-plusplus/utilities/src';
+import { dedent } from '@zero-plusplus/utilities/src';
 import {
   name, RuleDescriptor, RuleName,
   type ScopeName,
@@ -10,73 +10,106 @@ export function createSwitchStatementExpectedData(scopeName: ScopeName): Expecte
   return [
     ...common.createSwitchStatementExpectedData(scopeName),
 
-    [
-      dedent`
-        switch true, "On" {
-        }
-        switch true, "On"
-        {
-        }
-        switch true, "Off" {
-        }
-        switch true, "Off"
-        {
-        }
-        switch true, "Locale" {
-        }
-        switch true, "Locale"
-        {
-        }
-      `,
-      [
-        ...[ 'On', 'Off', 'Locale' ].flatMap((arg) => {
-          return repeatArray(2, [
-            { text: 'switch', scopes: name(scopeName, RuleName.ControlFlowKeyword) },
-            { text: 'true', scopes: name(scopeName, RuleName.KeywordLikeBuiltInVariable) },
-            { text: ',', scopes: name(scopeName, RuleName.Comma) },
-            { text: '"', scopes: name(scopeName, RuleName.DoubleString, RuleDescriptor.Begin) },
-            { text: arg, scopes: name(scopeName, RuleName.DoubleString) },
-            { text: '"', scopes: name(scopeName, RuleName.DoubleString, RuleDescriptor.End) },
-            { text: '{', scopes: name(scopeName, RuleName.BlockBegin) },
-            { text: '}', scopes: name(scopeName, RuleName.BlockEnd) },
-          ]);
-        }),
-      ],
-    ],
-    [
-      dedent`
-        switch (true), "On" {
-        }
-        switch (true), "On"
-        {
-        }
-        switch (true), "Off" {
-        }
-        switch (true), "Off"
-        {
-        }
-        switch (true), "Locale" {
-        }
-        switch (true), "Locale"
-        {
-        }
-      `,
-      [
-        ...[ 'On', 'Off', 'Locale' ].flatMap((arg) => {
-          return repeatArray(2, [
-            { text: 'switch', scopes: name(scopeName, RuleName.ControlFlowKeyword) },
-            { text: '(', scopes: name(scopeName, RuleName.OpenParen) },
-            { text: 'true', scopes: name(scopeName, RuleName.KeywordLikeBuiltInVariable) },
-            { text: ')', scopes: name(scopeName, RuleName.CloseParen) },
-            { text: ',', scopes: name(scopeName, RuleName.Comma) },
-            { text: '"', scopes: name(scopeName, RuleName.DoubleString, RuleDescriptor.Begin) },
-            { text: arg, scopes: name(scopeName, RuleName.DoubleString) },
-            { text: '"', scopes: name(scopeName, RuleName.DoubleString, RuleDescriptor.End) },
-            { text: '{', scopes: name(scopeName, RuleName.BlockBegin) },
-            { text: '}', scopes: name(scopeName, RuleName.BlockEnd) },
-          ]);
-        }),
-      ],
-    ],
+    ...((): ExpectedTestData[] => {
+      return [
+        // one true brace style
+        ...((): ExpectedTestData[] => {
+          return [
+            [
+              dedent`
+                switch true, "On" {       ; comment
+                }                         ; comment
+              `,
+              [
+                { text: 'switch', scopes: name(scopeName, RuleName.ControlFlowKeyword) },
+                { text: 'true', scopes: name(scopeName, RuleName.KeywordLikeBuiltInVariable) },
+                { text: ',', scopes: name(scopeName, RuleName.Comma) },
+                { text: '"', scopes: name(scopeName, RuleName.DoubleString, RuleDescriptor.Begin) },
+                { text: 'On', scopes: name(scopeName, RuleName.DoubleString) },
+                { text: '"', scopes: name(scopeName, RuleName.DoubleString, RuleDescriptor.End) },
+                { text: '{', scopes: name(scopeName, RuleName.BlockBegin) },
+                { text: '; comment', scopes: name(scopeName, RuleName.InLineComment) },
+
+                { text: '}', scopes: name(scopeName, RuleName.BlockEnd) },
+                { text: '; comment', scopes: name(scopeName, RuleName.InLineComment) },
+              ],
+            ],
+            [
+              dedent`
+                switch (true), "On" {       ; comment
+                }                           ; comment
+              `,
+              [
+                { text: 'switch', scopes: name(scopeName, RuleName.ControlFlowKeyword) },
+                { text: '(', scopes: name(scopeName, RuleName.OpenParen) },
+                { text: 'true', scopes: name(scopeName, RuleName.KeywordLikeBuiltInVariable) },
+                { text: ')', scopes: name(scopeName, RuleName.CloseParen) },
+                { text: ',', scopes: name(scopeName, RuleName.Comma) },
+                { text: '"', scopes: name(scopeName, RuleName.DoubleString, RuleDescriptor.Begin) },
+                { text: 'On', scopes: name(scopeName, RuleName.DoubleString) },
+                { text: '"', scopes: name(scopeName, RuleName.DoubleString, RuleDescriptor.End) },
+                { text: '{', scopes: name(scopeName, RuleName.BlockBegin) },
+                { text: '; comment', scopes: name(scopeName, RuleName.InLineComment) },
+
+                { text: '}', scopes: name(scopeName, RuleName.BlockEnd) },
+                { text: '; comment', scopes: name(scopeName, RuleName.InLineComment) },
+              ],
+            ],
+          ];
+        })(),
+
+        // K&R style
+        ...((): ExpectedTestData[] => {
+          return [
+            [
+              dedent`
+                switch true, "On"     ; comment
+                {                     ; comment
+                }                     ; comment
+              `,
+              [
+                { text: 'switch', scopes: name(scopeName, RuleName.ControlFlowKeyword) },
+                { text: 'true', scopes: name(scopeName, RuleName.KeywordLikeBuiltInVariable) },
+                { text: ',', scopes: name(scopeName, RuleName.Comma) },
+                { text: '"', scopes: name(scopeName, RuleName.DoubleString, RuleDescriptor.Begin) },
+                { text: 'On', scopes: name(scopeName, RuleName.DoubleString) },
+                { text: '"', scopes: name(scopeName, RuleName.DoubleString, RuleDescriptor.End) },
+                { text: '; comment', scopes: name(scopeName, RuleName.InLineComment) },
+
+                { text: '{', scopes: name(scopeName, RuleName.BlockBegin) },
+                { text: '; comment', scopes: name(scopeName, RuleName.InLineComment) },
+
+                { text: '}', scopes: name(scopeName, RuleName.BlockEnd) },
+                { text: '; comment', scopes: name(scopeName, RuleName.InLineComment) },
+              ],
+            ],
+            [
+              dedent`
+                switch (true), "On"       ; comment
+                {                         ; comment
+                }                         ; comment
+              `,
+              [
+                { text: 'switch', scopes: name(scopeName, RuleName.ControlFlowKeyword) },
+                { text: '(', scopes: name(scopeName, RuleName.OpenParen) },
+                { text: 'true', scopes: name(scopeName, RuleName.KeywordLikeBuiltInVariable) },
+                { text: ')', scopes: name(scopeName, RuleName.CloseParen) },
+                { text: ',', scopes: name(scopeName, RuleName.Comma) },
+                { text: '"', scopes: name(scopeName, RuleName.DoubleString, RuleDescriptor.Begin) },
+                { text: 'On', scopes: name(scopeName, RuleName.DoubleString) },
+                { text: '"', scopes: name(scopeName, RuleName.DoubleString, RuleDescriptor.End) },
+                { text: '; comment', scopes: name(scopeName, RuleName.InLineComment) },
+
+                { text: '{', scopes: name(scopeName, RuleName.BlockBegin) },
+                { text: '; comment', scopes: name(scopeName, RuleName.InLineComment) },
+
+                { text: '}', scopes: name(scopeName, RuleName.BlockEnd) },
+                { text: '; comment', scopes: name(scopeName, RuleName.InLineComment) },
+              ],
+            ],
+          ];
+        })(),
+      ];
+    })(),
   ];
 }
