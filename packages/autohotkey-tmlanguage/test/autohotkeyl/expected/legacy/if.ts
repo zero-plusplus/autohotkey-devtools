@@ -97,88 +97,148 @@ export function createLegacyIfStatementExpectedData(scopeName: ScopeName): Expec
     // #region [IfIs](https://www.autohotkey.com/docs/v1/lib/IfIs.htm)
     [
       dedent`
-        if value is
-        if value is integer
-        if value is float
-        if value is number
-        if value is digit
-        if value is xdigit
-        if value is alpha
-        if value is upper
-        if value is lower
-        if value is alnum
-        if value is space
-        if value is time
-        if value is not time
-        {
-        }
+        if value is                     ; comment
+        {                               ; comment
+        }                               ; comment
+        if value is not                 ; comment
+        {                               ; comment
+        }                               ; comment
+
+        if value is integer             ; comment
+        {                               ; comment
+        }                               ; comment
+        if value is not integer         ; comment
+        {                               ; comment
+        }                               ; comment
+
+        if value is float               ; comment
+        {                               ; comment
+        }                               ; comment
+        if value is not float           ; comment
+        {                               ; comment
+        }                               ; comment
+
+        if value is number              ; comment
+        {                               ; comment
+        }                               ; comment
+        if value is not number          ; comment
+        {                               ; comment
+        }                               ; comment
+
+        if value is digit               ; comment
+        {                               ; comment
+        }                               ; comment
+        if value is not digit           ; comment
+        {                               ; comment
+        }                               ; comment
+
+        if value is xdigit              ; comment
+        {                               ; comment
+        }                               ; comment
+        if value is not xdigit          ; comment
+        {                               ; comment
+        }                               ; comment
+
+        if value is alpha               ; comment
+        {                               ; comment
+        }                               ; comment
+        if value is not alpha           ; comment
+        {                               ; comment
+        }                               ; comment
+
+        if value is upper               ; comment
+        {                               ; comment
+        }                               ; comment
+        if value is not upper           ; comment
+        {                               ; comment
+        }                               ; comment
+
+        if value is lower               ; comment
+        {                               ; comment
+        }                               ; comment
+        if value is not lower           ; comment
+        {                               ; comment
+        }                               ; comment
+
+        if value is alnum               ; comment
+        {                               ; comment
+        }                               ; comment
+        if value is not alnum           ; comment
+        {                               ; comment
+        }                               ; comment
+
+        if value is space               ; comment
+        {                               ; comment
+        }                               ; comment
+        if value is not space           ; comment
+        {                               ; comment
+        }                               ; comment
+
+        if value is time                ; comment
+        {                               ; comment
+        }                               ; comment
+        if value is not time            ; comment
+        {                               ; comment
+        }                               ; comment
       `, [
-        { text: 'if', scopes: name(scopeName, Repository.LegacyIfStatement, RuleName.ControlFlowKeyword) },
-        { text: 'value', scopes: name(scopeName, Repository.LegacyIfStatement, RuleName.Variable) },
-        { text: 'is', scopes: name(scopeName, Repository.LegacyIfStatement, RuleName.KeywordInExpression) },
+        ...[
+          { text: 'if', scopes: name(scopeName, Repository.LegacyIfStatement, RuleName.ControlFlowKeyword) },
+          { text: 'value', scopes: name(scopeName, Repository.LegacyIfStatement, RuleName.Variable) },
+          { text: 'is', scopes: name(scopeName, Repository.LegacyIfStatement, RuleName.KeywordInExpression) },
+          { text: '; comment', scopes: name(scopeName, RuleName.InLineComment) },
 
-        { text: 'if', scopes: name(scopeName, Repository.LegacyIfStatement, RuleName.ControlFlowKeyword) },
-        { text: 'value', scopes: name(scopeName, Repository.LegacyIfStatement, RuleName.Variable) },
-        { text: 'is', scopes: name(scopeName, Repository.LegacyIfStatement, RuleName.KeywordInExpression) },
-        { text: 'integer', scopes: name(scopeName, Repository.LegacyIfStatement, RuleName.KeywordLikeBuiltInVariable) },
+          { text: '{', scopes: name(scopeName, RuleName.BlockBegin) },
+          { text: '; comment', scopes: name(scopeName, RuleName.InLineComment) },
 
-        { text: 'if', scopes: name(scopeName, Repository.LegacyIfStatement, RuleName.ControlFlowKeyword) },
-        { text: 'value', scopes: name(scopeName, Repository.LegacyIfStatement, RuleName.Variable) },
-        { text: 'is', scopes: name(scopeName, Repository.LegacyIfStatement, RuleName.KeywordInExpression) },
-        { text: 'float', scopes: name(scopeName, Repository.LegacyIfStatement, RuleName.KeywordLikeBuiltInVariable) },
+          { text: '}', scopes: name(scopeName, RuleName.BlockEnd) },
+          { text: '; comment', scopes: name(scopeName, RuleName.InLineComment) },
+        ],
 
-        { text: 'if', scopes: name(scopeName, Repository.LegacyIfStatement, RuleName.ControlFlowKeyword) },
-        { text: 'value', scopes: name(scopeName, Repository.LegacyIfStatement, RuleName.Variable) },
-        { text: 'is', scopes: name(scopeName, Repository.LegacyIfStatement, RuleName.KeywordInExpression) },
-        { text: 'number', scopes: name(scopeName, Repository.LegacyIfStatement, RuleName.KeywordLikeBuiltInVariable) },
+        ...[
+          { text: 'if', scopes: name(scopeName, Repository.LegacyIfStatement, RuleName.ControlFlowKeyword) },
+          { text: 'value', scopes: name(scopeName, Repository.LegacyIfStatement, RuleName.Variable) },
+          { text: 'is', scopes: name(scopeName, Repository.LegacyIfStatement, RuleName.KeywordInExpression) },
+          { text: 'not', scopes: name(scopeName, Repository.LegacyIfStatement, RuleName.KeywordInExpression) },
+          { text: '; comment', scopes: name(scopeName, RuleName.InLineComment) },
 
-        { text: 'if', scopes: name(scopeName, Repository.LegacyIfStatement, RuleName.ControlFlowKeyword) },
-        { text: 'value', scopes: name(scopeName, Repository.LegacyIfStatement, RuleName.Variable) },
-        { text: 'is', scopes: name(scopeName, Repository.LegacyIfStatement, RuleName.KeywordInExpression) },
-        { text: 'digit', scopes: name(scopeName, Repository.LegacyIfStatement, RuleName.KeywordLikeBuiltInVariable) },
+          { text: '{', scopes: name(scopeName, RuleName.BlockBegin) },
+          { text: '; comment', scopes: name(scopeName, RuleName.InLineComment) },
 
-        { text: 'if', scopes: name(scopeName, Repository.LegacyIfStatement, RuleName.ControlFlowKeyword) },
-        { text: 'value', scopes: name(scopeName, Repository.LegacyIfStatement, RuleName.Variable) },
-        { text: 'is', scopes: name(scopeName, Repository.LegacyIfStatement, RuleName.KeywordInExpression) },
-        { text: 'xdigit', scopes: name(scopeName, Repository.LegacyIfStatement, RuleName.KeywordLikeBuiltInVariable) },
+          { text: '}', scopes: name(scopeName, RuleName.BlockEnd) },
+          { text: '; comment', scopes: name(scopeName, RuleName.InLineComment) },
+        ],
 
-        { text: 'if', scopes: name(scopeName, Repository.LegacyIfStatement, RuleName.ControlFlowKeyword) },
-        { text: 'value', scopes: name(scopeName, Repository.LegacyIfStatement, RuleName.Variable) },
-        { text: 'is', scopes: name(scopeName, Repository.LegacyIfStatement, RuleName.KeywordInExpression) },
-        { text: 'alpha', scopes: name(scopeName, Repository.LegacyIfStatement, RuleName.KeywordLikeBuiltInVariable) },
+        ...[ 'integer', 'float', 'number', 'digit', 'xdigit', 'alpha', 'upper', 'lower', 'alnum', 'space', 'time' ].flatMap((word) => {
+          return [
+            ...[
+              { text: 'if', scopes: name(scopeName, Repository.LegacyIfStatement, RuleName.ControlFlowKeyword) },
+              { text: 'value', scopes: name(scopeName, Repository.LegacyIfStatement, RuleName.Variable) },
+              { text: 'is', scopes: name(scopeName, Repository.LegacyIfStatement, RuleName.KeywordInExpression) },
+              { text: word, scopes: name(scopeName, Repository.LegacyIfStatement, RuleName.KeywordLikeBuiltInVariable) },
+              { text: '; comment', scopes: name(scopeName, RuleName.InLineComment) },
 
-        { text: 'if', scopes: name(scopeName, Repository.LegacyIfStatement, RuleName.ControlFlowKeyword) },
-        { text: 'value', scopes: name(scopeName, Repository.LegacyIfStatement, RuleName.Variable) },
-        { text: 'is', scopes: name(scopeName, Repository.LegacyIfStatement, RuleName.KeywordInExpression) },
-        { text: 'upper', scopes: name(scopeName, Repository.LegacyIfStatement, RuleName.KeywordLikeBuiltInVariable) },
+              { text: '{', scopes: name(scopeName, RuleName.BlockBegin) },
+              { text: '; comment', scopes: name(scopeName, RuleName.InLineComment) },
 
-        { text: 'if', scopes: name(scopeName, Repository.LegacyIfStatement, RuleName.ControlFlowKeyword) },
-        { text: 'value', scopes: name(scopeName, Repository.LegacyIfStatement, RuleName.Variable) },
-        { text: 'is', scopes: name(scopeName, Repository.LegacyIfStatement, RuleName.KeywordInExpression) },
-        { text: 'lower', scopes: name(scopeName, Repository.LegacyIfStatement, RuleName.KeywordLikeBuiltInVariable) },
+              { text: '}', scopes: name(scopeName, RuleName.BlockEnd) },
+              { text: '; comment', scopes: name(scopeName, RuleName.InLineComment) },
+            ],
+            ...[
+              { text: 'if', scopes: name(scopeName, Repository.LegacyIfStatement, RuleName.ControlFlowKeyword) },
+              { text: 'value', scopes: name(scopeName, Repository.LegacyIfStatement, RuleName.Variable) },
+              { text: 'is', scopes: name(scopeName, Repository.LegacyIfStatement, RuleName.KeywordInExpression) },
+              { text: 'not', scopes: name(scopeName, Repository.LegacyIfStatement, RuleName.KeywordInExpression) },
+              { text: word, scopes: name(scopeName, Repository.LegacyIfStatement, RuleName.KeywordLikeBuiltInVariable) },
+              { text: '; comment', scopes: name(scopeName, RuleName.InLineComment) },
 
-        { text: 'if', scopes: name(scopeName, Repository.LegacyIfStatement, RuleName.ControlFlowKeyword) },
-        { text: 'value', scopes: name(scopeName, Repository.LegacyIfStatement, RuleName.Variable) },
-        { text: 'is', scopes: name(scopeName, Repository.LegacyIfStatement, RuleName.KeywordInExpression) },
-        { text: 'alnum', scopes: name(scopeName, Repository.LegacyIfStatement, RuleName.KeywordLikeBuiltInVariable) },
+              { text: '{', scopes: name(scopeName, RuleName.BlockBegin) },
+              { text: '; comment', scopes: name(scopeName, RuleName.InLineComment) },
 
-        { text: 'if', scopes: name(scopeName, Repository.LegacyIfStatement, RuleName.ControlFlowKeyword) },
-        { text: 'value', scopes: name(scopeName, Repository.LegacyIfStatement, RuleName.Variable) },
-        { text: 'is', scopes: name(scopeName, Repository.LegacyIfStatement, RuleName.KeywordInExpression) },
-        { text: 'space', scopes: name(scopeName, Repository.LegacyIfStatement, RuleName.KeywordLikeBuiltInVariable) },
-
-        { text: 'if', scopes: name(scopeName, Repository.LegacyIfStatement, RuleName.ControlFlowKeyword) },
-        { text: 'value', scopes: name(scopeName, Repository.LegacyIfStatement, RuleName.Variable) },
-        { text: 'is', scopes: name(scopeName, Repository.LegacyIfStatement, RuleName.KeywordInExpression) },
-        { text: 'time', scopes: name(scopeName, Repository.LegacyIfStatement, RuleName.KeywordLikeBuiltInVariable) },
-
-        { text: 'if', scopes: name(scopeName, Repository.LegacyIfStatement, RuleName.ControlFlowKeyword) },
-        { text: 'value', scopes: name(scopeName, Repository.LegacyIfStatement, RuleName.Variable) },
-        { text: 'is', scopes: name(scopeName, Repository.LegacyIfStatement, RuleName.KeywordInExpression) },
-        { text: 'not', scopes: name(scopeName, Repository.LegacyIfStatement, RuleName.KeywordInExpression) },
-        { text: 'time', scopes: name(scopeName, Repository.LegacyIfStatement, RuleName.KeywordLikeBuiltInVariable) },
-        { text: '{', scopes: name(scopeName, RuleName.BlockBegin) },
-        { text: '}', scopes: name(scopeName, RuleName.BlockEnd) },
+              { text: '}', scopes: name(scopeName, RuleName.BlockEnd) },
+              { text: '; comment', scopes: name(scopeName, RuleName.InLineComment) },
+            ],
+          ];
+        }),
       ],
     ],
     // #endregion IfIs
