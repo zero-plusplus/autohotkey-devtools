@@ -1,3 +1,4 @@
+import { dedent } from '@zero-plusplus/utilities/src';
 import * as constants_v1 from '../../../../src/autohotkeyl/constants';
 import {
   name, RuleName, StyleName,
@@ -38,11 +39,15 @@ export function createVariableExpectedData(scopeName: ScopeName): ExpectedTestDa
 
     // invalid
     [
-      `(${'v'.repeat(255)})`, [
+      dedent`
+        (${'v'.repeat(255)})        ; comment
+      `,
+      [
         { text: '(', scopes: name(scopeName, RuleName.OpenParen) },
         { text: 'v'.repeat(253), scopes: name(scopeName, RuleName.Variable) },
         { text: 'v'.repeat(2), scopes: name(scopeName, RuleName.Variable, StyleName.Invalid) },
         { text: ')', scopes: name(scopeName, RuleName.CloseParen) },
+        { text: '; comment', scopes: name(scopeName, RuleName.InLineComment) },
       ],
     ],
   ];
