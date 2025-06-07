@@ -7,26 +7,98 @@ import type { ExpectedTestData } from '../../../types';
 
 export function createLoopStatementExpectedData(scopeName: ScopeName): ExpectedTestData[] {
   return [
-    // #region [loop until](https://www.autohotkey.com/docs/v2/lib/Until.htm)
-    [
-      dedent`
-        Loop {
-        }
-        Until true
-        Loop {
-        } Until true
-      `,
-      [
-        ...repeatArray(2, [
-          { text: 'Loop', scopes: name(scopeName, RuleName.ControlFlowKeyword) },
-          { text: '{', scopes: name(scopeName, RuleName.BlockBegin) },
-          { text: '}', scopes: name(scopeName, RuleName.BlockEnd) },
-          { text: 'Until', scopes: name(scopeName, RuleName.ControlFlowKeyword) },
-          { text: 'true', scopes: name(scopeName, RuleName.KeywordLikeBuiltInVariable) },
-        ]),
-      ],
-    ],
-    // #endregion loop until
+    // [Loop Until](https://www.autohotkey.com/docs/v2/lib/Until.htm)
+    ...((): ExpectedTestData[] => {
+      return [
+        // one line
+        ...((): ExpectedTestData[] => {
+          return [
+            [
+              dedent`
+                Loop {            ; comment
+                } Until true      ; comment
+              `,
+              [
+                { text: 'Loop', scopes: name(scopeName, RuleName.ControlFlowKeyword) },
+                { text: '{', scopes: name(scopeName, RuleName.BlockBegin) },
+                { text: '; comment', scopes: name(scopeName, RuleName.InLineComment) },
+
+                { text: '}', scopes: name(scopeName, RuleName.BlockEnd) },
+                { text: 'Until', scopes: name(scopeName, RuleName.ControlFlowKeyword) },
+                { text: 'true', scopes: name(scopeName, RuleName.KeywordLikeBuiltInVariable) },
+                { text: '; comment', scopes: name(scopeName, RuleName.InLineComment) },
+              ],
+            ],
+            [
+              dedent`
+                Loop {            ; comment
+                }                 ; comment
+                Until true        ; comment
+              `,
+              [
+                { text: 'Loop', scopes: name(scopeName, RuleName.ControlFlowKeyword) },
+                { text: '{', scopes: name(scopeName, RuleName.BlockBegin) },
+                { text: '; comment', scopes: name(scopeName, RuleName.InLineComment) },
+
+                { text: '}', scopes: name(scopeName, RuleName.BlockEnd) },
+                { text: '; comment', scopes: name(scopeName, RuleName.InLineComment) },
+
+                { text: 'Until', scopes: name(scopeName, RuleName.ControlFlowKeyword) },
+                { text: 'true', scopes: name(scopeName, RuleName.KeywordLikeBuiltInVariable) },
+                { text: '; comment', scopes: name(scopeName, RuleName.InLineComment) },
+              ],
+            ],
+          ];
+        })(),
+
+        // continuation
+        ...((): ExpectedTestData[] => {
+          return [
+            [
+              dedent`
+                Loop              ; comment
+                {                 ; comment
+                } Until true      ; comment
+              `,
+              [
+                { text: 'Loop', scopes: name(scopeName, RuleName.ControlFlowKeyword) },
+                { text: '; comment', scopes: name(scopeName, RuleName.InLineComment) },
+
+                { text: '{', scopes: name(scopeName, RuleName.BlockBegin) },
+                { text: '; comment', scopes: name(scopeName, RuleName.InLineComment) },
+
+                { text: '}', scopes: name(scopeName, RuleName.BlockEnd) },
+                { text: 'Until', scopes: name(scopeName, RuleName.ControlFlowKeyword) },
+                { text: 'true', scopes: name(scopeName, RuleName.KeywordLikeBuiltInVariable) },
+                { text: '; comment', scopes: name(scopeName, RuleName.InLineComment) },
+              ],
+            ],
+            [
+              dedent`
+                Loop              ; comment
+                {                 ; comment
+                }                 ; comment
+                Until true        ; comment
+              `,
+              [
+                { text: 'Loop', scopes: name(scopeName, RuleName.ControlFlowKeyword) },
+                { text: '; comment', scopes: name(scopeName, RuleName.InLineComment) },
+
+                { text: '{', scopes: name(scopeName, RuleName.BlockBegin) },
+                { text: '; comment', scopes: name(scopeName, RuleName.InLineComment) },
+
+                { text: '}', scopes: name(scopeName, RuleName.BlockEnd) },
+                { text: '; comment', scopes: name(scopeName, RuleName.InLineComment) },
+
+                { text: 'Until', scopes: name(scopeName, RuleName.ControlFlowKeyword) },
+                { text: 'true', scopes: name(scopeName, RuleName.KeywordLikeBuiltInVariable) },
+                { text: '; comment', scopes: name(scopeName, RuleName.InLineComment) },
+              ],
+            ],
+          ];
+        })(),
+      ];
+    })(),
 
     // #region [loop files](https://www.autohotkey.com/docs/v2/lib/LoopFiles.htm)
     [
