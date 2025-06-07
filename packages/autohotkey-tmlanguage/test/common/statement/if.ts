@@ -7,7 +7,7 @@ import type { ExpectedTestData } from '../../types';
 
 export function createIfStatementExpectedData(scopeName: ScopeName): ExpectedTestData[] {
   return [
-    // one line
+    // one true brace style
     ...((): ExpectedTestData[] => {
       return [
         [
@@ -89,7 +89,7 @@ export function createIfStatementExpectedData(scopeName: ScopeName): ExpectedTes
       ];
     })(),
 
-    // continuation
+    // K&R style
     ...((): ExpectedTestData[] => {
       return [
         [
