@@ -347,31 +347,48 @@ export function createLegacyIfStatementExpectedData(scopeName: ScopeName): Expec
       ];
     })(),
 
-    // #region [IfIn](https://www.autohotkey.com/docs/v1/lib/IfIn.htm)
+    // [IfIn](https://www.autohotkey.com/docs/v1/lib/IfIn.htm)
     ...[ 'in', 'contains' ].map((keyword): ExpectedTestData => {
       return [
         dedent`
-          if value ${keyword} a,b,c
-          if value not ${keyword} a,b,c
-          {
-          }
-          `, [
-          { text: 'if', scopes: name(scopeName, Repository.LegacyIfStatement, RuleName.ControlFlowKeyword) },
-          { text: 'value', scopes: name(scopeName, Repository.LegacyIfStatement, RuleName.Variable) },
-          { text: keyword, scopes: name(scopeName, Repository.LegacyIfStatement, RuleName.KeywordInExpression) },
-          { text: 'a,b,c', scopes: name(scopeName, Repository.LegacyIfStatement, RuleName.UnquotedString) },
+          if value ${keyword} a,b,c                 ; comment
+          {                                         ; comment
+          }                                         ; comment
+          if value not ${keyword} a,b,c             ; comment
+          {                                         ; comment
+          }                                         ; comment
+        `,
+        [
+          ...[
+            { text: 'if', scopes: name(scopeName, Repository.LegacyIfStatement, RuleName.ControlFlowKeyword) },
+            { text: 'value', scopes: name(scopeName, Repository.LegacyIfStatement, RuleName.Variable) },
+            { text: keyword, scopes: name(scopeName, Repository.LegacyIfStatement, RuleName.KeywordInExpression) },
+            { text: 'a,b,c', scopes: name(scopeName, Repository.LegacyIfStatement, RuleName.UnquotedString) },
+            { text: '; comment', scopes: name(scopeName, RuleName.InLineComment) },
 
+            { text: '{', scopes: name(scopeName, RuleName.BlockBegin) },
+            { text: '; comment', scopes: name(scopeName, RuleName.InLineComment) },
 
-          { text: 'if', scopes: name(scopeName, Repository.LegacyIfStatement, RuleName.ControlFlowKeyword) },
-          { text: 'value', scopes: name(scopeName, Repository.LegacyIfStatement, RuleName.Variable) },
-          { text: 'not', scopes: name(scopeName, Repository.LegacyIfStatement, RuleName.KeywordInExpression) },
-          { text: keyword, scopes: name(scopeName, Repository.LegacyIfStatement, RuleName.KeywordInExpression) },
-          { text: 'a,b,c', scopes: name(scopeName, Repository.LegacyIfStatement, RuleName.UnquotedString) },
-          { text: '{', scopes: name(scopeName, RuleName.BlockBegin) },
-          { text: '}', scopes: name(scopeName, RuleName.BlockEnd) },
+            { text: '}', scopes: name(scopeName, RuleName.BlockEnd) },
+            { text: '; comment', scopes: name(scopeName, RuleName.InLineComment) },
+          ],
+
+          ...[
+            { text: 'if', scopes: name(scopeName, Repository.LegacyIfStatement, RuleName.ControlFlowKeyword) },
+            { text: 'value', scopes: name(scopeName, Repository.LegacyIfStatement, RuleName.Variable) },
+            { text: 'not', scopes: name(scopeName, Repository.LegacyIfStatement, RuleName.KeywordInExpression) },
+            { text: keyword, scopes: name(scopeName, Repository.LegacyIfStatement, RuleName.KeywordInExpression) },
+            { text: 'a,b,c', scopes: name(scopeName, Repository.LegacyIfStatement, RuleName.UnquotedString) },
+            { text: '; comment', scopes: name(scopeName, RuleName.InLineComment) },
+
+            { text: '{', scopes: name(scopeName, RuleName.BlockBegin) },
+            { text: '; comment', scopes: name(scopeName, RuleName.InLineComment) },
+
+            { text: '}', scopes: name(scopeName, RuleName.BlockEnd) },
+            { text: '; comment', scopes: name(scopeName, RuleName.InLineComment) },
+          ],
         ],
       ];
     }),
-    // #endregion IfIn
   ];
 }
