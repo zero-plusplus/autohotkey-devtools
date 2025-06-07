@@ -28,7 +28,6 @@ import { createSwitchStatementExpectedData } from './statement/switch';
 import { createThrowStatementExpectedData } from './statement/throw';
 import { createTryStatementExpectedData } from './statement/try';
 import { createWhileStatementExpectedData } from './statement/while';
-import { createDirectiveCommentExpectedData } from './trivia/directiveComment';
 
 interface Placeholder {
   keywordLikeBuiltinVariables: readonly string[];
@@ -38,6 +37,7 @@ interface Placeholder {
 export function createExpectedDataList(scopeName: ScopeName, placeholder?: Placeholder): ExpectedTestData[] {
   return [
     // #region common
+    ...common.createDirectiveCommentExpectedData(scopeName),
     ...common.createDocumentCommentExpectedData(scopeName),
     ...common.createMultiLineCommentExpectedData(scopeName),
     ...common.createSingleLineCommentExpectedData(scopeName),
@@ -49,7 +49,6 @@ export function createExpectedDataList(scopeName: ScopeName, placeholder?: Place
     ...createCallStatementExpectedData(scopeName),
     ...createClassDeclarationExpectedData(scopeName),
     ...createDereferenceExpressionExpectedData(scopeName),
-    ...createDirectiveCommentExpectedData(scopeName),
     ...createDirectiveStatementExpectedData(scopeName),
     ...createForStatementExpectedData(scopeName),
     ...createFunctionDeclarationExpectedData(scopeName),
