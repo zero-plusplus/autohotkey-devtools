@@ -34,7 +34,6 @@ import { createLoopStatementExpectedData } from './statement/loop';
 import { createSwitchStatementExpectedData } from './statement/switch';
 import { createThrowStatementExpectedData } from './statement/throw';
 import { createTryStatementExpectedData } from './statement/try';
-import { createUntilStatementExpectedData } from './statement/until';
 import { createWhileStatementExpectedData } from './statement/while';
 import { createDirectiveCommentExpectedData } from './trivia/directiveComment';
 import { createDocumentCommentExpectedData } from './trivia/documentComment';
@@ -73,7 +72,6 @@ export * from './statement/loop';
 export * from './statement/switch';
 export * from './statement/throw';
 export * from './statement/try';
-export * from './statement/until';
 export * from './statement/while';
 export * from './trivia/documentComment';
 export * from './trivia/multiLineComment';
@@ -118,7 +116,6 @@ export function createExpectedDataList(scopeName: ScopeName): ExpectedTestData[]
     ...createSwitchStatementExpectedData(scopeName),
     ...createThrowStatementExpectedData(scopeName),
     ...createTryStatementExpectedData(scopeName),
-    ...createUntilStatementExpectedData(scopeName),
     ...createVariableExpectedData(scopeName),
     ...createWhileStatementExpectedData(scopeName),
   ];
