@@ -1,4 +1,7 @@
-import { alt, capture, char, inlineSpace, inlineSpaces0, keyword, lookahead, lookbehind, seq } from '../../../oniguruma';
+import {
+  alt, capture, char, ignoreCase, inlineSpace, inlineSpaces0, lookahead, lookbehind,
+  optional, seq,
+} from '../../../oniguruma';
 import {
   nameRule, RuleName,
   type MatchRule, type ScopeName,
@@ -12,7 +15,9 @@ export function createWhileStatementRule(scopeName: ScopeName, placeholder: Plac
     match: seq(
       lookbehind(placeholder.startAnchor),
       inlineSpaces0(),
-      capture(keyword('while')),
+      capture(ignoreCase('while')),
+      inlineSpaces0(),
+      capture(optional(char(','))),      // Only v1 allows comma
       lookahead(alt(
         char('('),
         char('{'),
@@ -21,6 +26,7 @@ export function createWhileStatementRule(scopeName: ScopeName, placeholder: Plac
     ),
     captures: {
       1: nameRule(scopeName, RuleName.ControlFlowKeyword),
+      2: nameRule(scopeName, RuleName.Comma),
     },
   };
 }
