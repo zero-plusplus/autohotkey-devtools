@@ -228,63 +228,166 @@ export function createLoopStatementExpectedData(scopeName: ScopeName): ExpectedT
       ];
     })(),
 
-    // #region [loop files](https://www.autohotkey.com/docs/v1/lib/LoopFile.htm)
-    [
-      dedent`
-        Loop files
-        {
-        }
-        Loop, Files
-        {
-        }
-      `,
-      [
-        { text: 'Loop', scopes: name(scopeName, RuleName.ControlFlowKeyword) },
-        { text: 'files', scopes: name(scopeName, RuleName.FlowSubCommandName) },
-        { text: '{', scopes: name(scopeName, RuleName.BlockBegin) },
-        { text: '}', scopes: name(scopeName, RuleName.BlockEnd) },
+    // [Loop Files](https://www.autohotkey.com/docs/v1/lib/LoopFile.htm)
+    ...((): ExpectedTestData[] => {
+      return [
+        [
+          dedent`
+            loop files              ; comment
+            {                       ; comment
+            }                       ; comment
 
-        { text: 'Loop', scopes: name(scopeName, RuleName.ControlFlowKeyword) },
-        { text: ',', scopes: name(scopeName, RuleName.Comma) },
-        { text: 'Files', scopes: name(scopeName, RuleName.FlowSubCommandName) },
-        { text: '{', scopes: name(scopeName, RuleName.BlockBegin) },
-        { text: '}', scopes: name(scopeName, RuleName.BlockEnd) },
-      ],
-    ],
-    [
-      dedent`
-        Loop Files
-        Loop Files, C:\\test
-        Loop Files, C:\\test, DFR
-        Loop Files, C:\\test, _
-      `,
-      [
-        { text: 'Loop', scopes: name(scopeName, RuleName.ControlFlowKeyword) },
-        { text: 'Files', scopes: name(scopeName, RuleName.FlowSubCommandName) },
+            loop, files             ; comment
+            {                       ; comment
+            }                       ; comment
+          `,
+          [
+            ...[
+              { text: 'loop', scopes: name(scopeName, RuleName.ControlFlowKeyword) },
+              { text: 'files', scopes: name(scopeName, RuleName.FlowSubCommandName) },
+              { text: '; comment', scopes: name(scopeName, RuleName.InLineComment) },
 
-        { text: 'Loop', scopes: name(scopeName, RuleName.ControlFlowKeyword) },
-        { text: 'Files', scopes: name(scopeName, RuleName.FlowSubCommandName) },
-        { text: ',', scopes: name(scopeName, RuleName.Comma) },
-        { text: 'C:\\test', scopes: name(scopeName, RuleName.UnquotedString) },
+              { text: '{', scopes: name(scopeName, RuleName.BlockBegin) },
+              { text: '; comment', scopes: name(scopeName, RuleName.InLineComment) },
 
-        { text: 'Loop', scopes: name(scopeName, RuleName.ControlFlowKeyword) },
-        { text: 'Files', scopes: name(scopeName, RuleName.FlowSubCommandName) },
-        { text: ',', scopes: name(scopeName, RuleName.Comma) },
-        { text: 'C:\\test', scopes: name(scopeName, RuleName.UnquotedString) },
-        { text: ',', scopes: name(scopeName, RuleName.Comma) },
-        { text: 'D', scopes: name(scopeName, RuleName.UnquotedString, StyleName.Strong) },
-        { text: 'F', scopes: name(scopeName, RuleName.UnquotedString, StyleName.Strong) },
-        { text: 'R', scopes: name(scopeName, RuleName.UnquotedString, StyleName.Strong) },
+              { text: '}', scopes: name(scopeName, RuleName.BlockEnd) },
+              { text: '; comment', scopes: name(scopeName, RuleName.InLineComment) },
+            ],
 
-        { text: 'Loop', scopes: name(scopeName, RuleName.ControlFlowKeyword) },
-        { text: 'Files', scopes: name(scopeName, RuleName.FlowSubCommandName) },
-        { text: ',', scopes: name(scopeName, RuleName.Comma) },
-        { text: 'C:\\test', scopes: name(scopeName, RuleName.UnquotedString) },
-        { text: ',', scopes: name(scopeName, RuleName.Comma) },
-        { text: '_', scopes: name(scopeName, RuleName.UnquotedString, StyleName.Invalid) },
-      ],
-    ],
-    // #endregion loop files
+            ...[
+              { text: 'loop', scopes: name(scopeName, RuleName.ControlFlowKeyword) },
+              { text: ',', scopes: name(scopeName, RuleName.Comma) },
+              { text: 'files', scopes: name(scopeName, RuleName.FlowSubCommandName) },
+              { text: '; comment', scopes: name(scopeName, RuleName.InLineComment) },
+
+              { text: '{', scopes: name(scopeName, RuleName.BlockBegin) },
+              { text: '; comment', scopes: name(scopeName, RuleName.InLineComment) },
+
+              { text: '}', scopes: name(scopeName, RuleName.BlockEnd) },
+              { text: '; comment', scopes: name(scopeName, RuleName.InLineComment) },
+            ],
+          ],
+        ],
+        [
+          dedent`
+            Loop Files              ; comment
+            {                       ; comment
+            }                       ; comment
+            Loop, Files             ; comment
+            {                       ; comment
+            }                       ; comment
+          `,
+          [
+            ...[
+              { text: 'Loop', scopes: name(scopeName, RuleName.ControlFlowKeyword) },
+              { text: 'Files', scopes: name(scopeName, RuleName.FlowSubCommandName) },
+              { text: '; comment', scopes: name(scopeName, RuleName.InLineComment) },
+
+              { text: '{', scopes: name(scopeName, RuleName.BlockBegin) },
+              { text: '; comment', scopes: name(scopeName, RuleName.InLineComment) },
+
+              { text: '}', scopes: name(scopeName, RuleName.BlockEnd) },
+              { text: '; comment', scopes: name(scopeName, RuleName.InLineComment) },
+            ],
+
+            ...[
+              { text: 'Loop', scopes: name(scopeName, RuleName.ControlFlowKeyword) },
+              { text: ',', scopes: name(scopeName, RuleName.Comma) },
+              { text: 'Files', scopes: name(scopeName, RuleName.FlowSubCommandName) },
+              { text: '; comment', scopes: name(scopeName, RuleName.InLineComment) },
+
+              { text: '{', scopes: name(scopeName, RuleName.BlockBegin) },
+              { text: '; comment', scopes: name(scopeName, RuleName.InLineComment) },
+
+              { text: '}', scopes: name(scopeName, RuleName.BlockEnd) },
+              { text: '; comment', scopes: name(scopeName, RuleName.InLineComment) },
+            ],
+          ],
+        ],
+        [
+          dedent`
+            Loop Files                          ; comment
+            {                                   ; comment
+            }                                   ; comment
+
+            Loop Files, C:\\test                ; comment
+            {                                   ; comment
+            }                                   ; comment
+
+            Loop Files, C:\\test, DFR           ; comment
+            {                                   ; comment
+            }                                   ; comment
+
+            Loop Files, C:\\test, _             ; comment
+            {                                   ; comment
+            }                                   ; comment
+          `,
+          [
+            ...[
+              { text: 'Loop', scopes: name(scopeName, RuleName.ControlFlowKeyword) },
+              { text: 'Files', scopes: name(scopeName, RuleName.FlowSubCommandName) },
+              { text: '; comment', scopes: name(scopeName, RuleName.InLineComment) },
+
+              { text: '{', scopes: name(scopeName, RuleName.BlockBegin) },
+              { text: '; comment', scopes: name(scopeName, RuleName.InLineComment) },
+
+              { text: '}', scopes: name(scopeName, RuleName.BlockEnd) },
+              { text: '; comment', scopes: name(scopeName, RuleName.InLineComment) },
+            ],
+
+            ...[
+              { text: 'Loop', scopes: name(scopeName, RuleName.ControlFlowKeyword) },
+              { text: 'Files', scopes: name(scopeName, RuleName.FlowSubCommandName) },
+              { text: ',', scopes: name(scopeName, RuleName.Comma) },
+              { text: 'C:\\test', scopes: name(scopeName, RuleName.UnquotedString) },
+              { text: '; comment', scopes: name(scopeName, RuleName.InLineComment) },
+
+              { text: '{', scopes: name(scopeName, RuleName.BlockBegin) },
+              { text: '; comment', scopes: name(scopeName, RuleName.InLineComment) },
+
+              { text: '}', scopes: name(scopeName, RuleName.BlockEnd) },
+              { text: '; comment', scopes: name(scopeName, RuleName.InLineComment) },
+            ],
+
+            ...[
+              { text: 'Loop', scopes: name(scopeName, RuleName.ControlFlowKeyword) },
+              { text: 'Files', scopes: name(scopeName, RuleName.FlowSubCommandName) },
+              { text: ',', scopes: name(scopeName, RuleName.Comma) },
+              { text: 'C:\\test', scopes: name(scopeName, RuleName.UnquotedString) },
+              { text: ',', scopes: name(scopeName, RuleName.Comma) },
+              { text: 'D', scopes: name(scopeName, RuleName.UnquotedString, StyleName.Strong) },
+              { text: 'F', scopes: name(scopeName, RuleName.UnquotedString, StyleName.Strong) },
+              { text: 'R', scopes: name(scopeName, RuleName.UnquotedString, StyleName.Strong) },
+
+              { text: '; comment', scopes: name(scopeName, RuleName.InLineComment) },
+
+              { text: '{', scopes: name(scopeName, RuleName.BlockBegin) },
+              { text: '; comment', scopes: name(scopeName, RuleName.InLineComment) },
+
+              { text: '}', scopes: name(scopeName, RuleName.BlockEnd) },
+              { text: '; comment', scopes: name(scopeName, RuleName.InLineComment) },
+            ],
+
+            ...[
+              { text: 'Loop', scopes: name(scopeName, RuleName.ControlFlowKeyword) },
+              { text: 'Files', scopes: name(scopeName, RuleName.FlowSubCommandName) },
+              { text: ',', scopes: name(scopeName, RuleName.Comma) },
+              { text: 'C:\\test', scopes: name(scopeName, RuleName.UnquotedString) },
+              { text: ',', scopes: name(scopeName, RuleName.Comma) },
+              { text: '_', scopes: name(scopeName, RuleName.UnquotedString, StyleName.Invalid) },
+
+              { text: '; comment', scopes: name(scopeName, RuleName.InLineComment) },
+
+              { text: '{', scopes: name(scopeName, RuleName.BlockBegin) },
+              { text: '; comment', scopes: name(scopeName, RuleName.InLineComment) },
+
+              { text: '}', scopes: name(scopeName, RuleName.BlockEnd) },
+              { text: '; comment', scopes: name(scopeName, RuleName.InLineComment) },
+            ],
+          ],
+        ],
+      ];
+    })(),
 
     // #region [loop parse](https://www.autohotkey.com/docs/v1/lib/LoopParse.htm)
     [
