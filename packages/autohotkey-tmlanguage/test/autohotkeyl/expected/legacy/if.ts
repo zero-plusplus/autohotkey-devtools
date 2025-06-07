@@ -10,28 +10,57 @@ export function createLegacyIfStatementExpectedData(scopeName: ScopeName): Expec
     [
       // #region [IfBetween](https://www.autohotkey.com/docs/v1/lib/IfBetween.htm)
       dedent`
-        if value between
-        if value between a
-        if value between a and
-        if value between a and b
-        if value not between a and b
-        {
-        }
+        if value between                            ; comment
+        {                                           ; comment
+        }                                           ; comment
+        if value between a                          ; comment
+        {                                           ; comment
+        }                                           ; comment
+        if value between a and                      ; comment
+        {                                           ; comment
+        }                                           ; comment
+        if value between a and b                    ; comment
+        {                                           ; comment
+        }                                           ; comment
+        if value not between a and b                ; comment
+        {                                           ; comment
+        }                                           ; comment
       `, [
         { text: 'if', scopes: name(scopeName, Repository.LegacyIfStatement, RuleName.ControlFlowKeyword) },
         { text: 'value', scopes: name(scopeName, Repository.LegacyIfStatement, RuleName.Variable) },
         { text: 'between', scopes: name(scopeName, Repository.LegacyIfStatement, RuleName.KeywordInExpression) },
+        { text: '; comment', scopes: name(scopeName, RuleName.InLineComment) },
+
+        { text: '{', scopes: name(scopeName, RuleName.BlockBegin) },
+        { text: '; comment', scopes: name(scopeName, RuleName.InLineComment) },
+
+        { text: '}', scopes: name(scopeName, RuleName.BlockEnd) },
+        { text: '; comment', scopes: name(scopeName, RuleName.InLineComment) },
 
         { text: 'if', scopes: name(scopeName, Repository.LegacyIfStatement, RuleName.ControlFlowKeyword) },
         { text: 'value', scopes: name(scopeName, Repository.LegacyIfStatement, RuleName.Variable) },
         { text: 'between', scopes: name(scopeName, Repository.LegacyIfStatement, RuleName.KeywordInExpression) },
         { text: 'a', scopes: name(scopeName, Repository.LegacyIfStatement, RuleName.Variable) },
+        { text: '; comment', scopes: name(scopeName, RuleName.InLineComment) },
+
+        { text: '{', scopes: name(scopeName, RuleName.BlockBegin) },
+        { text: '; comment', scopes: name(scopeName, RuleName.InLineComment) },
+
+        { text: '}', scopes: name(scopeName, RuleName.BlockEnd) },
+        { text: '; comment', scopes: name(scopeName, RuleName.InLineComment) },
 
         { text: 'if', scopes: name(scopeName, Repository.LegacyIfStatement, RuleName.ControlFlowKeyword) },
         { text: 'value', scopes: name(scopeName, Repository.LegacyIfStatement, RuleName.Variable) },
         { text: 'between', scopes: name(scopeName, Repository.LegacyIfStatement, RuleName.KeywordInExpression) },
         { text: 'a', scopes: name(scopeName, Repository.LegacyIfStatement, RuleName.Variable) },
         { text: 'and', scopes: name(scopeName, Repository.LegacyIfStatement, RuleName.KeywordInExpression) },
+        { text: '; comment', scopes: name(scopeName, RuleName.InLineComment) },
+
+        { text: '{', scopes: name(scopeName, RuleName.BlockBegin) },
+        { text: '; comment', scopes: name(scopeName, RuleName.InLineComment) },
+
+        { text: '}', scopes: name(scopeName, RuleName.BlockEnd) },
+        { text: '; comment', scopes: name(scopeName, RuleName.InLineComment) },
 
         { text: 'if', scopes: name(scopeName, Repository.LegacyIfStatement, RuleName.ControlFlowKeyword) },
         { text: 'value', scopes: name(scopeName, Repository.LegacyIfStatement, RuleName.Variable) },
@@ -39,6 +68,13 @@ export function createLegacyIfStatementExpectedData(scopeName: ScopeName): Expec
         { text: 'a', scopes: name(scopeName, Repository.LegacyIfStatement, RuleName.Variable) },
         { text: 'and', scopes: name(scopeName, Repository.LegacyIfStatement, RuleName.KeywordInExpression) },
         { text: 'b', scopes: name(scopeName, Repository.LegacyIfStatement, RuleName.Variable) },
+        { text: '; comment', scopes: name(scopeName, RuleName.InLineComment) },
+
+        { text: '{', scopes: name(scopeName, RuleName.BlockBegin) },
+        { text: '; comment', scopes: name(scopeName, RuleName.InLineComment) },
+
+        { text: '}', scopes: name(scopeName, RuleName.BlockEnd) },
+        { text: '; comment', scopes: name(scopeName, RuleName.InLineComment) },
 
         { text: 'if', scopes: name(scopeName, Repository.LegacyIfStatement, RuleName.ControlFlowKeyword) },
         { text: 'value', scopes: name(scopeName, Repository.LegacyIfStatement, RuleName.Variable) },
@@ -47,8 +83,13 @@ export function createLegacyIfStatementExpectedData(scopeName: ScopeName): Expec
         { text: 'a', scopes: name(scopeName, Repository.LegacyIfStatement, RuleName.Variable) },
         { text: 'and', scopes: name(scopeName, Repository.LegacyIfStatement, RuleName.KeywordInExpression) },
         { text: 'b', scopes: name(scopeName, Repository.LegacyIfStatement, RuleName.Variable) },
+        { text: '; comment', scopes: name(scopeName, RuleName.InLineComment) },
+
         { text: '{', scopes: name(scopeName, RuleName.BlockBegin) },
+        { text: '; comment', scopes: name(scopeName, RuleName.InLineComment) },
+
         { text: '}', scopes: name(scopeName, RuleName.BlockEnd) },
+        { text: '; comment', scopes: name(scopeName, RuleName.InLineComment) },
       ],
     ],
     // #endregion IfBetween
