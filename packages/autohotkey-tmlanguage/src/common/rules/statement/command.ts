@@ -115,10 +115,10 @@ export function createCommandLikeRule(scopeName: ScopeName, definition: CommandD
               capturedCommaSeparator,
               inlineSpaces1(),
             ));
-            const separator = i === 0 ? capturedFirstSeparator : capturedCommaSeparator;
+            const capturedSeparator = i === 0 ? capturedFirstSeparator : capturedCommaSeparator;
 
             return seq(
-              separator,
+              capturedSeparator,
               negativeLookahead(seq(inlineSpaces1(), char(';'))),
               inlineSpaces0(),
               capture(parameterToOniguruma(parameter, isLastParameter, placeholder)),
@@ -127,7 +127,9 @@ export function createCommandLikeRule(scopeName: ScopeName, definition: CommandD
           }, ''))),
         ]
         : []),
-      optional(char(',')),
+
+      inlineSpaces0(),
+      capture(optional(char(','))),
       lookahead(placeholder.endAnchor),
     ),
     endCaptures: Object.fromEntries([
@@ -144,6 +146,8 @@ export function createCommandLikeRule(scopeName: ScopeName, definition: CommandD
           parameterToPatternsRule(scopeName, definition, parameter, isLastParameter, placeholder),
         ];
       }),
+
+      nameRule(scopeName, RuleName.Comma),
     ].map((rule, i) => [ i + 1, rule ])),
   };
 }

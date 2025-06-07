@@ -36,9 +36,14 @@ export function createContinuationSectionExpectedData(scopeName: ScopeName): Exp
     ],
     [
       dedent`
+        Gui,        ; comment
         (           ; comment
         ), text     ; comment
       `, [
+        { text: 'Gui', scopes: name(scopeName, RuleName.CommandName) },
+        { text: ',', scopes: name(scopeName, RuleName.Comma) },
+        { text: '; comment', scopes: name(scopeName, RuleName.InLineComment) },
+
         { text: '(', scopes: name(scopeName, RuleName.OpenParen) },
         { text: '; comment', scopes: name(scopeName, RuleName.InLineComment) },
 
