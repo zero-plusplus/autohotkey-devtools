@@ -4,7 +4,7 @@ import {
   lookbehind, negativeLookahead, negChars1, ordalt, seq, textalt,
 } from '../../../oniguruma';
 import {
-  includeRule, name, nameRule, Repository, RuleName,
+  includeRule, name, nameRule, patternsRule, Repository, RuleName, StyleName,
   type MatchRule, type ScopeName,
 } from '../../../tmlanguage';
 import * as constants_v1 from '../../constants';
@@ -35,30 +35,25 @@ export function createLegacyAssignmentRule(scopeName: ScopeName, placeholder: Pl
       endLine,
     ),
     captures: {
-      1: {
-        name: name(scopeName, Repository.LegacyAssignmentDeclaration),
-        patterns: [
-          includeRule(Repository.Comma),
-          includeRule(Repository.Expression),
-        ],
-      },
-      2: nameRule(scopeName, Repository.LegacyAssignmentDeclaration, RuleName.Operator),
-      3: {
-        name: name(scopeName, Repository.LegacyAssignmentDeclaration),
-        patterns: [
-          includeRule(Repository.PercentExpression),
-          includeRule(Repository.Dereference),
-          // escape sequences
-          {
-            name: name(scopeName, RuleName.EscapeSequence),
-            match: textalt(...constants_v1.unquoteEscapeSequences),
-          },
-          {
-            name: name(scopeName, RuleName.UnquotedString),
-            match: negChars1('`', '%'),
-          },
-        ],
-      },
+      1: patternsRule(
+        includeRule(Repository.Comma),
+        includeRule(Repository.Expression),
+      ),
+      2: nameRule(scopeName, RuleName.Operator),
+      3: patternsRule(
+        includeRule(Repository.PercentExpression),
+        includeRule(Repository.Dereference),
+
+        // escape sequences
+        {
+          name: name(scopeName, RuleName.UnquotedString, StyleName.Escape),
+          match: textalt(...constants_v1.unquoteEscapeSequences),
+        },
+        {
+          name: name(scopeName, RuleName.UnquotedString),
+          match: negChars1('`', '%'),
+        },
+      ),
     },
   };
 }

@@ -264,7 +264,6 @@ export const enum RuleName {
   SingleStringEscapeSequence = 'constant.character.escape.single',
   SingleString = 'token.string string.quoted.single',
   MultiLineString = 'token.string string.quoted.unquoted',
-  EscapeSequence = 'constant.character.escape',
   // #endregion string
   // #region number
   Integer = 'constant.numeric.integer',
