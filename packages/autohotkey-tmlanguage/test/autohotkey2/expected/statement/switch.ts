@@ -111,5 +111,28 @@ export function createSwitchStatementExpectedData(scopeName: ScopeName): Expecte
         })(),
       ];
     })(),
+
+    // Treat after the case statement as the start of a statement
+    [
+      dedent`
+        switch {                ; comment
+          case true: MsgBox     ; comment
+        }                       ; comment
+      `,
+      [
+        { text: 'switch', scopes: name(scopeName, RuleName.ControlFlowKeyword) },
+        { text: '{', scopes: name(scopeName, RuleName.BlockBegin) },
+        { text: '; comment', scopes: name(scopeName, RuleName.InLineComment) },
+
+        { text: 'case', scopes: name(scopeName, RuleName.SwitchLabelKeyword) },
+        { text: 'true', scopes: name(scopeName, RuleName.KeywordLikeBuiltInVariable) },
+        { text: ':', scopes: name(scopeName, RuleName.Colon) },
+        { text: 'MsgBox', scopes: name(scopeName, RuleName.FunctionName) },
+        { text: '; comment', scopes: name(scopeName, RuleName.InLineComment) },
+
+        { text: '}', scopes: name(scopeName, RuleName.BlockEnd) },
+        { text: '; comment', scopes: name(scopeName, RuleName.InLineComment) },
+      ],
+    ],
   ];
 }

@@ -1,6 +1,6 @@
-import { lineStartAnchor } from '../common/patterns';
+import * as patterns_common from '../common/patterns';
 import {
-  alt, anyChars1, char, endAnchor, group, groupMany0, groupMany1, inlineSpace, inlineSpaces0,
+  alt, anyChars0, anyChars1, char, endAnchor, group, groupMany0, groupMany1, ignoreCase, inlineSpace, inlineSpaces0,
   inlineSpaces1, lookahead, manyLimit, manyRange, negativeLookahead, negChar, number, reluctant,
   seq, text, textalt, wordChar,
 } from '../oniguruma';
@@ -43,10 +43,11 @@ export const looseCallableNamePattern: string = seq(
 // #endregion Names
 
 export const statementStartAnchor: string = alt(
-  lineStartAnchor,
-  reluctant(seq(lineStartAnchor, inlineSpaces0(), groupMany1(alt(negChar(':', seq(char('`'), char(':'))))), text('::'), inlineSpaces0())),
-  seq(lineStartAnchor, inlineSpaces0(), identifierPattern, char(':'), inlineSpaces0()),
-  seq(lineStartAnchor, inlineSpaces0(), char('}')),
+  patterns_common.lineStartAnchor,
+  seq(patterns_common.lineStartAnchor, inlineSpaces0(), groupMany1(alt(negChar(':', seq(char('`'), char(':'))))), text('::'), inlineSpaces0()),
+  seq(patterns_common.lineStartAnchor, inlineSpaces0(), ignoreCase('case'), inlineSpace(), reluctant(anyChars0()), char(':'), inlineSpaces0()),
+  seq(patterns_common.lineStartAnchor, inlineSpaces0(), identifierPattern, char(':'), inlineSpaces0()),
+  seq(patterns_common.lineStartAnchor, inlineSpaces0(), char('}')),
 );
 export const expressionContinuationStartAnchor: string = group(textalt(...constants_v1.continuationOperators));
 export const expressionEndAnchor: string = alt(
