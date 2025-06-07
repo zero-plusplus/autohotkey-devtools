@@ -11,7 +11,6 @@ import { createHotstringLabelStatementExpectedData } from './declaration/hotstri
 import { createLabelStatementExpectedData } from './declaration/label';
 import { createArrayLiteralExpectedData } from './expression/array';
 import { createCallExpressionExpectedData } from './expression/call';
-import { createContinuationStringLiteralExpectedData } from './expression/continuationString';
 import { createDereferenceExpressionExpectedData } from './expression/dereference';
 import { createNewExpressionExpectedData } from './expression/new';
 import { createNumberLiteralExpectedData } from './expression/number';
@@ -48,7 +47,6 @@ export function createExpectedDataList(scopeName: ScopeName): ExpectedTestData[]
     ...createClassDeclarationExpectedData(scopeName),
     ...createCommandStatementExpectedData(scopeName),
     ...createContinuationSectionExpectedData(scopeName),
-    ...createContinuationStringLiteralExpectedData(scopeName),
     ...createDereferenceExpressionExpectedData(scopeName),
     ...createDirectiveCommentExpectedData(scopeName),
     ...createDirectiveStatementExpectedData(scopeName),
