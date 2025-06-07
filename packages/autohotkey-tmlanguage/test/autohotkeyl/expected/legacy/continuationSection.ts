@@ -9,29 +9,39 @@ export function createContinuationSectionExpectedData(scopeName: ScopeName): Exp
   return [
     [
       dedent`
-        (
-          text
-        )
+        (               ; comment
+          text          ; text
+        )               ; comment
       `, [
         { text: '(', scopes: name(scopeName, RuleName.OpenParen) },
-        { text: 'text', scopes: name(scopeName, RuleName.UnquotedString) },
+        { text: '; comment', scopes: name(scopeName, RuleName.InLineComment) },
+
+        { text: 'text          ; text', scopes: name(scopeName, RuleName.UnquotedString) },
+
         { text: ')', scopes: name(scopeName, RuleName.CloseParen) },
+        { text: '; comment', scopes: name(scopeName, RuleName.InLineComment) },
       ],
     ],
     [
       dedent`
-        (Join\`r\`n
-        )
-        (Join|
-        )
+        (Join\`r\`n         ; comment
+        )                   ; comment
+        (Join|              ; comment
+        )                   ; comment
       `, [
         { text: '(', scopes: name(scopeName, RuleName.OpenParen) },
         { text: 'Join`r`n', scopes: name(scopeName, RuleName.ContinuationOption, StyleName.Strong) },
+        { text: '; comment', scopes: name(scopeName, RuleName.InLineComment) },
+
         { text: ')', scopes: name(scopeName, RuleName.CloseParen) },
+        { text: '; comment', scopes: name(scopeName, RuleName.InLineComment) },
 
         { text: '(', scopes: name(scopeName, RuleName.OpenParen) },
         { text: 'Join|', scopes: name(scopeName, RuleName.ContinuationOption, StyleName.Strong) },
+        { text: '; comment', scopes: name(scopeName, RuleName.InLineComment) },
+
         { text: ')', scopes: name(scopeName, RuleName.CloseParen) },
+        { text: '; comment', scopes: name(scopeName, RuleName.InLineComment) },
       ],
     ],
     [
@@ -54,14 +64,19 @@ export function createContinuationSectionExpectedData(scopeName: ScopeName): Exp
       ],
     ],
 
+    // invalid
     [
       dedent`
-        (:
-        )
-      `, [
+        (xxx                    ; comment
+        )                       ; comment
+      `,
+      [
         { text: '(', scopes: name(scopeName, RuleName.OpenParen) },
-        { text: ':', scopes: name(scopeName, RuleName.ContinuationOption, StyleName.Invalid) },
+        { text: 'xxx', scopes: name(scopeName, RuleName.ContinuationOption, StyleName.Invalid) },
+        { text: '; comment', scopes: name(scopeName, RuleName.InLineComment) },
+
         { text: ')', scopes: name(scopeName, RuleName.CloseParen) },
+        { text: '; comment', scopes: name(scopeName, RuleName.InLineComment) },
       ],
     ],
   ];
