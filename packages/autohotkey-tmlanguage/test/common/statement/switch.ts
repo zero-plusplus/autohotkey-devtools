@@ -1,4 +1,4 @@
-import { dedent, repeatArray } from '@zero-plusplus/utilities/src';
+import { dedent } from '@zero-plusplus/utilities/src';
 import {
   name, RuleName,
   type ScopeName,
@@ -334,35 +334,73 @@ export function createSwitchStatementExpectedData(scopeName: ScopeName): Expecte
     // Incomplete switch labels
     [
       dedent`
-        switch (true) {
-          case
-          case:
-          default
-          default:
-        }
-        switch (true)
-        {
-          case
-          case:
-          default
-          default:
-        }
+        switch (true) {           ; comment
+          case                    ; comment
+          case:                   ; comment
+          default                 ; comment
+          default:                ; comment
+        }                         ; comment
+        switch (true)             ; comment
+        {                         ; comment
+          case                    ; comment
+          case:                   ; comment
+          default                 ; comment
+          default:                ; comment
+        }                         ; comment
       `,
       [
-        ...repeatArray(2, [
+        ...[
           { text: 'switch', scopes: name(scopeName, RuleName.ControlFlowKeyword) },
           { text: '(', scopes: name(scopeName, RuleName.OpenParen) },
           { text: 'true', scopes: name(scopeName, RuleName.KeywordLikeBuiltInVariable) },
           { text: ')', scopes: name(scopeName, RuleName.CloseParen) },
           { text: '{', scopes: name(scopeName, RuleName.BlockBegin) },
+          { text: '; comment', scopes: name(scopeName, RuleName.InLineComment) },
+
           { text: 'case', scopes: name(scopeName, RuleName.SwitchLabelKeyword) },
+          { text: '; comment', scopes: name(scopeName, RuleName.InLineComment) },
+
           { text: 'case', scopes: name(scopeName, RuleName.SwitchLabelKeyword) },
           { text: ':', scopes: name(scopeName, RuleName.Colon) },
+          { text: '; comment', scopes: name(scopeName, RuleName.InLineComment) },
+
           { text: 'default', scopes: name(scopeName, RuleName.SwitchLabelKeyword) },
+          { text: '; comment', scopes: name(scopeName, RuleName.InLineComment) },
+
           { text: 'default', scopes: name(scopeName, RuleName.SwitchLabelKeyword) },
           { text: ':', scopes: name(scopeName, RuleName.Colon) },
+          { text: '; comment', scopes: name(scopeName, RuleName.InLineComment) },
+
           { text: '}', scopes: name(scopeName, RuleName.BlockEnd) },
-        ]),
+          { text: '; comment', scopes: name(scopeName, RuleName.InLineComment) },
+        ],
+
+        ...[
+          { text: 'switch', scopes: name(scopeName, RuleName.ControlFlowKeyword) },
+          { text: '(', scopes: name(scopeName, RuleName.OpenParen) },
+          { text: 'true', scopes: name(scopeName, RuleName.KeywordLikeBuiltInVariable) },
+          { text: ')', scopes: name(scopeName, RuleName.CloseParen) },
+          { text: '; comment', scopes: name(scopeName, RuleName.InLineComment) },
+          { text: '{', scopes: name(scopeName, RuleName.BlockBegin) },
+          { text: '; comment', scopes: name(scopeName, RuleName.InLineComment) },
+
+          { text: 'case', scopes: name(scopeName, RuleName.SwitchLabelKeyword) },
+          { text: '; comment', scopes: name(scopeName, RuleName.InLineComment) },
+
+          { text: 'case', scopes: name(scopeName, RuleName.SwitchLabelKeyword) },
+          { text: ':', scopes: name(scopeName, RuleName.Colon) },
+          { text: '; comment', scopes: name(scopeName, RuleName.InLineComment) },
+
+          { text: 'default', scopes: name(scopeName, RuleName.SwitchLabelKeyword) },
+          { text: '; comment', scopes: name(scopeName, RuleName.InLineComment) },
+
+          { text: 'default', scopes: name(scopeName, RuleName.SwitchLabelKeyword) },
+          { text: ':', scopes: name(scopeName, RuleName.Colon) },
+          { text: '; comment', scopes: name(scopeName, RuleName.InLineComment) },
+
+          { text: '}', scopes: name(scopeName, RuleName.BlockEnd) },
+          { text: '; comment', scopes: name(scopeName, RuleName.InLineComment) },
+        ],
       ],
     ],
     // Multi-line expressions in switch case label
