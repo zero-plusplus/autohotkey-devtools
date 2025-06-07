@@ -9,7 +9,6 @@ import { createFunctionDeclarationExpectedData } from './declaration/function';
 import { createHotkeyLabelStatementExpectedData } from './declaration/hotkeyLabel';
 import { createHotstringLabelStatementExpectedData } from './declaration/hotstringLabel';
 import { createLabelStatementExpectedData } from './declaration/label';
-import { createModifierDeclarationExpectedData } from './declaration/modifier';
 import { createArrayLiteralExpectedData } from './expression/array';
 import { createCallExpressionExpectedData } from './expression/call';
 import { createContinuationStringLiteralExpectedData } from './expression/continuationString';
@@ -47,7 +46,6 @@ export * from './declaration/function';
 export * from './declaration/hotkeyLabel';
 export * from './declaration/hotstringLabel';
 export * from './declaration/label';
-export * from './declaration/modifier';
 export * from './expression/array';
 export * from './expression/call';
 export * from './expression/continuationString';
@@ -103,7 +101,6 @@ export function createExpectedDataList(scopeName: ScopeName): ExpectedTestData[]
     ...createLegacyIfStatementExpectedData(scopeName),
     ...createLoopStatementExpectedData(scopeName),
     ...createMetaFunctionDeclarationExpectedData(scopeName),
-    ...createModifierDeclarationExpectedData(scopeName),
     ...createMultiLineCommentExpectedData(scopeName),
     ...createNewExpressionExpectedData(scopeName),
     ...createNumberLiteralExpectedData(scopeName),
