@@ -12,7 +12,7 @@ export function createObjectLiteralExpectedData(scopeName: ScopeName): ExpectedT
 
     [
       dedent`
-        var := { %a + b%: 123 }
+        var := { %a + b%: 123 }       ; comment
       `,
       [
         { text: 'var', scopes: name(scopeName, RuleName.Variable) },
@@ -26,6 +26,7 @@ export function createObjectLiteralExpectedData(scopeName: ScopeName): ExpectedT
         { text: ':', scopes: name(scopeName, RuleName.Colon) },
         { text: '123', scopes: name(scopeName, RuleName.Integer) },
         { text: '}', scopes: name(scopeName, RuleName.CloseBrace) },
+        { text: '; comment', scopes: name(scopeName, RuleName.InLineComment) },
       ],
     ],
   ];
