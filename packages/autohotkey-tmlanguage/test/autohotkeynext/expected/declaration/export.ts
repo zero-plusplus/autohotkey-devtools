@@ -17,7 +17,6 @@ export function createExportDeclarationExpectedData(scopeName: ScopeName): Expec
             export xxx() => yyy                       ; comment
           `,
           [
-
             ...[
               { text: 'export', scopes: name(scopeName, RuleName.MetaKeyword) },
               { text: 'x', scopes: name(scopeName, RuleName.Variable) },
@@ -61,7 +60,6 @@ export function createExportDeclarationExpectedData(scopeName: ScopeName): Expec
                 }                                         ; comment
               `,
               [
-
                 ...[
                   { text: 'export', scopes: name(scopeName, RuleName.MetaKeyword) },
                   { text: 'yyy', scopes: name(scopeName, RuleName.FunctionName) },
