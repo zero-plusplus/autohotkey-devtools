@@ -1,4 +1,4 @@
-import { dedent, repeatArray } from '@zero-plusplus/utilities/src';
+import { dedent } from '@zero-plusplus/utilities/src';
 import {
   name, RuleName,
   type ScopeName,
@@ -7,92 +7,186 @@ import type { ExpectedTestData } from '../../types';
 
 export function createIfStatementExpectedData(scopeName: ScopeName): ExpectedTestData[] {
   return [
-    [
-      dedent`
-        if (true) {
-        }
-        if (true)
-        {
-        }
-      `,
-      [
-        ...repeatArray(2, [
-          { text: 'if', scopes: name(scopeName, RuleName.ControlFlowKeyword) },
-          { text: '(', scopes: name(scopeName, RuleName.OpenParen) },
-          { text: 'true', scopes: name(scopeName, RuleName.KeywordLikeBuiltInVariable) },
-          { text: ')', scopes: name(scopeName, RuleName.CloseParen) },
-          { text: '{', scopes: name(scopeName, RuleName.BlockBegin) },
-          { text: '}', scopes: name(scopeName, RuleName.BlockEnd) },
-        ]),
-      ],
-    ],
-    [
-      dedent`
-        else {
-        }
-        else
-        {
-        }
-      `,
-      [
-        ...repeatArray(2, [
-          { text: 'else', scopes: name(scopeName, RuleName.ControlFlowKeyword) },
-          { text: '{', scopes: name(scopeName, RuleName.BlockBegin) },
-          { text: '}', scopes: name(scopeName, RuleName.BlockEnd) },
-        ]),
-      ],
-    ],
-    [
-      dedent`
-        else if (true) {
-        }
-        else if (true)
-        {
-        }
-      `,
-      [
-        ...repeatArray(2, [
-          { text: 'else if', scopes: name(scopeName, RuleName.ControlFlowKeyword) },
-          { text: '(', scopes: name(scopeName, RuleName.OpenParen) },
-          { text: 'true', scopes: name(scopeName, RuleName.KeywordLikeBuiltInVariable) },
-          { text: ')', scopes: name(scopeName, RuleName.CloseParen) },
-          { text: '{', scopes: name(scopeName, RuleName.BlockBegin) },
-          { text: '}', scopes: name(scopeName, RuleName.BlockEnd) },
-        ]),
-      ],
-    ],
-    [
-      dedent`
-        if true {
-        } else if true {
-        } else {
-        }
+    // one line
+    ...((): ExpectedTestData[] => {
+      return [
+        [
+          dedent`
+            if (true) {         ; comment
+            }                   ; comment
+          `,
+          [
+            { text: 'if', scopes: name(scopeName, RuleName.ControlFlowKeyword) },
+            { text: '(', scopes: name(scopeName, RuleName.OpenParen) },
+            { text: 'true', scopes: name(scopeName, RuleName.KeywordLikeBuiltInVariable) },
+            { text: ')', scopes: name(scopeName, RuleName.CloseParen) },
+            { text: '{', scopes: name(scopeName, RuleName.BlockBegin) },
+            { text: '; comment', scopes: name(scopeName, RuleName.InLineComment) },
 
-        if true
-        {
-        } else if true
-        {
-        } else
-        {
-        }
-      `,
-      [
-        ...repeatArray(2, [
-          { text: 'if', scopes: name(scopeName, RuleName.ControlFlowKeyword) },
-          { text: 'true', scopes: name(scopeName, RuleName.KeywordLikeBuiltInVariable) },
-          { text: '{', scopes: name(scopeName, RuleName.BlockBegin) },
-          { text: '}', scopes: name(scopeName, RuleName.BlockEnd) },
+            { text: '}', scopes: name(scopeName, RuleName.BlockEnd) },
+            { text: '; comment', scopes: name(scopeName, RuleName.InLineComment) },
+          ],
+        ],
+        [
+          dedent`
+            else {        ; comment
+            }             ; comment
+          `,
+          [
+            { text: 'else', scopes: name(scopeName, RuleName.ControlFlowKeyword) },
+            { text: '{', scopes: name(scopeName, RuleName.BlockBegin) },
+            { text: '; comment', scopes: name(scopeName, RuleName.InLineComment) },
 
-          { text: 'else if', scopes: name(scopeName, RuleName.ControlFlowKeyword) },
-          { text: 'true', scopes: name(scopeName, RuleName.KeywordLikeBuiltInVariable) },
-          { text: '{', scopes: name(scopeName, RuleName.BlockBegin) },
-          { text: '}', scopes: name(scopeName, RuleName.BlockEnd) },
+            { text: '}', scopes: name(scopeName, RuleName.BlockEnd) },
+            { text: '; comment', scopes: name(scopeName, RuleName.InLineComment) },
+          ],
+        ],
+        [
+          dedent`
+            else if (true) {        ; comment
+            }                       ; comment
+          `,
+          [
+            { text: 'else if', scopes: name(scopeName, RuleName.ControlFlowKeyword) },
+            { text: '(', scopes: name(scopeName, RuleName.OpenParen) },
+            { text: 'true', scopes: name(scopeName, RuleName.KeywordLikeBuiltInVariable) },
+            { text: ')', scopes: name(scopeName, RuleName.CloseParen) },
+            { text: '{', scopes: name(scopeName, RuleName.BlockBegin) },
+            { text: '; comment', scopes: name(scopeName, RuleName.InLineComment) },
 
-          { text: 'else', scopes: name(scopeName, RuleName.ControlFlowKeyword) },
-          { text: '{', scopes: name(scopeName, RuleName.BlockBegin) },
-          { text: '}', scopes: name(scopeName, RuleName.BlockEnd) },
-        ]),
-      ],
-    ],
+            { text: '}', scopes: name(scopeName, RuleName.BlockEnd) },
+            { text: '; comment', scopes: name(scopeName, RuleName.InLineComment) },
+          ],
+        ],
+        [
+          dedent`
+            if true {                 ; comment
+            } else if true {          ; comment
+            } else {                  ; comment
+            }                         ; comment
+          `,
+          [
+            { text: 'if', scopes: name(scopeName, RuleName.ControlFlowKeyword) },
+            { text: 'true', scopes: name(scopeName, RuleName.KeywordLikeBuiltInVariable) },
+            { text: '{', scopes: name(scopeName, RuleName.BlockBegin) },
+            { text: '; comment', scopes: name(scopeName, RuleName.InLineComment) },
+
+            { text: '}', scopes: name(scopeName, RuleName.BlockEnd) },
+            { text: 'else if', scopes: name(scopeName, RuleName.ControlFlowKeyword) },
+            { text: 'true', scopes: name(scopeName, RuleName.KeywordLikeBuiltInVariable) },
+            { text: '{', scopes: name(scopeName, RuleName.BlockBegin) },
+            { text: '; comment', scopes: name(scopeName, RuleName.InLineComment) },
+
+            { text: '}', scopes: name(scopeName, RuleName.BlockEnd) },
+            { text: 'else', scopes: name(scopeName, RuleName.ControlFlowKeyword) },
+            { text: '{', scopes: name(scopeName, RuleName.BlockBegin) },
+            { text: '; comment', scopes: name(scopeName, RuleName.InLineComment) },
+
+            { text: '}', scopes: name(scopeName, RuleName.BlockEnd) },
+            { text: '; comment', scopes: name(scopeName, RuleName.InLineComment) },
+          ],
+        ],
+      ];
+    })(),
+
+    // continuation
+    ...((): ExpectedTestData[] => {
+      return [
+        [
+          dedent`
+            if (true)           ; comment
+            {                   ; comment
+            }                   ; comment
+          `,
+          [
+            { text: 'if', scopes: name(scopeName, RuleName.ControlFlowKeyword) },
+            { text: '(', scopes: name(scopeName, RuleName.OpenParen) },
+            { text: 'true', scopes: name(scopeName, RuleName.KeywordLikeBuiltInVariable) },
+            { text: ')', scopes: name(scopeName, RuleName.CloseParen) },
+            { text: '; comment', scopes: name(scopeName, RuleName.InLineComment) },
+
+            { text: '{', scopes: name(scopeName, RuleName.BlockBegin) },
+            { text: '; comment', scopes: name(scopeName, RuleName.InLineComment) },
+
+            { text: '}', scopes: name(scopeName, RuleName.BlockEnd) },
+            { text: '; comment', scopes: name(scopeName, RuleName.InLineComment) },
+          ],
+        ],
+        [
+          dedent`
+            else        ; comment
+            {           ; comment
+            }           ; comment
+          `,
+          [
+            { text: 'else', scopes: name(scopeName, RuleName.ControlFlowKeyword) },
+            { text: '; comment', scopes: name(scopeName, RuleName.InLineComment) },
+
+            { text: '{', scopes: name(scopeName, RuleName.BlockBegin) },
+            { text: '; comment', scopes: name(scopeName, RuleName.InLineComment) },
+
+            { text: '}', scopes: name(scopeName, RuleName.BlockEnd) },
+            { text: '; comment', scopes: name(scopeName, RuleName.InLineComment) },
+          ],
+        ],
+        [
+          dedent`
+            else if (true)        ; comment
+            {                     ; comment
+            }                     ; comment
+          `,
+          [
+            { text: 'else if', scopes: name(scopeName, RuleName.ControlFlowKeyword) },
+            { text: '(', scopes: name(scopeName, RuleName.OpenParen) },
+            { text: 'true', scopes: name(scopeName, RuleName.KeywordLikeBuiltInVariable) },
+            { text: ')', scopes: name(scopeName, RuleName.CloseParen) },
+            { text: '; comment', scopes: name(scopeName, RuleName.InLineComment) },
+
+            { text: '{', scopes: name(scopeName, RuleName.BlockBegin) },
+            { text: '; comment', scopes: name(scopeName, RuleName.InLineComment) },
+
+            { text: '}', scopes: name(scopeName, RuleName.BlockEnd) },
+            { text: '; comment', scopes: name(scopeName, RuleName.InLineComment) },
+          ],
+        ],
+        [
+          dedent`
+            if true                 ; comment
+            {                       ; comment
+            } else if true          ; comment
+            {                       ; comment
+            } else                  ; comment
+            {                       ; comment
+            }                       ; comment
+          `,
+          [
+            { text: 'if', scopes: name(scopeName, RuleName.ControlFlowKeyword) },
+            { text: 'true', scopes: name(scopeName, RuleName.KeywordLikeBuiltInVariable) },
+            { text: '; comment', scopes: name(scopeName, RuleName.InLineComment) },
+
+            { text: '{', scopes: name(scopeName, RuleName.BlockBegin) },
+            { text: '; comment', scopes: name(scopeName, RuleName.InLineComment) },
+
+            { text: '}', scopes: name(scopeName, RuleName.BlockEnd) },
+            { text: 'else if', scopes: name(scopeName, RuleName.ControlFlowKeyword) },
+            { text: 'true', scopes: name(scopeName, RuleName.KeywordLikeBuiltInVariable) },
+            { text: '; comment', scopes: name(scopeName, RuleName.InLineComment) },
+
+            { text: '{', scopes: name(scopeName, RuleName.BlockBegin) },
+            { text: '; comment', scopes: name(scopeName, RuleName.InLineComment) },
+
+            { text: '}', scopes: name(scopeName, RuleName.BlockEnd) },
+            { text: 'else', scopes: name(scopeName, RuleName.ControlFlowKeyword) },
+            { text: '; comment', scopes: name(scopeName, RuleName.InLineComment) },
+
+            { text: '{', scopes: name(scopeName, RuleName.BlockBegin) },
+            { text: '; comment', scopes: name(scopeName, RuleName.InLineComment) },
+
+            { text: '}', scopes: name(scopeName, RuleName.BlockEnd) },
+            { text: '; comment', scopes: name(scopeName, RuleName.InLineComment) },
+          ],
+        ],
+      ];
+    })(),
   ];
 }
