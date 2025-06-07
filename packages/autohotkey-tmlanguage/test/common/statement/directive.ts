@@ -1,4 +1,4 @@
-import { hasFlag } from '@zero-plusplus/utilities/src';
+import { dedent, hasFlag } from '@zero-plusplus/utilities/src';
 import {
   CommandFlag,
   type CommandDefinition,
@@ -16,7 +16,9 @@ export function createDirectiveStatementExpectedData(scopeName: ScopeName, place
   return [
     ...placeholder.directiveDefinitions.map((definition): ExpectedTestData => {
       return [
-        definition.name,
+        dedent`
+          ${definition.name}      ; comment
+        `,
         [
           {
             text: definition.name,
@@ -24,6 +26,7 @@ export function createDirectiveStatementExpectedData(scopeName: ScopeName, place
               ? name(scopeName, RuleName.DirectiveName, StyleName.Strikethrough)
               : name(scopeName, RuleName.DirectiveName),
           },
+          { text: '; comment', scopes: name(scopeName, RuleName.InLineComment) },
         ],
       ];
     }),
@@ -31,52 +34,62 @@ export function createDirectiveStatementExpectedData(scopeName: ScopeName, place
     ...[ '#Include', '#IncludeAgain' ].flatMap((directive): ExpectedTestData[] => {
       return [
         [
-          `${directive} <LIBRARY> ; inline comment`,
+          dedent`
+            ${directive} <LIBRARY>      ; comment
+          `,
           [
             { text: directive, scopes: name(scopeName, RuleName.DirectiveName) },
             { text: '<', scopes: name(scopeName, RuleName.OpenAngleBracket) },
             { text: 'LIBRARY', scopes: name(scopeName, RuleName.UnquotedString, StyleName.Strong) },
             { text: '>', scopes: name(scopeName, RuleName.CloseAngleBracket) },
-            { text: '; inline comment', scopes: name(scopeName, RuleName.InLineComment) },
+            { text: '; comment', scopes: name(scopeName, RuleName.InLineComment) },
           ],
         ],
         [
-          `${directive} path\\to\\, file .ahk ; inline comment`,
+          dedent`
+            ${directive} path\\to\\, file .ahk      ; comment
+          `,
           [
             { text: directive, scopes: name(scopeName, RuleName.DirectiveName) },
             { text: 'path\\to\\, file .ahk', scopes: name(scopeName, RuleName.UnquotedString) },
-            { text: '; inline comment', scopes: name(scopeName, RuleName.InLineComment) },
+            { text: '; comment', scopes: name(scopeName, RuleName.InLineComment) },
           ],
         ],
         [
-          `${directive} .\\path\\to\\, file .ahk ; inline comment`,
+          dedent`
+            ${directive} .\\path\\to\\, file .ahk       ; comment
+          `,
           [
             { text: directive, scopes: name(scopeName, RuleName.DirectiveName) },
             { text: '.\\path\\to\\, file .ahk', scopes: name(scopeName, RuleName.UnquotedString) },
-            { text: '; inline comment', scopes: name(scopeName, RuleName.InLineComment) },
+            { text: '; comment', scopes: name(scopeName, RuleName.InLineComment) },
           ],
         ],
         [
-          `${directive} %A_LineFile%\\..\\file.ahk ; inline comment`,
+          dedent`
+            ${directive} %A_LineFile%\\..\\file.ahk     ; comment
+          `,
           [
             { text: directive, scopes: name(scopeName, RuleName.DirectiveName) },
             { text: '%', scopes: name(scopeName, RuleName.PercentBegin) },
             { text: 'A_LineFile', scopes: name(scopeName, RuleName.BuiltInVariable) },
             { text: '%', scopes: name(scopeName, RuleName.PercentEnd) },
             { text: '\\..\\file.ahk', scopes: name(scopeName, RuleName.UnquotedString) },
-            { text: '; inline comment', scopes: name(scopeName, RuleName.InLineComment) },
+            { text: '; comment', scopes: name(scopeName, RuleName.InLineComment) },
           ],
         ],
       ];
     }),
 
     [
-      `#Requires AutoHotkey v2.1 ; inline comment`,
+      dedent`
+        #Requires AutoHotkey v2.1         ; comment
+      `,
       [
         { text: '#Requires', scopes: name(scopeName, RuleName.DirectiveName) },
         { text: 'AutoHotkey', scopes: name(scopeName, RuleName.UnquotedString, StyleName.Strong) },
         { text: 'v2.1', scopes: name(scopeName, RuleName.UnquotedString, StyleName.Strong) },
-        { text: '; inline comment', scopes: name(scopeName, RuleName.InLineComment) },
+        { text: '; comment', scopes: name(scopeName, RuleName.InLineComment) },
       ],
     ],
   ];
