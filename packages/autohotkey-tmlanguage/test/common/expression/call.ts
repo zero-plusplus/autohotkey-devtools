@@ -12,9 +12,9 @@ export function createCallExpressionExpectedData(scopeName: ScopeName): Expected
       return [
         [
           dedent`
-            abc()       ; comment
-            abc(a)      ; comment
-            abc(a, (b * c), d)
+            abc()                 ; comment
+            abc(a)                ; comment
+            abc(a, (b * c), d)    ; comment
           `,
           [
             { text: 'abc', scopes: name(scopeName, RuleName.FunctionName) },
@@ -40,6 +40,7 @@ export function createCallExpressionExpectedData(scopeName: ScopeName): Expected
             { text: ',', scopes: name(scopeName, RuleName.Comma) },
             { text: 'd', scopes: name(scopeName, RuleName.Variable) },
             { text: ')', scopes: name(scopeName, RuleName.CloseParen) },
+            { text: '; comment', scopes: name(scopeName, RuleName.InLineComment) },
           ],
         ],
       ];
