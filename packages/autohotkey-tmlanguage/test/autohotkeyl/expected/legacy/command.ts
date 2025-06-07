@@ -1245,22 +1245,22 @@ export function createCommandStatementExpectedData(scopeName: ScopeName): Expect
             AutoTrim, %o%%f%%f%           ; comment
             AutoTrim, on,                 ; comment
 
-            BlockInput, Send
-            BlockInput, Mouse
-            BlockInput, SendAndMouse
-            BlockInput, Default
-            BlockInput, MouseMove
-            BlockInput, MouseMoveOff
-            BlockInput, on
-            BlockInput, ON
-            BlockInput, off
-            BlockInput, OFF
-            BlockInput, 1
-            BlockInput, 0
+            BlockInput, Send              ; comment
+            BlockInput, Mouse             ; comment
+            BlockInput, SendAndMouse      ; comment
+            BlockInput, Default           ; comment
+            BlockInput, MouseMove         ; comment
+            BlockInput, MouseMoveOff      ; comment
+            BlockInput, on                ; comment
+            BlockInput, ON                ; comment
+            BlockInput, off               ; comment
+            BlockInput, OFF               ; comment
+            BlockInput, 1                 ; comment
+            BlockInput, 0                 ; comment
 
-            BlockInput, % on                ; comment
-            BlockInput, %o%%f%%f%           ; comment
-            BlockInput, on,                 ; comment
+            BlockInput, % on              ; comment
+            BlockInput, %o%%f%%f%         ; comment
+            BlockInput, on,               ; comment
           `,
           [
             ...[ 'on', 'ON', 'off', 'OFF', '1', '0' ].flatMap((arg) => {
@@ -1321,6 +1321,7 @@ export function createCommandStatementExpectedData(scopeName: ScopeName): Expect
                 { text: 'BlockInput', scopes: name(scopeName, RuleName.CommandName) },
                 { text: ',', scopes: name(scopeName, RuleName.Comma) },
                 { text: arg, scopes: name(scopeName, RuleName.UnquotedString, StyleName.Strong) },
+                { text: '; comment', scopes: name(scopeName, RuleName.InLineComment) },
               ];
             }),
 
