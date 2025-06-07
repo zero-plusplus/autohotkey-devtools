@@ -12,14 +12,15 @@ export function createFieldDeclarationExpectedData(scopeName: ScopeName): Expect
       return [
         [
           dedent`
-            class {
+            class {                 ; comment
               field                 ; comment
               FIELD                 ; comment
-            }
+            }                       ; comment
           `,
           [
             { text: 'class', scopes: name(scopeName, RuleName.ClassKeyword) },
             { text: '{', scopes: name(scopeName, RuleName.ClassBlockBegin) },
+            { text: '; comment', scopes: name(scopeName, RuleName.InLineComment) },
 
             { text: 'field', scopes: name(scopeName, RuleName.Variable) },
             { text: '; comment', scopes: name(scopeName, RuleName.InLineComment) },
@@ -28,18 +29,20 @@ export function createFieldDeclarationExpectedData(scopeName: ScopeName): Expect
             { text: '; comment', scopes: name(scopeName, RuleName.InLineComment) },
 
             { text: '}', scopes: name(scopeName, RuleName.ClassBlockEnd) },
+            { text: '; comment', scopes: name(scopeName, RuleName.InLineComment) },
           ],
         ],
         [
           dedent`
-            class {
+            class {                 ; comment
               field := 123          ; comment
               FIELD := 123          ; comment
-            }
+            }                       ; comment
           `,
           [
             { text: 'class', scopes: name(scopeName, RuleName.ClassKeyword) },
             { text: '{', scopes: name(scopeName, RuleName.ClassBlockBegin) },
+            { text: '; comment', scopes: name(scopeName, RuleName.InLineComment) },
 
             { text: 'field', scopes: name(scopeName, RuleName.Variable) },
             { text: ':=', scopes: name(scopeName, RuleName.Operator) },
@@ -52,19 +55,21 @@ export function createFieldDeclarationExpectedData(scopeName: ScopeName): Expect
             { text: '; comment', scopes: name(scopeName, RuleName.InLineComment) },
 
             { text: '}', scopes: name(scopeName, RuleName.ClassBlockEnd) },
+            { text: '; comment', scopes: name(scopeName, RuleName.InLineComment) },
           ],
         ],
 
         [
           dedent`
-            class {
+            class {                 ; comment
               static field := 123   ; comment
               STATIC FIELD := 123   ; comment
-            }
+            }                       ; comment
           `,
           [
             { text: 'class', scopes: name(scopeName, RuleName.ClassKeyword) },
             { text: '{', scopes: name(scopeName, RuleName.ClassBlockBegin) },
+            { text: '; comment', scopes: name(scopeName, RuleName.InLineComment) },
 
             { text: 'static', scopes: name(scopeName, RuleName.Modifier) },
             { text: 'field', scopes: name(scopeName, RuleName.Variable) },
@@ -79,6 +84,7 @@ export function createFieldDeclarationExpectedData(scopeName: ScopeName): Expect
             { text: '; comment', scopes: name(scopeName, RuleName.InLineComment) },
 
             { text: '}', scopes: name(scopeName, RuleName.ClassBlockEnd) },
+            { text: '; comment', scopes: name(scopeName, RuleName.InLineComment) },
           ],
         ],
       ];
@@ -229,16 +235,17 @@ export function createFieldDeclarationExpectedData(scopeName: ScopeName): Expect
         ],
         [
           dedent`
-            class {
+            class {       ; comment
               field := [  ; comment
                 1, 2      ; comment
                 , 3,      ; comment
               ]           ; comment
-            }
+            }             ; comment
           `,
           [
             { text: 'class', scopes: name(scopeName, RuleName.ClassKeyword) },
             { text: '{', scopes: name(scopeName, RuleName.ClassBlockBegin) },
+            { text: '; comment', scopes: name(scopeName, RuleName.InLineComment) },
 
             { text: 'field', scopes: name(scopeName, RuleName.Variable) },
             { text: ':=', scopes: name(scopeName, RuleName.Operator) },
@@ -259,20 +266,22 @@ export function createFieldDeclarationExpectedData(scopeName: ScopeName): Expect
             { text: '; comment', scopes: name(scopeName, RuleName.InLineComment) },
 
             { text: '}', scopes: name(scopeName, RuleName.ClassBlockEnd) },
+            { text: '; comment', scopes: name(scopeName, RuleName.InLineComment) },
           ],
         ],
         [
           dedent`
-            class {
+            class {             ; comment
               field := Func(    ; comment
                   123,          ; comment
                 , 123           ; comment
               )                 ; comment
-            }
+            }                   ; comment
           `,
           [
             { text: 'class', scopes: name(scopeName, RuleName.ClassKeyword) },
             { text: '{', scopes: name(scopeName, RuleName.ClassBlockBegin) },
+            { text: '; comment', scopes: name(scopeName, RuleName.InLineComment) },
 
             { text: 'field', scopes: name(scopeName, RuleName.Variable) },
             { text: ':=', scopes: name(scopeName, RuleName.Operator) },
@@ -292,6 +301,7 @@ export function createFieldDeclarationExpectedData(scopeName: ScopeName): Expect
             { text: '; comment', scopes: name(scopeName, RuleName.InLineComment) },
 
             { text: '}', scopes: name(scopeName, RuleName.ClassBlockEnd) },
+            { text: '; comment', scopes: name(scopeName, RuleName.InLineComment) },
           ],
         ],
       ];
@@ -300,35 +310,42 @@ export function createFieldDeclarationExpectedData(scopeName: ScopeName): Expect
     // Field in nested class
     [
       dedent`
-        class {
-          class {
-            field
-            field := 123
-            static field := 123
-          }
-        }
+        class {                           ; comment
+          class {                         ; comment
+            field                         ; comment
+            field := 123                  ; comment
+            static field := 123           ; comment
+          }                               ; comment
+        }                                 ; comment
       `,
       [
         { text: 'class', scopes: name(scopeName, RuleName.ClassKeyword) },
         { text: '{', scopes: name(scopeName, RuleName.ClassBlockBegin) },
+        { text: '; comment', scopes: name(scopeName, RuleName.InLineComment) },
 
         { text: 'class', scopes: name(scopeName, RuleName.ClassKeyword) },
         { text: '{', scopes: name(scopeName, RuleName.ClassBlockBegin) },
+        { text: '; comment', scopes: name(scopeName, RuleName.InLineComment) },
 
         { text: 'field', scopes: name(scopeName, RuleName.Variable) },
+        { text: '; comment', scopes: name(scopeName, RuleName.InLineComment) },
 
         { text: 'field', scopes: name(scopeName, RuleName.Variable) },
         { text: ':=', scopes: name(scopeName, RuleName.Operator) },
         { text: '123', scopes: name(scopeName, RuleName.Integer) },
+        { text: '; comment', scopes: name(scopeName, RuleName.InLineComment) },
 
         { text: 'static', scopes: name(scopeName, RuleName.Modifier) },
         { text: 'field', scopes: name(scopeName, RuleName.Variable) },
         { text: ':=', scopes: name(scopeName, RuleName.Operator) },
         { text: '123', scopes: name(scopeName, RuleName.Integer) },
+        { text: '; comment', scopes: name(scopeName, RuleName.InLineComment) },
 
         { text: '}', scopes: name(scopeName, RuleName.ClassBlockEnd) },
+        { text: '; comment', scopes: name(scopeName, RuleName.InLineComment) },
 
         { text: '}', scopes: name(scopeName, RuleName.ClassBlockEnd) },
+        { text: '; comment', scopes: name(scopeName, RuleName.InLineComment) },
       ],
     ],
   ];
