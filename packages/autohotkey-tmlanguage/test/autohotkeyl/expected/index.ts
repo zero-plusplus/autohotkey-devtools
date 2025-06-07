@@ -39,42 +39,6 @@ import { createDocumentCommentExpectedData } from './trivia/documentComment';
 import { createMultiLineCommentExpectedData } from './trivia/multiLineComment';
 import { createSingleLineCommentExpectedData } from './trivia/singleLineComment';
 
-export * from './declaration/assignment';
-export * from './declaration/block';
-export * from './declaration/class';
-export * from './declaration/function';
-export * from './declaration/hotkeyLabel';
-export * from './declaration/hotstringLabel';
-export * from './declaration/label';
-export * from './expression/array';
-export * from './expression/call';
-export * from './expression/continuationString';
-export * from './expression/dereference';
-export * from './expression/new';
-export * from './expression/number';
-export * from './expression/object';
-export * from './expression/operator';
-export * from './expression/parenthesized';
-export * from './expression/regexp';
-export * from './expression/string';
-export * from './expression/variable';
-export * from './legacy/assignment';
-export * from './legacy/command';
-export * from './legacy/continuationSection';
-export * from './legacy/if';
-export * from './statement/directive';
-export * from './statement/for';
-export * from './statement/if';
-export * from './statement/jump';
-export * from './statement/loop';
-export * from './statement/switch';
-export * from './statement/throw';
-export * from './statement/try';
-export * from './statement/while';
-export * from './trivia/documentComment';
-export * from './trivia/multiLineComment';
-export * from './trivia/singleLineComment';
-
 export function createExpectedDataList(scopeName: ScopeName): ExpectedTestData[] {
   return [
     ...createArrayLiteralExpectedData(scopeName),
