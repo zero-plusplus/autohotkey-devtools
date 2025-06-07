@@ -330,7 +330,6 @@ export function createSwitchStatementExpectedData(scopeName: ScopeName): Expecte
       ];
     })(),
 
-
     // Incomplete switch labels
     [
       dedent`
@@ -403,58 +402,67 @@ export function createSwitchStatementExpectedData(scopeName: ScopeName): Expecte
         ],
       ],
     ],
+
     // Multi-line expressions in switch case label
     [
       dedent`
-        switch (true)
-        {
-          case a,
-               break,
-          case b:
-            break
+        switch (true)           ; comment
+        {                       ; comment
+          case a,               ; comment
+               b:               ; comment
+            break               ; comment
 
-          case a,
-               break,
-          default:
-            break
+          default:              ; comment
+            break               ; comment
 
-          case a,
-               break,
-        }
+          case c                ; comment
+             , d:               ; comment
+            break               ; comment
+        }                       ; comment
       `,
       [
         { text: 'switch', scopes: name(scopeName, RuleName.ControlFlowKeyword) },
         { text: '(', scopes: name(scopeName, RuleName.OpenParen) },
         { text: 'true', scopes: name(scopeName, RuleName.KeywordLikeBuiltInVariable) },
         { text: ')', scopes: name(scopeName, RuleName.CloseParen) },
+        { text: '; comment', scopes: name(scopeName, RuleName.InLineComment) },
+
         { text: '{', scopes: name(scopeName, RuleName.BlockBegin) },
+        { text: '; comment', scopes: name(scopeName, RuleName.InLineComment) },
 
         { text: 'case', scopes: name(scopeName, RuleName.SwitchLabelKeyword) },
         { text: 'a', scopes: name(scopeName, RuleName.Variable) },
         { text: ',', scopes: name(scopeName, RuleName.Comma) },
-        { text: 'break', scopes: name(scopeName, RuleName.Variable) },
-        { text: ',', scopes: name(scopeName, RuleName.Comma) },
-        { text: 'case', scopes: name(scopeName, RuleName.SwitchLabelKeyword) },
+        { text: '; comment', scopes: name(scopeName, RuleName.InLineComment) },
+
         { text: 'b', scopes: name(scopeName, RuleName.Variable) },
         { text: ':', scopes: name(scopeName, RuleName.Colon) },
-        { text: 'break', scopes: name(scopeName, RuleName.JumpCommandName) },
+        { text: '; comment', scopes: name(scopeName, RuleName.InLineComment) },
 
-        { text: 'case', scopes: name(scopeName, RuleName.SwitchLabelKeyword) },
-        { text: 'a', scopes: name(scopeName, RuleName.Variable) },
-        { text: ',', scopes: name(scopeName, RuleName.Comma) },
-        { text: 'break', scopes: name(scopeName, RuleName.Variable) },
-        { text: ',', scopes: name(scopeName, RuleName.Comma) },
+        { text: 'break', scopes: name(scopeName, RuleName.JumpCommandName) },
+        { text: '; comment', scopes: name(scopeName, RuleName.InLineComment) },
+
         { text: 'default', scopes: name(scopeName, RuleName.SwitchLabelKeyword) },
         { text: ':', scopes: name(scopeName, RuleName.Colon) },
+        { text: '; comment', scopes: name(scopeName, RuleName.InLineComment) },
+
         { text: 'break', scopes: name(scopeName, RuleName.JumpCommandName) },
+        { text: '; comment', scopes: name(scopeName, RuleName.InLineComment) },
 
         { text: 'case', scopes: name(scopeName, RuleName.SwitchLabelKeyword) },
-        { text: 'a', scopes: name(scopeName, RuleName.Variable) },
+        { text: 'c', scopes: name(scopeName, RuleName.Variable) },
+        { text: '; comment', scopes: name(scopeName, RuleName.InLineComment) },
+
         { text: ',', scopes: name(scopeName, RuleName.Comma) },
-        { text: 'break', scopes: name(scopeName, RuleName.Variable) },
-        { text: ',', scopes: name(scopeName, RuleName.Comma) },
+        { text: 'd', scopes: name(scopeName, RuleName.Variable) },
+        { text: ':', scopes: name(scopeName, RuleName.Colon) },
+        { text: '; comment', scopes: name(scopeName, RuleName.InLineComment) },
+
+        { text: 'break', scopes: name(scopeName, RuleName.JumpCommandName) },
+        { text: '; comment', scopes: name(scopeName, RuleName.InLineComment) },
 
         { text: '}', scopes: name(scopeName, RuleName.BlockEnd) },
+        { text: '; comment', scopes: name(scopeName, RuleName.InLineComment) },
       ],
     ],
   ];

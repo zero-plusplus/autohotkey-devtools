@@ -1,6 +1,6 @@
 import * as rules_common from '..';
 import {
-  alt, capture, char, endAnchor, group, ignoreCase, inlineSpace, inlineSpaces0, keyword, lookahead,
+  alt, capture, char, endAnchor, group, ignoreCase, inlineSpaces0, keyword, lookahead,
   lookbehind, optseq, ordalt, seq, startAnchor,
 } from '../../../oniguruma';
 import {
@@ -64,7 +64,6 @@ export function createSwitchStatementRule(scopeName: ScopeName, placeholder: Pla
             },
             end: alt(
               seq(capture(char(':')), inlineSpaces0()),
-              lookahead(seq(inlineSpace(), char(';'))),
               lookahead(char('}')),
               lookahead(seq(startAnchor(), inlineSpaces0(), ignoreCase(ordalt('case', 'default')))),
             ),
@@ -72,6 +71,8 @@ export function createSwitchStatementRule(scopeName: ScopeName, placeholder: Pla
               1: nameRule(scopeName, RuleName.Colon),
             },
             patterns: [
+              includeRule(Repository.Comment),
+
               includeRule(Repository.Comma),
               includeRule(Repository.ExpressionInControlFlow),
             ],
