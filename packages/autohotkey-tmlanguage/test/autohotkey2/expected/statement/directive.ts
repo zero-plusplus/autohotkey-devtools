@@ -51,6 +51,44 @@ export function createDirectiveStatementExpectedData(scopeName: ScopeName): Expe
             ],
           ];
         })(),
+
+        // https://www.autohotkey.com/docs/v2/lib/_ErrorStdOut.htm
+        ...((): ExpectedTestData[] => {
+          return [
+            [
+              dedent`
+                #ErrorStdOut UTF-8          ; comment
+              `,
+              [
+                { text: '#ErrorStdOut', scopes: name(scopeName, RuleName.DirectiveName) },
+                { text: 'UTF-8', scopes: name(scopeName, RuleName.UnquotedString, StyleName.Strong) },
+                { text: '; comment', scopes: name(scopeName, RuleName.InLineComment) },
+              ],
+            ],
+            [
+              dedent`
+                #ErrorStdOut "UTF-8"        ; comment
+              `,
+              [
+                { text: '#ErrorStdOut', scopes: name(scopeName, RuleName.DirectiveName) },
+                { text: '"', scopes: name(scopeName, RuleName.UnquotedString) },
+                { text: 'UTF-8', scopes: name(scopeName, RuleName.UnquotedString, StyleName.Strong) },
+                { text: '"', scopes: name(scopeName, RuleName.UnquotedString) },
+                { text: '; comment', scopes: name(scopeName, RuleName.InLineComment) },
+              ],
+            ],
+            [
+              dedent`
+                #ErrorStdOut XXX            ; comment
+              `,
+              [
+                { text: '#ErrorStdOut', scopes: name(scopeName, RuleName.DirectiveName) },
+                { text: 'XXX', scopes: name(scopeName, RuleName.UnquotedString) },
+                { text: '; comment', scopes: name(scopeName, RuleName.InLineComment) },
+              ],
+            ],
+          ];
+        })(),
       ];
     })(),
 
