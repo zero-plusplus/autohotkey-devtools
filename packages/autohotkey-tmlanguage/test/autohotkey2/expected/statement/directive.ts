@@ -2,7 +2,7 @@ import { dedent } from '@zero-plusplus/utilities/src';
 import * as definitions_v2 from '../../../../src/autohotkey2/definitions';
 import { quotableUnquoted, unquotedAndBoolean, unquotedInteger } from '../../../../src/definition';
 import {
-  name, RuleName, StyleName,
+  name, RuleDescriptor, RuleName, StyleName,
   type ScopeName,
 } from '../../../../src/tmlanguage';
 import * as common from '../../../common';
@@ -109,6 +109,27 @@ export function createDirectiveStatementExpectedData(scopeName: ScopeName): Expe
               [
                 { text: '#ErrorStdOut', scopes: name(scopeName, RuleName.DirectiveName) },
                 { text: 'XXX', scopes: name(scopeName, RuleName.UnquotedString) },
+                { text: '; comment', scopes: name(scopeName, RuleName.InLineComment) },
+              ],
+            ],
+          ];
+        })(),
+
+        // https://www.autohotkey.com/docs/v2/lib/_HotIf.htm
+        ...((): ExpectedTestData[] => {
+          return [
+            [
+              dedent`
+                #HotIf WinActive('ahk_exe xxx.exe')            ; comment
+              `,
+              [
+                { text: '#HotIf', scopes: name(scopeName, RuleName.DirectiveName) },
+                { text: 'WinActive', scopes: name(scopeName, RuleName.FunctionName) },
+                { text: '(', scopes: name(scopeName, RuleName.OpenParen) },
+                { text: `'`, scopes: name(scopeName, RuleName.SingleString, RuleDescriptor.Begin) },
+                { text: `ahk_exe xxx.exe`, scopes: name(scopeName, RuleName.SingleString) },
+                { text: `'`, scopes: name(scopeName, RuleName.SingleString, RuleDescriptor.End) },
+                { text: ')', scopes: name(scopeName, RuleName.CloseParen) },
                 { text: '; comment', scopes: name(scopeName, RuleName.InLineComment) },
               ],
             ],
