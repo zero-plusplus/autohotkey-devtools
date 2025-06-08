@@ -32,19 +32,25 @@ export function createDirectiveStatementExpectedData(scopeName: ScopeName): Expe
             ],
           ];
         })(),
-        [
-          dedent`
-            #DllLoad "*i path\\to\\file.exe"       ; comment
-          `,
-          [
-            { text: '#DllLoad', scopes: name(scopeName, RuleName.DirectiveName) },
-            { text: '"', scopes: name(scopeName, RuleName.UnquotedString) },
-            { text: '*i', scopes: name(scopeName, RuleName.UnquotedString, StyleName.Strong) },
-            { text: 'path\\to\\file.exe', scopes: name(scopeName, RuleName.UnquotedString) },
-            { text: '"', scopes: name(scopeName, RuleName.UnquotedString) },
-            { text: '; comment', scopes: name(scopeName, RuleName.InLineComment) },
-          ],
-        ],
+
+        // https://www.autohotkey.com/docs/v2/lib/_DllLoad.htm
+        ...((): ExpectedTestData[] => {
+          return [
+            [
+              dedent`
+                #DllLoad "*i path\\to\\file.exe"       ; comment
+              `,
+              [
+                { text: '#DllLoad', scopes: name(scopeName, RuleName.DirectiveName) },
+                { text: '"', scopes: name(scopeName, RuleName.UnquotedString) },
+                { text: '*i', scopes: name(scopeName, RuleName.UnquotedString, StyleName.Strong) },
+                { text: 'path\\to\\file.exe', scopes: name(scopeName, RuleName.UnquotedString) },
+                { text: '"', scopes: name(scopeName, RuleName.UnquotedString) },
+                { text: '; comment', scopes: name(scopeName, RuleName.InLineComment) },
+              ],
+            ],
+          ];
+        })(),
       ];
     })(),
 
