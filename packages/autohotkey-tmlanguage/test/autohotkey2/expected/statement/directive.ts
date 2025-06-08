@@ -135,6 +135,22 @@ export function createDirectiveStatementExpectedData(scopeName: ScopeName): Expe
             ],
           ];
         })(),
+
+        // https://www.autohotkey.com/docs/v2/lib/_HotIfTimeout.htm
+        ...((): ExpectedTestData[] => {
+          return [
+            [
+              dedent`
+                #HotIfTimeout 123            ; comment
+              `,
+              [
+                { text: '#HotIfTimeout', scopes: name(scopeName, RuleName.DirectiveName) },
+                { text: '123', scopes: name(scopeName, RuleName.Integer) },
+                { text: '; comment', scopes: name(scopeName, RuleName.InLineComment) },
+              ],
+            ],
+          ];
+        })(),
       ];
     })(),
 
