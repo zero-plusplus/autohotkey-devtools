@@ -644,12 +644,12 @@ function parameterToPatternsRule(scopeName: ScopeName, defenition: CommandDefini
               ? [
                 {
                   name: name(scopeName, RuleName.UnquotedString),
-                  match: char('"'),
+                  match: char('"', `'`),
                 },
                 ...optionItemPatternsToRules(scopeName, parameter.itemPatterns),
                 {
                   name: name(scopeName, RuleName.UnquotedString),
-                  match: negChars1('`', '"', inlineSpace()),
+                  match: negChars1('`', '"', `'`, inlineSpace()),
                 },
               ]
               : [

@@ -49,6 +49,19 @@ export function createDirectiveStatementExpectedData(scopeName: ScopeName): Expe
                 { text: '; comment', scopes: name(scopeName, RuleName.InLineComment) },
               ],
             ],
+            [
+              dedent`
+                #DllLoad '*i path\\to\\file.exe'       ; comment
+              `,
+              [
+                { text: '#DllLoad', scopes: name(scopeName, RuleName.DirectiveName) },
+                { text: `'`, scopes: name(scopeName, RuleName.UnquotedString) },
+                { text: '*i', scopes: name(scopeName, RuleName.UnquotedString, StyleName.Strong) },
+                { text: 'path\\to\\file.exe', scopes: name(scopeName, RuleName.UnquotedString) },
+                { text: `'`, scopes: name(scopeName, RuleName.UnquotedString) },
+                { text: '; comment', scopes: name(scopeName, RuleName.InLineComment) },
+              ],
+            ],
           ];
         })(),
 
@@ -74,6 +87,18 @@ export function createDirectiveStatementExpectedData(scopeName: ScopeName): Expe
                 { text: '"', scopes: name(scopeName, RuleName.UnquotedString) },
                 { text: 'UTF-8', scopes: name(scopeName, RuleName.UnquotedString, StyleName.Strong) },
                 { text: '"', scopes: name(scopeName, RuleName.UnquotedString) },
+                { text: '; comment', scopes: name(scopeName, RuleName.InLineComment) },
+              ],
+            ],
+            [
+              dedent`
+                #ErrorStdOut 'UTF-8'        ; comment
+              `,
+              [
+                { text: '#ErrorStdOut', scopes: name(scopeName, RuleName.DirectiveName) },
+                { text: `'`, scopes: name(scopeName, RuleName.UnquotedString) },
+                { text: 'UTF-8', scopes: name(scopeName, RuleName.UnquotedString, StyleName.Strong) },
+                { text: `'`, scopes: name(scopeName, RuleName.UnquotedString) },
                 { text: '; comment', scopes: name(scopeName, RuleName.InLineComment) },
               ],
             ],

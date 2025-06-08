@@ -197,12 +197,12 @@ export function createSpacedOptionItemPattern(pattern: string): string {
   return seq(
     lookbehind(alt(
       inlineSpace(),
-      char(',', ':', '"'),
+      char(',', ':', '"', `'`),
     )),
     pattern,
     lookahead(alt(
       inlineSpace(),
-      char(',', '%', '"'),
+      char(',', '%', '"', `'`),
       endAnchor(),
     )),
   );
