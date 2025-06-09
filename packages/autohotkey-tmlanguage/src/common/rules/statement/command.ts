@@ -52,10 +52,6 @@ export function createCommandLikeStatementRule(scopeName: ScopeName, definitions
         ...sortedDefinitions.flatMap((definition) => {
           return definition.signatures.map((signature) => createCommandLikeRule(scopeName, definition, signature, placeholder));
         }),
-        createCommandNames(scopeName, definitions, {
-          commandElementName: placeholder.commandElementName,
-          startAnchor: placeholder.startAnchor,
-        }),
       ),
     },
     while: seq(
