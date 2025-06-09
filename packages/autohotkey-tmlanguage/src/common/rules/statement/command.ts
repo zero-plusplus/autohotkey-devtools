@@ -135,7 +135,6 @@ export function createSingleLineCommandLikeStatementRule(scopeName: ScopeName, d
 
             return seq(
               capturedSeparator,
-              negativeLookahead(seq(inlineSpaces1(), char(';'))),
               inlineSpaces0(),
               capture(parameterToOniguruma(parameter, isLastParameter)),
               prev !== '' ? optional(prev) : '',
