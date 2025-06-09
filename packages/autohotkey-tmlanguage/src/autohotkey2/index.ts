@@ -101,15 +101,15 @@ export function createRepositories(scopeName: ScopeName, placeholder?: Placehold
       includeRule(Repository.ThrowStatement),
     ),
     [Repository.DirectiveStatement]: patternsRule(
-      rules_common.createCommandLikeStatementRule(scopeName, definitions_v2.directiveDefinitions, {
+      rules_common.createDirectiveStatementRule(scopeName, definitions_v2.directiveDefinitions, {
         startAnchor: patterns_v2.statementStartAnchor,
         endAnchor: patterns_common.lineEndAnchor,
-        commandElementName: RuleName.DirectiveName,
+        allowFirstComma: false,
       }),
-      rules_common.createCommandLikeStatementRule(scopeName, [ definitions_common.undefinedDirective ], {
+      rules_common.createDirectiveStatementRule(scopeName, [ definitions_common.undefinedDirective ], {
         startAnchor: patterns_v2.statementStartAnchor,
         endAnchor: patterns_common.lineEndAnchor,
-        commandElementName: RuleName.DirectiveName,
+        allowFirstComma: false,
       }),
     ),
     [Repository.JumpStatement]: rules_common.createJumpStatement(scopeName, {

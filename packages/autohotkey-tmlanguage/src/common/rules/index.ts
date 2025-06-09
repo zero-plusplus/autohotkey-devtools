@@ -17,6 +17,7 @@ export * from './expression/string';
 export * from './misc/unquotedString';
 export * from './statement/call';
 export * from './statement/command';
+export * from './statement/directive';
 export * from './statement/for';
 export * from './statement/if';
 export * from './statement/jump';

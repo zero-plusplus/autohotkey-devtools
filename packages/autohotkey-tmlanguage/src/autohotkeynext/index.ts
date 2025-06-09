@@ -6,7 +6,7 @@ import * as definitions_common from '../common/definitions';
 import * as patterns_common from '../common/patterns';
 import * as rules_common from '../common/rules';
 import {
-  includeRule, patternsRule, Repository, RuleName,
+  includeRule, patternsRule, Repository,
   type ScopeName, type TmLanguage,
 } from '../tmlanguage';
 import * as constants_vnext from './constants';
@@ -72,15 +72,15 @@ export function createTmLanguage(): TmLanguage {
 
       // #region statement
       [Repository.DirectiveStatement]: patternsRule(
-        rules_common.createCommandLikeStatementRule(scopeName, definitions_vnext.directiveDefinitions, {
+        rules_common.createDirectiveStatementRule(scopeName, definitions_vnext.directiveDefinitions, {
           startAnchor: patterns_v1.statementStartAnchor,
           endAnchor: patterns_common.lineEndAnchor,
-          commandElementName: RuleName.DirectiveName,
+          allowFirstComma: false,
         }),
-        rules_common.createCommandLikeStatementRule(scopeName, [ definitions_common.undefinedDirective ], {
+        rules_common.createDirectiveStatementRule(scopeName, [ definitions_common.undefinedDirective ], {
           startAnchor: patterns_v2.statementStartAnchor,
           endAnchor: patterns_common.lineEndAnchor,
-          commandElementName: RuleName.DirectiveName,
+          allowFirstComma: false,
         }),
       ),
       // #endregion statement

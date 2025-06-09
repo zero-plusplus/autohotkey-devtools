@@ -95,16 +95,16 @@ export function createRepositories(scopeName: ScopeName): Repositories {
       includeRule(Repository.ExpressionStatement),
     ),
     [Repository.LegacyStatement]: patternsRule(includeRule(Repository.Legacy)),
-    [Repository.CommandStatement]: rules_common.createCommandLikeStatementRule(scopeName, definitions_v1.commandDefinitions, {
+    [Repository.CommandStatement]: rules_common.createCommandStatementRule(scopeName, definitions_v1.commandDefinitions, {
       startAnchor: patterns_v1.statementStartAnchor,
       endAnchor: patterns_common.lineEndAnchor,
       commandElementName: RuleName.CommandName,
-      argumentStartPattern: patterns_v1.commandArgumentStartPattern,
+      expressionOperators: constants_v1.expressionOperators,
     }),
-    [Repository.DirectiveStatement]: rules_common.createCommandLikeStatementRule(scopeName, definitions_v1.directiveDefinitions, {
+    [Repository.DirectiveStatement]: rules_common.createDirectiveStatementRule(scopeName, definitions_v1.directiveDefinitions, {
       startAnchor: patterns_common.lineStartAnchor,
       endAnchor: patterns_common.lineEndAnchor,
-      commandElementName: RuleName.DirectiveName,
+      allowFirstComma: true,
     }),
     [Repository.JumpStatement]: rules_common.createJumpStatement(scopeName, {
       startAnchor: patterns_v1.statementStartAnchor,
@@ -149,6 +149,8 @@ export function createRepositories(scopeName: ScopeName): Repositories {
     [Repository.LoopStatement]: rule_v1.createLoopStatementRule(scopeName, {
       startAnchor: patterns_v1.statementStartAnchor,
       endAnchor: patterns_v1.controlFlowEndAnchor,
+      definitions: definitions_v1.loopCommandDefenitions,
+      expressionOperators: constants_v1.expressionOperators,
     }),
     [Repository.UntilStatement]: rules_common.createUntilStatementRule(scopeName, {
       startAnchor: patterns_v1.statementStartAnchor,

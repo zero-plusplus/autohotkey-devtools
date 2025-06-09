@@ -18,13 +18,34 @@ import * as constants_common from '../../constants';
 import * as patterns_common from '../../patterns';
 import { createAllowArgumentRule, createNumberRule, createSpacedArgumentTextRule } from '../misc/unquotedString';
 
-interface Placeholder {
+interface Placeholder_CommandStatementRule {
   startAnchor: string;
   endAnchor: string;
   commandElementName: ElementName;
-  argumentStartPattern?: string;
+  expressionOperators: readonly string[];
 }
-export function createCommandLikeStatementRule(scopeName: ScopeName, definitions: CommandDefinition[], placeholder: Placeholder): BeginWhileRule {
+export function createCommandStatementRule(scopeName: ScopeName, definitions: CommandDefinition[], placeholder: Placeholder_CommandStatementRule): BeginWhileRule {
+  return createMultiLineCommandLikeStatementRule(scopeName, definitions, {
+    startAnchor: placeholder.startAnchor,
+    endAnchor: placeholder.endAnchor,
+    commandElementName: placeholder.commandElementName,
+    allowFirstComma: true,
+    argumentStartPattern: alt(
+      seq(inlineSpaces0(), negativeLookahead(textalt(...placeholder.expressionOperators))),
+      inlineSpaces1(),
+      seq(inlineSpaces0(), char(',')),
+    ),
+  });
+}
+
+interface Placeholder_MultiLineCommandLikeStatementRule {
+  startAnchor: string;
+  endAnchor: string;
+  commandElementName: ElementName;
+  argumentStartPattern: string;
+  allowFirstComma: boolean;
+}
+export function createMultiLineCommandLikeStatementRule(scopeName: ScopeName, definitions: CommandDefinition[], placeholder: Placeholder_MultiLineCommandLikeStatementRule): BeginWhileRule {
   const sortedDefinitions = definitions.sort((a, b) => b.name.length - a.name.length);
 
   return {
@@ -34,15 +55,7 @@ export function createCommandLikeStatementRule(scopeName: ScopeName, definitions
       inlineSpaces0(),
       ignoreCase(alt(...sortedDefinitions.map((definition) => definition.name))),
       negativeLookahead(alt(char('(', '['), wordChar())),
-      ...(
-        placeholder.argumentStartPattern
-          ? [ placeholder.argumentStartPattern ]
-          : [
-            lookahead(alt(
-              seq(inlineSpaces1()),
-              seq(inlineSpaces0(), char(',')),
-            )),
-          ]),
+      lookahead(placeholder.argumentStartPattern),
       optional(anyChars0()),
       lookahead(placeholder.endAnchor),
     )),
@@ -50,7 +63,7 @@ export function createCommandLikeStatementRule(scopeName: ScopeName, definitions
       1: patternsRule(
         includeRule(Repository.Comment),
         ...sortedDefinitions.flatMap((definition) => {
-          return definition.signatures.map((signature) => createCommandLikeRule(scopeName, definition, signature, placeholder));
+          return definition.signatures.map((signature) => createSingleLineCommandLikeStatementRule(scopeName, definition, signature, placeholder));
         }),
       ),
     },
@@ -82,14 +95,21 @@ export function createCommandLikeStatementRule(scopeName: ScopeName, definitions
     patterns: [ includeRule(Repository.Comment) ],
   };
 }
-export function createCommandLikeRule(scopeName: ScopeName, definition: CommandDefinition, signature: CommandSignature, placeholder: Placeholder): Rule {
+
+export interface Placeholder_SingleLineCommandLikeStatementRule {
+  startAnchor: string;
+  endAnchor: string;
+  commandElementName: ElementName;
+  allowFirstComma: boolean;
+}
+export function createSingleLineCommandLikeStatementRule(scopeName: ScopeName, definition: CommandDefinition, signature: CommandSignature, placeholder: Placeholder_SingleLineCommandLikeStatementRule): Rule {
   return {
     begin: lookahead(seq(
       lookbehind(placeholder.startAnchor),
       inlineSpaces0(),
       ignoreCase(definition.name),
       negativeLookahead(char('(')),
-      lookaheadOnigurumaByParameters(signature.parameters, placeholder),
+      lookaheadOnigurumaByParameters(signature.parameters),
     )),
     end: seq(
       // command name
@@ -117,7 +137,7 @@ export function createCommandLikeRule(scopeName: ScopeName, definition: CommandD
               capturedSeparator,
               negativeLookahead(seq(inlineSpaces1(), char(';'))),
               inlineSpaces0(),
-              capture(parameterToOniguruma(parameter, isLastParameter, placeholder)),
+              capture(parameterToOniguruma(parameter, isLastParameter)),
               prev !== '' ? optional(prev) : '',
             );
           }, ''))),
@@ -148,7 +168,12 @@ export function createCommandLikeRule(scopeName: ScopeName, definition: CommandD
   };
 }
 
-export function createDirectiveCommentRule(scopeName: ScopeName, definition: CommandDefinition, signature: CommandSignature, placeholder: Placeholder): Rule {
+interface Placeholder_DirectiveCommentRule {
+  startAnchor: string;
+  endAnchor: string;
+  commandElementName: ElementName;
+}
+export function createDirectiveCommentRule(scopeName: ScopeName, definition: CommandDefinition, signature: CommandSignature, placeholder: Placeholder_DirectiveCommentRule): Rule {
   return {
     match: seq(
       // command name
@@ -178,7 +203,7 @@ export function createDirectiveCommentRule(scopeName: ScopeName, definition: Com
               separator,
               negativeLookahead(seq(inlineSpaces1(), char(';'))),
               inlineSpaces0(),
-              capture(parameterToOniguruma(parameter, isLastParameter, placeholder)),
+              capture(parameterToOniguruma(parameter, isLastParameter)),
               prev !== '' ? optional(prev) : '',
             );
           }, ''))),
@@ -440,7 +465,7 @@ export function createInvalidArgumentRule(scopeName: ScopeName): MatchRule {
 
 
 // #region helpers
-function lookaheadOnigurumaByParameters(parameters: CommandParameter[], placeholder: Placeholder): string {
+function lookaheadOnigurumaByParameters(parameters: CommandParameter[]): string {
   const subcommandArgumentIndex = parameters.findLastIndex((parameter) => isSubCommandParameter(parameter));
   if (subcommandArgumentIndex === -1) {
     return group(alt(
@@ -498,7 +523,7 @@ function lookaheadOnigurumaByParameters(parameters: CommandParameter[], placehol
         }
         default: break;
       }
-      return optional(parameterToOniguruma(parameter, false, placeholder));
+      return optional(parameterToOniguruma(parameter, false));
     })();
 
     return seq(
@@ -509,7 +534,7 @@ function lookaheadOnigurumaByParameters(parameters: CommandParameter[], placehol
     );
   }, '');
 }
-function parameterToOniguruma(parameter: CommandParameter, isLastParameter: boolean, placeholder: Placeholder): string {
+function parameterToOniguruma(parameter: CommandParameter, isLastParameter: boolean): string {
   switch (parameter.type) {
     case HighlightType.Input:
     case HighlightType.Output:
@@ -549,7 +574,7 @@ function parameterToOniguruma(parameter: CommandParameter, isLastParameter: bool
         : patterns_common.unquotedArgumentPattern;
   }
 }
-function parameterToPatternsRule(scopeName: ScopeName, defenition: CommandDefinition, parameter: CommandParameter, isLastParameter: boolean, placeholder: Placeholder): PatternsRule {
+function parameterToPatternsRule(scopeName: ScopeName, defenition: CommandDefinition, parameter: CommandParameter, isLastParameter: boolean, placeholder: { startAnchor: string }): PatternsRule {
   switch (parameter.type) {
     case HighlightType.None:
     case HighlightType.Invalid:
