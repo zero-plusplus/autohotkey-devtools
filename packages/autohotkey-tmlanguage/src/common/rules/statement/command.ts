@@ -135,6 +135,7 @@ export function createSingleLineCommandLikeStatementRule(scopeName: ScopeName, d
 
             return seq(
               capturedSeparator,
+              negativeLookahead(seq(inlineSpaces1(), char(';'))),
               inlineSpaces0(),
               capture(parameterToOniguruma(parameter, isLastParameter)),
               prev !== '' ? optional(prev) : '',
@@ -428,31 +429,6 @@ export function createMenuNameCommandArgumentRule(scopeName: ScopeName): Pattern
       match: negChars1('`', '&', '\\s'),
     },
   );
-}
-
-interface Placeholder_CommandNames {
-  startAnchor: string;
-  commandElementName: ElementName;
-}
-export function createCommandNames(scopeName: ScopeName, definitions: CommandDefinition[], placeholder: Placeholder_CommandNames): PatternsRule {
-  const commandNames = definitions.filter((definition) => !hasFlag(definition.flags, CommandFlag.Deprecated)).map((definition) => definition.name);
-  const deprecatedCommandNames = definitions.filter((definition) => hasFlag(definition.flags, CommandFlag.Deprecated)).map((definition) => definition.name);
-
-  const targets: [ [ string[], boolean ], [ string[], boolean ] ] = [ [ commandNames, false ], [ deprecatedCommandNames, true ] ];
-  return patternsRule(...targets.map(([ names, isDeprecated ]): MatchRule => {
-    return {
-      match: seq(
-        lookbehind(placeholder.startAnchor),
-        inlineSpaces0(),
-        capture(keyword(...names)),
-      ),
-      captures: {
-        1: isDeprecated
-          ? nameRule(scopeName, placeholder.commandElementName, StyleName.Strikethrough)
-          : nameRule(scopeName, placeholder.commandElementName),
-      },
-    };
-  }));
 }
 
 export function createInvalidArgumentRule(scopeName: ScopeName): MatchRule {

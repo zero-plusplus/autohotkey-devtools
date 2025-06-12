@@ -1,6 +1,7 @@
-import { dedent } from '@zero-plusplus/utilities/src';
+import { dedent, hasFlag } from '@zero-plusplus/utilities/src';
+import * as definitions_v1 from '../../../../src/autohotkeyl/definitions';
 import {
-  blank, control, expression, fileAttributes, flagedGuiControlOptions, guiControlOptions, guiOptions,
+  blank, CommandFlag, control, expression, fileAttributes, flagedGuiControlOptions, guiControlOptions, guiOptions,
   keywordOnly, onOff, output, restParams, sendKeys, unquoted, winTitle,
 } from '../../../../src/definition';
 import {
@@ -11,6 +12,48 @@ import type { ExpectedTestData, ParsedResult } from '../../../types';
 
 export function createCommandStatementExpectedData(scopeName: ScopeName): ExpectedTestData[] {
   return [
+    // command names
+    ...((): ExpectedTestData[] => {
+      return definitions_v1.commandDefinitions.flatMap((definition): ExpectedTestData[] => {
+        const commandElementScopes = hasFlag(definition.flags, CommandFlag.Deprecated) ? name(scopeName, RuleName.CommandName, StyleName.Strikethrough) : name(scopeName, RuleName.CommandName);
+        return [
+          [
+            dedent`
+              ${definition.name}      ; comment
+            `,
+            [
+              { text: definition.name, scopes: commandElementScopes },
+              { text: '; comment', scopes: name(scopeName, RuleName.InLineComment) },
+            ],
+          ],
+          [
+            dedent`
+              ${definition.name},     ; comment
+            `,
+            [
+              { text: definition.name, scopes: commandElementScopes },
+              { text: ',', scopes: name(scopeName, RuleName.Comma) },
+              { text: '; comment', scopes: name(scopeName, RuleName.InLineComment) },
+            ],
+          ],
+          [
+            dedent`
+              ${definition.name},     ; comment
+                , text                ; comment
+            `,
+            [
+              { text: definition.name, scopes: commandElementScopes },
+              { text: ',', scopes: name(scopeName, RuleName.Comma) },
+              { text: '; comment', scopes: name(scopeName, RuleName.InLineComment) },
+
+              { text: ',', scopes: name(scopeName, RuleName.Comma) },
+              { text: 'text', scopes: name(scopeName, RuleName.UnquotedString) },
+              { text: '; comment', scopes: name(scopeName, RuleName.InLineComment) },
+            ],
+          ],
+        ];
+      });
+    })(),
     // signatures
     ...((): ExpectedTestData[] => {
       return [

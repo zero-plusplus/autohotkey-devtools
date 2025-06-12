@@ -1,7 +1,7 @@
 import {
-  command, decimalOptionItem, expression, includeLib, keywordOnly, optionItem, quotableEncoding,
-  quotableUnquoted, requiresVersion, signature, signedNumberOptionItem, toggleOptionItem, unquoted,
-  unquotedAndBoolean, unquotedInteger,
+  command, decimalOptionItem, expression, includeLib, keywordOnly, optionItem, parameterless,
+  quotableEncoding, quotableUnquoted, requiresVersion, signature, signedNumberOptionItem,
+  toggleOptionItem, unquoted, unquotedAndBoolean, unquotedInteger,
   type CommandDefinition,
 } from '../definition';
 
@@ -42,7 +42,7 @@ export const directiveDefinitions: CommandDefinition[] = [
   command('#MaxThreadsPerHotkey', signature([ unquotedInteger() ])),
 
   // https://www.autohotkey.com/docs/v2/lib/_NoTrayIcon.htm
-  command('#NoTrayIcon', signature([])),
+  command('#NoTrayIcon', signature(parameterless())),
 
   // https://www.autohotkey.com/docs/v2/lib/_Requires.htm
   command('#Requires', signature([ requiresVersion() ])),
@@ -60,6 +60,6 @@ export const directiveDefinitions: CommandDefinition[] = [
   command('#Warn', signature([ keywordOnly([ optionItem('VarUnset', 'LocalSameAsGlobal', 'Unreachable', 'All') ]), keywordOnly([ optionItem('MsgBox', 'StdOut', 'OutputDebug', 'Off') ]) ])),
 
   // https://www.autohotkey.com/docs/v2/lib/_WinActivateForce.htm
-  command('#WinActivateForce', signature([])),
+  command('#WinActivateForce', signature(parameterless())),
 ];
 // #endregion directives

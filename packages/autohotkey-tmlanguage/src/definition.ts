@@ -392,6 +392,9 @@ export function command(name: string, signatureOrSignatures: CommandSignature | 
 export function signature(parameters: CommandParameter[], flags: CommandSignatureFlag = CommandSignatureFlag.None): CommandSignature {
   return { flags, parameters };
 }
+export function parameterless(): CommandParameter[] {
+  return [ invalid() ];
+}
 export function subcommand(values: string | string[] = [], flags: CommandParameterFlag = CommandParameterFlag.None): CommandParameter {
   return { type: HighlightType.SubCommand, flags, itemPatterns: Array.isArray(values) ? values : [ values ] };
 }
