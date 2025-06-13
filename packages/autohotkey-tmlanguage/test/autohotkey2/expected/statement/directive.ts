@@ -151,6 +151,34 @@ export function createDirectiveStatementExpectedData(scopeName: ScopeName): Expe
             ],
           ];
         })(),
+
+        // https://www.autohotkey.com/docs/v2/lib/_Hotstring.htm
+        ...((): ExpectedTestData[] => {
+          return [
+            [
+              dedent`
+                #Hotstring NoMouse            ; comment
+              `,
+              [
+                { text: '#Hotstring', scopes: name(scopeName, RuleName.DirectiveName) },
+                { text: 'NoMouse', scopes: name(scopeName, RuleName.UnquotedString, StyleName.Strong) },
+                { text: '; comment', scopes: name(scopeName, RuleName.InLineComment) },
+              ],
+            ],
+            [
+              dedent`
+                #Hotstring EndChars ,\`t            ; comment
+              `,
+              [
+                { text: '#Hotstring', scopes: name(scopeName, RuleName.DirectiveName) },
+                { text: 'EndChars', scopes: name(scopeName, RuleName.UnquotedString, StyleName.Strong) },
+                { text: ',', scopes: name(scopeName, RuleName.UnquotedString) },
+                { text: '`t', scopes: name(scopeName, RuleName.UnquotedString, StyleName.Escape) },
+                { text: '; comment', scopes: name(scopeName, RuleName.InLineComment) },
+              ],
+            ],
+          ];
+        })(),
       ];
     })(),
 

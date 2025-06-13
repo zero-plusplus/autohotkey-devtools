@@ -1,7 +1,7 @@
 import {
-  alt, anyChar, char, endAnchor, group, groupMany0, groupMany1, inlineSpace, inlineSpaces0,
-  inlineSpaces1, negativeLookahead, negativeLookbehind, negChar, negChars0, optional, seq,
-  startAnchor, textalt,
+  alt, anyChar, char, endAnchor, group, groupMany0, groupMany1, inlineSpace,
+  inlineSpaces0, inlineSpaces1, negativeLookahead, negativeLookbehind, negChar,
+  negChars0, optional, seq, startAnchor, textalt,
 } from '../oniguruma';
 import * as constants_common from './constants';
 
@@ -41,6 +41,10 @@ export const unquotedCharPattern: string = seq(
   )),
   anyChar(),
 );
+export const lastUnquotedCharPattern: string = seq(
+  negativeLookahead(seq(inlineSpaces1(), char(';'))),
+  anyChar(),
+);
 export const unquotedExpressionArgumentPattern: string = groupMany0(alt(
   unquotedPairStringPattern,
   seq(inlineSpaces1(), negativeLookahead(char(';'))),
@@ -72,8 +76,7 @@ export const unquotedLastArgumentPattern: string = group(alt(
   percentExpressionLastArgumentPattern,
   groupMany1(alt(
     unquotedPairStringPattern,
-    char(','),
-    unquotedCharPattern,
+    lastUnquotedCharPattern,
   )),
 ));
 // #endregion command / directive
