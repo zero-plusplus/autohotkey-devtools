@@ -190,20 +190,18 @@ export function createDirectiveStatementExpectedData(scopeName: ScopeName): Expe
         [
           dedent`
             #ClipboardTimeout             ; comment
-            #ClipboardTimeout, 123        ; comment
-            #ClipboardTimeout, invalid    ; comment
+            #ClipboardTimeout 123        ; comment
+            #ClipboardTimeout invalid    ; comment
           `,
           [
             { text: '#ClipboardTimeout', scopes: name(scopeName, RuleName.DirectiveName) },
             { text: '; comment', scopes: name(scopeName, RuleName.InLineComment) },
 
             { text: '#ClipboardTimeout', scopes: name(scopeName, RuleName.DirectiveName) },
-            { text: ',', scopes: name(scopeName, RuleName.Comma) },
             { text: '123', scopes: name(scopeName, RuleName.Integer) },
             { text: '; comment', scopes: name(scopeName, RuleName.InLineComment) },
 
             { text: '#ClipboardTimeout', scopes: name(scopeName, RuleName.DirectiveName) },
-            { text: ',', scopes: name(scopeName, RuleName.Comma) },
             { text: 'invalid', scopes: name(scopeName, RuleName.UnquotedString, StyleName.Invalid) },
             { text: '; comment', scopes: name(scopeName, RuleName.InLineComment) },
           ],
@@ -216,17 +214,15 @@ export function createDirectiveStatementExpectedData(scopeName: ScopeName): Expe
       return [
         [
           dedent`
-            #ErrorStdOut, UTF-8     ; comment
-            #ErrorStdOut, "UTF-8"   ; comment
+            #ErrorStdOut UTF-8        ; comment
+            #ErrorStdOut "UTF-8"      ; comment
           `,
           [
             { text: '#ErrorStdOut', scopes: name(scopeName, RuleName.DirectiveName) },
-            { text: ',', scopes: name(scopeName, RuleName.Comma) },
             { text: 'UTF-8', scopes: name(scopeName, RuleName.UnquotedString, StyleName.Strong) },
             { text: '; comment', scopes: name(scopeName, RuleName.InLineComment) },
 
             { text: '#ErrorStdOut', scopes: name(scopeName, RuleName.DirectiveName) },
-            { text: ',', scopes: name(scopeName, RuleName.Comma) },
             { text: '"', scopes: name(scopeName, RuleName.UnquotedString) },
             { text: 'UTF-8', scopes: name(scopeName, RuleName.UnquotedString, StyleName.Strong) },
             { text: '"', scopes: name(scopeName, RuleName.UnquotedString) },
@@ -241,17 +237,16 @@ export function createDirectiveStatementExpectedData(scopeName: ScopeName): Expe
       return [
         [
           dedent`
-            #MaxThreadsBuffer, 1      ; comment
-            #MaxThreadsBuffer, 0      ; comment
+            #MaxThreadsBuffer 1      ; comment
+            #MaxThreadsBuffer 0      ; comment
 
-            #MaxThreadsBuffer, true   ; comment
-            #MaxThreadsBuffer, false  ; comment
+            #MaxThreadsBuffer true   ; comment
+            #MaxThreadsBuffer false  ; comment
           `,
           [
             ...[ '1', '0', 'true', 'false' ].flatMap((value) => {
               return [
                 { text: '#MaxThreadsBuffer', scopes: name(scopeName, RuleName.DirectiveName) },
-                { text: ',', scopes: name(scopeName, RuleName.Comma) },
                 { text: value, scopes: name(scopeName, RuleName.UnquotedString, StyleName.Strong) },
                 { text: '; comment', scopes: name(scopeName, RuleName.InLineComment) },
               ];
@@ -264,11 +259,17 @@ export function createDirectiveStatementExpectedData(scopeName: ScopeName): Expe
     // Example of highlighting invalid directive syntax
     [
       dedent`
+        #ClipboardTimeout,        ; comment
+
         # invalid                 ; comment
 
         #NotDirective invalid     ; comment
       `,
       [
+        { text: '#ClipboardTimeout', scopes: name(scopeName, RuleName.DirectiveName) },
+        { text: ',', scopes: name(scopeName, RuleName.Comma, StyleName.Invalid) },
+        { text: '; comment', scopes: name(scopeName, RuleName.InLineComment) },
+
         { text: '#', scopes: name(scopeName, RuleName.DirectiveName) },
         { text: 'invalid', scopes: name(scopeName, RuleName.UnquotedString, StyleName.Invalid) },
         { text: '; comment', scopes: name(scopeName, RuleName.InLineComment) },

@@ -158,12 +158,16 @@ export function createSingleLineCommandLikeStatementRule(scopeName: ScopeName, d
       ...signature.parameters.flatMap((parameter, i, parameters) => {
         const isLastParameter = parameters.length - 1 === i;
         return [
-          patternsRule(includeRule(Repository.Comma)),
+          (!placeholder.allowFirstComma && i === 0)
+            ? nameRule(scopeName, RuleName.Comma, StyleName.Invalid)
+            : patternsRule(includeRule(Repository.Comma)),
           parameterToPatternsRule(scopeName, definition, parameter, isLastParameter, placeholder),
         ];
       }),
 
-      nameRule(scopeName, RuleName.Comma),
+      placeholder.allowFirstComma
+        ? patternsRule(includeRule(Repository.Comma))
+        : nameRule(scopeName, RuleName.Comma, StyleName.Invalid),
     ].map((rule, i) => [ i + 1, rule ])),
   };
 }
