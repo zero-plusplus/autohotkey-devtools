@@ -1,6 +1,6 @@
 import { dedent } from '@zero-plusplus/utilities/src';
 import * as definitions_v2 from '../../../../src/autohotkey2/definitions';
-import { quotableUnquoted, unquotedAndBoolean, unquotedInteger } from '../../../../src/definition';
+import { quotableEncoding, quotableUnquoted, unquotedAndBoolean, unquotedInteger } from '../../../../src/definition';
 import {
   name, RuleDescriptor, RuleName, StyleName,
   type ScopeName,
@@ -208,14 +208,35 @@ export function createDirectiveStatementExpectedData(scopeName: ScopeName): Expe
         ],
       ];
     })(),
+
     ...((): ExpectedTestData[] => {
       quotableUnquoted;
 
       return [
         [
           dedent`
+            #DllLoad "abc"        ; comment
+          `,
+          [
+            { text: '#DllLoad', scopes: name(scopeName, RuleName.DirectiveName) },
+            { text: '"', scopes: name(scopeName, RuleName.UnquotedString) },
+            { text: 'abc', scopes: name(scopeName, RuleName.UnquotedString) },
+            { text: '"', scopes: name(scopeName, RuleName.UnquotedString) },
+            { text: '; comment', scopes: name(scopeName, RuleName.InLineComment) },
+          ],
+        ],
+      ];
+    })(),
+
+    ...((): ExpectedTestData[] => {
+      quotableEncoding;
+
+      return [
+        [
+          dedent`
             #ErrorStdOut UTF-8        ; comment
             #ErrorStdOut "UTF-8"      ; comment
+            #ErrorStdOut "CP65001"    ; comment
           `,
           [
             { text: '#ErrorStdOut', scopes: name(scopeName, RuleName.DirectiveName) },
@@ -225,6 +246,12 @@ export function createDirectiveStatementExpectedData(scopeName: ScopeName): Expe
             { text: '#ErrorStdOut', scopes: name(scopeName, RuleName.DirectiveName) },
             { text: '"', scopes: name(scopeName, RuleName.UnquotedString) },
             { text: 'UTF-8', scopes: name(scopeName, RuleName.UnquotedString, StyleName.Strong) },
+            { text: '"', scopes: name(scopeName, RuleName.UnquotedString) },
+            { text: '; comment', scopes: name(scopeName, RuleName.InLineComment) },
+
+            { text: '#ErrorStdOut', scopes: name(scopeName, RuleName.DirectiveName) },
+            { text: '"', scopes: name(scopeName, RuleName.UnquotedString) },
+            { text: 'CP65001', scopes: name(scopeName, RuleName.UnquotedString, StyleName.Strong) },
             { text: '"', scopes: name(scopeName, RuleName.UnquotedString) },
             { text: '; comment', scopes: name(scopeName, RuleName.InLineComment) },
           ],
