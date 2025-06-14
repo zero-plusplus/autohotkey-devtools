@@ -28,6 +28,7 @@ export const enum HighlightType {
   // e.g. `#Include path\to`, `#Include <lib>`
   //                ^^^^^^^             ^^^^^
   IncludeLibrary = 'include_library',
+  QuotableIncludeLibrary = 'quotable_include_library',
 
   RestParams = 'rest_params',
   LabelName = 'labelname',
@@ -485,6 +486,9 @@ export function menuItemName(flags: CommandParameterFlag = CommandParameterFlag.
 }
 export function includeLib(flags: CommandParameterFlag = CommandParameterFlag.None): CommandParameter {
   return { type: HighlightType.IncludeLibrary, flags };
+}
+export function quotableIncludeLib(flags: CommandParameterFlag = CommandParameterFlag.None): CommandParameter {
+  return { type: HighlightType.QuotableIncludeLibrary, flags };
 }
 export function requiresVersion(flags: CommandParameterFlag = CommandParameterFlag.None): CommandParameter {
   return unquoted([

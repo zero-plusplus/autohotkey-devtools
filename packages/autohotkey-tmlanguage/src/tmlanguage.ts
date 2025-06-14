@@ -336,6 +336,7 @@ export const enum RuleName {
 
   // #region misc
   Unknown = 'unknown',
+  IncludeLibrary = 'string.include.library',
   // #endregion misc
 }
 export const enum RuleDescriptor {

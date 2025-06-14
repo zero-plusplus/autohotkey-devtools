@@ -190,6 +190,47 @@ export function createDirectiveStatementExpectedData(scopeName: ScopeName): Expe
             ],
           ];
         })(),
+
+        // https://www.autohotkey.com/docs/v2/lib/_Include.htm
+        ...((): ExpectedTestData[] => {
+          return [
+            [
+              dedent`
+                #Include %A_ScriptDir%\\lib\\example.ahk              ; comment
+                #Include "%A_ScriptDir%\\lib\\example.ahk"            ; comment
+              `,
+              [
+                { text: '#Include', scopes: name(scopeName, RuleName.DirectiveName) },
+                { text: '%', scopes: name(scopeName, RuleName.PercentBegin) },
+                { text: 'A_ScriptDir', scopes: name(scopeName, RuleName.BuiltInVariable) },
+                { text: '%', scopes: name(scopeName, RuleName.PercentEnd) },
+                { text: '\\lib\\example.ahk', scopes: name(scopeName, RuleName.UnquotedString) },
+                { text: '; comment', scopes: name(scopeName, RuleName.InLineComment) },
+
+                { text: '#Include', scopes: name(scopeName, RuleName.DirectiveName) },
+                { text: '"', scopes: name(scopeName, RuleName.UnquotedString) },
+                { text: '%', scopes: name(scopeName, RuleName.PercentBegin) },
+                { text: 'A_ScriptDir', scopes: name(scopeName, RuleName.BuiltInVariable) },
+                { text: '%', scopes: name(scopeName, RuleName.PercentEnd) },
+                { text: '\\lib\\example.ahk', scopes: name(scopeName, RuleName.UnquotedString) },
+                { text: '"', scopes: name(scopeName, RuleName.UnquotedString) },
+                { text: '; comment', scopes: name(scopeName, RuleName.InLineComment) },
+              ],
+            ],
+            [
+              dedent`
+                #Include <lib>            ; comment
+              `,
+              [
+                { text: '#Include', scopes: name(scopeName, RuleName.DirectiveName) },
+                { text: '<', scopes: name(scopeName, RuleName.OpenAngleBracket) },
+                { text: 'lib', scopes: name(scopeName, RuleName.IncludeLibrary) },
+                { text: '>', scopes: name(scopeName, RuleName.CloseAngleBracket) },
+                { text: '; comment', scopes: name(scopeName, RuleName.InLineComment) },
+              ],
+            ],
+          ];
+        })(),
       ];
     })(),
 

@@ -855,6 +855,7 @@ function parameterToPatternsRule(scopeName: ScopeName, defenition: CommandDefini
       );
     }
     case HighlightType.IncludeLibrary:
+    case HighlightType.QuotableIncludeLibrary:
     {
       return patternsRule(
         {
@@ -868,12 +869,25 @@ function parameterToPatternsRule(scopeName: ScopeName, defenition: CommandDefini
           captures: {
             1: nameRule(scopeName, RuleName.UnquotedString, StyleName.Invalid),
             2: nameRule(scopeName, RuleName.OpenAngleBracket),
-            3: nameRule(scopeName, RuleName.UnquotedString, StyleName.Strong),
+            3: nameRule(scopeName, RuleName.IncludeLibrary),
             4: nameRule(scopeName, RuleName.CloseAngleBracket),
             5: nameRule(scopeName, RuleName.UnquotedString, StyleName.Invalid),
           },
         },
-        includeRule(Repository.CommandLastArgument),
+        ...parameter.type === HighlightType.QuotableIncludeLibrary
+          ? [
+            {
+              name: name(scopeName, RuleName.UnquotedString),
+              match: char('"', `'`),
+            },
+            {
+              match: capture(negChars1('`', '"', `'`)),
+              captures: {
+                1: patternsRule(includeRule(Repository.CommandLastArgument)),
+              },
+            },
+          ]
+          : [ includeRule(Repository.CommandLastArgument) ],
       );
     }
     // Make each definition group easily distinguishable by underlining. However, if the underline is applied in TMLanguage, its color cannot be controlled. This should be implemented with semantic highlighting

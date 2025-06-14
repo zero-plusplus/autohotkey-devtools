@@ -1,7 +1,7 @@
 import {
-  command, decimalOptionItem, expression, includeLib, keywordOnly, optionItem, parameterless,
-  quotableEncoding, quotableUnquoted, requiresVersion, signature, signedNumberOptionItem,
-  toggleOptionItem, unquoted, unquotedAndBoolean, unquotedInteger,
+  command, decimalOptionItem, expression, keywordOnly, optionItem, parameterless, quotableEncoding,
+  quotableIncludeLib, quotableUnquoted, requiresVersion, signature, signedNumberOptionItem, toggleOptionItem,
+  unquoted, unquotedAndBoolean, unquotedInteger,
   type CommandDefinition,
 } from '../definition';
 
@@ -26,8 +26,8 @@ export const directiveDefinitions: CommandDefinition[] = [
   command('#Hotstring', signature([ unquoted([ optionItem('NoMouse', 'EndChars', 'SI', 'SP', 'SE', 'X'), toggleOptionItem('*', '?', 'B', 'C', 'O', 'R', 'T', 'Z'), decimalOptionItem('P'), signedNumberOptionItem('K') ]) ])),
 
   // https://www.autohotkey.com/docs/v2/lib/_Include.htm
-  command('#Include', signature([ includeLib() ])),
-  command('#IncludeAgain', signature([ includeLib() ])),
+  command('#Include', signature([ quotableIncludeLib() ])),
+  command('#IncludeAgain', signature([ quotableIncludeLib() ])),
 
   // https://www.autohotkey.com/docs/v2/lib/_InputLevel.htm
   command('#InputLevel', signature([ unquotedInteger() ])),

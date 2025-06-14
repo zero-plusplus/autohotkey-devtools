@@ -40,7 +40,7 @@ export function createDirectiveStatementExpectedData(scopeName: ScopeName, place
           [
             { text: directive, scopes: name(scopeName, RuleName.DirectiveName) },
             { text: '<', scopes: name(scopeName, RuleName.OpenAngleBracket) },
-            { text: 'LIBRARY', scopes: name(scopeName, RuleName.UnquotedString, StyleName.Strong) },
+            { text: 'LIBRARY', scopes: name(scopeName, RuleName.IncludeLibrary) },
             { text: '>', scopes: name(scopeName, RuleName.CloseAngleBracket) },
             { text: '; comment', scopes: name(scopeName, RuleName.InLineComment) },
           ],
