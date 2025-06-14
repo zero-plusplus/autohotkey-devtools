@@ -219,12 +219,19 @@ export function createDirectiveStatementExpectedData(scopeName: ScopeName): Expe
             ],
             [
               dedent`
-                #Include <lib>            ; comment
+                #Include <lib>                      ; comment
+                #Include <lib\\example>             ; comment
               `,
               [
                 { text: '#Include', scopes: name(scopeName, RuleName.DirectiveName) },
                 { text: '<', scopes: name(scopeName, RuleName.OpenAngleBracket) },
                 { text: 'lib', scopes: name(scopeName, RuleName.IncludeLibrary) },
+                { text: '>', scopes: name(scopeName, RuleName.CloseAngleBracket) },
+                { text: '; comment', scopes: name(scopeName, RuleName.InLineComment) },
+
+                { text: '#Include', scopes: name(scopeName, RuleName.DirectiveName) },
+                { text: '<', scopes: name(scopeName, RuleName.OpenAngleBracket) },
+                { text: 'lib\\example', scopes: name(scopeName, RuleName.IncludeLibrary) },
                 { text: '>', scopes: name(scopeName, RuleName.CloseAngleBracket) },
                 { text: '; comment', scopes: name(scopeName, RuleName.InLineComment) },
               ],
