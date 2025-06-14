@@ -238,6 +238,22 @@ export function createDirectiveStatementExpectedData(scopeName: ScopeName): Expe
             ],
           ];
         }),
+
+        // https://www.autohotkey.com/docs/v2/lib/_InputLevel.htm
+        ...((): ExpectedTestData[] => {
+          return [
+            [
+              dedent`
+                #InputLevel 50            ; comment
+              `,
+              [
+                { text: '#InputLevel', scopes: name(scopeName, RuleName.DirectiveName) },
+                { text: '50', scopes: name(scopeName, RuleName.Integer) },
+                { text: '; comment', scopes: name(scopeName, RuleName.InLineComment) },
+              ],
+            ],
+          ];
+        })(),
       ];
     })(),
 
