@@ -177,6 +177,17 @@ export function createDirectiveStatementExpectedData(scopeName: ScopeName): Expe
                 { text: '; comment', scopes: name(scopeName, RuleName.InLineComment) },
               ],
             ],
+            [
+              dedent`
+                #Hotstring B0 C1            ; comment
+              `,
+              [
+                { text: '#Hotstring', scopes: name(scopeName, RuleName.DirectiveName) },
+                { text: 'B0', scopes: name(scopeName, RuleName.UnquotedString, StyleName.Strong) },
+                { text: 'C1', scopes: name(scopeName, RuleName.UnquotedString, StyleName.Strong) },
+                { text: '; comment', scopes: name(scopeName, RuleName.InLineComment) },
+              ],
+            ],
           ];
         })(),
       ];
