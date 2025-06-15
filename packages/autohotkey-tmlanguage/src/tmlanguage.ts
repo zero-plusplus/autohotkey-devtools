@@ -258,13 +258,13 @@ export const enum RuleName {
   // #endregion variable
   // #region string
   ContinuationOption = 'continuation.option keyword.operator.quantifier.regexp',
-  UnquotedString = 'token.string string.unquoted',
-  UnquotedStringEscapeSequence = 'token.string string.escape.unquoted',
+  UnquotedString = 'string.unquoted',
+  UnquotedStringEscapeSequence = 'string.escape.unquoted',
   DoubleString = 'string.quoted.double',
   DoubleStringEscapeSequence = 'constant.character.escape.double',
   SingleStringEscapeSequence = 'constant.character.escape.single',
-  SingleString = 'token.string string.quoted.single',
-  MultiLineString = 'token.string string.quoted.unquoted',
+  SingleString = 'string.quoted.single',
+  MultiLineString = 'string.quoted.unquoted',
   // #endregion string
   // #region number
   Integer = 'constant.numeric.integer',
