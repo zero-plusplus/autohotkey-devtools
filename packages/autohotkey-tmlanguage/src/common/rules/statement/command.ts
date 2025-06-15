@@ -692,6 +692,10 @@ function parameterToPatternsRule(scopeName: ScopeName, defenition: CommandDefini
         }),
       );
     }
+    case HighlightType.UnquotedBooleanLike:
+    {
+      return patternsRule(includeRule(Repository.CommandArgumentBooleanLike));
+    }
     case HighlightType.NumberInCommandArgument:
     {
       return patternsRule(

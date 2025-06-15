@@ -17,6 +17,7 @@ export const enum HighlightType {
   UnquotedString = 'unquotedstring',
   UnquotedStringShouldEscapeComma = 'unquoted_string_should_escapecomma',
   UnquotedStringWithNumber = 'unquotedstring_with_number',
+  UnquotedBooleanLike = 'unquoted_boolean_like',
   QuotableUnquotedString = 'quotable_unquotedstring',
   NumberInCommandArgument = 'number_in_command_argument',
   // e.g. Send, {LButton 5}
@@ -433,8 +434,8 @@ export function unquotedNumber(...optionItems: string[]): CommandParameter {
     itemPatterns: optionItems,
   };
 }
-export function unquotedAndBoolean(...optionItems: string[]): CommandParameter {
-  return unquoted([ optionItem('0', '1', 'true', 'false'), ...optionItems ]);
+export function unquotedAndBoolean(flags: CommandParameterFlag = CommandParameterFlag.None): CommandParameter {
+  return { type: HighlightType.UnquotedBooleanLike, flags, itemPatterns: [] };
 }
 export function quotableUnquoted(itemPatterns: string[] = [], flags: CommandParameterFlag = CommandParameterFlag.None): CommandParameter {
   return { type: HighlightType.QuotableUnquotedString, flags, itemPatterns };

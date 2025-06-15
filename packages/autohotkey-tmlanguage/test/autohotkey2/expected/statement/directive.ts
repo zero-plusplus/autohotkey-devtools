@@ -270,6 +270,48 @@ export function createDirectiveStatementExpectedData(scopeName: ScopeName): Expe
             ],
           ];
         })(),
+
+        // https://www.autohotkey.com/docs/v2/lib/_MaxThreadsBuffer.htm
+        ...((): ExpectedTestData[] => {
+          return [
+            [
+              dedent`
+                #MaxThreadsBuffer true          ; comment
+                #MaxThreadsBuffer false         ; comment
+                #MaxThreadsBuffer 1             ; comment
+                #MaxThreadsBuffer 0             ; comment
+
+                #MaxThreadsBuffer abc           ; comment
+                #MaxThreadsBuffer 9             ; comment
+              `,
+              [
+                { text: '#MaxThreadsBuffer', scopes: name(scopeName, RuleName.DirectiveName) },
+                { text: 'true', scopes: name(scopeName, RuleName.KeywordLikeBuiltInVariable) },
+                { text: '; comment', scopes: name(scopeName, RuleName.InLineComment) },
+
+                { text: '#MaxThreadsBuffer', scopes: name(scopeName, RuleName.DirectiveName) },
+                { text: 'false', scopes: name(scopeName, RuleName.KeywordLikeBuiltInVariable) },
+                { text: '; comment', scopes: name(scopeName, RuleName.InLineComment) },
+
+                { text: '#MaxThreadsBuffer', scopes: name(scopeName, RuleName.DirectiveName) },
+                { text: '1', scopes: name(scopeName, RuleName.Integer) },
+                { text: '; comment', scopes: name(scopeName, RuleName.InLineComment) },
+
+                { text: '#MaxThreadsBuffer', scopes: name(scopeName, RuleName.DirectiveName) },
+                { text: '0', scopes: name(scopeName, RuleName.Integer) },
+                { text: '; comment', scopes: name(scopeName, RuleName.InLineComment) },
+
+                { text: '#MaxThreadsBuffer', scopes: name(scopeName, RuleName.DirectiveName) },
+                { text: 'abc', scopes: name(scopeName, RuleName.UnquotedString, StyleName.Invalid) },
+                { text: '; comment', scopes: name(scopeName, RuleName.InLineComment) },
+
+                { text: '#MaxThreadsBuffer', scopes: name(scopeName, RuleName.DirectiveName) },
+                { text: '9', scopes: name(scopeName, RuleName.UnquotedString, StyleName.Invalid) },
+                { text: '; comment', scopes: name(scopeName, RuleName.InLineComment) },
+              ],
+            ],
+          ];
+        })(),
       ];
     })(),
 
@@ -355,20 +397,38 @@ export function createDirectiveStatementExpectedData(scopeName: ScopeName): Expe
       return [
         [
           dedent`
-            #MaxThreadsBuffer 1      ; comment
-            #MaxThreadsBuffer 0      ; comment
+            #MaxThreadsBuffer true          ; comment
+            #MaxThreadsBuffer false         ; comment
+            #MaxThreadsBuffer 1             ; comment
+            #MaxThreadsBuffer 0             ; comment
 
-            #MaxThreadsBuffer true   ; comment
-            #MaxThreadsBuffer false  ; comment
+            #MaxThreadsBuffer abc           ; comment
+            #MaxThreadsBuffer 9             ; comment
           `,
           [
-            ...[ '1', '0', 'true', 'false' ].flatMap((value) => {
-              return [
-                { text: '#MaxThreadsBuffer', scopes: name(scopeName, RuleName.DirectiveName) },
-                { text: value, scopes: name(scopeName, RuleName.UnquotedString, StyleName.Strong) },
-                { text: '; comment', scopes: name(scopeName, RuleName.InLineComment) },
-              ];
-            }),
+            { text: '#MaxThreadsBuffer', scopes: name(scopeName, RuleName.DirectiveName) },
+            { text: 'true', scopes: name(scopeName, RuleName.KeywordLikeBuiltInVariable) },
+            { text: '; comment', scopes: name(scopeName, RuleName.InLineComment) },
+
+            { text: '#MaxThreadsBuffer', scopes: name(scopeName, RuleName.DirectiveName) },
+            { text: 'false', scopes: name(scopeName, RuleName.KeywordLikeBuiltInVariable) },
+            { text: '; comment', scopes: name(scopeName, RuleName.InLineComment) },
+
+            { text: '#MaxThreadsBuffer', scopes: name(scopeName, RuleName.DirectiveName) },
+            { text: '1', scopes: name(scopeName, RuleName.Integer) },
+            { text: '; comment', scopes: name(scopeName, RuleName.InLineComment) },
+
+            { text: '#MaxThreadsBuffer', scopes: name(scopeName, RuleName.DirectiveName) },
+            { text: '0', scopes: name(scopeName, RuleName.Integer) },
+            { text: '; comment', scopes: name(scopeName, RuleName.InLineComment) },
+
+            { text: '#MaxThreadsBuffer', scopes: name(scopeName, RuleName.DirectiveName) },
+            { text: 'abc', scopes: name(scopeName, RuleName.UnquotedString, StyleName.Invalid) },
+            { text: '; comment', scopes: name(scopeName, RuleName.InLineComment) },
+
+            { text: '#MaxThreadsBuffer', scopes: name(scopeName, RuleName.DirectiveName) },
+            { text: '9', scopes: name(scopeName, RuleName.UnquotedString, StyleName.Invalid) },
+            { text: '; comment', scopes: name(scopeName, RuleName.InLineComment) },
           ],
         ],
       ];

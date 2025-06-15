@@ -190,6 +190,7 @@ export const enum Repository {
   CommandInvalidArgument = 'Repository.CommandInvalidArgument',
   CommandArgumentControlStyleText = 'Repository.CommandArgumentControlStyleText',
   CommandArgumentSendKeyName = 'Repository.CommandArgumentSendKeyName',
+  CommandArgumentBooleanLike = 'Repository.CommandArgumentBooleanLike',
   // #endregion v1 syntax
   // #region legacy
   Legacy = 'Repository.Legacy',
