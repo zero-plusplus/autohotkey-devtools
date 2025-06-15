@@ -229,6 +229,7 @@ export const enum RuleName {
   NameOrUrlInDocument = 'variable.other.in-document',
   // #endregion document
   // #endregion trivias
+
   // #region statement
   ClassName = 'support.class.name',
   DirectiveName = 'meta.preprocessor.directive',
@@ -241,6 +242,7 @@ export const enum RuleName {
   HotstringLabelName = 'string.label.like.hotstring',
   Namespace = 'support.class.namespace',
   // #endregion statement
+
   // #region declaration
   Type = 'entity.name.type',
   Modifier = 'storage.modifier',
@@ -249,6 +251,7 @@ export const enum RuleName {
   BlockEnd = 'punctuation.definition.block.end',
   ClassBlockEnd = 'punctuation.definition.class.block.end',
   // #endregion declaration
+
   // #region expressions
   // #region variable
   Variable = 'variable.other',
@@ -256,6 +259,7 @@ export const enum RuleName {
   BuiltInVariable = 'support.variable',
   KeywordLikeBuiltInVariable = 'constant.language.varible',
   // #endregion variable
+
   // #region string
   ContinuationOption = 'continuation.option keyword.operator.quantifier.regexp',
   UnquotedString = 'string.unquoted',
@@ -266,6 +270,7 @@ export const enum RuleName {
   SingleString = 'string.quoted.single',
   MultiLineString = 'string.quoted.unquoted',
   // #endregion string
+
   // #region number
   Integer = 'constant.numeric.integer',
   DecimalPart = 'constant.numeric.decimal.part',
@@ -279,14 +284,16 @@ export const enum RuleName {
   ExponentPlusMinusSign = 'constant.numeric.exponent.plus-minus.sign',
   Exponent = 'constant.numeric.exponent',
   // #endregion number
+
   // #region operators
   Operator = 'keyword.operator',
   Dot = 'keyword.operator.dot',
   Equals = 'keyword.operator.equals',
   Comma = 'keyword.operator.comma',
   // #endregion operators
+
   // #region regexp
-  RegExpOption = 'string.regexp keyword.other.regexp.option',
+  RegExpOption = 'keyword.other.regexp.option',
   RegExpString = 'string.regexp',
   DoubleStringAsRegExp = 'string.regexp.double-quote',
   RegExpAnchor = 'keyword.control.anchor.regexp',
@@ -297,6 +304,7 @@ export const enum RuleName {
   RegExpQuantifier = 'keyword.operator.quantifier.regexp',
   // #endregion regexp
   // #endregion expressions
+
   // #region keyword
   ImportExportAll = 'constant.language.import-export-all',
   MetaKeyword = 'keyword.control.meta',
@@ -306,6 +314,13 @@ export const enum RuleName {
   ClassKeyword = 'storage.type.class',
   ExtendsKeyword = 'storage.modifier.extends',
   // #endregion keyword
+
+  // #region name
+  JumpCommandName = 'keyword.control.jump',
+  SubCommandName = 'support.function.subcommand',
+  FlowSubCommandName = 'keyword.control.flow.subcommand',
+  // #endregion name
+
   // #region token
   FunctionName = 'support.function',
   MetaFunctionName = 'storage.type',
@@ -326,19 +341,13 @@ export const enum RuleName {
   ColonColon = 'punctuation.separator.colon-colon',
   SemiColon = 'punctuation.separator.semi-colon',
   // #region tokens
-  // #region legacy
+
+  // #region command / directive / legacy
   LegacyAssignment = 'expression.legacy.assignment',
   LegacyTextEscapeSequence = 'constant.character.escape.legacy.text',
   CommandName = 'support.function.command',
-  JumpCommandName = 'keyword.control.jump',
-  SubCommandName = 'support.function.subcommand',
-  FlowSubCommandName = 'keyword.control.flow.subcommand',
-  // #endregion legacy
-
-  // #region misc
-  Unknown = 'unknown',
   IncludeLibrary = 'string.include.library',
-  // #endregion misc
+  // #endregion command / directive / legacy
 }
 export const enum RuleDescriptor {
   Begin = 'description.begin',
