@@ -11,108 +11,108 @@ export const scopeNames = [ 'autohotkey', 'autohotkeynext', 'autohotkeyl', 'auto
 
 // #region enum
 export const enum HighlightType {
-  None = 'none',
-  Blank = 'blank',
-  Expression = 'expression',
-  UnquotedString = 'unquotedstring',
-  UnquotedStringShouldEscapeComma = 'unquoted_string_should_escapecomma',
-  UnquotedStringWithNumber = 'unquotedstring_with_number',
-  UnquotedBooleanLike = 'unquoted_boolean_like',
-  QuotableUnquotedString = 'quotable_unquotedstring',
-  NumberInCommandArgument = 'number_in_command_argument',
+  None = 'None',
+  Blank = 'Blank',
+  Expression = 'Expression',
+  UnquotedString = 'UnquotedString',
+  UnquotedStringShouldEscapeComma = 'UnquotedStringShouldEscapeComma',
+  UnquotedStringWithNumber = 'UnquotedStringWithNumber',
+  UnquotedBooleanLike = 'UnquotedBooleanLike',
+  QuotableUnquotedString = 'QuotableUnquotedString',
+  NumberInCommandArgument = 'NumberInCommandArgument',
   // e.g. Send, {LButton 5}
   //            ^^^^^^^^^^^
-  SendKeyName = 'send_key_name',
+  SendKeyName = 'SendKeyName',
   // e.g. #Requires AutoHotkey v2.0
   //                ^^^^^^^^^^^^^^^
   // RequiresVersion = 'requires_version',
   // e.g. `#Include path\to`, `#Include <lib>`
   //                ^^^^^^^             ^^^^^
-  IncludeLibrary = 'include_library',
-  QuotableIncludeLibrary = 'quotable_include_library',
+  IncludeLibrary = 'IncludeLibrary',
+  QuotableIncludeLibrary = 'QuotableIncludeLibrary',
 
-  RestParams = 'rest_params',
-  LabelName = 'labelname',
+  RestParams = 'RestParams',
+  LabelName = 'LabelName',
   // Keywords to distinguish between signatures
   // e.g. `Control, Check`, `Control, UnCheck`
   //                ^^^^^             ^^^^^^^
-  SubCommand = 'subcommand',
+  SubCommand = 'SubCommand',
   // Applies only to the first argument of the following two commands
   // Not originally necessary. However, added to distinguish between strict signatures
   // https://www.autohotkey.com/docs/v1/lib/Progress.htm
   // https://www.autohotkey.com/docs/v1/lib/SplashImage.htm
   // e.g. `Progress, Off`, `SplashImage, Off`
   //                 ^^^                 ^^^
-  SubCommandLike = 'subcommand_like',
+  SubCommandLike = 'SubCommandLike',
   // Basically the same as SubCommand, but the highlighted color is the same as the control flow keyword
   // e.g. `Loop Files`, `Loop Parse`
   //            ^^^^^         ^^^^^
-  FlowSubCommand = 'flow_subcommand',
+  FlowSubCommand = 'FlowSubCommand',
   // In addition to SubCommand, a label-like syntax is added. Mainly used in commands that deal with Gui
   // e.g. `Gui, Add`, `Gui, GuiName:Add`
   //            ^^^         ^^^^^^^^^^^
-  GuiSubCommand = 'gui_subcommand',
-  Input = 'input',
-  Output = 'output',
-  Invalid = 'invalid',
+  GuiSubCommand = 'GuiSubCommand',
+  Input = 'Input',
+  Output = 'Output',
+  Invalid = 'Invalid',
 
   // Accepts one arbitrary keyword, otherwise not accepted
   // e.g. `Gui, Flash, Off`
   //                   ^^^
-  KeywordOnly = 'keyword_only',
+  KeywordOnly = 'KeywordOnly',
   // e.g. `PixelGetColor, output, x, y, Fast RGB`
   //                                    ^^^^ ^^^
-  SpacedKeywordsOnly = 'spaced_keywords_only',
+  SpacedKeywordsOnly = 'SpacedKeywordsOnly',
 
   // Accepts zero or more unquoted strings or keywords. Must have a space between each
   // e.g. `ControlClick x123 y123`, `Click, 100 100 LButton`
   //                    ^^^^ ^^^^           ^^^ ^^^ ^^^^^^^
-  UnquotedOrKeywords = 'unquoted_or_keywords',
+  UnquotedOrKeywords = 'UnquotedOrKeywords',
 
   // Accepts one or more arbitrary keywords. No space is needed between each
   // e.g. `Loop, Files, \path\to, DFR
   //                              ^^^
-  LetterOptions = 'letter_options',
+  LetterOptions = 'LetterOptions',
   // Accepts entries beginning with `+`, `-` or `^` followed by one or more keywords. No space is needed between each
   // e.g. `FileSetAttrib, +HA-R`
   //                      ^^^^^
-  FileAttributes = 'file_attributes',
+  FileAttributes = 'FileAttributes',
 
   // Accepts zero or more keywords. Each keyword must be preceded by `+` or `-` and each must have a space
   // It also accepts an optional gui name for the first argument
   // e.g. `Gui, GuiName: +Resize`, `Gui, New, +Resize`
   //            ^^^^^^^^^^^^^^^^              ^^^^^^^
-  GuiOptions = 'gui_options',
+  GuiOptions = 'GuiOptions',
 
   // Accepts zero or more keywords. Each keyword must be preceded by `+` or `-` and each must have a space
   // e.g. `GuiControl, +Default`
   //                   ^^^^^^^^
-  GuiControlOptions = 'gui_control_options',
+  GuiControlOptions = 'GuiControlOptions',
 
   // https://www.autohotkey.com/docs/v1/lib/Menu.htm#MenuItemName
   // In the following example, `&O` needs to be emphasized and `&&` needs to be escaped
   // e.g. `Menu, MenuName, Add, &Open`, `Menu, MenuName, Add, Save && Exit`
-  MenuItemName = 'menu_item_name',
+  MenuItemName = 'MenuItemName',
 
   // e.g. `Control, Style, ^0x800000`, `WinSet, Style, -0xC00000`
   //                       ^^^^^^^^^                   ^^^^^^^^^
-  Style = 'style',
+  Style = 'Style',
 
   // e.g. `WinGet, output,ID, abc ahk_exe abc.exe ahk_class abc
   //                          ^^^ ^^^^^^^^^^^^^^^ ^^^^^^^^^^^^^
-  WinTitle = 'window_title',
+  WinTitle = 'WinTitle',
 
   // e.g. `#Module ModuleName`
   //               ^^^^^^^^^^
-  Namespace = 'namespace',
+  Namespace = 'Namespace',
 
   // ; @Ahk2Exe-AddResource fileName
   //                        ^^^^^^^^
-  UnquotedStringInCompilerDirective = 'unquotedstring_in_compiler_directive',
+  UnquotedStringInCompilerDirective = 'UnquotedStringInCompilerDirective',
 
   // ; @Ahk2Exe-Let name = value
   //                ^^^^^^^^^^^^
-  ExpressionInCompilerDirective = 'expression_in_compiler_directive',
+  ExpressionInCompilerDirective = 'ExpressionInCompilerDirective',
 }
 export const enum CommandSignatureFlag {
   None = 0,
