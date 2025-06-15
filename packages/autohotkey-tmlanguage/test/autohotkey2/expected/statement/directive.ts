@@ -22,9 +22,13 @@ export function createDirectiveStatementExpectedData(scopeName: ScopeName): Expe
           return [
             [
               dedent`
+                #ClipboardTimeout           ; comment
                 #ClipboardTimeout 123       ; comment
               `,
               [
+                { text: '#ClipboardTimeout', scopes: name(scopeName, RuleName.DirectiveName) },
+                { text: '; comment', scopes: name(scopeName, RuleName.InlineComment) },
+
                 { text: '#ClipboardTimeout', scopes: name(scopeName, RuleName.DirectiveName) },
                 { text: '123', scopes: name(scopeName, RuleName.Integer) },
                 { text: '; comment', scopes: name(scopeName, RuleName.InlineComment) },
@@ -38,7 +42,16 @@ export function createDirectiveStatementExpectedData(scopeName: ScopeName): Expe
           return [
             [
               dedent`
-                #DllLoad "*i path\\to\\file.exe"       ; comment
+                #DllLoad                              ; comment
+              `,
+              [
+                { text: '#DllLoad', scopes: name(scopeName, RuleName.DirectiveName) },
+                { text: '; comment', scopes: name(scopeName, RuleName.InlineComment) },
+              ],
+            ],
+            [
+              dedent`
+                #DllLoad "*i path\\to\\file.exe"      ; comment
               `,
               [
                 { text: '#DllLoad', scopes: name(scopeName, RuleName.DirectiveName) },
@@ -51,7 +64,7 @@ export function createDirectiveStatementExpectedData(scopeName: ScopeName): Expe
             ],
             [
               dedent`
-                #DllLoad '*i path\\to\\file.exe'       ; comment
+                #DllLoad '*i path\\to\\file.exe'      ; comment
               `,
               [
                 { text: '#DllLoad', scopes: name(scopeName, RuleName.DirectiveName) },
@@ -68,6 +81,15 @@ export function createDirectiveStatementExpectedData(scopeName: ScopeName): Expe
         // https://www.autohotkey.com/docs/v2/lib/_ErrorStdOut.htm
         ...((): ExpectedTestData[] => {
           return [
+            [
+              dedent`
+                #ErrorStdOut                ; comment
+              `,
+              [
+                { text: '#ErrorStdOut', scopes: name(scopeName, RuleName.DirectiveName) },
+                { text: '; comment', scopes: name(scopeName, RuleName.InlineComment) },
+              ],
+            ],
             [
               dedent`
                 #ErrorStdOut UTF-8          ; comment
@@ -120,9 +142,13 @@ export function createDirectiveStatementExpectedData(scopeName: ScopeName): Expe
           return [
             [
               dedent`
-                #HotIf WinActive('ahk_exe xxx.exe')            ; comment
+                #HotIf                                          ; comment
+                #HotIf WinActive('ahk_exe xxx.exe')             ; comment
               `,
               [
+                { text: '#HotIf', scopes: name(scopeName, RuleName.DirectiveName) },
+                { text: '; comment', scopes: name(scopeName, RuleName.InlineComment) },
+
                 { text: '#HotIf', scopes: name(scopeName, RuleName.DirectiveName) },
                 { text: 'WinActive', scopes: name(scopeName, RuleName.FunctionName) },
                 { text: '(', scopes: name(scopeName, RuleName.OpenParen) },
@@ -141,9 +167,13 @@ export function createDirectiveStatementExpectedData(scopeName: ScopeName): Expe
           return [
             [
               dedent`
-                #HotIfTimeout 123            ; comment
+                #HotIfTimeout                 ; comment
+                #HotIfTimeout 123             ; comment
               `,
               [
+                { text: '#HotIfTimeout', scopes: name(scopeName, RuleName.DirectiveName) },
+                { text: '; comment', scopes: name(scopeName, RuleName.InlineComment) },
+
                 { text: '#HotIfTimeout', scopes: name(scopeName, RuleName.DirectiveName) },
                 { text: '123', scopes: name(scopeName, RuleName.Integer) },
                 { text: '; comment', scopes: name(scopeName, RuleName.InlineComment) },
@@ -155,6 +185,15 @@ export function createDirectiveStatementExpectedData(scopeName: ScopeName): Expe
         // https://www.autohotkey.com/docs/v2/lib/_Hotstring.htm
         ...((): ExpectedTestData[] => {
           return [
+            [
+              dedent`
+                #Hotstring                    ; comment
+              `,
+              [
+                { text: '#Hotstring', scopes: name(scopeName, RuleName.DirectiveName) },
+                { text: '; comment', scopes: name(scopeName, RuleName.InlineComment) },
+              ],
+            ],
             [
               dedent`
                 #Hotstring NoMouse            ; comment
@@ -196,10 +235,14 @@ export function createDirectiveStatementExpectedData(scopeName: ScopeName): Expe
           return [
             [
               dedent`
+                ${directive}                                              ; comment
                 ${directive} %A_ScriptDir%\\lib\\example.ahk              ; comment
                 ${directive} "%A_ScriptDir%\\lib\\example.ahk"            ; comment
               `,
               [
+                { text: directive, scopes: name(scopeName, RuleName.DirectiveName) },
+                { text: '; comment', scopes: name(scopeName, RuleName.InlineComment) },
+
                 { text: directive, scopes: name(scopeName, RuleName.DirectiveName) },
                 { text: '%', scopes: name(scopeName, RuleName.PercentBegin) },
                 { text: 'A_ScriptDir', scopes: name(scopeName, RuleName.BuiltInVariable) },
@@ -244,9 +287,13 @@ export function createDirectiveStatementExpectedData(scopeName: ScopeName): Expe
           return [
             [
               dedent`
+                #InputLevel               ; comment
                 #InputLevel 50            ; comment
               `,
               [
+                { text: '#InputLevel', scopes: name(scopeName, RuleName.DirectiveName) },
+                { text: '; comment', scopes: name(scopeName, RuleName.InlineComment) },
+
                 { text: '#InputLevel', scopes: name(scopeName, RuleName.DirectiveName) },
                 { text: '50', scopes: name(scopeName, RuleName.Integer) },
                 { text: '; comment', scopes: name(scopeName, RuleName.InlineComment) },
@@ -260,9 +307,13 @@ export function createDirectiveStatementExpectedData(scopeName: ScopeName): Expe
           return [
             [
               dedent`
-                #MaxThreads 255            ; comment
+                #MaxThreads                 ; comment
+                #MaxThreads 255             ; comment
               `,
               [
+                { text: '#MaxThreads', scopes: name(scopeName, RuleName.DirectiveName) },
+                { text: '; comment', scopes: name(scopeName, RuleName.InlineComment) },
+
                 { text: '#MaxThreads', scopes: name(scopeName, RuleName.DirectiveName) },
                 { text: '255', scopes: name(scopeName, RuleName.Integer) },
                 { text: '; comment', scopes: name(scopeName, RuleName.InlineComment) },
@@ -276,6 +327,7 @@ export function createDirectiveStatementExpectedData(scopeName: ScopeName): Expe
           return [
             [
               dedent`
+                #MaxThreadsBuffer               ; comment
                 #MaxThreadsBuffer true          ; comment
                 #MaxThreadsBuffer false         ; comment
                 #MaxThreadsBuffer 1             ; comment
@@ -285,6 +337,9 @@ export function createDirectiveStatementExpectedData(scopeName: ScopeName): Expe
                 #MaxThreadsBuffer 9             ; comment
               `,
               [
+                { text: '#MaxThreadsBuffer', scopes: name(scopeName, RuleName.DirectiveName) },
+                { text: '; comment', scopes: name(scopeName, RuleName.InlineComment) },
+
                 { text: '#MaxThreadsBuffer', scopes: name(scopeName, RuleName.DirectiveName) },
                 { text: 'true', scopes: name(scopeName, RuleName.KeywordLikeBuiltInVariable) },
                 { text: '; comment', scopes: name(scopeName, RuleName.InlineComment) },
@@ -318,9 +373,13 @@ export function createDirectiveStatementExpectedData(scopeName: ScopeName): Expe
           return [
             [
               dedent`
+                #MaxThreadsPerHotkey                ; comment
                 #MaxThreadsPerHotkey 255            ; comment
               `,
               [
+                { text: '#MaxThreadsPerHotkey', scopes: name(scopeName, RuleName.DirectiveName) },
+                { text: '; comment', scopes: name(scopeName, RuleName.InlineComment) },
+
                 { text: '#MaxThreadsPerHotkey', scopes: name(scopeName, RuleName.DirectiveName) },
                 { text: '255', scopes: name(scopeName, RuleName.Integer) },
                 { text: '; comment', scopes: name(scopeName, RuleName.InlineComment) },
