@@ -234,12 +234,12 @@ export const enum RuleName {
   ClassName = 'support.class.name',
   DirectiveName = 'meta.preprocessor.directive',
   LabelName = 'entity.name.label',
-  HotkeyFlag = 'string.label.like.flag',
-  HotkeyModifier = 'string.label.like.hotkey.modifier',
-  HotkeyLabelName = 'string.label.like.hotkey.label',
-  HotkeyCombinator = 'string.label.like.hotkey.combinator',
-  HotstringOption = 'string.label.like.hotkey.option',
-  HotstringLabelName = 'string.label.like.hotstring',
+  HotkeyFlag = 'string.label.hotkey.flag',
+  HotkeyModifier = 'string.label.hotkey.modifier',
+  HotkeyLabelName = 'string.label.hotkey.name',
+  HotkeyCombinator = 'string.label.hotkey.combinator',
+  HotstringOption = 'string.label.hotkey.option',
+  HotstringLabelName = 'string.label.hotstring',
   Namespace = 'support.class.namespace',
   // #endregion statement
 
@@ -261,7 +261,7 @@ export const enum RuleName {
   // #endregion variable
 
   // #region string
-  ContinuationOption = 'continuation.option keyword.operator.quantifier.regexp',
+  ContinuationOption = 'keyword.operator.quantifier.continuation-option',
   UnquotedString = 'string.unquoted',
   UnquotedStringEscapeSequence = 'string.escape.unquoted',
   DoubleString = 'string.quoted.double',
