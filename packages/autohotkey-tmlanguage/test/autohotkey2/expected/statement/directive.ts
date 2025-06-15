@@ -312,6 +312,22 @@ export function createDirectiveStatementExpectedData(scopeName: ScopeName): Expe
             ],
           ];
         })(),
+
+        // https://www.autohotkey.com/docs/v2/lib/_MaxThreadsPerHotkey.htm
+        ...((): ExpectedTestData[] => {
+          return [
+            [
+              dedent`
+                #MaxThreadsPerHotkey 255            ; comment
+              `,
+              [
+                { text: '#MaxThreadsPerHotkey', scopes: name(scopeName, RuleName.DirectiveName) },
+                { text: '255', scopes: name(scopeName, RuleName.Integer) },
+                { text: '; comment', scopes: name(scopeName, RuleName.InlineComment) },
+              ],
+            ],
+          ];
+        })(),
       ];
     })(),
 
