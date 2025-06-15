@@ -260,7 +260,7 @@ export const enum RuleName {
   ContinuationOption = 'continuation.option keyword.operator.quantifier.regexp',
   UnquotedString = 'token.string string.unquoted',
   UnquotedStringEscapeSequence = 'token.string string.escape.unquoted',
-  DoubleString = 'token.string string.quoted.double',
+  DoubleString = 'string.quoted.double',
   DoubleStringEscapeSequence = 'constant.character.escape.double',
   SingleStringEscapeSequence = 'constant.character.escape.single',
   SingleString = 'token.string string.quoted.single',
