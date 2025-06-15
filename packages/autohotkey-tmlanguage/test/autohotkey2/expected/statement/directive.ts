@@ -328,6 +328,26 @@ export function createDirectiveStatementExpectedData(scopeName: ScopeName): Expe
             ],
           ];
         })(),
+
+        // https://www.autohotkey.com/docs/v2/lib/_NoTrayIcon.htm
+        ...((): ExpectedTestData[] => {
+          return [
+            [
+              dedent`
+                #NoTrayIcon                     ; comment
+                #NoTrayIcon invalid             ; comment
+              `,
+              [
+                { text: '#NoTrayIcon', scopes: name(scopeName, RuleName.DirectiveName) },
+                { text: '; comment', scopes: name(scopeName, RuleName.InlineComment) },
+
+                { text: '#NoTrayIcon', scopes: name(scopeName, RuleName.DirectiveName) },
+                { text: 'invalid', scopes: name(scopeName, RuleName.UnquotedString, StyleName.Invalid) },
+                { text: '; comment', scopes: name(scopeName, RuleName.InlineComment) },
+              ],
+            ],
+          ];
+        })(),
       ];
     })(),
 
