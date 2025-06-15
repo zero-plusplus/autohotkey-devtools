@@ -26,7 +26,7 @@ export function createDirectiveStatementExpectedData(scopeName: ScopeName, place
               ? name(scopeName, RuleName.DirectiveName, StyleName.Strikethrough)
               : name(scopeName, RuleName.DirectiveName),
           },
-          { text: '; comment', scopes: name(scopeName, RuleName.InLineComment) },
+          { text: '; comment', scopes: name(scopeName, RuleName.InlineComment) },
         ],
       ];
     }),
@@ -42,7 +42,7 @@ export function createDirectiveStatementExpectedData(scopeName: ScopeName, place
             { text: '<', scopes: name(scopeName, RuleName.OpenAngleBracket) },
             { text: 'LIBRARY', scopes: name(scopeName, RuleName.IncludeLibrary) },
             { text: '>', scopes: name(scopeName, RuleName.CloseAngleBracket) },
-            { text: '; comment', scopes: name(scopeName, RuleName.InLineComment) },
+            { text: '; comment', scopes: name(scopeName, RuleName.InlineComment) },
           ],
         ],
         [
@@ -52,7 +52,7 @@ export function createDirectiveStatementExpectedData(scopeName: ScopeName, place
           [
             { text: directive, scopes: name(scopeName, RuleName.DirectiveName) },
             { text: 'path\\to\\, file .ahk', scopes: name(scopeName, RuleName.UnquotedString) },
-            { text: '; comment', scopes: name(scopeName, RuleName.InLineComment) },
+            { text: '; comment', scopes: name(scopeName, RuleName.InlineComment) },
           ],
         ],
         [
@@ -62,7 +62,7 @@ export function createDirectiveStatementExpectedData(scopeName: ScopeName, place
           [
             { text: directive, scopes: name(scopeName, RuleName.DirectiveName) },
             { text: '.\\path\\to\\, file .ahk', scopes: name(scopeName, RuleName.UnquotedString) },
-            { text: '; comment', scopes: name(scopeName, RuleName.InLineComment) },
+            { text: '; comment', scopes: name(scopeName, RuleName.InlineComment) },
           ],
         ],
         [
@@ -75,7 +75,7 @@ export function createDirectiveStatementExpectedData(scopeName: ScopeName, place
             { text: 'A_LineFile', scopes: name(scopeName, RuleName.BuiltInVariable) },
             { text: '%', scopes: name(scopeName, RuleName.PercentEnd) },
             { text: '\\..\\file.ahk', scopes: name(scopeName, RuleName.UnquotedString) },
-            { text: '; comment', scopes: name(scopeName, RuleName.InLineComment) },
+            { text: '; comment', scopes: name(scopeName, RuleName.InlineComment) },
           ],
         ],
       ];
@@ -89,7 +89,7 @@ export function createDirectiveStatementExpectedData(scopeName: ScopeName, place
         { text: '#Requires', scopes: name(scopeName, RuleName.DirectiveName) },
         { text: 'AutoHotkey', scopes: name(scopeName, RuleName.UnquotedString, StyleName.Strong) },
         { text: 'v2.1', scopes: name(scopeName, RuleName.UnquotedString, StyleName.Strong) },
-        { text: '; comment', scopes: name(scopeName, RuleName.InLineComment) },
+        { text: '; comment', scopes: name(scopeName, RuleName.InlineComment) },
       ],
     ],
   ];

@@ -14,7 +14,7 @@ export function createLabelStatementExpectedData(scopeName: ScopeName): Expected
       [
         { text: 'abc_123', scopes: name(scopeName, RuleName.LabelName) },
         { text: ':', scopes: name(scopeName, RuleName.Colon) },
-        { text: '; comment', scopes: name(scopeName, RuleName.InLineComment) },
+        { text: '; comment', scopes: name(scopeName, RuleName.InlineComment) },
       ],
     ],
     [
@@ -24,7 +24,7 @@ export function createLabelStatementExpectedData(scopeName: ScopeName): Expected
       [
         { text: '123_abc', scopes: name(scopeName, RuleName.LabelName) },
         { text: ':', scopes: name(scopeName, RuleName.Colon) },
-        { text: '; comment', scopes: name(scopeName, RuleName.InLineComment) },
+        { text: '; comment', scopes: name(scopeName, RuleName.InlineComment) },
       ],
     ],
     [
@@ -35,10 +35,10 @@ export function createLabelStatementExpectedData(scopeName: ScopeName): Expected
       [
         { text: 'abc', scopes: name(scopeName, RuleName.LabelName) },
         { text: ':', scopes: name(scopeName, RuleName.Colon) },
-        { text: '; comment', scopes: name(scopeName, RuleName.InLineComment) },
+        { text: '; comment', scopes: name(scopeName, RuleName.InlineComment) },
 
         { text: 'return', scopes: name(scopeName, RuleName.JumpCommandName) },
-        { text: '; comment', scopes: name(scopeName, RuleName.InLineComment) },
+        { text: '; comment', scopes: name(scopeName, RuleName.InlineComment) },
       ],
     ],
     [
@@ -51,16 +51,16 @@ export function createLabelStatementExpectedData(scopeName: ScopeName): Expected
       [
         { text: 'abc', scopes: name(scopeName, RuleName.LabelName) },
         { text: ':', scopes: name(scopeName, RuleName.Colon) },
-        { text: '; comment', scopes: name(scopeName, RuleName.InLineComment) },
+        { text: '; comment', scopes: name(scopeName, RuleName.InlineComment) },
 
         { text: '{', scopes: name(scopeName, RuleName.BlockBegin) },
-        { text: '; comment', scopes: name(scopeName, RuleName.InLineComment) },
+        { text: '; comment', scopes: name(scopeName, RuleName.InlineComment) },
 
         { text: 'return', scopes: name(scopeName, RuleName.JumpCommandName) },
-        { text: '; comment', scopes: name(scopeName, RuleName.InLineComment) },
+        { text: '; comment', scopes: name(scopeName, RuleName.InlineComment) },
 
         { text: '}', scopes: name(scopeName, RuleName.BlockEnd) },
-        { text: '; comment', scopes: name(scopeName, RuleName.InLineComment) },
+        { text: '; comment', scopes: name(scopeName, RuleName.InlineComment) },
       ],
     ],
     [
@@ -73,19 +73,19 @@ export function createLabelStatementExpectedData(scopeName: ScopeName): Expected
       [
         { text: 'abc', scopes: name(scopeName, RuleName.LabelName) },
         { text: ':', scopes: name(scopeName, RuleName.Colon) },
-        { text: '; comment', scopes: name(scopeName, RuleName.InLineComment) },
+        { text: '; comment', scopes: name(scopeName, RuleName.InlineComment) },
 
         { text: 'abc', scopes: name(scopeName, RuleName.FunctionName) },
         { text: '(', scopes: name(scopeName, RuleName.OpenParen) },
         { text: ')', scopes: name(scopeName, RuleName.CloseParen) },
         { text: '{', scopes: name(scopeName, RuleName.BlockBegin) },
-        { text: '; comment', scopes: name(scopeName, RuleName.InLineComment) },
+        { text: '; comment', scopes: name(scopeName, RuleName.InlineComment) },
 
         { text: 'return', scopes: name(scopeName, RuleName.JumpCommandName) },
-        { text: '; comment', scopes: name(scopeName, RuleName.InLineComment) },
+        { text: '; comment', scopes: name(scopeName, RuleName.InlineComment) },
 
         { text: '}', scopes: name(scopeName, RuleName.BlockEnd) },
-        { text: '; comment', scopes: name(scopeName, RuleName.InLineComment) },
+        { text: '; comment', scopes: name(scopeName, RuleName.InlineComment) },
       ],
     ],
   ];

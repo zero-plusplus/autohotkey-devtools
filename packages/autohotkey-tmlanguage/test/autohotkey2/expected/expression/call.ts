@@ -20,7 +20,7 @@ export function createCallExpressionExpectedData(scopeName: ScopeName): Expected
         { text: '%', scopes: name(scopeName, RuleName.PercentEnd) },
         { text: '(', scopes: name(scopeName, RuleName.OpenParen) },
         { text: ')', scopes: name(scopeName, RuleName.CloseParen) },
-        { text: '; comment', scopes: name(scopeName, RuleName.InLineComment) },
+        { text: '; comment', scopes: name(scopeName, RuleName.InlineComment) },
 
         { text: '%', scopes: name(scopeName, RuleName.PercentBegin) },
         { text: 'abc', scopes: name(scopeName, RuleName.Variable) },
@@ -28,7 +28,7 @@ export function createCallExpressionExpectedData(scopeName: ScopeName): Expected
         { text: 'edf', scopes: name(scopeName, RuleName.FunctionName) },
         { text: '(', scopes: name(scopeName, RuleName.OpenParen) },
         { text: ')', scopes: name(scopeName, RuleName.CloseParen) },
-        { text: '; comment', scopes: name(scopeName, RuleName.InLineComment) },
+        { text: '; comment', scopes: name(scopeName, RuleName.InlineComment) },
       ],
     ],
     [
@@ -40,12 +40,12 @@ export function createCallExpressionExpectedData(scopeName: ScopeName): Expected
         { text: 'Class', scopes: name(scopeName, RuleName.FunctionName, RuleName.ClassName) },
         { text: '(', scopes: name(scopeName, RuleName.OpenParen) },
         { text: ')', scopes: name(scopeName, RuleName.CloseParen) },
-        { text: '; comment', scopes: name(scopeName, RuleName.InLineComment) },
+        { text: '; comment', scopes: name(scopeName, RuleName.InlineComment) },
 
         { text: 'Map', scopes: name(scopeName, RuleName.FunctionName, RuleName.ClassName) },
         { text: '(', scopes: name(scopeName, RuleName.OpenParen) },
         { text: ')', scopes: name(scopeName, RuleName.CloseParen) },
-        { text: '; comment', scopes: name(scopeName, RuleName.InLineComment) },
+        { text: '; comment', scopes: name(scopeName, RuleName.InlineComment) },
       ],
     ],
     [
@@ -62,7 +62,7 @@ export function createCallExpressionExpectedData(scopeName: ScopeName): Expected
         { text: ')', scopes: name(scopeName, RuleName.CloseParen) },
         { text: '(', scopes: name(scopeName, RuleName.OpenParen) },
         { text: ')', scopes: name(scopeName, RuleName.CloseParen) },
-        { text: '; comment', scopes: name(scopeName, RuleName.InLineComment) },
+        { text: '; comment', scopes: name(scopeName, RuleName.InlineComment) },
 
         { text: '(', scopes: name(scopeName, RuleName.OpenParen) },
         { text: '(', scopes: name(scopeName, RuleName.OpenParen) },
@@ -78,7 +78,7 @@ export function createCallExpressionExpectedData(scopeName: ScopeName): Expected
         { text: ')', scopes: name(scopeName, RuleName.CloseParen) },
         { text: '(', scopes: name(scopeName, RuleName.OpenParen) },
         { text: ')', scopes: name(scopeName, RuleName.CloseParen) },
-        { text: '; comment', scopes: name(scopeName, RuleName.InLineComment) },
+        { text: '; comment', scopes: name(scopeName, RuleName.InlineComment) },
       ],
     ],
     [
@@ -98,10 +98,10 @@ export function createCallExpressionExpectedData(scopeName: ScopeName): Expected
         { text: ')', scopes: name(scopeName, RuleName.CloseParen) },
         { text: '%', scopes: name(scopeName, RuleName.PercentEnd) },
         { text: '}', scopes: name(scopeName, RuleName.CloseBrace) },
-        { text: '; comment', scopes: name(scopeName, RuleName.InLineComment) },
+        { text: '; comment', scopes: name(scopeName, RuleName.InlineComment) },
 
         { text: 'return', scopes: name(scopeName, RuleName.JumpCommandName) },
-        { text: '; comment', scopes: name(scopeName, RuleName.InLineComment) },
+        { text: '; comment', scopes: name(scopeName, RuleName.InlineComment) },
       ],
     ],
   ];

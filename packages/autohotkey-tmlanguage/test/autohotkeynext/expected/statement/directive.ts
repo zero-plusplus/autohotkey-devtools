@@ -16,7 +16,7 @@ export function createDirectiveStatementExpectedData(scopeName: ScopeName): Expe
       [
         { text: '#Module', scopes: name(scopeName, RuleName.DirectiveName) },
         { text: 'ModuleName', scopes: name(scopeName, RuleName.Namespace) },
-        { text: '; comment', scopes: name(scopeName, RuleName.InLineComment) },
+        { text: '; comment', scopes: name(scopeName, RuleName.InlineComment) },
       ],
     ],
   ];

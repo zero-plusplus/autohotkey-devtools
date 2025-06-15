@@ -26,12 +26,12 @@ export function createAssignmentDeclarationExpectedData(scopeName: ScopeName): E
             { text: 'input', scopes: name(scopeName, RuleName.Variable) },
             { text: ':=', scopes: name(scopeName, RuleName.Operator) },
             { text: '1', scopes: name(scopeName, RuleName.Integer) },
-            { text: '; comment', scopes: name(scopeName, RuleName.InLineComment) },
+            { text: '; comment', scopes: name(scopeName, RuleName.InlineComment) },
 
             { text: 'inputABC', scopes: name(scopeName, RuleName.Variable) },
             { text: ':=', scopes: name(scopeName, RuleName.Operator) },
             { text: '1', scopes: name(scopeName, RuleName.Integer) },
-            { text: '; comment', scopes: name(scopeName, RuleName.InLineComment) },
+            { text: '; comment', scopes: name(scopeName, RuleName.InlineComment) },
           ],
         ],
         [
@@ -50,7 +50,7 @@ export function createAssignmentDeclarationExpectedData(scopeName: ScopeName): E
             { text: ']', scopes: name(scopeName, RuleName.CloseBracket) },
             { text: ':=', scopes: name(scopeName, RuleName.Operator) },
             { text: '1', scopes: name(scopeName, RuleName.Integer) },
-            { text: '; comment', scopes: name(scopeName, RuleName.InLineComment) },
+            { text: '; comment', scopes: name(scopeName, RuleName.InlineComment) },
 
             { text: 'inputABC', scopes: name(scopeName, RuleName.Variable) },
             { text: '[', scopes: name(scopeName, RuleName.OpenBracket) },
@@ -62,7 +62,7 @@ export function createAssignmentDeclarationExpectedData(scopeName: ScopeName): E
             { text: ']', scopes: name(scopeName, RuleName.CloseBracket) },
             { text: ':=', scopes: name(scopeName, RuleName.Operator) },
             { text: '1', scopes: name(scopeName, RuleName.Integer) },
-            { text: '; comment', scopes: name(scopeName, RuleName.InLineComment) },
+            { text: '; comment', scopes: name(scopeName, RuleName.InlineComment) },
           ],
         ],
         [
@@ -75,7 +75,7 @@ export function createAssignmentDeclarationExpectedData(scopeName: ScopeName): E
             { text: 'abc', scopes: name(scopeName, RuleName.Variable) },
             { text: ':=', scopes: name(scopeName, RuleName.Operator) },
             { text: '1', scopes: name(scopeName, RuleName.Integer) },
-            { text: '; comment', scopes: name(scopeName, RuleName.InLineComment) },
+            { text: '; comment', scopes: name(scopeName, RuleName.InlineComment) },
           ],
         ],
         [
@@ -90,7 +90,7 @@ export function createAssignmentDeclarationExpectedData(scopeName: ScopeName): E
             { text: '%', scopes: name(scopeName, RuleName.PercentEnd) },
             { text: ':=', scopes: name(scopeName, RuleName.Operator) },
             { text: '1', scopes: name(scopeName, RuleName.Integer) },
-            { text: '; comment', scopes: name(scopeName, RuleName.InLineComment) },
+            { text: '; comment', scopes: name(scopeName, RuleName.InlineComment) },
 
             { text: '%', scopes: name(scopeName, RuleName.PercentBegin) },
             { text: 'input', scopes: name(scopeName, RuleName.Variable) },
@@ -98,7 +98,7 @@ export function createAssignmentDeclarationExpectedData(scopeName: ScopeName): E
             { text: 'abc', scopes: name(scopeName, RuleName.Variable) },
             { text: ':=', scopes: name(scopeName, RuleName.Operator) },
             { text: '1', scopes: name(scopeName, RuleName.Integer) },
-            { text: '; comment', scopes: name(scopeName, RuleName.InLineComment) },
+            { text: '; comment', scopes: name(scopeName, RuleName.InlineComment) },
 
             { text: '%', scopes: name(scopeName, RuleName.PercentBegin) },
             { text: 'a', scopes: name(scopeName, RuleName.Variable) },
@@ -108,7 +108,7 @@ export function createAssignmentDeclarationExpectedData(scopeName: ScopeName): E
             { text: 'abc', scopes: name(scopeName, RuleName.Variable) },
             { text: ':=', scopes: name(scopeName, RuleName.Operator) },
             { text: '1', scopes: name(scopeName, RuleName.Integer) },
-            { text: '; comment', scopes: name(scopeName, RuleName.InLineComment) },
+            { text: '; comment', scopes: name(scopeName, RuleName.InlineComment) },
           ],
         ],
         [
@@ -128,7 +128,7 @@ export function createAssignmentDeclarationExpectedData(scopeName: ScopeName): E
             { text: '%', scopes: name(scopeName, RuleName.PercentEnd) },
             { text: ':=', scopes: name(scopeName, RuleName.Operator) },
             { text: '1', scopes: name(scopeName, RuleName.Integer) },
-            { text: '; comment', scopes: name(scopeName, RuleName.InLineComment) },
+            { text: '; comment', scopes: name(scopeName, RuleName.InlineComment) },
           ],
         ],
       ];

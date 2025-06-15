@@ -25,19 +25,19 @@ export function createStringLiteralExpectedData(scopeName: ScopeName, placeholde
           [
             { text: q, scopes: name(scopeName, placeholder.ruleName, RuleDescriptor.Begin) },
             { text: q, scopes: name(scopeName, placeholder.ruleName, RuleDescriptor.End) },
-            { text: '; comment', scopes: name(scopeName, RuleName.InLineComment) },
+            { text: '; comment', scopes: name(scopeName, RuleName.InlineComment) },
 
             { text: q, scopes: name(scopeName, placeholder.ruleName, RuleDescriptor.Begin) },
             { text: q, scopes: name(scopeName, placeholder.ruleName, RuleDescriptor.End) },
             { text: ',', scopes: name(scopeName, RuleName.Comma) },
             { text: q, scopes: name(scopeName, placeholder.ruleName, RuleDescriptor.Begin) },
             { text: q, scopes: name(scopeName, placeholder.ruleName, RuleDescriptor.End) },
-            { text: '; comment', scopes: name(scopeName, RuleName.InLineComment) },
+            { text: '; comment', scopes: name(scopeName, RuleName.InlineComment) },
 
             { text: q, scopes: name(scopeName, placeholder.ruleName, RuleDescriptor.Begin) },
             { text: 'string', scopes: name(scopeName, placeholder.ruleName) },
             { text: q, scopes: name(scopeName, placeholder.ruleName, RuleDescriptor.End) },
-            { text: '; comment', scopes: name(scopeName, RuleName.InLineComment) },
+            { text: '; comment', scopes: name(scopeName, RuleName.InlineComment) },
           ],
         ],
       ];
@@ -55,7 +55,7 @@ export function createStringLiteralExpectedData(scopeName: ScopeName, placeholde
               { text: q, scopes: name(scopeName, placeholder.ruleName, RuleDescriptor.Begin) },
               { text: escapeSequence, scopes: name(scopeName, placeholder.ruleName, StyleName.Escape) },
               { text: q, scopes: name(scopeName, placeholder.ruleName, RuleDescriptor.End) },
-              { text: '; comment', scopes: name(scopeName, RuleName.InLineComment) },
+              { text: '; comment', scopes: name(scopeName, RuleName.InlineComment) },
             ],
           ];
         }),
@@ -70,7 +70,7 @@ export function createStringLiteralExpectedData(scopeName: ScopeName, placeholde
               { text: q, scopes: name(scopeName, placeholder.ruleName, RuleDescriptor.Begin) },
               ...repeatArray(count, [ { text: escapeSequence, scopes: name(scopeName, placeholder.ruleName, StyleName.Escape) } ]),
               { text: q, scopes: name(scopeName, placeholder.ruleName, RuleDescriptor.End) },
-              { text: '; comment', scopes: name(scopeName, RuleName.InLineComment) },
+              { text: '; comment', scopes: name(scopeName, RuleName.InlineComment) },
             ],
           ];
         }),
@@ -90,7 +90,7 @@ export function createStringLiteralExpectedData(scopeName: ScopeName, placeholde
             { text: q, scopes: name(scopeName, placeholder.ruleName, RuleDescriptor.Begin) },
             { text: 'i)', scopes: name(scopeName, placeholder.ruleName) },
             { text: q, scopes: name(scopeName, placeholder.ruleName, RuleDescriptor.End) },
-            { text: '; comment', scopes: name(scopeName, RuleName.InLineComment) },
+            { text: '; comment', scopes: name(scopeName, RuleName.InlineComment) },
 
             // If the closing character of the regexp options is escaped, it is highlighted as a string
             { text: q, scopes: name(scopeName, placeholder.ruleName, RuleDescriptor.Begin) },
@@ -98,7 +98,7 @@ export function createStringLiteralExpectedData(scopeName: ScopeName, placeholde
             { text: '`)', scopes: name(scopeName, placeholder.ruleName, StyleName.Escape) },
             { text: 'text', scopes: name(scopeName, placeholder.ruleName) },
             { text: q, scopes: name(scopeName, placeholder.ruleName, RuleDescriptor.End) },
-            { text: '; comment', scopes: name(scopeName, RuleName.InLineComment) },
+            { text: '; comment', scopes: name(scopeName, RuleName.InlineComment) },
           ],
         ],
       ];
@@ -119,16 +119,16 @@ export function createStringLiteralExpectedData(scopeName: ScopeName, placeholde
             { text: 'abc', scopes: name(scopeName, RuleName.Variable) },
             { text: ':=', scopes: name(scopeName, RuleName.Operator) },
             { text: q, scopes: name(scopeName, placeholder.ruleName, RuleDescriptor.Begin) },
-            { text: '; comment', scopes: name(scopeName, RuleName.InLineComment) },
+            { text: '; comment', scopes: name(scopeName, RuleName.InlineComment) },
 
             { text: '(', scopes: name(scopeName, placeholder.ruleName) },
             { text: 'LTrim', scopes: name(scopeName, placeholder.ruleName, RuleName.ContinuationOption, StyleName.Strong) },
-            { text: '; comment', scopes: name(scopeName, placeholder.ruleName, RuleName.InLineComment) },
+            { text: '; comment', scopes: name(scopeName, placeholder.ruleName, RuleName.InlineComment) },
 
             { text: '  1-line                ; text', scopes: name(scopeName, placeholder.ruleName) },
             { text: '  2-line                ; text', scopes: name(scopeName, placeholder.ruleName) },
             { text: `)${q}`, scopes: name(scopeName, placeholder.ruleName, RuleDescriptor.End) },
-            { text: '; comment', scopes: name(scopeName, RuleName.InLineComment) },
+            { text: '; comment', scopes: name(scopeName, RuleName.InlineComment) },
           ],
         ],
       ];
@@ -144,12 +144,12 @@ export function createStringLiteralExpectedData(scopeName: ScopeName, placeholde
         { text: q, scopes: name(scopeName, placeholder.ruleName, RuleDescriptor.Begin) },
         { text: ':', scopes: name(scopeName, placeholder.ruleName) },
         { text: q, scopes: name(scopeName, placeholder.ruleName, RuleDescriptor.End) },
-        { text: '; comment', scopes: name(scopeName, RuleName.InLineComment) },
+        { text: '; comment', scopes: name(scopeName, RuleName.InlineComment) },
 
         { text: q, scopes: name(scopeName, placeholder.ruleName, RuleDescriptor.Begin) },
         { text: '::', scopes: name(scopeName, placeholder.ruleName) },
         { text: q, scopes: name(scopeName, placeholder.ruleName, RuleDescriptor.End) },
-        { text: '; comment', scopes: name(scopeName, RuleName.InLineComment) },
+        { text: '; comment', scopes: name(scopeName, RuleName.InlineComment) },
       ],
     ],
 
@@ -170,7 +170,7 @@ export function createStringLiteralExpectedData(scopeName: ScopeName, placeholde
         { text: '  text  ', scopes: name(scopeName, placeholder.ruleName) },
         { text: q, scopes: name(scopeName, placeholder.ruleName, RuleDescriptor.End) },
         { text: ')', scopes: name(scopeName, RuleName.CloseParen) },
-        { text: '; comment', scopes: name(scopeName, RuleName.InLineComment) },
+        { text: '; comment', scopes: name(scopeName, RuleName.InlineComment) },
       ],
     ],
     // Fix: Beginning with a parenthesis opening is misidentified as a starting position and highlighted as an option
@@ -186,16 +186,16 @@ export function createStringLiteralExpectedData(scopeName: ScopeName, placeholde
         { text: 'var', scopes: name(scopeName, RuleName.Variable) },
         { text: ':=', scopes: name(scopeName, RuleName.Operator) },
         { text: q, scopes: name(scopeName, placeholder.ruleName, RuleDescriptor.Begin) },
-        { text: '; comment', scopes: name(scopeName, RuleName.InLineComment) },
+        { text: '; comment', scopes: name(scopeName, RuleName.InlineComment) },
 
         { text: '(', scopes: name(scopeName, placeholder.ruleName) },
         { text: 'LTrim', scopes: name(scopeName, placeholder.ruleName, RuleName.ContinuationOption, StyleName.Strong) },
-        { text: '; comment', scopes: name(scopeName, placeholder.ruleName, RuleName.InLineComment) },
+        { text: '; comment', scopes: name(scopeName, placeholder.ruleName, RuleName.InlineComment) },
 
         { text: '  (text         ; text', scopes: name(scopeName, placeholder.ruleName) },
         { text: '  (text)        ; text', scopes: name(scopeName, placeholder.ruleName) },
         { text: `)${q}`, scopes: name(scopeName, placeholder.ruleName, RuleDescriptor.End) },
-        { text: '; comment', scopes: name(scopeName, RuleName.InLineComment) },
+        { text: '; comment', scopes: name(scopeName, RuleName.InlineComment) },
       ],
     ],
   ];

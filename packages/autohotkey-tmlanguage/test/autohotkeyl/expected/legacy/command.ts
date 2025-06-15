@@ -23,7 +23,7 @@ export function createCommandStatementExpectedData(scopeName: ScopeName): Expect
             `,
             [
               { text: definition.name, scopes: commandElementScopes },
-              { text: '; comment', scopes: name(scopeName, RuleName.InLineComment) },
+              { text: '; comment', scopes: name(scopeName, RuleName.InlineComment) },
             ],
           ],
           [
@@ -33,7 +33,7 @@ export function createCommandStatementExpectedData(scopeName: ScopeName): Expect
             [
               { text: definition.name, scopes: commandElementScopes },
               { text: ',', scopes: name(scopeName, RuleName.Comma) },
-              { text: '; comment', scopes: name(scopeName, RuleName.InLineComment) },
+              { text: '; comment', scopes: name(scopeName, RuleName.InlineComment) },
             ],
           ],
           [
@@ -44,11 +44,11 @@ export function createCommandStatementExpectedData(scopeName: ScopeName): Expect
             [
               { text: definition.name, scopes: commandElementScopes },
               { text: ',', scopes: name(scopeName, RuleName.Comma) },
-              { text: '; comment', scopes: name(scopeName, RuleName.InLineComment) },
+              { text: '; comment', scopes: name(scopeName, RuleName.InlineComment) },
 
               { text: ',', scopes: name(scopeName, RuleName.Comma) },
               { text: 'text', scopes: name(scopeName, RuleName.UnquotedString) },
-              { text: '; comment', scopes: name(scopeName, RuleName.InLineComment) },
+              { text: '; comment', scopes: name(scopeName, RuleName.InlineComment) },
             ],
           ],
         ];
@@ -92,7 +92,7 @@ export function createCommandStatementExpectedData(scopeName: ScopeName): Expect
                 { text: 'blank', scopes: name(scopeName, RuleName.UnquotedString, StyleName.Invalid) },
                 { text: ',', scopes: name(scopeName, RuleName.Comma) },
                 { text: 'control-id', scopes: name(scopeName, RuleName.UnquotedString) },
-                { text: '; comment', scopes: name(scopeName, RuleName.InLineComment) },
+                { text: '; comment', scopes: name(scopeName, RuleName.InlineComment) },
               ];
             }),
 
@@ -107,7 +107,7 @@ export function createCommandStatementExpectedData(scopeName: ScopeName): Expect
                 { text: '123', scopes: name(scopeName, RuleName.Hex, RuleName.HexValue) },
                 { text: ',', scopes: name(scopeName, RuleName.Comma) },
                 { text: 'control-id', scopes: name(scopeName, RuleName.UnquotedString) },
-                { text: '; comment', scopes: name(scopeName, RuleName.InLineComment) },
+                { text: '; comment', scopes: name(scopeName, RuleName.InlineComment) },
               ];
             }),
 
@@ -120,7 +120,7 @@ export function createCommandStatementExpectedData(scopeName: ScopeName): Expect
                 { text: 'unquoted', scopes: name(scopeName, RuleName.UnquotedString) },
                 { text: ',', scopes: name(scopeName, RuleName.Comma) },
                 { text: 'control-id', scopes: name(scopeName, RuleName.UnquotedString) },
-                { text: '; comment', scopes: name(scopeName, RuleName.InLineComment) },
+                { text: '; comment', scopes: name(scopeName, RuleName.InlineComment) },
               ];
             }),
 
@@ -131,7 +131,7 @@ export function createCommandStatementExpectedData(scopeName: ScopeName): Expect
             { text: 'blank', scopes: name(scopeName, RuleName.UnquotedString) },
             { text: ',', scopes: name(scopeName, RuleName.Comma) },
             { text: 'control-id', scopes: name(scopeName, RuleName.UnquotedString) },
-            { text: '; comment', scopes: name(scopeName, RuleName.InLineComment) },
+            { text: '; comment', scopes: name(scopeName, RuleName.InlineComment) },
           ],
         ],
 
@@ -165,7 +165,7 @@ export function createCommandStatementExpectedData(scopeName: ScopeName): Expect
             { text: 'Selected', scopes: name(scopeName, RuleName.UnquotedString, StyleName.Strong) },
             { text: ',', scopes: name(scopeName, RuleName.Comma) },
             { text: 'control-id', scopes: name(scopeName, RuleName.UnquotedString) },
-            { text: '; comment', scopes: name(scopeName, RuleName.InLineComment) },
+            { text: '; comment', scopes: name(scopeName, RuleName.InlineComment) },
 
             ...[ 'Checked', 'Enabled', 'Visible', 'Tab', 'Choice', 'LineCount', 'CurrentLine', 'CurrentCol', 'Selected', 'Style', 'ExStyle', 'Hwnd' ].flatMap((subcommand) => {
               return [
@@ -178,7 +178,7 @@ export function createCommandStatementExpectedData(scopeName: ScopeName): Expect
                 { text: 'blank', scopes: name(scopeName, RuleName.UnquotedString, StyleName.Invalid) },
                 { text: ',', scopes: name(scopeName, RuleName.Comma) },
                 { text: 'control-id', scopes: name(scopeName, RuleName.UnquotedString) },
-                { text: '; comment', scopes: name(scopeName, RuleName.InLineComment) },
+                { text: '; comment', scopes: name(scopeName, RuleName.InlineComment) },
               ];
             }),
 
@@ -191,7 +191,7 @@ export function createCommandStatementExpectedData(scopeName: ScopeName): Expect
             { text: 'blank', scopes: name(scopeName, RuleName.UnquotedString) },
             { text: ',', scopes: name(scopeName, RuleName.Comma) },
             { text: 'control-id', scopes: name(scopeName, RuleName.UnquotedString) },
-            { text: '; comment', scopes: name(scopeName, RuleName.InLineComment) },
+            { text: '; comment', scopes: name(scopeName, RuleName.InlineComment) },
           ],
         ],
 
@@ -213,21 +213,21 @@ export function createCommandStatementExpectedData(scopeName: ScopeName): Expect
             { text: 'C:', scopes: name(scopeName, RuleName.UnquotedString) },
             { text: ',', scopes: name(scopeName, RuleName.Comma) },
             { text: 'Z:', scopes: name(scopeName, RuleName.UnquotedString) },
-            { text: '; comment', scopes: name(scopeName, RuleName.InLineComment) },
+            { text: '; comment', scopes: name(scopeName, RuleName.InlineComment) },
 
             { text: 'Drive', scopes: name(scopeName, RuleName.CommandName) },
             { text: ',', scopes: name(scopeName, RuleName.Comma) },
             { text: 'Lock', scopes: name(scopeName, RuleName.SubCommandName) },
             { text: ',', scopes: name(scopeName, RuleName.Comma) },
             { text: 'C:', scopes: name(scopeName, RuleName.UnquotedString) },
-            { text: '; comment', scopes: name(scopeName, RuleName.InLineComment) },
+            { text: '; comment', scopes: name(scopeName, RuleName.InlineComment) },
 
             { text: 'Drive', scopes: name(scopeName, RuleName.CommandName) },
             { text: ',', scopes: name(scopeName, RuleName.Comma) },
             { text: 'UnLock', scopes: name(scopeName, RuleName.SubCommandName) },
             { text: ',', scopes: name(scopeName, RuleName.Comma) },
             { text: 'C:', scopes: name(scopeName, RuleName.UnquotedString) },
-            { text: '; comment', scopes: name(scopeName, RuleName.InLineComment) },
+            { text: '; comment', scopes: name(scopeName, RuleName.InlineComment) },
 
             { text: 'Drive', scopes: name(scopeName, RuleName.CommandName) },
             { text: ',', scopes: name(scopeName, RuleName.Comma) },
@@ -236,14 +236,14 @@ export function createCommandStatementExpectedData(scopeName: ScopeName): Expect
             { text: 'C:', scopes: name(scopeName, RuleName.UnquotedString) },
             { text: ',', scopes: name(scopeName, RuleName.Comma) },
             { text: '1', scopes: name(scopeName, RuleName.UnquotedString, StyleName.Strong) },
-            { text: '; comment', scopes: name(scopeName, RuleName.InLineComment) },
+            { text: '; comment', scopes: name(scopeName, RuleName.InlineComment) },
 
             { text: 'Drive', scopes: name(scopeName, RuleName.CommandName) },
             { text: ',', scopes: name(scopeName, RuleName.Comma) },
             { text: 'unquoted', scopes: name(scopeName, RuleName.UnquotedString) },
             { text: ',', scopes: name(scopeName, RuleName.Comma) },
             { text: 'C:', scopes: name(scopeName, RuleName.UnquotedString) },
-            { text: '; comment', scopes: name(scopeName, RuleName.InLineComment) },
+            { text: '; comment', scopes: name(scopeName, RuleName.InlineComment) },
           ],
         ],
 
@@ -271,7 +271,7 @@ export function createCommandStatementExpectedData(scopeName: ScopeName): Expect
             { text: 'List', scopes: name(scopeName, RuleName.SubCommandName) },
             { text: ',', scopes: name(scopeName, RuleName.Comma) },
             { text: 'CDROM', scopes: name(scopeName, RuleName.UnquotedString, StyleName.Strong) },
-            { text: '; comment', scopes: name(scopeName, RuleName.InLineComment) },
+            { text: '; comment', scopes: name(scopeName, RuleName.InlineComment) },
 
             ...[ 'Capacity', 'Cap' ].flatMap((subcommand) => {
               return [
@@ -282,7 +282,7 @@ export function createCommandStatementExpectedData(scopeName: ScopeName): Expect
                 { text: subcommand, scopes: name(scopeName, RuleName.SubCommandName) },
                 { text: ',', scopes: name(scopeName, RuleName.Comma) },
                 { text: '\\path\\to', scopes: name(scopeName, RuleName.UnquotedString) },
-                { text: '; comment', scopes: name(scopeName, RuleName.InLineComment) },
+                { text: '; comment', scopes: name(scopeName, RuleName.InlineComment) },
               ];
             }),
             ...[ 'FileSystem', 'FS' ].flatMap((subcommand) => {
@@ -294,7 +294,7 @@ export function createCommandStatementExpectedData(scopeName: ScopeName): Expect
                 { text: subcommand, scopes: name(scopeName, RuleName.SubCommandName) },
                 { text: ',', scopes: name(scopeName, RuleName.Comma) },
                 { text: 'C:', scopes: name(scopeName, RuleName.UnquotedString) },
-                { text: '; comment', scopes: name(scopeName, RuleName.InLineComment) },
+                { text: '; comment', scopes: name(scopeName, RuleName.InlineComment) },
               ];
             }),
 
@@ -305,7 +305,7 @@ export function createCommandStatementExpectedData(scopeName: ScopeName): Expect
             { text: 'Label', scopes: name(scopeName, RuleName.SubCommandName) },
             { text: ',', scopes: name(scopeName, RuleName.Comma) },
             { text: 'C:', scopes: name(scopeName, RuleName.UnquotedString) },
-            { text: '; comment', scopes: name(scopeName, RuleName.InLineComment) },
+            { text: '; comment', scopes: name(scopeName, RuleName.InlineComment) },
 
             { text: 'DriveGet', scopes: name(scopeName, RuleName.CommandName) },
             { text: ',', scopes: name(scopeName, RuleName.Comma) },
@@ -314,7 +314,7 @@ export function createCommandStatementExpectedData(scopeName: ScopeName): Expect
             { text: 'Serial', scopes: name(scopeName, RuleName.SubCommandName) },
             { text: ',', scopes: name(scopeName, RuleName.Comma) },
             { text: 'C:', scopes: name(scopeName, RuleName.UnquotedString) },
-            { text: '; comment', scopes: name(scopeName, RuleName.InLineComment) },
+            { text: '; comment', scopes: name(scopeName, RuleName.InlineComment) },
 
             { text: 'DriveGet', scopes: name(scopeName, RuleName.CommandName) },
             { text: ',', scopes: name(scopeName, RuleName.Comma) },
@@ -323,7 +323,7 @@ export function createCommandStatementExpectedData(scopeName: ScopeName): Expect
             { text: 'Type', scopes: name(scopeName, RuleName.SubCommandName) },
             { text: ',', scopes: name(scopeName, RuleName.Comma) },
             { text: '\\path\\to', scopes: name(scopeName, RuleName.UnquotedString) },
-            { text: '; comment', scopes: name(scopeName, RuleName.InLineComment) },
+            { text: '; comment', scopes: name(scopeName, RuleName.InlineComment) },
 
             { text: 'DriveGet', scopes: name(scopeName, RuleName.CommandName) },
             { text: ',', scopes: name(scopeName, RuleName.Comma) },
@@ -332,7 +332,7 @@ export function createCommandStatementExpectedData(scopeName: ScopeName): Expect
             { text: 'Status', scopes: name(scopeName, RuleName.SubCommandName) },
             { text: ',', scopes: name(scopeName, RuleName.Comma) },
             { text: '\\path\\to', scopes: name(scopeName, RuleName.UnquotedString) },
-            { text: '; comment', scopes: name(scopeName, RuleName.InLineComment) },
+            { text: '; comment', scopes: name(scopeName, RuleName.InlineComment) },
 
             { text: 'DriveGet', scopes: name(scopeName, RuleName.CommandName) },
             { text: ',', scopes: name(scopeName, RuleName.Comma) },
@@ -341,7 +341,7 @@ export function createCommandStatementExpectedData(scopeName: ScopeName): Expect
             { text: 'StatusCD', scopes: name(scopeName, RuleName.SubCommandName) },
             { text: ',', scopes: name(scopeName, RuleName.Comma) },
             { text: 'C:', scopes: name(scopeName, RuleName.UnquotedString) },
-            { text: '; comment', scopes: name(scopeName, RuleName.InLineComment) },
+            { text: '; comment', scopes: name(scopeName, RuleName.InlineComment) },
 
             { text: 'DriveGet', scopes: name(scopeName, RuleName.CommandName) },
             { text: ',', scopes: name(scopeName, RuleName.Comma) },
@@ -350,7 +350,7 @@ export function createCommandStatementExpectedData(scopeName: ScopeName): Expect
             { text: 'unquoted', scopes: name(scopeName, RuleName.UnquotedString) },
             { text: ',', scopes: name(scopeName, RuleName.Comma) },
             { text: 'C:', scopes: name(scopeName, RuleName.UnquotedString) },
-            { text: '; comment', scopes: name(scopeName, RuleName.InLineComment) },
+            { text: '; comment', scopes: name(scopeName, RuleName.InlineComment) },
           ],
         ],
 
@@ -376,7 +376,7 @@ export function createCommandStatementExpectedData(scopeName: ScopeName): Expect
                 { text: 'unquoted', scopes: name(scopeName, RuleName.UnquotedString) },
                 { text: ',', scopes: name(scopeName, RuleName.Comma) },
                 { text: subcommand, scopes: name(scopeName, RuleName.UnquotedString, StyleName.Strong) },
-                { text: '; comment', scopes: name(scopeName, RuleName.InLineComment) },
+                { text: '; comment', scopes: name(scopeName, RuleName.InlineComment) },
               ];
             }),
           ],
@@ -413,7 +413,7 @@ export function createCommandStatementExpectedData(scopeName: ScopeName): Expect
             { text: '-MaximizeBox', scopes: name(scopeName, RuleName.UnquotedString, StyleName.Strong) },
             { text: ',', scopes: name(scopeName, RuleName.Comma) },
             { text: 'unquoted', scopes: name(scopeName, RuleName.UnquotedString) },
-            { text: '; comment', scopes: name(scopeName, RuleName.InLineComment) },
+            { text: '; comment', scopes: name(scopeName, RuleName.InlineComment) },
 
             { text: 'Gui', scopes: name(scopeName, RuleName.CommandName) },
             { text: ',', scopes: name(scopeName, RuleName.Comma) },
@@ -424,7 +424,7 @@ export function createCommandStatementExpectedData(scopeName: ScopeName): Expect
             { text: 'unquoted', scopes: name(scopeName, RuleName.UnquotedString) },
             { text: ',', scopes: name(scopeName, RuleName.Comma) },
             { text: 'unquoted', scopes: name(scopeName, RuleName.UnquotedString) },
-            { text: '; comment', scopes: name(scopeName, RuleName.InLineComment) },
+            { text: '; comment', scopes: name(scopeName, RuleName.InlineComment) },
 
             { text: 'Gui', scopes: name(scopeName, RuleName.CommandName) },
             { text: ',', scopes: name(scopeName, RuleName.Comma) },
@@ -435,7 +435,7 @@ export function createCommandStatementExpectedData(scopeName: ScopeName): Expect
             { text: 'R10', scopes: name(scopeName, RuleName.UnquotedString, StyleName.Strong) },
             { text: ',', scopes: name(scopeName, RuleName.Comma) },
             { text: 'unquoted', scopes: name(scopeName, RuleName.UnquotedString) },
-            { text: '; comment', scopes: name(scopeName, RuleName.InLineComment) },
+            { text: '; comment', scopes: name(scopeName, RuleName.InlineComment) },
 
             { text: 'Gui', scopes: name(scopeName, RuleName.CommandName) },
             { text: ',', scopes: name(scopeName, RuleName.Comma) },
@@ -444,21 +444,21 @@ export function createCommandStatementExpectedData(scopeName: ScopeName): Expect
             { text: 'Center', scopes: name(scopeName, RuleName.UnquotedString, StyleName.Strong) },
             { text: ',', scopes: name(scopeName, RuleName.Comma) },
             { text: 'unquoted', scopes: name(scopeName, RuleName.UnquotedString) },
-            { text: '; comment', scopes: name(scopeName, RuleName.InLineComment) },
+            { text: '; comment', scopes: name(scopeName, RuleName.InlineComment) },
 
             { text: 'Gui', scopes: name(scopeName, RuleName.CommandName) },
             { text: ',', scopes: name(scopeName, RuleName.Comma) },
             { text: 'Submit', scopes: name(scopeName, RuleName.SubCommandName) },
             { text: ',', scopes: name(scopeName, RuleName.Comma) },
             { text: 'NoHide', scopes: name(scopeName, RuleName.UnquotedString, StyleName.Strong) },
-            { text: '; comment', scopes: name(scopeName, RuleName.InLineComment) },
+            { text: '; comment', scopes: name(scopeName, RuleName.InlineComment) },
 
             ...[ 'Cancel', 'Hide', 'Destroy', 'Minimize', 'Maximize', 'Restore', 'Default' ].flatMap((subcommand) => {
               return [
                 { text: 'Gui', scopes: name(scopeName, RuleName.CommandName) },
                 { text: ',', scopes: name(scopeName, RuleName.Comma) },
                 { text: subcommand, scopes: name(scopeName, RuleName.SubCommandName) },
-                { text: '; comment', scopes: name(scopeName, RuleName.InLineComment) },
+                { text: '; comment', scopes: name(scopeName, RuleName.InlineComment) },
               ];
             }),
 
@@ -470,7 +470,7 @@ export function createCommandStatementExpectedData(scopeName: ScopeName): Expect
             { text: 'cRed', scopes: name(scopeName, RuleName.UnquotedString, StyleName.Strong) },
             { text: ',', scopes: name(scopeName, RuleName.Comma) },
             { text: 'unquoted', scopes: name(scopeName, RuleName.UnquotedString) },
-            { text: '; comment', scopes: name(scopeName, RuleName.InLineComment) },
+            { text: '; comment', scopes: name(scopeName, RuleName.InlineComment) },
 
             { text: 'Gui', scopes: name(scopeName, RuleName.CommandName) },
             { text: ',', scopes: name(scopeName, RuleName.Comma) },
@@ -479,7 +479,7 @@ export function createCommandStatementExpectedData(scopeName: ScopeName): Expect
             { text: 'Red', scopes: name(scopeName, RuleName.UnquotedString, StyleName.Strong) },
             { text: ',', scopes: name(scopeName, RuleName.Comma) },
             { text: 'FFFFFF', scopes: name(scopeName, RuleName.UnquotedString) },
-            { text: '; comment', scopes: name(scopeName, RuleName.InLineComment) },
+            { text: '; comment', scopes: name(scopeName, RuleName.InlineComment) },
 
             { text: 'Gui', scopes: name(scopeName, RuleName.CommandName) },
             { text: ',', scopes: name(scopeName, RuleName.Comma) },
@@ -488,21 +488,21 @@ export function createCommandStatementExpectedData(scopeName: ScopeName): Expect
             { text: '15', scopes: name(scopeName, RuleName.Integer) },
             { text: ',', scopes: name(scopeName, RuleName.Comma) },
             { text: '30', scopes: name(scopeName, RuleName.Integer) },
-            { text: '; comment', scopes: name(scopeName, RuleName.InLineComment) },
+            { text: '; comment', scopes: name(scopeName, RuleName.InlineComment) },
 
             { text: 'Gui', scopes: name(scopeName, RuleName.CommandName) },
             { text: ',', scopes: name(scopeName, RuleName.Comma) },
             { text: 'Menu', scopes: name(scopeName, RuleName.SubCommandName) },
             { text: ',', scopes: name(scopeName, RuleName.Comma) },
             { text: 'unquoted', scopes: name(scopeName, RuleName.UnquotedString) },
-            { text: '; comment', scopes: name(scopeName, RuleName.InLineComment) },
+            { text: '; comment', scopes: name(scopeName, RuleName.InlineComment) },
 
             { text: 'Gui', scopes: name(scopeName, RuleName.CommandName) },
             { text: ',', scopes: name(scopeName, RuleName.Comma) },
             { text: 'Flash', scopes: name(scopeName, RuleName.SubCommandName) },
             { text: ',', scopes: name(scopeName, RuleName.Comma) },
             { text: 'Off', scopes: name(scopeName, RuleName.UnquotedString, StyleName.Strong) },
-            { text: '; comment', scopes: name(scopeName, RuleName.InLineComment) },
+            { text: '; comment', scopes: name(scopeName, RuleName.InlineComment) },
 
             { text: 'Gui', scopes: name(scopeName, RuleName.CommandName) },
             { text: ',', scopes: name(scopeName, RuleName.Comma) },
@@ -510,7 +510,7 @@ export function createCommandStatementExpectedData(scopeName: ScopeName): Expect
             { text: ':', scopes: name(scopeName, RuleName.Colon) },
             { text: '+Resize', scopes: name(scopeName, RuleName.UnquotedString, StyleName.Strong) },
             { text: '-MaximizeBox', scopes: name(scopeName, RuleName.UnquotedString, StyleName.Strong) },
-            { text: '; comment', scopes: name(scopeName, RuleName.InLineComment) },
+            { text: '; comment', scopes: name(scopeName, RuleName.InlineComment) },
           ],
         ],
 
@@ -539,7 +539,7 @@ export function createCommandStatementExpectedData(scopeName: ScopeName): Expect
             { text: 'unquoted', scopes: name(scopeName, RuleName.UnquotedString) },
             { text: ',', scopes: name(scopeName, RuleName.Comma) },
             { text: 'unquoted', scopes: name(scopeName, RuleName.UnquotedString) },
-            { text: '; comment', scopes: name(scopeName, RuleName.InLineComment) },
+            { text: '; comment', scopes: name(scopeName, RuleName.InlineComment) },
 
             { text: 'GuiControl', scopes: name(scopeName, RuleName.CommandName) },
             { text: ',', scopes: name(scopeName, RuleName.Comma) },
@@ -548,7 +548,7 @@ export function createCommandStatementExpectedData(scopeName: ScopeName): Expect
             { text: 'unquoted', scopes: name(scopeName, RuleName.UnquotedString) },
             { text: ',', scopes: name(scopeName, RuleName.Comma) },
             { text: 'unquoted', scopes: name(scopeName, RuleName.UnquotedString) },
-            { text: '; comment', scopes: name(scopeName, RuleName.InLineComment) },
+            { text: '; comment', scopes: name(scopeName, RuleName.InlineComment) },
 
             ...[ 'Text', 'Choose', 'ChooseString' ].flatMap((subcommand) => {
               return [
@@ -559,7 +559,7 @@ export function createCommandStatementExpectedData(scopeName: ScopeName): Expect
                 { text: 'unquoted', scopes: name(scopeName, RuleName.UnquotedString) },
                 { text: ',', scopes: name(scopeName, RuleName.Comma) },
                 { text: 'unquoted', scopes: name(scopeName, RuleName.UnquotedString) },
-                { text: '; comment', scopes: name(scopeName, RuleName.InLineComment) },
+                { text: '; comment', scopes: name(scopeName, RuleName.InlineComment) },
               ];
             }),
 
@@ -572,7 +572,7 @@ export function createCommandStatementExpectedData(scopeName: ScopeName): Expect
                 { text: 'unquoted', scopes: name(scopeName, RuleName.UnquotedString) },
                 { text: ',', scopes: name(scopeName, RuleName.Comma) },
                 { text: 'w10', scopes: name(scopeName, RuleName.UnquotedString, StyleName.Strong) },
-                { text: '; comment', scopes: name(scopeName, RuleName.InLineComment) },
+                { text: '; comment', scopes: name(scopeName, RuleName.InlineComment) },
               ];
             }),
 
@@ -583,7 +583,7 @@ export function createCommandStatementExpectedData(scopeName: ScopeName): Expect
                 { text: subcommand, scopes: name(scopeName, RuleName.SubCommandName) },
                 { text: ',', scopes: name(scopeName, RuleName.Comma) },
                 { text: 'unquoted', scopes: name(scopeName, RuleName.UnquotedString) },
-                { text: '; comment', scopes: name(scopeName, RuleName.InLineComment) },
+                { text: '; comment', scopes: name(scopeName, RuleName.InlineComment) },
               ];
             }),
 
@@ -595,7 +595,7 @@ export function createCommandStatementExpectedData(scopeName: ScopeName): Expect
             { text: 'unquoted', scopes: name(scopeName, RuleName.UnquotedString) },
             { text: ',', scopes: name(scopeName, RuleName.Comma) },
             { text: 'unquoted', scopes: name(scopeName, RuleName.UnquotedString) },
-            { text: '; comment', scopes: name(scopeName, RuleName.InLineComment) },
+            { text: '; comment', scopes: name(scopeName, RuleName.InlineComment) },
           ],
         ],
 
@@ -621,7 +621,7 @@ export function createCommandStatementExpectedData(scopeName: ScopeName): Expect
             { text: 'unquoted', scopes: name(scopeName, RuleName.UnquotedString) },
             { text: ',', scopes: name(scopeName, RuleName.Comma) },
             { text: 'unquoted', scopes: name(scopeName, RuleName.UnquotedString) },
-            { text: '; comment', scopes: name(scopeName, RuleName.InLineComment) },
+            { text: '; comment', scopes: name(scopeName, RuleName.InlineComment) },
 
             { text: 'GuiControlGet', scopes: name(scopeName, RuleName.CommandName) },
             { text: ',', scopes: name(scopeName, RuleName.Comma) },
@@ -632,7 +632,7 @@ export function createCommandStatementExpectedData(scopeName: ScopeName): Expect
             { text: 'Pos', scopes: name(scopeName, RuleName.SubCommandName) },
             { text: ',', scopes: name(scopeName, RuleName.Comma) },
             { text: 'unquoted', scopes: name(scopeName, RuleName.UnquotedString) },
-            { text: '; comment', scopes: name(scopeName, RuleName.InLineComment) },
+            { text: '; comment', scopes: name(scopeName, RuleName.InlineComment) },
 
             ...[ 'Pos', 'Focus', 'FocusV', 'Visible', 'Hwnd', 'Name' ].flatMap((subcommand) => {
               return [
@@ -643,7 +643,7 @@ export function createCommandStatementExpectedData(scopeName: ScopeName): Expect
                 { text: subcommand, scopes: name(scopeName, RuleName.SubCommandName) },
                 { text: ',', scopes: name(scopeName, RuleName.Comma) },
                 { text: 'unquoted', scopes: name(scopeName, RuleName.UnquotedString) },
-                { text: '; comment', scopes: name(scopeName, RuleName.InLineComment) },
+                { text: '; comment', scopes: name(scopeName, RuleName.InlineComment) },
               ];
             }),
 
@@ -654,7 +654,7 @@ export function createCommandStatementExpectedData(scopeName: ScopeName): Expect
             { text: 'XXX', scopes: name(scopeName, RuleName.UnquotedString, StyleName.Invalid) },
             { text: ',', scopes: name(scopeName, RuleName.Comma) },
             { text: 'unquoted', scopes: name(scopeName, RuleName.UnquotedString) },
-            { text: '; comment', scopes: name(scopeName, RuleName.InLineComment) },
+            { text: '; comment', scopes: name(scopeName, RuleName.InlineComment) },
           ],
         ],
 
@@ -675,7 +675,7 @@ export function createCommandStatementExpectedData(scopeName: ScopeName): Expect
             { text: 'Off', scopes: name(scopeName, RuleName.UnquotedString, StyleName.Strong) },
             { text: ',', scopes: name(scopeName, RuleName.Comma) },
             { text: 'UseErrorLevel', scopes: name(scopeName, RuleName.UnquotedString, StyleName.Strong) },
-            { text: '; comment', scopes: name(scopeName, RuleName.InLineComment) },
+            { text: '; comment', scopes: name(scopeName, RuleName.InlineComment) },
 
             ...[ 'IfWinActive', 'IfWinExist' ].flatMap((subcommand) => {
               return [
@@ -690,7 +690,7 @@ export function createCommandStatementExpectedData(scopeName: ScopeName): Expect
                 { text: 'abc', scopes: name(scopeName, RuleName.UnquotedString) },
                 { text: ',', scopes: name(scopeName, RuleName.Comma) },
                 { text: 'unquoted', scopes: name(scopeName, RuleName.UnquotedString) },
-                { text: '; comment', scopes: name(scopeName, RuleName.InLineComment) },
+                { text: '; comment', scopes: name(scopeName, RuleName.InlineComment) },
               ];
             }),
 
@@ -701,7 +701,7 @@ export function createCommandStatementExpectedData(scopeName: ScopeName): Expect
             { text: 'a', scopes: name(scopeName, RuleName.Variable) },
             { text: '+', scopes: name(scopeName, RuleName.Operator) },
             { text: 'b', scopes: name(scopeName, RuleName.Variable) },
-            { text: '; comment', scopes: name(scopeName, RuleName.InLineComment) },
+            { text: '; comment', scopes: name(scopeName, RuleName.InlineComment) },
 
             { text: 'Hotkey', scopes: name(scopeName, RuleName.CommandName) },
             { text: ',', scopes: name(scopeName, RuleName.Comma) },
@@ -709,7 +709,7 @@ export function createCommandStatementExpectedData(scopeName: ScopeName): Expect
             { text: ',', scopes: name(scopeName, RuleName.Comma) },
             { text: '%', scopes: name(scopeName, RuleName.PercentExpressionBegin) },
             { text: 'a', scopes: name(scopeName, RuleName.Variable) },
-            { text: '; comment', scopes: name(scopeName, RuleName.InLineComment) },
+            { text: '; comment', scopes: name(scopeName, RuleName.InlineComment) },
           ],
         ],
 
@@ -756,7 +756,7 @@ export function createCommandStatementExpectedData(scopeName: ScopeName): Expect
             { text: 'unquoted', scopes: name(scopeName, RuleName.UnquotedString) },
             { text: ',', scopes: name(scopeName, RuleName.Comma) },
             { text: 'unquoted', scopes: name(scopeName, RuleName.UnquotedString) },
-            { text: '; comment', scopes: name(scopeName, RuleName.InLineComment) },
+            { text: '; comment', scopes: name(scopeName, RuleName.InlineComment) },
 
             ...[ 'Tip', 'Click' ].flatMap((subcommand) => {
               return [
@@ -767,7 +767,7 @@ export function createCommandStatementExpectedData(scopeName: ScopeName): Expect
                 { text: subcommand, scopes: name(scopeName, RuleName.SubCommandName) },
                 { text: ',', scopes: name(scopeName, RuleName.Comma) },
                 { text: 'unquoted', scopes: name(scopeName, RuleName.UnquotedString) },
-                { text: '; comment', scopes: name(scopeName, RuleName.InLineComment) },
+                { text: '; comment', scopes: name(scopeName, RuleName.InlineComment) },
               ];
             }),
 
@@ -778,7 +778,7 @@ export function createCommandStatementExpectedData(scopeName: ScopeName): Expect
                 { text: 'Tray', scopes: name(scopeName, RuleName.SubCommandName) },
                 { text: ',', scopes: name(scopeName, RuleName.Comma) },
                 { text: subcommand, scopes: name(scopeName, RuleName.SubCommandName) },
-                { text: '; comment', scopes: name(scopeName, RuleName.InLineComment) },
+                { text: '; comment', scopes: name(scopeName, RuleName.InlineComment) },
               ];
             }),
 
@@ -791,7 +791,7 @@ export function createCommandStatementExpectedData(scopeName: ScopeName): Expect
             { text: 'unquoted', scopes: name(scopeName, RuleName.UnquotedString) },
             { text: ',', scopes: name(scopeName, RuleName.Comma) },
             { text: 'unquoted', scopes: name(scopeName, RuleName.UnquotedString) },
-            { text: '; comment', scopes: name(scopeName, RuleName.InLineComment) },
+            { text: '; comment', scopes: name(scopeName, RuleName.InlineComment) },
 
             { text: 'Menu', scopes: name(scopeName, RuleName.CommandName) },
             { text: ',', scopes: name(scopeName, RuleName.Comma) },
@@ -807,7 +807,7 @@ export function createCommandStatementExpectedData(scopeName: ScopeName): Expect
             { text: 'unquoted', scopes: name(scopeName, RuleName.UnquotedString) },
             { text: ',', scopes: name(scopeName, RuleName.Comma) },
             { text: 'P1', scopes: name(scopeName, RuleName.UnquotedString, StyleName.Strong) },
-            { text: '; comment', scopes: name(scopeName, RuleName.InLineComment) },
+            { text: '; comment', scopes: name(scopeName, RuleName.InlineComment) },
 
             { text: 'Menu', scopes: name(scopeName, RuleName.CommandName) },
             { text: ',', scopes: name(scopeName, RuleName.Comma) },
@@ -825,7 +825,7 @@ export function createCommandStatementExpectedData(scopeName: ScopeName): Expect
             { text: 'unquoted', scopes: name(scopeName, RuleName.UnquotedString) },
             { text: ',', scopes: name(scopeName, RuleName.Comma) },
             { text: 'P1', scopes: name(scopeName, RuleName.UnquotedString, StyleName.Strong) },
-            { text: '; comment', scopes: name(scopeName, RuleName.InLineComment) },
+            { text: '; comment', scopes: name(scopeName, RuleName.InlineComment) },
 
 
             ...[ 'Delete', 'Check', 'Uncheck', 'ToggleCheck', 'Enable', 'Disable', 'ToggleEnable', 'Default', 'NoIcon' ].flatMap((subcommand) => {
@@ -840,7 +840,7 @@ export function createCommandStatementExpectedData(scopeName: ScopeName): Expect
                 { text: '&b', scopes: name(scopeName, RuleName.UnquotedString, StyleName.Underline) },
                 { text: '&&', scopes: name(scopeName, RuleName.UnquotedString, StyleName.Escape) },
                 { text: 'c', scopes: name(scopeName, RuleName.UnquotedString) },
-                { text: '; comment', scopes: name(scopeName, RuleName.InLineComment) },
+                { text: '; comment', scopes: name(scopeName, RuleName.InlineComment) },
               ];
             }),
 
@@ -851,7 +851,7 @@ export function createCommandStatementExpectedData(scopeName: ScopeName): Expect
                 { text: 'unquoted', scopes: name(scopeName, RuleName.UnquotedString) },
                 { text: ',', scopes: name(scopeName, RuleName.Comma) },
                 { text: subcommand, scopes: name(scopeName, RuleName.SubCommandName) },
-                { text: '; comment', scopes: name(scopeName, RuleName.InLineComment) },
+                { text: '; comment', scopes: name(scopeName, RuleName.InlineComment) },
               ];
             }),
 
@@ -870,7 +870,7 @@ export function createCommandStatementExpectedData(scopeName: ScopeName): Expect
             { text: '&b', scopes: name(scopeName, RuleName.UnquotedString, StyleName.Underline) },
             { text: '&&', scopes: name(scopeName, RuleName.UnquotedString, StyleName.Escape) },
             { text: 'c', scopes: name(scopeName, RuleName.UnquotedString) },
-            { text: '; comment', scopes: name(scopeName, RuleName.InLineComment) },
+            { text: '; comment', scopes: name(scopeName, RuleName.InlineComment) },
 
             { text: 'Menu', scopes: name(scopeName, RuleName.CommandName) },
             { text: ',', scopes: name(scopeName, RuleName.Comma) },
@@ -885,7 +885,7 @@ export function createCommandStatementExpectedData(scopeName: ScopeName): Expect
             { text: 'unquoted', scopes: name(scopeName, RuleName.UnquotedString) },
             { text: ',', scopes: name(scopeName, RuleName.Comma) },
             { text: 'HBITMAP:*\\path\\to', scopes: name(scopeName, RuleName.UnquotedString, StyleName.Strong) },
-            { text: '; comment', scopes: name(scopeName, RuleName.InLineComment) },
+            { text: '; comment', scopes: name(scopeName, RuleName.InlineComment) },
 
             { text: 'Menu', scopes: name(scopeName, RuleName.CommandName) },
             { text: ',', scopes: name(scopeName, RuleName.Comma) },
@@ -894,7 +894,7 @@ export function createCommandStatementExpectedData(scopeName: ScopeName): Expect
             { text: 'UseErrorLevel', scopes: name(scopeName, RuleName.SubCommandName) },
             { text: ',', scopes: name(scopeName, RuleName.Comma) },
             { text: 'Off', scopes: name(scopeName, RuleName.UnquotedString, StyleName.Strong) },
-            { text: '; comment', scopes: name(scopeName, RuleName.InLineComment) },
+            { text: '; comment', scopes: name(scopeName, RuleName.InlineComment) },
 
             ...[ 'Show', 'Color' ].flatMap((subcommand) => {
               return [
@@ -907,7 +907,7 @@ export function createCommandStatementExpectedData(scopeName: ScopeName): Expect
                 { text: 'unquoted', scopes: name(scopeName, RuleName.UnquotedString) },
                 { text: ',', scopes: name(scopeName, RuleName.Comma) },
                 { text: 'unquoted', scopes: name(scopeName, RuleName.UnquotedString) },
-                { text: '; comment', scopes: name(scopeName, RuleName.InLineComment) },
+                { text: '; comment', scopes: name(scopeName, RuleName.InlineComment) },
               ];
             }),
           ],
@@ -931,7 +931,7 @@ export function createCommandStatementExpectedData(scopeName: ScopeName): Expect
                 { text: subcommand, scopes: name(scopeName, RuleName.SubCommandName) },
                 { text: ',', scopes: name(scopeName, RuleName.Comma) },
                 { text: 'unquoted', scopes: name(scopeName, RuleName.UnquotedString) },
-                { text: '; comment', scopes: name(scopeName, RuleName.InLineComment) },
+                { text: '; comment', scopes: name(scopeName, RuleName.InlineComment) },
               ];
             }),
 
@@ -944,7 +944,7 @@ export function createCommandStatementExpectedData(scopeName: ScopeName): Expect
                 { text: 'unquoted', scopes: name(scopeName, RuleName.UnquotedString) },
                 { text: ',', scopes: name(scopeName, RuleName.Comma) },
                 { text: 'unquoted', scopes: name(scopeName, RuleName.UnquotedString) },
-                { text: '; comment', scopes: name(scopeName, RuleName.InLineComment) },
+                { text: '; comment', scopes: name(scopeName, RuleName.InlineComment) },
               ];
             }),
 
@@ -955,12 +955,12 @@ export function createCommandStatementExpectedData(scopeName: ScopeName): Expect
             { text: 'unquoted', scopes: name(scopeName, RuleName.UnquotedString) },
             { text: ',', scopes: name(scopeName, RuleName.Comma) },
             { text: 'Low', scopes: name(scopeName, RuleName.UnquotedString, StyleName.Strong) },
-            { text: '; comment', scopes: name(scopeName, RuleName.InLineComment) },
+            { text: '; comment', scopes: name(scopeName, RuleName.InlineComment) },
 
             { text: 'Process', scopes: name(scopeName, RuleName.CommandName) },
             { text: ',', scopes: name(scopeName, RuleName.Comma) },
             { text: 'List', scopes: name(scopeName, RuleName.SubCommandName) },
-            { text: '; comment', scopes: name(scopeName, RuleName.InLineComment) },
+            { text: '; comment', scopes: name(scopeName, RuleName.InlineComment) },
           ],
         ],
 
@@ -974,7 +974,7 @@ export function createCommandStatementExpectedData(scopeName: ScopeName): Expect
             { text: 'Progress', scopes: name(scopeName, RuleName.CommandName, StyleName.Strikethrough) },
             { text: ',', scopes: name(scopeName, RuleName.Comma) },
             { text: 'Off', scopes: name(scopeName, RuleName.UnquotedString, StyleName.Strong) },
-            { text: '; comment', scopes: name(scopeName, RuleName.InLineComment) },
+            { text: '; comment', scopes: name(scopeName, RuleName.InlineComment) },
 
             { text: 'Progress', scopes: name(scopeName, RuleName.CommandName, StyleName.Strikethrough) },
             { text: ',', scopes: name(scopeName, RuleName.Comma) },
@@ -987,7 +987,7 @@ export function createCommandStatementExpectedData(scopeName: ScopeName): Expect
             { text: 'ahk_id', scopes: name(scopeName, RuleName.UnquotedString, StyleName.Strong) },
             { text: ',', scopes: name(scopeName, RuleName.Comma) },
             { text: 'unquoted', scopes: name(scopeName, RuleName.UnquotedString) },
-            { text: '; comment', scopes: name(scopeName, RuleName.InLineComment) },
+            { text: '; comment', scopes: name(scopeName, RuleName.InlineComment) },
           ],
         ],
 
@@ -1001,7 +1001,7 @@ export function createCommandStatementExpectedData(scopeName: ScopeName): Expect
             { text: 'SplashImage', scopes: name(scopeName, RuleName.CommandName, StyleName.Strikethrough) },
             { text: ',', scopes: name(scopeName, RuleName.Comma) },
             { text: 'Off', scopes: name(scopeName, RuleName.UnquotedString, StyleName.Strong) },
-            { text: '; comment', scopes: name(scopeName, RuleName.InLineComment) },
+            { text: '; comment', scopes: name(scopeName, RuleName.InlineComment) },
 
             { text: 'SplashImage', scopes: name(scopeName, RuleName.CommandName, StyleName.Strikethrough) },
             { text: ',', scopes: name(scopeName, RuleName.Comma) },
@@ -1017,7 +1017,7 @@ export function createCommandStatementExpectedData(scopeName: ScopeName): Expect
             { text: 'ahk_id', scopes: name(scopeName, RuleName.UnquotedString, StyleName.Strong) },
             { text: ',', scopes: name(scopeName, RuleName.Comma) },
             { text: 'unquoted', scopes: name(scopeName, RuleName.UnquotedString) },
-            { text: '; comment', scopes: name(scopeName, RuleName.InLineComment) },
+            { text: '; comment', scopes: name(scopeName, RuleName.InlineComment) },
           ],
         ],
 
@@ -1040,7 +1040,7 @@ export function createCommandStatementExpectedData(scopeName: ScopeName): Expect
                 { text: 'output', scopes: name(scopeName, RuleName.Variable) },
                 { text: ',', scopes: name(scopeName, RuleName.Comma) },
                 { text: subcommand, scopes: name(scopeName, RuleName.SubCommandName) },
-                { text: '; comment', scopes: name(scopeName, RuleName.InLineComment) },
+                { text: '; comment', scopes: name(scopeName, RuleName.InlineComment) },
               ];
             })),
 
@@ -1053,7 +1053,7 @@ export function createCommandStatementExpectedData(scopeName: ScopeName): Expect
                 { text: subcommand, scopes: name(scopeName, RuleName.SubCommandName) },
                 { text: ',', scopes: name(scopeName, RuleName.Comma) },
                 { text: '80', scopes: name(scopeName, RuleName.Integer) },
-                { text: '; comment', scopes: name(scopeName, RuleName.InLineComment) },
+                { text: '; comment', scopes: name(scopeName, RuleName.InlineComment) },
               ];
             })),
 
@@ -1062,7 +1062,7 @@ export function createCommandStatementExpectedData(scopeName: ScopeName): Expect
             { text: 'output', scopes: name(scopeName, RuleName.Variable) },
             { text: ',', scopes: name(scopeName, RuleName.Comma) },
             { text: '80', scopes: name(scopeName, RuleName.Integer) },
-            { text: '; comment', scopes: name(scopeName, RuleName.InLineComment) },
+            { text: '; comment', scopes: name(scopeName, RuleName.InlineComment) },
           ],
         ],
 
@@ -1084,7 +1084,7 @@ export function createCommandStatementExpectedData(scopeName: ScopeName): Expect
                 { text: 'a', scopes: name(scopeName, RuleName.Variable) },
                 { text: '+', scopes: name(scopeName, RuleName.Operator) },
                 { text: 'b', scopes: name(scopeName, RuleName.Variable) },
-                { text: '; comment', scopes: name(scopeName, RuleName.InLineComment) },
+                { text: '; comment', scopes: name(scopeName, RuleName.InlineComment) },
               ];
             }),
 
@@ -1095,12 +1095,12 @@ export function createCommandStatementExpectedData(scopeName: ScopeName): Expect
             { text: '80', scopes: name(scopeName, RuleName.Integer) },
             { text: ',', scopes: name(scopeName, RuleName.Comma) },
             { text: '80', scopes: name(scopeName, RuleName.Integer) },
-            { text: '; comment', scopes: name(scopeName, RuleName.InLineComment) },
+            { text: '; comment', scopes: name(scopeName, RuleName.InlineComment) },
 
             { text: 'Thread', scopes: name(scopeName, RuleName.CommandName) },
             { text: ',', scopes: name(scopeName, RuleName.Comma) },
             { text: '80', scopes: name(scopeName, RuleName.UnquotedString, StyleName.Invalid) },
-            { text: '; comment', scopes: name(scopeName, RuleName.InLineComment) },
+            { text: '; comment', scopes: name(scopeName, RuleName.InlineComment) },
           ],
         ],
 
@@ -1145,7 +1145,7 @@ export function createCommandStatementExpectedData(scopeName: ScopeName): Expect
                 { text: subcommand, scopes: name(scopeName, RuleName.SubCommandName) },
                 { text: ',', scopes: name(scopeName, RuleName.Comma) },
                 { text: 'unquoted', scopes: name(scopeName, RuleName.UnquotedString) },
-                { text: '; comment', scopes: name(scopeName, RuleName.InLineComment) },
+                { text: '; comment', scopes: name(scopeName, RuleName.InlineComment) },
               ];
             }),
 
@@ -1160,7 +1160,7 @@ export function createCommandStatementExpectedData(scopeName: ScopeName): Expect
                 { text: 'unquoted', scopes: name(scopeName, RuleName.UnquotedString) },
                 { text: ',', scopes: name(scopeName, RuleName.Comma) },
                 { text: 'unquoted', scopes: name(scopeName, RuleName.UnquotedString) },
-                { text: '; comment', scopes: name(scopeName, RuleName.InLineComment) },
+                { text: '; comment', scopes: name(scopeName, RuleName.InlineComment) },
               ];
             }),
           ],
@@ -1195,7 +1195,7 @@ export function createCommandStatementExpectedData(scopeName: ScopeName): Expect
             { text: 'unquoted', scopes: name(scopeName, RuleName.UnquotedString) },
             { text: ',', scopes: name(scopeName, RuleName.Comma) },
             { text: 'unquoted', scopes: name(scopeName, RuleName.UnquotedString) },
-            { text: '; comment', scopes: name(scopeName, RuleName.InLineComment) },
+            { text: '; comment', scopes: name(scopeName, RuleName.InlineComment) },
 
             ...[ 'Transparent', 'TransColor' ].flatMap((subcommand) => {
               return [
@@ -1212,7 +1212,7 @@ export function createCommandStatementExpectedData(scopeName: ScopeName): Expect
                 { text: 'unquoted', scopes: name(scopeName, RuleName.UnquotedString) },
                 { text: ',', scopes: name(scopeName, RuleName.Comma) },
                 { text: 'unquoted', scopes: name(scopeName, RuleName.UnquotedString) },
-                { text: '; comment', scopes: name(scopeName, RuleName.InLineComment) },
+                { text: '; comment', scopes: name(scopeName, RuleName.InlineComment) },
               ];
             }),
 
@@ -1231,7 +1231,7 @@ export function createCommandStatementExpectedData(scopeName: ScopeName): Expect
                 { text: 'unquoted', scopes: name(scopeName, RuleName.UnquotedString) },
                 { text: ',', scopes: name(scopeName, RuleName.Comma) },
                 { text: 'unquoted', scopes: name(scopeName, RuleName.UnquotedString) },
-                { text: '; comment', scopes: name(scopeName, RuleName.InLineComment) },
+                { text: '; comment', scopes: name(scopeName, RuleName.InlineComment) },
               ];
             }),
 
@@ -1250,7 +1250,7 @@ export function createCommandStatementExpectedData(scopeName: ScopeName): Expect
                 { text: 'unquoted', scopes: name(scopeName, RuleName.UnquotedString) },
                 { text: ',', scopes: name(scopeName, RuleName.Comma) },
                 { text: 'unquoted', scopes: name(scopeName, RuleName.UnquotedString) },
-                { text: '; comment', scopes: name(scopeName, RuleName.InLineComment) },
+                { text: '; comment', scopes: name(scopeName, RuleName.InlineComment) },
               ];
             }),
 
@@ -1267,7 +1267,7 @@ export function createCommandStatementExpectedData(scopeName: ScopeName): Expect
             { text: 'unquoted', scopes: name(scopeName, RuleName.UnquotedString) },
             { text: ',', scopes: name(scopeName, RuleName.Comma) },
             { text: 'unquoted', scopes: name(scopeName, RuleName.UnquotedString) },
-            { text: '; comment', scopes: name(scopeName, RuleName.InLineComment) },
+            { text: '; comment', scopes: name(scopeName, RuleName.InlineComment) },
           ],
         ],
       ];
@@ -1314,7 +1314,7 @@ export function createCommandStatementExpectedData(scopeName: ScopeName): Expect
                 { text: 'AutoTrim', scopes: name(scopeName, RuleName.CommandName) },
                 { text: ',', scopes: name(scopeName, RuleName.Comma) },
                 { text: arg, scopes: name(scopeName, RuleName.UnquotedString, StyleName.Strong) },
-                { text: '; comment', scopes: name(scopeName, RuleName.InLineComment) },
+                { text: '; comment', scopes: name(scopeName, RuleName.InlineComment) },
               ];
             }),
 
@@ -1322,7 +1322,7 @@ export function createCommandStatementExpectedData(scopeName: ScopeName): Expect
             { text: ',', scopes: name(scopeName, RuleName.Comma) },
             { text: '%', scopes: name(scopeName, RuleName.PercentExpressionBegin) },
             { text: 'on', scopes: name(scopeName, RuleName.Variable) },
-            { text: '; comment', scopes: name(scopeName, RuleName.InLineComment) },
+            { text: '; comment', scopes: name(scopeName, RuleName.InlineComment) },
 
             { text: 'AutoTrim', scopes: name(scopeName, RuleName.CommandName) },
             { text: ',', scopes: name(scopeName, RuleName.Comma) },
@@ -1335,13 +1335,13 @@ export function createCommandStatementExpectedData(scopeName: ScopeName): Expect
             { text: '%', scopes: name(scopeName, RuleName.PercentBegin) },
             { text: 'f', scopes: name(scopeName, RuleName.Variable) },
             { text: '%', scopes: name(scopeName, RuleName.PercentEnd) },
-            { text: '; comment', scopes: name(scopeName, RuleName.InLineComment) },
+            { text: '; comment', scopes: name(scopeName, RuleName.InlineComment) },
 
             { text: 'AutoTrim', scopes: name(scopeName, RuleName.CommandName) },
             { text: ',', scopes: name(scopeName, RuleName.Comma) },
             { text: 'on', scopes: name(scopeName, RuleName.UnquotedString, StyleName.Strong) },
             { text: ',', scopes: name(scopeName, RuleName.UnquotedString, StyleName.Invalid) },
-            { text: '; comment', scopes: name(scopeName, RuleName.InLineComment) },
+            { text: '; comment', scopes: name(scopeName, RuleName.InlineComment) },
 
             ...[
               ...[ // keywords
@@ -1365,7 +1365,7 @@ export function createCommandStatementExpectedData(scopeName: ScopeName): Expect
                 { text: 'BlockInput', scopes: name(scopeName, RuleName.CommandName) },
                 { text: ',', scopes: name(scopeName, RuleName.Comma) },
                 { text: arg, scopes: name(scopeName, RuleName.UnquotedString, StyleName.Strong) },
-                { text: '; comment', scopes: name(scopeName, RuleName.InLineComment) },
+                { text: '; comment', scopes: name(scopeName, RuleName.InlineComment) },
               ];
             }),
 
@@ -1373,7 +1373,7 @@ export function createCommandStatementExpectedData(scopeName: ScopeName): Expect
             { text: ',', scopes: name(scopeName, RuleName.Comma) },
             { text: '%', scopes: name(scopeName, RuleName.PercentExpressionBegin) },
             { text: 'on', scopes: name(scopeName, RuleName.Variable) },
-            { text: '; comment', scopes: name(scopeName, RuleName.InLineComment) },
+            { text: '; comment', scopes: name(scopeName, RuleName.InlineComment) },
 
             { text: 'BlockInput', scopes: name(scopeName, RuleName.CommandName) },
             { text: ',', scopes: name(scopeName, RuleName.Comma) },
@@ -1386,13 +1386,13 @@ export function createCommandStatementExpectedData(scopeName: ScopeName): Expect
             { text: '%', scopes: name(scopeName, RuleName.PercentBegin) },
             { text: 'f', scopes: name(scopeName, RuleName.Variable) },
             { text: '%', scopes: name(scopeName, RuleName.PercentEnd) },
-            { text: '; comment', scopes: name(scopeName, RuleName.InLineComment) },
+            { text: '; comment', scopes: name(scopeName, RuleName.InlineComment) },
 
             { text: 'BlockInput', scopes: name(scopeName, RuleName.CommandName) },
             { text: ',', scopes: name(scopeName, RuleName.Comma) },
             { text: 'on', scopes: name(scopeName, RuleName.UnquotedString, StyleName.Strong) },
             { text: ',', scopes: name(scopeName, RuleName.UnquotedString, StyleName.Invalid) },
-            { text: '; comment', scopes: name(scopeName, RuleName.InLineComment) },
+            { text: '; comment', scopes: name(scopeName, RuleName.InlineComment) },
           ],
         ],
         ...((): ExpectedTestData[] => {
@@ -1422,7 +1422,7 @@ export function createCommandStatementExpectedData(scopeName: ScopeName): Expect
                     { text: '100', scopes: name(scopeName, RuleName.Integer) },
                     { text: '200', scopes: name(scopeName, RuleName.Integer) },
                     { text: keyword, scopes: name(scopeName, RuleName.UnquotedString, StyleName.Strong) },
-                    { text: '; comment', scopes: name(scopeName, RuleName.InLineComment) },
+                    { text: '; comment', scopes: name(scopeName, RuleName.InlineComment) },
                   ];
                 }),
               ],
@@ -1440,7 +1440,7 @@ export function createCommandStatementExpectedData(scopeName: ScopeName): Expect
                 { text: 'Tab', scopes: name(scopeName, RuleName.UnquotedString, StyleName.Strong) },
                 { text: ',', scopes: name(scopeName, RuleName.UnquotedString) },
                 { text: 'Tab', scopes: name(scopeName, RuleName.UnquotedString, StyleName.Strong) },
-                { text: '; comment', scopes: name(scopeName, RuleName.InLineComment) },
+                { text: '; comment', scopes: name(scopeName, RuleName.InlineComment) },
               ],
             ],
           ];
@@ -1460,7 +1460,7 @@ export function createCommandStatementExpectedData(scopeName: ScopeName): Expect
                 { text: '1', scopes: name(scopeName, RuleName.Integer) },
                 { text: ',', scopes: name(scopeName, RuleName.Comma) },
                 { text: '0', scopes: name(scopeName, RuleName.Integer) },
-                { text: '; comment', scopes: name(scopeName, RuleName.InLineComment) },
+                { text: '; comment', scopes: name(scopeName, RuleName.InlineComment) },
 
                 { text: 'ClipWait', scopes: name(scopeName, RuleName.CommandName) },
                 { text: ',', scopes: name(scopeName, RuleName.Comma) },
@@ -1471,7 +1471,7 @@ export function createCommandStatementExpectedData(scopeName: ScopeName): Expect
                 { text: 'var', scopes: name(scopeName, RuleName.Variable) },
                 { text: ',', scopes: name(scopeName, RuleName.Comma) },
                 { text: '1', scopes: name(scopeName, RuleName.Integer) },
-                { text: '; comment', scopes: name(scopeName, RuleName.InLineComment) },
+                { text: '; comment', scopes: name(scopeName, RuleName.InlineComment) },
               ];
             })(),
           ],
@@ -1492,14 +1492,14 @@ export function createCommandStatementExpectedData(scopeName: ScopeName): Expect
                 { text: 'Check', scopes: name(scopeName, RuleName.SubCommandName) },
                 { text: ',', scopes: name(scopeName, RuleName.Comma) },
                 { text: 'blank', scopes: name(scopeName, RuleName.UnquotedString, StyleName.Invalid) },
-                { text: '; comment', scopes: name(scopeName, RuleName.InLineComment) },
+                { text: '; comment', scopes: name(scopeName, RuleName.InlineComment) },
 
                 { text: 'Control', scopes: name(scopeName, RuleName.CommandName) },
                 { text: ',', scopes: name(scopeName, RuleName.Comma) },
                 { text: 'Check', scopes: name(scopeName, RuleName.SubCommandName) },
                 { text: ',', scopes: name(scopeName, RuleName.Comma) },
                 { text: '%blank%', scopes: name(scopeName, RuleName.UnquotedString, StyleName.Invalid) },
-                { text: '; comment', scopes: name(scopeName, RuleName.InLineComment) },
+                { text: '; comment', scopes: name(scopeName, RuleName.InlineComment) },
 
                 { text: 'Control', scopes: name(scopeName, RuleName.CommandName) },
                 { text: ',', scopes: name(scopeName, RuleName.Comma) },
@@ -1507,7 +1507,7 @@ export function createCommandStatementExpectedData(scopeName: ScopeName): Expect
                 { text: ',', scopes: name(scopeName, RuleName.Comma) },
                 { text: '%', scopes: name(scopeName, RuleName.UnquotedString, StyleName.Invalid) },
                 { text: 'blank', scopes: name(scopeName, RuleName.UnquotedString, StyleName.Invalid) },
-                { text: '; comment', scopes: name(scopeName, RuleName.InLineComment) },
+                { text: '; comment', scopes: name(scopeName, RuleName.InlineComment) },
               ];
             })(),
           ],
@@ -1531,7 +1531,7 @@ export function createCommandStatementExpectedData(scopeName: ScopeName): Expect
                 { text: '%', scopes: name(scopeName, RuleName.PercentBegin) },
                 { text: 'ctrlHwnd', scopes: name(scopeName, RuleName.Variable) },
                 { text: '%', scopes: name(scopeName, RuleName.PercentEnd) },
-                { text: '; comment', scopes: name(scopeName, RuleName.InLineComment) },
+                { text: '; comment', scopes: name(scopeName, RuleName.InlineComment) },
 
                 { text: 'Control', scopes: name(scopeName, RuleName.CommandName) },
                 { text: ',', scopes: name(scopeName, RuleName.Comma) },
@@ -1543,7 +1543,7 @@ export function createCommandStatementExpectedData(scopeName: ScopeName): Expect
                 { text: 'ahk_id', scopes: name(scopeName, RuleName.DoubleString) },
                 { text: '"', scopes: name(scopeName, RuleName.DoubleString, RuleDescriptor.End) },
                 { text: 'ctrlHwnd', scopes: name(scopeName, RuleName.Variable) },
-                { text: '; comment', scopes: name(scopeName, RuleName.InLineComment) },
+                { text: '; comment', scopes: name(scopeName, RuleName.InlineComment) },
               ];
             })(),
           ],
@@ -1568,7 +1568,7 @@ export function createCommandStatementExpectedData(scopeName: ScopeName): Expect
                 { text: '%', scopes: name(scopeName, RuleName.PercentBegin) },
                 { text: 'winHwnd', scopes: name(scopeName, RuleName.Variable) },
                 { text: '%', scopes: name(scopeName, RuleName.PercentEnd) },
-                { text: '; comment', scopes: name(scopeName, RuleName.InLineComment) },
+                { text: '; comment', scopes: name(scopeName, RuleName.InlineComment) },
 
                 { text: 'Control', scopes: name(scopeName, RuleName.CommandName) },
                 { text: ',', scopes: name(scopeName, RuleName.Comma) },
@@ -1581,7 +1581,7 @@ export function createCommandStatementExpectedData(scopeName: ScopeName): Expect
                 { text: 'ahk_class', scopes: name(scopeName, RuleName.DoubleString) },
                 { text: '"', scopes: name(scopeName, RuleName.DoubleString, RuleDescriptor.End) },
                 { text: 'winHwnd', scopes: name(scopeName, RuleName.Variable) },
-                { text: '; comment', scopes: name(scopeName, RuleName.InLineComment) },
+                { text: '; comment', scopes: name(scopeName, RuleName.InlineComment) },
               ];
             })(),
           ],
@@ -1598,7 +1598,7 @@ export function createCommandStatementExpectedData(scopeName: ScopeName): Expect
                 { text: 'ControlGet', scopes: name(scopeName, RuleName.CommandName) },
                 { text: ',', scopes: name(scopeName, RuleName.Comma) },
                 { text: 'output', scopes: name(scopeName, RuleName.Variable) },
-                { text: '; comment', scopes: name(scopeName, RuleName.InLineComment) },
+                { text: '; comment', scopes: name(scopeName, RuleName.InlineComment) },
               ];
             })(),
           ],
@@ -1621,7 +1621,7 @@ export function createCommandStatementExpectedData(scopeName: ScopeName): Expect
                 { text: 'b', scopes: name(scopeName, RuleName.UnquotedString) },
                 { text: ',', scopes: name(scopeName, RuleName.Comma) },
                 { text: 'c', scopes: name(scopeName, RuleName.UnquotedString) },
-                { text: '; comment', scopes: name(scopeName, RuleName.InLineComment) },
+                { text: '; comment', scopes: name(scopeName, RuleName.InlineComment) },
 
                 { text: 'ControlGet', scopes: name(scopeName, RuleName.CommandName) },
                 { text: ',', scopes: name(scopeName, RuleName.Comma) },
@@ -1632,7 +1632,7 @@ export function createCommandStatementExpectedData(scopeName: ScopeName): Expect
                 { text: 'b', scopes: name(scopeName, RuleName.UnquotedString) },
                 { text: ',', scopes: name(scopeName, RuleName.Comma) },
                 { text: 'c', scopes: name(scopeName, RuleName.UnquotedString) },
-                { text: '; comment', scopes: name(scopeName, RuleName.InLineComment) },
+                { text: '; comment', scopes: name(scopeName, RuleName.InlineComment) },
               ];
             })(),
           ],
@@ -1663,7 +1663,7 @@ export function createCommandStatementExpectedData(scopeName: ScopeName): Expect
                 { text: ',', scopes: name(scopeName, RuleName.Comma) },
                 { text: '+!#', scopes: name(scopeName, RuleName.UnquotedString, StyleName.Strong) },
                 { text: '{Up}', scopes: name(scopeName, RuleName.UnquotedString, StyleName.Strong) },
-                { text: '; comment', scopes: name(scopeName, RuleName.InLineComment) },
+                { text: '; comment', scopes: name(scopeName, RuleName.InlineComment) },
 
                 ...[ 'Up', 'Down', 'DownTemp' ].flatMap((word) => {
                   return [
@@ -1674,7 +1674,7 @@ export function createCommandStatementExpectedData(scopeName: ScopeName): Expect
                     { text: '{', scopes: name(scopeName, RuleName.UnquotedString, StyleName.Strong) },
                     { text: 'Tab', scopes: name(scopeName, RuleName.UnquotedString, StyleName.Strong) },
                     { text: `${word}}`, scopes: name(scopeName, RuleName.UnquotedString, StyleName.Strong) },
-                    { text: '; comment', scopes: name(scopeName, RuleName.InLineComment) },
+                    { text: '; comment', scopes: name(scopeName, RuleName.InlineComment) },
                   ];
                 }),
 
@@ -1685,7 +1685,7 @@ export function createCommandStatementExpectedData(scopeName: ScopeName): Expect
                 { text: '{', scopes: name(scopeName, RuleName.UnquotedString, StyleName.Strong) },
                 { text: 'Tab', scopes: name(scopeName, RuleName.UnquotedString, StyleName.Strong) },
                 { text: '5}', scopes: name(scopeName, RuleName.UnquotedString, StyleName.Strong) },
-                { text: '; comment', scopes: name(scopeName, RuleName.InLineComment) },
+                { text: '; comment', scopes: name(scopeName, RuleName.InlineComment) },
 
                 { text: 'ControlSend', scopes: name(scopeName, RuleName.CommandName) },
                 { text: ',', scopes: name(scopeName, RuleName.Comma) },
@@ -1696,7 +1696,7 @@ export function createCommandStatementExpectedData(scopeName: ScopeName): Expect
                 { text: '100', scopes: name(scopeName, RuleName.UnquotedString, StyleName.Strong) },
                 { text: 'Left', scopes: name(scopeName, RuleName.UnquotedString, StyleName.Strong) },
                 { text: '}', scopes: name(scopeName, RuleName.UnquotedString, StyleName.Strong) },
-                { text: '; comment', scopes: name(scopeName, RuleName.InLineComment) },
+                { text: '; comment', scopes: name(scopeName, RuleName.InlineComment) },
 
                 { text: 'ControlSend', scopes: name(scopeName, RuleName.CommandName) },
                 { text: ',', scopes: name(scopeName, RuleName.Comma) },
@@ -1704,7 +1704,7 @@ export function createCommandStatementExpectedData(scopeName: ScopeName): Expect
                 { text: '{Blind}', scopes: name(scopeName, RuleName.UnquotedString, StyleName.Strong) },
                 { text: '+!#', scopes: name(scopeName, RuleName.UnquotedString, StyleName.Strong) },
                 { text: '{Up}', scopes: name(scopeName, RuleName.UnquotedString, StyleName.Strong) },
-                { text: '; comment', scopes: name(scopeName, RuleName.InLineComment) },
+                { text: '; comment', scopes: name(scopeName, RuleName.InlineComment) },
 
                 ...[ '{Raw}', '{Text}' ].flatMap((mode) => {
                   return [
@@ -1713,7 +1713,7 @@ export function createCommandStatementExpectedData(scopeName: ScopeName): Expect
                     { text: ',', scopes: name(scopeName, RuleName.Comma) },
                     { text: mode, scopes: name(scopeName, RuleName.UnquotedString, StyleName.Strong) },
                     { text: '+!#{Up}', scopes: name(scopeName, RuleName.UnquotedString) },
-                    { text: '; comment', scopes: name(scopeName, RuleName.InLineComment) },
+                    { text: '; comment', scopes: name(scopeName, RuleName.InlineComment) },
 
                     { text: 'ControlSend', scopes: name(scopeName, RuleName.CommandName) },
                     { text: ',', scopes: name(scopeName, RuleName.Comma) },
@@ -1722,7 +1722,7 @@ export function createCommandStatementExpectedData(scopeName: ScopeName): Expect
                     { text: `line 1`, scopes: name(scopeName, RuleName.UnquotedString) },
                     { text: `\`n`, scopes: name(scopeName, RuleName.UnquotedString, StyleName.Escape) },
                     { text: `line 2`, scopes: name(scopeName, RuleName.UnquotedString) },
-                    { text: '; comment', scopes: name(scopeName, RuleName.InLineComment) },
+                    { text: '; comment', scopes: name(scopeName, RuleName.InlineComment) },
 
                     { text: 'ControlSend', scopes: name(scopeName, RuleName.CommandName) },
                     { text: ',', scopes: name(scopeName, RuleName.Comma) },
@@ -1732,7 +1732,7 @@ export function createCommandStatementExpectedData(scopeName: ScopeName): Expect
                     { text: `a`, scopes: name(scopeName, RuleName.Variable) },
                     { text: `%`, scopes: name(scopeName, RuleName.PercentEnd) },
                     { text: 'bc', scopes: name(scopeName, RuleName.UnquotedString) },
-                    { text: '; comment', scopes: name(scopeName, RuleName.InLineComment) },
+                    { text: '; comment', scopes: name(scopeName, RuleName.InlineComment) },
                   ];
                 }),
               ];
@@ -1761,7 +1761,7 @@ export function createCommandStatementExpectedData(scopeName: ScopeName): Expect
                     { text: 'CoordMode', scopes: name(scopeName, RuleName.CommandName) },
                     { text: ',', scopes: name(scopeName, RuleName.Comma) },
                     { text: word, scopes: name(scopeName, RuleName.UnquotedString, StyleName.Strong) },
-                    { text: '; comment', scopes: name(scopeName, RuleName.InLineComment) },
+                    { text: '; comment', scopes: name(scopeName, RuleName.InlineComment) },
                   ];
                 }),
 
@@ -1770,7 +1770,7 @@ export function createCommandStatementExpectedData(scopeName: ScopeName): Expect
                     { text: 'CoordMode', scopes: name(scopeName, RuleName.CommandName) },
                     { text: ',', scopes: name(scopeName, RuleName.Comma) },
                     { text: word, scopes: name(scopeName, RuleName.UnquotedString, StyleName.Invalid) },
-                    { text: '; comment', scopes: name(scopeName, RuleName.InLineComment) },
+                    { text: '; comment', scopes: name(scopeName, RuleName.InlineComment) },
                   ];
                 }),
 
@@ -1779,13 +1779,13 @@ export function createCommandStatementExpectedData(scopeName: ScopeName): Expect
                 { text: '%', scopes: name(scopeName, RuleName.PercentBegin) },
                 { text: 'var', scopes: name(scopeName, RuleName.Variable) },
                 { text: '%', scopes: name(scopeName, RuleName.PercentEnd) },
-                { text: '; comment', scopes: name(scopeName, RuleName.InLineComment) },
+                { text: '; comment', scopes: name(scopeName, RuleName.InlineComment) },
 
                 { text: 'CoordMode', scopes: name(scopeName, RuleName.CommandName) },
                 { text: ',', scopes: name(scopeName, RuleName.Comma) },
                 { text: '%', scopes: name(scopeName, RuleName.PercentExpressionBegin) },
                 { text: 'expression', scopes: name(scopeName, RuleName.Variable) },
-                { text: '; comment', scopes: name(scopeName, RuleName.InLineComment) },
+                { text: '; comment', scopes: name(scopeName, RuleName.InlineComment) },
               ];
             })(),
           ],
@@ -1810,7 +1810,7 @@ export function createCommandStatementExpectedData(scopeName: ScopeName): Expect
                 { text: 'O', scopes: name(scopeName, RuleName.UnquotedString, StyleName.Strong) },
                 { text: 'T', scopes: name(scopeName, RuleName.UnquotedString, StyleName.Strong) },
                 { text: 'U', scopes: name(scopeName, RuleName.UnquotedString, StyleName.Invalid) },
-                { text: '; comment', scopes: name(scopeName, RuleName.InLineComment) },
+                { text: '; comment', scopes: name(scopeName, RuleName.InlineComment) },
 
                 { text: 'FileSetAttrib', scopes: name(scopeName, RuleName.CommandName) },
                 { text: ',', scopes: name(scopeName, RuleName.Comma) },
@@ -1822,7 +1822,7 @@ export function createCommandStatementExpectedData(scopeName: ScopeName): Expect
                 { text: 'O', scopes: name(scopeName, RuleName.UnquotedString, StyleName.Strong) },
                 { text: '+', scopes: name(scopeName, RuleName.UnquotedString, StyleName.Invalid) },
                 { text: 'U', scopes: name(scopeName, RuleName.UnquotedString, StyleName.Invalid) },
-                { text: '; comment', scopes: name(scopeName, RuleName.InLineComment) },
+                { text: '; comment', scopes: name(scopeName, RuleName.InlineComment) },
               ];
             })(),
           ],
@@ -1845,7 +1845,7 @@ export function createCommandStatementExpectedData(scopeName: ScopeName): Expect
                 { text: ',', scopes: name(scopeName, RuleName.Comma) },
                 { text: '+AlwaysOnTop', scopes: name(scopeName, RuleName.UnquotedString, StyleName.Strong) },
                 { text: 'Delimiter`,', scopes: name(scopeName, RuleName.UnquotedString, StyleName.Strong) },
-                { text: '; comment', scopes: name(scopeName, RuleName.InLineComment) },
+                { text: '; comment', scopes: name(scopeName, RuleName.InlineComment) },
 
                 { text: 'Gui', scopes: name(scopeName, RuleName.CommandName) },
                 { text: ',', scopes: name(scopeName, RuleName.Comma) },
@@ -1853,7 +1853,7 @@ export function createCommandStatementExpectedData(scopeName: ScopeName): Expect
                 { text: ':', scopes: name(scopeName, RuleName.Colon) },
                 { text: '+AlwaysOnTop', scopes: name(scopeName, RuleName.UnquotedString, StyleName.Strong) },
                 { text: 'Delimiter,', scopes: name(scopeName, RuleName.UnquotedString, StyleName.Strong) },
-                { text: '; comment', scopes: name(scopeName, RuleName.InLineComment) },
+                { text: '; comment', scopes: name(scopeName, RuleName.InlineComment) },
               ],
             ],
           ];
@@ -1877,19 +1877,19 @@ export function createCommandStatementExpectedData(scopeName: ScopeName): Expect
                 { text: 'ActiveX', scopes: name(scopeName, RuleName.UnquotedString, StyleName.Strong) },
                 { text: ',', scopes: name(scopeName, RuleName.Comma) },
                 { text: 'X+M', scopes: name(scopeName, RuleName.UnquotedString, StyleName.Strong) },
-                { text: '; comment', scopes: name(scopeName, RuleName.InLineComment) },
+                { text: '; comment', scopes: name(scopeName, RuleName.InlineComment) },
 
                 { text: 'GuiControl', scopes: name(scopeName, RuleName.CommandName) },
                 { text: ',', scopes: name(scopeName, RuleName.Comma) },
                 { text: '+X+M', scopes: name(scopeName, RuleName.UnquotedString, StyleName.Strong) },
-                { text: '; comment', scopes: name(scopeName, RuleName.InLineComment) },
+                { text: '; comment', scopes: name(scopeName, RuleName.InlineComment) },
 
                 { text: 'GuiControl', scopes: name(scopeName, RuleName.CommandName) },
                 { text: ',', scopes: name(scopeName, RuleName.Comma) },
                 { text: 'GuiName', scopes: name(scopeName, RuleName.LabelName) },
                 { text: ':', scopes: name(scopeName, RuleName.Colon) },
                 { text: '+X+M', scopes: name(scopeName, RuleName.UnquotedString, StyleName.Strong) },
-                { text: '; comment', scopes: name(scopeName, RuleName.InLineComment) },
+                { text: '; comment', scopes: name(scopeName, RuleName.InlineComment) },
               ],
             ],
           ];
@@ -1929,90 +1929,90 @@ export function createCommandStatementExpectedData(scopeName: ScopeName): Expect
           [
             // global
             { text: 'Control', scopes: name(scopeName, RuleName.CommandName) },
-            { text: '; comment', scopes: name(scopeName, RuleName.InLineComment) },
+            { text: '; comment', scopes: name(scopeName, RuleName.InlineComment) },
 
             { text: ',', scopes: name(scopeName, RuleName.Comma) },
             { text: 'arg1', scopes: name(scopeName, RuleName.UnquotedString) },
-            { text: '; comment', scopes: name(scopeName, RuleName.InLineComment) },
+            { text: '; comment', scopes: name(scopeName, RuleName.InlineComment) },
 
             { text: ',', scopes: name(scopeName, RuleName.Comma) },
             { text: 'arg2', scopes: name(scopeName, RuleName.UnquotedString) },
             { text: ',', scopes: name(scopeName, RuleName.Comma) },
             { text: 'arg3', scopes: name(scopeName, RuleName.UnquotedString) },
-            { text: '; comment', scopes: name(scopeName, RuleName.InLineComment) },
+            { text: '; comment', scopes: name(scopeName, RuleName.InlineComment) },
 
             // block
             { text: '{', scopes: name(scopeName, RuleName.BlockBegin) },
-            { text: '; comment', scopes: name(scopeName, RuleName.InLineComment) },
+            { text: '; comment', scopes: name(scopeName, RuleName.InlineComment) },
 
             { text: 'Control', scopes: name(scopeName, RuleName.CommandName) },
-            { text: '; comment', scopes: name(scopeName, RuleName.InLineComment) },
+            { text: '; comment', scopes: name(scopeName, RuleName.InlineComment) },
 
             { text: ',', scopes: name(scopeName, RuleName.Comma) },
             { text: 'arg1', scopes: name(scopeName, RuleName.UnquotedString) },
-            { text: '; comment', scopes: name(scopeName, RuleName.InLineComment) },
+            { text: '; comment', scopes: name(scopeName, RuleName.InlineComment) },
 
             { text: ',', scopes: name(scopeName, RuleName.Comma) },
             { text: 'arg2', scopes: name(scopeName, RuleName.UnquotedString) },
             { text: ',', scopes: name(scopeName, RuleName.Comma) },
             { text: 'arg3', scopes: name(scopeName, RuleName.UnquotedString) },
-            { text: '; comment', scopes: name(scopeName, RuleName.InLineComment) },
+            { text: '; comment', scopes: name(scopeName, RuleName.InlineComment) },
 
             { text: '}', scopes: name(scopeName, RuleName.BlockEnd) },
-            { text: '; comment', scopes: name(scopeName, RuleName.InLineComment) },
+            { text: '; comment', scopes: name(scopeName, RuleName.InlineComment) },
 
             // function block
             { text: 'F', scopes: name(scopeName, RuleName.FunctionName) },
             { text: '(', scopes: name(scopeName, RuleName.OpenParen) },
             { text: ')', scopes: name(scopeName, RuleName.CloseParen) },
             { text: '{', scopes: name(scopeName, RuleName.BlockBegin) },
-            { text: '; comment', scopes: name(scopeName, RuleName.InLineComment) },
+            { text: '; comment', scopes: name(scopeName, RuleName.InlineComment) },
 
             { text: 'Control', scopes: name(scopeName, RuleName.CommandName) },
-            { text: '; comment', scopes: name(scopeName, RuleName.InLineComment) },
+            { text: '; comment', scopes: name(scopeName, RuleName.InlineComment) },
 
             { text: ',', scopes: name(scopeName, RuleName.Comma) },
             { text: 'arg1', scopes: name(scopeName, RuleName.UnquotedString) },
-            { text: '; comment', scopes: name(scopeName, RuleName.InLineComment) },
+            { text: '; comment', scopes: name(scopeName, RuleName.InlineComment) },
 
             { text: ',', scopes: name(scopeName, RuleName.Comma) },
             { text: 'arg2', scopes: name(scopeName, RuleName.UnquotedString) },
             { text: ',', scopes: name(scopeName, RuleName.Comma) },
             { text: 'arg3', scopes: name(scopeName, RuleName.UnquotedString) },
-            { text: '; comment', scopes: name(scopeName, RuleName.InLineComment) },
+            { text: '; comment', scopes: name(scopeName, RuleName.InlineComment) },
 
             { text: '}', scopes: name(scopeName, RuleName.BlockEnd) },
-            { text: '; comment', scopes: name(scopeName, RuleName.InLineComment) },
+            { text: '; comment', scopes: name(scopeName, RuleName.InlineComment) },
 
             // method block
             { text: 'class', scopes: name(scopeName, RuleName.ClassKeyword) },
             { text: '{', scopes: name(scopeName, RuleName.ClassBlockBegin) },
-            { text: '; comment', scopes: name(scopeName, RuleName.InLineComment) },
+            { text: '; comment', scopes: name(scopeName, RuleName.InlineComment) },
 
             { text: 'M', scopes: name(scopeName, RuleName.FunctionName) },
             { text: '(', scopes: name(scopeName, RuleName.OpenParen) },
             { text: ')', scopes: name(scopeName, RuleName.CloseParen) },
             { text: '{', scopes: name(scopeName, RuleName.BlockBegin) },
-            { text: '; comment', scopes: name(scopeName, RuleName.InLineComment) },
+            { text: '; comment', scopes: name(scopeName, RuleName.InlineComment) },
 
             { text: 'Control', scopes: name(scopeName, RuleName.CommandName) },
-            { text: '; comment', scopes: name(scopeName, RuleName.InLineComment) },
+            { text: '; comment', scopes: name(scopeName, RuleName.InlineComment) },
 
             { text: ',', scopes: name(scopeName, RuleName.Comma) },
             { text: 'arg1', scopes: name(scopeName, RuleName.UnquotedString) },
-            { text: '; comment', scopes: name(scopeName, RuleName.InLineComment) },
+            { text: '; comment', scopes: name(scopeName, RuleName.InlineComment) },
 
             { text: ',', scopes: name(scopeName, RuleName.Comma) },
             { text: 'arg2', scopes: name(scopeName, RuleName.UnquotedString) },
             { text: ',', scopes: name(scopeName, RuleName.Comma) },
             { text: 'arg3', scopes: name(scopeName, RuleName.UnquotedString) },
-            { text: '; comment', scopes: name(scopeName, RuleName.InLineComment) },
+            { text: '; comment', scopes: name(scopeName, RuleName.InlineComment) },
 
             { text: '}', scopes: name(scopeName, RuleName.BlockEnd) },
-            { text: '; comment', scopes: name(scopeName, RuleName.InLineComment) },
+            { text: '; comment', scopes: name(scopeName, RuleName.InlineComment) },
 
             { text: '}', scopes: name(scopeName, RuleName.ClassBlockEnd) },
-            { text: '; comment', scopes: name(scopeName, RuleName.InLineComment) },
+            { text: '; comment', scopes: name(scopeName, RuleName.InlineComment) },
           ],
         ],
         [
@@ -2056,126 +2056,126 @@ export function createCommandStatementExpectedData(scopeName: ScopeName): Expect
           [
             // global
             { text: 'Control', scopes: name(scopeName, RuleName.CommandName) },
-            { text: '; comment', scopes: name(scopeName, RuleName.InLineComment) },
+            { text: '; comment', scopes: name(scopeName, RuleName.InlineComment) },
 
             { text: ',', scopes: name(scopeName, RuleName.Comma) },
             { text: 'arg1', scopes: name(scopeName, RuleName.UnquotedString) },
-            { text: '; comment', scopes: name(scopeName, RuleName.InLineComment) },
+            { text: '; comment', scopes: name(scopeName, RuleName.InlineComment) },
 
             { text: ',', scopes: name(scopeName, RuleName.Comma) },
             { text: 'arg2', scopes: name(scopeName, RuleName.UnquotedString) },
             { text: ',', scopes: name(scopeName, RuleName.Comma) },
             { text: 'arg3', scopes: name(scopeName, RuleName.UnquotedString) },
             { text: ',', scopes: name(scopeName, RuleName.Comma) },
-            { text: '; comment', scopes: name(scopeName, RuleName.InLineComment) },
+            { text: '; comment', scopes: name(scopeName, RuleName.InlineComment) },
 
             { text: '(', scopes: name(scopeName, RuleName.OpenParen) },
-            { text: '; comment', scopes: name(scopeName, RuleName.InLineComment) },
+            { text: '; comment', scopes: name(scopeName, RuleName.InlineComment) },
 
             { text: 'arg4              ; text', scopes: name(scopeName, RuleName.UnquotedString) },
 
             { text: ')', scopes: name(scopeName, RuleName.CloseParen) },
-            { text: '; comment', scopes: name(scopeName, RuleName.InLineComment) },
+            { text: '; comment', scopes: name(scopeName, RuleName.InlineComment) },
 
             // block
             { text: '{', scopes: name(scopeName, RuleName.BlockBegin) },
-            { text: '; comment', scopes: name(scopeName, RuleName.InLineComment) },
+            { text: '; comment', scopes: name(scopeName, RuleName.InlineComment) },
 
             { text: 'Control', scopes: name(scopeName, RuleName.CommandName) },
-            { text: '; comment', scopes: name(scopeName, RuleName.InLineComment) },
+            { text: '; comment', scopes: name(scopeName, RuleName.InlineComment) },
 
             { text: ',', scopes: name(scopeName, RuleName.Comma) },
             { text: 'arg1', scopes: name(scopeName, RuleName.UnquotedString) },
-            { text: '; comment', scopes: name(scopeName, RuleName.InLineComment) },
+            { text: '; comment', scopes: name(scopeName, RuleName.InlineComment) },
 
             { text: ',', scopes: name(scopeName, RuleName.Comma) },
             { text: 'arg2', scopes: name(scopeName, RuleName.UnquotedString) },
             { text: ',', scopes: name(scopeName, RuleName.Comma) },
             { text: 'arg3', scopes: name(scopeName, RuleName.UnquotedString) },
             { text: ',', scopes: name(scopeName, RuleName.Comma) },
-            { text: '; comment', scopes: name(scopeName, RuleName.InLineComment) },
+            { text: '; comment', scopes: name(scopeName, RuleName.InlineComment) },
 
             { text: '(', scopes: name(scopeName, RuleName.OpenParen) },
-            { text: '; comment', scopes: name(scopeName, RuleName.InLineComment) },
+            { text: '; comment', scopes: name(scopeName, RuleName.InlineComment) },
 
             { text: 'arg4            ; text', scopes: name(scopeName, RuleName.UnquotedString) },
 
             { text: ')', scopes: name(scopeName, RuleName.CloseParen) },
-            { text: '; comment', scopes: name(scopeName, RuleName.InLineComment) },
+            { text: '; comment', scopes: name(scopeName, RuleName.InlineComment) },
 
             { text: '}', scopes: name(scopeName, RuleName.BlockEnd) },
-            { text: '; comment', scopes: name(scopeName, RuleName.InLineComment) },
+            { text: '; comment', scopes: name(scopeName, RuleName.InlineComment) },
 
             // function block
             { text: 'F', scopes: name(scopeName, RuleName.FunctionName) },
             { text: '(', scopes: name(scopeName, RuleName.OpenParen) },
             { text: ')', scopes: name(scopeName, RuleName.CloseParen) },
             { text: '{', scopes: name(scopeName, RuleName.BlockBegin) },
-            { text: '; comment', scopes: name(scopeName, RuleName.InLineComment) },
+            { text: '; comment', scopes: name(scopeName, RuleName.InlineComment) },
 
             { text: 'Control', scopes: name(scopeName, RuleName.CommandName) },
-            { text: '; comment', scopes: name(scopeName, RuleName.InLineComment) },
+            { text: '; comment', scopes: name(scopeName, RuleName.InlineComment) },
 
             { text: ',', scopes: name(scopeName, RuleName.Comma) },
             { text: 'arg1', scopes: name(scopeName, RuleName.UnquotedString) },
-            { text: '; comment', scopes: name(scopeName, RuleName.InLineComment) },
+            { text: '; comment', scopes: name(scopeName, RuleName.InlineComment) },
 
             { text: ',', scopes: name(scopeName, RuleName.Comma) },
             { text: 'arg2', scopes: name(scopeName, RuleName.UnquotedString) },
             { text: ',', scopes: name(scopeName, RuleName.Comma) },
             { text: 'arg3', scopes: name(scopeName, RuleName.UnquotedString) },
             { text: ',', scopes: name(scopeName, RuleName.Comma) },
-            { text: '; comment', scopes: name(scopeName, RuleName.InLineComment) },
+            { text: '; comment', scopes: name(scopeName, RuleName.InlineComment) },
 
             { text: '(', scopes: name(scopeName, RuleName.OpenParen) },
-            { text: '; comment', scopes: name(scopeName, RuleName.InLineComment) },
+            { text: '; comment', scopes: name(scopeName, RuleName.InlineComment) },
 
             { text: 'arg4            ; text', scopes: name(scopeName, RuleName.UnquotedString) },
 
             { text: ')', scopes: name(scopeName, RuleName.CloseParen) },
-            { text: '; comment', scopes: name(scopeName, RuleName.InLineComment) },
+            { text: '; comment', scopes: name(scopeName, RuleName.InlineComment) },
 
             { text: '}', scopes: name(scopeName, RuleName.BlockEnd) },
-            { text: '; comment', scopes: name(scopeName, RuleName.InLineComment) },
+            { text: '; comment', scopes: name(scopeName, RuleName.InlineComment) },
 
             // method block
             { text: 'class', scopes: name(scopeName, RuleName.ClassKeyword) },
             { text: '{', scopes: name(scopeName, RuleName.ClassBlockBegin) },
-            { text: '; comment', scopes: name(scopeName, RuleName.InLineComment) },
+            { text: '; comment', scopes: name(scopeName, RuleName.InlineComment) },
 
             { text: 'M', scopes: name(scopeName, RuleName.FunctionName) },
             { text: '(', scopes: name(scopeName, RuleName.OpenParen) },
             { text: ')', scopes: name(scopeName, RuleName.CloseParen) },
             { text: '{', scopes: name(scopeName, RuleName.BlockBegin) },
-            { text: '; comment', scopes: name(scopeName, RuleName.InLineComment) },
+            { text: '; comment', scopes: name(scopeName, RuleName.InlineComment) },
 
             { text: 'Control', scopes: name(scopeName, RuleName.CommandName) },
-            { text: '; comment', scopes: name(scopeName, RuleName.InLineComment) },
+            { text: '; comment', scopes: name(scopeName, RuleName.InlineComment) },
 
             { text: ',', scopes: name(scopeName, RuleName.Comma) },
             { text: 'arg1', scopes: name(scopeName, RuleName.UnquotedString) },
-            { text: '; comment', scopes: name(scopeName, RuleName.InLineComment) },
+            { text: '; comment', scopes: name(scopeName, RuleName.InlineComment) },
 
             { text: ',', scopes: name(scopeName, RuleName.Comma) },
             { text: 'arg2', scopes: name(scopeName, RuleName.UnquotedString) },
             { text: ',', scopes: name(scopeName, RuleName.Comma) },
             { text: 'arg3', scopes: name(scopeName, RuleName.UnquotedString) },
             { text: ',', scopes: name(scopeName, RuleName.Comma) },
-            { text: '; comment', scopes: name(scopeName, RuleName.InLineComment) },
+            { text: '; comment', scopes: name(scopeName, RuleName.InlineComment) },
 
             { text: '(', scopes: name(scopeName, RuleName.OpenParen) },
-            { text: '; comment', scopes: name(scopeName, RuleName.InLineComment) },
+            { text: '; comment', scopes: name(scopeName, RuleName.InlineComment) },
 
             { text: 'arg4          ; text', scopes: name(scopeName, RuleName.UnquotedString) },
 
             { text: ')', scopes: name(scopeName, RuleName.CloseParen) },
-            { text: '; comment', scopes: name(scopeName, RuleName.InLineComment) },
+            { text: '; comment', scopes: name(scopeName, RuleName.InlineComment) },
 
             { text: '}', scopes: name(scopeName, RuleName.BlockEnd) },
-            { text: '; comment', scopes: name(scopeName, RuleName.InLineComment) },
+            { text: '; comment', scopes: name(scopeName, RuleName.InlineComment) },
 
             { text: '}', scopes: name(scopeName, RuleName.ClassBlockEnd) },
-            { text: '; comment', scopes: name(scopeName, RuleName.InLineComment) },
+            { text: '; comment', scopes: name(scopeName, RuleName.InlineComment) },
           ],
         ],
       ];
@@ -2192,13 +2192,13 @@ export function createCommandStatementExpectedData(scopeName: ScopeName): Expect
         { text: 'Control', scopes: name(scopeName, RuleName.Variable) },
         { text: '+=', scopes: name(scopeName, RuleName.Operator) },
         { text: 'var', scopes: name(scopeName, RuleName.Variable) },
-        { text: '; comment', scopes: name(scopeName, RuleName.InLineComment) },
+        { text: '; comment', scopes: name(scopeName, RuleName.InlineComment) },
 
         { text: 'Control', scopes: name(scopeName, RuleName.CommandName) },
         { text: ',', scopes: name(scopeName, RuleName.Comma) },
         { text: '+=', scopes: name(scopeName, RuleName.UnquotedString) },
         { text: 'var', scopes: name(scopeName, RuleName.UnquotedString) },
-        { text: '; comment', scopes: name(scopeName, RuleName.InLineComment) },
+        { text: '; comment', scopes: name(scopeName, RuleName.InlineComment) },
       ],
     ],
 
@@ -2214,7 +2214,7 @@ export function createCommandStatementExpectedData(scopeName: ScopeName): Expect
         { text: 'abc', scopes: name(scopeName, RuleName.Variable) },
         { text: ',', scopes: name(scopeName, RuleName.Comma) },
         { text: 'd', scopes: name(scopeName, RuleName.Variable) },
-        { text: '; comment', scopes: name(scopeName, RuleName.InLineComment) },
+        { text: '; comment', scopes: name(scopeName, RuleName.InlineComment) },
       ],
     ],
   ];

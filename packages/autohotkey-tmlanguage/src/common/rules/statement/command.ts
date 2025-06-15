@@ -61,7 +61,7 @@ export function createMultiLineCommandLikeStatementRule(scopeName: ScopeName, de
     )),
     beginCaptures: {
       1: patternsRule(
-        includeRule(Repository.Comment),
+        includeRule(Repository.Trivias),
         ...sortedDefinitions.flatMap((definition) => {
           return definition.signatures.map((signature) => createSingleLineCommandLikeStatementRule(scopeName, definition, signature, placeholder));
         }),
@@ -92,7 +92,7 @@ export function createMultiLineCommandLikeStatementRule(scopeName: ScopeName, de
       ),
       2: patternsRule(includeRule(Repository.Comma)),
     },
-    patterns: [ includeRule(Repository.Comment) ],
+    patterns: [ includeRule(Repository.Trivias) ],
   };
 }
 
@@ -234,7 +234,7 @@ export function createDirectiveCommentRule(scopeName: ScopeName, definition: Com
       }),
 
       // inline comment
-      nameRule(scopeName, RuleName.InLineComment),
+      nameRule(scopeName, RuleName.InlineComment),
     ].map((rule, i) => [ i + 1, rule ])),
   };
 }
@@ -961,7 +961,7 @@ function parameterToPatternsRule(scopeName: ScopeName, defenition: CommandDefini
         includeRule(isLastParameter ? Repository.PercentExpressionInLastArgument : Repository.PercentExpression),
 
         includeRule(Repository.Comma),
-        includeRule(Repository.AllInLineComments),
+        includeRule(Repository.InlineTrivias),
         includeRule(Repository.Expression),
       );
     }

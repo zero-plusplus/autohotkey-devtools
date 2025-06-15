@@ -17,7 +17,7 @@ export function createDirectiveCommentExpectedData(scopeName: ScopeName): Expect
         { text: '*2 file\\to\\path', scopes: name(scopeName, RuleName.UnquotedString) },
         { text: ',', scopes: name(scopeName, RuleName.Comma) },
         { text: 'X', scopes: name(scopeName, RuleName.UnquotedString) },
-        { text: '; comment', scopes: name(scopeName, RuleName.InLineComment) },
+        { text: '; comment', scopes: name(scopeName, RuleName.InlineComment) },
       ],
     ],
     [
@@ -33,7 +33,7 @@ export function createDirectiveCommentExpectedData(scopeName: ScopeName): Expect
         { text: 'exePath\\name', scopes: name(scopeName, RuleName.UnquotedString) },
         { text: ',', scopes: name(scopeName, RuleName.Comma) },
         { text: '65001', scopes: name(scopeName, RuleName.UnquotedString) },
-        { text: '; comment', scopes: name(scopeName, RuleName.InLineComment) },
+        { text: '; comment', scopes: name(scopeName, RuleName.InlineComment) },
 
         { text: ';', scopes: name(scopeName, RuleName.DirectiveComment) },
         { text: '@Ahk2Exe-Base', scopes: name(scopeName, RuleName.DirectiveCommentName) },
@@ -42,7 +42,7 @@ export function createDirectiveCommentExpectedData(scopeName: ScopeName): Expect
         { text: 'exePath\\name', scopes: name(scopeName, RuleName.UnquotedString) },
         { text: ',', scopes: name(scopeName, RuleName.Comma) },
         { text: '65001', scopes: name(scopeName, RuleName.UnquotedString) },
-        { text: '; comment', scopes: name(scopeName, RuleName.InLineComment) },
+        { text: '; comment', scopes: name(scopeName, RuleName.InlineComment) },
       ],
     ],
     [
@@ -52,7 +52,7 @@ export function createDirectiveCommentExpectedData(scopeName: ScopeName): Expect
       [
         { text: ';', scopes: name(scopeName, RuleName.DirectiveComment) },
         { text: '@Ahk2Exe-ConsoleApp', scopes: name(scopeName, RuleName.DirectiveCommentName) },
-        { text: '; comment', scopes: name(scopeName, RuleName.InLineComment) },
+        { text: '; comment', scopes: name(scopeName, RuleName.InlineComment) },
       ],
     ],
     [
@@ -66,7 +66,7 @@ export function createDirectiveCommentExpectedData(scopeName: ScopeName): Expect
             { text: ';', scopes: name(scopeName, RuleName.DirectiveComment) },
             { text: `@Ahk2Exe-${directiveName}`, scopes: name(scopeName, RuleName.DirectiveCommentName) },
             { text: 'text', scopes: name(scopeName, RuleName.UnquotedString) },
-            { text: '; comment', scopes: name(scopeName, RuleName.InLineComment) },
+            { text: '; comment', scopes: name(scopeName, RuleName.InlineComment) },
           ];
         }),
       ],
@@ -79,7 +79,7 @@ export function createDirectiveCommentExpectedData(scopeName: ScopeName): Expect
         { text: ';', scopes: name(scopeName, RuleName.DirectiveComment) },
         { text: `@Ahk2Exe-ExeName`, scopes: name(scopeName, RuleName.DirectiveCommentName) },
         { text: 'path\\name', scopes: name(scopeName, RuleName.UnquotedString) },
-        { text: '; comment', scopes: name(scopeName, RuleName.InLineComment) },
+        { text: '; comment', scopes: name(scopeName, RuleName.InlineComment) },
       ],
     ],
     [
@@ -106,7 +106,7 @@ export function createDirectiveCommentExpectedData(scopeName: ScopeName): Expect
         { text: '.exe', scopes: name(scopeName, RuleName.DoubleString) },
         { text: '%', scopes: name(scopeName, TokenType.Other, RuleName.PercentEnd) },
         { text: '"', scopes: name(scopeName, RuleName.DoubleString, RuleDescriptor.End) },
-        { text: '; comment', scopes: name(scopeName, RuleName.InLineComment) },
+        { text: '; comment', scopes: name(scopeName, RuleName.InlineComment) },
       ],
     ],
     [
@@ -116,7 +116,7 @@ export function createDirectiveCommentExpectedData(scopeName: ScopeName): Expect
       [
         { text: ';', scopes: name(scopeName, RuleName.DirectiveComment) },
         { text: `@Ahk2Exe-Nop`, scopes: name(scopeName, RuleName.DirectiveCommentName) },
-        { text: 'text       ; comment', scopes: name(scopeName, RuleName.InLineComment) },
+        { text: 'text       ; comment', scopes: name(scopeName, RuleName.InlineComment) },
       ],
     ],
     [
@@ -146,7 +146,7 @@ export function createDirectiveCommentExpectedData(scopeName: ScopeName): Expect
         { text: '"', scopes: name(scopeName, RuleName.DoubleString, RuleDescriptor.End) },
         { text: ',', scopes: name(scopeName, RuleName.Comma) },
         { text: '2', scopes: name(scopeName, RuleName.Integer) },
-        { text: '; comment', scopes: name(scopeName, RuleName.InLineComment) },
+        { text: '; comment', scopes: name(scopeName, RuleName.InlineComment) },
       ],
     ],
     [
@@ -169,7 +169,7 @@ export function createDirectiveCommentExpectedData(scopeName: ScopeName): Expect
         { text: '1', scopes: name(scopeName, RuleName.UnquotedString, StyleName.Strong) },
         { text: ',', scopes: name(scopeName, RuleName.Comma) },
         { text: '1', scopes: name(scopeName, RuleName.UnquotedString, StyleName.Strong) },
-        { text: '; comment', scopes: name(scopeName, RuleName.InLineComment) },
+        { text: '; comment', scopes: name(scopeName, RuleName.InlineComment) },
       ],
     ],
     [
@@ -180,7 +180,7 @@ export function createDirectiveCommentExpectedData(scopeName: ScopeName): Expect
         { text: ';', scopes: name(scopeName, RuleName.DirectiveComment) },
         { text: `@Ahk2Exe-ResourceID`, scopes: name(scopeName, RuleName.DirectiveCommentName) },
         { text: '#00000', scopes: name(scopeName, RuleName.UnquotedString) },
-        { text: '; comment', scopes: name(scopeName, RuleName.InLineComment) },
+        { text: '; comment', scopes: name(scopeName, RuleName.InlineComment) },
       ],
     ],
     [
@@ -191,7 +191,7 @@ export function createDirectiveCommentExpectedData(scopeName: ScopeName): Expect
         { text: ';', scopes: name(scopeName, RuleName.DirectiveComment) },
         { text: `@Ahk2Exe-SetMainIcon`, scopes: name(scopeName, RuleName.DirectiveCommentName) },
         { text: 'IconFile', scopes: name(scopeName, RuleName.UnquotedString) },
-        { text: '; comment', scopes: name(scopeName, RuleName.InLineComment) },
+        { text: '; comment', scopes: name(scopeName, RuleName.InlineComment) },
       ],
     ],
     [
@@ -215,7 +215,7 @@ export function createDirectiveCommentExpectedData(scopeName: ScopeName): Expect
             { text: ';', scopes: name(scopeName, RuleName.DirectiveComment) },
             { text: `@Ahk2Exe-${directiveName}`, scopes: name(scopeName, RuleName.DirectiveCommentName) },
             { text: 'value', scopes: name(scopeName, RuleName.UnquotedString) },
-            { text: '; comment', scopes: name(scopeName, RuleName.InLineComment) },
+            { text: '; comment', scopes: name(scopeName, RuleName.InlineComment) },
           ];
         }),
       ],
@@ -230,7 +230,7 @@ export function createDirectiveCommentExpectedData(scopeName: ScopeName): Expect
         { text: 'prop', scopes: name(scopeName, RuleName.UnquotedString) },
         { text: ',', scopes: name(scopeName, RuleName.Comma) },
         { text: 'value', scopes: name(scopeName, RuleName.UnquotedString) },
-        { text: '; comment', scopes: name(scopeName, RuleName.InLineComment) },
+        { text: '; comment', scopes: name(scopeName, RuleName.InlineComment) },
       ],
     ],
     [
@@ -247,7 +247,7 @@ export function createDirectiveCommentExpectedData(scopeName: ScopeName): Expect
         { text: '1.0.0', scopes: name(scopeName, RuleName.UnquotedString) },
         { text: ',', scopes: name(scopeName, RuleName.Comma) },
         { text: '1', scopes: name(scopeName, RuleName.UnquotedString, StyleName.Strong) },
-        { text: '; comment', scopes: name(scopeName, RuleName.InLineComment) },
+        { text: '; comment', scopes: name(scopeName, RuleName.InlineComment) },
       ],
     ],
     [
@@ -259,7 +259,7 @@ export function createDirectiveCommentExpectedData(scopeName: ScopeName): Expect
         { text: `@Ahk2Exe-UseResourceLang`, scopes: name(scopeName, RuleName.DirectiveCommentName) },
         { text: '0x', scopes: name(scopeName, RuleName.Hex, RuleName.HexPrefix) },
         { text: '123', scopes: name(scopeName, RuleName.Hex, RuleName.HexValue) },
-        { text: '; comment', scopes: name(scopeName, RuleName.InLineComment) },
+        { text: '; comment', scopes: name(scopeName, RuleName.InlineComment) },
       ],
     ],
     [

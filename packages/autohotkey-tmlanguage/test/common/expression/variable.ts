@@ -21,7 +21,7 @@ export function createVariableExpectedData(scopeName: ScopeName, placeholder: Pl
             { text: '(', scopes: name(scopeName, RuleName.OpenParen) },
             { text: variable, scopes: name(scopeName, placeholder.ruleName) },
             { text: ')', scopes: name(scopeName, RuleName.CloseParen) },
-            { text: '; comment', scopes: name(scopeName, RuleName.InLineComment) },
+            { text: '; comment', scopes: name(scopeName, RuleName.InlineComment) },
           ],
         ],
         [
@@ -34,15 +34,15 @@ export function createVariableExpectedData(scopeName: ScopeName, placeholder: Pl
             { text: 'a', scopes: name(scopeName, RuleName.Variable) },
             { text: ':=', scopes: name(scopeName, RuleName.Operator) },
             { text: 'b', scopes: name(scopeName, RuleName.Variable) },
-            { text: '; comment', scopes: name(scopeName, RuleName.InLineComment) },
+            { text: '; comment', scopes: name(scopeName, RuleName.InlineComment) },
 
             { text: '?', scopes: name(scopeName, RuleName.Operator) },
             { text: 'c', scopes: name(scopeName, RuleName.Variable) },
-            { text: '; comment', scopes: name(scopeName, RuleName.InLineComment) },
+            { text: '; comment', scopes: name(scopeName, RuleName.InlineComment) },
 
             { text: ':', scopes: name(scopeName, RuleName.Operator) },
             { text: variable, scopes: name(scopeName, placeholder.ruleName) },
-            { text: '; comment', scopes: name(scopeName, RuleName.InLineComment) },
+            { text: '; comment', scopes: name(scopeName, RuleName.InlineComment) },
           ],
         ],
       ];

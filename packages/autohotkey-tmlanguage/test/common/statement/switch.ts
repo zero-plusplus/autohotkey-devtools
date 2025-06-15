@@ -20,10 +20,10 @@ export function createSwitchStatementExpectedData(scopeName: ScopeName): Expecte
               [
                 { text: 'switch', scopes: name(scopeName, RuleName.ControlFlowKeyword) },
                 { text: '{', scopes: name(scopeName, RuleName.BlockBegin) },
-                { text: '; comment', scopes: name(scopeName, RuleName.InLineComment) },
+                { text: '; comment', scopes: name(scopeName, RuleName.InlineComment) },
 
                 { text: '}', scopes: name(scopeName, RuleName.BlockEnd) },
-                { text: '; comment', scopes: name(scopeName, RuleName.InLineComment) },
+                { text: '; comment', scopes: name(scopeName, RuleName.InlineComment) },
               ],
             ],
             [
@@ -34,10 +34,10 @@ export function createSwitchStatementExpectedData(scopeName: ScopeName): Expecte
               [
                 { text: 'Switch', scopes: name(scopeName, RuleName.ControlFlowKeyword) },
                 { text: '{', scopes: name(scopeName, RuleName.BlockBegin) },
-                { text: '; comment', scopes: name(scopeName, RuleName.InLineComment) },
+                { text: '; comment', scopes: name(scopeName, RuleName.InlineComment) },
 
                 { text: '}', scopes: name(scopeName, RuleName.BlockEnd) },
-                { text: '; comment', scopes: name(scopeName, RuleName.InLineComment) },
+                { text: '; comment', scopes: name(scopeName, RuleName.InlineComment) },
               ],
             ],
             [
@@ -49,10 +49,10 @@ export function createSwitchStatementExpectedData(scopeName: ScopeName): Expecte
                 { text: 'switch', scopes: name(scopeName, RuleName.ControlFlowKeyword) },
                 { text: 'true', scopes: name(scopeName, RuleName.KeywordLikeBuiltInVariable) },
                 { text: '{', scopes: name(scopeName, RuleName.BlockBegin) },
-                { text: '; comment', scopes: name(scopeName, RuleName.InLineComment) },
+                { text: '; comment', scopes: name(scopeName, RuleName.InlineComment) },
 
                 { text: '}', scopes: name(scopeName, RuleName.BlockEnd) },
-                { text: '; comment', scopes: name(scopeName, RuleName.InLineComment) },
+                { text: '; comment', scopes: name(scopeName, RuleName.InlineComment) },
               ],
             ],
             [
@@ -66,10 +66,10 @@ export function createSwitchStatementExpectedData(scopeName: ScopeName): Expecte
                 { text: 'true', scopes: name(scopeName, RuleName.KeywordLikeBuiltInVariable) },
                 { text: ')', scopes: name(scopeName, RuleName.CloseParen) },
                 { text: '{', scopes: name(scopeName, RuleName.BlockBegin) },
-                { text: '; comment', scopes: name(scopeName, RuleName.InLineComment) },
+                { text: '; comment', scopes: name(scopeName, RuleName.InlineComment) },
 
                 { text: '}', scopes: name(scopeName, RuleName.BlockEnd) },
-                { text: '; comment', scopes: name(scopeName, RuleName.InLineComment) },
+                { text: '; comment', scopes: name(scopeName, RuleName.InlineComment) },
               ],
             ],
             [
@@ -83,21 +83,21 @@ export function createSwitchStatementExpectedData(scopeName: ScopeName): Expecte
                 { text: 'switch', scopes: name(scopeName, RuleName.ControlFlowKeyword) },
                 { text: 'true', scopes: name(scopeName, RuleName.KeywordLikeBuiltInVariable) },
                 { text: '{', scopes: name(scopeName, RuleName.BlockBegin) },
-                { text: '; comment', scopes: name(scopeName, RuleName.InLineComment) },
+                { text: '; comment', scopes: name(scopeName, RuleName.InlineComment) },
 
                 { text: 'case', scopes: name(scopeName, RuleName.SwitchLabelKeyword) },
                 { text: 'true', scopes: name(scopeName, RuleName.KeywordLikeBuiltInVariable) },
                 { text: ':', scopes: name(scopeName, RuleName.Colon) },
                 { text: 'break', scopes: name(scopeName, RuleName.JumpCommandName) },
-                { text: '; comment', scopes: name(scopeName, RuleName.InLineComment) },
+                { text: '; comment', scopes: name(scopeName, RuleName.InlineComment) },
 
                 { text: 'default', scopes: name(scopeName, RuleName.SwitchLabelKeyword) },
                 { text: ':', scopes: name(scopeName, RuleName.Colon) },
                 { text: 'break', scopes: name(scopeName, RuleName.JumpCommandName) },
-                { text: '; comment', scopes: name(scopeName, RuleName.InLineComment) },
+                { text: '; comment', scopes: name(scopeName, RuleName.InlineComment) },
 
                 { text: '}', scopes: name(scopeName, RuleName.BlockEnd) },
-                { text: '; comment', scopes: name(scopeName, RuleName.InLineComment) },
+                { text: '; comment', scopes: name(scopeName, RuleName.InlineComment) },
               ],
             ],
             [
@@ -115,33 +115,33 @@ export function createSwitchStatementExpectedData(scopeName: ScopeName): Expecte
                 { text: 'switch', scopes: name(scopeName, RuleName.ControlFlowKeyword) },
                 { text: 'true', scopes: name(scopeName, RuleName.KeywordLikeBuiltInVariable) },
                 { text: '{', scopes: name(scopeName, RuleName.BlockBegin) },
-                { text: '; comment', scopes: name(scopeName, RuleName.InLineComment) },
+                { text: '; comment', scopes: name(scopeName, RuleName.InlineComment) },
 
                 { text: 'case', scopes: name(scopeName, RuleName.SwitchLabelKeyword) },
                 { text: 'true', scopes: name(scopeName, RuleName.KeywordLikeBuiltInVariable) },
                 { text: ':', scopes: name(scopeName, RuleName.Colon) },
                 { text: '{', scopes: name(scopeName, RuleName.BlockBegin) },
-                { text: '; comment', scopes: name(scopeName, RuleName.InLineComment) },
+                { text: '; comment', scopes: name(scopeName, RuleName.InlineComment) },
 
                 { text: 'break', scopes: name(scopeName, RuleName.JumpCommandName) },
-                { text: '; comment', scopes: name(scopeName, RuleName.InLineComment) },
+                { text: '; comment', scopes: name(scopeName, RuleName.InlineComment) },
 
                 { text: '}', scopes: name(scopeName, RuleName.BlockEnd) },
-                { text: '; comment', scopes: name(scopeName, RuleName.InLineComment) },
+                { text: '; comment', scopes: name(scopeName, RuleName.InlineComment) },
 
                 { text: 'default', scopes: name(scopeName, RuleName.SwitchLabelKeyword) },
                 { text: ':', scopes: name(scopeName, RuleName.Colon) },
                 { text: '{', scopes: name(scopeName, RuleName.BlockBegin) },
-                { text: '; comment', scopes: name(scopeName, RuleName.InLineComment) },
+                { text: '; comment', scopes: name(scopeName, RuleName.InlineComment) },
 
                 { text: 'break', scopes: name(scopeName, RuleName.JumpCommandName) },
-                { text: '; comment', scopes: name(scopeName, RuleName.InLineComment) },
+                { text: '; comment', scopes: name(scopeName, RuleName.InlineComment) },
 
                 { text: '}', scopes: name(scopeName, RuleName.BlockEnd) },
-                { text: '; comment', scopes: name(scopeName, RuleName.InLineComment) },
+                { text: '; comment', scopes: name(scopeName, RuleName.InlineComment) },
 
                 { text: '}', scopes: name(scopeName, RuleName.BlockEnd) },
-                { text: '; comment', scopes: name(scopeName, RuleName.InLineComment) },
+                { text: '; comment', scopes: name(scopeName, RuleName.InlineComment) },
               ],
             ],
             [
@@ -155,7 +155,7 @@ export function createSwitchStatementExpectedData(scopeName: ScopeName): Expecte
                 { text: 'switch', scopes: name(scopeName, RuleName.ControlFlowKeyword) },
                 { text: 'true', scopes: name(scopeName, RuleName.KeywordLikeBuiltInVariable) },
                 { text: '{', scopes: name(scopeName, RuleName.BlockBegin) },
-                { text: '; comment', scopes: name(scopeName, RuleName.InLineComment) },
+                { text: '; comment', scopes: name(scopeName, RuleName.InlineComment) },
 
                 { text: 'case', scopes: name(scopeName, RuleName.SwitchLabelKeyword) },
                 { text: 'true', scopes: name(scopeName, RuleName.KeywordLikeBuiltInVariable) },
@@ -163,15 +163,15 @@ export function createSwitchStatementExpectedData(scopeName: ScopeName): Expecte
                 { text: 'false', scopes: name(scopeName, RuleName.KeywordLikeBuiltInVariable) },
                 { text: ':', scopes: name(scopeName, RuleName.Colon) },
                 { text: 'break', scopes: name(scopeName, RuleName.JumpCommandName) },
-                { text: '; comment', scopes: name(scopeName, RuleName.InLineComment) },
+                { text: '; comment', scopes: name(scopeName, RuleName.InlineComment) },
 
                 { text: 'default', scopes: name(scopeName, RuleName.SwitchLabelKeyword) },
                 { text: ':', scopes: name(scopeName, RuleName.Colon) },
                 { text: 'break', scopes: name(scopeName, RuleName.JumpCommandName) },
-                { text: '; comment', scopes: name(scopeName, RuleName.InLineComment) },
+                { text: '; comment', scopes: name(scopeName, RuleName.InlineComment) },
 
                 { text: '}', scopes: name(scopeName, RuleName.BlockEnd) },
-                { text: '; comment', scopes: name(scopeName, RuleName.InLineComment) },
+                { text: '; comment', scopes: name(scopeName, RuleName.InlineComment) },
               ],
             ],
           ];
@@ -188,13 +188,13 @@ export function createSwitchStatementExpectedData(scopeName: ScopeName): Expecte
               `,
               [
                 { text: 'switch', scopes: name(scopeName, RuleName.ControlFlowKeyword) },
-                { text: '; comment', scopes: name(scopeName, RuleName.InLineComment) },
+                { text: '; comment', scopes: name(scopeName, RuleName.InlineComment) },
 
                 { text: '{', scopes: name(scopeName, RuleName.BlockBegin) },
-                { text: '; comment', scopes: name(scopeName, RuleName.InLineComment) },
+                { text: '; comment', scopes: name(scopeName, RuleName.InlineComment) },
 
                 { text: '}', scopes: name(scopeName, RuleName.BlockEnd) },
-                { text: '; comment', scopes: name(scopeName, RuleName.InLineComment) },
+                { text: '; comment', scopes: name(scopeName, RuleName.InlineComment) },
               ],
             ],
             [
@@ -206,13 +206,13 @@ export function createSwitchStatementExpectedData(scopeName: ScopeName): Expecte
               [
                 { text: 'switch', scopes: name(scopeName, RuleName.ControlFlowKeyword) },
                 { text: 'true', scopes: name(scopeName, RuleName.KeywordLikeBuiltInVariable) },
-                { text: '; comment', scopes: name(scopeName, RuleName.InLineComment) },
+                { text: '; comment', scopes: name(scopeName, RuleName.InlineComment) },
 
                 { text: '{', scopes: name(scopeName, RuleName.BlockBegin) },
-                { text: '; comment', scopes: name(scopeName, RuleName.InLineComment) },
+                { text: '; comment', scopes: name(scopeName, RuleName.InlineComment) },
 
                 { text: '}', scopes: name(scopeName, RuleName.BlockEnd) },
-                { text: '; comment', scopes: name(scopeName, RuleName.InLineComment) },
+                { text: '; comment', scopes: name(scopeName, RuleName.InlineComment) },
               ],
             ],
             [
@@ -226,13 +226,13 @@ export function createSwitchStatementExpectedData(scopeName: ScopeName): Expecte
                 { text: '(', scopes: name(scopeName, RuleName.OpenParen) },
                 { text: 'true', scopes: name(scopeName, RuleName.KeywordLikeBuiltInVariable) },
                 { text: ')', scopes: name(scopeName, RuleName.CloseParen) },
-                { text: '; comment', scopes: name(scopeName, RuleName.InLineComment) },
+                { text: '; comment', scopes: name(scopeName, RuleName.InlineComment) },
 
                 { text: '{', scopes: name(scopeName, RuleName.BlockBegin) },
-                { text: '; comment', scopes: name(scopeName, RuleName.InLineComment) },
+                { text: '; comment', scopes: name(scopeName, RuleName.InlineComment) },
 
                 { text: '}', scopes: name(scopeName, RuleName.BlockEnd) },
-                { text: '; comment', scopes: name(scopeName, RuleName.InLineComment) },
+                { text: '; comment', scopes: name(scopeName, RuleName.InlineComment) },
               ],
             ],
             [
@@ -248,28 +248,28 @@ export function createSwitchStatementExpectedData(scopeName: ScopeName): Expecte
               [
                 { text: 'switch', scopes: name(scopeName, RuleName.ControlFlowKeyword) },
                 { text: 'true', scopes: name(scopeName, RuleName.KeywordLikeBuiltInVariable) },
-                { text: '; comment', scopes: name(scopeName, RuleName.InLineComment) },
+                { text: '; comment', scopes: name(scopeName, RuleName.InlineComment) },
 
                 { text: '{', scopes: name(scopeName, RuleName.BlockBegin) },
-                { text: '; comment', scopes: name(scopeName, RuleName.InLineComment) },
+                { text: '; comment', scopes: name(scopeName, RuleName.InlineComment) },
 
                 { text: 'case', scopes: name(scopeName, RuleName.SwitchLabelKeyword) },
                 { text: 'true', scopes: name(scopeName, RuleName.KeywordLikeBuiltInVariable) },
                 { text: ':', scopes: name(scopeName, RuleName.Colon) },
-                { text: '; comment', scopes: name(scopeName, RuleName.InLineComment) },
+                { text: '; comment', scopes: name(scopeName, RuleName.InlineComment) },
 
                 { text: 'break', scopes: name(scopeName, RuleName.JumpCommandName) },
-                { text: '; comment', scopes: name(scopeName, RuleName.InLineComment) },
+                { text: '; comment', scopes: name(scopeName, RuleName.InlineComment) },
 
                 { text: 'default', scopes: name(scopeName, RuleName.SwitchLabelKeyword) },
                 { text: ':', scopes: name(scopeName, RuleName.Colon) },
-                { text: '; comment', scopes: name(scopeName, RuleName.InLineComment) },
+                { text: '; comment', scopes: name(scopeName, RuleName.InlineComment) },
 
                 { text: 'break', scopes: name(scopeName, RuleName.JumpCommandName) },
-                { text: '; comment', scopes: name(scopeName, RuleName.InLineComment) },
+                { text: '; comment', scopes: name(scopeName, RuleName.InlineComment) },
 
                 { text: '}', scopes: name(scopeName, RuleName.BlockEnd) },
-                { text: '; comment', scopes: name(scopeName, RuleName.InLineComment) },
+                { text: '; comment', scopes: name(scopeName, RuleName.InlineComment) },
               ],
             ],
             [
@@ -289,40 +289,40 @@ export function createSwitchStatementExpectedData(scopeName: ScopeName): Expecte
               [
                 { text: 'switch', scopes: name(scopeName, RuleName.ControlFlowKeyword) },
                 { text: 'true', scopes: name(scopeName, RuleName.KeywordLikeBuiltInVariable) },
-                { text: '; comment', scopes: name(scopeName, RuleName.InLineComment) },
+                { text: '; comment', scopes: name(scopeName, RuleName.InlineComment) },
 
                 { text: '{', scopes: name(scopeName, RuleName.BlockBegin) },
-                { text: '; comment', scopes: name(scopeName, RuleName.InLineComment) },
+                { text: '; comment', scopes: name(scopeName, RuleName.InlineComment) },
 
                 { text: 'case', scopes: name(scopeName, RuleName.SwitchLabelKeyword) },
                 { text: 'true', scopes: name(scopeName, RuleName.KeywordLikeBuiltInVariable) },
                 { text: ':', scopes: name(scopeName, RuleName.Colon) },
-                { text: '; comment', scopes: name(scopeName, RuleName.InLineComment) },
+                { text: '; comment', scopes: name(scopeName, RuleName.InlineComment) },
 
                 { text: '{', scopes: name(scopeName, RuleName.BlockBegin) },
-                { text: '; comment', scopes: name(scopeName, RuleName.InLineComment) },
+                { text: '; comment', scopes: name(scopeName, RuleName.InlineComment) },
 
                 { text: 'break', scopes: name(scopeName, RuleName.JumpCommandName) },
-                { text: '; comment', scopes: name(scopeName, RuleName.InLineComment) },
+                { text: '; comment', scopes: name(scopeName, RuleName.InlineComment) },
 
                 { text: '}', scopes: name(scopeName, RuleName.BlockEnd) },
-                { text: '; comment', scopes: name(scopeName, RuleName.InLineComment) },
+                { text: '; comment', scopes: name(scopeName, RuleName.InlineComment) },
 
                 { text: 'default', scopes: name(scopeName, RuleName.SwitchLabelKeyword) },
                 { text: ':', scopes: name(scopeName, RuleName.Colon) },
-                { text: '; comment', scopes: name(scopeName, RuleName.InLineComment) },
+                { text: '; comment', scopes: name(scopeName, RuleName.InlineComment) },
 
                 { text: '{', scopes: name(scopeName, RuleName.BlockBegin) },
-                { text: '; comment', scopes: name(scopeName, RuleName.InLineComment) },
+                { text: '; comment', scopes: name(scopeName, RuleName.InlineComment) },
 
                 { text: 'break', scopes: name(scopeName, RuleName.JumpCommandName) },
-                { text: '; comment', scopes: name(scopeName, RuleName.InLineComment) },
+                { text: '; comment', scopes: name(scopeName, RuleName.InlineComment) },
 
                 { text: '}', scopes: name(scopeName, RuleName.BlockEnd) },
-                { text: '; comment', scopes: name(scopeName, RuleName.InLineComment) },
+                { text: '; comment', scopes: name(scopeName, RuleName.InlineComment) },
 
                 { text: '}', scopes: name(scopeName, RuleName.BlockEnd) },
-                { text: '; comment', scopes: name(scopeName, RuleName.InLineComment) },
+                { text: '; comment', scopes: name(scopeName, RuleName.InlineComment) },
               ],
             ],
           ];
@@ -354,24 +354,24 @@ export function createSwitchStatementExpectedData(scopeName: ScopeName): Expecte
           { text: 'true', scopes: name(scopeName, RuleName.KeywordLikeBuiltInVariable) },
           { text: ')', scopes: name(scopeName, RuleName.CloseParen) },
           { text: '{', scopes: name(scopeName, RuleName.BlockBegin) },
-          { text: '; comment', scopes: name(scopeName, RuleName.InLineComment) },
+          { text: '; comment', scopes: name(scopeName, RuleName.InlineComment) },
 
           { text: 'case', scopes: name(scopeName, RuleName.SwitchLabelKeyword) },
-          { text: '; comment', scopes: name(scopeName, RuleName.InLineComment) },
+          { text: '; comment', scopes: name(scopeName, RuleName.InlineComment) },
 
           { text: 'case', scopes: name(scopeName, RuleName.SwitchLabelKeyword) },
           { text: ':', scopes: name(scopeName, RuleName.Colon) },
-          { text: '; comment', scopes: name(scopeName, RuleName.InLineComment) },
+          { text: '; comment', scopes: name(scopeName, RuleName.InlineComment) },
 
           { text: 'default', scopes: name(scopeName, RuleName.SwitchLabelKeyword) },
-          { text: '; comment', scopes: name(scopeName, RuleName.InLineComment) },
+          { text: '; comment', scopes: name(scopeName, RuleName.InlineComment) },
 
           { text: 'default', scopes: name(scopeName, RuleName.SwitchLabelKeyword) },
           { text: ':', scopes: name(scopeName, RuleName.Colon) },
-          { text: '; comment', scopes: name(scopeName, RuleName.InLineComment) },
+          { text: '; comment', scopes: name(scopeName, RuleName.InlineComment) },
 
           { text: '}', scopes: name(scopeName, RuleName.BlockEnd) },
-          { text: '; comment', scopes: name(scopeName, RuleName.InLineComment) },
+          { text: '; comment', scopes: name(scopeName, RuleName.InlineComment) },
         ],
 
         ...[
@@ -379,26 +379,26 @@ export function createSwitchStatementExpectedData(scopeName: ScopeName): Expecte
           { text: '(', scopes: name(scopeName, RuleName.OpenParen) },
           { text: 'true', scopes: name(scopeName, RuleName.KeywordLikeBuiltInVariable) },
           { text: ')', scopes: name(scopeName, RuleName.CloseParen) },
-          { text: '; comment', scopes: name(scopeName, RuleName.InLineComment) },
+          { text: '; comment', scopes: name(scopeName, RuleName.InlineComment) },
           { text: '{', scopes: name(scopeName, RuleName.BlockBegin) },
-          { text: '; comment', scopes: name(scopeName, RuleName.InLineComment) },
+          { text: '; comment', scopes: name(scopeName, RuleName.InlineComment) },
 
           { text: 'case', scopes: name(scopeName, RuleName.SwitchLabelKeyword) },
-          { text: '; comment', scopes: name(scopeName, RuleName.InLineComment) },
+          { text: '; comment', scopes: name(scopeName, RuleName.InlineComment) },
 
           { text: 'case', scopes: name(scopeName, RuleName.SwitchLabelKeyword) },
           { text: ':', scopes: name(scopeName, RuleName.Colon) },
-          { text: '; comment', scopes: name(scopeName, RuleName.InLineComment) },
+          { text: '; comment', scopes: name(scopeName, RuleName.InlineComment) },
 
           { text: 'default', scopes: name(scopeName, RuleName.SwitchLabelKeyword) },
-          { text: '; comment', scopes: name(scopeName, RuleName.InLineComment) },
+          { text: '; comment', scopes: name(scopeName, RuleName.InlineComment) },
 
           { text: 'default', scopes: name(scopeName, RuleName.SwitchLabelKeyword) },
           { text: ':', scopes: name(scopeName, RuleName.Colon) },
-          { text: '; comment', scopes: name(scopeName, RuleName.InLineComment) },
+          { text: '; comment', scopes: name(scopeName, RuleName.InlineComment) },
 
           { text: '}', scopes: name(scopeName, RuleName.BlockEnd) },
-          { text: '; comment', scopes: name(scopeName, RuleName.InLineComment) },
+          { text: '; comment', scopes: name(scopeName, RuleName.InlineComment) },
         ],
       ],
     ],
@@ -425,44 +425,44 @@ export function createSwitchStatementExpectedData(scopeName: ScopeName): Expecte
         { text: '(', scopes: name(scopeName, RuleName.OpenParen) },
         { text: 'true', scopes: name(scopeName, RuleName.KeywordLikeBuiltInVariable) },
         { text: ')', scopes: name(scopeName, RuleName.CloseParen) },
-        { text: '; comment', scopes: name(scopeName, RuleName.InLineComment) },
+        { text: '; comment', scopes: name(scopeName, RuleName.InlineComment) },
 
         { text: '{', scopes: name(scopeName, RuleName.BlockBegin) },
-        { text: '; comment', scopes: name(scopeName, RuleName.InLineComment) },
+        { text: '; comment', scopes: name(scopeName, RuleName.InlineComment) },
 
         { text: 'case', scopes: name(scopeName, RuleName.SwitchLabelKeyword) },
         { text: 'a', scopes: name(scopeName, RuleName.Variable) },
         { text: ',', scopes: name(scopeName, RuleName.Comma) },
-        { text: '; comment', scopes: name(scopeName, RuleName.InLineComment) },
+        { text: '; comment', scopes: name(scopeName, RuleName.InlineComment) },
 
         { text: 'b', scopes: name(scopeName, RuleName.Variable) },
         { text: ':', scopes: name(scopeName, RuleName.Colon) },
-        { text: '; comment', scopes: name(scopeName, RuleName.InLineComment) },
+        { text: '; comment', scopes: name(scopeName, RuleName.InlineComment) },
 
         { text: 'break', scopes: name(scopeName, RuleName.JumpCommandName) },
-        { text: '; comment', scopes: name(scopeName, RuleName.InLineComment) },
+        { text: '; comment', scopes: name(scopeName, RuleName.InlineComment) },
 
         { text: 'default', scopes: name(scopeName, RuleName.SwitchLabelKeyword) },
         { text: ':', scopes: name(scopeName, RuleName.Colon) },
-        { text: '; comment', scopes: name(scopeName, RuleName.InLineComment) },
+        { text: '; comment', scopes: name(scopeName, RuleName.InlineComment) },
 
         { text: 'break', scopes: name(scopeName, RuleName.JumpCommandName) },
-        { text: '; comment', scopes: name(scopeName, RuleName.InLineComment) },
+        { text: '; comment', scopes: name(scopeName, RuleName.InlineComment) },
 
         { text: 'case', scopes: name(scopeName, RuleName.SwitchLabelKeyword) },
         { text: 'c', scopes: name(scopeName, RuleName.Variable) },
-        { text: '; comment', scopes: name(scopeName, RuleName.InLineComment) },
+        { text: '; comment', scopes: name(scopeName, RuleName.InlineComment) },
 
         { text: ',', scopes: name(scopeName, RuleName.Comma) },
         { text: 'd', scopes: name(scopeName, RuleName.Variable) },
         { text: ':', scopes: name(scopeName, RuleName.Colon) },
-        { text: '; comment', scopes: name(scopeName, RuleName.InLineComment) },
+        { text: '; comment', scopes: name(scopeName, RuleName.InlineComment) },
 
         { text: 'break', scopes: name(scopeName, RuleName.JumpCommandName) },
-        { text: '; comment', scopes: name(scopeName, RuleName.InLineComment) },
+        { text: '; comment', scopes: name(scopeName, RuleName.InlineComment) },
 
         { text: '}', scopes: name(scopeName, RuleName.BlockEnd) },
-        { text: '; comment', scopes: name(scopeName, RuleName.InLineComment) },
+        { text: '; comment', scopes: name(scopeName, RuleName.InlineComment) },
       ],
     ],
   ];

@@ -17,16 +17,16 @@ export function createJumpStatementExpectedData(scopeName: ScopeName): ExpectedT
           `,
           [
             { text: command, scopes: name(scopeName, RuleName.JumpCommandName) },
-            { text: '; comment', scopes: name(scopeName, RuleName.InLineComment) },
+            { text: '; comment', scopes: name(scopeName, RuleName.InlineComment) },
 
             { text: command, scopes: name(scopeName, RuleName.JumpCommandName) },
             { text: 'label', scopes: name(scopeName, RuleName.LabelName) },
-            { text: '; comment', scopes: name(scopeName, RuleName.InLineComment) },
+            { text: '; comment', scopes: name(scopeName, RuleName.InlineComment) },
 
             { text: command, scopes: name(scopeName, RuleName.JumpCommandName) },
             { text: ',', scopes: name(scopeName, RuleName.Comma) },
             { text: 'label', scopes: name(scopeName, RuleName.LabelName) },
-            { text: '; comment', scopes: name(scopeName, RuleName.InLineComment) },
+            { text: '; comment', scopes: name(scopeName, RuleName.InlineComment) },
           ],
         ],
         [
@@ -39,22 +39,22 @@ export function createJumpStatementExpectedData(scopeName: ScopeName): ExpectedT
           `,
           [
             { text: '{', scopes: name(scopeName, RuleName.BlockBegin) },
-            { text: '; comment', scopes: name(scopeName, RuleName.InLineComment) },
+            { text: '; comment', scopes: name(scopeName, RuleName.InlineComment) },
 
             { text: command, scopes: name(scopeName, RuleName.JumpCommandName) },
-            { text: '; comment', scopes: name(scopeName, RuleName.InLineComment) },
+            { text: '; comment', scopes: name(scopeName, RuleName.InlineComment) },
 
             { text: command, scopes: name(scopeName, RuleName.JumpCommandName) },
             { text: 'label', scopes: name(scopeName, RuleName.LabelName) },
-            { text: '; comment', scopes: name(scopeName, RuleName.InLineComment) },
+            { text: '; comment', scopes: name(scopeName, RuleName.InlineComment) },
 
             { text: command, scopes: name(scopeName, RuleName.JumpCommandName) },
             { text: ',', scopes: name(scopeName, RuleName.Comma) },
             { text: 'label', scopes: name(scopeName, RuleName.LabelName) },
-            { text: '; comment', scopes: name(scopeName, RuleName.InLineComment) },
+            { text: '; comment', scopes: name(scopeName, RuleName.InlineComment) },
 
             { text: '}', scopes: name(scopeName, RuleName.BlockEnd) },
-            { text: '; comment', scopes: name(scopeName, RuleName.InLineComment) },
+            { text: '; comment', scopes: name(scopeName, RuleName.InlineComment) },
           ],
         ],
       ];
@@ -69,16 +69,16 @@ export function createJumpStatementExpectedData(scopeName: ScopeName): ExpectedT
           `,
           [
             { text: command, scopes: name(scopeName, RuleName.JumpCommandName) },
-            { text: '; comment', scopes: name(scopeName, RuleName.InLineComment) },
+            { text: '; comment', scopes: name(scopeName, RuleName.InlineComment) },
 
             { text: command, scopes: name(scopeName, RuleName.JumpCommandName) },
             { text: '1', scopes: name(scopeName, RuleName.Integer) },
-            { text: '; comment', scopes: name(scopeName, RuleName.InLineComment) },
+            { text: '; comment', scopes: name(scopeName, RuleName.InlineComment) },
 
             { text: command, scopes: name(scopeName, RuleName.JumpCommandName) },
             { text: ',', scopes: name(scopeName, RuleName.Comma) },
             { text: '1', scopes: name(scopeName, RuleName.Integer) },
-            { text: '; comment', scopes: name(scopeName, RuleName.InLineComment) },
+            { text: '; comment', scopes: name(scopeName, RuleName.InlineComment) },
           ],
         ],
         [
@@ -95,30 +95,30 @@ export function createJumpStatementExpectedData(scopeName: ScopeName): ExpectedT
           [
             { text: command, scopes: name(scopeName, RuleName.JumpCommandName) },
             { text: '(', scopes: name(scopeName, RuleName.OpenParen) },
-            { text: '; comment', scopes: name(scopeName, RuleName.InLineComment) },
+            { text: '; comment', scopes: name(scopeName, RuleName.InlineComment) },
 
             { text: ')', scopes: name(scopeName, RuleName.CloseParen) },
-            { text: '; comment', scopes: name(scopeName, RuleName.InLineComment) },
+            { text: '; comment', scopes: name(scopeName, RuleName.InlineComment) },
 
             { text: command, scopes: name(scopeName, RuleName.JumpCommandName) },
             { text: ',', scopes: name(scopeName, RuleName.Comma) },
             { text: '(', scopes: name(scopeName, RuleName.OpenParen) },
-            { text: '; comment', scopes: name(scopeName, RuleName.InLineComment) },
+            { text: '; comment', scopes: name(scopeName, RuleName.InlineComment) },
 
             { text: ')', scopes: name(scopeName, RuleName.CloseParen) },
-            { text: '; comment', scopes: name(scopeName, RuleName.InLineComment) },
+            { text: '; comment', scopes: name(scopeName, RuleName.InlineComment) },
 
             { text: command, scopes: name(scopeName, RuleName.JumpCommandName) },
             { text: '{', scopes: name(scopeName, RuleName.OpenBrace) },
-            { text: '; comment', scopes: name(scopeName, RuleName.InLineComment) },
+            { text: '; comment', scopes: name(scopeName, RuleName.InlineComment) },
 
             { text: 'key', scopes: name(scopeName, RuleName.Variable) },
             { text: ':', scopes: name(scopeName, RuleName.Colon) },
             { text: 'value', scopes: name(scopeName, RuleName.Variable) },
-            { text: '; comment', scopes: name(scopeName, RuleName.InLineComment) },
+            { text: '; comment', scopes: name(scopeName, RuleName.InlineComment) },
 
             { text: '}', scopes: name(scopeName, RuleName.CloseBrace) },
-            { text: '; comment', scopes: name(scopeName, RuleName.InLineComment) },
+            { text: '; comment', scopes: name(scopeName, RuleName.InlineComment) },
           ],
         ],
       ];

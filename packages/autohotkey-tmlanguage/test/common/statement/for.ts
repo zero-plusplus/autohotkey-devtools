@@ -23,10 +23,10 @@ export function createForStatementExpectedData(scopeName: ScopeName): ExpectedTe
             { text: 'in', scopes: name(scopeName, RuleName.KeywordInExpression) },
             { text: 'obj', scopes: name(scopeName, RuleName.Variable) },
             { text: '{', scopes: name(scopeName, RuleName.BlockBegin) },
-            { text: '; comment', scopes: name(scopeName, RuleName.InLineComment) },
+            { text: '; comment', scopes: name(scopeName, RuleName.InlineComment) },
 
             { text: '}', scopes: name(scopeName, RuleName.BlockEnd) },
-            { text: '; comment', scopes: name(scopeName, RuleName.InLineComment) },
+            { text: '; comment', scopes: name(scopeName, RuleName.InlineComment) },
           ],
         ],
         [
@@ -43,10 +43,10 @@ export function createForStatementExpectedData(scopeName: ScopeName): ExpectedTe
             { text: 'in', scopes: name(scopeName, RuleName.KeywordInExpression) },
             { text: 'obj', scopes: name(scopeName, RuleName.Variable) },
             { text: '{', scopes: name(scopeName, RuleName.BlockBegin) },
-            { text: '; comment', scopes: name(scopeName, RuleName.InLineComment) },
+            { text: '; comment', scopes: name(scopeName, RuleName.InlineComment) },
 
             { text: '}', scopes: name(scopeName, RuleName.BlockEnd) },
-            { text: '; comment', scopes: name(scopeName, RuleName.InLineComment) },
+            { text: '; comment', scopes: name(scopeName, RuleName.InlineComment) },
           ],
         ],
         [
@@ -67,10 +67,10 @@ export function createForStatementExpectedData(scopeName: ScopeName): ExpectedTe
             { text: 'in', scopes: name(scopeName, RuleName.KeywordInExpression) },
             { text: 'obj', scopes: name(scopeName, RuleName.Variable) },
             { text: '{', scopes: name(scopeName, RuleName.BlockBegin) },
-            { text: '; comment', scopes: name(scopeName, RuleName.InLineComment) },
+            { text: '; comment', scopes: name(scopeName, RuleName.InlineComment) },
 
             { text: '}', scopes: name(scopeName, RuleName.BlockEnd) },
-            { text: '; comment', scopes: name(scopeName, RuleName.InLineComment) },
+            { text: '; comment', scopes: name(scopeName, RuleName.InlineComment) },
           ],
         ],
       ];
@@ -92,13 +92,13 @@ export function createForStatementExpectedData(scopeName: ScopeName): ExpectedTe
             { text: 'value', scopes: name(scopeName, RuleName.Variable) },
             { text: 'in', scopes: name(scopeName, RuleName.KeywordInExpression) },
             { text: 'obj', scopes: name(scopeName, RuleName.Variable) },
-            { text: '; comment', scopes: name(scopeName, RuleName.InLineComment) },
+            { text: '; comment', scopes: name(scopeName, RuleName.InlineComment) },
 
             { text: '{', scopes: name(scopeName, RuleName.BlockBegin) },
-            { text: '; comment', scopes: name(scopeName, RuleName.InLineComment) },
+            { text: '; comment', scopes: name(scopeName, RuleName.InlineComment) },
 
             { text: '}', scopes: name(scopeName, RuleName.BlockEnd) },
-            { text: '; comment', scopes: name(scopeName, RuleName.InLineComment) },
+            { text: '; comment', scopes: name(scopeName, RuleName.InlineComment) },
           ],
         ],
         [
@@ -115,13 +115,13 @@ export function createForStatementExpectedData(scopeName: ScopeName): ExpectedTe
             { text: 'value', scopes: name(scopeName, RuleName.Variable) },
             { text: 'in', scopes: name(scopeName, RuleName.KeywordInExpression) },
             { text: 'obj', scopes: name(scopeName, RuleName.Variable) },
-            { text: '; comment', scopes: name(scopeName, RuleName.InLineComment) },
+            { text: '; comment', scopes: name(scopeName, RuleName.InlineComment) },
 
             { text: '{', scopes: name(scopeName, RuleName.BlockBegin) },
-            { text: '; comment', scopes: name(scopeName, RuleName.InLineComment) },
+            { text: '; comment', scopes: name(scopeName, RuleName.InlineComment) },
 
             { text: '}', scopes: name(scopeName, RuleName.BlockEnd) },
-            { text: '; comment', scopes: name(scopeName, RuleName.InLineComment) },
+            { text: '; comment', scopes: name(scopeName, RuleName.InlineComment) },
           ],
         ],
       ];

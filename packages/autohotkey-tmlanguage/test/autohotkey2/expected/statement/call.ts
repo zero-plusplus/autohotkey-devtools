@@ -18,7 +18,7 @@ export function createCallStatementExpectedData(scopeName: ScopeName): ExpectedT
             `,
             [
               { text: functionName, scopes: name(scopeName, RuleName.FunctionName) },
-              { text: '; comment', scopes: name(scopeName, RuleName.InLineComment) },
+              { text: '; comment', scopes: name(scopeName, RuleName.InlineComment) },
             ],
           ];
         }),
@@ -29,7 +29,7 @@ export function createCallStatementExpectedData(scopeName: ScopeName): ExpectedT
             `,
             [
               { text: functionName, scopes: name(scopeName, RuleName.FunctionName, StyleName.Strikethrough) },
-              { text: '; comment', scopes: name(scopeName, RuleName.InLineComment) },
+              { text: '; comment', scopes: name(scopeName, RuleName.InlineComment) },
             ],
           ];
         }),
@@ -43,14 +43,14 @@ export function createCallStatementExpectedData(scopeName: ScopeName): ExpectedT
             { text: '"', scopes: name(scopeName, RuleName.DoubleString, RuleDescriptor.Begin) },
             { text: 'arg1', scopes: name(scopeName, RuleName.DoubleString) },
             { text: '"', scopes: name(scopeName, RuleName.DoubleString, RuleDescriptor.End) },
-            { text: '; comment', scopes: name(scopeName, RuleName.InLineComment) },
+            { text: '; comment', scopes: name(scopeName, RuleName.InlineComment) },
 
             { text: 'Abc', scopes: name(scopeName, RuleName.FunctionName) },
             { text: ',', scopes: name(scopeName, RuleName.Comma) },
             { text: '"', scopes: name(scopeName, RuleName.DoubleString, RuleDescriptor.Begin) },
             { text: 'arg1', scopes: name(scopeName, RuleName.DoubleString) },
             { text: '"', scopes: name(scopeName, RuleName.DoubleString, RuleDescriptor.End) },
-            { text: '; comment', scopes: name(scopeName, RuleName.InLineComment) },
+            { text: '; comment', scopes: name(scopeName, RuleName.InlineComment) },
           ],
         ],
         [
@@ -73,7 +73,7 @@ export function createCallStatementExpectedData(scopeName: ScopeName): ExpectedT
             { text: ':', scopes: name(scopeName, RuleName.Colon) },
             { text: 'value', scopes: name(scopeName, RuleName.Variable) },
             { text: '}', scopes: name(scopeName, RuleName.CloseBrace) },
-            { text: '; comment', scopes: name(scopeName, RuleName.InLineComment) },
+            { text: '; comment', scopes: name(scopeName, RuleName.InlineComment) },
           ],
         ],
       ];
@@ -94,31 +94,31 @@ export function createCallStatementExpectedData(scopeName: ScopeName): ExpectedT
           [
             { text: 'Abc', scopes: name(scopeName, RuleName.FunctionName) },
             { text: '{', scopes: name(scopeName, RuleName.OpenBrace) },
-            { text: '; comment', scopes: name(scopeName, RuleName.InLineComment) },
+            { text: '; comment', scopes: name(scopeName, RuleName.InlineComment) },
 
             { text: 'key', scopes: name(scopeName, RuleName.Variable) },
             { text: ':', scopes: name(scopeName, RuleName.Colon) },
             { text: 'value', scopes: name(scopeName, RuleName.Variable) },
-            { text: '; comment', scopes: name(scopeName, RuleName.InLineComment) },
+            { text: '; comment', scopes: name(scopeName, RuleName.InlineComment) },
 
             { text: '}', scopes: name(scopeName, RuleName.CloseBrace) },
             { text: ',', scopes: name(scopeName, RuleName.Comma) },
             { text: '[', scopes: name(scopeName, RuleName.OpenBracket) },
             { text: '1', scopes: name(scopeName, RuleName.Integer) },
             { text: ',', scopes: name(scopeName, RuleName.Comma) },
-            { text: '; comment', scopes: name(scopeName, RuleName.InLineComment) },
+            { text: '; comment', scopes: name(scopeName, RuleName.InlineComment) },
 
             { text: '2', scopes: name(scopeName, RuleName.Integer) },
-            { text: '; comment', scopes: name(scopeName, RuleName.InLineComment) },
+            { text: '; comment', scopes: name(scopeName, RuleName.InlineComment) },
 
             { text: ',', scopes: name(scopeName, RuleName.Comma) },
             { text: '3', scopes: name(scopeName, RuleName.Integer) },
             { text: ',', scopes: name(scopeName, RuleName.Comma) },
-            { text: '; comment', scopes: name(scopeName, RuleName.InLineComment) },
+            { text: '; comment', scopes: name(scopeName, RuleName.InlineComment) },
 
             { text: ']', scopes: name(scopeName, RuleName.CloseBracket) },
             { text: ',', scopes: name(scopeName, RuleName.Comma) },
-            { text: '; comment', scopes: name(scopeName, RuleName.InLineComment) },
+            { text: '; comment', scopes: name(scopeName, RuleName.InlineComment) },
           ],
         ],
       ];

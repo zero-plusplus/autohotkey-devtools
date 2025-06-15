@@ -16,14 +16,14 @@ export function createParenthesizedExpressionExpectedData(scopeName: ScopeName):
         { text: '(', scopes: name(scopeName, RuleName.OpenParen) },
         { text: 'var', scopes: name(scopeName, RuleName.Variable) },
         { text: ')', scopes: name(scopeName, RuleName.CloseParen) },
-        { text: '; comment', scopes: name(scopeName, RuleName.InLineComment) },
+        { text: '; comment', scopes: name(scopeName, RuleName.InlineComment) },
 
         { text: '(', scopes: name(scopeName, RuleName.OpenParen) },
         { text: 'a', scopes: name(scopeName, RuleName.Variable) },
         { text: '+', scopes: name(scopeName, RuleName.Operator) },
         { text: 'b', scopes: name(scopeName, RuleName.Variable) },
         { text: ')', scopes: name(scopeName, RuleName.CloseParen) },
-        { text: '; comment', scopes: name(scopeName, RuleName.InLineComment) },
+        { text: '; comment', scopes: name(scopeName, RuleName.InlineComment) },
       ],
     ],
   ];

@@ -18,10 +18,10 @@ export function createWhileStatementExpectedData(scopeName: ScopeName): Expected
         { text: ',', scopes: name(scopeName, RuleName.Comma) },
         { text: 'true', scopes: name(scopeName, RuleName.KeywordLikeBuiltInVariable) },
         { text: '{', scopes: name(scopeName, RuleName.BlockBegin) },
-        { text: '; comment', scopes: name(scopeName, RuleName.InLineComment) },
+        { text: '; comment', scopes: name(scopeName, RuleName.InlineComment) },
 
         { text: '}', scopes: name(scopeName, RuleName.BlockEnd) },
-        { text: '; comment', scopes: name(scopeName, RuleName.InLineComment) },
+        { text: '; comment', scopes: name(scopeName, RuleName.InlineComment) },
       ],
     ],
   ];

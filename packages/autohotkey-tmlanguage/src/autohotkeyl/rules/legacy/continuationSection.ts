@@ -24,7 +24,7 @@ export function createContinuationSectionRule(scopeName: ScopeName, placeholder:
       1: nameRule(scopeName, RuleName.OpenParen),
       2: patternsRule(
         includeRule(Repository.ContinuationStringOptions),
-        includeRule(Repository.AllInLineComments),
+        includeRule(Repository.InlineTrivias),
       ),
     },
     end: seq(
@@ -47,7 +47,7 @@ export function createContinuationSectionRule(scopeName: ScopeName, placeholder:
         includeRule(Repository.Comma),
         includeRule(Repository.CommandArgument),
       ),
-      3: patternsRule(includeRule(Repository.AllInLineComments)),
+      3: patternsRule(includeRule(Repository.InlineTrivias)),
       4: patternsRule(includeRule(Repository.Comma)),
     },
     patterns: [ includeRule(Repository.ContinuationSectionText) ],

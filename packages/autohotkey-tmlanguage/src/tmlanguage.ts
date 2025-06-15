@@ -28,15 +28,15 @@ export const enum Repository {
   Meta = '$Meta',
 
   // #region trivas
-  Comment = '$Comment',
-  AllMultiLineComments = '$AllMultiLineComments',
-  AllSingleLineComments = '$AllSingleLineComments',
-  AllInLineComments = '$AllInLineComments',
+  Trivias = '$Trivias',
+  MultiLineTrivias = '$MultiLineTrivias',
+  SingleLineTrivias = '$SingleLineTrivias',
+  InlineTrivias = '$InlineTrivias',
 
   MultiLineComment = '$MultiLineComment',
   SingleLineComment = '$SingleLineComment',
   CompilerDirectiveComment = '$CompilerDirectiveComment',
-  InLineComment = '$InLineComment',
+  InlineComment = '$InlineComment',
 
   // #region document
   MultiLineDocumentComment = '$MultiLineDocumentComment',
@@ -208,7 +208,7 @@ export const enum Repository {
 export const enum RuleName {
   // #region trivias
   SingleLineComment = 'comment.single-line',
-  InLineComment = 'comment.in-line',
+  InlineComment = 'comment.inline',
   MultiLineComment = 'comment.multi-line',
   DirectiveComment = 'comment.single-line.directive',
   DirectiveCommentName = 'meta.preprocessor.comment.directive',

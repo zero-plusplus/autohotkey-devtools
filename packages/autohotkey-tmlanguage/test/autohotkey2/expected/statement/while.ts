@@ -26,15 +26,15 @@ export function createWhileStatementExpectedData(scopeName: ScopeName): Expected
                 { text: 'while', scopes: name(scopeName, RuleName.ControlFlowKeyword) },
                 { text: 'true', scopes: name(scopeName, RuleName.KeywordLikeBuiltInVariable) },
                 { text: '{', scopes: name(scopeName, RuleName.BlockBegin) },
-                { text: '; comment', scopes: name(scopeName, RuleName.InLineComment) },
+                { text: '; comment', scopes: name(scopeName, RuleName.InlineComment) },
 
                 { text: '}', scopes: name(scopeName, RuleName.BlockEnd) },
                 { text: 'else', scopes: name(scopeName, RuleName.ControlFlowKeyword) },
                 { text: '{', scopes: name(scopeName, RuleName.BlockBegin) },
-                { text: '; comment', scopes: name(scopeName, RuleName.InLineComment) },
+                { text: '; comment', scopes: name(scopeName, RuleName.InlineComment) },
 
                 { text: '}', scopes: name(scopeName, RuleName.BlockEnd) },
-                { text: '; comment', scopes: name(scopeName, RuleName.InLineComment) },
+                { text: '; comment', scopes: name(scopeName, RuleName.InlineComment) },
               ],
             ],
             [
@@ -48,17 +48,17 @@ export function createWhileStatementExpectedData(scopeName: ScopeName): Expected
                 { text: 'while', scopes: name(scopeName, RuleName.ControlFlowKeyword) },
                 { text: 'true', scopes: name(scopeName, RuleName.KeywordLikeBuiltInVariable) },
                 { text: '{', scopes: name(scopeName, RuleName.BlockBegin) },
-                { text: '; comment', scopes: name(scopeName, RuleName.InLineComment) },
+                { text: '; comment', scopes: name(scopeName, RuleName.InlineComment) },
 
                 { text: '}', scopes: name(scopeName, RuleName.BlockEnd) },
-                { text: '; comment', scopes: name(scopeName, RuleName.InLineComment) },
+                { text: '; comment', scopes: name(scopeName, RuleName.InlineComment) },
 
                 { text: 'else', scopes: name(scopeName, RuleName.ControlFlowKeyword) },
                 { text: '{', scopes: name(scopeName, RuleName.BlockBegin) },
-                { text: '; comment', scopes: name(scopeName, RuleName.InLineComment) },
+                { text: '; comment', scopes: name(scopeName, RuleName.InlineComment) },
 
                 { text: '}', scopes: name(scopeName, RuleName.BlockEnd) },
-                { text: '; comment', scopes: name(scopeName, RuleName.InLineComment) },
+                { text: '; comment', scopes: name(scopeName, RuleName.InlineComment) },
               ],
             ],
           ];
@@ -79,22 +79,22 @@ export function createWhileStatementExpectedData(scopeName: ScopeName): Expected
               [
                 { text: 'while', scopes: name(scopeName, RuleName.ControlFlowKeyword) },
                 { text: 'true', scopes: name(scopeName, RuleName.KeywordLikeBuiltInVariable) },
-                { text: '; comment', scopes: name(scopeName, RuleName.InLineComment) },
+                { text: '; comment', scopes: name(scopeName, RuleName.InlineComment) },
 
                 { text: '{', scopes: name(scopeName, RuleName.BlockBegin) },
-                { text: '; comment', scopes: name(scopeName, RuleName.InLineComment) },
+                { text: '; comment', scopes: name(scopeName, RuleName.InlineComment) },
 
                 { text: '}', scopes: name(scopeName, RuleName.BlockEnd) },
-                { text: '; comment', scopes: name(scopeName, RuleName.InLineComment) },
+                { text: '; comment', scopes: name(scopeName, RuleName.InlineComment) },
 
                 { text: 'else', scopes: name(scopeName, RuleName.ControlFlowKeyword) },
-                { text: '; comment', scopes: name(scopeName, RuleName.InLineComment) },
+                { text: '; comment', scopes: name(scopeName, RuleName.InlineComment) },
 
                 { text: '{', scopes: name(scopeName, RuleName.BlockBegin) },
-                { text: '; comment', scopes: name(scopeName, RuleName.InLineComment) },
+                { text: '; comment', scopes: name(scopeName, RuleName.InlineComment) },
 
                 { text: '}', scopes: name(scopeName, RuleName.BlockEnd) },
-                { text: '; comment', scopes: name(scopeName, RuleName.InLineComment) },
+                { text: '; comment', scopes: name(scopeName, RuleName.InlineComment) },
               ],
             ],
           ];

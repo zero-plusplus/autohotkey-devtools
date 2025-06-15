@@ -18,19 +18,19 @@ export function createMethodDeclarationExpectedData(scopeName: ScopeName): Expec
       [
         { text: 'class', scopes: name(scopeName, RuleName.ClassKeyword) },
         { text: '{', scopes: name(scopeName, RuleName.ClassBlockBegin) },
-        { text: '; comment', scopes: name(scopeName, RuleName.InLineComment) },
+        { text: '; comment', scopes: name(scopeName, RuleName.InlineComment) },
 
         { text: 'map', scopes: name(scopeName, RuleName.FunctionName) },
         { text: '(', scopes: name(scopeName, RuleName.OpenParen) },
         { text: ')', scopes: name(scopeName, RuleName.CloseParen) },
         { text: '{', scopes: name(scopeName, RuleName.BlockBegin) },
-        { text: '; comment', scopes: name(scopeName, RuleName.InLineComment) },
+        { text: '; comment', scopes: name(scopeName, RuleName.InlineComment) },
 
         { text: '}', scopes: name(scopeName, RuleName.BlockEnd) },
-        { text: '; comment', scopes: name(scopeName, RuleName.InLineComment) },
+        { text: '; comment', scopes: name(scopeName, RuleName.InlineComment) },
 
         { text: '}', scopes: name(scopeName, RuleName.ClassBlockEnd) },
-        { text: '; comment', scopes: name(scopeName, RuleName.InLineComment) },
+        { text: '; comment', scopes: name(scopeName, RuleName.InlineComment) },
       ],
     ],
   ];

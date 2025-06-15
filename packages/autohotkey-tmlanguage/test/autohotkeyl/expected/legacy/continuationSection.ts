@@ -14,12 +14,12 @@ export function createContinuationSectionExpectedData(scopeName: ScopeName): Exp
         )               ; comment
       `, [
         { text: '(', scopes: name(scopeName, RuleName.OpenParen) },
-        { text: '; comment', scopes: name(scopeName, RuleName.InLineComment) },
+        { text: '; comment', scopes: name(scopeName, RuleName.InlineComment) },
 
         { text: 'text          ; text', scopes: name(scopeName, RuleName.UnquotedString) },
 
         { text: ')', scopes: name(scopeName, RuleName.CloseParen) },
-        { text: '; comment', scopes: name(scopeName, RuleName.InLineComment) },
+        { text: '; comment', scopes: name(scopeName, RuleName.InlineComment) },
       ],
     ],
     [
@@ -31,17 +31,17 @@ export function createContinuationSectionExpectedData(scopeName: ScopeName): Exp
       `, [
         { text: '(', scopes: name(scopeName, RuleName.OpenParen) },
         { text: 'Join`r`n', scopes: name(scopeName, RuleName.ContinuationOption, StyleName.Strong) },
-        { text: '; comment', scopes: name(scopeName, RuleName.InLineComment) },
+        { text: '; comment', scopes: name(scopeName, RuleName.InlineComment) },
 
         { text: ')', scopes: name(scopeName, RuleName.CloseParen) },
-        { text: '; comment', scopes: name(scopeName, RuleName.InLineComment) },
+        { text: '; comment', scopes: name(scopeName, RuleName.InlineComment) },
 
         { text: '(', scopes: name(scopeName, RuleName.OpenParen) },
         { text: 'Join|', scopes: name(scopeName, RuleName.ContinuationOption, StyleName.Strong) },
-        { text: '; comment', scopes: name(scopeName, RuleName.InLineComment) },
+        { text: '; comment', scopes: name(scopeName, RuleName.InlineComment) },
 
         { text: ')', scopes: name(scopeName, RuleName.CloseParen) },
-        { text: '; comment', scopes: name(scopeName, RuleName.InLineComment) },
+        { text: '; comment', scopes: name(scopeName, RuleName.InlineComment) },
       ],
     ],
     [
@@ -52,15 +52,15 @@ export function createContinuationSectionExpectedData(scopeName: ScopeName): Exp
       `, [
         { text: 'Gui', scopes: name(scopeName, RuleName.CommandName) },
         { text: ',', scopes: name(scopeName, RuleName.Comma) },
-        { text: '; comment', scopes: name(scopeName, RuleName.InLineComment) },
+        { text: '; comment', scopes: name(scopeName, RuleName.InlineComment) },
 
         { text: '(', scopes: name(scopeName, RuleName.OpenParen) },
-        { text: '; comment', scopes: name(scopeName, RuleName.InLineComment) },
+        { text: '; comment', scopes: name(scopeName, RuleName.InlineComment) },
 
         { text: ')', scopes: name(scopeName, RuleName.CloseParen) },
         { text: ',', scopes: name(scopeName, RuleName.Comma) },
         { text: 'text', scopes: name(scopeName, RuleName.UnquotedString) },
-        { text: '; comment', scopes: name(scopeName, RuleName.InLineComment) },
+        { text: '; comment', scopes: name(scopeName, RuleName.InlineComment) },
       ],
     ],
 
@@ -73,10 +73,10 @@ export function createContinuationSectionExpectedData(scopeName: ScopeName): Exp
       [
         { text: '(', scopes: name(scopeName, RuleName.OpenParen) },
         { text: 'xxx', scopes: name(scopeName, RuleName.ContinuationOption, StyleName.Invalid) },
-        { text: '; comment', scopes: name(scopeName, RuleName.InLineComment) },
+        { text: '; comment', scopes: name(scopeName, RuleName.InlineComment) },
 
         { text: ')', scopes: name(scopeName, RuleName.CloseParen) },
-        { text: '; comment', scopes: name(scopeName, RuleName.InLineComment) },
+        { text: '; comment', scopes: name(scopeName, RuleName.InlineComment) },
       ],
     ],
   ];

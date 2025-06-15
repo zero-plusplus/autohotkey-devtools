@@ -15,7 +15,7 @@ export function createParenthesizedExpressionRule(scopeName: ScopeName): BeginEn
       1: nameRule(scopeName, RuleName.CloseParen),
     },
     patterns: [
-      includeRule(Repository.Comment),
+      includeRule(Repository.Trivias),
 
       includeRule(Repository.Comma),
       includeRule(Repository.ExpressionInBrackets),

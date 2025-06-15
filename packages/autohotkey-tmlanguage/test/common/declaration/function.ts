@@ -20,10 +20,10 @@ export function createFunctionDeclarationExpectedData(scopeName: ScopeName): Exp
             { text: '(', scopes: name(scopeName, RuleName.OpenParen) },
             { text: ')', scopes: name(scopeName, RuleName.CloseParen) },
             { text: '{', scopes: name(scopeName, RuleName.BlockBegin) },
-            { text: '; comment', scopes: name(scopeName, RuleName.InLineComment) },
+            { text: '; comment', scopes: name(scopeName, RuleName.InlineComment) },
 
             { text: '}', scopes: name(scopeName, RuleName.BlockEnd) },
-            { text: '; comment', scopes: name(scopeName, RuleName.InLineComment) },
+            { text: '; comment', scopes: name(scopeName, RuleName.InlineComment) },
           ],
         ],
         [
@@ -37,10 +37,10 @@ export function createFunctionDeclarationExpectedData(scopeName: ScopeName): Exp
             { text: '(', scopes: name(scopeName, RuleName.OpenParen) },
             { text: ')', scopes: name(scopeName, RuleName.CloseParen) },
             { text: '{', scopes: name(scopeName, RuleName.BlockBegin) },
-            { text: '; comment', scopes: name(scopeName, RuleName.InLineComment) },
+            { text: '; comment', scopes: name(scopeName, RuleName.InlineComment) },
 
             { text: '}', scopes: name(scopeName, RuleName.BlockEnd) },
-            { text: '; comment', scopes: name(scopeName, RuleName.InLineComment) },
+            { text: '; comment', scopes: name(scopeName, RuleName.InlineComment) },
           ],
         ],
         [
@@ -55,25 +55,25 @@ export function createFunctionDeclarationExpectedData(scopeName: ScopeName): Exp
           [
             { text: 'abc', scopes: name(scopeName, RuleName.FunctionName) },
             { text: '(', scopes: name(scopeName, RuleName.OpenParen) },
-            { text: '; comment', scopes: name(scopeName, RuleName.InLineComment) },
+            { text: '; comment', scopes: name(scopeName, RuleName.InlineComment) },
 
             { text: 'a', scopes: name(scopeName, RuleName.Variable) },
             { text: ',', scopes: name(scopeName, RuleName.Comma) },
-            { text: '; comment', scopes: name(scopeName, RuleName.InLineComment) },
+            { text: '; comment', scopes: name(scopeName, RuleName.InlineComment) },
 
             { text: 'b', scopes: name(scopeName, RuleName.Variable) },
-            { text: '; comment', scopes: name(scopeName, RuleName.InLineComment) },
+            { text: '; comment', scopes: name(scopeName, RuleName.InlineComment) },
 
             { text: ',', scopes: name(scopeName, RuleName.Comma) },
             { text: 'c', scopes: name(scopeName, RuleName.Variable) },
-            { text: '; comment', scopes: name(scopeName, RuleName.InLineComment) },
+            { text: '; comment', scopes: name(scopeName, RuleName.InlineComment) },
 
             { text: ')', scopes: name(scopeName, RuleName.CloseParen) },
             { text: '{', scopes: name(scopeName, RuleName.BlockBegin) },
-            { text: '; comment', scopes: name(scopeName, RuleName.InLineComment) },
+            { text: '; comment', scopes: name(scopeName, RuleName.InlineComment) },
 
             { text: '}', scopes: name(scopeName, RuleName.BlockEnd) },
-            { text: '; comment', scopes: name(scopeName, RuleName.InLineComment) },
+            { text: '; comment', scopes: name(scopeName, RuleName.InlineComment) },
           ],
         ],
       ];
@@ -92,13 +92,13 @@ export function createFunctionDeclarationExpectedData(scopeName: ScopeName): Exp
             { text: 'abc', scopes: name(scopeName, RuleName.FunctionName) },
             { text: '(', scopes: name(scopeName, RuleName.OpenParen) },
             { text: ')', scopes: name(scopeName, RuleName.CloseParen) },
-            { text: '; comment', scopes: name(scopeName, RuleName.InLineComment) },
+            { text: '; comment', scopes: name(scopeName, RuleName.InlineComment) },
 
             { text: '{', scopes: name(scopeName, RuleName.BlockBegin) },
-            { text: '; comment', scopes: name(scopeName, RuleName.InLineComment) },
+            { text: '; comment', scopes: name(scopeName, RuleName.InlineComment) },
 
             { text: '}', scopes: name(scopeName, RuleName.BlockEnd) },
-            { text: '; comment', scopes: name(scopeName, RuleName.InLineComment) },
+            { text: '; comment', scopes: name(scopeName, RuleName.InlineComment) },
           ],
         ],
         [
@@ -112,13 +112,13 @@ export function createFunctionDeclarationExpectedData(scopeName: ScopeName): Exp
             { text: 'abc', scopes: name(scopeName, RuleName.FunctionName) },
             { text: '(', scopes: name(scopeName, RuleName.OpenParen) },
             { text: ')', scopes: name(scopeName, RuleName.CloseParen) },
-            { text: '; comment', scopes: name(scopeName, RuleName.InLineComment) },
+            { text: '; comment', scopes: name(scopeName, RuleName.InlineComment) },
 
             { text: '{', scopes: name(scopeName, RuleName.BlockBegin) },
-            { text: '; comment', scopes: name(scopeName, RuleName.InLineComment) },
+            { text: '; comment', scopes: name(scopeName, RuleName.InlineComment) },
 
             { text: '}', scopes: name(scopeName, RuleName.BlockEnd) },
-            { text: '; comment', scopes: name(scopeName, RuleName.InLineComment) },
+            { text: '; comment', scopes: name(scopeName, RuleName.InlineComment) },
           ],
         ],
 
@@ -135,27 +135,27 @@ export function createFunctionDeclarationExpectedData(scopeName: ScopeName): Exp
           [
             { text: 'abc', scopes: name(scopeName, RuleName.FunctionName) },
             { text: '(', scopes: name(scopeName, RuleName.OpenParen) },
-            { text: '; comment', scopes: name(scopeName, RuleName.InLineComment) },
+            { text: '; comment', scopes: name(scopeName, RuleName.InlineComment) },
 
             { text: 'a', scopes: name(scopeName, RuleName.Variable) },
             { text: ',', scopes: name(scopeName, RuleName.Comma) },
-            { text: '; comment', scopes: name(scopeName, RuleName.InLineComment) },
+            { text: '; comment', scopes: name(scopeName, RuleName.InlineComment) },
 
             { text: 'b', scopes: name(scopeName, RuleName.Variable) },
-            { text: '; comment', scopes: name(scopeName, RuleName.InLineComment) },
+            { text: '; comment', scopes: name(scopeName, RuleName.InlineComment) },
 
             { text: ',', scopes: name(scopeName, RuleName.Comma) },
             { text: 'c', scopes: name(scopeName, RuleName.Variable) },
-            { text: '; comment', scopes: name(scopeName, RuleName.InLineComment) },
+            { text: '; comment', scopes: name(scopeName, RuleName.InlineComment) },
 
             { text: ')', scopes: name(scopeName, RuleName.CloseParen) },
-            { text: '; comment', scopes: name(scopeName, RuleName.InLineComment) },
+            { text: '; comment', scopes: name(scopeName, RuleName.InlineComment) },
 
             { text: '{', scopes: name(scopeName, RuleName.BlockBegin) },
-            { text: '; comment', scopes: name(scopeName, RuleName.InLineComment) },
+            { text: '; comment', scopes: name(scopeName, RuleName.InlineComment) },
 
             { text: '}', scopes: name(scopeName, RuleName.BlockEnd) },
-            { text: '; comment', scopes: name(scopeName, RuleName.InLineComment) },
+            { text: '; comment', scopes: name(scopeName, RuleName.InlineComment) },
           ],
         ],
       ];

@@ -21,10 +21,10 @@ export function createHotkeyLabelStatementExpectedData(scopeName: ScopeName): Ex
         { text: '^', scopes: name(scopeName, RuleName.HotkeyModifier) },
         { text: 'c', scopes: name(scopeName, RuleName.HotkeyLabelName) },
         { text: '::', scopes: name(scopeName, RuleName.ColonColon) },
-        { text: '; comment', scopes: name(scopeName, RuleName.InLineComment) },
+        { text: '; comment', scopes: name(scopeName, RuleName.InlineComment) },
 
         { text: '{', scopes: name(scopeName, RuleName.BlockBegin) },
-        { text: '; comment', scopes: name(scopeName, RuleName.InLineComment) },
+        { text: '; comment', scopes: name(scopeName, RuleName.InlineComment) },
 
         { text: 'Send', scopes: name(scopeName, RuleName.FunctionName) },
         { text: '(', scopes: name(scopeName, RuleName.OpenParen) },
@@ -32,10 +32,10 @@ export function createHotkeyLabelStatementExpectedData(scopeName: ScopeName): Ex
         { text: '^c', scopes: name(scopeName, RuleName.DoubleString) },
         { text: '"', scopes: name(scopeName, RuleName.DoubleString, RuleDescriptor.End) },
         { text: ')', scopes: name(scopeName, RuleName.CloseParen) },
-        { text: '; comment', scopes: name(scopeName, RuleName.InLineComment) },
+        { text: '; comment', scopes: name(scopeName, RuleName.InlineComment) },
 
         { text: '}', scopes: name(scopeName, RuleName.BlockEnd) },
-        { text: '; comment', scopes: name(scopeName, RuleName.InLineComment) },
+        { text: '; comment', scopes: name(scopeName, RuleName.InlineComment) },
       ],
     ],
   ];

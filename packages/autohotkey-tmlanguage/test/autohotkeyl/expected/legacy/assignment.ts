@@ -16,7 +16,7 @@ export function createLegacyAssignmentStatementExpectedData(scopeName: ScopeName
         { text: 'var', scopes: name(scopeName, RuleName.Variable) },
         { text: '=', scopes: name(scopeName, RuleName.Operator) },
         { text: 'text', scopes: name(scopeName, RuleName.UnquotedString) },
-        { text: '; comment', scopes: name(scopeName, RuleName.InLineComment) },
+        { text: '; comment', scopes: name(scopeName, RuleName.InlineComment) },
       ],
     ],
     [
@@ -29,7 +29,7 @@ export function createLegacyAssignmentStatementExpectedData(scopeName: ScopeName
         ...constants_v1.unquoteEscapeSequences.map((escapeSequence) => {
           return { text: escapeSequence, scopes: name(scopeName, RuleName.UnquotedString, StyleName.Escape) };
         }),
-        { text: '; comment', scopes: name(scopeName, RuleName.InLineComment) },
+        { text: '; comment', scopes: name(scopeName, RuleName.InlineComment) },
       ],
     ],
     [
@@ -41,7 +41,7 @@ export function createLegacyAssignmentStatementExpectedData(scopeName: ScopeName
         { text: '=', scopes: name(scopeName, RuleName.Operator) },
         { text: 'a ', scopes: name(scopeName, RuleName.UnquotedString) },
         { text: '`;', scopes: name(scopeName, RuleName.UnquotedString, StyleName.Escape) },
-        { text: '; comment', scopes: name(scopeName, RuleName.InLineComment) },
+        { text: '; comment', scopes: name(scopeName, RuleName.InlineComment) },
       ],
     ],
     [
@@ -54,7 +54,7 @@ export function createLegacyAssignmentStatementExpectedData(scopeName: ScopeName
         { text: '%', scopes: name(scopeName, RuleName.PercentBegin) },
         { text: 'var2', scopes: name(scopeName, RuleName.Variable) },
         { text: '%', scopes: name(scopeName, RuleName.PercentEnd) },
-        { text: '; comment', scopes: name(scopeName, RuleName.InLineComment) },
+        { text: '; comment', scopes: name(scopeName, RuleName.InlineComment) },
       ],
     ],
     [
@@ -66,7 +66,7 @@ export function createLegacyAssignmentStatementExpectedData(scopeName: ScopeName
         { text: '=', scopes: name(scopeName, RuleName.Operator) },
         { text: '%', scopes: name(scopeName, RuleName.PercentExpressionBegin) },
         { text: 'abc', scopes: name(scopeName, RuleName.Variable) },
-        { text: '; comment', scopes: name(scopeName, RuleName.InLineComment) },
+        { text: '; comment', scopes: name(scopeName, RuleName.InlineComment) },
       ],
     ],
     [
@@ -82,7 +82,7 @@ export function createLegacyAssignmentStatementExpectedData(scopeName: ScopeName
         { text: ',', scopes: name(scopeName, RuleName.Comma) },
         { text: 'bar', scopes: name(scopeName, RuleName.Variable) },
         { text: ')', scopes: name(scopeName, RuleName.CloseParen) },
-        { text: '; comment', scopes: name(scopeName, RuleName.InLineComment) },
+        { text: '; comment', scopes: name(scopeName, RuleName.InlineComment) },
       ],
     ],
   ];

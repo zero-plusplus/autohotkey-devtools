@@ -29,10 +29,10 @@ export function createFunctionDeclarationExpectedData(scopeName: ScopeName): Exp
         { text: '*', scopes: name(scopeName, RuleName.Operator) },
         { text: ')', scopes: name(scopeName, RuleName.CloseParen) },
         { text: '{', scopes: name(scopeName, RuleName.BlockBegin) },
-        { text: '; comment', scopes: name(scopeName, RuleName.InLineComment) },
+        { text: '; comment', scopes: name(scopeName, RuleName.InlineComment) },
 
         { text: '}', scopes: name(scopeName, RuleName.BlockEnd) },
-        { text: '; comment', scopes: name(scopeName, RuleName.InLineComment) },
+        { text: '; comment', scopes: name(scopeName, RuleName.InlineComment) },
       ],
     ],
   ];

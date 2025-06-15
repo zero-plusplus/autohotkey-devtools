@@ -18,10 +18,10 @@ export function createSwitchStatementExpectedData(scopeName: ScopeName): Expecte
         { text: ',', scopes: name(scopeName, RuleName.Comma) },
         { text: 'true', scopes: name(scopeName, RuleName.KeywordLikeBuiltInVariable) },
         { text: '{', scopes: name(scopeName, RuleName.BlockBegin) },
-        { text: '; comment', scopes: name(scopeName, RuleName.InLineComment) },
+        { text: '; comment', scopes: name(scopeName, RuleName.InlineComment) },
 
         { text: '}', scopes: name(scopeName, RuleName.BlockEnd) },
-        { text: '; comment', scopes: name(scopeName, RuleName.InLineComment) },
+        { text: '; comment', scopes: name(scopeName, RuleName.InlineComment) },
       ],
     ],
 
@@ -35,16 +35,16 @@ export function createSwitchStatementExpectedData(scopeName: ScopeName): Expecte
       [
         { text: 'switch', scopes: name(scopeName, RuleName.ControlFlowKeyword) },
         { text: '{', scopes: name(scopeName, RuleName.BlockBegin) },
-        { text: '; comment', scopes: name(scopeName, RuleName.InLineComment) },
+        { text: '; comment', scopes: name(scopeName, RuleName.InlineComment) },
 
         { text: 'case', scopes: name(scopeName, RuleName.SwitchLabelKeyword) },
         { text: 'true', scopes: name(scopeName, RuleName.KeywordLikeBuiltInVariable) },
         { text: ':', scopes: name(scopeName, RuleName.Colon) },
         { text: 'MsgBox', scopes: name(scopeName, RuleName.CommandName) },
-        { text: '; comment', scopes: name(scopeName, RuleName.InLineComment) },
+        { text: '; comment', scopes: name(scopeName, RuleName.InlineComment) },
 
         { text: '}', scopes: name(scopeName, RuleName.BlockEnd) },
-        { text: '; comment', scopes: name(scopeName, RuleName.InLineComment) },
+        { text: '; comment', scopes: name(scopeName, RuleName.InlineComment) },
       ],
     ],
   ];

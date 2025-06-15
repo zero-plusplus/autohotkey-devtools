@@ -134,7 +134,7 @@ export function createContinuationString(scopeName: ScopeName, placeholder: Plac
     beginCaptures: {
       1: nameRule(scopeName, placeholder.stringElementName, RuleDescriptor.Begin),
       2: patternsRule(...contentRules),
-      3: patternsRule(includeRule(Repository.AllInLineComments)),
+      3: patternsRule(includeRule(Repository.InlineTrivias)),
     },
     end: seq(
       startAnchor(),
@@ -182,7 +182,7 @@ export function createContinuationStringOptionsRule(scopeName: ScopeName): Begin
     )),
     end: endAnchor(),
     patterns: [
-      includeRule(Repository.AllInLineComments),
+      includeRule(Repository.InlineTrivias),
 
       // [options](https://www.autohotkey.com/docs/v1/Scripts.htm#Join)
       {

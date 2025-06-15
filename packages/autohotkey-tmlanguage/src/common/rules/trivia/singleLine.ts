@@ -25,7 +25,7 @@ export function createInLineCommentRule(scopeName: ScopeName): MatchRule {
       endAnchor(),
     ),
     captures: {
-      1: nameRule(scopeName, RuleName.InLineComment),
+      1: nameRule(scopeName, RuleName.InlineComment),
     },
   };
 }

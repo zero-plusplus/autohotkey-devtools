@@ -18,22 +18,22 @@ export function createTypedAssignmentDeclarationExpectedData(scopeName: ScopeNam
         { text: 'class', scopes: name(scopeName, RuleName.ClassKeyword) },
         { text: 'Point', scopes: name(scopeName, RuleName.ClassName) },
         { text: '{', scopes: name(scopeName, RuleName.ClassBlockBegin) },
-        { text: '; comment', scopes: name(scopeName, RuleName.InLineComment) },
+        { text: '; comment', scopes: name(scopeName, RuleName.InlineComment) },
 
         { text: 'x', scopes: name(scopeName, RuleName.Variable) },
         { text: ':', scopes: name(scopeName, RuleName.Colon) },
         { text: 'i32', scopes: name(scopeName, RuleName.Type) },
-        { text: '; comment', scopes: name(scopeName, RuleName.InLineComment) },
+        { text: '; comment', scopes: name(scopeName, RuleName.InlineComment) },
 
         { text: 'y', scopes: name(scopeName, RuleName.Variable) },
         { text: ':', scopes: name(scopeName, RuleName.Colon) },
         { text: 'i32', scopes: name(scopeName, RuleName.Type) },
         { text: ':=', scopes: name(scopeName, RuleName.Operator) },
         { text: 'zzz', scopes: name(scopeName, RuleName.Variable) },
-        { text: '; comment', scopes: name(scopeName, RuleName.InLineComment) },
+        { text: '; comment', scopes: name(scopeName, RuleName.InlineComment) },
 
         { text: '}', scopes: name(scopeName, RuleName.ClassBlockEnd) },
-        { text: '; comment', scopes: name(scopeName, RuleName.InLineComment) },
+        { text: '; comment', scopes: name(scopeName, RuleName.InlineComment) },
       ],
     ],
     [
@@ -47,22 +47,22 @@ export function createTypedAssignmentDeclarationExpectedData(scopeName: ScopeNam
         { text: 'class', scopes: name(scopeName, RuleName.ClassKeyword) },
         { text: 'Point', scopes: name(scopeName, RuleName.ClassName) },
         { text: '{', scopes: name(scopeName, RuleName.ClassBlockBegin) },
-        { text: '; comment', scopes: name(scopeName, RuleName.InLineComment) },
+        { text: '; comment', scopes: name(scopeName, RuleName.InlineComment) },
 
         { text: 'X', scopes: name(scopeName, RuleName.ConstantLikeVariable) },
         { text: ':', scopes: name(scopeName, RuleName.Colon) },
         { text: 'I32', scopes: name(scopeName, RuleName.Type) },
-        { text: '; comment', scopes: name(scopeName, RuleName.InLineComment) },
+        { text: '; comment', scopes: name(scopeName, RuleName.InlineComment) },
 
         { text: 'Y', scopes: name(scopeName, RuleName.ConstantLikeVariable) },
         { text: ':', scopes: name(scopeName, RuleName.Colon) },
         { text: 'I32', scopes: name(scopeName, RuleName.Type) },
         { text: ':=', scopes: name(scopeName, RuleName.Operator) },
         { text: 'zzz', scopes: name(scopeName, RuleName.Variable) },
-        { text: '; comment', scopes: name(scopeName, RuleName.InLineComment) },
+        { text: '; comment', scopes: name(scopeName, RuleName.InlineComment) },
 
         { text: '}', scopes: name(scopeName, RuleName.ClassBlockEnd) },
-        { text: '; comment', scopes: name(scopeName, RuleName.InLineComment) },
+        { text: '; comment', scopes: name(scopeName, RuleName.InlineComment) },
       ],
     ],
   ];

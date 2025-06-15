@@ -22,7 +22,7 @@ export function createDirectiveStatementExpectedData(scopeName: ScopeName): Expe
           [
             { text: '#Hotstring', scopes: name(scopeName, RuleName.DirectiveName) },
             { text: 'NoMouse', scopes: name(scopeName, RuleName.UnquotedString, StyleName.Strong) },
-            { text: '; comment', scopes: name(scopeName, RuleName.InLineComment) },
+            { text: '; comment', scopes: name(scopeName, RuleName.InlineComment) },
           ],
         ],
         [
@@ -34,7 +34,7 @@ export function createDirectiveStatementExpectedData(scopeName: ScopeName): Expe
             { text: 'EndChars', scopes: name(scopeName, RuleName.UnquotedString, StyleName.Strong) },
             { text: ',', scopes: name(scopeName, RuleName.UnquotedString) },
             { text: '`t', scopes: name(scopeName, RuleName.UnquotedString, StyleName.Escape) },
-            { text: '; comment', scopes: name(scopeName, RuleName.InLineComment) },
+            { text: '; comment', scopes: name(scopeName, RuleName.InlineComment) },
           ],
         ],
       ];
@@ -51,12 +51,12 @@ export function createDirectiveStatementExpectedData(scopeName: ScopeName): Expe
         { text: '#ErrorStdOut', scopes: name(scopeName, RuleName.DirectiveName) },
         { text: '+=', scopes: name(scopeName, RuleName.UnquotedString) },
         { text: 'var', scopes: name(scopeName, RuleName.UnquotedString) },
-        { text: '; comment', scopes: name(scopeName, RuleName.InLineComment) },
+        { text: '; comment', scopes: name(scopeName, RuleName.InlineComment) },
 
         { text: '#NotDirective', scopes: name(scopeName, RuleName.Variable) },
         { text: '+=', scopes: name(scopeName, RuleName.Operator) },
         { text: 'var', scopes: name(scopeName, RuleName.Variable) },
-        { text: '; comment', scopes: name(scopeName, RuleName.InLineComment) },
+        { text: '; comment', scopes: name(scopeName, RuleName.InlineComment) },
       ],
     ],
 
@@ -70,13 +70,13 @@ export function createDirectiveStatementExpectedData(scopeName: ScopeName): Expe
         { text: '(', scopes: name(scopeName, RuleName.OpenParen) },
         { text: '#Requires', scopes: name(scopeName, RuleName.Variable) },
         { text: ')', scopes: name(scopeName, RuleName.CloseParen) },
-        { text: '; comment', scopes: name(scopeName, RuleName.InLineComment) },
+        { text: '; comment', scopes: name(scopeName, RuleName.InlineComment) },
 
         { text: 'local', scopes: name(scopeName, RuleName.Modifier) },
         { text: 'var', scopes: name(scopeName, RuleName.Variable) },
         { text: ':=', scopes: name(scopeName, RuleName.Operator) },
         { text: '1', scopes: name(scopeName, RuleName.Integer) },
-        { text: '; comment', scopes: name(scopeName, RuleName.InLineComment) },
+        { text: '; comment', scopes: name(scopeName, RuleName.InlineComment) },
       ],
     ],
   ];

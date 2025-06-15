@@ -21,7 +21,7 @@ export function createSingleLineCommentExpectedData(scopeName: ScopeName): Expec
         { text: '(', scopes: name(scopeName, RuleName.OpenParen) },
         { text: 'abc', scopes: name(scopeName, RuleName.Variable) },
         { text: ')', scopes: name(scopeName, RuleName.CloseParen) },
-        { text: '; comment', scopes: name(scopeName, RuleName.InLineComment) },
+        { text: '; comment', scopes: name(scopeName, RuleName.InlineComment) },
       ],
     ],
   ];

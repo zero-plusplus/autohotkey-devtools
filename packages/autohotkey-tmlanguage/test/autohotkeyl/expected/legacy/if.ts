@@ -30,13 +30,13 @@ export function createLegacyIfStatementExpectedData(scopeName: ScopeName): Expec
               { text: 'if', scopes: name(scopeName, Repository.LegacyIfStatement, RuleName.ControlFlowKeyword) },
               { text: 'value', scopes: name(scopeName, Repository.LegacyIfStatement, RuleName.Variable) },
               { text: 'between', scopes: name(scopeName, Repository.LegacyIfStatement, RuleName.KeywordInExpression) },
-              { text: '; comment', scopes: name(scopeName, RuleName.InLineComment) },
+              { text: '; comment', scopes: name(scopeName, RuleName.InlineComment) },
 
               { text: '{', scopes: name(scopeName, RuleName.BlockBegin) },
-              { text: '; comment', scopes: name(scopeName, RuleName.InLineComment) },
+              { text: '; comment', scopes: name(scopeName, RuleName.InlineComment) },
 
               { text: '}', scopes: name(scopeName, RuleName.BlockEnd) },
-              { text: '; comment', scopes: name(scopeName, RuleName.InLineComment) },
+              { text: '; comment', scopes: name(scopeName, RuleName.InlineComment) },
             ],
 
             ...[
@@ -44,13 +44,13 @@ export function createLegacyIfStatementExpectedData(scopeName: ScopeName): Expec
               { text: 'value', scopes: name(scopeName, Repository.LegacyIfStatement, RuleName.Variable) },
               { text: 'between', scopes: name(scopeName, Repository.LegacyIfStatement, RuleName.KeywordInExpression) },
               { text: 'a', scopes: name(scopeName, Repository.LegacyIfStatement, RuleName.Variable) },
-              { text: '; comment', scopes: name(scopeName, RuleName.InLineComment) },
+              { text: '; comment', scopes: name(scopeName, RuleName.InlineComment) },
 
               { text: '{', scopes: name(scopeName, RuleName.BlockBegin) },
-              { text: '; comment', scopes: name(scopeName, RuleName.InLineComment) },
+              { text: '; comment', scopes: name(scopeName, RuleName.InlineComment) },
 
               { text: '}', scopes: name(scopeName, RuleName.BlockEnd) },
-              { text: '; comment', scopes: name(scopeName, RuleName.InLineComment) },
+              { text: '; comment', scopes: name(scopeName, RuleName.InlineComment) },
             ],
 
             ...[
@@ -59,13 +59,13 @@ export function createLegacyIfStatementExpectedData(scopeName: ScopeName): Expec
               { text: 'between', scopes: name(scopeName, Repository.LegacyIfStatement, RuleName.KeywordInExpression) },
               { text: 'a', scopes: name(scopeName, Repository.LegacyIfStatement, RuleName.Variable) },
               { text: 'and', scopes: name(scopeName, Repository.LegacyIfStatement, RuleName.KeywordInExpression) },
-              { text: '; comment', scopes: name(scopeName, RuleName.InLineComment) },
+              { text: '; comment', scopes: name(scopeName, RuleName.InlineComment) },
 
               { text: '{', scopes: name(scopeName, RuleName.BlockBegin) },
-              { text: '; comment', scopes: name(scopeName, RuleName.InLineComment) },
+              { text: '; comment', scopes: name(scopeName, RuleName.InlineComment) },
 
               { text: '}', scopes: name(scopeName, RuleName.BlockEnd) },
-              { text: '; comment', scopes: name(scopeName, RuleName.InLineComment) },
+              { text: '; comment', scopes: name(scopeName, RuleName.InlineComment) },
             ],
 
             ...[
@@ -75,13 +75,13 @@ export function createLegacyIfStatementExpectedData(scopeName: ScopeName): Expec
               { text: 'a', scopes: name(scopeName, Repository.LegacyIfStatement, RuleName.Variable) },
               { text: 'and', scopes: name(scopeName, Repository.LegacyIfStatement, RuleName.KeywordInExpression) },
               { text: 'b', scopes: name(scopeName, Repository.LegacyIfStatement, RuleName.Variable) },
-              { text: '; comment', scopes: name(scopeName, RuleName.InLineComment) },
+              { text: '; comment', scopes: name(scopeName, RuleName.InlineComment) },
 
               { text: '{', scopes: name(scopeName, RuleName.BlockBegin) },
-              { text: '; comment', scopes: name(scopeName, RuleName.InLineComment) },
+              { text: '; comment', scopes: name(scopeName, RuleName.InlineComment) },
 
               { text: '}', scopes: name(scopeName, RuleName.BlockEnd) },
-              { text: '; comment', scopes: name(scopeName, RuleName.InLineComment) },
+              { text: '; comment', scopes: name(scopeName, RuleName.InlineComment) },
             ],
           ],
         ],
@@ -109,13 +109,13 @@ export function createLegacyIfStatementExpectedData(scopeName: ScopeName): Expec
               { text: 'value', scopes: name(scopeName, Repository.LegacyIfStatement, RuleName.Variable) },
               { text: 'not', scopes: name(scopeName, Repository.LegacyIfStatement, RuleName.KeywordInExpression) },
               { text: 'between', scopes: name(scopeName, Repository.LegacyIfStatement, RuleName.KeywordInExpression) },
-              { text: '; comment', scopes: name(scopeName, RuleName.InLineComment) },
+              { text: '; comment', scopes: name(scopeName, RuleName.InlineComment) },
 
               { text: '{', scopes: name(scopeName, RuleName.BlockBegin) },
-              { text: '; comment', scopes: name(scopeName, RuleName.InLineComment) },
+              { text: '; comment', scopes: name(scopeName, RuleName.InlineComment) },
 
               { text: '}', scopes: name(scopeName, RuleName.BlockEnd) },
-              { text: '; comment', scopes: name(scopeName, RuleName.InLineComment) },
+              { text: '; comment', scopes: name(scopeName, RuleName.InlineComment) },
             ],
 
             ...[
@@ -124,13 +124,13 @@ export function createLegacyIfStatementExpectedData(scopeName: ScopeName): Expec
               { text: 'not', scopes: name(scopeName, Repository.LegacyIfStatement, RuleName.KeywordInExpression) },
               { text: 'between', scopes: name(scopeName, Repository.LegacyIfStatement, RuleName.KeywordInExpression) },
               { text: 'a', scopes: name(scopeName, Repository.LegacyIfStatement, RuleName.Variable) },
-              { text: '; comment', scopes: name(scopeName, RuleName.InLineComment) },
+              { text: '; comment', scopes: name(scopeName, RuleName.InlineComment) },
 
               { text: '{', scopes: name(scopeName, RuleName.BlockBegin) },
-              { text: '; comment', scopes: name(scopeName, RuleName.InLineComment) },
+              { text: '; comment', scopes: name(scopeName, RuleName.InlineComment) },
 
               { text: '}', scopes: name(scopeName, RuleName.BlockEnd) },
-              { text: '; comment', scopes: name(scopeName, RuleName.InLineComment) },
+              { text: '; comment', scopes: name(scopeName, RuleName.InlineComment) },
             ],
 
             ...[
@@ -140,13 +140,13 @@ export function createLegacyIfStatementExpectedData(scopeName: ScopeName): Expec
               { text: 'between', scopes: name(scopeName, Repository.LegacyIfStatement, RuleName.KeywordInExpression) },
               { text: 'a', scopes: name(scopeName, Repository.LegacyIfStatement, RuleName.Variable) },
               { text: 'and', scopes: name(scopeName, Repository.LegacyIfStatement, RuleName.KeywordInExpression) },
-              { text: '; comment', scopes: name(scopeName, RuleName.InLineComment) },
+              { text: '; comment', scopes: name(scopeName, RuleName.InlineComment) },
 
               { text: '{', scopes: name(scopeName, RuleName.BlockBegin) },
-              { text: '; comment', scopes: name(scopeName, RuleName.InLineComment) },
+              { text: '; comment', scopes: name(scopeName, RuleName.InlineComment) },
 
               { text: '}', scopes: name(scopeName, RuleName.BlockEnd) },
-              { text: '; comment', scopes: name(scopeName, RuleName.InLineComment) },
+              { text: '; comment', scopes: name(scopeName, RuleName.InlineComment) },
             ],
 
             ...[
@@ -157,13 +157,13 @@ export function createLegacyIfStatementExpectedData(scopeName: ScopeName): Expec
               { text: 'a', scopes: name(scopeName, Repository.LegacyIfStatement, RuleName.Variable) },
               { text: 'and', scopes: name(scopeName, Repository.LegacyIfStatement, RuleName.KeywordInExpression) },
               { text: 'b', scopes: name(scopeName, Repository.LegacyIfStatement, RuleName.Variable) },
-              { text: '; comment', scopes: name(scopeName, RuleName.InLineComment) },
+              { text: '; comment', scopes: name(scopeName, RuleName.InlineComment) },
 
               { text: '{', scopes: name(scopeName, RuleName.BlockBegin) },
-              { text: '; comment', scopes: name(scopeName, RuleName.InLineComment) },
+              { text: '; comment', scopes: name(scopeName, RuleName.InlineComment) },
 
               { text: '}', scopes: name(scopeName, RuleName.BlockEnd) },
-              { text: '; comment', scopes: name(scopeName, RuleName.InLineComment) },
+              { text: '; comment', scopes: name(scopeName, RuleName.InlineComment) },
             ],
           ],
         ],
@@ -187,13 +187,13 @@ export function createLegacyIfStatementExpectedData(scopeName: ScopeName): Expec
               { text: 'if', scopes: name(scopeName, Repository.LegacyIfStatement, RuleName.ControlFlowKeyword) },
               { text: 'value', scopes: name(scopeName, Repository.LegacyIfStatement, RuleName.Variable) },
               { text: 'is', scopes: name(scopeName, Repository.LegacyIfStatement, RuleName.KeywordInExpression) },
-              { text: '; comment', scopes: name(scopeName, RuleName.InLineComment) },
+              { text: '; comment', scopes: name(scopeName, RuleName.InlineComment) },
 
               { text: '{', scopes: name(scopeName, RuleName.BlockBegin) },
-              { text: '; comment', scopes: name(scopeName, RuleName.InLineComment) },
+              { text: '; comment', scopes: name(scopeName, RuleName.InlineComment) },
 
               { text: '}', scopes: name(scopeName, RuleName.BlockEnd) },
-              { text: '; comment', scopes: name(scopeName, RuleName.InLineComment) },
+              { text: '; comment', scopes: name(scopeName, RuleName.InlineComment) },
             ],
 
             ...[
@@ -201,13 +201,13 @@ export function createLegacyIfStatementExpectedData(scopeName: ScopeName): Expec
               { text: 'value', scopes: name(scopeName, Repository.LegacyIfStatement, RuleName.Variable) },
               { text: 'is', scopes: name(scopeName, Repository.LegacyIfStatement, RuleName.KeywordInExpression) },
               { text: 'not', scopes: name(scopeName, Repository.LegacyIfStatement, RuleName.KeywordInExpression) },
-              { text: '; comment', scopes: name(scopeName, RuleName.InLineComment) },
+              { text: '; comment', scopes: name(scopeName, RuleName.InlineComment) },
 
               { text: '{', scopes: name(scopeName, RuleName.BlockBegin) },
-              { text: '; comment', scopes: name(scopeName, RuleName.InLineComment) },
+              { text: '; comment', scopes: name(scopeName, RuleName.InlineComment) },
 
               { text: '}', scopes: name(scopeName, RuleName.BlockEnd) },
-              { text: '; comment', scopes: name(scopeName, RuleName.InLineComment) },
+              { text: '; comment', scopes: name(scopeName, RuleName.InlineComment) },
             ],
           ],
         ],
@@ -265,13 +265,13 @@ export function createLegacyIfStatementExpectedData(scopeName: ScopeName): Expec
                   { text: 'value', scopes: name(scopeName, Repository.LegacyIfStatement, RuleName.Variable) },
                   { text: 'is', scopes: name(scopeName, Repository.LegacyIfStatement, RuleName.KeywordInExpression) },
                   { text: word, scopes: name(scopeName, Repository.LegacyIfStatement, RuleName.KeywordLikeBuiltInVariable) },
-                  { text: '; comment', scopes: name(scopeName, RuleName.InLineComment) },
+                  { text: '; comment', scopes: name(scopeName, RuleName.InlineComment) },
 
                   { text: '{', scopes: name(scopeName, RuleName.BlockBegin) },
-                  { text: '; comment', scopes: name(scopeName, RuleName.InLineComment) },
+                  { text: '; comment', scopes: name(scopeName, RuleName.InlineComment) },
 
                   { text: '}', scopes: name(scopeName, RuleName.BlockEnd) },
-                  { text: '; comment', scopes: name(scopeName, RuleName.InLineComment) },
+                  { text: '; comment', scopes: name(scopeName, RuleName.InlineComment) },
                 ],
               ];
             }),
@@ -332,13 +332,13 @@ export function createLegacyIfStatementExpectedData(scopeName: ScopeName): Expec
                   { text: 'is', scopes: name(scopeName, Repository.LegacyIfStatement, RuleName.KeywordInExpression) },
                   { text: 'not', scopes: name(scopeName, Repository.LegacyIfStatement, RuleName.KeywordInExpression) },
                   { text: word, scopes: name(scopeName, Repository.LegacyIfStatement, RuleName.KeywordLikeBuiltInVariable) },
-                  { text: '; comment', scopes: name(scopeName, RuleName.InLineComment) },
+                  { text: '; comment', scopes: name(scopeName, RuleName.InlineComment) },
 
                   { text: '{', scopes: name(scopeName, RuleName.BlockBegin) },
-                  { text: '; comment', scopes: name(scopeName, RuleName.InLineComment) },
+                  { text: '; comment', scopes: name(scopeName, RuleName.InlineComment) },
 
                   { text: '}', scopes: name(scopeName, RuleName.BlockEnd) },
-                  { text: '; comment', scopes: name(scopeName, RuleName.InLineComment) },
+                  { text: '; comment', scopes: name(scopeName, RuleName.InlineComment) },
                 ],
               ];
             }),
@@ -364,13 +364,13 @@ export function createLegacyIfStatementExpectedData(scopeName: ScopeName): Expec
             { text: 'value', scopes: name(scopeName, Repository.LegacyIfStatement, RuleName.Variable) },
             { text: keyword, scopes: name(scopeName, Repository.LegacyIfStatement, RuleName.KeywordInExpression) },
             { text: 'a,b,c', scopes: name(scopeName, Repository.LegacyIfStatement, RuleName.UnquotedString) },
-            { text: '; comment', scopes: name(scopeName, RuleName.InLineComment) },
+            { text: '; comment', scopes: name(scopeName, RuleName.InlineComment) },
 
             { text: '{', scopes: name(scopeName, RuleName.BlockBegin) },
-            { text: '; comment', scopes: name(scopeName, RuleName.InLineComment) },
+            { text: '; comment', scopes: name(scopeName, RuleName.InlineComment) },
 
             { text: '}', scopes: name(scopeName, RuleName.BlockEnd) },
-            { text: '; comment', scopes: name(scopeName, RuleName.InLineComment) },
+            { text: '; comment', scopes: name(scopeName, RuleName.InlineComment) },
           ],
 
           ...[
@@ -379,13 +379,13 @@ export function createLegacyIfStatementExpectedData(scopeName: ScopeName): Expec
             { text: 'not', scopes: name(scopeName, Repository.LegacyIfStatement, RuleName.KeywordInExpression) },
             { text: keyword, scopes: name(scopeName, Repository.LegacyIfStatement, RuleName.KeywordInExpression) },
             { text: 'a,b,c', scopes: name(scopeName, Repository.LegacyIfStatement, RuleName.UnquotedString) },
-            { text: '; comment', scopes: name(scopeName, RuleName.InLineComment) },
+            { text: '; comment', scopes: name(scopeName, RuleName.InlineComment) },
 
             { text: '{', scopes: name(scopeName, RuleName.BlockBegin) },
-            { text: '; comment', scopes: name(scopeName, RuleName.InLineComment) },
+            { text: '; comment', scopes: name(scopeName, RuleName.InlineComment) },
 
             { text: '}', scopes: name(scopeName, RuleName.BlockEnd) },
-            { text: '; comment', scopes: name(scopeName, RuleName.InLineComment) },
+            { text: '; comment', scopes: name(scopeName, RuleName.InlineComment) },
           ],
         ],
       ];

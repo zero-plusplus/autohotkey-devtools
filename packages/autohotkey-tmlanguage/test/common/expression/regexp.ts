@@ -29,14 +29,14 @@ export function createRegExpExpectedData(scopeName: ScopeName, placeholder: Plac
             { text: '~=', scopes: name(scopeName, RuleName.Operator) },
             { text: q, scopes: name(scopeName, RuleName.RegExpString, RuleDescriptor.Begin) },
             { text: q, scopes: name(scopeName, RuleName.RegExpString, RuleDescriptor.End) },
-            { text: '; comment', scopes: name(scopeName, RuleName.InLineComment) },
+            { text: '; comment', scopes: name(scopeName, RuleName.InlineComment) },
 
             { text: 'var', scopes: name(scopeName, RuleName.Variable) },
             { text: '~=', scopes: name(scopeName, RuleName.Operator) },
             { text: q, scopes: name(scopeName, RuleName.RegExpString, RuleDescriptor.Begin) },
             { text: 'text', scopes: name(scopeName, RuleName.RegExpString) },
             { text: q, scopes: name(scopeName, RuleName.RegExpString, RuleDescriptor.End) },
-            { text: '; comment', scopes: name(scopeName, RuleName.InLineComment) },
+            { text: '; comment', scopes: name(scopeName, RuleName.InlineComment) },
           ],
         ],
       ];
@@ -58,7 +58,7 @@ export function createRegExpExpectedData(scopeName: ScopeName, placeholder: Plac
             { text: `${placeholder.regexOptions.join('')})`, scopes: name(scopeName, RuleName.RegExpString, RuleName.RegExpOption) },
             { text: 'text', scopes: name(scopeName, RuleName.RegExpString) },
             { text: q, scopes: name(scopeName, RuleName.RegExpString, RuleDescriptor.End) },
-            { text: '; comment', scopes: name(scopeName, RuleName.InLineComment) },
+            { text: '; comment', scopes: name(scopeName, RuleName.InlineComment) },
 
             { text: 'var', scopes: name(scopeName, RuleName.Variable) },
             { text: '~=', scopes: name(scopeName, RuleName.Operator) },
@@ -66,7 +66,7 @@ export function createRegExpExpectedData(scopeName: ScopeName, placeholder: Plac
             { text: '(*UCP)', scopes: name(scopeName, RuleName.RegExpString, RuleName.RegExpOption) },
             { text: 'text', scopes: name(scopeName, RuleName.RegExpString) },
             { text: q, scopes: name(scopeName, RuleName.RegExpString, RuleDescriptor.End) },
-            { text: '; comment', scopes: name(scopeName, RuleName.InLineComment) },
+            { text: '; comment', scopes: name(scopeName, RuleName.InlineComment) },
 
             { text: 'var', scopes: name(scopeName, RuleName.Variable) },
             { text: '~=', scopes: name(scopeName, RuleName.Operator) },
@@ -74,7 +74,7 @@ export function createRegExpExpectedData(scopeName: ScopeName, placeholder: Plac
             { text: 'i)(*UCP)', scopes: name(scopeName, RuleName.RegExpString, RuleName.RegExpOption) },
             { text: 'text', scopes: name(scopeName, RuleName.RegExpString) },
             { text: q, scopes: name(scopeName, RuleName.RegExpString, RuleDescriptor.End) },
-            { text: '; comment', scopes: name(scopeName, RuleName.InLineComment) },
+            { text: '; comment', scopes: name(scopeName, RuleName.InlineComment) },
           ],
         ],
       ];
@@ -95,7 +95,7 @@ export function createRegExpExpectedData(scopeName: ScopeName, placeholder: Plac
             { text: '(?C123', scopes: name(scopeName, RuleName.RegExpString, RuleName.RegExpGroup, RuleDescriptor.Begin) },
             { text: ')', scopes: name(scopeName, RuleName.RegExpString, RuleName.RegExpGroup, RuleDescriptor.End) },
             { text: q, scopes: name(scopeName, RuleName.RegExpString, RuleDescriptor.End) },
-            { text: '; comment', scopes: name(scopeName, RuleName.InLineComment) },
+            { text: '; comment', scopes: name(scopeName, RuleName.InlineComment) },
 
             { text: 'var', scopes: name(scopeName, RuleName.Variable) },
             { text: '~=', scopes: name(scopeName, RuleName.Operator) },
@@ -105,7 +105,7 @@ export function createRegExpExpectedData(scopeName: ScopeName, placeholder: Plac
             { text: 'func', scopes: name(scopeName, RuleName.RegExpString, RuleName.FunctionName) },
             { text: ')', scopes: name(scopeName, RuleName.RegExpString, RuleName.RegExpGroup, RuleDescriptor.End) },
             { text: q, scopes: name(scopeName, RuleName.RegExpString, RuleDescriptor.End) },
-            { text: '; comment', scopes: name(scopeName, RuleName.InLineComment) },
+            { text: '; comment', scopes: name(scopeName, RuleName.InlineComment) },
           ],
         ],
       ];
@@ -133,7 +133,7 @@ export function createRegExpExpectedData(scopeName: ScopeName, placeholder: Plac
                 { text: 'text', scopes: name(scopeName, RuleName.RegExpString) },
                 { text: ')', scopes: name(scopeName, RuleName.RegExpString, TokenType.Other, RuleName.RegExpGroup, RuleDescriptor.End) },
                 { text: q, scopes: name(scopeName, RuleName.RegExpString, RuleDescriptor.End) },
-                { text: '; comment', scopes: name(scopeName, RuleName.InLineComment) },
+                { text: '; comment', scopes: name(scopeName, RuleName.InlineComment) },
               ];
             }),
           ],
@@ -152,7 +152,7 @@ export function createRegExpExpectedData(scopeName: ScopeName, placeholder: Plac
             { text: 'text', scopes: name(scopeName, RuleName.RegExpString) },
             { text: ')', scopes: name(scopeName, RuleName.RegExpString, TokenType.Other, RuleName.RegExpGroup, RuleDescriptor.End) },
             { text: q, scopes: name(scopeName, RuleName.RegExpString, RuleDescriptor.End) },
-            { text: '; comment', scopes: name(scopeName, RuleName.InLineComment) },
+            { text: '; comment', scopes: name(scopeName, RuleName.InlineComment) },
           ],
         ],
         [
@@ -171,7 +171,7 @@ export function createRegExpExpectedData(scopeName: ScopeName, placeholder: Plac
             { text: 'text', scopes: name(scopeName, RuleName.RegExpString) },
             { text: ')', scopes: name(scopeName, RuleName.RegExpString, TokenType.Other, RuleName.RegExpGroup, RuleDescriptor.End) },
             { text: q, scopes: name(scopeName, RuleName.RegExpString, RuleDescriptor.End) },
-            { text: '; comment', scopes: name(scopeName, RuleName.InLineComment) },
+            { text: '; comment', scopes: name(scopeName, RuleName.InlineComment) },
 
             { text: 'var', scopes: name(scopeName, RuleName.Variable) },
             { text: '~=', scopes: name(scopeName, RuleName.Operator) },
@@ -184,7 +184,7 @@ export function createRegExpExpectedData(scopeName: ScopeName, placeholder: Plac
             { text: 'text', scopes: name(scopeName, RuleName.RegExpString) },
             { text: ')', scopes: name(scopeName, RuleName.RegExpString, TokenType.Other, RuleName.RegExpGroup, RuleDescriptor.End) },
             { text: q, scopes: name(scopeName, RuleName.RegExpString, RuleDescriptor.End) },
-            { text: '; comment', scopes: name(scopeName, RuleName.InLineComment) },
+            { text: '; comment', scopes: name(scopeName, RuleName.InlineComment) },
           ],
         ],
       ];
@@ -227,7 +227,7 @@ export function createRegExpExpectedData(scopeName: ScopeName, placeholder: Plac
             { text: 'abc', scopes: name(scopeName, RuleName.RegExpString, RuleName.RegExpCharacterClassSet) },
             { text: ']', scopes: name(scopeName, RuleName.RegExpString, RuleName.RegExpCharacterClassSet, RuleName.RegExpCharacterClass, RuleDescriptor.End) },
             { text: q, scopes: name(scopeName, RuleName.RegExpString, RuleDescriptor.End) },
-            { text: '; comment', scopes: name(scopeName, RuleName.InLineComment) },
+            { text: '; comment', scopes: name(scopeName, RuleName.InlineComment) },
 
             { text: 'var', scopes: name(scopeName, RuleName.Variable) },
             { text: '~=', scopes: name(scopeName, RuleName.Operator) },
@@ -236,7 +236,7 @@ export function createRegExpExpectedData(scopeName: ScopeName, placeholder: Plac
             { text: 'abc', scopes: name(scopeName, RuleName.RegExpString, RuleName.RegExpCharacterClassSet) },
             { text: ']', scopes: name(scopeName, RuleName.RegExpString, RuleName.RegExpCharacterClassSet, RuleName.RegExpCharacterClass, RuleDescriptor.End) },
             { text: q, scopes: name(scopeName, RuleName.RegExpString, RuleDescriptor.End) },
-            { text: '; comment', scopes: name(scopeName, RuleName.InLineComment) },
+            { text: '; comment', scopes: name(scopeName, RuleName.InlineComment) },
 
             { text: 'var', scopes: name(scopeName, RuleName.Variable) },
             { text: '~=', scopes: name(scopeName, RuleName.Operator) },
@@ -245,7 +245,7 @@ export function createRegExpExpectedData(scopeName: ScopeName, placeholder: Plac
             { text: '\\]', scopes: name(scopeName, RuleName.RegExpString, RuleName.RegExpCharacterClassSet, StyleName.Escape) },
             { text: ']', scopes: name(scopeName, RuleName.RegExpString, RuleName.RegExpCharacterClassSet, RuleName.RegExpCharacterClass, RuleDescriptor.End) },
             { text: q, scopes: name(scopeName, RuleName.RegExpString, RuleDescriptor.End) },
-            { text: '; comment', scopes: name(scopeName, RuleName.InLineComment) },
+            { text: '; comment', scopes: name(scopeName, RuleName.InlineComment) },
           ],
         ],
         ...[ ...constants_common.pcreUnicodePropertyCodes, ...constants_common.pcreUnicodePropertyScripts ].map((code): ExpectedTestData => {
@@ -261,7 +261,7 @@ export function createRegExpExpectedData(scopeName: ScopeName, placeholder: Plac
               { text: code, scopes: name(scopeName, RuleName.RegExpString, RuleName.RegExpCharacterClass, StyleName.Strong) },
               { text: `}`, scopes: name(scopeName, RuleName.RegExpString, RuleName.RegExpCharacterClass, RuleDescriptor.End) },
               { text: q, scopes: name(scopeName, RuleName.RegExpString, RuleDescriptor.End) },
-              { text: '; comment', scopes: name(scopeName, RuleName.InLineComment) },
+              { text: '; comment', scopes: name(scopeName, RuleName.InlineComment) },
             ],
           ];
         }),
@@ -276,7 +276,7 @@ export function createRegExpExpectedData(scopeName: ScopeName, placeholder: Plac
               { text: q, scopes: name(scopeName, RuleName.RegExpString, RuleDescriptor.Begin) },
               { text: `\\p${letterCode}`, scopes: name(scopeName, RuleName.RegExpString, RuleName.RegExpCharacterClass) },
               { text: q, scopes: name(scopeName, RuleName.RegExpString, RuleDescriptor.End) },
-              { text: '; comment', scopes: name(scopeName, RuleName.InLineComment) },
+              { text: '; comment', scopes: name(scopeName, RuleName.InlineComment) },
             ],
           ];
         }),
@@ -297,7 +297,7 @@ export function createRegExpExpectedData(scopeName: ScopeName, placeholder: Plac
             { text: '^', scopes: name(scopeName, RuleName.RegExpString, RuleName.RegExpAnchor) },
             { text: '$', scopes: name(scopeName, RuleName.RegExpString, RuleName.RegExpAnchor) },
             { text: q, scopes: name(scopeName, RuleName.RegExpString, RuleDescriptor.End) },
-            { text: '; comment', scopes: name(scopeName, RuleName.InLineComment) },
+            { text: '; comment', scopes: name(scopeName, RuleName.InlineComment) },
           ],
         ],
       ];
@@ -321,7 +321,7 @@ export function createRegExpExpectedData(scopeName: ScopeName, placeholder: Plac
                 { text: '.', scopes: name(scopeName, RuleName.RegExpString, RuleName.RegExpCharacterClass) },
                 { text: quantifier, scopes: name(scopeName, RuleName.RegExpString, RuleName.RegExpQuantifier) },
                 { text: q, scopes: name(scopeName, RuleName.RegExpString, RuleDescriptor.End) },
-                { text: '; comment', scopes: name(scopeName, RuleName.InLineComment) },
+                { text: '; comment', scopes: name(scopeName, RuleName.InlineComment) },
               ];
             }),
           ],
@@ -343,7 +343,7 @@ export function createRegExpExpectedData(scopeName: ScopeName, placeholder: Plac
                 { text: '.', scopes: name(scopeName, RuleName.RegExpString, RuleName.RegExpCharacterClass) },
                 { text: quantifier, scopes: name(scopeName, RuleName.RegExpString, RuleName.RegExpQuantifier) },
                 { text: q, scopes: name(scopeName, RuleName.RegExpString, RuleDescriptor.End) },
-                { text: '; comment', scopes: name(scopeName, RuleName.InLineComment) },
+                { text: '; comment', scopes: name(scopeName, RuleName.InlineComment) },
               ];
             }),
           ],
@@ -380,7 +380,7 @@ export function createRegExpExpectedData(scopeName: ScopeName, placeholder: Plac
                 { text: escapeSequence, scopes: name(scopeName, RuleName.RegExpString, RuleName.RegExpCharacterClassSet, StyleName.Escape) },
                 { text: `]`, scopes: name(scopeName, RuleName.RegExpString, RuleName.RegExpCharacterClassSet, RuleName.RegExpCharacterClass, RuleDescriptor.End) },
                 { text: q, scopes: name(scopeName, RuleName.RegExpString, RuleDescriptor.End) },
-                { text: '; comment', scopes: name(scopeName, RuleName.InLineComment) },
+                { text: '; comment', scopes: name(scopeName, RuleName.InlineComment) },
               ];
             }),
           ],
@@ -396,7 +396,7 @@ export function createRegExpExpectedData(scopeName: ScopeName, placeholder: Plac
               { text: q, scopes: name(scopeName, RuleName.RegExpString, RuleDescriptor.Begin) },
               { text: escapeSequence, scopes: name(scopeName, RuleName.RegExpString, StyleName.Escape) },
               { text: q, scopes: name(scopeName, RuleName.RegExpString, RuleDescriptor.End) },
-              { text: '; comment', scopes: name(scopeName, RuleName.InLineComment) },
+              { text: '; comment', scopes: name(scopeName, RuleName.InlineComment) },
             ],
           ];
         }),
@@ -415,13 +415,13 @@ export function createRegExpExpectedData(scopeName: ScopeName, placeholder: Plac
         { text: ')', scopes: name(scopeName, RuleName.RegExpString, RuleName.RegExpOption) },
         { text: 'text', scopes: name(scopeName, RuleName.RegExpString) },
         { text: q, scopes: name(scopeName, RuleName.RegExpString, RuleDescriptor.End) },
-        { text: '; comment', scopes: name(scopeName, RuleName.InLineComment) },
+        { text: '; comment', scopes: name(scopeName, RuleName.InlineComment) },
 
         { text: q, scopes: name(scopeName, RuleName.RegExpString, RuleDescriptor.Begin) },
         { text: `${placeholder.regexOptions.join('')})`, scopes: name(scopeName, RuleName.RegExpString, RuleName.RegExpOption) },
         { text: 'text', scopes: name(scopeName, RuleName.RegExpString) },
         { text: q, scopes: name(scopeName, RuleName.RegExpString, RuleDescriptor.End) },
-        { text: '; comment', scopes: name(scopeName, RuleName.InLineComment) },
+        { text: '; comment', scopes: name(scopeName, RuleName.InlineComment) },
       ],
     ],
     // #endregion string as regexp

@@ -16,20 +16,20 @@ export function createThrowStatementExpectedData(scopeName: ScopeName): Expected
       `,
       [
         { text: 'throw', scopes: name(scopeName, RuleName.ControlFlowKeyword) },
-        { text: '; comment', scopes: name(scopeName, RuleName.InLineComment) },
+        { text: '; comment', scopes: name(scopeName, RuleName.InlineComment) },
 
         { text: 'throw', scopes: name(scopeName, RuleName.ControlFlowKeyword) },
         { text: ',', scopes: name(scopeName, RuleName.Comma) },
-        { text: '; comment', scopes: name(scopeName, RuleName.InLineComment) },
+        { text: '; comment', scopes: name(scopeName, RuleName.InlineComment) },
 
         { text: 'throw', scopes: name(scopeName, RuleName.ControlFlowKeyword) },
         { text: 'err', scopes: name(scopeName, RuleName.Variable) },
-        { text: '; comment', scopes: name(scopeName, RuleName.InLineComment) },
+        { text: '; comment', scopes: name(scopeName, RuleName.InlineComment) },
 
         { text: 'throw', scopes: name(scopeName, RuleName.ControlFlowKeyword) },
         { text: ',', scopes: name(scopeName, RuleName.Comma) },
         { text: 'err', scopes: name(scopeName, RuleName.Variable) },
-        { text: '; comment', scopes: name(scopeName, RuleName.InLineComment) },
+        { text: '; comment', scopes: name(scopeName, RuleName.InlineComment) },
       ],
     ],
   ];

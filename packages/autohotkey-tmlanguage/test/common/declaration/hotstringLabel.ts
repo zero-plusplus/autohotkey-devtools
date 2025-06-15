@@ -39,7 +39,7 @@ export function createHotstringLabelStatementExpectedData(scopeName: ScopeName):
         { text: 'abc', scopes: name(scopeName, RuleName.HotstringLabelName) },
         { text: '::', scopes: name(scopeName, RuleName.ColonColon) },
         { text: 'text', scopes: name(scopeName, RuleName.UnquotedString) },
-        { text: '; comment', scopes: name(scopeName, RuleName.InLineComment) },
+        { text: '; comment', scopes: name(scopeName, RuleName.InlineComment) },
       ],
     ],
     [
@@ -52,10 +52,10 @@ export function createHotstringLabelStatementExpectedData(scopeName: ScopeName):
         { text: ':', scopes: name(scopeName, RuleName.Colon) },
         { text: 'abc', scopes: name(scopeName, RuleName.HotstringLabelName) },
         { text: '::', scopes: name(scopeName, RuleName.ColonColon) },
-        { text: '; comment', scopes: name(scopeName, RuleName.InLineComment) },
+        { text: '; comment', scopes: name(scopeName, RuleName.InlineComment) },
 
         { text: 'return', scopes: name(scopeName, RuleName.JumpCommandName) },
-        { text: '; comment', scopes: name(scopeName, RuleName.InLineComment) },
+        { text: '; comment', scopes: name(scopeName, RuleName.InlineComment) },
       ],
     ],
     [
@@ -70,16 +70,16 @@ export function createHotstringLabelStatementExpectedData(scopeName: ScopeName):
         { text: ':', scopes: name(scopeName, RuleName.Colon) },
         { text: 'abc', scopes: name(scopeName, RuleName.HotstringLabelName) },
         { text: '::', scopes: name(scopeName, RuleName.ColonColon) },
-        { text: '; comment', scopes: name(scopeName, RuleName.InLineComment) },
+        { text: '; comment', scopes: name(scopeName, RuleName.InlineComment) },
 
         { text: '{', scopes: name(scopeName, RuleName.BlockBegin) },
-        { text: '; comment', scopes: name(scopeName, RuleName.InLineComment) },
+        { text: '; comment', scopes: name(scopeName, RuleName.InlineComment) },
 
         { text: 'return', scopes: name(scopeName, RuleName.JumpCommandName) },
-        { text: '; comment', scopes: name(scopeName, RuleName.InLineComment) },
+        { text: '; comment', scopes: name(scopeName, RuleName.InlineComment) },
 
         { text: '}', scopes: name(scopeName, RuleName.BlockEnd) },
-        { text: '; comment', scopes: name(scopeName, RuleName.InLineComment) },
+        { text: '; comment', scopes: name(scopeName, RuleName.InlineComment) },
       ],
     ],
     [
@@ -94,19 +94,19 @@ export function createHotstringLabelStatementExpectedData(scopeName: ScopeName):
         { text: ':', scopes: name(scopeName, RuleName.Colon) },
         { text: 'abc', scopes: name(scopeName, RuleName.HotstringLabelName) },
         { text: '::', scopes: name(scopeName, RuleName.ColonColon) },
-        { text: '; comment', scopes: name(scopeName, RuleName.InLineComment) },
+        { text: '; comment', scopes: name(scopeName, RuleName.InlineComment) },
 
         { text: 'abc', scopes: name(scopeName, RuleName.FunctionName) },
         { text: '(', scopes: name(scopeName, RuleName.OpenParen) },
         { text: ')', scopes: name(scopeName, RuleName.CloseParen) },
         { text: '{', scopes: name(scopeName, RuleName.BlockBegin) },
-        { text: '; comment', scopes: name(scopeName, RuleName.InLineComment) },
+        { text: '; comment', scopes: name(scopeName, RuleName.InlineComment) },
 
         { text: 'return', scopes: name(scopeName, RuleName.JumpCommandName) },
-        { text: '; comment', scopes: name(scopeName, RuleName.InLineComment) },
+        { text: '; comment', scopes: name(scopeName, RuleName.InlineComment) },
 
         { text: '}', scopes: name(scopeName, RuleName.BlockEnd) },
-        { text: '; comment', scopes: name(scopeName, RuleName.InLineComment) },
+        { text: '; comment', scopes: name(scopeName, RuleName.InlineComment) },
       ],
     ],
   ];

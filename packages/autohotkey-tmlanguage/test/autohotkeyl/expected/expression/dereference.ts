@@ -15,7 +15,7 @@ export function createDereferenceExpressionExpectedData(scopeName: ScopeName): E
         { text: '%', scopes: name(scopeName, RuleName.PercentBegin) },
         { text: 'abc', scopes: name(scopeName, RuleName.Variable) },
         { text: '%', scopes: name(scopeName, RuleName.PercentEnd) },
-        { text: '; comment', scopes: name(scopeName, RuleName.InLineComment) },
+        { text: '; comment', scopes: name(scopeName, RuleName.InlineComment) },
       ],
     ],
     [
@@ -26,7 +26,7 @@ export function createDereferenceExpressionExpectedData(scopeName: ScopeName): E
         { text: '%', scopes: name(scopeName, RuleName.PercentBegin) },
         { text: 'A_ScriptDir', scopes: name(scopeName, RuleName.BuiltInVariable) },
         { text: '%', scopes: name(scopeName, RuleName.PercentEnd) },
-        { text: '; comment', scopes: name(scopeName, RuleName.InLineComment) },
+        { text: '; comment', scopes: name(scopeName, RuleName.InlineComment) },
       ],
     ],
     [
@@ -36,7 +36,7 @@ export function createDereferenceExpressionExpectedData(scopeName: ScopeName): E
       [
         { text: '%', scopes: name(scopeName, RuleName.PercentBegin, StyleName.Invalid) },
         { text: '%', scopes: name(scopeName, RuleName.PercentEnd, StyleName.Invalid) },
-        { text: '; comment', scopes: name(scopeName, RuleName.InLineComment) },
+        { text: '; comment', scopes: name(scopeName, RuleName.InlineComment) },
       ],
     ],
     [
@@ -46,7 +46,7 @@ export function createDereferenceExpressionExpectedData(scopeName: ScopeName): E
       [
         { text: '%', scopes: name(scopeName, RuleName.PercentBegin) },
         { text: 'a', scopes: name(scopeName, RuleName.Variable, StyleName.Invalid) },
-        { text: '; comment', scopes: name(scopeName, RuleName.InLineComment) },
+        { text: '; comment', scopes: name(scopeName, RuleName.InlineComment) },
       ],
     ],
     [
@@ -57,7 +57,7 @@ export function createDereferenceExpressionExpectedData(scopeName: ScopeName): E
         { text: '%', scopes: name(scopeName, RuleName.PercentBegin) },
         { text: 'a', scopes: name(scopeName, RuleName.Variable, StyleName.Invalid) },
         { text: '%', scopes: name(scopeName, RuleName.PercentEnd) },
-        { text: '; comment', scopes: name(scopeName, RuleName.InLineComment) },
+        { text: '; comment', scopes: name(scopeName, RuleName.InlineComment) },
       ],
     ],
     [
@@ -70,7 +70,7 @@ export function createDereferenceExpressionExpectedData(scopeName: ScopeName): E
         { text: 'b', scopes: name(scopeName, RuleName.Variable, StyleName.Invalid) },
         { text: 'c', scopes: name(scopeName, RuleName.Variable, StyleName.Invalid) },
         { text: '%', scopes: name(scopeName, RuleName.PercentEnd) },
-        { text: '; comment', scopes: name(scopeName, RuleName.InLineComment) },
+        { text: '; comment', scopes: name(scopeName, RuleName.InlineComment) },
       ],
     ],
   ];

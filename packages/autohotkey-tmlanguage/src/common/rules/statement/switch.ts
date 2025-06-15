@@ -36,7 +36,7 @@ export function createSwitchStatementRule(scopeName: ScopeName, placeholder: Pla
           endAnchor(),
         ),
         patterns: [
-          includeRule(Repository.Comment),
+          includeRule(Repository.Trivias),
 
           includeRule(Repository.Comma),
           includeRule(Repository.ExpressionInControlFlow),
@@ -71,7 +71,7 @@ export function createSwitchStatementRule(scopeName: ScopeName, placeholder: Pla
               1: nameRule(scopeName, RuleName.Colon),
             },
             patterns: [
-              includeRule(Repository.Comment),
+              includeRule(Repository.Trivias),
 
               includeRule(Repository.Comma),
               includeRule(Repository.ExpressionInControlFlow),

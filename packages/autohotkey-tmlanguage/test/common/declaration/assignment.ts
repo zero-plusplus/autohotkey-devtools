@@ -23,7 +23,7 @@ export function createAssignmentDeclarationExpectedData(scopeName: ScopeName, pl
               { text: 'var', scopes: name(scopeName, RuleName.Variable) },
               { text: operator, scopes: name(scopeName, RuleName.Operator) },
               { text: '123', scopes: name(scopeName, RuleName.Integer) },
-              { text: '; comment', scopes: name(scopeName, RuleName.InLineComment) },
+              { text: '; comment', scopes: name(scopeName, RuleName.InlineComment) },
             ],
           ],
           [
@@ -34,14 +34,14 @@ export function createAssignmentDeclarationExpectedData(scopeName: ScopeName, pl
             `,
             [
               { text: modifier, scopes: name(scopeName, RuleName.Modifier) },
-              { text: '; comment', scopes: name(scopeName, RuleName.InLineComment) },
+              { text: '; comment', scopes: name(scopeName, RuleName.InlineComment) },
 
               { text: 'var', scopes: name(scopeName, RuleName.Variable) },
               { text: operator, scopes: name(scopeName, RuleName.Operator) },
-              { text: '; comment', scopes: name(scopeName, RuleName.InLineComment) },
+              { text: '; comment', scopes: name(scopeName, RuleName.InlineComment) },
 
               { text: '123', scopes: name(scopeName, RuleName.Integer) },
-              { text: '; comment', scopes: name(scopeName, RuleName.InLineComment) },
+              { text: '; comment', scopes: name(scopeName, RuleName.InlineComment) },
             ],
           ],
         ];

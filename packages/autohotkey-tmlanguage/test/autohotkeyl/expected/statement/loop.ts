@@ -21,10 +21,10 @@ export function createLoopStatementExpectedData(scopeName: ScopeName): ExpectedT
               [
                 { text: 'loop', scopes: name(scopeName, RuleName.ControlFlowKeyword) },
                 { text: '{', scopes: name(scopeName, RuleName.BlockBegin) },
-                { text: '; comment', scopes: name(scopeName, RuleName.InLineComment) },
+                { text: '; comment', scopes: name(scopeName, RuleName.InlineComment) },
 
                 { text: '}', scopes: name(scopeName, RuleName.BlockEnd) },
-                { text: '; comment', scopes: name(scopeName, RuleName.InLineComment) },
+                { text: '; comment', scopes: name(scopeName, RuleName.InlineComment) },
               ],
             ],
             [
@@ -35,10 +35,10 @@ export function createLoopStatementExpectedData(scopeName: ScopeName): ExpectedT
               [
                 { text: 'Loop', scopes: name(scopeName, RuleName.ControlFlowKeyword) },
                 { text: '{', scopes: name(scopeName, RuleName.BlockBegin) },
-                { text: '; comment', scopes: name(scopeName, RuleName.InLineComment) },
+                { text: '; comment', scopes: name(scopeName, RuleName.InlineComment) },
 
                 { text: '}', scopes: name(scopeName, RuleName.BlockEnd) },
-                { text: '; comment', scopes: name(scopeName, RuleName.InLineComment) },
+                { text: '; comment', scopes: name(scopeName, RuleName.InlineComment) },
               ],
             ],
             [
@@ -54,10 +54,10 @@ export function createLoopStatementExpectedData(scopeName: ScopeName): ExpectedT
                   { text: 'Loop', scopes: name(scopeName, RuleName.ControlFlowKeyword) },
                   { text: '10', scopes: name(scopeName, RuleName.Integer) },
                   { text: '{', scopes: name(scopeName, RuleName.BlockBegin) },
-                  { text: '; comment', scopes: name(scopeName, RuleName.InLineComment) },
+                  { text: '; comment', scopes: name(scopeName, RuleName.InlineComment) },
 
                   { text: '}', scopes: name(scopeName, RuleName.BlockEnd) },
-                  { text: '; comment', scopes: name(scopeName, RuleName.InLineComment) },
+                  { text: '; comment', scopes: name(scopeName, RuleName.InlineComment) },
                 ],
 
                 ...[
@@ -65,10 +65,10 @@ export function createLoopStatementExpectedData(scopeName: ScopeName): ExpectedT
                   { text: ',', scopes: name(scopeName, RuleName.Comma) },
                   { text: '10', scopes: name(scopeName, RuleName.Integer) },
                   { text: '{', scopes: name(scopeName, RuleName.BlockBegin) },
-                  { text: '; comment', scopes: name(scopeName, RuleName.InLineComment) },
+                  { text: '; comment', scopes: name(scopeName, RuleName.InlineComment) },
 
                   { text: '}', scopes: name(scopeName, RuleName.BlockEnd) },
-                  { text: '; comment', scopes: name(scopeName, RuleName.InLineComment) },
+                  { text: '; comment', scopes: name(scopeName, RuleName.InlineComment) },
                 ],
               ],
             ],
@@ -86,13 +86,13 @@ export function createLoopStatementExpectedData(scopeName: ScopeName): ExpectedT
               `,
               [
                 { text: 'loop', scopes: name(scopeName, RuleName.ControlFlowKeyword) },
-                { text: '; comment', scopes: name(scopeName, RuleName.InLineComment) },
+                { text: '; comment', scopes: name(scopeName, RuleName.InlineComment) },
 
                 { text: '{', scopes: name(scopeName, RuleName.BlockBegin) },
-                { text: '; comment', scopes: name(scopeName, RuleName.InLineComment) },
+                { text: '; comment', scopes: name(scopeName, RuleName.InlineComment) },
 
                 { text: '}', scopes: name(scopeName, RuleName.BlockEnd) },
-                { text: '; comment', scopes: name(scopeName, RuleName.InLineComment) },
+                { text: '; comment', scopes: name(scopeName, RuleName.InlineComment) },
               ],
             ],
             [
@@ -103,13 +103,13 @@ export function createLoopStatementExpectedData(scopeName: ScopeName): ExpectedT
               `,
               [
                 { text: 'Loop', scopes: name(scopeName, RuleName.ControlFlowKeyword) },
-                { text: '; comment', scopes: name(scopeName, RuleName.InLineComment) },
+                { text: '; comment', scopes: name(scopeName, RuleName.InlineComment) },
 
                 { text: '{', scopes: name(scopeName, RuleName.BlockBegin) },
-                { text: '; comment', scopes: name(scopeName, RuleName.InLineComment) },
+                { text: '; comment', scopes: name(scopeName, RuleName.InlineComment) },
 
                 { text: '}', scopes: name(scopeName, RuleName.BlockEnd) },
-                { text: '; comment', scopes: name(scopeName, RuleName.InLineComment) },
+                { text: '; comment', scopes: name(scopeName, RuleName.InlineComment) },
               ],
             ],
             [
@@ -126,26 +126,26 @@ export function createLoopStatementExpectedData(scopeName: ScopeName): ExpectedT
                 ...[
                   { text: 'Loop', scopes: name(scopeName, RuleName.ControlFlowKeyword) },
                   { text: '10', scopes: name(scopeName, RuleName.Integer) },
-                  { text: '; comment', scopes: name(scopeName, RuleName.InLineComment) },
+                  { text: '; comment', scopes: name(scopeName, RuleName.InlineComment) },
 
                   { text: '{', scopes: name(scopeName, RuleName.BlockBegin) },
-                  { text: '; comment', scopes: name(scopeName, RuleName.InLineComment) },
+                  { text: '; comment', scopes: name(scopeName, RuleName.InlineComment) },
 
                   { text: '}', scopes: name(scopeName, RuleName.BlockEnd) },
-                  { text: '; comment', scopes: name(scopeName, RuleName.InLineComment) },
+                  { text: '; comment', scopes: name(scopeName, RuleName.InlineComment) },
                 ],
 
                 ...[
                   { text: 'Loop', scopes: name(scopeName, RuleName.ControlFlowKeyword) },
                   { text: ',', scopes: name(scopeName, RuleName.Comma) },
                   { text: '10', scopes: name(scopeName, RuleName.Integer) },
-                  { text: '; comment', scopes: name(scopeName, RuleName.InLineComment) },
+                  { text: '; comment', scopes: name(scopeName, RuleName.InlineComment) },
 
                   { text: '{', scopes: name(scopeName, RuleName.BlockBegin) },
-                  { text: '; comment', scopes: name(scopeName, RuleName.InLineComment) },
+                  { text: '; comment', scopes: name(scopeName, RuleName.InlineComment) },
 
                   { text: '}', scopes: name(scopeName, RuleName.BlockEnd) },
-                  { text: '; comment', scopes: name(scopeName, RuleName.InLineComment) },
+                  { text: '; comment', scopes: name(scopeName, RuleName.InlineComment) },
                 ],
               ],
             ],
@@ -173,25 +173,25 @@ export function createLoopStatementExpectedData(scopeName: ScopeName): ExpectedT
                 ...[
                   { text: 'Loop', scopes: name(scopeName, RuleName.ControlFlowKeyword) },
                   { text: '{', scopes: name(scopeName, RuleName.BlockBegin) },
-                  { text: '; comment', scopes: name(scopeName, RuleName.InLineComment) },
+                  { text: '; comment', scopes: name(scopeName, RuleName.InlineComment) },
 
                   { text: '}', scopes: name(scopeName, RuleName.BlockEnd) },
                   { text: 'Until', scopes: name(scopeName, RuleName.ControlFlowKeyword) },
                   { text: 'true', scopes: name(scopeName, RuleName.KeywordLikeBuiltInVariable) },
-                  { text: '; comment', scopes: name(scopeName, RuleName.InLineComment) },
+                  { text: '; comment', scopes: name(scopeName, RuleName.InlineComment) },
                 ],
 
                 ...[
                   { text: 'Loop', scopes: name(scopeName, RuleName.ControlFlowKeyword) },
                   { text: '{', scopes: name(scopeName, RuleName.BlockBegin) },
-                  { text: '; comment', scopes: name(scopeName, RuleName.InLineComment) },
+                  { text: '; comment', scopes: name(scopeName, RuleName.InlineComment) },
 
                   { text: '}', scopes: name(scopeName, RuleName.BlockEnd) },
-                  { text: '; comment', scopes: name(scopeName, RuleName.InLineComment) },
+                  { text: '; comment', scopes: name(scopeName, RuleName.InlineComment) },
 
                   { text: 'Until', scopes: name(scopeName, RuleName.ControlFlowKeyword) },
                   { text: 'true', scopes: name(scopeName, RuleName.KeywordLikeBuiltInVariable) },
-                  { text: '; comment', scopes: name(scopeName, RuleName.InLineComment) },
+                  { text: '; comment', scopes: name(scopeName, RuleName.InlineComment) },
                 ],
               ],
             ],
@@ -210,17 +210,17 @@ export function createLoopStatementExpectedData(scopeName: ScopeName): ExpectedT
               `,
               [
                 { text: 'Loop', scopes: name(scopeName, RuleName.ControlFlowKeyword) },
-                { text: '; comment', scopes: name(scopeName, RuleName.InLineComment) },
+                { text: '; comment', scopes: name(scopeName, RuleName.InlineComment) },
 
                 { text: '{', scopes: name(scopeName, RuleName.BlockBegin) },
-                { text: '; comment', scopes: name(scopeName, RuleName.InLineComment) },
+                { text: '; comment', scopes: name(scopeName, RuleName.InlineComment) },
 
                 { text: '}', scopes: name(scopeName, RuleName.BlockEnd) },
-                { text: '; comment', scopes: name(scopeName, RuleName.InLineComment) },
+                { text: '; comment', scopes: name(scopeName, RuleName.InlineComment) },
 
                 { text: 'Until', scopes: name(scopeName, RuleName.ControlFlowKeyword) },
                 { text: 'true', scopes: name(scopeName, RuleName.KeywordLikeBuiltInVariable) },
-                { text: '; comment', scopes: name(scopeName, RuleName.InLineComment) },
+                { text: '; comment', scopes: name(scopeName, RuleName.InlineComment) },
               ],
             ],
           ];
@@ -245,26 +245,26 @@ export function createLoopStatementExpectedData(scopeName: ScopeName): ExpectedT
             ...[
               { text: 'loop', scopes: name(scopeName, RuleName.ControlFlowKeyword) },
               { text: 'files', scopes: name(scopeName, RuleName.FlowSubCommandName) },
-              { text: '; comment', scopes: name(scopeName, RuleName.InLineComment) },
+              { text: '; comment', scopes: name(scopeName, RuleName.InlineComment) },
 
               { text: '{', scopes: name(scopeName, RuleName.BlockBegin) },
-              { text: '; comment', scopes: name(scopeName, RuleName.InLineComment) },
+              { text: '; comment', scopes: name(scopeName, RuleName.InlineComment) },
 
               { text: '}', scopes: name(scopeName, RuleName.BlockEnd) },
-              { text: '; comment', scopes: name(scopeName, RuleName.InLineComment) },
+              { text: '; comment', scopes: name(scopeName, RuleName.InlineComment) },
             ],
 
             ...[
               { text: 'loop', scopes: name(scopeName, RuleName.ControlFlowKeyword) },
               { text: ',', scopes: name(scopeName, RuleName.Comma) },
               { text: 'files', scopes: name(scopeName, RuleName.FlowSubCommandName) },
-              { text: '; comment', scopes: name(scopeName, RuleName.InLineComment) },
+              { text: '; comment', scopes: name(scopeName, RuleName.InlineComment) },
 
               { text: '{', scopes: name(scopeName, RuleName.BlockBegin) },
-              { text: '; comment', scopes: name(scopeName, RuleName.InLineComment) },
+              { text: '; comment', scopes: name(scopeName, RuleName.InlineComment) },
 
               { text: '}', scopes: name(scopeName, RuleName.BlockEnd) },
-              { text: '; comment', scopes: name(scopeName, RuleName.InLineComment) },
+              { text: '; comment', scopes: name(scopeName, RuleName.InlineComment) },
             ],
           ],
         ],
@@ -281,26 +281,26 @@ export function createLoopStatementExpectedData(scopeName: ScopeName): ExpectedT
             ...[
               { text: 'Loop', scopes: name(scopeName, RuleName.ControlFlowKeyword) },
               { text: 'Files', scopes: name(scopeName, RuleName.FlowSubCommandName) },
-              { text: '; comment', scopes: name(scopeName, RuleName.InLineComment) },
+              { text: '; comment', scopes: name(scopeName, RuleName.InlineComment) },
 
               { text: '{', scopes: name(scopeName, RuleName.BlockBegin) },
-              { text: '; comment', scopes: name(scopeName, RuleName.InLineComment) },
+              { text: '; comment', scopes: name(scopeName, RuleName.InlineComment) },
 
               { text: '}', scopes: name(scopeName, RuleName.BlockEnd) },
-              { text: '; comment', scopes: name(scopeName, RuleName.InLineComment) },
+              { text: '; comment', scopes: name(scopeName, RuleName.InlineComment) },
             ],
 
             ...[
               { text: 'Loop', scopes: name(scopeName, RuleName.ControlFlowKeyword) },
               { text: ',', scopes: name(scopeName, RuleName.Comma) },
               { text: 'Files', scopes: name(scopeName, RuleName.FlowSubCommandName) },
-              { text: '; comment', scopes: name(scopeName, RuleName.InLineComment) },
+              { text: '; comment', scopes: name(scopeName, RuleName.InlineComment) },
 
               { text: '{', scopes: name(scopeName, RuleName.BlockBegin) },
-              { text: '; comment', scopes: name(scopeName, RuleName.InLineComment) },
+              { text: '; comment', scopes: name(scopeName, RuleName.InlineComment) },
 
               { text: '}', scopes: name(scopeName, RuleName.BlockEnd) },
-              { text: '; comment', scopes: name(scopeName, RuleName.InLineComment) },
+              { text: '; comment', scopes: name(scopeName, RuleName.InlineComment) },
             ],
           ],
         ],
@@ -326,13 +326,13 @@ export function createLoopStatementExpectedData(scopeName: ScopeName): ExpectedT
             ...[
               { text: 'Loop', scopes: name(scopeName, RuleName.ControlFlowKeyword) },
               { text: 'Files', scopes: name(scopeName, RuleName.FlowSubCommandName) },
-              { text: '; comment', scopes: name(scopeName, RuleName.InLineComment) },
+              { text: '; comment', scopes: name(scopeName, RuleName.InlineComment) },
 
               { text: '{', scopes: name(scopeName, RuleName.BlockBegin) },
-              { text: '; comment', scopes: name(scopeName, RuleName.InLineComment) },
+              { text: '; comment', scopes: name(scopeName, RuleName.InlineComment) },
 
               { text: '}', scopes: name(scopeName, RuleName.BlockEnd) },
-              { text: '; comment', scopes: name(scopeName, RuleName.InLineComment) },
+              { text: '; comment', scopes: name(scopeName, RuleName.InlineComment) },
             ],
 
             ...[
@@ -340,13 +340,13 @@ export function createLoopStatementExpectedData(scopeName: ScopeName): ExpectedT
               { text: 'Files', scopes: name(scopeName, RuleName.FlowSubCommandName) },
               { text: ',', scopes: name(scopeName, RuleName.Comma) },
               { text: 'C:\\test', scopes: name(scopeName, RuleName.UnquotedString) },
-              { text: '; comment', scopes: name(scopeName, RuleName.InLineComment) },
+              { text: '; comment', scopes: name(scopeName, RuleName.InlineComment) },
 
               { text: '{', scopes: name(scopeName, RuleName.BlockBegin) },
-              { text: '; comment', scopes: name(scopeName, RuleName.InLineComment) },
+              { text: '; comment', scopes: name(scopeName, RuleName.InlineComment) },
 
               { text: '}', scopes: name(scopeName, RuleName.BlockEnd) },
-              { text: '; comment', scopes: name(scopeName, RuleName.InLineComment) },
+              { text: '; comment', scopes: name(scopeName, RuleName.InlineComment) },
             ],
 
             ...[
@@ -359,13 +359,13 @@ export function createLoopStatementExpectedData(scopeName: ScopeName): ExpectedT
               { text: 'F', scopes: name(scopeName, RuleName.UnquotedString, StyleName.Strong) },
               { text: 'R', scopes: name(scopeName, RuleName.UnquotedString, StyleName.Strong) },
 
-              { text: '; comment', scopes: name(scopeName, RuleName.InLineComment) },
+              { text: '; comment', scopes: name(scopeName, RuleName.InlineComment) },
 
               { text: '{', scopes: name(scopeName, RuleName.BlockBegin) },
-              { text: '; comment', scopes: name(scopeName, RuleName.InLineComment) },
+              { text: '; comment', scopes: name(scopeName, RuleName.InlineComment) },
 
               { text: '}', scopes: name(scopeName, RuleName.BlockEnd) },
-              { text: '; comment', scopes: name(scopeName, RuleName.InLineComment) },
+              { text: '; comment', scopes: name(scopeName, RuleName.InlineComment) },
             ],
 
             ...[
@@ -376,13 +376,13 @@ export function createLoopStatementExpectedData(scopeName: ScopeName): ExpectedT
               { text: ',', scopes: name(scopeName, RuleName.Comma) },
               { text: '_', scopes: name(scopeName, RuleName.UnquotedString, StyleName.Invalid) },
 
-              { text: '; comment', scopes: name(scopeName, RuleName.InLineComment) },
+              { text: '; comment', scopes: name(scopeName, RuleName.InlineComment) },
 
               { text: '{', scopes: name(scopeName, RuleName.BlockBegin) },
-              { text: '; comment', scopes: name(scopeName, RuleName.InLineComment) },
+              { text: '; comment', scopes: name(scopeName, RuleName.InlineComment) },
 
               { text: '}', scopes: name(scopeName, RuleName.BlockEnd) },
-              { text: '; comment', scopes: name(scopeName, RuleName.InLineComment) },
+              { text: '; comment', scopes: name(scopeName, RuleName.InlineComment) },
             ],
           ],
         ],
@@ -406,26 +406,26 @@ export function createLoopStatementExpectedData(scopeName: ScopeName): ExpectedT
             ...[
               { text: 'loop', scopes: name(scopeName, RuleName.ControlFlowKeyword) },
               { text: 'parse', scopes: name(scopeName, RuleName.FlowSubCommandName) },
-              { text: '; comment', scopes: name(scopeName, RuleName.InLineComment) },
+              { text: '; comment', scopes: name(scopeName, RuleName.InlineComment) },
 
               { text: '{', scopes: name(scopeName, RuleName.BlockBegin) },
-              { text: '; comment', scopes: name(scopeName, RuleName.InLineComment) },
+              { text: '; comment', scopes: name(scopeName, RuleName.InlineComment) },
 
               { text: '}', scopes: name(scopeName, RuleName.BlockEnd) },
-              { text: '; comment', scopes: name(scopeName, RuleName.InLineComment) },
+              { text: '; comment', scopes: name(scopeName, RuleName.InlineComment) },
             ],
 
             ...[
               { text: 'loop', scopes: name(scopeName, RuleName.ControlFlowKeyword) },
               { text: ',', scopes: name(scopeName, RuleName.Comma) },
               { text: 'parse', scopes: name(scopeName, RuleName.FlowSubCommandName) },
-              { text: '; comment', scopes: name(scopeName, RuleName.InLineComment) },
+              { text: '; comment', scopes: name(scopeName, RuleName.InlineComment) },
 
               { text: '{', scopes: name(scopeName, RuleName.BlockBegin) },
-              { text: '; comment', scopes: name(scopeName, RuleName.InLineComment) },
+              { text: '; comment', scopes: name(scopeName, RuleName.InlineComment) },
 
               { text: '}', scopes: name(scopeName, RuleName.BlockEnd) },
-              { text: '; comment', scopes: name(scopeName, RuleName.InLineComment) },
+              { text: '; comment', scopes: name(scopeName, RuleName.InlineComment) },
             ],
           ],
         ],
@@ -443,26 +443,26 @@ export function createLoopStatementExpectedData(scopeName: ScopeName): ExpectedT
             ...[
               { text: 'Loop', scopes: name(scopeName, RuleName.ControlFlowKeyword) },
               { text: 'Parse', scopes: name(scopeName, RuleName.FlowSubCommandName) },
-              { text: '; comment', scopes: name(scopeName, RuleName.InLineComment) },
+              { text: '; comment', scopes: name(scopeName, RuleName.InlineComment) },
 
               { text: '{', scopes: name(scopeName, RuleName.BlockBegin) },
-              { text: '; comment', scopes: name(scopeName, RuleName.InLineComment) },
+              { text: '; comment', scopes: name(scopeName, RuleName.InlineComment) },
 
               { text: '}', scopes: name(scopeName, RuleName.BlockEnd) },
-              { text: '; comment', scopes: name(scopeName, RuleName.InLineComment) },
+              { text: '; comment', scopes: name(scopeName, RuleName.InlineComment) },
             ],
 
             ...[
               { text: 'Loop', scopes: name(scopeName, RuleName.ControlFlowKeyword) },
               { text: ',', scopes: name(scopeName, RuleName.Comma) },
               { text: 'Parse', scopes: name(scopeName, RuleName.FlowSubCommandName) },
-              { text: '; comment', scopes: name(scopeName, RuleName.InLineComment) },
+              { text: '; comment', scopes: name(scopeName, RuleName.InlineComment) },
 
               { text: '{', scopes: name(scopeName, RuleName.BlockBegin) },
-              { text: '; comment', scopes: name(scopeName, RuleName.InLineComment) },
+              { text: '; comment', scopes: name(scopeName, RuleName.InlineComment) },
 
               { text: '}', scopes: name(scopeName, RuleName.BlockEnd) },
-              { text: '; comment', scopes: name(scopeName, RuleName.InLineComment) },
+              { text: '; comment', scopes: name(scopeName, RuleName.InlineComment) },
             ],
           ],
         ],
@@ -500,13 +500,13 @@ export function createLoopStatementExpectedData(scopeName: ScopeName): ExpectedT
             ...[
               { text: 'Loop', scopes: name(scopeName, RuleName.ControlFlowKeyword) },
               { text: 'Parse', scopes: name(scopeName, RuleName.FlowSubCommandName) },
-              { text: '; comment', scopes: name(scopeName, RuleName.InLineComment) },
+              { text: '; comment', scopes: name(scopeName, RuleName.InlineComment) },
 
               { text: '{', scopes: name(scopeName, RuleName.BlockBegin) },
-              { text: '; comment', scopes: name(scopeName, RuleName.InLineComment) },
+              { text: '; comment', scopes: name(scopeName, RuleName.InlineComment) },
 
               { text: '}', scopes: name(scopeName, RuleName.BlockEnd) },
-              { text: '; comment', scopes: name(scopeName, RuleName.InLineComment) },
+              { text: '; comment', scopes: name(scopeName, RuleName.InlineComment) },
             ],
 
             ...[
@@ -514,13 +514,13 @@ export function createLoopStatementExpectedData(scopeName: ScopeName): ExpectedT
               { text: 'Parse', scopes: name(scopeName, RuleName.FlowSubCommandName) },
               { text: ',', scopes: name(scopeName, RuleName.Comma) },
               { text: 'input', scopes: name(scopeName, RuleName.Variable) },
-              { text: '; comment', scopes: name(scopeName, RuleName.InLineComment) },
+              { text: '; comment', scopes: name(scopeName, RuleName.InlineComment) },
 
               { text: '{', scopes: name(scopeName, RuleName.BlockBegin) },
-              { text: '; comment', scopes: name(scopeName, RuleName.InLineComment) },
+              { text: '; comment', scopes: name(scopeName, RuleName.InlineComment) },
 
               { text: '}', scopes: name(scopeName, RuleName.BlockEnd) },
-              { text: '; comment', scopes: name(scopeName, RuleName.InLineComment) },
+              { text: '; comment', scopes: name(scopeName, RuleName.InlineComment) },
             ],
 
             ...[
@@ -531,13 +531,13 @@ export function createLoopStatementExpectedData(scopeName: ScopeName): ExpectedT
               { text: '"', scopes: name(scopeName, RuleName.DoubleString, RuleDescriptor.Begin) },
               { text: 'a,b,c', scopes: name(scopeName, RuleName.DoubleString) },
               { text: '"', scopes: name(scopeName, RuleName.DoubleString, RuleDescriptor.End) },
-              { text: '; comment', scopes: name(scopeName, RuleName.InLineComment) },
+              { text: '; comment', scopes: name(scopeName, RuleName.InlineComment) },
 
               { text: '{', scopes: name(scopeName, RuleName.BlockBegin) },
-              { text: '; comment', scopes: name(scopeName, RuleName.InLineComment) },
+              { text: '; comment', scopes: name(scopeName, RuleName.InlineComment) },
 
               { text: '}', scopes: name(scopeName, RuleName.BlockEnd) },
-              { text: '; comment', scopes: name(scopeName, RuleName.InLineComment) },
+              { text: '; comment', scopes: name(scopeName, RuleName.InlineComment) },
             ],
 
             ...[
@@ -547,13 +547,13 @@ export function createLoopStatementExpectedData(scopeName: ScopeName): ExpectedT
               { text: 'input', scopes: name(scopeName, RuleName.Variable) },
               { text: ',', scopes: name(scopeName, RuleName.Comma) },
               { text: 'CSV', scopes: name(scopeName, RuleName.UnquotedString, StyleName.Strong) },
-              { text: '; comment', scopes: name(scopeName, RuleName.InLineComment) },
+              { text: '; comment', scopes: name(scopeName, RuleName.InlineComment) },
 
               { text: '{', scopes: name(scopeName, RuleName.BlockBegin) },
-              { text: '; comment', scopes: name(scopeName, RuleName.InLineComment) },
+              { text: '; comment', scopes: name(scopeName, RuleName.InlineComment) },
 
               { text: '}', scopes: name(scopeName, RuleName.BlockEnd) },
-              { text: '; comment', scopes: name(scopeName, RuleName.InLineComment) },
+              { text: '; comment', scopes: name(scopeName, RuleName.InlineComment) },
             ],
 
             ...[
@@ -563,13 +563,13 @@ export function createLoopStatementExpectedData(scopeName: ScopeName): ExpectedT
               { text: 'input', scopes: name(scopeName, RuleName.Variable) },
               { text: ',', scopes: name(scopeName, RuleName.Comma) },
               { text: '|', scopes: name(scopeName, RuleName.UnquotedString) },
-              { text: '; comment', scopes: name(scopeName, RuleName.InLineComment) },
+              { text: '; comment', scopes: name(scopeName, RuleName.InlineComment) },
 
               { text: '{', scopes: name(scopeName, RuleName.BlockBegin) },
-              { text: '; comment', scopes: name(scopeName, RuleName.InLineComment) },
+              { text: '; comment', scopes: name(scopeName, RuleName.InlineComment) },
 
               { text: '}', scopes: name(scopeName, RuleName.BlockEnd) },
-              { text: '; comment', scopes: name(scopeName, RuleName.InLineComment) },
+              { text: '; comment', scopes: name(scopeName, RuleName.InlineComment) },
             ],
 
             ...[
@@ -581,13 +581,13 @@ export function createLoopStatementExpectedData(scopeName: ScopeName): ExpectedT
               { text: 'CSV', scopes: name(scopeName, RuleName.UnquotedString, StyleName.Strong) },
               { text: ',', scopes: name(scopeName, RuleName.Comma) },
               { text: '|', scopes: name(scopeName, RuleName.UnquotedString) },
-              { text: '; comment', scopes: name(scopeName, RuleName.InLineComment) },
+              { text: '; comment', scopes: name(scopeName, RuleName.InlineComment) },
 
               { text: '{', scopes: name(scopeName, RuleName.BlockBegin) },
-              { text: '; comment', scopes: name(scopeName, RuleName.InLineComment) },
+              { text: '; comment', scopes: name(scopeName, RuleName.InlineComment) },
 
               { text: '}', scopes: name(scopeName, RuleName.BlockEnd) },
-              { text: '; comment', scopes: name(scopeName, RuleName.InLineComment) },
+              { text: '; comment', scopes: name(scopeName, RuleName.InlineComment) },
             ],
 
             ...[
@@ -599,13 +599,13 @@ export function createLoopStatementExpectedData(scopeName: ScopeName): ExpectedT
               { text: 'CSV', scopes: name(scopeName, RuleName.UnquotedString, StyleName.Strong) },
               { text: ',', scopes: name(scopeName, RuleName.Comma) },
               { text: '`,', scopes: name(scopeName, RuleName.UnquotedString, StyleName.Escape) },
-              { text: '; comment', scopes: name(scopeName, RuleName.InLineComment) },
+              { text: '; comment', scopes: name(scopeName, RuleName.InlineComment) },
 
               { text: '{', scopes: name(scopeName, RuleName.BlockBegin) },
-              { text: '; comment', scopes: name(scopeName, RuleName.InLineComment) },
+              { text: '; comment', scopes: name(scopeName, RuleName.InlineComment) },
 
               { text: '}', scopes: name(scopeName, RuleName.BlockEnd) },
-              { text: '; comment', scopes: name(scopeName, RuleName.InLineComment) },
+              { text: '; comment', scopes: name(scopeName, RuleName.InlineComment) },
             ],
           ],
         ],
@@ -628,26 +628,26 @@ export function createLoopStatementExpectedData(scopeName: ScopeName): ExpectedT
             ...[
               { text: 'loop', scopes: name(scopeName, RuleName.ControlFlowKeyword) },
               { text: 'read', scopes: name(scopeName, RuleName.FlowSubCommandName) },
-              { text: '; comment', scopes: name(scopeName, RuleName.InLineComment) },
+              { text: '; comment', scopes: name(scopeName, RuleName.InlineComment) },
 
               { text: '{', scopes: name(scopeName, RuleName.BlockBegin) },
-              { text: '; comment', scopes: name(scopeName, RuleName.InLineComment) },
+              { text: '; comment', scopes: name(scopeName, RuleName.InlineComment) },
 
               { text: '}', scopes: name(scopeName, RuleName.BlockEnd) },
-              { text: '; comment', scopes: name(scopeName, RuleName.InLineComment) },
+              { text: '; comment', scopes: name(scopeName, RuleName.InlineComment) },
             ],
 
             ...[
               { text: 'loop', scopes: name(scopeName, RuleName.ControlFlowKeyword) },
               { text: ',', scopes: name(scopeName, RuleName.Comma) },
               { text: 'read', scopes: name(scopeName, RuleName.FlowSubCommandName) },
-              { text: '; comment', scopes: name(scopeName, RuleName.InLineComment) },
+              { text: '; comment', scopes: name(scopeName, RuleName.InlineComment) },
 
               { text: '{', scopes: name(scopeName, RuleName.BlockBegin) },
-              { text: '; comment', scopes: name(scopeName, RuleName.InLineComment) },
+              { text: '; comment', scopes: name(scopeName, RuleName.InlineComment) },
 
               { text: '}', scopes: name(scopeName, RuleName.BlockEnd) },
-              { text: '; comment', scopes: name(scopeName, RuleName.InLineComment) },
+              { text: '; comment', scopes: name(scopeName, RuleName.InlineComment) },
             ],
           ],
         ],
@@ -664,26 +664,26 @@ export function createLoopStatementExpectedData(scopeName: ScopeName): ExpectedT
             ...[
               { text: 'Loop', scopes: name(scopeName, RuleName.ControlFlowKeyword) },
               { text: 'Read', scopes: name(scopeName, RuleName.FlowSubCommandName) },
-              { text: '; comment', scopes: name(scopeName, RuleName.InLineComment) },
+              { text: '; comment', scopes: name(scopeName, RuleName.InlineComment) },
 
               { text: '{', scopes: name(scopeName, RuleName.BlockBegin) },
-              { text: '; comment', scopes: name(scopeName, RuleName.InLineComment) },
+              { text: '; comment', scopes: name(scopeName, RuleName.InlineComment) },
 
               { text: '}', scopes: name(scopeName, RuleName.BlockEnd) },
-              { text: '; comment', scopes: name(scopeName, RuleName.InLineComment) },
+              { text: '; comment', scopes: name(scopeName, RuleName.InlineComment) },
             ],
 
             ...[
               { text: 'Loop', scopes: name(scopeName, RuleName.ControlFlowKeyword) },
               { text: ',', scopes: name(scopeName, RuleName.Comma) },
               { text: 'Read', scopes: name(scopeName, RuleName.FlowSubCommandName) },
-              { text: '; comment', scopes: name(scopeName, RuleName.InLineComment) },
+              { text: '; comment', scopes: name(scopeName, RuleName.InlineComment) },
 
               { text: '{', scopes: name(scopeName, RuleName.BlockBegin) },
-              { text: '; comment', scopes: name(scopeName, RuleName.InLineComment) },
+              { text: '; comment', scopes: name(scopeName, RuleName.InlineComment) },
 
               { text: '}', scopes: name(scopeName, RuleName.BlockEnd) },
-              { text: '; comment', scopes: name(scopeName, RuleName.InLineComment) },
+              { text: '; comment', scopes: name(scopeName, RuleName.InlineComment) },
             ],
           ],
         ],
@@ -710,13 +710,13 @@ export function createLoopStatementExpectedData(scopeName: ScopeName): ExpectedT
               { text: 'Loop', scopes: name(scopeName, RuleName.ControlFlowKeyword) },
               { text: ',', scopes: name(scopeName, RuleName.Comma) },
               { text: 'Read', scopes: name(scopeName, RuleName.FlowSubCommandName) },
-              { text: '; comment', scopes: name(scopeName, RuleName.InLineComment) },
+              { text: '; comment', scopes: name(scopeName, RuleName.InlineComment) },
 
               { text: '{', scopes: name(scopeName, RuleName.BlockBegin) },
-              { text: '; comment', scopes: name(scopeName, RuleName.InLineComment) },
+              { text: '; comment', scopes: name(scopeName, RuleName.InlineComment) },
 
               { text: '}', scopes: name(scopeName, RuleName.BlockEnd) },
-              { text: '; comment', scopes: name(scopeName, RuleName.InLineComment) },
+              { text: '; comment', scopes: name(scopeName, RuleName.InlineComment) },
             ],
 
             ...[
@@ -725,13 +725,13 @@ export function createLoopStatementExpectedData(scopeName: ScopeName): ExpectedT
               { text: 'Read', scopes: name(scopeName, RuleName.FlowSubCommandName) },
               { text: ',', scopes: name(scopeName, RuleName.Comma) },
               { text: 'path\\to', scopes: name(scopeName, RuleName.UnquotedString) },
-              { text: '; comment', scopes: name(scopeName, RuleName.InLineComment) },
+              { text: '; comment', scopes: name(scopeName, RuleName.InlineComment) },
 
               { text: '{', scopes: name(scopeName, RuleName.BlockBegin) },
-              { text: '; comment', scopes: name(scopeName, RuleName.InLineComment) },
+              { text: '; comment', scopes: name(scopeName, RuleName.InlineComment) },
 
               { text: '}', scopes: name(scopeName, RuleName.BlockEnd) },
-              { text: '; comment', scopes: name(scopeName, RuleName.InLineComment) },
+              { text: '; comment', scopes: name(scopeName, RuleName.InlineComment) },
             ],
 
             ...[
@@ -742,13 +742,13 @@ export function createLoopStatementExpectedData(scopeName: ScopeName): ExpectedT
               { text: 'path\\to', scopes: name(scopeName, RuleName.UnquotedString) },
               { text: ',', scopes: name(scopeName, RuleName.Comma) },
               { text: 'path\\to', scopes: name(scopeName, RuleName.UnquotedString) },
-              { text: '; comment', scopes: name(scopeName, RuleName.InLineComment) },
+              { text: '; comment', scopes: name(scopeName, RuleName.InlineComment) },
 
               { text: '{', scopes: name(scopeName, RuleName.BlockBegin) },
-              { text: '; comment', scopes: name(scopeName, RuleName.InLineComment) },
+              { text: '; comment', scopes: name(scopeName, RuleName.InlineComment) },
 
               { text: '}', scopes: name(scopeName, RuleName.BlockEnd) },
-              { text: '; comment', scopes: name(scopeName, RuleName.InLineComment) },
+              { text: '; comment', scopes: name(scopeName, RuleName.InlineComment) },
             ],
 
             ...[
@@ -759,13 +759,13 @@ export function createLoopStatementExpectedData(scopeName: ScopeName): ExpectedT
               { text: 'path\\to', scopes: name(scopeName, RuleName.UnquotedString) },
               { text: ',', scopes: name(scopeName, RuleName.Comma) },
               { text: '`,', scopes: name(scopeName, RuleName.UnquotedString, StyleName.Escape) },
-              { text: '; comment', scopes: name(scopeName, RuleName.InLineComment) },
+              { text: '; comment', scopes: name(scopeName, RuleName.InlineComment) },
 
               { text: '{', scopes: name(scopeName, RuleName.BlockBegin) },
-              { text: '; comment', scopes: name(scopeName, RuleName.InLineComment) },
+              { text: '; comment', scopes: name(scopeName, RuleName.InlineComment) },
 
               { text: '}', scopes: name(scopeName, RuleName.BlockEnd) },
-              { text: '; comment', scopes: name(scopeName, RuleName.InLineComment) },
+              { text: '; comment', scopes: name(scopeName, RuleName.InlineComment) },
             ],
           ],
         ],
@@ -788,26 +788,26 @@ export function createLoopStatementExpectedData(scopeName: ScopeName): ExpectedT
             ...[
               { text: 'loop', scopes: name(scopeName, RuleName.ControlFlowKeyword) },
               { text: 'reg', scopes: name(scopeName, RuleName.FlowSubCommandName) },
-              { text: '; comment', scopes: name(scopeName, RuleName.InLineComment) },
+              { text: '; comment', scopes: name(scopeName, RuleName.InlineComment) },
 
               { text: '{', scopes: name(scopeName, RuleName.BlockBegin) },
-              { text: '; comment', scopes: name(scopeName, RuleName.InLineComment) },
+              { text: '; comment', scopes: name(scopeName, RuleName.InlineComment) },
 
               { text: '}', scopes: name(scopeName, RuleName.BlockEnd) },
-              { text: '; comment', scopes: name(scopeName, RuleName.InLineComment) },
+              { text: '; comment', scopes: name(scopeName, RuleName.InlineComment) },
             ],
 
             ...[
               { text: 'loop', scopes: name(scopeName, RuleName.ControlFlowKeyword) },
               { text: ',', scopes: name(scopeName, RuleName.Comma) },
               { text: 'reg', scopes: name(scopeName, RuleName.FlowSubCommandName) },
-              { text: '; comment', scopes: name(scopeName, RuleName.InLineComment) },
+              { text: '; comment', scopes: name(scopeName, RuleName.InlineComment) },
 
               { text: '{', scopes: name(scopeName, RuleName.BlockBegin) },
-              { text: '; comment', scopes: name(scopeName, RuleName.InLineComment) },
+              { text: '; comment', scopes: name(scopeName, RuleName.InlineComment) },
 
               { text: '}', scopes: name(scopeName, RuleName.BlockEnd) },
-              { text: '; comment', scopes: name(scopeName, RuleName.InLineComment) },
+              { text: '; comment', scopes: name(scopeName, RuleName.InlineComment) },
             ],
           ],
         ],
@@ -824,26 +824,26 @@ export function createLoopStatementExpectedData(scopeName: ScopeName): ExpectedT
             ...[
               { text: 'Loop', scopes: name(scopeName, RuleName.ControlFlowKeyword) },
               { text: 'Reg', scopes: name(scopeName, RuleName.FlowSubCommandName) },
-              { text: '; comment', scopes: name(scopeName, RuleName.InLineComment) },
+              { text: '; comment', scopes: name(scopeName, RuleName.InlineComment) },
 
               { text: '{', scopes: name(scopeName, RuleName.BlockBegin) },
-              { text: '; comment', scopes: name(scopeName, RuleName.InLineComment) },
+              { text: '; comment', scopes: name(scopeName, RuleName.InlineComment) },
 
               { text: '}', scopes: name(scopeName, RuleName.BlockEnd) },
-              { text: '; comment', scopes: name(scopeName, RuleName.InLineComment) },
+              { text: '; comment', scopes: name(scopeName, RuleName.InlineComment) },
             ],
 
             ...[
               { text: 'Loop', scopes: name(scopeName, RuleName.ControlFlowKeyword) },
               { text: ',', scopes: name(scopeName, RuleName.Comma) },
               { text: 'Reg', scopes: name(scopeName, RuleName.FlowSubCommandName) },
-              { text: '; comment', scopes: name(scopeName, RuleName.InLineComment) },
+              { text: '; comment', scopes: name(scopeName, RuleName.InlineComment) },
 
               { text: '{', scopes: name(scopeName, RuleName.BlockBegin) },
-              { text: '; comment', scopes: name(scopeName, RuleName.InLineComment) },
+              { text: '; comment', scopes: name(scopeName, RuleName.InlineComment) },
 
               { text: '}', scopes: name(scopeName, RuleName.BlockEnd) },
-              { text: '; comment', scopes: name(scopeName, RuleName.InLineComment) },
+              { text: '; comment', scopes: name(scopeName, RuleName.InlineComment) },
             ],
           ],
         ],
@@ -870,13 +870,13 @@ export function createLoopStatementExpectedData(scopeName: ScopeName): ExpectedT
               { text: 'Loop', scopes: name(scopeName, RuleName.ControlFlowKeyword) },
               { text: ',', scopes: name(scopeName, RuleName.Comma) },
               { text: 'Reg', scopes: name(scopeName, RuleName.FlowSubCommandName) },
-              { text: '; comment', scopes: name(scopeName, RuleName.InLineComment) },
+              { text: '; comment', scopes: name(scopeName, RuleName.InlineComment) },
 
               { text: '{', scopes: name(scopeName, RuleName.BlockBegin) },
-              { text: '; comment', scopes: name(scopeName, RuleName.InLineComment) },
+              { text: '; comment', scopes: name(scopeName, RuleName.InlineComment) },
 
               { text: '}', scopes: name(scopeName, RuleName.BlockEnd) },
-              { text: '; comment', scopes: name(scopeName, RuleName.InLineComment) },
+              { text: '; comment', scopes: name(scopeName, RuleName.InlineComment) },
             ],
 
             ...[
@@ -885,13 +885,13 @@ export function createLoopStatementExpectedData(scopeName: ScopeName): ExpectedT
               { text: 'Reg', scopes: name(scopeName, RuleName.FlowSubCommandName) },
               { text: ',', scopes: name(scopeName, RuleName.Comma) },
               { text: 'HKLM\\path\\to', scopes: name(scopeName, RuleName.UnquotedString) },
-              { text: '; comment', scopes: name(scopeName, RuleName.InLineComment) },
+              { text: '; comment', scopes: name(scopeName, RuleName.InlineComment) },
 
               { text: '{', scopes: name(scopeName, RuleName.BlockBegin) },
-              { text: '; comment', scopes: name(scopeName, RuleName.InLineComment) },
+              { text: '; comment', scopes: name(scopeName, RuleName.InlineComment) },
 
               { text: '}', scopes: name(scopeName, RuleName.BlockEnd) },
-              { text: '; comment', scopes: name(scopeName, RuleName.InLineComment) },
+              { text: '; comment', scopes: name(scopeName, RuleName.InlineComment) },
             ],
 
             ...[
@@ -904,13 +904,13 @@ export function createLoopStatementExpectedData(scopeName: ScopeName): ExpectedT
               { text: 'K', scopes: name(scopeName, RuleName.UnquotedString, StyleName.Strong) },
               { text: 'V', scopes: name(scopeName, RuleName.UnquotedString, StyleName.Strong) },
               { text: 'R', scopes: name(scopeName, RuleName.UnquotedString, StyleName.Strong) },
-              { text: '; comment', scopes: name(scopeName, RuleName.InLineComment) },
+              { text: '; comment', scopes: name(scopeName, RuleName.InlineComment) },
 
               { text: '{', scopes: name(scopeName, RuleName.BlockBegin) },
-              { text: '; comment', scopes: name(scopeName, RuleName.InLineComment) },
+              { text: '; comment', scopes: name(scopeName, RuleName.InlineComment) },
 
               { text: '}', scopes: name(scopeName, RuleName.BlockEnd) },
-              { text: '; comment', scopes: name(scopeName, RuleName.InLineComment) },
+              { text: '; comment', scopes: name(scopeName, RuleName.InlineComment) },
             ],
 
             ...[
@@ -921,13 +921,13 @@ export function createLoopStatementExpectedData(scopeName: ScopeName): ExpectedT
               { text: 'HKLM\\path\\to', scopes: name(scopeName, RuleName.UnquotedString) },
               { text: ',', scopes: name(scopeName, RuleName.Comma) },
               { text: '_', scopes: name(scopeName, RuleName.UnquotedString, StyleName.Invalid) },
-              { text: '; comment', scopes: name(scopeName, RuleName.InLineComment) },
+              { text: '; comment', scopes: name(scopeName, RuleName.InlineComment) },
 
               { text: '{', scopes: name(scopeName, RuleName.BlockBegin) },
-              { text: '; comment', scopes: name(scopeName, RuleName.InLineComment) },
+              { text: '; comment', scopes: name(scopeName, RuleName.InlineComment) },
 
               { text: '}', scopes: name(scopeName, RuleName.BlockEnd) },
-              { text: '; comment', scopes: name(scopeName, RuleName.InLineComment) },
+              { text: '; comment', scopes: name(scopeName, RuleName.InlineComment) },
             ],
           ],
         ],

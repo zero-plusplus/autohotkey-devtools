@@ -47,7 +47,7 @@ export function createVariableExpectedData(scopeName: ScopeName): ExpectedTestDa
         { text: 'v'.repeat(253), scopes: name(scopeName, RuleName.Variable) },
         { text: 'v'.repeat(2), scopes: name(scopeName, RuleName.Variable, StyleName.Invalid) },
         { text: ')', scopes: name(scopeName, RuleName.CloseParen) },
-        { text: '; comment', scopes: name(scopeName, RuleName.InLineComment) },
+        { text: '; comment', scopes: name(scopeName, RuleName.InlineComment) },
       ],
     ],
   ];

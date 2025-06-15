@@ -9,7 +9,7 @@ interface Placeholder {
 }
 export function createImportDeclarationRule(scopeName: ScopeName, placeholder: Placeholder): PatternsRule {
   const rulesInBrace: Rule[] = [
-    includeRule(Repository.Comment),
+    includeRule(Repository.Trivias),
 
     {
       name: name(scopeName, RuleName.ImportExportAll),

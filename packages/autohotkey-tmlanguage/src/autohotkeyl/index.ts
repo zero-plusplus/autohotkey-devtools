@@ -29,33 +29,33 @@ export function createRepositories(scopeName: ScopeName): Repositories {
   return {
     [Repository.FencedCodeBlockInDocument]: markdown.createCodeFencePatternsRule(),
     [Repository.Meta]: patternsRule(
-      includeRule(Repository.Comment),
+      includeRule(Repository.Trivias),
       includeRule(Repository.DirectiveStatement),
     ),
 
     // #region trivia
-    [Repository.Comment]: patternsRule(
-      includeRule(Repository.AllMultiLineComments),
-      includeRule(Repository.AllInLineComments),
-      includeRule(Repository.AllSingleLineComments),
+    [Repository.Trivias]: patternsRule(
+      includeRule(Repository.MultiLineTrivias),
+      includeRule(Repository.InlineTrivias),
+      includeRule(Repository.SingleLineTrivias),
     ),
-    [Repository.AllSingleLineComments]: patternsRule(
+    [Repository.SingleLineTrivias]: patternsRule(
       includeRule(Repository.CompilerDirectiveComment),
       includeRule(Repository.SingleLineDocumentComment),
       includeRule(Repository.SingleLineComment),
     ),
-    [Repository.AllInLineComments]: patternsRule(
+    [Repository.InlineTrivias]: patternsRule(
       includeRule(Repository.InlineDocumentComment),
-      includeRule(Repository.InLineComment),
+      includeRule(Repository.InlineComment),
     ),
-    [Repository.AllMultiLineComments]: patternsRule(
+    [Repository.MultiLineTrivias]: patternsRule(
       includeRule(Repository.MultiLineDocumentComment),
       includeRule(Repository.MultiLineComment),
     ),
 
     // #region comment
     [Repository.SingleLineComment]: rules_common.createSingleLineCommentRule(scopeName),
-    [Repository.InLineComment]: rules_common.createInLineCommentRule(scopeName),
+    [Repository.InlineComment]: rules_common.createInLineCommentRule(scopeName),
     [Repository.MultiLineComment]: rules_common.createMultiLineCommentRule(scopeName),
     // #endregion comment
 
@@ -403,27 +403,27 @@ export function createRepositories(scopeName: ScopeName): Repositories {
       includeRule(Repository.PercentExpression),
       includeRule(Repository.Dereference),
       includeRule(Repository.CommandArgumentText),
-      includeRule(Repository.AllInLineComments),
+      includeRule(Repository.InlineTrivias),
     ),
     [Repository.CommandArgumentWithNumber]: patternsRule(
       includeRule(Repository.PercentExpression),
       includeRule(Repository.Dereference),
       includeRule(Repository.CommandArgumentNumber),
       includeRule(Repository.CommandArgumentText),
-      includeRule(Repository.AllInLineComments),
+      includeRule(Repository.InlineTrivias),
     ),
     [Repository.CommandLastArgument]: patternsRule(
       includeRule(Repository.PercentExpressionInLastArgument),
       includeRule(Repository.Dereference),
       includeRule(Repository.CommandLastArgumentText),
-      includeRule(Repository.AllInLineComments),
+      includeRule(Repository.InlineTrivias),
     ),
     [Repository.CommandLastArgumentWithNumber]: patternsRule(
       includeRule(Repository.PercentExpressionInLastArgument),
       includeRule(Repository.Dereference),
       includeRule(Repository.CommandArgumentNumber),
       includeRule(Repository.CommandLastArgumentText),
-      includeRule(Repository.AllInLineComments),
+      includeRule(Repository.InlineTrivias),
     ),
     [Repository.CommandRestArguments]: rules_common.createCommandRestArgumentsRule(scopeName),
     [Repository.CommandInvalidArgument]: rules_common.createInvalidArgumentRule(scopeName),

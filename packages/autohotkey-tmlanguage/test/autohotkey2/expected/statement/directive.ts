@@ -27,7 +27,7 @@ export function createDirectiveStatementExpectedData(scopeName: ScopeName): Expe
               [
                 { text: '#ClipboardTimeout', scopes: name(scopeName, RuleName.DirectiveName) },
                 { text: '123', scopes: name(scopeName, RuleName.Integer) },
-                { text: '; comment', scopes: name(scopeName, RuleName.InLineComment) },
+                { text: '; comment', scopes: name(scopeName, RuleName.InlineComment) },
               ],
             ],
           ];
@@ -46,7 +46,7 @@ export function createDirectiveStatementExpectedData(scopeName: ScopeName): Expe
                 { text: '*i', scopes: name(scopeName, RuleName.UnquotedString, StyleName.Strong) },
                 { text: 'path\\to\\file.exe', scopes: name(scopeName, RuleName.UnquotedString) },
                 { text: '"', scopes: name(scopeName, RuleName.UnquotedString) },
-                { text: '; comment', scopes: name(scopeName, RuleName.InLineComment) },
+                { text: '; comment', scopes: name(scopeName, RuleName.InlineComment) },
               ],
             ],
             [
@@ -59,7 +59,7 @@ export function createDirectiveStatementExpectedData(scopeName: ScopeName): Expe
                 { text: '*i', scopes: name(scopeName, RuleName.UnquotedString, StyleName.Strong) },
                 { text: 'path\\to\\file.exe', scopes: name(scopeName, RuleName.UnquotedString) },
                 { text: `'`, scopes: name(scopeName, RuleName.UnquotedString) },
-                { text: '; comment', scopes: name(scopeName, RuleName.InLineComment) },
+                { text: '; comment', scopes: name(scopeName, RuleName.InlineComment) },
               ],
             ],
           ];
@@ -75,7 +75,7 @@ export function createDirectiveStatementExpectedData(scopeName: ScopeName): Expe
               [
                 { text: '#ErrorStdOut', scopes: name(scopeName, RuleName.DirectiveName) },
                 { text: 'UTF-8', scopes: name(scopeName, RuleName.UnquotedString, StyleName.Strong) },
-                { text: '; comment', scopes: name(scopeName, RuleName.InLineComment) },
+                { text: '; comment', scopes: name(scopeName, RuleName.InlineComment) },
               ],
             ],
             [
@@ -87,7 +87,7 @@ export function createDirectiveStatementExpectedData(scopeName: ScopeName): Expe
                 { text: '"', scopes: name(scopeName, RuleName.UnquotedString) },
                 { text: 'UTF-8', scopes: name(scopeName, RuleName.UnquotedString, StyleName.Strong) },
                 { text: '"', scopes: name(scopeName, RuleName.UnquotedString) },
-                { text: '; comment', scopes: name(scopeName, RuleName.InLineComment) },
+                { text: '; comment', scopes: name(scopeName, RuleName.InlineComment) },
               ],
             ],
             [
@@ -99,7 +99,7 @@ export function createDirectiveStatementExpectedData(scopeName: ScopeName): Expe
                 { text: `'`, scopes: name(scopeName, RuleName.UnquotedString) },
                 { text: 'UTF-8', scopes: name(scopeName, RuleName.UnquotedString, StyleName.Strong) },
                 { text: `'`, scopes: name(scopeName, RuleName.UnquotedString) },
-                { text: '; comment', scopes: name(scopeName, RuleName.InLineComment) },
+                { text: '; comment', scopes: name(scopeName, RuleName.InlineComment) },
               ],
             ],
             [
@@ -109,7 +109,7 @@ export function createDirectiveStatementExpectedData(scopeName: ScopeName): Expe
               [
                 { text: '#ErrorStdOut', scopes: name(scopeName, RuleName.DirectiveName) },
                 { text: 'XXX', scopes: name(scopeName, RuleName.UnquotedString) },
-                { text: '; comment', scopes: name(scopeName, RuleName.InLineComment) },
+                { text: '; comment', scopes: name(scopeName, RuleName.InlineComment) },
               ],
             ],
           ];
@@ -130,7 +130,7 @@ export function createDirectiveStatementExpectedData(scopeName: ScopeName): Expe
                 { text: `ahk_exe xxx.exe`, scopes: name(scopeName, RuleName.SingleString) },
                 { text: `'`, scopes: name(scopeName, RuleName.SingleString, RuleDescriptor.End) },
                 { text: ')', scopes: name(scopeName, RuleName.CloseParen) },
-                { text: '; comment', scopes: name(scopeName, RuleName.InLineComment) },
+                { text: '; comment', scopes: name(scopeName, RuleName.InlineComment) },
               ],
             ],
           ];
@@ -146,7 +146,7 @@ export function createDirectiveStatementExpectedData(scopeName: ScopeName): Expe
               [
                 { text: '#HotIfTimeout', scopes: name(scopeName, RuleName.DirectiveName) },
                 { text: '123', scopes: name(scopeName, RuleName.Integer) },
-                { text: '; comment', scopes: name(scopeName, RuleName.InLineComment) },
+                { text: '; comment', scopes: name(scopeName, RuleName.InlineComment) },
               ],
             ],
           ];
@@ -162,7 +162,7 @@ export function createDirectiveStatementExpectedData(scopeName: ScopeName): Expe
               [
                 { text: '#Hotstring', scopes: name(scopeName, RuleName.DirectiveName) },
                 { text: 'NoMouse', scopes: name(scopeName, RuleName.UnquotedString, StyleName.Strong) },
-                { text: '; comment', scopes: name(scopeName, RuleName.InLineComment) },
+                { text: '; comment', scopes: name(scopeName, RuleName.InlineComment) },
               ],
             ],
             [
@@ -174,7 +174,7 @@ export function createDirectiveStatementExpectedData(scopeName: ScopeName): Expe
                 { text: 'EndChars', scopes: name(scopeName, RuleName.UnquotedString, StyleName.Strong) },
                 { text: ',', scopes: name(scopeName, RuleName.UnquotedString) },
                 { text: '`t', scopes: name(scopeName, RuleName.UnquotedString, StyleName.Escape) },
-                { text: '; comment', scopes: name(scopeName, RuleName.InLineComment) },
+                { text: '; comment', scopes: name(scopeName, RuleName.InlineComment) },
               ],
             ],
             [
@@ -185,7 +185,7 @@ export function createDirectiveStatementExpectedData(scopeName: ScopeName): Expe
                 { text: '#Hotstring', scopes: name(scopeName, RuleName.DirectiveName) },
                 { text: 'B0', scopes: name(scopeName, RuleName.UnquotedString, StyleName.Strong) },
                 { text: 'C1', scopes: name(scopeName, RuleName.UnquotedString, StyleName.Strong) },
-                { text: '; comment', scopes: name(scopeName, RuleName.InLineComment) },
+                { text: '; comment', scopes: name(scopeName, RuleName.InlineComment) },
               ],
             ],
           ];
@@ -205,7 +205,7 @@ export function createDirectiveStatementExpectedData(scopeName: ScopeName): Expe
                 { text: 'A_ScriptDir', scopes: name(scopeName, RuleName.BuiltInVariable) },
                 { text: '%', scopes: name(scopeName, RuleName.PercentEnd) },
                 { text: '\\lib\\example.ahk', scopes: name(scopeName, RuleName.UnquotedString) },
-                { text: '; comment', scopes: name(scopeName, RuleName.InLineComment) },
+                { text: '; comment', scopes: name(scopeName, RuleName.InlineComment) },
 
                 { text: directive, scopes: name(scopeName, RuleName.DirectiveName) },
                 { text: '"', scopes: name(scopeName, RuleName.UnquotedString) },
@@ -214,7 +214,7 @@ export function createDirectiveStatementExpectedData(scopeName: ScopeName): Expe
                 { text: '%', scopes: name(scopeName, RuleName.PercentEnd) },
                 { text: '\\lib\\example.ahk', scopes: name(scopeName, RuleName.UnquotedString) },
                 { text: '"', scopes: name(scopeName, RuleName.UnquotedString) },
-                { text: '; comment', scopes: name(scopeName, RuleName.InLineComment) },
+                { text: '; comment', scopes: name(scopeName, RuleName.InlineComment) },
               ],
             ],
             [
@@ -227,13 +227,13 @@ export function createDirectiveStatementExpectedData(scopeName: ScopeName): Expe
                 { text: '<', scopes: name(scopeName, RuleName.OpenAngleBracket) },
                 { text: 'lib', scopes: name(scopeName, RuleName.IncludeLibrary) },
                 { text: '>', scopes: name(scopeName, RuleName.CloseAngleBracket) },
-                { text: '; comment', scopes: name(scopeName, RuleName.InLineComment) },
+                { text: '; comment', scopes: name(scopeName, RuleName.InlineComment) },
 
                 { text: directive, scopes: name(scopeName, RuleName.DirectiveName) },
                 { text: '<', scopes: name(scopeName, RuleName.OpenAngleBracket) },
                 { text: 'lib\\example', scopes: name(scopeName, RuleName.IncludeLibrary) },
                 { text: '>', scopes: name(scopeName, RuleName.CloseAngleBracket) },
-                { text: '; comment', scopes: name(scopeName, RuleName.InLineComment) },
+                { text: '; comment', scopes: name(scopeName, RuleName.InlineComment) },
               ],
             ],
           ];
@@ -249,7 +249,7 @@ export function createDirectiveStatementExpectedData(scopeName: ScopeName): Expe
               [
                 { text: '#InputLevel', scopes: name(scopeName, RuleName.DirectiveName) },
                 { text: '50', scopes: name(scopeName, RuleName.Integer) },
-                { text: '; comment', scopes: name(scopeName, RuleName.InLineComment) },
+                { text: '; comment', scopes: name(scopeName, RuleName.InlineComment) },
               ],
             ],
           ];
@@ -265,7 +265,7 @@ export function createDirectiveStatementExpectedData(scopeName: ScopeName): Expe
               [
                 { text: '#MaxThreads', scopes: name(scopeName, RuleName.DirectiveName) },
                 { text: '255', scopes: name(scopeName, RuleName.Integer) },
-                { text: '; comment', scopes: name(scopeName, RuleName.InLineComment) },
+                { text: '; comment', scopes: name(scopeName, RuleName.InlineComment) },
               ],
             ],
           ];
@@ -287,27 +287,27 @@ export function createDirectiveStatementExpectedData(scopeName: ScopeName): Expe
               [
                 { text: '#MaxThreadsBuffer', scopes: name(scopeName, RuleName.DirectiveName) },
                 { text: 'true', scopes: name(scopeName, RuleName.KeywordLikeBuiltInVariable) },
-                { text: '; comment', scopes: name(scopeName, RuleName.InLineComment) },
+                { text: '; comment', scopes: name(scopeName, RuleName.InlineComment) },
 
                 { text: '#MaxThreadsBuffer', scopes: name(scopeName, RuleName.DirectiveName) },
                 { text: 'false', scopes: name(scopeName, RuleName.KeywordLikeBuiltInVariable) },
-                { text: '; comment', scopes: name(scopeName, RuleName.InLineComment) },
+                { text: '; comment', scopes: name(scopeName, RuleName.InlineComment) },
 
                 { text: '#MaxThreadsBuffer', scopes: name(scopeName, RuleName.DirectiveName) },
                 { text: '1', scopes: name(scopeName, RuleName.Integer) },
-                { text: '; comment', scopes: name(scopeName, RuleName.InLineComment) },
+                { text: '; comment', scopes: name(scopeName, RuleName.InlineComment) },
 
                 { text: '#MaxThreadsBuffer', scopes: name(scopeName, RuleName.DirectiveName) },
                 { text: '0', scopes: name(scopeName, RuleName.Integer) },
-                { text: '; comment', scopes: name(scopeName, RuleName.InLineComment) },
+                { text: '; comment', scopes: name(scopeName, RuleName.InlineComment) },
 
                 { text: '#MaxThreadsBuffer', scopes: name(scopeName, RuleName.DirectiveName) },
                 { text: 'abc', scopes: name(scopeName, RuleName.UnquotedString, StyleName.Invalid) },
-                { text: '; comment', scopes: name(scopeName, RuleName.InLineComment) },
+                { text: '; comment', scopes: name(scopeName, RuleName.InlineComment) },
 
                 { text: '#MaxThreadsBuffer', scopes: name(scopeName, RuleName.DirectiveName) },
                 { text: '9', scopes: name(scopeName, RuleName.UnquotedString, StyleName.Invalid) },
-                { text: '; comment', scopes: name(scopeName, RuleName.InLineComment) },
+                { text: '; comment', scopes: name(scopeName, RuleName.InlineComment) },
               ],
             ],
           ];
@@ -328,15 +328,15 @@ export function createDirectiveStatementExpectedData(scopeName: ScopeName): Expe
           `,
           [
             { text: '#ClipboardTimeout', scopes: name(scopeName, RuleName.DirectiveName) },
-            { text: '; comment', scopes: name(scopeName, RuleName.InLineComment) },
+            { text: '; comment', scopes: name(scopeName, RuleName.InlineComment) },
 
             { text: '#ClipboardTimeout', scopes: name(scopeName, RuleName.DirectiveName) },
             { text: '123', scopes: name(scopeName, RuleName.Integer) },
-            { text: '; comment', scopes: name(scopeName, RuleName.InLineComment) },
+            { text: '; comment', scopes: name(scopeName, RuleName.InlineComment) },
 
             { text: '#ClipboardTimeout', scopes: name(scopeName, RuleName.DirectiveName) },
             { text: 'invalid', scopes: name(scopeName, RuleName.UnquotedString, StyleName.Invalid) },
-            { text: '; comment', scopes: name(scopeName, RuleName.InLineComment) },
+            { text: '; comment', scopes: name(scopeName, RuleName.InlineComment) },
           ],
         ],
       ];
@@ -355,7 +355,7 @@ export function createDirectiveStatementExpectedData(scopeName: ScopeName): Expe
             { text: '"', scopes: name(scopeName, RuleName.UnquotedString) },
             { text: 'abc', scopes: name(scopeName, RuleName.UnquotedString) },
             { text: '"', scopes: name(scopeName, RuleName.UnquotedString) },
-            { text: '; comment', scopes: name(scopeName, RuleName.InLineComment) },
+            { text: '; comment', scopes: name(scopeName, RuleName.InlineComment) },
           ],
         ],
       ];
@@ -374,19 +374,19 @@ export function createDirectiveStatementExpectedData(scopeName: ScopeName): Expe
           [
             { text: '#ErrorStdOut', scopes: name(scopeName, RuleName.DirectiveName) },
             { text: 'UTF-8', scopes: name(scopeName, RuleName.UnquotedString, StyleName.Strong) },
-            { text: '; comment', scopes: name(scopeName, RuleName.InLineComment) },
+            { text: '; comment', scopes: name(scopeName, RuleName.InlineComment) },
 
             { text: '#ErrorStdOut', scopes: name(scopeName, RuleName.DirectiveName) },
             { text: '"', scopes: name(scopeName, RuleName.UnquotedString) },
             { text: 'UTF-8', scopes: name(scopeName, RuleName.UnquotedString, StyleName.Strong) },
             { text: '"', scopes: name(scopeName, RuleName.UnquotedString) },
-            { text: '; comment', scopes: name(scopeName, RuleName.InLineComment) },
+            { text: '; comment', scopes: name(scopeName, RuleName.InlineComment) },
 
             { text: '#ErrorStdOut', scopes: name(scopeName, RuleName.DirectiveName) },
             { text: '"', scopes: name(scopeName, RuleName.UnquotedString) },
             { text: 'CP65001', scopes: name(scopeName, RuleName.UnquotedString, StyleName.Strong) },
             { text: '"', scopes: name(scopeName, RuleName.UnquotedString) },
-            { text: '; comment', scopes: name(scopeName, RuleName.InLineComment) },
+            { text: '; comment', scopes: name(scopeName, RuleName.InlineComment) },
           ],
         ],
       ];
@@ -408,27 +408,27 @@ export function createDirectiveStatementExpectedData(scopeName: ScopeName): Expe
           [
             { text: '#MaxThreadsBuffer', scopes: name(scopeName, RuleName.DirectiveName) },
             { text: 'true', scopes: name(scopeName, RuleName.KeywordLikeBuiltInVariable) },
-            { text: '; comment', scopes: name(scopeName, RuleName.InLineComment) },
+            { text: '; comment', scopes: name(scopeName, RuleName.InlineComment) },
 
             { text: '#MaxThreadsBuffer', scopes: name(scopeName, RuleName.DirectiveName) },
             { text: 'false', scopes: name(scopeName, RuleName.KeywordLikeBuiltInVariable) },
-            { text: '; comment', scopes: name(scopeName, RuleName.InLineComment) },
+            { text: '; comment', scopes: name(scopeName, RuleName.InlineComment) },
 
             { text: '#MaxThreadsBuffer', scopes: name(scopeName, RuleName.DirectiveName) },
             { text: '1', scopes: name(scopeName, RuleName.Integer) },
-            { text: '; comment', scopes: name(scopeName, RuleName.InLineComment) },
+            { text: '; comment', scopes: name(scopeName, RuleName.InlineComment) },
 
             { text: '#MaxThreadsBuffer', scopes: name(scopeName, RuleName.DirectiveName) },
             { text: '0', scopes: name(scopeName, RuleName.Integer) },
-            { text: '; comment', scopes: name(scopeName, RuleName.InLineComment) },
+            { text: '; comment', scopes: name(scopeName, RuleName.InlineComment) },
 
             { text: '#MaxThreadsBuffer', scopes: name(scopeName, RuleName.DirectiveName) },
             { text: 'abc', scopes: name(scopeName, RuleName.UnquotedString, StyleName.Invalid) },
-            { text: '; comment', scopes: name(scopeName, RuleName.InLineComment) },
+            { text: '; comment', scopes: name(scopeName, RuleName.InlineComment) },
 
             { text: '#MaxThreadsBuffer', scopes: name(scopeName, RuleName.DirectiveName) },
             { text: '9', scopes: name(scopeName, RuleName.UnquotedString, StyleName.Invalid) },
-            { text: '; comment', scopes: name(scopeName, RuleName.InLineComment) },
+            { text: '; comment', scopes: name(scopeName, RuleName.InlineComment) },
           ],
         ],
       ];
@@ -446,15 +446,15 @@ export function createDirectiveStatementExpectedData(scopeName: ScopeName): Expe
       [
         { text: '#ClipboardTimeout', scopes: name(scopeName, RuleName.DirectiveName) },
         { text: ',', scopes: name(scopeName, RuleName.Comma, StyleName.Invalid) },
-        { text: '; comment', scopes: name(scopeName, RuleName.InLineComment) },
+        { text: '; comment', scopes: name(scopeName, RuleName.InlineComment) },
 
         { text: '#', scopes: name(scopeName, RuleName.DirectiveName) },
         { text: 'invalid', scopes: name(scopeName, RuleName.UnquotedString, StyleName.Invalid) },
-        { text: '; comment', scopes: name(scopeName, RuleName.InLineComment) },
+        { text: '; comment', scopes: name(scopeName, RuleName.InlineComment) },
 
         { text: '#NotDirective', scopes: name(scopeName, RuleName.DirectiveName) },
         { text: 'invalid', scopes: name(scopeName, RuleName.UnquotedString, StyleName.Invalid) },
-        { text: '; comment', scopes: name(scopeName, RuleName.InLineComment) },
+        { text: '; comment', scopes: name(scopeName, RuleName.InlineComment) },
       ],
     ],
   ];

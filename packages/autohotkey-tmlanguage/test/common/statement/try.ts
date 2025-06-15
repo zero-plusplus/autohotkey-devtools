@@ -20,10 +20,10 @@ export function createTryStatementExpectedData(scopeName: ScopeName): ExpectedTe
               [
                 { text: 'try', scopes: name(scopeName, RuleName.ControlFlowKeyword) },
                 { text: '{', scopes: name(scopeName, RuleName.BlockBegin) },
-                { text: '; comment', scopes: name(scopeName, RuleName.InLineComment) },
+                { text: '; comment', scopes: name(scopeName, RuleName.InlineComment) },
 
                 { text: '}', scopes: name(scopeName, RuleName.BlockEnd) },
-                { text: '; comment', scopes: name(scopeName, RuleName.InLineComment) },
+                { text: '; comment', scopes: name(scopeName, RuleName.InlineComment) },
               ],
             ],
             [
@@ -35,10 +35,10 @@ export function createTryStatementExpectedData(scopeName: ScopeName): ExpectedTe
                 { text: 'catch', scopes: name(scopeName, RuleName.ControlFlowKeyword) },
                 { text: 'err', scopes: name(scopeName, RuleName.Variable) },
                 { text: '{', scopes: name(scopeName, RuleName.BlockBegin) },
-                { text: '; comment', scopes: name(scopeName, RuleName.InLineComment) },
+                { text: '; comment', scopes: name(scopeName, RuleName.InlineComment) },
 
                 { text: '}', scopes: name(scopeName, RuleName.BlockEnd) },
-                { text: '; comment', scopes: name(scopeName, RuleName.InLineComment) },
+                { text: '; comment', scopes: name(scopeName, RuleName.InlineComment) },
               ],
             ],
             [
@@ -49,10 +49,10 @@ export function createTryStatementExpectedData(scopeName: ScopeName): ExpectedTe
               [
                 { text: 'finally', scopes: name(scopeName, RuleName.ControlFlowKeyword) },
                 { text: '{', scopes: name(scopeName, RuleName.BlockBegin) },
-                { text: '; comment', scopes: name(scopeName, RuleName.InLineComment) },
+                { text: '; comment', scopes: name(scopeName, RuleName.InlineComment) },
 
                 { text: '}', scopes: name(scopeName, RuleName.BlockEnd) },
-                { text: '; comment', scopes: name(scopeName, RuleName.InLineComment) },
+                { text: '; comment', scopes: name(scopeName, RuleName.InlineComment) },
               ],
             ],
             [
@@ -65,21 +65,21 @@ export function createTryStatementExpectedData(scopeName: ScopeName): ExpectedTe
               [
                 { text: 'try', scopes: name(scopeName, RuleName.ControlFlowKeyword) },
                 { text: '{', scopes: name(scopeName, RuleName.BlockBegin) },
-                { text: '; comment', scopes: name(scopeName, RuleName.InLineComment) },
+                { text: '; comment', scopes: name(scopeName, RuleName.InlineComment) },
 
                 { text: '}', scopes: name(scopeName, RuleName.BlockEnd) },
                 { text: 'catch', scopes: name(scopeName, RuleName.ControlFlowKeyword) },
                 { text: 'err', scopes: name(scopeName, RuleName.Variable) },
                 { text: '{', scopes: name(scopeName, RuleName.BlockBegin) },
-                { text: '; comment', scopes: name(scopeName, RuleName.InLineComment) },
+                { text: '; comment', scopes: name(scopeName, RuleName.InlineComment) },
 
                 { text: '}', scopes: name(scopeName, RuleName.BlockEnd) },
                 { text: 'finally', scopes: name(scopeName, RuleName.ControlFlowKeyword) },
                 { text: '{', scopes: name(scopeName, RuleName.BlockBegin) },
-                { text: '; comment', scopes: name(scopeName, RuleName.InLineComment) },
+                { text: '; comment', scopes: name(scopeName, RuleName.InlineComment) },
 
                 { text: '}', scopes: name(scopeName, RuleName.BlockEnd) },
-                { text: '; comment', scopes: name(scopeName, RuleName.InLineComment) },
+                { text: '; comment', scopes: name(scopeName, RuleName.InlineComment) },
               ],
             ],
           ];
@@ -96,13 +96,13 @@ export function createTryStatementExpectedData(scopeName: ScopeName): ExpectedTe
               `,
               [
                 { text: 'try', scopes: name(scopeName, RuleName.ControlFlowKeyword) },
-                { text: '; comment', scopes: name(scopeName, RuleName.InLineComment) },
+                { text: '; comment', scopes: name(scopeName, RuleName.InlineComment) },
 
                 { text: '{', scopes: name(scopeName, RuleName.BlockBegin) },
-                { text: '; comment', scopes: name(scopeName, RuleName.InLineComment) },
+                { text: '; comment', scopes: name(scopeName, RuleName.InlineComment) },
 
                 { text: '}', scopes: name(scopeName, RuleName.BlockEnd) },
-                { text: '; comment', scopes: name(scopeName, RuleName.InLineComment) },
+                { text: '; comment', scopes: name(scopeName, RuleName.InlineComment) },
               ],
             ],
             [
@@ -114,13 +114,13 @@ export function createTryStatementExpectedData(scopeName: ScopeName): ExpectedTe
               [
                 { text: 'catch', scopes: name(scopeName, RuleName.ControlFlowKeyword) },
                 { text: 'err', scopes: name(scopeName, RuleName.Variable) },
-                { text: '; comment', scopes: name(scopeName, RuleName.InLineComment) },
+                { text: '; comment', scopes: name(scopeName, RuleName.InlineComment) },
 
                 { text: '{', scopes: name(scopeName, RuleName.BlockBegin) },
-                { text: '; comment', scopes: name(scopeName, RuleName.InLineComment) },
+                { text: '; comment', scopes: name(scopeName, RuleName.InlineComment) },
 
                 { text: '}', scopes: name(scopeName, RuleName.BlockEnd) },
-                { text: '; comment', scopes: name(scopeName, RuleName.InLineComment) },
+                { text: '; comment', scopes: name(scopeName, RuleName.InlineComment) },
               ],
             ],
             [
@@ -131,13 +131,13 @@ export function createTryStatementExpectedData(scopeName: ScopeName): ExpectedTe
               `,
               [
                 { text: 'finally', scopes: name(scopeName, RuleName.ControlFlowKeyword) },
-                { text: '; comment', scopes: name(scopeName, RuleName.InLineComment) },
+                { text: '; comment', scopes: name(scopeName, RuleName.InlineComment) },
 
                 { text: '{', scopes: name(scopeName, RuleName.BlockBegin) },
-                { text: '; comment', scopes: name(scopeName, RuleName.InLineComment) },
+                { text: '; comment', scopes: name(scopeName, RuleName.InlineComment) },
 
                 { text: '}', scopes: name(scopeName, RuleName.BlockEnd) },
-                { text: '; comment', scopes: name(scopeName, RuleName.InLineComment) },
+                { text: '; comment', scopes: name(scopeName, RuleName.InlineComment) },
               ],
             ],
             [
@@ -154,32 +154,32 @@ export function createTryStatementExpectedData(scopeName: ScopeName): ExpectedTe
               `,
               [
                 { text: 'try', scopes: name(scopeName, RuleName.ControlFlowKeyword) },
-                { text: '; comment', scopes: name(scopeName, RuleName.InLineComment) },
+                { text: '; comment', scopes: name(scopeName, RuleName.InlineComment) },
 
                 { text: '{', scopes: name(scopeName, RuleName.BlockBegin) },
-                { text: '; comment', scopes: name(scopeName, RuleName.InLineComment) },
+                { text: '; comment', scopes: name(scopeName, RuleName.InlineComment) },
 
                 { text: '}', scopes: name(scopeName, RuleName.BlockEnd) },
-                { text: '; comment', scopes: name(scopeName, RuleName.InLineComment) },
+                { text: '; comment', scopes: name(scopeName, RuleName.InlineComment) },
 
                 { text: 'catch', scopes: name(scopeName, RuleName.ControlFlowKeyword) },
                 { text: 'err', scopes: name(scopeName, RuleName.Variable) },
-                { text: '; comment', scopes: name(scopeName, RuleName.InLineComment) },
+                { text: '; comment', scopes: name(scopeName, RuleName.InlineComment) },
 
                 { text: '{', scopes: name(scopeName, RuleName.BlockBegin) },
-                { text: '; comment', scopes: name(scopeName, RuleName.InLineComment) },
+                { text: '; comment', scopes: name(scopeName, RuleName.InlineComment) },
 
                 { text: '}', scopes: name(scopeName, RuleName.BlockEnd) },
-                { text: '; comment', scopes: name(scopeName, RuleName.InLineComment) },
+                { text: '; comment', scopes: name(scopeName, RuleName.InlineComment) },
 
                 { text: 'finally', scopes: name(scopeName, RuleName.ControlFlowKeyword) },
-                { text: '; comment', scopes: name(scopeName, RuleName.InLineComment) },
+                { text: '; comment', scopes: name(scopeName, RuleName.InlineComment) },
 
                 { text: '{', scopes: name(scopeName, RuleName.BlockBegin) },
-                { text: '; comment', scopes: name(scopeName, RuleName.InLineComment) },
+                { text: '; comment', scopes: name(scopeName, RuleName.InlineComment) },
 
                 { text: '}', scopes: name(scopeName, RuleName.BlockEnd) },
-                { text: '; comment', scopes: name(scopeName, RuleName.InLineComment) },
+                { text: '; comment', scopes: name(scopeName, RuleName.InlineComment) },
               ],
             ],
           ];
