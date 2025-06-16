@@ -453,7 +453,7 @@ export function createDirectiveStatementExpectedData(scopeName: ScopeName): Expe
           return [
             [
               dedent`
-                #SuspendExempt              ; comment
+                #SuspendExempt                ; comment
               `,
               [
                 { text: '#SuspendExempt', scopes: name(scopeName, RuleName.DirectiveName) },
@@ -487,10 +487,60 @@ export function createDirectiveStatementExpectedData(scopeName: ScopeName): Expe
             ],
             [
               dedent`
-                #SuspendExempt invalid          ; comment
+                #SuspendExempt invalid        ; comment
               `,
               [
                 { text: '#SuspendExempt', scopes: name(scopeName, RuleName.DirectiveName) },
+                { text: 'invalid', scopes: name(scopeName, RuleName.UnquotedString, StyleName.Invalid) },
+                { text: '; comment', scopes: name(scopeName, RuleName.InlineComment) },
+              ],
+            ],
+          ];
+        })(),
+
+        // https://www.autohotkey.com/docs/v2/lib/_UseHook.htm
+        ...((): ExpectedTestData[] => {
+          return [
+            [
+              dedent`
+                #UseHook                ; comment
+              `,
+              [
+                { text: '#UseHook', scopes: name(scopeName, RuleName.DirectiveName) },
+                { text: '; comment', scopes: name(scopeName, RuleName.InlineComment) },
+              ],
+            ],
+            [
+              dedent`
+                #UseHook true           ; comment
+                #UseHook false          ; comment
+                #UseHook 0              ; comment
+                #UseHook 1              ; comment
+              `,
+              [
+                { text: '#UseHook', scopes: name(scopeName, RuleName.DirectiveName) },
+                { text: 'true', scopes: name(scopeName, RuleName.KeywordLikeBuiltInVariable) },
+                { text: '; comment', scopes: name(scopeName, RuleName.InlineComment) },
+
+                { text: '#UseHook', scopes: name(scopeName, RuleName.DirectiveName) },
+                { text: 'false', scopes: name(scopeName, RuleName.KeywordLikeBuiltInVariable) },
+                { text: '; comment', scopes: name(scopeName, RuleName.InlineComment) },
+
+                { text: '#UseHook', scopes: name(scopeName, RuleName.DirectiveName) },
+                { text: '0', scopes: name(scopeName, RuleName.Integer) },
+                { text: '; comment', scopes: name(scopeName, RuleName.InlineComment) },
+
+                { text: '#UseHook', scopes: name(scopeName, RuleName.DirectiveName) },
+                { text: '1', scopes: name(scopeName, RuleName.Integer) },
+                { text: '; comment', scopes: name(scopeName, RuleName.InlineComment) },
+              ],
+            ],
+            [
+              dedent`
+                #UseHook invalid        ; comment
+              `,
+              [
+                { text: '#UseHook', scopes: name(scopeName, RuleName.DirectiveName) },
                 { text: 'invalid', scopes: name(scopeName, RuleName.UnquotedString, StyleName.Invalid) },
                 { text: '; comment', scopes: name(scopeName, RuleName.InlineComment) },
               ],
