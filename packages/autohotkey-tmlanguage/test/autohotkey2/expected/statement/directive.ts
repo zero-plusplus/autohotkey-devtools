@@ -627,6 +627,31 @@ export function createDirectiveStatementExpectedData(scopeName: ScopeName): Expe
             ],
           ];
         })(),
+
+        // https://www.autohotkey.com/docs/v2/lib/_WinActivateForce.htm
+        ...((): ExpectedTestData[] => {
+          return [
+            [
+              dedent`
+                #WinActivateForce               ; comment
+              `,
+              [
+                { text: '#WinActivateForce', scopes: name(scopeName, RuleName.DirectiveName) },
+                { text: '; comment', scopes: name(scopeName, RuleName.InlineComment) },
+              ],
+            ],
+            [
+              dedent`
+                #WinActivateForce invalid       ; comment
+              `,
+              [
+                { text: '#WinActivateForce', scopes: name(scopeName, RuleName.DirectiveName) },
+                { text: 'invalid', scopes: name(scopeName, RuleName.UnquotedString, StyleName.Invalid) },
+                { text: '; comment', scopes: name(scopeName, RuleName.InlineComment) },
+              ],
+            ],
+          ];
+        })(),
       ];
     })(),
 
