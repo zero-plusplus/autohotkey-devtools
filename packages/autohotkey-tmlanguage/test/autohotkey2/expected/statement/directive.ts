@@ -407,6 +407,46 @@ export function createDirectiveStatementExpectedData(scopeName: ScopeName): Expe
             ],
           ];
         })(),
+
+        // https://www.autohotkey.com/docs/v2/lib/_SingleInstance.htm
+        ...((): ExpectedTestData[] => {
+          return [
+            [
+              dedent`
+                #SingleInstance             ; comment
+              `,
+              [
+                { text: '#SingleInstance', scopes: name(scopeName, RuleName.DirectiveName) },
+                { text: '; comment', scopes: name(scopeName, RuleName.InlineComment) },
+              ],
+            ],
+            [
+              dedent`
+                #SingleInstance Force       ; comment
+                #SingleInstance Ignore      ; comment
+                #SingleInstance Prompt      ; comment
+                #SingleInstance Off         ; comment
+              `,
+              [
+                { text: '#SingleInstance', scopes: name(scopeName, RuleName.DirectiveName) },
+                { text: 'Force', scopes: name(scopeName, RuleName.UnquotedString, StyleName.Strong) },
+                { text: '; comment', scopes: name(scopeName, RuleName.InlineComment) },
+
+                { text: '#SingleInstance', scopes: name(scopeName, RuleName.DirectiveName) },
+                { text: 'Ignore', scopes: name(scopeName, RuleName.UnquotedString, StyleName.Strong) },
+                { text: '; comment', scopes: name(scopeName, RuleName.InlineComment) },
+
+                { text: '#SingleInstance', scopes: name(scopeName, RuleName.DirectiveName) },
+                { text: 'Prompt', scopes: name(scopeName, RuleName.UnquotedString, StyleName.Strong) },
+                { text: '; comment', scopes: name(scopeName, RuleName.InlineComment) },
+
+                { text: '#SingleInstance', scopes: name(scopeName, RuleName.DirectiveName) },
+                { text: 'Off', scopes: name(scopeName, RuleName.UnquotedString, StyleName.Strong) },
+                { text: '; comment', scopes: name(scopeName, RuleName.InlineComment) },
+              ],
+            ],
+          ];
+        })(),
       ];
     })(),
 
