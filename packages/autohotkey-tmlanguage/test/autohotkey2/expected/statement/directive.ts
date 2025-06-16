@@ -547,6 +547,86 @@ export function createDirectiveStatementExpectedData(scopeName: ScopeName): Expe
             ],
           ];
         })(),
+
+        // https://www.autohotkey.com/docs/v2/lib/_Warn.htm
+        ...((): ExpectedTestData[] => {
+          return [
+            [
+              dedent`
+                #Warn         ; comment
+              `,
+              [
+                { text: '#Warn', scopes: name(scopeName, RuleName.DirectiveName) },
+                { text: '; comment', scopes: name(scopeName, RuleName.InlineComment) },
+              ],
+            ],
+            [
+              dedent`
+                #Warn VarUnset                  ; comment
+                #Warn LocalSameAsGlobal         ; comment
+                #Warn Unreachable               ; comment
+                #Warn All                       ; comment
+                #Warn invalid                   ; comment
+              `,
+              [
+                { text: '#Warn', scopes: name(scopeName, RuleName.DirectiveName) },
+                { text: 'VarUnset', scopes: name(scopeName, RuleName.UnquotedString, StyleName.Strong) },
+                { text: '; comment', scopes: name(scopeName, RuleName.InlineComment) },
+
+                { text: '#Warn', scopes: name(scopeName, RuleName.DirectiveName) },
+                { text: 'LocalSameAsGlobal', scopes: name(scopeName, RuleName.UnquotedString, StyleName.Strong) },
+                { text: '; comment', scopes: name(scopeName, RuleName.InlineComment) },
+
+                { text: '#Warn', scopes: name(scopeName, RuleName.DirectiveName) },
+                { text: 'Unreachable', scopes: name(scopeName, RuleName.UnquotedString, StyleName.Strong) },
+                { text: '; comment', scopes: name(scopeName, RuleName.InlineComment) },
+
+                { text: '#Warn', scopes: name(scopeName, RuleName.DirectiveName) },
+                { text: 'All', scopes: name(scopeName, RuleName.UnquotedString, StyleName.Strong) },
+                { text: '; comment', scopes: name(scopeName, RuleName.InlineComment) },
+
+                { text: '#Warn', scopes: name(scopeName, RuleName.DirectiveName) },
+                { text: 'invalid', scopes: name(scopeName, RuleName.UnquotedString, StyleName.Invalid) },
+                { text: '; comment', scopes: name(scopeName, RuleName.InlineComment) },
+              ],
+            ],
+            [
+              dedent`
+                #Warn , MsgBox                ; comment
+                #Warn , StdOut                ; comment
+                #Warn , OutputDebug           ; comment
+                #Warn , Off                   ; comment
+                #Warn , invalid               ; comment
+              `,
+              [
+                { text: '#Warn', scopes: name(scopeName, RuleName.DirectiveName) },
+                { text: ',', scopes: name(scopeName, RuleName.Comma) },
+                { text: 'MsgBox', scopes: name(scopeName, RuleName.UnquotedString, StyleName.Strong) },
+                { text: '; comment', scopes: name(scopeName, RuleName.InlineComment) },
+
+                { text: '#Warn', scopes: name(scopeName, RuleName.DirectiveName) },
+                { text: ',', scopes: name(scopeName, RuleName.Comma) },
+                { text: 'StdOut', scopes: name(scopeName, RuleName.UnquotedString, StyleName.Strong) },
+                { text: '; comment', scopes: name(scopeName, RuleName.InlineComment) },
+
+                { text: '#Warn', scopes: name(scopeName, RuleName.DirectiveName) },
+                { text: ',', scopes: name(scopeName, RuleName.Comma) },
+                { text: 'OutputDebug', scopes: name(scopeName, RuleName.UnquotedString, StyleName.Strong) },
+                { text: '; comment', scopes: name(scopeName, RuleName.InlineComment) },
+
+                { text: '#Warn', scopes: name(scopeName, RuleName.DirectiveName) },
+                { text: ',', scopes: name(scopeName, RuleName.Comma) },
+                { text: 'Off', scopes: name(scopeName, RuleName.UnquotedString, StyleName.Strong) },
+                { text: '; comment', scopes: name(scopeName, RuleName.InlineComment) },
+
+                { text: '#Warn', scopes: name(scopeName, RuleName.DirectiveName) },
+                { text: ',', scopes: name(scopeName, RuleName.Comma) },
+                { text: 'invalid', scopes: name(scopeName, RuleName.UnquotedString, StyleName.Invalid) },
+                { text: '; comment', scopes: name(scopeName, RuleName.InlineComment) },
+              ],
+            ],
+          ];
+        })(),
       ];
     })(),
 

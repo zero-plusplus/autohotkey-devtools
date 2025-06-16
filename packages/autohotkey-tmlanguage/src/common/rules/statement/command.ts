@@ -126,7 +126,9 @@ export function createSingleLineCommandLikeStatementRule(scopeName: ScopeName, d
           reluctant(optional(signature.parameters.reduceRight<string>((prev, parameter, i, parameters) => {
             const isLastParameter = parameters.length - 1 === i;
 
-            const capturedCommaSeparator = seq(inlineSpaces0(), capture(char(',')));
+            const capturedCommaSeparator = placeholder.allowFirstComma
+              ? seq(inlineSpaces0(), capture(char(',')))
+              : capture(char(','));
             const capturedFirstSeparator = group(alt(
               capturedCommaSeparator,
               inlineSpaces1(),
