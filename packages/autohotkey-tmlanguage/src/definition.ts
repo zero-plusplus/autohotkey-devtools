@@ -2,7 +2,7 @@ import * as patterns_v1 from './autohotkeyl/patterns';
 import * as constants_common from './common/constants';
 import {
   alt, char, endAnchor, group, groupMany1, ignoreCase, inlineSpace, inlineSpaces0, lookahead, lookbehind,
-  negChars0, negChars1, numbers0, numbers1, optional, optseq, ordalt, seq, textalt, wordBound,
+  negChars0, negChars1, numbers0, numbers1, optional, optseq, ordalt, seq, text, textalt, wordBound,
 } from './oniguruma';
 
 // #region constants
@@ -494,6 +494,7 @@ export function quotableIncludeLib(flags: CommandParameterFlag = CommandParamete
 export function requiresVersion(flags: CommandParameterFlag = CommandParameterFlag.None): CommandParameter {
   return unquoted([
     createOptionItemPattern(ignoreCase('AutoHotkey')),
+    group(seq(group(alt('32', '64')), char('-'), ignoreCase(text('bit')))),
     group(ordalt(
       '<',
       '<=',

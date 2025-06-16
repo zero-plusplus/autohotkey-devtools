@@ -81,16 +81,36 @@ export function createDirectiveStatementExpectedData(scopeName: ScopeName, place
       ];
     }),
 
-    [
-      dedent`
-        #Requires AutoHotkey v2.1         ; comment
-      `,
-      [
-        { text: '#Requires', scopes: name(scopeName, RuleName.DirectiveName) },
-        { text: 'AutoHotkey', scopes: name(scopeName, RuleName.UnquotedString, StyleName.Strong) },
-        { text: 'v2.1', scopes: name(scopeName, RuleName.UnquotedString, StyleName.Strong) },
-        { text: '; comment', scopes: name(scopeName, RuleName.InlineComment) },
-      ],
-    ],
+    ...((): ExpectedTestData[] => {
+      return [
+        [
+          dedent`
+            #Requires                         ; comment
+            #Requires AutoHotkey v2.1         ; comment
+          `,
+          [
+            { text: '#Requires', scopes: name(scopeName, RuleName.DirectiveName) },
+            { text: '; comment', scopes: name(scopeName, RuleName.InlineComment) },
+
+            { text: '#Requires', scopes: name(scopeName, RuleName.DirectiveName) },
+            { text: 'AutoHotkey', scopes: name(scopeName, RuleName.UnquotedString, StyleName.Strong) },
+            { text: 'v2.1', scopes: name(scopeName, RuleName.UnquotedString, StyleName.Strong) },
+            { text: '; comment', scopes: name(scopeName, RuleName.InlineComment) },
+          ],
+        ],
+        [
+          dedent`
+            #Requires AutoHotkey v2.1 64-bit         ; comment
+          `,
+          [
+            { text: '#Requires', scopes: name(scopeName, RuleName.DirectiveName) },
+            { text: 'AutoHotkey', scopes: name(scopeName, RuleName.UnquotedString, StyleName.Strong) },
+            { text: 'v2.1', scopes: name(scopeName, RuleName.UnquotedString, StyleName.Strong) },
+            { text: '64-bit', scopes: name(scopeName, RuleName.UnquotedString, StyleName.Strong) },
+            { text: '; comment', scopes: name(scopeName, RuleName.InlineComment) },
+          ],
+        ],
+      ];
+    })(),
   ];
 }
