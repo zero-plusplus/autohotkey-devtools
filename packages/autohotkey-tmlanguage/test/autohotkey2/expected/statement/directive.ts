@@ -819,6 +819,7 @@ export function createDirectiveStatementExpectedData(scopeName: ScopeName): Expe
           return [
             [
               dedent`
+                #Warn ,                       ; comment
                 #Warn , MsgBox                ; comment
                 #Warn , StdOut                ; comment
                 #Warn , OutputDebug           ; comment
@@ -826,6 +827,12 @@ export function createDirectiveStatementExpectedData(scopeName: ScopeName): Expe
                 #Warn , invalid               ; comment
               `,
               [
+                ...[
+                  { text: '#Warn', scopes: name(scopeName, RuleName.DirectiveName) },
+                  { text: ',', scopes: name(scopeName, RuleName.Comma) },
+                  { text: '; comment', scopes: name(scopeName, RuleName.InlineComment) },
+                ],
+
                 ...[
                   { text: '#Warn', scopes: name(scopeName, RuleName.DirectiveName) },
                   { text: ',', scopes: name(scopeName, RuleName.Comma) },

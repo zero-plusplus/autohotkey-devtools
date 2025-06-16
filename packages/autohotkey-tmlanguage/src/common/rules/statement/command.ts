@@ -146,8 +146,10 @@ export function createSingleLineCommandLikeStatementRule(scopeName: ScopeName, d
         ]
         : []),
 
-      inlineSpaces0(),
-      capture(optional(char(','))),
+      optional(group(alt(
+        seq(inlineSpaces1(), capture(optional(char(',')))),
+        seq(inlineSpaces0(), capture(optional(char(',')))),
+      ))),
       lookahead(placeholder.endAnchor),
     ),
     endCaptures: Object.fromEntries([
@@ -167,6 +169,7 @@ export function createSingleLineCommandLikeStatementRule(scopeName: ScopeName, d
         ];
       }),
 
+      patternsRule(includeRule(Repository.Comma)),
       placeholder.allowFirstComma
         ? patternsRule(includeRule(Repository.Comma))
         : nameRule(scopeName, RuleName.Comma, StyleName.Invalid),
