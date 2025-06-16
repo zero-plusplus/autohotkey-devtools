@@ -447,6 +447,56 @@ export function createDirectiveStatementExpectedData(scopeName: ScopeName): Expe
             ],
           ];
         })(),
+
+        // https://www.autohotkey.com/docs/v2/lib/_SuspendExempt.htm
+        ...((): ExpectedTestData[] => {
+          return [
+            [
+              dedent`
+                #SuspendExempt              ; comment
+              `,
+              [
+                { text: '#SuspendExempt', scopes: name(scopeName, RuleName.DirectiveName) },
+                { text: '; comment', scopes: name(scopeName, RuleName.InlineComment) },
+              ],
+            ],
+            [
+              dedent`
+                #SuspendExempt true           ; comment
+                #SuspendExempt false          ; comment
+                #SuspendExempt 0              ; comment
+                #SuspendExempt 1              ; comment
+              `,
+              [
+                { text: '#SuspendExempt', scopes: name(scopeName, RuleName.DirectiveName) },
+                { text: 'true', scopes: name(scopeName, RuleName.KeywordLikeBuiltInVariable) },
+                { text: '; comment', scopes: name(scopeName, RuleName.InlineComment) },
+
+                { text: '#SuspendExempt', scopes: name(scopeName, RuleName.DirectiveName) },
+                { text: 'false', scopes: name(scopeName, RuleName.KeywordLikeBuiltInVariable) },
+                { text: '; comment', scopes: name(scopeName, RuleName.InlineComment) },
+
+                { text: '#SuspendExempt', scopes: name(scopeName, RuleName.DirectiveName) },
+                { text: '0', scopes: name(scopeName, RuleName.Integer) },
+                { text: '; comment', scopes: name(scopeName, RuleName.InlineComment) },
+
+                { text: '#SuspendExempt', scopes: name(scopeName, RuleName.DirectiveName) },
+                { text: '1', scopes: name(scopeName, RuleName.Integer) },
+                { text: '; comment', scopes: name(scopeName, RuleName.InlineComment) },
+              ],
+            ],
+            [
+              dedent`
+                #SuspendExempt invalid          ; comment
+              `,
+              [
+                { text: '#SuspendExempt', scopes: name(scopeName, RuleName.DirectiveName) },
+                { text: 'invalid', scopes: name(scopeName, RuleName.UnquotedString, StyleName.Invalid) },
+                { text: '; comment', scopes: name(scopeName, RuleName.InlineComment) },
+              ],
+            ],
+          ];
+        })(),
       ];
     })(),
 
