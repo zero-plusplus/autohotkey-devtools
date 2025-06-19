@@ -154,9 +154,15 @@ export function createSingleLineCommandLikeStatementRule(scopeName: ScopeName, d
     ),
     endCaptures: Object.fromEntries([
       // command name
-      hasFlag(definition.flags, CommandFlag.Deprecated)
-        ? nameRule(scopeName, placeholder.commandElementName, StyleName.Strikethrough)
-        : nameRule(scopeName, placeholder.commandElementName),
+      ((): Rule => {
+        if (hasFlag(definition.flags, CommandFlag.Removed)) {
+          return nameRule(scopeName, placeholder.commandElementName, StyleName.Invalid, StyleName.Strikethrough);
+        }
+        if (hasFlag(definition.flags, CommandFlag.Deprecated)) {
+          return nameRule(scopeName, placeholder.commandElementName, StyleName.Strikethrough);
+        }
+        return nameRule(scopeName, placeholder.commandElementName);
+      })(),
 
       // parameters
       ...signature.parameters.flatMap((parameter, i, parameters) => {
@@ -225,9 +231,15 @@ export function createDirectiveCommentRule(scopeName: ScopeName, definition: Com
       nameRule(scopeName, RuleName.DirectiveComment),
 
       // command name
-      hasFlag(definition.flags, CommandFlag.Deprecated)
-        ? nameRule(scopeName, placeholder.commandElementName, StyleName.Strikethrough)
-        : nameRule(scopeName, placeholder.commandElementName),
+      ((): Rule => {
+        if (hasFlag(definition.flags, CommandFlag.Removed)) {
+          return nameRule(scopeName, placeholder.commandElementName, StyleName.Invalid, StyleName.Strikethrough);
+        }
+        if (hasFlag(definition.flags, CommandFlag.Deprecated)) {
+          return nameRule(scopeName, placeholder.commandElementName, StyleName.Strikethrough);
+        }
+        return nameRule(scopeName, placeholder.commandElementName);
+      })(),
 
       // parameters
       ...signature.parameters.flatMap((parameter, i, parameters) => {

@@ -13,6 +13,32 @@ export function createDirectiveStatementExpectedData(scopeName: ScopeName): Expe
       directiveDefinitions,
     }),
 
+    // https://www.autohotkey.com/docs/v1/lib/_AllowSameLineComments.htm
+    ...((): ExpectedTestData[] => {
+      return [
+        [
+          dedent`
+            #AllowSameLineComments                ; comment
+          `,
+          [
+            { text: '#AllowSameLineComments', scopes: name(scopeName, RuleName.DirectiveName, StyleName.Invalid, StyleName.Strikethrough) },
+            { text: '; comment', scopes: name(scopeName, RuleName.InlineComment) },
+          ],
+        ],
+        [
+          dedent`
+            #AllowSameLineComments, invalid       ; comment
+          `,
+          [
+            { text: '#AllowSameLineComments', scopes: name(scopeName, RuleName.DirectiveName, StyleName.Invalid, StyleName.Strikethrough) },
+            { text: ',', scopes: name(scopeName, RuleName.Comma) },
+            { text: 'invalid', scopes: name(scopeName, RuleName.UnquotedString, StyleName.Invalid) },
+            { text: '; comment', scopes: name(scopeName, RuleName.InlineComment) },
+          ],
+        ],
+      ];
+    })(),
+
     ...((): ExpectedTestData[] => {
       return [
         [

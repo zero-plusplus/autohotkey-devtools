@@ -12,6 +12,9 @@ import {
 
 // #region directives
 export const directiveDefinitions: CommandDefinition[] = [
+  // https://www.autohotkey.com/docs/v1/lib/_AllowSameLineComments.htm
+  command('#AllowSameLineComments', signature([ invalid() ]), CommandFlag.Removed),
+
   // https://www.autohotkey.com/docs/v1/lib/_ClipboardTimeout.htm
   command('#ClipboardTimeout', signature([ unquoted() ])),
 

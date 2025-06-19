@@ -22,9 +22,15 @@ export function createDirectiveStatementExpectedData(scopeName: ScopeName, place
         [
           {
             text: definition.name,
-            scopes: hasFlag(definition.flags, CommandFlag.Deprecated)
-              ? name(scopeName, RuleName.DirectiveName, StyleName.Strikethrough)
-              : name(scopeName, RuleName.DirectiveName),
+            scopes: ((): string => {
+              if (hasFlag(definition.flags, CommandFlag.Removed)) {
+                return name(scopeName, RuleName.DirectiveName, StyleName.Invalid, StyleName.Strikethrough);
+              }
+              if (hasFlag(definition.flags, CommandFlag.Deprecated)) {
+                return name(scopeName, RuleName.DirectiveName, StyleName.Strikethrough);
+              }
+              return name(scopeName, RuleName.DirectiveName);
+            })(),
           },
           { text: '; comment', scopes: name(scopeName, RuleName.InlineComment) },
         ],

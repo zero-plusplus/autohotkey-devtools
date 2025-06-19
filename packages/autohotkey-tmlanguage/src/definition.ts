@@ -127,6 +127,7 @@ export const enum CommandParameterFlag {
 export const enum CommandFlag {
   None = 0,
   Deprecated = 1 << 0,
+  Removed = 1 << 1,
 }
 // #endregion enum
 
