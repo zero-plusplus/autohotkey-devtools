@@ -30,6 +30,7 @@ export function createCommandStatementRule(scopeName: ScopeName, definitions: Co
     endAnchor: placeholder.endAnchor,
     commandElementName: placeholder.commandElementName,
     allowFirstComma: true,
+    allowContinuation: true,
     argumentStartPattern: alt(
       seq(inlineSpaces0(), negativeLookahead(textalt(...placeholder.expressionOperators))),
       inlineSpaces1(),
@@ -44,6 +45,7 @@ interface Placeholder_MultiLineCommandLikeStatementRule {
   commandElementName: ElementName;
   argumentStartPattern: string;
   allowFirstComma: boolean;
+  allowContinuation: boolean;
 }
 export function createMultiLineCommandLikeStatementRule(scopeName: ScopeName, definitions: CommandDefinition[], placeholder: Placeholder_MultiLineCommandLikeStatementRule): BeginWhileRule {
   const sortedDefinitions = definitions.sort((a, b) => b.name.length - a.name.length);
@@ -85,13 +87,18 @@ export function createMultiLineCommandLikeStatementRule(scopeName: ScopeName, de
       inlineSpaces0(),
       lookahead(placeholder.endAnchor),
     ),
-    whileCaptures: {
-      1: patternsRule(
-        includeRule(Repository.Comma),
-        includeRule(Repository.CommandArgument),
-      ),
-      2: patternsRule(includeRule(Repository.Comma)),
-    },
+    whileCaptures: placeholder.allowContinuation
+      ? {
+        1: patternsRule(
+          includeRule(Repository.Comma),
+          includeRule(Repository.CommandArgument),
+        ),
+        2: patternsRule(includeRule(Repository.Comma)),
+      }
+      : {
+        1: nameRule(scopeName, RuleName.UnquotedString, StyleName.Invalid),
+        2: nameRule(scopeName, RuleName.UnquotedString, StyleName.Invalid),
+      },
     patterns: [ includeRule(Repository.Trivias) ],
   };
 }

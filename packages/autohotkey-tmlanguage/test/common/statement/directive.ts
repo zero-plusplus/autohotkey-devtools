@@ -14,25 +14,45 @@ interface Placeholder {
 }
 export function createDirectiveStatementExpectedData(scopeName: ScopeName, placeholder: Placeholder): ExpectedTestData[] {
   return [
-    ...placeholder.directiveDefinitions.map((definition): ExpectedTestData => {
+    ...placeholder.directiveDefinitions.flatMap((definition): ExpectedTestData[] => {
+      const directiveScopes = ((): string => {
+        if (hasFlag(definition.flags, CommandFlag.Removed)) {
+          return name(scopeName, RuleName.DirectiveName, StyleName.Invalid, StyleName.Strikethrough);
+        }
+        if (hasFlag(definition.flags, CommandFlag.Deprecated)) {
+          return name(scopeName, RuleName.DirectiveName, StyleName.Strikethrough);
+        }
+        return name(scopeName, RuleName.DirectiveName);
+      })();
       return [
-        dedent`
-          ${definition.name}      ; comment
-        `,
         [
-          {
-            text: definition.name,
-            scopes: ((): string => {
-              if (hasFlag(definition.flags, CommandFlag.Removed)) {
-                return name(scopeName, RuleName.DirectiveName, StyleName.Invalid, StyleName.Strikethrough);
-              }
-              if (hasFlag(definition.flags, CommandFlag.Deprecated)) {
-                return name(scopeName, RuleName.DirectiveName, StyleName.Strikethrough);
-              }
-              return name(scopeName, RuleName.DirectiveName);
-            })(),
-          },
-          { text: '; comment', scopes: name(scopeName, RuleName.InlineComment) },
+          dedent`
+            ${definition.name}      ; comment
+            ${definition.name},     ; comment
+          `,
+          [
+            { text: definition.name, scopes: directiveScopes },
+            { text: '; comment', scopes: name(scopeName, RuleName.InlineComment) },
+
+            { text: definition.name, scopes: directiveScopes },
+            { text: ',', scopes: name(scopeName, RuleName.Comma) },
+            { text: '; comment', scopes: name(scopeName, RuleName.InlineComment) },
+          ],
+        ],
+
+        // continuation
+        [
+          dedent`
+            ${definition.name}      ; comment
+              , invalid             ; comment
+          `,
+          [
+            { text: definition.name, scopes: directiveScopes },
+            { text: '; comment', scopes: name(scopeName, RuleName.InlineComment) },
+
+            { text: ', invalid', scopes: name(scopeName, RuleName.UnquotedString, StyleName.Invalid) },
+            { text: '; comment', scopes: name(scopeName, RuleName.InlineComment) },
+          ],
         ],
       ];
     }),

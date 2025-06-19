@@ -14,6 +14,7 @@ export function createDirectiveStatementRule(scopeName: ScopeName, definitions: 
     endAnchor: placeholder.endAnchor,
     allowFirstComma: placeholder.allowFirstComma,
     commandElementName: RuleName.DirectiveName,
+    allowContinuation: false,
     argumentStartPattern: alt(
       inlineSpaces1(),
       seq(inlineSpaces0(), char(',')),
