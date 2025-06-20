@@ -115,6 +115,51 @@ export function createDirectiveStatementExpectedData(scopeName: ScopeName): Expe
       ];
     })(),
 
+    // https://www.autohotkey.com/docs/v1/lib/_ErrorStdOut.htm
+    ...((): ExpectedTestData[] => {
+      return [
+        [
+          dedent`
+            #ErrorStdOut          ; comment
+            #ErrorStdOut,         ; comment
+          `,
+          [
+            { text: '#ErrorStdOut', scopes: name(scopeName, RuleName.DirectiveName) },
+            { text: '; comment', scopes: name(scopeName, RuleName.InlineComment) },
+
+            { text: '#ErrorStdOut', scopes: name(scopeName, RuleName.DirectiveName) },
+            { text: ',', scopes: name(scopeName, RuleName.Comma) },
+            { text: '; comment', scopes: name(scopeName, RuleName.InlineComment) },
+          ],
+        ],
+        [
+          dedent`
+            #ErrorStdOut x        ; comment
+          `,
+          [
+            { text: '#ErrorStdOut', scopes: name(scopeName, RuleName.DirectiveName) },
+            { text: 'x', scopes: name(scopeName, RuleName.UnquotedString) },
+            { text: '; comment', scopes: name(scopeName, RuleName.InlineComment) },
+          ],
+        ],
+        [
+          dedent`
+            #ErrorStdOut UTF-8        ; comment
+            #ErrorStdOut CP65001      ; comment
+          `,
+          [
+            { text: '#ErrorStdOut', scopes: name(scopeName, RuleName.DirectiveName) },
+            { text: 'UTF-8', scopes: name(scopeName, RuleName.UnquotedString, StyleName.Strong) },
+            { text: '; comment', scopes: name(scopeName, RuleName.InlineComment) },
+
+            { text: '#ErrorStdOut', scopes: name(scopeName, RuleName.DirectiveName) },
+            { text: 'CP65001', scopes: name(scopeName, RuleName.UnquotedString, StyleName.Strong) },
+            { text: '; comment', scopes: name(scopeName, RuleName.InlineComment) },
+          ],
+        ],
+      ];
+    })(),
+
     ...((): ExpectedTestData[] => {
       return [
         [
