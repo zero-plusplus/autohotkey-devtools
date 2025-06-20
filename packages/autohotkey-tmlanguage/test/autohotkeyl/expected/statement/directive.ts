@@ -19,9 +19,14 @@ export function createDirectiveStatementExpectedData(scopeName: ScopeName): Expe
         [
           dedent`
             #AllowSameLineComments                ; comment
+            #AllowSameLineComments,               ; comment
           `,
           [
             { text: '#AllowSameLineComments', scopes: name(scopeName, RuleName.DirectiveName, StyleName.Invalid, StyleName.Strikethrough) },
+            { text: '; comment', scopes: name(scopeName, RuleName.InlineComment) },
+
+            { text: '#AllowSameLineComments', scopes: name(scopeName, RuleName.DirectiveName, StyleName.Invalid, StyleName.Strikethrough) },
+            { text: ',', scopes: name(scopeName, RuleName.Comma) },
             { text: '; comment', scopes: name(scopeName, RuleName.InlineComment) },
           ],
         ],
@@ -31,6 +36,47 @@ export function createDirectiveStatementExpectedData(scopeName: ScopeName): Expe
           `,
           [
             { text: '#AllowSameLineComments', scopes: name(scopeName, RuleName.DirectiveName, StyleName.Invalid, StyleName.Strikethrough) },
+            { text: ',', scopes: name(scopeName, RuleName.Comma) },
+            { text: 'invalid', scopes: name(scopeName, RuleName.UnquotedString, StyleName.Invalid) },
+            { text: '; comment', scopes: name(scopeName, RuleName.InlineComment) },
+          ],
+        ],
+      ];
+    })(),
+
+    // https://www.autohotkey.com/docs/v1/lib/_ClipboardTimeout.htm
+    ...((): ExpectedTestData[] => {
+      return [
+        [
+          dedent`
+            #ClipboardTimeout           ; comment
+            #ClipboardTimeout,          ; comment
+          `,
+          [
+            { text: '#ClipboardTimeout', scopes: name(scopeName, RuleName.DirectiveName) },
+            { text: '; comment', scopes: name(scopeName, RuleName.InlineComment) },
+
+            { text: '#ClipboardTimeout', scopes: name(scopeName, RuleName.DirectiveName) },
+            { text: ',', scopes: name(scopeName, RuleName.Comma) },
+            { text: '; comment', scopes: name(scopeName, RuleName.InlineComment) },
+          ],
+        ],
+        [
+          dedent`
+            #ClipboardTimeout 123         ; comment
+          `,
+          [
+            { text: '#ClipboardTimeout', scopes: name(scopeName, RuleName.DirectiveName) },
+            { text: '123', scopes: name(scopeName, RuleName.Integer) },
+            { text: '; comment', scopes: name(scopeName, RuleName.InlineComment) },
+          ],
+        ],
+        [
+          dedent`
+            #ClipboardTimeout, invalid     ; comment
+          `,
+          [
+            { text: '#ClipboardTimeout', scopes: name(scopeName, RuleName.DirectiveName) },
             { text: ',', scopes: name(scopeName, RuleName.Comma) },
             { text: 'invalid', scopes: name(scopeName, RuleName.UnquotedString, StyleName.Invalid) },
             { text: '; comment', scopes: name(scopeName, RuleName.InlineComment) },

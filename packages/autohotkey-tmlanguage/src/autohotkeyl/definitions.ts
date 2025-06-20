@@ -5,8 +5,8 @@ import {
   input, invalid, keyName, keywordOnly, labelName, letterOptionItem, letterOptions, matchKeyOptionItem, menuItemName,
   menuOptions, numberOptionItem, onOff, onOffToggle, optionItem, output, parameterless, path, rangeOptionItem, requiresVersion,
   restParams, sendKeys, signature, signedNumberOptionItem, sizeOptionItem, soundComponent, soundControlType, spacedKeywordsOnly,
-  stringOptionItem, style, subcommand, subcommandlike, timeunit, toggleOptionItem, unquoted, unquotedNumber, unquotedShouldEscapeComma,
-  unquotedWithNumber, whichButton, winParams, winTitle,
+  stringOptionItem, style, subcommand, subcommandlike, timeunit, toggleOptionItem, unquoted, unquotedInteger, unquotedNumber,
+  unquotedShouldEscapeComma, unquotedWithNumber, whichButton, winParams, winTitle,
   type CommandDefinition,
 } from '../definition';
 
@@ -16,7 +16,7 @@ export const directiveDefinitions: CommandDefinition[] = [
   command('#AllowSameLineComments', signature([ invalid() ]), CommandFlag.Removed),
 
   // https://www.autohotkey.com/docs/v1/lib/_ClipboardTimeout.htm
-  command('#ClipboardTimeout', signature([ unquoted() ])),
+  command('#ClipboardTimeout', signature([ unquotedInteger() ])),
 
   // https://www.autohotkey.com/docs/v1/lib/_CommentFlag.htm
   command('#CommentFlag', signature([ unquoted() ]), CommandFlag.Deprecated),
