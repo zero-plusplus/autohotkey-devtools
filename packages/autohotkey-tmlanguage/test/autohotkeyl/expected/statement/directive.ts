@@ -85,6 +85,36 @@ export function createDirectiveStatementExpectedData(scopeName: ScopeName): Expe
       ];
     })(),
 
+    // https://www.autohotkey.com/docs/v1/lib/_CommentFlag.htm
+    ...((): ExpectedTestData[] => {
+      return [
+        [
+          dedent`
+            #CommentFlag          ; comment
+            #CommentFlag,         ; comment
+          `,
+          [
+            { text: '#CommentFlag', scopes: name(scopeName, RuleName.DirectiveName, StyleName.Strikethrough) },
+            { text: '; comment', scopes: name(scopeName, RuleName.InlineComment) },
+
+            { text: '#CommentFlag', scopes: name(scopeName, RuleName.DirectiveName, StyleName.Strikethrough) },
+            { text: ',', scopes: name(scopeName, RuleName.Comma) },
+            { text: '; comment', scopes: name(scopeName, RuleName.InlineComment) },
+          ],
+        ],
+        [
+          dedent`
+            #CommentFlag //       ; comment
+          `,
+          [
+            { text: '#CommentFlag', scopes: name(scopeName, RuleName.DirectiveName, StyleName.Strikethrough) },
+            { text: '//', scopes: name(scopeName, RuleName.UnquotedString) },
+            { text: '; comment', scopes: name(scopeName, RuleName.InlineComment) },
+          ],
+        ],
+      ];
+    })(),
+
     ...((): ExpectedTestData[] => {
       return [
         [
