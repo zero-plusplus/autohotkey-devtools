@@ -722,11 +722,35 @@ function parameterToPatternsRule(scopeName: ScopeName, defenition: CommandDefini
     }
     case HighlightType.NumberInCommandArgument:
     {
+      if (parameter.itemPatterns === undefined || parameter.itemPatterns.length === 0) {
+        return patternsRule(
+          includeRule(isLastParameter ? Repository.PercentExpressionInLastArgument : Repository.PercentExpression),
+
+          includeRule(Repository.DereferenceUnaryOperator),
+          includeRule(Repository.Dereference),
+          includeRule(Repository.Number),
+          includeRule(Repository.CommandInvalidArgument),
+        );
+      }
+
       return patternsRule(
-        includeRule(Repository.PercentExpression),
-        includeRule(Repository.Dereference),
-        includeRule(Repository.Number),
-        includeRule(Repository.CommandInvalidArgument),
+        includeRule(isLastParameter ? Repository.PercentExpressionInLastArgument : Repository.PercentExpression),
+
+        createSpacedArgumentTextRule(scopeName, {
+          stringRuleName: RuleName.UnquotedString,
+          additionalRules: [
+            ...(isLastParameter ? [
+              { name: name(scopeName, RuleName.UnquotedString, StyleName.Escape), match: text('`,') },
+              { name: name(scopeName, RuleName.UnquotedString), match: seq(char(',')) },
+            ] : []),
+            ...optionItemPatternsToRules(scopeName, parameter.itemPatterns),
+            createNumberRule(scopeName),
+            {
+              name: name(scopeName, RuleName.Integer, StyleName.Invalid),
+              match: negChars0('0-9', inlineSpace()),
+            },
+          ],
+        }),
       );
     }
     case HighlightType.SendKeyName:

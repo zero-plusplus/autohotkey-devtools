@@ -1,4 +1,4 @@
-import { alt, char, inlineSpace, negativeLookahead, seq, textalt } from '../../../oniguruma';
+import { alt, char, inlineSpace, lookahead, negativeLookahead, seq, textalt } from '../../../oniguruma';
 import {
   name, Repository, RuleName,
   type MatchRule, type Repositories, type ScopeName,
@@ -18,6 +18,15 @@ export function createOperatorRepositories(scopeName: ScopeName, placeholder: Pl
       operatorRuleName: RuleName.Operator,
       operators: placeholder.expressionOperators,
     }),
+    ...scopeName === 'autohotkeyl' ? {
+      [Repository.DereferenceUnaryOperator]: {
+        name: name(scopeName, RuleName.Operator),
+        match: seq(
+          char('+', '-', '^'),
+          lookahead('%'),
+        ),
+      },
+    } : {},
   };
 }
 

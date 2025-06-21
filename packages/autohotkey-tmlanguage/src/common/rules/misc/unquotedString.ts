@@ -77,6 +77,7 @@ export function createSpacedArgumentTextRule(scopeName: ScopeName, placeholder: 
     ),
     captures: {
       1: patternsRule(
+        includeRule(Repository.DereferenceUnaryOperator),
         includeRule(Repository.Dereference),
         ...(placeholder.additionalRules ?? []),
 
@@ -100,7 +101,7 @@ export function createNumberRule(scopeName: ScopeName, placeholder: Placeholder_
         inlineSpace(),
         char(','),
       )),
-      ...(placeholder.unaryOperator ? [ optional(capture(char(...placeholder.unaryOperator))) ] : []),
+      optional(capture(char(...placeholder.unaryOperator ?? [ '+', '-' ]))),
       capture(alt(
         seq(ignoreCase('0x'), chars0('0-9', 'a-f', 'A-F')),
         seq(
@@ -119,14 +120,10 @@ export function createNumberRule(scopeName: ScopeName, placeholder: Placeholder_
         endAnchor(),
       )),
     ),
-    captures: placeholder.unaryOperator
-      ? {
-        1: patternsRule(includeRule(Repository.Operator)),
-        2: patternsRule(includeRule(Repository.Number)),
-      }
-      : {
-        1: patternsRule(includeRule(Repository.Number)),
-      },
+    captures: {
+      1: patternsRule(includeRule(Repository.Operator)),
+      2: patternsRule(includeRule(Repository.Number)),
+    },
   };
 }
 

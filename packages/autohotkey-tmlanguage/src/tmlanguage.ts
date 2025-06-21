@@ -157,6 +157,7 @@ export const enum Repository {
   // #endregion regexp
   // #region misc
   Dereference = '$Dereference',
+  DereferenceUnaryOperator = '$DereferenceUnaryOperator',
   InvalidDereference = '$InvalidDereference',
   CallExpression_FunctionDeclarationHead = '$CallExpression_FunctionDeclarationHead',
   MethodDeclarationHead = '$MethodDeclarationHead',

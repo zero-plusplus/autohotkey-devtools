@@ -556,7 +556,7 @@ export const commandDefinitions: CommandDefinition[] = [
   command('SetStoreCapsLockMode', signature([ onOff() ])),
 
   // https://www.autohotkey.com/docs/v1/lib/SetTimer.htm
-  command('SetTimer', signature([ unquoted(), keywordOnly([ optionItem('On', 'Off', 'Delete') ]), expression() ])),
+  command('SetTimer', signature([ unquoted(), unquotedNumber(optionItem('On', 'Off', 'Delete')), expression() ])),
 
   // https://www.autohotkey.com/docs/v1/lib/SetTitleMatchMode.htm
   command('SetTitleMatchMode', signature([ keywordOnly([ optionItem('1', '2', '3', 'RegEx', 'Fast', 'Slow') ]) ])),
