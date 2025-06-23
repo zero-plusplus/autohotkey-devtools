@@ -1,7 +1,7 @@
 import { dedent } from '@zero-plusplus/utilities/src';
 import { directiveDefinitions } from '../../../../src/autohotkeyl/definitions';
 import {
-  name, RuleName, StyleName,
+  name, RuleDescriptor, RuleName, StyleName,
   type ScopeName,
 } from '../../../../src/tmlanguage';
 import * as common from '../../../common';
@@ -314,6 +314,41 @@ export function createDirectiveStatementExpectedData(scopeName: ScopeName): Expe
               { text: 'C1', scopes: name(scopeName, RuleName.UnquotedString, StyleName.Strong) },
               { text: '; comment', scopes: name(scopeName, RuleName.InlineComment) },
             ],
+          ],
+        ],
+      ];
+    })(),
+
+    // https://www.autohotkey.com/docs/v1/lib/_If.htm
+    ...((): ExpectedTestData[] => {
+      return [
+        [
+          dedent`
+            #If                                     ; comment
+            #If,                                    ; comment
+          `,
+          [
+            { text: '#If', scopes: name(scopeName, RuleName.DirectiveName) },
+            { text: '; comment', scopes: name(scopeName, RuleName.InlineComment) },
+
+            { text: '#If', scopes: name(scopeName, RuleName.DirectiveName) },
+            { text: ',', scopes: name(scopeName, RuleName.Comma) },
+            { text: '; comment', scopes: name(scopeName, RuleName.InlineComment) },
+          ],
+        ],
+        [
+          dedent`
+            #If WinActive("ahk_exe xxx.exe")        ; comment
+          `,
+          [
+            { text: '#If', scopes: name(scopeName, RuleName.DirectiveName) },
+            { text: 'WinActive', scopes: name(scopeName, RuleName.FunctionName) },
+            { text: '(', scopes: name(scopeName, RuleName.OpenParen) },
+            { text: '"', scopes: name(scopeName, RuleName.DoubleString, RuleDescriptor.Begin) },
+            { text: `ahk_exe xxx.exe`, scopes: name(scopeName, RuleName.DoubleString) },
+            { text: '"', scopes: name(scopeName, RuleName.DoubleString, RuleDescriptor.End) },
+            { text: ')', scopes: name(scopeName, RuleName.CloseParen) },
+            { text: '; comment', scopes: name(scopeName, RuleName.InlineComment) },
           ],
         ],
       ];
