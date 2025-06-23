@@ -190,6 +190,46 @@ export function createDirectiveStatementExpectedData(scopeName: ScopeName): Expe
       ];
     })(),
 
+    // https://www.autohotkey.com/docs/v1/lib/_HotkeyInterval.htm
+    ...((): ExpectedTestData[] => {
+      return [
+        [
+          dedent`
+            #HotkeyInterval         ; comment
+            #HotkeyInterval,        ; comment
+          `,
+          [
+            { text: '#HotkeyInterval', scopes: name(scopeName, RuleName.DirectiveName) },
+            { text: '; comment', scopes: name(scopeName, RuleName.InlineComment) },
+
+            { text: '#HotkeyInterval', scopes: name(scopeName, RuleName.DirectiveName) },
+            { text: ',', scopes: name(scopeName, RuleName.Comma) },
+            { text: '; comment', scopes: name(scopeName, RuleName.InlineComment) },
+          ],
+        ],
+        [
+          dedent`
+            #HotkeyInterval 123     ; comment
+          `,
+          [
+            { text: '#HotkeyInterval', scopes: name(scopeName, RuleName.DirectiveName) },
+            { text: '123', scopes: name(scopeName, RuleName.Integer) },
+            { text: '; comment', scopes: name(scopeName, RuleName.InlineComment) },
+          ],
+        ],
+        [
+          dedent`
+            #HotkeyInterval invalid     ; comment
+          `,
+          [
+            { text: '#HotkeyInterval', scopes: name(scopeName, RuleName.DirectiveName) },
+            { text: 'invalid', scopes: name(scopeName, RuleName.UnquotedString, StyleName.Invalid) },
+            { text: '; comment', scopes: name(scopeName, RuleName.InlineComment) },
+          ],
+        ],
+      ];
+    })(),
+
     ...((): ExpectedTestData[] => {
       return [
         [

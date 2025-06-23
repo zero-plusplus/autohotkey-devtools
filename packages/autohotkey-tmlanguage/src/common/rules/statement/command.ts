@@ -745,10 +745,7 @@ function parameterToPatternsRule(scopeName: ScopeName, defenition: CommandDefini
             ] : []),
             ...optionItemPatternsToRules(scopeName, parameter.itemPatterns),
             createNumberRule(scopeName),
-            {
-              name: name(scopeName, RuleName.Integer, StyleName.Invalid),
-              match: negChars0('0-9', inlineSpace()),
-            },
+            includeRule(Repository.CommandInvalidArgument),
           ],
         }),
       );

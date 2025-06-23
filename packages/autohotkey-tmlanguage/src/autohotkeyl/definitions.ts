@@ -34,7 +34,7 @@ export const directiveDefinitions: CommandDefinition[] = [
   command('#EscapeChar', signature([ unquoted() ]), CommandFlag.Deprecated),
 
   // https://www.autohotkey.com/docs/v1/lib/_HotkeyInterval.htm
-  command('#HotkeyInterval', signature([ unquoted() ])),
+  command('#HotkeyInterval', signature([ unquotedInteger() ])),
 
   // https://www.autohotkey.com/docs/v1/lib/_HotkeyModifierTimeout.htm
   command('#HotkeyModifierTimeout', signature([ unquoted() ])),
