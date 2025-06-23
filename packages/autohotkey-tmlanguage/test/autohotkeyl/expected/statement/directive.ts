@@ -354,6 +354,39 @@ export function createDirectiveStatementExpectedData(scopeName: ScopeName): Expe
       ];
     })(),
 
+    // https://www.autohotkey.com/docs/v1/lib/_IfWinActive.htm
+    ...[ '#IfWinActive', '#IfWinExist', '#IfWinNotActive', '#IfWinNotExist' ].flatMap((directive): ExpectedTestData[] => {
+      return [
+        [
+          dedent`
+            ${directive}                                    ; comment
+            ${directive},                                   ; comment
+          `,
+          [
+            { text: directive, scopes: name(scopeName, RuleName.DirectiveName) },
+            { text: '; comment', scopes: name(scopeName, RuleName.InlineComment) },
+
+            { text: directive, scopes: name(scopeName, RuleName.DirectiveName) },
+            { text: ',', scopes: name(scopeName, RuleName.Comma) },
+            { text: '; comment', scopes: name(scopeName, RuleName.InlineComment) },
+          ],
+        ],
+
+        [
+          dedent`
+            ${directive} ahk_exe Code.exe           ; comment
+          `,
+          [
+            { text: directive, scopes: name(scopeName, RuleName.DirectiveName) },
+            { text: 'ahk_exe', scopes: name(scopeName, RuleName.UnquotedString, StyleName.Strong) },
+            { text: 'Code.exe', scopes: name(scopeName, RuleName.UnquotedString) },
+            { text: '; comment', scopes: name(scopeName, RuleName.InlineComment) },
+          ],
+        ],
+      ];
+    }),
+
+
     ...((): ExpectedTestData[] => {
       return [
         [
