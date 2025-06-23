@@ -37,7 +37,7 @@ export const directiveDefinitions: CommandDefinition[] = [
   command('#HotkeyInterval', signature([ unquotedInteger() ])),
 
   // https://www.autohotkey.com/docs/v1/lib/_HotkeyModifierTimeout.htm
-  command('#HotkeyModifierTimeout', signature([ unquoted() ])),
+  command('#HotkeyModifierTimeout', signature([ unquotedInteger() ])),
 
   // https://www.autohotkey.com/docs/v1/lib/_Hotstring.htm
   command('#Hotstring', signature([ unquoted([ optionItem('NoMouse', 'EndChars', 'SI', 'SP', 'SE', 'X'), toggleOptionItem('*', '?', 'B', 'C', 'O', 'R', 'T', 'Z'), decimalOptionItem('P'), signedNumberOptionItem('K') ]) ])),

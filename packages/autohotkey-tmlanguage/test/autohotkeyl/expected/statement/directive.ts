@@ -230,6 +230,46 @@ export function createDirectiveStatementExpectedData(scopeName: ScopeName): Expe
       ];
     })(),
 
+    // https://www.autohotkey.com/docs/v1/lib/_HotkeyModifierTimeout.htm
+    ...((): ExpectedTestData[] => {
+      return [
+        [
+          dedent`
+            #HotkeyModifierTimeout            ; comment
+            #HotkeyModifierTimeout,           ; comment
+          `,
+          [
+            { text: '#HotkeyModifierTimeout', scopes: name(scopeName, RuleName.DirectiveName) },
+            { text: '; comment', scopes: name(scopeName, RuleName.InlineComment) },
+
+            { text: '#HotkeyModifierTimeout', scopes: name(scopeName, RuleName.DirectiveName) },
+            { text: ',', scopes: name(scopeName, RuleName.Comma) },
+            { text: '; comment', scopes: name(scopeName, RuleName.InlineComment) },
+          ],
+        ],
+        [
+          dedent`
+            #HotkeyModifierTimeout 123        ; comment
+          `,
+          [
+            { text: '#HotkeyModifierTimeout', scopes: name(scopeName, RuleName.DirectiveName) },
+            { text: '123', scopes: name(scopeName, RuleName.Integer) },
+            { text: '; comment', scopes: name(scopeName, RuleName.InlineComment) },
+          ],
+        ],
+        [
+          dedent`
+            #HotkeyModifierTimeout invalid    ; comment
+          `,
+          [
+            { text: '#HotkeyModifierTimeout', scopes: name(scopeName, RuleName.DirectiveName) },
+            { text: 'invalid', scopes: name(scopeName, RuleName.UnquotedString, StyleName.Invalid) },
+            { text: '; comment', scopes: name(scopeName, RuleName.InlineComment) },
+          ],
+        ],
+      ];
+    })(),
+
     ...((): ExpectedTestData[] => {
       return [
         [
