@@ -160,6 +160,36 @@ export function createDirectiveStatementExpectedData(scopeName: ScopeName): Expe
       ];
     })(),
 
+    // https://www.autohotkey.com/docs/v1/lib/_EscapeChar.htm
+    ...((): ExpectedTestData[] => {
+      return [
+        [
+          dedent`
+            #EscapeChar         ; comment
+            #EscapeChar,        ; comment
+          `,
+          [
+            { text: '#EscapeChar', scopes: name(scopeName, RuleName.DirectiveName, StyleName.Strikethrough) },
+            { text: '; comment', scopes: name(scopeName, RuleName.InlineComment) },
+
+            { text: '#EscapeChar', scopes: name(scopeName, RuleName.DirectiveName, StyleName.Strikethrough) },
+            { text: ',', scopes: name(scopeName, RuleName.Comma) },
+            { text: '; comment', scopes: name(scopeName, RuleName.InlineComment) },
+          ],
+        ],
+        [
+          dedent`
+            #EscapeChar \\        ; comment
+          `,
+          [
+            { text: '#EscapeChar', scopes: name(scopeName, RuleName.DirectiveName, StyleName.Strikethrough) },
+            { text: '\\', scopes: name(scopeName, RuleName.UnquotedString) },
+            { text: '; comment', scopes: name(scopeName, RuleName.InlineComment) },
+          ],
+        ],
+      ];
+    })(),
+
     ...((): ExpectedTestData[] => {
       return [
         [
