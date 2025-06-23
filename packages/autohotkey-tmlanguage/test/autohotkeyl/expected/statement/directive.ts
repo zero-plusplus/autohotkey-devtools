@@ -270,6 +270,55 @@ export function createDirectiveStatementExpectedData(scopeName: ScopeName): Expe
       ];
     })(),
 
+    // https://www.autohotkey.com/docs/v1/lib/_Hotstring.htm
+    ...((): ExpectedTestData[] => {
+      return [
+        [
+          dedent`
+            #Hotstring                    ; comment
+            #Hotstring,                   ; comment
+          `,
+          [
+            { text: '#Hotstring', scopes: name(scopeName, RuleName.DirectiveName) },
+            { text: '; comment', scopes: name(scopeName, RuleName.InlineComment) },
+
+            { text: '#Hotstring', scopes: name(scopeName, RuleName.DirectiveName) },
+            { text: ',', scopes: name(scopeName, RuleName.Comma) },
+            { text: '; comment', scopes: name(scopeName, RuleName.InlineComment) },
+          ],
+        ],
+        [
+          dedent`
+            #Hotstring NoMouse              ; comment
+            #Hotstring EndChars ,\`t        ; comment
+            #Hotstring B0 C1                ; comment
+          `,
+          [
+            ...[
+              { text: '#Hotstring', scopes: name(scopeName, RuleName.DirectiveName) },
+              { text: 'NoMouse', scopes: name(scopeName, RuleName.UnquotedString, StyleName.Strong) },
+              { text: '; comment', scopes: name(scopeName, RuleName.InlineComment) },
+            ],
+
+            ...[
+              { text: '#Hotstring', scopes: name(scopeName, RuleName.DirectiveName) },
+              { text: 'EndChars', scopes: name(scopeName, RuleName.UnquotedString, StyleName.Strong) },
+              { text: ',', scopes: name(scopeName, RuleName.UnquotedString) },
+              { text: '`t', scopes: name(scopeName, RuleName.UnquotedString, StyleName.Escape) },
+              { text: '; comment', scopes: name(scopeName, RuleName.InlineComment) },
+            ],
+
+            ...[
+              { text: '#Hotstring', scopes: name(scopeName, RuleName.DirectiveName) },
+              { text: 'B0', scopes: name(scopeName, RuleName.UnquotedString, StyleName.Strong) },
+              { text: 'C1', scopes: name(scopeName, RuleName.UnquotedString, StyleName.Strong) },
+              { text: '; comment', scopes: name(scopeName, RuleName.InlineComment) },
+            ],
+          ],
+        ],
+      ];
+    })(),
+
     ...((): ExpectedTestData[] => {
       return [
         [
