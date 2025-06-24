@@ -11,7 +11,6 @@ export const scopeNames = [ 'autohotkey', 'autohotkeynext', 'autohotkeyl', 'auto
 
 // #region enum
 export const enum HighlightType {
-  None = 'None',
   Blank = 'Blank',
   Expression = 'Expression',
   UnquotedString = 'UnquotedString',

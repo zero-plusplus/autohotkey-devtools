@@ -579,7 +579,6 @@ function parameterToOniguruma(parameter: CommandParameter, isLastParameter: bool
 }
 function parameterToPatternsRule(scopeName: ScopeName, defenition: CommandDefinition, parameter: CommandParameter, isLastParameter: boolean, placeholder: { startAnchor: string }): PatternsRule {
   switch (parameter.type) {
-    case HighlightType.None:
     case HighlightType.Invalid:
     case HighlightType.Blank:
     {
