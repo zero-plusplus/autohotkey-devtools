@@ -1,8 +1,8 @@
 import { dedent, hasFlag } from '@zero-plusplus/utilities/src';
 import * as definitions_v1 from '../../../../src/autohotkeyl/definitions';
 import {
-  blank, CommandFlag, control, expression, fileAttributes, flagedGuiControlOptions, guiControlOptions, guiOptions,
-  keywordOnly, onOff, output, restParams, sendKeys, unquoted, winTitle,
+  CommandFlag, control, expression, fileAttributes, flagedGuiControlOptions, guiControlOptions, guiOptions,
+  HighlightType, keywordOnly, onOff, output, restParams, sendKeys, unquoted, winTitle,
 } from '../../../../src/definition';
 import {
   name, RuleDescriptor, RuleName, StyleName,
@@ -1356,7 +1356,42 @@ export function createCommandStatementExpectedData(scopeName: ScopeName): Expect
       ];
     })(),
 
-    // #region arg types
+    // #region highlight types
+    ...((_ = HighlightType.Blank): ExpectedTestData[] => {
+      return [
+        [
+          dedent`
+            Control, Check, blank             ; comment
+            Control, Check, %blank%           ; comment
+            Control, Check, % blank           ; comment
+          `,
+          [
+            { text: 'Control', scopes: name(scopeName, RuleName.CommandName) },
+            { text: ',', scopes: name(scopeName, RuleName.Comma) },
+            { text: 'Check', scopes: name(scopeName, RuleName.SubCommandName) },
+            { text: ',', scopes: name(scopeName, RuleName.Comma) },
+            { text: 'blank', scopes: name(scopeName, RuleName.UnquotedString, StyleName.Invalid) },
+            { text: '; comment', scopes: name(scopeName, RuleName.InlineComment) },
+
+            { text: 'Control', scopes: name(scopeName, RuleName.CommandName) },
+            { text: ',', scopes: name(scopeName, RuleName.Comma) },
+            { text: 'Check', scopes: name(scopeName, RuleName.SubCommandName) },
+            { text: ',', scopes: name(scopeName, RuleName.Comma) },
+            { text: '%blank%', scopes: name(scopeName, RuleName.UnquotedString, StyleName.Invalid) },
+            { text: '; comment', scopes: name(scopeName, RuleName.InlineComment) },
+
+            { text: 'Control', scopes: name(scopeName, RuleName.CommandName) },
+            { text: ',', scopes: name(scopeName, RuleName.Comma) },
+            { text: 'Check', scopes: name(scopeName, RuleName.SubCommandName) },
+            { text: ',', scopes: name(scopeName, RuleName.Comma) },
+            { text: '%', scopes: name(scopeName, RuleName.UnquotedString, StyleName.Invalid) },
+            { text: 'blank', scopes: name(scopeName, RuleName.UnquotedString, StyleName.Invalid) },
+            { text: '; comment', scopes: name(scopeName, RuleName.InlineComment) },
+          ],
+        ],
+      ];
+    })(),
+
     // onOff parameter
     ...((): ExpectedTestData[] => {
       onOff;
@@ -1561,44 +1596,6 @@ export function createCommandStatementExpectedData(scopeName: ScopeName): Expect
             { text: 'var', scopes: name(scopeName, RuleName.Variable) },
             { text: ',', scopes: name(scopeName, RuleName.Comma) },
             { text: '1', scopes: name(scopeName, RuleName.Integer) },
-            { text: '; comment', scopes: name(scopeName, RuleName.InlineComment) },
-          ],
-        ],
-      ];
-    })(),
-
-    // blank parameter
-    ...((): ExpectedTestData[] => {
-      blank;
-
-      return [
-        [
-          dedent`
-            Control, Check, blank             ; comment
-            Control, Check, %blank%           ; comment
-            Control, Check, % blank           ; comment
-          `,
-          [
-            { text: 'Control', scopes: name(scopeName, RuleName.CommandName) },
-            { text: ',', scopes: name(scopeName, RuleName.Comma) },
-            { text: 'Check', scopes: name(scopeName, RuleName.SubCommandName) },
-            { text: ',', scopes: name(scopeName, RuleName.Comma) },
-            { text: 'blank', scopes: name(scopeName, RuleName.UnquotedString, StyleName.Invalid) },
-            { text: '; comment', scopes: name(scopeName, RuleName.InlineComment) },
-
-            { text: 'Control', scopes: name(scopeName, RuleName.CommandName) },
-            { text: ',', scopes: name(scopeName, RuleName.Comma) },
-            { text: 'Check', scopes: name(scopeName, RuleName.SubCommandName) },
-            { text: ',', scopes: name(scopeName, RuleName.Comma) },
-            { text: '%blank%', scopes: name(scopeName, RuleName.UnquotedString, StyleName.Invalid) },
-            { text: '; comment', scopes: name(scopeName, RuleName.InlineComment) },
-
-            { text: 'Control', scopes: name(scopeName, RuleName.CommandName) },
-            { text: ',', scopes: name(scopeName, RuleName.Comma) },
-            { text: 'Check', scopes: name(scopeName, RuleName.SubCommandName) },
-            { text: ',', scopes: name(scopeName, RuleName.Comma) },
-            { text: '%', scopes: name(scopeName, RuleName.UnquotedString, StyleName.Invalid) },
-            { text: 'blank', scopes: name(scopeName, RuleName.UnquotedString, StyleName.Invalid) },
             { text: '; comment', scopes: name(scopeName, RuleName.InlineComment) },
           ],
         ],
@@ -2005,7 +2002,7 @@ export function createCommandStatementExpectedData(scopeName: ScopeName): Expect
         ],
       ];
     })(),
-    // #endregion arg types
+    // #endregion highlight types
 
     // #region continuation
     ...((): ExpectedTestData[] => {
