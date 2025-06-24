@@ -546,7 +546,7 @@ function parameterToOniguruma(parameter: CommandParameter, isLastParameter: bool
         ? patterns_common.unquotedExpressionLastArgumentPattern
         : patterns_common.unquotedExpressionArgumentPattern;
     case HighlightType.RestParams:
-    case HighlightType.UnquotedStringShouldEscapeComma: {
+    {
       if (isLastParameter) {
         return seq(groupMany1(seq(
           patterns_common.unquotedArgumentPattern,
@@ -759,7 +759,6 @@ function parameterToPatternsRule(scopeName: ScopeName, defenition: CommandDefini
       );
     }
     case HighlightType.RestParams:
-    case HighlightType.UnquotedStringShouldEscapeComma:
     {
       if (parameter.itemPatterns === undefined || parameter.itemPatterns.length === 0) {
         return patternsRule(includeRule(Repository.CommandRestArguments));

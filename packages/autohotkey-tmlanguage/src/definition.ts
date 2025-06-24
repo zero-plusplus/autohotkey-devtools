@@ -14,7 +14,6 @@ export const enum HighlightType {
   Blank = 'Blank',
   Expression = 'Expression',
   UnquotedString = 'UnquotedString',
-  UnquotedStringShouldEscapeComma = 'UnquotedStringShouldEscapeComma',
   UnquotedStringWithNumber = 'UnquotedStringWithNumber',
   UnquotedBooleanLike = 'UnquotedBooleanLike',
   QuotableUnquotedString = 'QuotableUnquotedString',
@@ -418,8 +417,8 @@ export function blank(flags: CommandParameterFlag = CommandParameterFlag.None): 
 export function unquoted(values: string[] = [], flags: CommandParameterFlag = CommandParameterFlag.None): CommandParameter {
   return { type: HighlightType.UnquotedString, flags, itemPatterns: values };
 }
-export function unquotedShouldEscapeComma(values: string[] = [], flags: CommandParameterFlag = CommandParameterFlag.None): CommandParameter {
-  return { type: HighlightType.UnquotedStringShouldEscapeComma, flags, itemPatterns: values };
+export function unquotedShouldEscapeComma(optionItems: string[] = [], flags: CommandParameterFlag = CommandParameterFlag.None): CommandParameter {
+  return restParams(optionItems, flags);
 }
 export function unquotedInteger(...optionItems: string[]): CommandParameter {
   return unquotedNumber(...optionItems);
