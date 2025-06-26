@@ -465,6 +465,15 @@ export function createInvalidArgumentRule(scopeName: ScopeName): MatchRule {
     match: negChars1(',', inlineSpace()),
   };
 }
+export function createInvalidLastArgumentRule(scopeName: ScopeName): PatternsRule {
+  return patternsRule(
+    includeRule(Repository.CommandInvalidArgument),
+    {
+      name: name(scopeName, RuleName.Comma, StyleName.Invalid),
+      match: char(','),
+    },
+  );
+}
 
 
 // #region helpers
@@ -579,7 +588,7 @@ function parameterToPatternsRule(scopeName: ScopeName, defenition: CommandDefini
   switch (parameter.type) {
     case HighlightType.Blank:
     {
-      return patternsRule(includeRule(Repository.CommandInvalidArgument));
+      return patternsRule(isLastParameter ? includeRule(Repository.CommandInvalidLastArgument) : includeRule(Repository.CommandInvalidArgument));
     }
     case HighlightType.SubCommand:
     case HighlightType.SubCommandLike:

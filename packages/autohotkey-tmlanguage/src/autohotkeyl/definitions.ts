@@ -156,7 +156,7 @@ export const commandDefinitions: CommandDefinition[] = [
       signature([ subcommand([ 'Check', 'UnCheck', 'Enable', 'Disable', 'Show', 'Hide', 'ShowDropDown', 'HideDropDown' ]), blank(), control(), ...winParams ]),
       signature([ subcommand([ 'Style', 'ExStyle' ]), style(), control(), ...winParams ]),
       signature([ subcommand([ 'TabLeft', 'TabRight', 'Add', 'Delete', 'Choose', 'ChooseString', 'EditPaste' ]), unquoted(), control(), ...winParams ]),
-      signature([ restParams() ]),
+      signature(parameterless()),
     ],
   ),
 
