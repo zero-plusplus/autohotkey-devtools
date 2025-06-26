@@ -12,23 +12,24 @@ export const scopeNames = [ 'autohotkey', 'autohotkeynext', 'autohotkeyl', 'auto
 // #region enum
 export const enum HighlightType {
   Blank = 'Blank',
+  // e.g. `#If var + fn()`
+  //           ^^^^^^^^^^
   Expression = 'Expression',
   UnquotedString = 'UnquotedString',
   UnquotedStringWithNumber = 'UnquotedStringWithNumber',
   UnquotedBooleanLike = 'UnquotedBooleanLike',
   QuotableUnquotedString = 'QuotableUnquotedString',
   NumberInCommandArgument = 'NumberInCommandArgument',
-  // e.g. Send, {LButton 5}
-  //            ^^^^^^^^^^^
+  // e.g. `Send, {LButton 5}`
+  //             ^^^^^^^^^^^
   SendKeyName = 'SendKeyName',
-  // e.g. #Requires AutoHotkey v2.0
-  //                ^^^^^^^^^^^^^^^
-  // RequiresVersion = 'requires_version',
   // e.g. `#Include path\to`, `#Include <lib>`
   //                ^^^^^^^             ^^^^^
   IncludeLibrary = 'IncludeLibrary',
   QuotableIncludeLibrary = 'QuotableIncludeLibrary',
 
+  // e.g. `arg1, arg2`
+  //       ^^^^^^^^^^
   RestParams = 'RestParams',
   LabelName = 'LabelName',
   // Keywords to distinguish between signatures
