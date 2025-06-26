@@ -355,9 +355,7 @@ export function createLoopStatementExpectedData(scopeName: ScopeName): ExpectedT
               { text: ',', scopes: name(scopeName, RuleName.Comma) },
               { text: 'C:\\test', scopes: name(scopeName, RuleName.UnquotedString) },
               { text: ',', scopes: name(scopeName, RuleName.Comma) },
-              { text: 'D', scopes: name(scopeName, RuleName.UnquotedString, StyleName.Strong) },
-              { text: 'F', scopes: name(scopeName, RuleName.UnquotedString, StyleName.Strong) },
-              { text: 'R', scopes: name(scopeName, RuleName.UnquotedString, StyleName.Strong) },
+              { text: 'DFR', scopes: name(scopeName, RuleName.UnquotedString, StyleName.Strong) },
 
               { text: '; comment', scopes: name(scopeName, RuleName.InlineComment) },
 
@@ -901,9 +899,7 @@ export function createLoopStatementExpectedData(scopeName: ScopeName): ExpectedT
               { text: ',', scopes: name(scopeName, RuleName.Comma) },
               { text: 'HKLM\\path\\to', scopes: name(scopeName, RuleName.UnquotedString) },
               { text: ',', scopes: name(scopeName, RuleName.Comma) },
-              { text: 'K', scopes: name(scopeName, RuleName.UnquotedString, StyleName.Strong) },
-              { text: 'V', scopes: name(scopeName, RuleName.UnquotedString, StyleName.Strong) },
-              { text: 'R', scopes: name(scopeName, RuleName.UnquotedString, StyleName.Strong) },
+              { text: 'KVR', scopes: name(scopeName, RuleName.UnquotedString, StyleName.Strong) },
               { text: '; comment', scopes: name(scopeName, RuleName.InlineComment) },
 
               { text: '{', scopes: name(scopeName, RuleName.BlockBegin) },

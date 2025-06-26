@@ -5,10 +5,10 @@ import {
   type CommandDefinition, type CommandParameter, type CommandSignature,
 } from '../../../definition';
 import {
-  alt, anyChar, anyChars0, anyChars1, capture, char, chars1, endAnchor, group, groupMany0, groupMany1,
-  ignoreCase, inlineSpace, inlineSpaces0, inlineSpaces1, keyword, lookahead, lookbehind, negativeLookahead,
-  negativeLookbehind, negChar, negChars0, negChars1, numbers1, optional, optseq, ordalt, reluctant, seq, text,
-  textalt, wordBound, wordChar, wordChars1,
+  alt, anyChars0, anyChars1, capture, char, chars1, endAnchor, group, groupMany0, groupMany1, ignoreCase,
+  inlineSpace, inlineSpaces0, inlineSpaces1, keyword, lookahead, lookbehind, negativeLookahead, negativeLookbehind,
+  negChar, negChars0, negChars1, numbers1, optional, optseq, ordalt, reluctant, seq, text, textalt, wordBound,
+  wordChar, wordChars1,
 } from '../../../oniguruma';
 import {
   includeRule, name, nameRule, patternsRule, Repository, RuleName, StyleName,
@@ -625,23 +625,6 @@ function parameterToPatternsRule(scopeName: ScopeName, defenition: CommandDefini
         includeRule(Repository.CommandInvalidArgument),
       );
     }
-    case HighlightType.LetterOptions:
-    {
-      return patternsRule(
-        includeRule(isLastParameter ? Repository.PercentExpressionInLastArgument : Repository.PercentExpression),
-
-        createSpacedArgumentTextRule(scopeName, {
-          stringRuleName: RuleName.UnquotedString,
-          additionalRules: [
-            ...optionItemPatternsToRules(scopeName, parameter.itemPatterns),
-            {
-              name: name(scopeName, RuleName.UnquotedString, StyleName.Invalid),
-              match: anyChar(),
-            },
-          ],
-        }),
-      );
-    }
     case HighlightType.UnquotedString:
     case HighlightType.QuotableUnquotedString:
     {
@@ -803,27 +786,6 @@ function parameterToPatternsRule(scopeName: ScopeName, defenition: CommandDefini
                 negChar('`', '0-9', '+', '-', '^', inlineSpace(), ','),
                 negChars0('`', inlineSpace(), ','),
               ),
-            },
-          ],
-        }),
-      );
-    }
-    case HighlightType.LetterOptions:
-    {
-      if (!parameter.itemPatterns || parameter.itemPatterns.length === 0) {
-        throw Error('letter option is not specified correctly');
-      }
-
-      return patternsRule(
-        includeRule(isLastParameter ? Repository.PercentExpressionInLastArgument : Repository.PercentExpression),
-
-        createSpacedArgumentTextRule(scopeName, {
-          stringRuleName: RuleName.UnquotedString,
-          additionalRules: [
-            ...optionItemPatternsToRules(scopeName, parameter.itemPatterns),
-            {
-              name: name(scopeName, RuleName.SubCommandName, StyleName.Invalid),
-              match: anyChar(),
             },
           ],
         }),

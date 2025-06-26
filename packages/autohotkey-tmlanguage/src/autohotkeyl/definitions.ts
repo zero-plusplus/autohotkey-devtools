@@ -2,8 +2,8 @@ import {
   blank, color, colorOptionItem, command, CommandFlag, control, controlMoveOptions, controlOrPos, decimalOptionItem,
   encoding, endKeyOptionItem, expression, fileAttributes, flagedGuiControlOptions, flowSubcommand, formatTime, glob,
   guiControlOptions, guiControlType, guiOptions, guiSubcommand, hotkeyName, identifierOptionItem, imagePath, includeLib,
-  input, invalid, keyName, keywordOnly, labelName, letterOptionItem, letterOptions, matchKeyOptionItem, menuItemName,
-  menuOptions, numberOptionItem, onOff, onOffToggle, optionItem, output, parameterless, path, rangeOptionItem, requiresVersion,
+  input, invalid, keyName, keywordOnly, labelName, letterOptionItem, matchKeyOptionItem, menuItemName, menuOptions,
+  numberOptionItem, onOff, onOffToggle, optionItem, output, parameterless, path, rangeOptionItem, requiresVersion,
   restParams, sendKeys, signature, signedNumberOptionItem, sizeOptionItem, soundComponent, soundControlType, spacedKeywordsOnly,
   stringOptionItem, style, subcommand, subcommandlike, timeunit, toggleOptionItem, unquoted, unquotedInteger, unquotedNumber,
   unquotedShouldEscapeComma, unquotedWithNumber, whichButton, winParams, winTitle,
@@ -121,7 +121,7 @@ export const directiveDefinitions: CommandDefinition[] = [
 export const loopCommandDefenitions: CommandDefinition[] = [
   command('Loop', [
     // https://www.autohotkey.com/docs/v1/lib/LoopFile.htm
-    signature([ flowSubcommand('Files'), path(), letterOptions([ letterOptionItem('D', 'F', 'R') ]) ]),
+    signature([ flowSubcommand('Files'), path(), keywordOnly([ letterOptionItem('D', 'F', 'R') ]) ]),
 
     // https://www.autohotkey.com/docs/v1/lib/LoopParse.htm
     signature([ flowSubcommand('Parse'), input(), unquoted([ optionItem('CSV') ]), unquotedShouldEscapeComma() ]),
@@ -130,7 +130,7 @@ export const loopCommandDefenitions: CommandDefinition[] = [
     signature([ flowSubcommand('Read'), path(), unquotedShouldEscapeComma() ]),
 
     // https://www.autohotkey.com/docs/v1/lib/LoopReg.htm#new
-    signature([ flowSubcommand('Reg'), unquoted(), letterOptions([ letterOptionItem('K', 'V', 'R') ]) ]),
+    signature([ flowSubcommand('Reg'), unquoted(), keywordOnly([ letterOptionItem('K', 'V', 'R') ]) ]),
   ]),
 ];
 // #endregion loop

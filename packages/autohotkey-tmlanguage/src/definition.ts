@@ -68,15 +68,6 @@ export const enum HighlightType {
   //                    ^^^^ ^^^^           ^^^ ^^^ ^^^^^^^
   UnquotedOrKeywords = 'UnquotedOrKeywords',
 
-  // Accepts one or more arbitrary keywords. No space is needed between each
-  // e.g. `Loop, Files, \path\to, DFR
-  //                              ^^^
-  LetterOptions = 'LetterOptions',
-  // Accepts entries beginning with `+`, `-` or `^` followed by one or more keywords. No space is needed between each
-  // e.g. `FileSetAttrib, +HA-R`
-  //                      ^^^^^
-  FileAttributes = 'FileAttributes',
-
   // Accepts zero or more keywords. Each keyword must be preceded by `+` or `-` and each must have a space
   // It also accepts an optional gui name for the first argument
   // e.g. `Gui, GuiName: +Resize`, `Gui, New, +Resize`
@@ -231,12 +222,12 @@ export function matchKeyOptionItem(): string {
   return createSpacedOptionItemPattern(negChars1(','));
 }
 export function letterOptionItem(...options: string[]): string {
-  return ignoreCase(textalt(...options));
+  return groupMany1(ignoreCase(textalt(...options)));
 }
 export function flagedLetterOptionItem(...options: string[]): string {
   return seq(
     optional(char('+', '-', '^')),
-    ignoreCase(textalt(...options)),
+    letterOptionItem(...options),
   );
 }
 export function toggleOptionItem(...options: string[]): string {
@@ -452,11 +443,8 @@ export function expression(flags: CommandParameterFlag = CommandParameterFlag.No
 export function style(flags: CommandParameterFlag = CommandParameterFlag.None): CommandParameter {
   return { type: HighlightType.Style, flags };
 }
-export function letterOptions(values: string[], flags: CommandParameterFlag = CommandParameterFlag.None): CommandParameter {
-  return { type: HighlightType.LetterOptions, flags, itemPatterns: values };
-}
 export function fileAttributes(flags: CommandParameterFlag = CommandParameterFlag.None): CommandParameter {
-  return letterOptions([ flagedLetterOptionItem('R', 'A', 'S', 'H', 'N', 'O', 'T') ]);
+  return keywordOnly([ flagedLetterOptionItem('R', 'A', 'S', 'H', 'N', 'O', 'T') ], flags);
 }
 export function guiOptions(flags: CommandParameterFlag = CommandParameterFlag.None): CommandParameter {
   return {
