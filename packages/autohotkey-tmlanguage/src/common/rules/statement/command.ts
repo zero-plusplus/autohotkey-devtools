@@ -539,8 +539,6 @@ function lookaheadOnigurumaByParameters(parameters: CommandParameter[]): string 
 }
 function parameterToOniguruma(parameter: CommandParameter, isLastParameter: boolean): string {
   switch (parameter.type) {
-    case HighlightType.Input:
-    case HighlightType.Output:
     case HighlightType.Expression:
       return isLastParameter
         ? patterns_common.unquotedExpressionLastArgumentPattern
@@ -579,7 +577,6 @@ function parameterToOniguruma(parameter: CommandParameter, isLastParameter: bool
 }
 function parameterToPatternsRule(scopeName: ScopeName, defenition: CommandDefinition, parameter: CommandParameter, isLastParameter: boolean, placeholder: { startAnchor: string }): PatternsRule {
   switch (parameter.type) {
-    case HighlightType.Invalid:
     case HighlightType.Blank:
     {
       return patternsRule(includeRule(Repository.CommandInvalidArgument));
@@ -996,8 +993,6 @@ function parameterToPatternsRule(scopeName: ScopeName, defenition: CommandDefini
     //   );
     // }
     case HighlightType.LabelName: return patternsRule(includeRule(Repository.LabelName));
-    case HighlightType.Input:
-    case HighlightType.Output:
     case HighlightType.Expression:
     {
       return patternsRule(

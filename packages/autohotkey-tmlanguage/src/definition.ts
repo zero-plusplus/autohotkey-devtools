@@ -409,11 +409,11 @@ export function flowSubcommand(values: string | string[] = [], flags: CommandPar
 export function guiSubcommand(values: string | string[] = [], flags: CommandParameterFlag = CommandParameterFlag.None): CommandParameter {
   return { type: HighlightType.GuiSubCommand, flags, itemPatterns: Array.isArray(values) ? values : [ values ] };
 }
-export function invalid(flags: CommandParameterFlag = CommandParameterFlag.None): CommandParameter {
-  return { type: HighlightType.Invalid, flags };
-}
 export function blank(flags: CommandParameterFlag = CommandParameterFlag.None): CommandParameter {
   return { type: HighlightType.Blank, flags };
+}
+export function invalid(flags: CommandParameterFlag = CommandParameterFlag.None): CommandParameter {
+  return blank(flags);
 }
 export function unquoted(values: string[] = [], flags: CommandParameterFlag = CommandParameterFlag.None): CommandParameter {
   return { type: HighlightType.UnquotedString, flags, itemPatterns: values };
@@ -477,10 +477,10 @@ export function spacedKeywordsOnly(values: string[] = [], flags: CommandParamete
   return { type: HighlightType.SpacedKeywordsOnly, flags, itemPatterns: values };
 }
 export function input(flags: CommandParameterFlag = CommandParameterFlag.None): CommandParameter {
-  return { type: HighlightType.Input, flags };
+  return expression(flags);
 }
 export function output(flags: CommandParameterFlag = CommandParameterFlag.None): CommandParameter {
-  return { type: HighlightType.Output, flags };
+  return expression(flags);
 }
 export function menuItemName(flags: CommandParameterFlag = CommandParameterFlag.None): CommandParameter {
   return { type: HighlightType.MenuItemName, flags };
