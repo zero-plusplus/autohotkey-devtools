@@ -105,12 +105,12 @@ export const enum HighlightType {
   //               ^^^^^^^^^^
   Namespace = 'Namespace',
 
-  // ; @Ahk2Exe-AddResource fileName
-  //                        ^^^^^^^^
+  // e.g. `; @Ahk2Exe-AddResource fileName`
+  //                              ^^^^^^^^
   UnquotedStringInCompilerDirective = 'UnquotedStringInCompilerDirective',
 
-  // ; @Ahk2Exe-Let name = value
-  //                ^^^^^^^^^^^^
+  // e.g. `; @Ahk2Exe-Let name = value`
+  //                      ^^^^^^^^^^^^
   ExpressionInCompilerDirective = 'ExpressionInCompilerDirective',
 }
 export const enum CommandSignatureFlag {
