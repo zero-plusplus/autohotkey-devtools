@@ -1,3 +1,4 @@
+import { mergeFlags } from '@zero-plusplus/utilities/src';
 import * as patterns_v1 from './autohotkeyl/patterns';
 import * as constants_common from './common/constants';
 import {
@@ -111,8 +112,9 @@ export const enum CommandSignatureFlag {
 export const enum CommandParameterFlag {
   None = 0,
   Deprecated = 1 << 0,
-  Keyword = 1 << 1,
-  IgnoreCase = 1 << 2,
+  SubCommand = 1 << 1,
+  Labeled = 1 << 2,
+  IgnoreCase = 1 << 3,
 }
 export const enum CommandFlag {
   None = 0,
@@ -389,16 +391,31 @@ export function parameterless(): CommandParameter[] {
   return [ invalid() ];
 }
 export function subcommand(values: string | string[] = [], flags: CommandParameterFlag = CommandParameterFlag.None): CommandParameter {
-  return { type: HighlightType.SubCommand, flags, itemPatterns: Array.isArray(values) ? values : [ values ] };
+  return {
+    type: HighlightType.SubCommand,
+    flags: mergeFlags(flags, CommandParameterFlag.SubCommand),
+    itemPatterns: Array.isArray(values) ? values : [ values ],
+  };
 }
 export function subcommandlike(values: string | string[] = [], flags: CommandParameterFlag = CommandParameterFlag.None): CommandParameter {
-  return { type: HighlightType.SubCommandLike, flags, itemPatterns: Array.isArray(values) ? values : [ values ] };
+  return unquoted(
+    Array.isArray(values) ? values : [ values ],
+    mergeFlags(flags, CommandParameterFlag.SubCommand),
+  );
 }
 export function flowSubcommand(values: string | string[] = [], flags: CommandParameterFlag = CommandParameterFlag.None): SubCommandParameter {
-  return { type: HighlightType.FlowSubCommand, flags, itemPatterns: Array.isArray(values) ? values : [ values ] };
+  return {
+    type: HighlightType.FlowSubCommand,
+    flags: mergeFlags(flags, CommandParameterFlag.SubCommand),
+    itemPatterns: Array.isArray(values) ? values : [ values ],
+  };
 }
 export function guiSubcommand(values: string | string[] = [], flags: CommandParameterFlag = CommandParameterFlag.None): CommandParameter {
-  return { type: HighlightType.GuiSubCommand, flags, itemPatterns: Array.isArray(values) ? values : [ values ] };
+  return {
+    type: HighlightType.GuiSubCommand,
+    flags: mergeFlags(flags, CommandParameterFlag.SubCommand, CommandParameterFlag.Labeled),
+    itemPatterns: Array.isArray(values) ? values : [ values ],
+  };
 }
 export function blank(flags: CommandParameterFlag = CommandParameterFlag.None): CommandParameter {
   return { type: HighlightType.Blank, flags };

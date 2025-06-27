@@ -1,7 +1,7 @@
 import { hasFlag } from '@zero-plusplus/utilities/src';
 import * as patterns_v2 from '../../../autohotkey2/patterns';
 import {
-  CommandFlag, HighlightType, isSubCommandParameter,
+  CommandFlag, CommandParameterFlag, HighlightType,
   type CommandDefinition, type CommandParameter, type CommandSignature,
 } from '../../../definition';
 import {
@@ -478,7 +478,7 @@ export function createInvalidLastArgumentRule(scopeName: ScopeName): PatternsRul
 
 // #region helpers
 function lookaheadOnigurumaByParameters(parameters: CommandParameter[]): string {
-  const subcommandArgumentIndex = parameters.findLastIndex((parameter) => isSubCommandParameter(parameter));
+  const subcommandArgumentIndex = parameters.findLastIndex((parameter) => hasFlag(parameter.flags, CommandParameterFlag.SubCommand));
   if (subcommandArgumentIndex === -1) {
     return group(alt(
       inlineSpace(),
@@ -496,44 +496,33 @@ function lookaheadOnigurumaByParameters(parameters: CommandParameter[]): string 
     const separator = i === 0 ? firstSeparator : commaSeparator;
 
     const parameterText = ((): string => {
-      switch (parameter.type) {
-        case HighlightType.SubCommand:
-        case HighlightType.SubCommandLike:
-        case HighlightType.FlowSubCommand: {
-          if (parameter.itemPatterns && 0 < parameter.itemPatterns.length) {
-            return seq(
-              wordBound(),
-              ignoreCase(ordalt(...parameter.itemPatterns)),
-              wordBound(),
-            );
-          }
-          break;
+      const labelPattern = group(optseq(
+        inlineSpaces0(),
+        negChars0(':', inlineSpace()),
+        char(':'),
+      ));
+
+      if (hasFlag(parameter.flags, CommandParameterFlag.SubCommand)) {
+        if (parameter.itemPatterns?.length === undefined) {
+          throw Error('');
         }
-        case HighlightType.GuiSubCommand: {
-          if (parameter.itemPatterns && 0 < parameter.itemPatterns.length) {
-            return seq(
-              group(optseq(
-                negChars0(':'),
-                char(':'),
-              )),
-              wordBound(),
-              ignoreCase(ordalt(...parameter.itemPatterns)),
-              wordBound(),
-            );
-          }
-          break;
-        }
-        case HighlightType.GuiOptions:
-        case HighlightType.GuiControlOptions: {
+
+        const subcommandPattern = seq(
+          wordBound(),
+          ignoreCase(ordalt(...parameter.itemPatterns)),
+          wordBound(),
+        );
+        if (hasFlag(parameter.flags, CommandParameterFlag.Labeled)) {
           return seq(
+            labelPattern,
             inlineSpaces0(),
-            optseq(
-              negChars0(':'),
-              char(':'),
-            ),
+            subcommandPattern,
           );
         }
-        default: break;
+        return subcommandPattern;
+      }
+      else if (hasFlag(parameter.flags, CommandParameterFlag.Labeled)) {
+        return labelPattern;
       }
       return optional(parameterToOniguruma(parameter, false));
     })();
