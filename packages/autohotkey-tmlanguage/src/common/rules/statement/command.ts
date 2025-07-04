@@ -2,7 +2,7 @@ import { hasFlag } from '@zero-plusplus/utilities/src';
 import * as patterns_v2 from '../../../autohotkey2/patterns';
 import {
   CommandFlag, CommandParameterFlag, HighlightType,
-  type CommandDefinition, type CommandParameter, type CommandSignature,
+  type CommandDefinition, type CommandParameter, type CommandSignature, type ItemPattern,
 } from '../../../definition';
 import {
   alt, anyChars0, anyChars1, capture, char, chars1, endAnchor, group, groupMany0, groupMany1, ignoreCase,
@@ -509,7 +509,7 @@ function lookaheadOnigurumaByParameters(parameters: CommandParameter[]): string 
 
         const subcommandPattern = seq(
           wordBound(),
-          ignoreCase(ordalt(...parameter.itemPatterns)),
+          group(alt(...itemPatternsToPattern(parameter.itemPatterns))),
           wordBound(),
         );
         if (hasFlag(parameter.flags, CommandParameterFlag.Labeled)) {
@@ -574,6 +574,10 @@ function parameterToOniguruma(parameter: CommandParameter, isLastParameter: bool
   }
 }
 function parameterToPatternsRule(scopeName: ScopeName, defenition: CommandDefinition, parameter: CommandParameter, isLastParameter: boolean, placeholder: { startAnchor: string }): PatternsRule {
+  if (hasFlag(parameter.flags, CommandParameterFlag.SubCommand)) {
+    return subcommandParameterToPatternsRule(scopeName, defenition, parameter, isLastParameter, placeholder);
+  }
+
   switch (parameter.type) {
     case HighlightType.Blank:
     {
@@ -586,17 +590,9 @@ function parameterToPatternsRule(scopeName: ScopeName, defenition: CommandDefini
       if (!parameter.itemPatterns || parameter.itemPatterns.length === 0) {
         throw Error('The subcommand keyword is not specified correctly.');
       }
+
       return patternsRule(
-        {
-          name: ((): ElementName => {
-            switch (parameter.type) {
-              case HighlightType.SubCommand: return name(scopeName, RuleName.SubCommandName);
-              case HighlightType.FlowSubCommand: return name(scopeName, RuleName.FlowSubCommandName);
-              default: return name(scopeName, RuleName.UnquotedString, StyleName.Strong);
-            }
-          })(),
-          match: ignoreCase(ordalt(...parameter.itemPatterns)),
-        },
+        ...itemPatternsToRules(scopeName, parameter.itemPatterns),
         includeRule(Repository.CommandInvalidArgument),
       );
     }
@@ -612,12 +608,12 @@ function parameterToPatternsRule(scopeName: ScopeName, defenition: CommandDefini
               capture(negChars0(':')),
               capture(char(':')),
             ),
-            capture(ignoreCase(ordalt(...parameter.itemPatterns))),
+            capture(ordalt(...itemPatternsToPattern(parameter.itemPatterns))),
           ),
           captures: {
             1: patternsRule(includeRule(Repository.LabelName)),
             2: nameRule(scopeName, RuleName.Colon),
-            3: nameRule(scopeName, RuleName.SubCommandName),
+            3: patternsRule(...itemPatternsToRules(scopeName, parameter.itemPatterns)),
           },
         },
         includeRule(Repository.CommandInvalidArgument),
@@ -647,14 +643,14 @@ function parameterToPatternsRule(scopeName: ScopeName, defenition: CommandDefini
                   name: name(scopeName, RuleName.UnquotedString),
                   match: char('"', `'`),
                 },
-                ...optionItemPatternsToRules(scopeName, parameter.itemPatterns),
+                ...optionItemPatternsToRules(scopeName, itemPatternsToPattern(parameter.itemPatterns)),
                 {
                   name: name(scopeName, RuleName.UnquotedString),
                   match: negChars1('`', '"', `'`, inlineSpace()),
                 },
               ]
               : [
-                ...optionItemPatternsToRules(scopeName, parameter.itemPatterns),
+                ...optionItemPatternsToRules(scopeName, itemPatternsToPattern(parameter.itemPatterns)),
                 {
                   name: name(scopeName, RuleName.UnquotedString),
                   match: negChars1('`', inlineSpace()),
@@ -680,7 +676,7 @@ function parameterToPatternsRule(scopeName: ScopeName, defenition: CommandDefini
               { name: name(scopeName, RuleName.UnquotedString, StyleName.Escape), match: text('`,') },
               { name: name(scopeName, RuleName.UnquotedString), match: seq(char(',')) },
             ] : []),
-            ...optionItemPatternsToRules(scopeName, parameter.itemPatterns),
+            ...optionItemPatternsToRules(scopeName, itemPatternsToPattern(parameter.itemPatterns)),
             createNumberRule(scopeName),
             {
               name: name(scopeName, RuleName.UnquotedString),
@@ -720,7 +716,7 @@ function parameterToPatternsRule(scopeName: ScopeName, defenition: CommandDefini
               { name: name(scopeName, RuleName.UnquotedString, StyleName.Escape), match: text('`,') },
               { name: name(scopeName, RuleName.UnquotedString), match: seq(char(',')) },
             ] : []),
-            ...optionItemPatternsToRules(scopeName, parameter.itemPatterns),
+            ...optionItemPatternsToRules(scopeName, itemPatternsToPattern(parameter.itemPatterns)),
             createNumberRule(scopeName),
             includeRule(Repository.CommandInvalidArgument),
           ],
@@ -748,7 +744,7 @@ function parameterToPatternsRule(scopeName: ScopeName, defenition: CommandDefini
         createSpacedArgumentTextRule(scopeName, {
           stringRuleName: RuleName.UnquotedString,
           additionalRules: [
-            ...optionItemPatternsToRules(scopeName, parameter.itemPatterns),
+            ...optionItemPatternsToRules(scopeName, itemPatternsToPattern(parameter.itemPatterns)),
             {
               match: seq(
                 negativeLookahead('`'),
@@ -776,7 +772,7 @@ function parameterToPatternsRule(scopeName: ScopeName, defenition: CommandDefini
         createSpacedArgumentTextRule(scopeName, {
           stringRuleName: RuleName.UnquotedString,
           additionalRules: [
-            ...optionItemPatternsToRules(scopeName, parameter.itemPatterns),
+            ...optionItemPatternsToRules(scopeName, itemPatternsToPattern(parameter.itemPatterns ?? [])),
             createNumberRule(scopeName, { unaryOperator: [ '+', '-', '^' ] }),
             {
               name: name(scopeName, RuleName.UnquotedString),
@@ -802,7 +798,7 @@ function parameterToPatternsRule(scopeName: ScopeName, defenition: CommandDefini
         createAllowArgumentRule(scopeName, {
           stringPattern: patterns_common.unquotedArgumentPattern,
           stringRuleName: RuleName.UnquotedString,
-          allowRules: optionItemPatternsToRules(scopeName, parameter.itemPatterns),
+          allowRules: optionItemPatternsToRules(scopeName, itemPatternsToPattern(parameter.itemPatterns)),
         }),
       );
     }
@@ -845,7 +841,7 @@ function parameterToPatternsRule(scopeName: ScopeName, defenition: CommandDefini
             },
             // e.g. `Gui, GuiName:+Resize`
             //                    ^^^^^^^
-            ...optionItemPatternsToRules(scopeName, parameter.itemPatterns),
+            ...itemPatternsToRules(scopeName, parameter.itemPatterns),
           ],
         }),
       );
@@ -988,6 +984,34 @@ function parameterToPatternsRule(scopeName: ScopeName, defenition: CommandDefini
   }
   throw Error(`Specified an unknown highligh type.\nSpecified: "${String(parameter.type)}"`);
 }
+function subcommandParameterToPatternsRule(scopeName: ScopeName, definition: CommandDefinition, parameter: CommandParameter, isLastParameter: boolean, placeholder: { startAnchor: string }): PatternsRule {
+  if (!parameter.itemPatterns || parameter.itemPatterns.length === 0) {
+    throw Error('The subcommand keyword is not specified correctly.');
+  }
+  if (hasFlag(parameter.flags, CommandParameterFlag.Labeled)) {
+    return patternsRule(
+      {
+        match: seq(
+          optseq(
+            capture(negChars0(':')),
+            capture(char(':')),
+          ),
+          capture(anyChars1()),
+        ),
+        captures: {
+          1: patternsRule(includeRule(Repository.LabelName)),
+          2: nameRule(scopeName, RuleName.Colon),
+          3: patternsRule(...itemPatternsToRules(scopeName, parameter.itemPatterns)),
+        },
+      },
+      includeRule(Repository.CommandInvalidArgument),
+    );
+  }
+  return patternsRule(
+    ...itemPatternsToRules(scopeName, parameter.itemPatterns),
+    includeRule(Repository.CommandInvalidArgument),
+  );
+}
 function optionItemPatternsToRules(scopeName: ScopeName, optionItemPatterns: string[] | undefined): Rule[] {
   if (optionItemPatterns === undefined || optionItemPatterns.length === 0) {
     return [];
@@ -996,6 +1020,30 @@ function optionItemPatternsToRules(scopeName: ScopeName, optionItemPatterns: str
     return {
       name: name(scopeName, RuleName.UnquotedString, StyleName.Strong),
       match: optionItemPattern,
+    };
+  });
+}
+function itemPatternsToPattern(itemPatterns: ItemPattern[]): string[] {
+  return itemPatterns.map((itemPattern) => {
+    if (typeof itemPattern === 'string') {
+      return itemPattern;
+    }
+
+    return itemPattern.pattern;
+  });
+}
+function itemPatternsToRules(scopeName: ScopeName, itemPatterns: ItemPattern[]): Rule[] {
+  return itemPatterns.map((itemPattern): Rule => {
+    if (typeof itemPattern === 'string') {
+      return {
+        name: name(scopeName, RuleName.UnquotedString, StyleName.Strong),
+        match: ignoreCase(itemPattern),
+      };
+    }
+
+    return {
+      name: name(scopeName, ...Array.isArray(itemPattern.name) ? itemPattern.name : [ itemPattern.name ]),
+      match: itemPattern.pattern,
     };
   });
 }
