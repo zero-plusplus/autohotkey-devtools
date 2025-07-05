@@ -150,24 +150,6 @@ export interface CommandDefinition {
 }
 // #endregion type
 
-// #region predicate
-export function isSubCommandParameter(parameter: CommandParameter): parameter is SubCommandParameter {
-  switch (parameter.type) {
-    case HighlightType.SubCommand:
-    case HighlightType.SubCommandLike:
-    case HighlightType.FlowSubCommand:
-    case HighlightType.GuiSubCommand: {
-      if (parameter.itemPatterns && 0 < parameter.itemPatterns.length) {
-        return true;
-      }
-      break;
-    }
-    default: break;
-  }
-  return false;
-}
-// #endregion predicate
-
 // #region parameter item defenition
 export function decimalPattern(): string {
   return numbers1();
