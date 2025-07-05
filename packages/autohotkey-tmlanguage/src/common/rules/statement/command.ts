@@ -568,6 +568,9 @@ function parameterToPatternsRule(scopeName: ScopeName, defenition: CommandDefini
     }
     return patternsRule(includeRule(Repository.UnquotedStringInCompilerDirective));
   }
+  else if (hasFlag(parameter.flags, CommandParameterFlag.Invalid)) {
+    return patternsRule(includeRule(isLastParameter ? Repository.CommandInvalidLastArgument : Repository.CommandInvalidArgument));
+  }
   else if (hasFlag(parameter.flags, CommandParameterFlag.SubCommand)) {
     return subcommandParameterToPatternsRule(scopeName, defenition, parameter, isLastParameter, placeholder);
   }
@@ -582,10 +585,6 @@ function parameterToPatternsRule(scopeName: ScopeName, defenition: CommandDefini
   }
 
   switch (parameter.type) {
-    case HighlightType.Blank:
-    {
-      return patternsRule(isLastParameter ? includeRule(Repository.CommandInvalidLastArgument) : includeRule(Repository.CommandInvalidArgument));
-    }
     case HighlightType.SubCommand:
     case HighlightType.SubCommandLike:
     case HighlightType.FlowSubCommand:

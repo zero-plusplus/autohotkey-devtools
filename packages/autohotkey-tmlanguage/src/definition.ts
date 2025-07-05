@@ -112,11 +112,12 @@ export const enum CommandSignatureFlag {
 }
 export const enum CommandParameterFlag {
   None = 0,
-  Deprecated = 1 << 0,
-  SubCommand = 1 << 1,
-  Expression = 1 << 2,
-  RestParams = 1 << 3,
-  CompilerDirective = 1 << 4,
+  Invalid = 1 << 0,
+  Deprecated = 1 << 1,
+  SubCommand = 1 << 2,
+  Expression = 1 << 3,
+  RestParams = 1 << 4,
+  CompilerDirective = 1 << 5,
 
   Labeled = 1 << 15,
   CaseSensitive = 1 << 16,
