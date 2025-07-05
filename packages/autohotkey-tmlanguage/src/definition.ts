@@ -118,7 +118,7 @@ export const enum CommandParameterFlag {
   RestParams = 1 << 3,
 
   Labeled = 1 << 15,
-  IgnoreCase = 1 << 16,
+  CaseSensitive = 1 << 16,
 }
 export const enum CommandFlag {
   None = 0,
@@ -606,7 +606,7 @@ export function timeunit(flags: CommandParameterFlag = CommandParameterFlag.None
   return keywordOnly([ optionItem('Seconds', 'S', 'Minutes', 'M', 'Hours', 'H', 'Days', 'D') ], flags);
 }
 export function formatTime(flags: CommandParameterFlag = CommandParameterFlag.None): CommandParameter {
-  return unquoted([ letterOptionItem('d', 'dd', 'ddd', 'dddd', 'M', 'MM', 'MMM', 'MMMM', 'y', 'yy', 'yyyy', 'gg', 'h', 'hh', 'H', 'HH', 'm', 'mm', 's', 'ss', 't', 'tt') ], CommandParameterFlag.IgnoreCase | flags);
+  return unquoted([ letterOptionItem('d', 'dd', 'ddd', 'dddd', 'M', 'MM', 'MMM', 'MMMM', 'y', 'yy', 'yyyy', 'gg', 'h', 'hh', 'H', 'HH', 'm', 'mm', 's', 'ss', 't', 'tt') ], CommandParameterFlag.CaseSensitive | flags);
 }
 export function color(flags: CommandParameterFlag = CommandParameterFlag.None): CommandParameter {
   return unquoted([ optionItem('Default', 'Black', 'Silver', 'Gray', 'White', 'Maroon', 'Red', 'Purple', 'Fuchsia', 'Green', 'Lime', 'Olive', 'Yellow', 'Navy', 'Blue', 'Teal', 'Aqua') ], flags);
