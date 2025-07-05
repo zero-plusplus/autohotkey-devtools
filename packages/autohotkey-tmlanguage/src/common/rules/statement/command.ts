@@ -555,11 +555,6 @@ function parameterToOniguruma(parameter: CommandParameter, isLastParameter: bool
   }
 
   switch (parameter.type) {
-    case HighlightType.Namespace:
-    case HighlightType.IncludeLibrary:
-    {
-      return patterns_common.unquotedLastArgumentPattern;
-    }
     case HighlightType.UnquotedStringInCompilerDirective:
     case HighlightType.ExpressionInCompilerDirective:
       return patterns_common.unquotedArgumentPattern;
