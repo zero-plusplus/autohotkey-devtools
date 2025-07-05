@@ -114,8 +114,9 @@ export const enum CommandParameterFlag {
   None = 0,
   Deprecated = 1 << 0,
   SubCommand = 1 << 1,
-  Labeled = 1 << 2,
-  IgnoreCase = 1 << 3,
+  Expression = 1 << 2,
+  Labeled = 1 << 3,
+  IgnoreCase = 1 << 4,
 }
 export const enum CommandFlag {
   None = 0,
@@ -458,7 +459,7 @@ export function labelName(values: string[] = [], flags: CommandParameterFlag = C
   return { type: HighlightType.LabelName, flags, itemPatterns: values };
 }
 export function expression(flags: CommandParameterFlag = CommandParameterFlag.None): CommandParameter {
-  return { type: HighlightType.Expression, flags };
+  return { type: HighlightType.Expression, flags: mergeFlags(flags, CommandParameterFlag.Expression) };
 }
 export function style(flags: CommandParameterFlag = CommandParameterFlag.None): CommandParameter {
   return { type: HighlightType.Style, flags };

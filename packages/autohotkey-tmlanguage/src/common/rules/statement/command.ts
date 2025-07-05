@@ -536,11 +536,11 @@ function lookaheadOnigurumaByParameters(parameters: CommandParameter[]): string 
   }, '');
 }
 function parameterToOniguruma(parameter: CommandParameter, isLastParameter: boolean): string {
+  if (hasFlag(parameter.flags, CommandParameterFlag.Expression)) {
+    return isLastParameter ? patterns_common.unquotedExpressionLastArgumentPattern : patterns_common.unquotedExpressionArgumentPattern;
+  }
+
   switch (parameter.type) {
-    case HighlightType.Expression:
-      return isLastParameter
-        ? patterns_common.unquotedExpressionLastArgumentPattern
-        : patterns_common.unquotedExpressionArgumentPattern;
     case HighlightType.RestParams:
     {
       if (isLastParameter) {
@@ -574,8 +574,19 @@ function parameterToOniguruma(parameter: CommandParameter, isLastParameter: bool
   }
 }
 function parameterToPatternsRule(scopeName: ScopeName, defenition: CommandDefinition, parameter: CommandParameter, isLastParameter: boolean, placeholder: { startAnchor: string }): PatternsRule {
+  const percentExpressionRule = includeRule(isLastParameter ? Repository.PercentExpressionInLastArgument : Repository.PercentExpression);
+
   if (hasFlag(parameter.flags, CommandParameterFlag.SubCommand)) {
     return subcommandParameterToPatternsRule(scopeName, defenition, parameter, isLastParameter, placeholder);
+  }
+  else if (hasFlag(parameter.flags, CommandParameterFlag.Expression)) {
+    return patternsRule(
+      percentExpressionRule,
+
+      includeRule(Repository.Comma),
+      includeRule(Repository.InlineTrivias),
+      includeRule(Repository.Expression),
+    );
   }
 
   switch (parameter.type) {
@@ -949,16 +960,6 @@ function parameterToPatternsRule(scopeName: ScopeName, defenition: CommandDefini
     //   );
     // }
     case HighlightType.LabelName: return patternsRule(includeRule(Repository.LabelName));
-    case HighlightType.Expression:
-    {
-      return patternsRule(
-        includeRule(isLastParameter ? Repository.PercentExpressionInLastArgument : Repository.PercentExpression),
-
-        includeRule(Repository.Comma),
-        includeRule(Repository.InlineTrivias),
-        includeRule(Repository.Expression),
-      );
-    }
     case HighlightType.Namespace:
     {
       return patternsRule(
