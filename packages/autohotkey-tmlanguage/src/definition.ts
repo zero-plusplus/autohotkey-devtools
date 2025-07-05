@@ -115,8 +115,10 @@ export const enum CommandParameterFlag {
   Deprecated = 1 << 0,
   SubCommand = 1 << 1,
   Expression = 1 << 2,
-  Labeled = 1 << 3,
-  IgnoreCase = 1 << 4,
+  RestParams = 1 << 3,
+
+  Labeled = 1 << 15,
+  IgnoreCase = 1 << 16,
 }
 export const enum CommandFlag {
   None = 0,
@@ -453,7 +455,11 @@ export function quotableUnquoted(itemPatterns: ItemPattern[] = [], flags: Comman
   return { type: HighlightType.QuotableUnquotedString, flags, itemPatterns };
 }
 export function restParams(values: string[] = [], flags: CommandParameterFlag = CommandParameterFlag.None): CommandParameter {
-  return { type: HighlightType.RestParams, flags, itemPatterns: values };
+  return {
+    type: HighlightType.RestParams,
+    flags: mergeFlags(flags, CommandParameterFlag.RestParams),
+    itemPatterns: values,
+  };
 }
 export function labelName(values: string[] = [], flags: CommandParameterFlag = CommandParameterFlag.None): CommandParameter {
   return { type: HighlightType.LabelName, flags, itemPatterns: values };

@@ -539,26 +539,22 @@ function parameterToOniguruma(parameter: CommandParameter, isLastParameter: bool
   if (hasFlag(parameter.flags, CommandParameterFlag.Expression)) {
     return isLastParameter ? patterns_common.unquotedExpressionLastArgumentPattern : patterns_common.unquotedExpressionArgumentPattern;
   }
+  else if (hasFlag(parameter.flags, CommandParameterFlag.RestParams)) {
+    return seq(groupMany1(seq(
+      patterns_common.unquotedArgumentPattern,
+      optseq(
+        inlineSpaces0(),
+        char(','),
+        optseq(
+          negativeLookahead(seq(inlineSpaces1(), char(';'))),
+          inlineSpaces0(),
+          patterns_common.unquotedArgumentPattern,
+        ),
+      ),
+    )));
+  }
 
   switch (parameter.type) {
-    case HighlightType.RestParams:
-    {
-      if (isLastParameter) {
-        return seq(groupMany1(seq(
-          patterns_common.unquotedArgumentPattern,
-          optseq(
-            inlineSpaces0(),
-            char(','),
-            optseq(
-              negativeLookahead(seq(inlineSpaces1(), char(';'))),
-              inlineSpaces0(),
-              patterns_common.unquotedArgumentPattern,
-            ),
-          ),
-        )));
-      }
-      return patterns_common.unquotedArgumentPattern;
-    }
     case HighlightType.Namespace:
     case HighlightType.IncludeLibrary:
     {
@@ -630,7 +626,6 @@ function parameterToPatternsRule(scopeName: ScopeName, defenition: CommandDefini
         includeRule(Repository.CommandInvalidArgument),
       );
     }
-    case HighlightType.UnquotedString:
     case HighlightType.QuotableUnquotedString:
     {
       if (parameter.itemPatterns === undefined || parameter.itemPatterns.length === 0) {
@@ -648,25 +643,15 @@ function parameterToPatternsRule(scopeName: ScopeName, defenition: CommandDefini
               { name: name(scopeName, RuleName.UnquotedString), match: seq(char(',')) },
             ] : []),
 
-            ...parameter.type === HighlightType.QuotableUnquotedString
-              ? [
-                {
-                  name: name(scopeName, RuleName.UnquotedString),
-                  match: char('"', `'`),
-                },
-                ...optionItemPatternsToRules(scopeName, itemPatternsToPattern(parameter.itemPatterns)),
-                {
-                  name: name(scopeName, RuleName.UnquotedString),
-                  match: negChars1('`', '"', `'`, inlineSpace()),
-                },
-              ]
-              : [
-                ...optionItemPatternsToRules(scopeName, itemPatternsToPattern(parameter.itemPatterns)),
-                {
-                  name: name(scopeName, RuleName.UnquotedString),
-                  match: negChars1('`', inlineSpace()),
-                },
-              ],
+            {
+              name: name(scopeName, RuleName.UnquotedString),
+              match: char('"', `'`),
+            },
+            ...optionItemPatternsToRules(scopeName, itemPatternsToPattern(parameter.itemPatterns)),
+            {
+              name: name(scopeName, RuleName.UnquotedString),
+              match: negChars1('`', '"', `'`, inlineSpace()),
+            },
           ],
         }),
       );
@@ -983,7 +968,29 @@ function parameterToPatternsRule(scopeName: ScopeName, defenition: CommandDefini
     }
     default: break;
   }
-  throw Error(`Specified an unknown highligh type.\nSpecified: "${String(parameter.type)}"`);
+
+  if (parameter.itemPatterns === undefined || parameter.itemPatterns.length === 0) {
+    return patternsRule(includeRule(isLastParameter ? Repository.CommandLastArgument : Repository.CommandArgument));
+  }
+  return patternsRule(
+    includeRule(isLastParameter ? Repository.PercentExpressionInLastArgument : Repository.PercentExpression),
+
+    createSpacedArgumentTextRule(scopeName, {
+      stringRuleName: RuleName.UnquotedString,
+      additionalRules: [
+        ...(isLastParameter && !hasFlag(parameter.flags, CommandParameterFlag.RestParams) ? [
+          { name: name(scopeName, RuleName.UnquotedString, StyleName.Escape), match: text('`,') },
+          { name: name(scopeName, RuleName.UnquotedString), match: seq(char(',')) },
+        ] : []),
+
+        ...optionItemPatternsToRules(scopeName, itemPatternsToPattern(parameter.itemPatterns)),
+        {
+          name: name(scopeName, RuleName.UnquotedString),
+          match: negChars1('`', inlineSpace()),
+        },
+      ],
+    }),
+  );
 }
 function subcommandParameterToPatternsRule(scopeName: ScopeName, definition: CommandDefinition, parameter: CommandParameter, isLastParameter: boolean, placeholder: { startAnchor: string }): PatternsRule {
   if (!parameter.itemPatterns || parameter.itemPatterns.length === 0) {
