@@ -1,3 +1,4 @@
+import { mergeFlags } from '@zero-plusplus/utilities/src';
 import {
   command, CommandFlag, CommandParameterFlag, encoding, HighlightType, invalid, keywordOnly, optionItem,
   output, signature, unquotedNumber, unquotedWithNumber,
@@ -76,7 +77,7 @@ export const compilerDirectives: CommandDefinition[] = [
 export function unquoted(optionItems?: string[], flags: CommandParameterFlag = CommandParameterFlag.None): CommandParameter {
   return {
     type: HighlightType.UnquotedStringInCompilerDirective,
-    flags,
+    flags: mergeFlags(flags, CommandParameterFlag.CompilerDirective),
     itemPatterns: optionItems ?? [],
   };
 }
@@ -111,14 +112,13 @@ export function fileName(flags: CommandParameterFlag = CommandParameterFlag.None
 export function expression(): CommandParameter {
   return {
     type: HighlightType.ExpressionInCompilerDirective,
-    flags: CommandParameterFlag.None,
+    flags: mergeFlags(CommandParameterFlag.Expression, CommandParameterFlag.CompilerDirective),
     itemPatterns: [],
   };
 }
 export function variableName(): CommandParameter {
   return expression();
 }
-
 export function on(): CommandParameter {
   return keywordOnly([ optionItem('1') ]);
 }

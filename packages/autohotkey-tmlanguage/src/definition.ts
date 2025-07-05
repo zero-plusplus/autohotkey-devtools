@@ -116,6 +116,7 @@ export const enum CommandParameterFlag {
   SubCommand = 1 << 1,
   Expression = 1 << 2,
   RestParams = 1 << 3,
+  CompilerDirective = 1 << 4,
 
   Labeled = 1 << 15,
   CaseSensitive = 1 << 16,

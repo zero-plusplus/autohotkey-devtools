@@ -536,7 +536,10 @@ function lookaheadOnigurumaByParameters(parameters: CommandParameter[]): string 
   }, '');
 }
 function parameterToOniguruma(parameter: CommandParameter, isLastParameter: boolean): string {
-  if (hasFlag(parameter.flags, CommandParameterFlag.Expression)) {
+  if (hasFlag(parameter.flags, CommandParameterFlag.CompilerDirective)) {
+    return patterns_common.unquotedArgumentPattern;
+  }
+  else if (hasFlag(parameter.flags, CommandParameterFlag.Expression)) {
     return isLastParameter ? patterns_common.unquotedExpressionLastArgumentPattern : patterns_common.unquotedExpressionArgumentPattern;
   }
   else if (hasFlag(parameter.flags, CommandParameterFlag.RestParams)) {
@@ -553,21 +556,18 @@ function parameterToOniguruma(parameter: CommandParameter, isLastParameter: bool
       ),
     )));
   }
-
-  switch (parameter.type) {
-    case HighlightType.UnquotedStringInCompilerDirective:
-    case HighlightType.ExpressionInCompilerDirective:
-      return patterns_common.unquotedArgumentPattern;
-    default:
-      return isLastParameter
-        ? patterns_common.unquotedLastArgumentPattern
-        : patterns_common.unquotedArgumentPattern;
-  }
+  return isLastParameter ? patterns_common.unquotedLastArgumentPattern : patterns_common.unquotedArgumentPattern;
 }
 function parameterToPatternsRule(scopeName: ScopeName, defenition: CommandDefinition, parameter: CommandParameter, isLastParameter: boolean, placeholder: { startAnchor: string }): PatternsRule {
   const percentExpressionRule = includeRule(isLastParameter ? Repository.PercentExpressionInLastArgument : Repository.PercentExpression);
 
-  if (hasFlag(parameter.flags, CommandParameterFlag.SubCommand)) {
+  if (hasFlag(parameter.flags, CommandParameterFlag.CompilerDirective)) {
+    if (hasFlag(parameter.flags, CommandParameterFlag.Expression)) {
+      return patternsRule(includeRule(Repository.ExpressionInCompilerDirective));
+    }
+    return patternsRule(includeRule(Repository.UnquotedStringInCompilerDirective));
+  }
+  else if (hasFlag(parameter.flags, CommandParameterFlag.SubCommand)) {
     return subcommandParameterToPatternsRule(scopeName, defenition, parameter, isLastParameter, placeholder);
   }
   else if (hasFlag(parameter.flags, CommandParameterFlag.Expression)) {
@@ -952,14 +952,6 @@ function parameterToPatternsRule(scopeName: ScopeName, defenition: CommandDefini
           match: anyChars1(),
         },
       );
-    }
-    case HighlightType.UnquotedStringInCompilerDirective:
-    {
-      return patternsRule(includeRule(Repository.UnquotedStringInCompilerDirective));
-    }
-    case HighlightType.ExpressionInCompilerDirective:
-    {
-      return patternsRule(includeRule(Repository.ExpressionInCompilerDirective));
     }
     default: break;
   }
