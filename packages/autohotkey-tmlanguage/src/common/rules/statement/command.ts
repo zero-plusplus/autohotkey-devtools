@@ -7,7 +7,7 @@ import {
 import {
   alt, anyChars0, anyChars1, capture, char, chars1, endAnchor, group, groupMany0, groupMany1, ignoreCase,
   inlineSpace, inlineSpaces0, inlineSpaces1, keyword, lookahead, lookbehind, negativeLookahead, negativeLookbehind,
-  negChar, negChars0, negChars1, numbers1, optional, optseq, ordalt, reluctant, seq, text, textalt, wordBound,
+  negChar, negChars0, negChars1, numbers1, optional, optseq, reluctant, seq, text, textalt, wordBound,
   wordChar, wordChars1,
 } from '../../../oniguruma';
 import {
@@ -585,42 +585,6 @@ function parameterToPatternsRule(scopeName: ScopeName, defenition: CommandDefini
   }
 
   switch (parameter.type) {
-    case HighlightType.SubCommand:
-    case HighlightType.SubCommandLike:
-    case HighlightType.FlowSubCommand:
-    {
-      if (!parameter.itemPatterns || parameter.itemPatterns.length === 0) {
-        throw Error('The subcommand keyword is not specified correctly.');
-      }
-
-      return patternsRule(
-        ...itemPatternsToRules(scopeName, parameter.itemPatterns),
-        includeRule(Repository.CommandInvalidArgument),
-      );
-    }
-    case HighlightType.GuiSubCommand:
-    {
-      if (!parameter.itemPatterns || parameter.itemPatterns.length === 0) {
-        throw Error('The subcommand keyword is not specified correctly.');
-      }
-      return patternsRule(
-        {
-          match: seq(
-            optseq(
-              capture(negChars0(':')),
-              capture(char(':')),
-            ),
-            capture(ordalt(...itemPatternsToPattern(parameter.itemPatterns))),
-          ),
-          captures: {
-            1: patternsRule(includeRule(Repository.LabelName)),
-            2: nameRule(scopeName, RuleName.Colon),
-            3: patternsRule(...itemPatternsToRules(scopeName, parameter.itemPatterns)),
-          },
-        },
-        includeRule(Repository.CommandInvalidArgument),
-      );
-    }
     case HighlightType.QuotableUnquotedString:
     {
       if (parameter.itemPatterns === undefined || parameter.itemPatterns.length === 0) {
@@ -758,50 +722,6 @@ function parameterToPatternsRule(scopeName: ScopeName, defenition: CommandDefini
           stringPattern: patterns_common.unquotedArgumentPattern,
           stringRuleName: RuleName.UnquotedString,
           allowRules: optionItemPatternsToRules(scopeName, itemPatternsToPattern(parameter.itemPatterns)),
-        }),
-      );
-    }
-    case HighlightType.GuiOptions:
-    case HighlightType.GuiControlOptions:
-    {
-      if (!parameter.itemPatterns || parameter.itemPatterns.length === 0) {
-        throw Error('keyword is not specified correctly');
-      }
-
-      return patternsRule(
-        includeRule(isLastParameter ? Repository.PercentExpressionInLastArgument : Repository.PercentExpression),
-
-        createSpacedArgumentTextRule(scopeName, {
-          stringRuleName: RuleName.UnquotedString,
-          additionalRules: [
-            // e.g. `Gui, GuiName:+Resize`
-            //            ^^^^^^^^
-            {
-              match: seq(
-                lookbehind(seq(
-                  lookbehind(placeholder.startAnchor),
-                  inlineSpaces0(),
-                  ignoreCase(defenition.name),
-                  alt(inlineSpace(), seq(inlineSpaces0(), char(','))),
-                  inlineSpaces0(),
-                )),
-                inlineSpaces0(),
-                group(alt(
-                  capture(seq(char('%'), anyChars0(), char('%'))),
-                  seq(negativeLookahead(char('%')), capture(wordChars1())),
-                )),
-                capture(char(':')),
-              ),
-              captures: {
-                1: patternsRule(includeRule(Repository.Dereference)),
-                2: patternsRule(includeRule(Repository.LabelName)),
-                3: nameRule(scopeName, RuleName.Colon),
-              },
-            },
-            // e.g. `Gui, GuiName:+Resize`
-            //                    ^^^^^^^
-            ...itemPatternsToRules(scopeName, parameter.itemPatterns),
-          ],
         }),
       );
     }
@@ -943,6 +863,38 @@ function parameterToPatternsRule(scopeName: ScopeName, defenition: CommandDefini
           { name: name(scopeName, RuleName.UnquotedString, StyleName.Escape), match: text('`,') },
           { name: name(scopeName, RuleName.UnquotedString), match: seq(char(',')) },
         ] : []),
+
+        ...((): Rule[] => {
+          if (hasFlag(parameter.flags, CommandParameterFlag.Labeled)) {
+            // e.g. `Gui, GuiName:+Resize`
+            //            ^^^^^^^^
+            return [
+              {
+                match: seq(
+                  lookbehind(seq(
+                    lookbehind(placeholder.startAnchor),
+                    inlineSpaces0(),
+                    ignoreCase(defenition.name),
+                    alt(inlineSpace(), seq(inlineSpaces0(), char(','))),
+                    inlineSpaces0(),
+                  )),
+                  inlineSpaces0(),
+                  group(alt(
+                    capture(seq(char('%'), anyChars0(), char('%'))),
+                    seq(negativeLookahead(char('%')), capture(wordChars1())),
+                  )),
+                  capture(char(':')),
+                ),
+                captures: {
+                  1: patternsRule(includeRule(Repository.Dereference)),
+                  2: patternsRule(includeRule(Repository.LabelName)),
+                  3: nameRule(scopeName, RuleName.Colon),
+                },
+              },
+            ];
+          }
+          return [];
+        })(),
 
         ...optionItemPatternsToRules(scopeName, itemPatternsToPattern(parameter.itemPatterns)),
         {

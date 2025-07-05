@@ -426,7 +426,10 @@ export function guiSubcommand(values: string | string[] = [], flags: CommandPara
   };
 }
 export function blank(flags: CommandParameterFlag = CommandParameterFlag.None): CommandParameter {
-  return { type: HighlightType.Blank, flags };
+  return {
+    type: HighlightType.Blank,
+    flags: mergeFlags(flags, CommandParameterFlag.Invalid),
+  };
 }
 export function invalid(flags: CommandParameterFlag = CommandParameterFlag.None): CommandParameter {
   return blank(flags);
@@ -552,7 +555,7 @@ export function controlMoveOptions(): CommandParameter {
 export function guiControlOptions(_flaged = false): CommandParameter {
   return {
     type: HighlightType.GuiOptions,
-    flags: CommandParameterFlag.None,
+    flags: CommandParameterFlag.Labeled,
     itemPatterns: [
       (_flaged ? flagedSignedNumberOptionItem : signedNumberOptionItem)('R', 'W', 'H', 'WP', 'HP', 'X', 'Y', 'XP', 'YP', 'XM', 'YM', 'XS', 'YS', 'Choose', 'VScroll', 'HScroll'),
       (_flaged ? flagedOptionItem : optionItem)('X+M', 'X-M', 'Y+M', 'Y-M', 'Left', 'Right', 'Center', 'Section', 'Tabstop', 'Wrap', 'AltSubmit', 'CDefault', 'BackgroundTrans', 'Background', 'Border', 'Theme'),
