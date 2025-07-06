@@ -78,7 +78,7 @@ export function unquoted(optionItems?: string[], flags: CommandParameterFlag = C
   return {
     type: HighlightType.UnquotedStringInCompilerDirective,
     flags: mergeFlags(flags, CommandParameterFlag.CompilerDirective, CommandParameterFlag.WithNumber),
-    itemPatterns: optionItems ?? [],
+    itemMatchers: optionItems ?? [],
   };
 }
 export function fileName(flags: CommandParameterFlag = CommandParameterFlag.None): CommandParameter {
@@ -113,7 +113,7 @@ export function expression(): CommandParameter {
   return {
     type: HighlightType.ExpressionInCompilerDirective,
     flags: mergeFlags(CommandParameterFlag.Expression, CommandParameterFlag.CompilerDirective),
-    itemPatterns: [],
+    itemMatchers: [],
   };
 }
 export function variableName(): CommandParameter {

@@ -5,7 +5,7 @@ import {
   alt, char, endAnchor, group, groupMany1, ignoreCase, inlineSpace, inlineSpaces0, lookahead, lookbehind,
   negChars0, negChars1, numbers0, numbers1, optional, optseq, ordalt, seq, text, textalt, wordBound,
 } from './oniguruma';
-import { RuleName, type ElementName } from './tmlanguage';
+import { RuleName, type ElementName, type IncludeRule } from './tmlanguage';
 
 // #region constants
 export const scopeNames = [ 'autohotkey', 'autohotkeynext', 'autohotkeyl', 'autohotkey2' ] as const;
@@ -134,15 +134,19 @@ export const enum CommandFlag {
 // #endregion enum
 
 // #region type
-export interface CommandParameterItem {
+export interface CommandParameterMatcher {
   name: ElementName | ElementName[];
-  pattern: string;
+  match: string;
 }
-export type ItemPattern = string | CommandParameterItem;
+export interface CommandParameterCapturedMatcher {
+  match: string;
+  captures: { [key in number ]: CommandParameterMatcher | IncludeRule };
+}
+export type ParameterItemMatcher = string | CommandParameterMatcher | CommandParameterCapturedMatcher;
 export interface CommandParameter {
   readonly type: HighlightType;
   readonly flags: CommandParameterFlag;
-  readonly itemPatterns?: ItemPattern[];
+  readonly itemMatchers?: ParameterItemMatcher[];
 }
 export interface CommandSignature {
   readonly flags: CommandSignatureFlag;
@@ -307,7 +311,7 @@ export function namespace(): CommandParameter {
   return {
     type: HighlightType.Namespace,
     flags: CommandParameterFlag.None,
-    itemPatterns: [],
+    itemMatchers: [],
   };
 }
 export function decimalOptionItem(...options: string[]): string {
@@ -387,10 +391,10 @@ export function subcommand(values: string | string[] = [], flags: CommandParamet
   return {
     type: HighlightType.SubCommand,
     flags: mergeFlags(flags, CommandParameterFlag.SubCommand),
-    itemPatterns: [
+    itemMatchers: [
       {
         name: RuleName.SubCommandName,
-        pattern: ignoreCase(ordalt(...(Array.isArray(values) ? values : [ values ]))),
+        match: ignoreCase(ordalt(...(Array.isArray(values) ? values : [ values ]))),
       },
     ],
   };
@@ -405,10 +409,10 @@ export function flowSubcommand(values: string | string[] = [], flags: CommandPar
   return {
     type: HighlightType.FlowSubCommand,
     flags: mergeFlags(flags, CommandParameterFlag.SubCommand),
-    itemPatterns: [
+    itemMatchers: [
       {
         name: RuleName.FlowSubCommandName,
-        pattern: ignoreCase(ordalt(...(Array.isArray(values) ? values : [ values ]))),
+        match: ignoreCase(ordalt(...(Array.isArray(values) ? values : [ values ]))),
       },
     ],
   };
@@ -417,10 +421,10 @@ export function guiSubcommand(values: string | string[] = [], flags: CommandPara
   return {
     type: HighlightType.GuiSubCommand,
     flags: mergeFlags(flags, CommandParameterFlag.SubCommand, CommandParameterFlag.Labeled),
-    itemPatterns: [
+    itemMatchers: [
       {
         name: RuleName.SubCommandName,
-        pattern: ignoreCase(ordalt(...(Array.isArray(values) ? values : [ values ]))),
+        match: ignoreCase(ordalt(...(Array.isArray(values) ? values : [ values ]))),
       },
     ],
   };
@@ -435,7 +439,7 @@ export function invalid(flags: CommandParameterFlag = CommandParameterFlag.None)
   return blank(flags);
 }
 export function unquoted(values: string[] = [], flags: CommandParameterFlag = CommandParameterFlag.None): CommandParameter {
-  return { type: HighlightType.UnquotedString, flags, itemPatterns: values };
+  return { type: HighlightType.UnquotedString, flags, itemMatchers: values };
 }
 export function unquotedShouldEscapeComma(optionItems: string[] = [], flags: CommandParameterFlag = CommandParameterFlag.None): CommandParameter {
   return restParams(optionItems, flags);
@@ -447,31 +451,31 @@ export function unquotedWithNumber(values: string[] = [], flags: CommandParamete
   return {
     type: HighlightType.UnquotedStringWithNumber,
     flags: mergeFlags(flags, CommandParameterFlag.WithNumber),
-    itemPatterns: values,
+    itemMatchers: values,
   };
 }
 export function unquotedNumber(...optionItems: string[]): CommandParameter {
   return {
     type: HighlightType.NumberInCommandArgument,
     flags: CommandParameterFlag.Number,
-    itemPatterns: optionItems,
+    itemMatchers: optionItems,
   };
 }
 export function unquotedAndBoolean(flags: CommandParameterFlag = CommandParameterFlag.None): CommandParameter {
-  return { type: HighlightType.UnquotedBooleanLike, flags, itemPatterns: [] };
+  return { type: HighlightType.UnquotedBooleanLike, flags, itemMatchers: [] };
 }
-export function quotableUnquoted(itemPatterns: ItemPattern[] = [], flags: CommandParameterFlag = CommandParameterFlag.None): CommandParameter {
-  return { type: HighlightType.QuotableUnquotedString, flags, itemPatterns };
+export function quotableUnquoted(itemPatterns: ParameterItemMatcher[] = [], flags: CommandParameterFlag = CommandParameterFlag.None): CommandParameter {
+  return { type: HighlightType.QuotableUnquotedString, flags, itemMatchers: itemPatterns };
 }
 export function restParams(values: string[] = [], flags: CommandParameterFlag = CommandParameterFlag.None): CommandParameter {
   return {
     type: HighlightType.RestParams,
     flags: mergeFlags(flags, CommandParameterFlag.RestParams),
-    itemPatterns: values,
+    itemMatchers: values,
   };
 }
 export function labelName(values: string[] = [], flags: CommandParameterFlag = CommandParameterFlag.None): CommandParameter {
-  return { type: HighlightType.LabelName, flags, itemPatterns: values };
+  return { type: HighlightType.LabelName, flags, itemMatchers: values };
 }
 export function expression(flags: CommandParameterFlag = CommandParameterFlag.None): CommandParameter {
   return { type: HighlightType.Expression, flags: mergeFlags(flags, CommandParameterFlag.Expression) };
@@ -486,7 +490,7 @@ export function guiOptions(flags: CommandParameterFlag = CommandParameterFlag.No
   return {
     type: HighlightType.GuiOptions,
     flags: mergeFlags(flags, CommandParameterFlag.Labeled),
-    itemPatterns: [
+    itemMatchers: [
       flagedOptionItem('AlwaysOnTop', 'Border', 'Caption', 'DelimiterSpace', 'DelimiterTab', 'Disabled', 'DPIScale', 'LastFoundExist', 'MaximizeBox', 'MinimizeBox', 'OwnDialogs', 'Owner', 'Parent', 'Resize', 'SysMenu', 'Theme', 'ToolWindow'),
       flagedStringOptionItem('Delimiter'),
       flagedIdentifierOptionItem('Hwnd', 'Label', 'LastFound'),
@@ -498,7 +502,7 @@ export function keywordOnly(values: string[] = [], flags: CommandParameterFlag =
   return {
     type: HighlightType.KeywordOnly,
     flags: mergeFlags(flags, CommandParameterFlag.Keyword),
-    itemPatterns: values,
+    itemMatchers: values,
   };
 }
 export function spacedKeywordsOnly(values: string[] = [], flags: CommandParameterFlag = CommandParameterFlag.None): CommandParameter {
@@ -564,7 +568,7 @@ export function guiControlOptions(_flaged = false): CommandParameter {
   return {
     type: HighlightType.GuiOptions,
     flags: CommandParameterFlag.Labeled,
-    itemPatterns: [
+    itemMatchers: [
       (_flaged ? flagedSignedNumberOptionItem : signedNumberOptionItem)('R', 'W', 'H', 'WP', 'HP', 'X', 'Y', 'XP', 'YP', 'XM', 'YM', 'XS', 'YS', 'Choose', 'VScroll', 'HScroll'),
       (_flaged ? flagedOptionItem : optionItem)('X+M', 'X-M', 'Y+M', 'Y-M', 'Left', 'Right', 'Center', 'Section', 'Tabstop', 'Wrap', 'AltSubmit', 'CDefault', 'BackgroundTrans', 'Background', 'Border', 'Theme'),
       (_flaged ? flagedIdentifierOptionItem : identifierOptionItem)('V', 'G', 'Hwnd'),
@@ -592,13 +596,13 @@ export function imagePath(flags: CommandParameterFlag = CommandParameterFlag.Non
   return path([ stringOptionItem('HICON:', 'HBITMAP:') ], flags);
 }
 export function glob(flags: CommandParameterFlag = CommandParameterFlag.None): CommandParameter {
-  return { type: HighlightType.UnquotedString, flags, itemPatterns: [] };
+  return { type: HighlightType.UnquotedString, flags, itemMatchers: [] };
 }
 export function encoding(flags: CommandParameterFlag = CommandParameterFlag.None): CommandParameter {
   return unquoted([ optionItem('CP0', 'UTF-8', 'UTF-8-RAW', 'UTF-16', 'UTF-16-RAW'), numberOptionItem('CP') ], flags);
 }
 export function quotableEncoding(flags: CommandParameterFlag = CommandParameterFlag.None): CommandParameter {
-  return quotableUnquoted(encoding().itemPatterns, flags);
+  return quotableUnquoted(encoding().itemMatchers, flags);
 }
 export function keyName(flags: CommandParameterFlag = CommandParameterFlag.None): CommandParameter {
   return unquoted([ optionItem(...constants_common.keyNameList), hexOptionItem('sc', 'vk') ], flags);

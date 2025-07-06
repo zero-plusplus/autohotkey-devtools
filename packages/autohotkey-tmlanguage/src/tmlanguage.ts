@@ -374,6 +374,9 @@ export const enum TokenType {
 export type Repositories = {
   [key in Partial<Repository>[number]]: Rule | undefined;
 };
+export type Captures = {
+  [key in number ]: Rule | undefined;
+};
 export type ScopeName = (typeof scopeNames)[number];
 export type ElementName = Repository | RuleName | RuleDescriptor | StyleName | TokenType;
 export interface TmLanguage {
@@ -400,19 +403,19 @@ export interface PatternsRule extends RuleBase {
 }
 export interface MatchRule extends RuleBase {
   match: string;
-  captures?: Repositories;
+  captures?: Captures;
 }
 export interface BeginEndRule extends RuleBase {
   begin: string;
-  beginCaptures?: Repositories;
+  beginCaptures?: Captures;
   end: string;
-  endCaptures?: Repositories;
+  endCaptures?: Captures;
 }
 export interface BeginWhileRule extends RuleBase {
   begin: string;
-  beginCaptures?: Repositories;
+  beginCaptures?: Captures;
   while: string;
-  whileCaptures?: Repositories;
+  whileCaptures?: Captures;
 }
 export interface IncludeRule extends RuleBase {
   include: string;
