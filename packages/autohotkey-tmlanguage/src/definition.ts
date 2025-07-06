@@ -151,14 +151,14 @@ export interface CommandParameter {
   readonly flags: CommandParameterFlag;
   readonly itemMatchers?: ParameterItemMatcher[];
 }
-export interface PatternsRuleCommandParameter {
+export interface IncludeRulesCommandParameter {
   readonly type: HighlightType;
   readonly flags: CommandParameterFlag;
-  readonly patterns: IncludeRule[];
+  readonly includes: IncludeRule[];
 }
 export interface CommandSignature {
   readonly flags: CommandSignatureFlag;
-  readonly parameters: Array<CommandParameter | PatternsRuleCommandParameter>;
+  readonly parameters: Array<CommandParameter | IncludeRulesCommandParameter>;
 }
 export interface CommandDefinition {
   readonly name: string;
@@ -533,11 +533,11 @@ export function input(flags: CommandParameterFlag = CommandParameterFlag.None): 
 export function output(flags: CommandParameterFlag = CommandParameterFlag.None): CommandParameter {
   return expression(flags);
 }
-export function menuItemName(flags: CommandParameterFlag = CommandParameterFlag.None): PatternsRuleCommandParameter {
+export function menuItemName(flags: CommandParameterFlag = CommandParameterFlag.None): IncludeRulesCommandParameter {
   return {
     type: HighlightType.MenuItemName,
     flags,
-    patterns: [ includeRule(Repository.MenuItemNameCommandArgument) ],
+    includes: [ includeRule(Repository.MenuItemNameCommandArgument) ],
   };
 }
 export function includeLib(flags: CommandParameterFlag = CommandParameterFlag.None): CommandParameter {
@@ -639,11 +639,11 @@ export function hotkeyName(flags: CommandParameterFlag = CommandParameterFlag.No
   //   ];
   // }
 }
-export function sendKeys(flags: CommandParameterFlag = CommandParameterFlag.None): PatternsRuleCommandParameter {
+export function sendKeys(flags: CommandParameterFlag = CommandParameterFlag.None): IncludeRulesCommandParameter {
   return {
     type: HighlightType.SendKeyName,
     flags,
-    patterns: [ includeRule(Repository.CommandArgumentSendKeyName) ],
+    includes: [ includeRule(Repository.CommandArgumentSendKeyName) ],
   };
 }
 export function timeunit(flags: CommandParameterFlag = CommandParameterFlag.None): CommandParameter {

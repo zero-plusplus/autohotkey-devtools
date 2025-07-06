@@ -2,8 +2,8 @@ import { hasFlag } from '@zero-plusplus/utilities/src';
 import * as patterns_v2 from '../../../autohotkey2/patterns';
 import {
   CommandFlag, CommandParameterFlag, HighlightType,
-  type CommandDefinition, type CommandParameter, type CommandSignature, type ParameterItemMatcher,
-  type PatternsRuleCommandParameter,
+  type CommandDefinition, type CommandParameter, type CommandSignature,
+  type IncludeRulesCommandParameter, type ParameterItemMatcher,
 } from '../../../definition';
 import {
   alt, anyChars0, anyChars1, capture, char, chars1, endAnchor, group, groupMany0, groupMany1, ignoreCase,
@@ -560,15 +560,15 @@ function parameterToOniguruma(parameter: CommandParameter, isLastParameter: bool
   }
   return isLastParameter ? patterns_common.unquotedLastArgumentPattern : patterns_common.unquotedArgumentPattern;
 }
-function parameterToPatternsRule(scopeName: ScopeName, defenition: CommandDefinition, parameter: CommandParameter | PatternsRuleCommandParameter, isLastParameter: boolean, placeholder: { startAnchor: string }): PatternsRule {
+function parameterToPatternsRule(scopeName: ScopeName, defenition: CommandDefinition, parameter: CommandParameter | IncludeRulesCommandParameter, isLastParameter: boolean, placeholder: { startAnchor: string }): PatternsRule {
   const percentExpressionRule = includeRule(isLastParameter ? Repository.PercentExpressionInLastArgument : Repository.PercentExpression);
 
-  if ('patterns' in parameter) {
+  if ('includes' in parameter) {
     return patternsRule(
       percentExpressionRule,
       includeRule(Repository.Dereference),
 
-      ...parameter.patterns,
+      ...parameter.includes,
     );
   }
 
