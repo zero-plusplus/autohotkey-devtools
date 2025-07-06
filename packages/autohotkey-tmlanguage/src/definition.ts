@@ -473,7 +473,21 @@ export function unquotedAndBoolean(flags: CommandParameterFlag = CommandParamete
   return { type: HighlightType.UnquotedBooleanLike, flags, itemMatchers: [] };
 }
 export function quotableUnquoted(itemPatterns: ParameterItemMatcher[] = [], flags: CommandParameterFlag = CommandParameterFlag.None): CommandParameter {
-  return { type: HighlightType.QuotableUnquotedString, flags, itemMatchers: itemPatterns };
+  return {
+    type: HighlightType.QuotableUnquotedString,
+    flags,
+    itemMatchers: [
+      {
+        name: RuleName.UnquotedString,
+        match: char('"', `'`),
+      },
+      ...itemPatterns,
+      {
+        name: RuleName.UnquotedString,
+        match: negChars1('`', '"', `'`, inlineSpace()),
+      },
+    ],
+  };
 }
 export function restParams(values: string[] = [], flags: CommandParameterFlag = CommandParameterFlag.None): CommandParameter {
   return {

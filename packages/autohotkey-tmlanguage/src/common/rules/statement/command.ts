@@ -595,36 +595,6 @@ function parameterToPatternsRule(scopeName: ScopeName, defenition: CommandDefini
   }
 
   switch (parameter.type) {
-    case HighlightType.QuotableUnquotedString:
-    {
-      if (parameter.itemMatchers === undefined || parameter.itemMatchers.length === 0) {
-        return patternsRule(includeRule(isLastParameter ? Repository.CommandLastArgument : Repository.CommandArgument));
-      }
-
-      return patternsRule(
-        includeRule(isLastParameter ? Repository.PercentExpressionInLastArgument : Repository.PercentExpression),
-
-        createSpacedArgumentTextRule(scopeName, {
-          stringRuleName: RuleName.UnquotedString,
-          additionalRules: [
-            ...(isLastParameter ? [
-              { name: name(scopeName, RuleName.UnquotedString, StyleName.Escape), match: text('`,') },
-              { name: name(scopeName, RuleName.UnquotedString), match: seq(char(',')) },
-            ] : []),
-
-            {
-              name: name(scopeName, RuleName.UnquotedString),
-              match: char('"', `'`),
-            },
-            ...optionItemPatternsToRules(scopeName, itemPatternsToPattern(parameter.itemMatchers)),
-            {
-              name: name(scopeName, RuleName.UnquotedString),
-              match: negChars1('`', '"', `'`, inlineSpace()),
-            },
-          ],
-        }),
-      );
-    }
     case HighlightType.UnquotedBooleanLike:
     {
       return patternsRule(includeRule(Repository.CommandArgumentBooleanLike));
@@ -827,7 +797,7 @@ function parameterToPatternsRule(scopeName: ScopeName, defenition: CommandDefini
           return highPriorityRules;
         })(),
 
-        ...optionItemPatternsToRules(scopeName, itemPatternsToPattern(parameter.itemMatchers)),
+        ...itemPatternsToRules(scopeName, parameter.itemMatchers),
 
         ...((): Rule[] => {
           if (hasFlag(parameter.flags, CommandParameterFlag.Keyword)) {
