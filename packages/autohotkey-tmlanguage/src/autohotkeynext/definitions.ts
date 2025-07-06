@@ -1,8 +1,11 @@
 import * as definitions_v2 from '../autohotkey2/definitions';
+import * as patterns_v2 from '../autohotkey2/patterns';
 import {
-  command, namespace, signature,
-  type CommandDefinition,
+  command, CommandParameterFlag, HighlightType, signature,
+  type CommandDefinition, type CommandParameter,
 } from '../definition';
+import { anyChars1, seq, wordBound } from '../oniguruma';
+import { RuleName, StyleName } from '../tmlanguage';
 
 export const directiveDefinitions: CommandDefinition[] = [
   ...definitions_v2.directiveDefinitions,
@@ -12,3 +15,19 @@ export const directiveDefinitions: CommandDefinition[] = [
   command('#Module', signature([ namespace() ])),
 ];
 
+export function namespace(): CommandParameter {
+  return {
+    type: HighlightType.Namespace,
+    flags: CommandParameterFlag.None,
+    itemMatchers: [
+      {
+        name: RuleName.Namespace,
+        match: seq(wordBound(), patterns_v2.identifierPattern, wordBound()),
+      },
+      {
+        name: [ RuleName.Namespace, StyleName.Invalid ],
+        match: anyChars1(),
+      },
+    ],
+  };
+}

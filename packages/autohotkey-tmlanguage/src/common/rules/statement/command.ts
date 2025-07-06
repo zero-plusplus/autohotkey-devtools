@@ -1,5 +1,4 @@
 import { hasFlag } from '@zero-plusplus/utilities/src';
-import * as patterns_v2 from '../../../autohotkey2/patterns';
 import {
   CommandFlag, CommandParameterFlag, HighlightType,
   type CommandDefinition, type CommandParameter, type CommandSignature,
@@ -714,19 +713,6 @@ function parameterToPatternsRule(scopeName: ScopeName, defenition: CommandDefini
     //     },
     //   );
     // }
-    case HighlightType.Namespace:
-    {
-      return patternsRule(
-        {
-          name: name(scopeName, RuleName.Namespace),
-          match: seq(wordBound(), patterns_v2.identifierPattern, wordBound()),
-        },
-        {
-          name: name(scopeName, RuleName.Namespace, StyleName.Invalid),
-          match: anyChars1(),
-        },
-      );
-    }
     default: break;
   }
 

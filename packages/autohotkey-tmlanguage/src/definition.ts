@@ -315,13 +315,6 @@ export function flagedIdentifierOptionItem(...options: string[]): string {
     optional(patterns_v1.identifierPattern),
   ));
 }
-export function namespace(): CommandParameter {
-  return {
-    type: HighlightType.Namespace,
-    flags: CommandParameterFlag.None,
-    itemMatchers: [],
-  };
-}
 export function decimalOptionItem(...options: string[]): string {
   return createSpacedOptionItemPattern(seq(
     ignoreCase(textalt(...options)),
