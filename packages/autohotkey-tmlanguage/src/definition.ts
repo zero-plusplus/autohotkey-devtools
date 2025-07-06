@@ -151,9 +151,14 @@ export interface CommandParameter {
   readonly flags: CommandParameterFlag;
   readonly itemMatchers?: ParameterItemMatcher[];
 }
+export interface PatternsRuleCommandParameter {
+  readonly type: HighlightType;
+  readonly flags: CommandParameterFlag;
+  readonly patterns: IncludeRule[];
+}
 export interface CommandSignature {
   readonly flags: CommandSignatureFlag;
-  readonly parameters: CommandParameter[];
+  readonly parameters: Array<CommandParameter | PatternsRuleCommandParameter>;
 }
 export interface CommandDefinition {
   readonly name: string;
@@ -528,8 +533,12 @@ export function input(flags: CommandParameterFlag = CommandParameterFlag.None): 
 export function output(flags: CommandParameterFlag = CommandParameterFlag.None): CommandParameter {
   return expression(flags);
 }
-export function menuItemName(flags: CommandParameterFlag = CommandParameterFlag.None): CommandParameter {
-  return { type: HighlightType.MenuItemName, flags };
+export function menuItemName(flags: CommandParameterFlag = CommandParameterFlag.None): PatternsRuleCommandParameter {
+  return {
+    type: HighlightType.MenuItemName,
+    flags,
+    patterns: [ includeRule(Repository.MenuItemNameCommandArgument) ],
+  };
 }
 export function includeLib(flags: CommandParameterFlag = CommandParameterFlag.None): CommandParameter {
   return { type: HighlightType.IncludeLibrary, flags };

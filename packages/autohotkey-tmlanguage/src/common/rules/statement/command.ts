@@ -3,6 +3,7 @@ import * as patterns_v2 from '../../../autohotkey2/patterns';
 import {
   CommandFlag, CommandParameterFlag, HighlightType,
   type CommandDefinition, type CommandParameter, type CommandSignature, type ParameterItemMatcher,
+  type PatternsRuleCommandParameter,
 } from '../../../definition';
 import {
   alt, anyChars0, anyChars1, capture, char, chars1, endAnchor, group, groupMany0, groupMany1, ignoreCase,
@@ -559,8 +560,12 @@ function parameterToOniguruma(parameter: CommandParameter, isLastParameter: bool
   }
   return isLastParameter ? patterns_common.unquotedLastArgumentPattern : patterns_common.unquotedArgumentPattern;
 }
-function parameterToPatternsRule(scopeName: ScopeName, defenition: CommandDefinition, parameter: CommandParameter, isLastParameter: boolean, placeholder: { startAnchor: string }): PatternsRule {
+function parameterToPatternsRule(scopeName: ScopeName, defenition: CommandDefinition, parameter: CommandParameter | PatternsRuleCommandParameter, isLastParameter: boolean, placeholder: { startAnchor: string }): PatternsRule {
   const percentExpressionRule = includeRule(isLastParameter ? Repository.PercentExpressionInLastArgument : Repository.PercentExpression);
+
+  if ('patterns' in parameter) {
+    return patternsRule(...parameter.patterns);
+  }
 
   if (hasFlag(parameter.flags, CommandParameterFlag.CompilerDirective)) {
     if (hasFlag(parameter.flags, CommandParameterFlag.Expression)) {
@@ -647,14 +652,6 @@ function parameterToPatternsRule(scopeName: ScopeName, defenition: CommandDefini
             },
           ],
         }),
-      );
-    }
-    case HighlightType.MenuItemName:
-    {
-      return patternsRule(
-        includeRule(isLastParameter ? Repository.PercentExpressionInLastArgument : Repository.PercentExpression),
-
-        includeRule(Repository.MenuItemNameCommandArgument),
       );
     }
     case HighlightType.IncludeLibrary:
