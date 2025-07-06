@@ -120,10 +120,11 @@ export const enum CommandParameterFlag {
   CompilerDirective = 1 << 5,
 
   Number = 1 << 14,
-  Keyword = 1 << 15,
-  Options = 1 << 16,
-  Labeled = 1 << 17,
-  CaseSensitive = 1 << 18,
+  WithNumber = 1 << 15,
+  Keyword = 1 << 16,
+  Options = 1 << 17,
+  Labeled = 1 << 18,
+  CaseSensitive = 1 << 19,
 }
 export const enum CommandFlag {
   None = 0,
@@ -447,12 +448,16 @@ export function unquotedInteger(...optionItems: string[]): CommandParameter {
   return unquotedNumber(...optionItems);
 }
 export function unquotedWithNumber(values: string[] = [], flags: CommandParameterFlag = CommandParameterFlag.None): CommandParameter {
-  return { type: HighlightType.UnquotedStringWithNumber, flags, itemPatterns: values };
+  return {
+    type: HighlightType.UnquotedStringWithNumber,
+    flags: mergeFlags(flags, CommandParameterFlag.WithNumber),
+    itemPatterns: values,
+  };
 }
 export function unquotedNumber(...optionItems: string[]): CommandParameter {
   return {
     type: HighlightType.NumberInCommandArgument,
-    flags: CommandParameterFlag.None,
+    flags: CommandParameterFlag.Number,
     itemPatterns: optionItems,
   };
 }

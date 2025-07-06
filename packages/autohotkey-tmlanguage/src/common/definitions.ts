@@ -77,7 +77,7 @@ export const compilerDirectives: CommandDefinition[] = [
 export function unquoted(optionItems?: string[], flags: CommandParameterFlag = CommandParameterFlag.None): CommandParameter {
   return {
     type: HighlightType.UnquotedStringInCompilerDirective,
-    flags: mergeFlags(flags, CommandParameterFlag.CompilerDirective),
+    flags: mergeFlags(flags, CommandParameterFlag.CompilerDirective, CommandParameterFlag.WithNumber),
     itemPatterns: optionItems ?? [],
   };
 }

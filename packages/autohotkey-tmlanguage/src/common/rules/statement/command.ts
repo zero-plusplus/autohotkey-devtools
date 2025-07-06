@@ -615,68 +615,9 @@ function parameterToPatternsRule(scopeName: ScopeName, defenition: CommandDefini
         }),
       );
     }
-    case HighlightType.UnquotedStringWithNumber:
-    {
-      if (parameter.itemPatterns === undefined || parameter.itemPatterns.length === 0) {
-        return patternsRule(includeRule(isLastParameter ? Repository.CommandLastArgumentWithNumber : Repository.CommandArgumentWithNumber));
-      }
-
-      return patternsRule(
-        includeRule(isLastParameter ? Repository.PercentExpressionInLastArgument : Repository.PercentExpression),
-
-        createSpacedArgumentTextRule(scopeName, {
-          stringRuleName: RuleName.UnquotedString,
-          additionalRules: [
-            ...(isLastParameter ? [
-              { name: name(scopeName, RuleName.UnquotedString, StyleName.Escape), match: text('`,') },
-              { name: name(scopeName, RuleName.UnquotedString), match: seq(char(',')) },
-            ] : []),
-            ...optionItemPatternsToRules(scopeName, itemPatternsToPattern(parameter.itemPatterns)),
-            createNumberRule(scopeName),
-            {
-              name: name(scopeName, RuleName.UnquotedString),
-              match: seq(
-                negChar('`', '0-9', inlineSpace()),
-                negChars0('`', inlineSpace()),
-              ),
-            },
-          ],
-        }),
-      );
-    }
     case HighlightType.UnquotedBooleanLike:
     {
       return patternsRule(includeRule(Repository.CommandArgumentBooleanLike));
-    }
-    case HighlightType.NumberInCommandArgument:
-    {
-      if (parameter.itemPatterns === undefined || parameter.itemPatterns.length === 0) {
-        return patternsRule(
-          includeRule(isLastParameter ? Repository.PercentExpressionInLastArgument : Repository.PercentExpression),
-
-          includeRule(Repository.DereferenceUnaryOperator),
-          includeRule(Repository.Dereference),
-          includeRule(Repository.Number),
-          includeRule(Repository.CommandInvalidArgument),
-        );
-      }
-
-      return patternsRule(
-        includeRule(isLastParameter ? Repository.PercentExpressionInLastArgument : Repository.PercentExpression),
-
-        createSpacedArgumentTextRule(scopeName, {
-          stringRuleName: RuleName.UnquotedString,
-          additionalRules: [
-            ...(isLastParameter ? [
-              { name: name(scopeName, RuleName.UnquotedString, StyleName.Escape), match: text('`,') },
-              { name: name(scopeName, RuleName.UnquotedString), match: seq(char(',')) },
-            ] : []),
-            ...optionItemPatternsToRules(scopeName, itemPatternsToPattern(parameter.itemPatterns)),
-            createNumberRule(scopeName),
-            includeRule(Repository.CommandInvalidArgument),
-          ],
-        }),
-      );
     }
     case HighlightType.SendKeyName:
     {
@@ -834,6 +775,19 @@ function parameterToPatternsRule(scopeName: ScopeName, defenition: CommandDefini
         includeRule(Repository.CommandArgument),
       );
     }
+    else if (hasFlag(parameter.flags, CommandParameterFlag.WithNumber)) {
+      return patternsRule(includeRule(isLastParameter ? Repository.CommandLastArgumentWithNumber : Repository.CommandArgumentWithNumber));
+    }
+    else if (hasFlag(parameter.flags, CommandParameterFlag.Number)) {
+      return patternsRule(
+        includeRule(isLastParameter ? Repository.PercentExpressionInLastArgument : Repository.PercentExpression),
+
+        includeRule(Repository.DereferenceUnaryOperator),
+        includeRule(Repository.Dereference),
+        includeRule(Repository.Number),
+        includeRule(Repository.CommandInvalidArgument),
+      );
+    }
     return patternsRule(includeRule(isLastParameter ? Repository.CommandLastArgument : Repository.CommandArgument));
   }
   return patternsRule(
@@ -843,10 +797,10 @@ function parameterToPatternsRule(scopeName: ScopeName, defenition: CommandDefini
       stringRuleName: RuleName.UnquotedString,
       additionalRules: [
         ...((): Rule[] => {
-          const prefixRules: Rule[] = [];
+          const highPriorityRules: Rule[] = [];
 
           if (isLastParameter && !hasFlag(parameter.flags, CommandParameterFlag.Keyword)) {
-            prefixRules.push(
+            highPriorityRules.push(
               { name: name(scopeName, RuleName.UnquotedString, StyleName.Escape), match: text('`,') },
               { name: name(scopeName, RuleName.UnquotedString), match: seq(char(',')) },
             );
@@ -855,7 +809,7 @@ function parameterToPatternsRule(scopeName: ScopeName, defenition: CommandDefini
           if (hasFlag(parameter.flags, CommandParameterFlag.Labeled)) {
             // e.g. `Gui, GuiName:+Resize`
             //            ^^^^^^^^
-            prefixRules.push({
+            highPriorityRules.push({
               match: seq(
                 lookbehind(seq(
                   lookbehind(placeholder.startAnchor),
@@ -878,7 +832,7 @@ function parameterToPatternsRule(scopeName: ScopeName, defenition: CommandDefini
               },
             });
           }
-          return prefixRules;
+          return highPriorityRules;
         })(),
 
         ...optionItemPatternsToRules(scopeName, itemPatternsToPattern(parameter.itemPatterns)),
@@ -892,12 +846,34 @@ function parameterToPatternsRule(scopeName: ScopeName, defenition: CommandDefini
               },
             ];
           }
-          return [
-            {
-              name: name(scopeName, RuleName.UnquotedString),
-              match: negChars1('`', inlineSpace()),
-            },
-          ];
+          else if (hasFlag(parameter.flags, CommandParameterFlag.Number)) {
+            return [
+              createNumberRule(scopeName),
+              includeRule(Repository.CommandInvalidArgument),
+            ];
+          }
+          else if (hasFlag(parameter.flags, CommandParameterFlag.WithNumber)) {
+            return [
+              createNumberRule(scopeName),
+              {
+                name: name(scopeName, RuleName.UnquotedString),
+                match: seq(
+                  negChar('`', '0-9', inlineSpace()),
+                  negChars0('`', inlineSpace()),
+                ),
+              },
+            ];
+          }
+
+          const lowPriorityRules: Rule[] = [];
+          if (hasFlag(parameter.flags, CommandParameterFlag.Number)) {
+            lowPriorityRules.push(createNumberRule(scopeName));
+          }
+          lowPriorityRules.push({
+            name: name(scopeName, RuleName.UnquotedString),
+            match: negChars1('`', inlineSpace()),
+          });
+          return lowPriorityRules;
         })(),
       ],
     }),
