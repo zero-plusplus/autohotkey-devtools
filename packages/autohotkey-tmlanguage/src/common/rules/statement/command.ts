@@ -751,7 +751,6 @@ function parameterToPatternsRule(scopeName: ScopeName, defenition: CommandDefini
     //     },
     //   );
     // }
-    case HighlightType.LabelName: return patternsRule(includeRule(Repository.LabelName));
     case HighlightType.Namespace:
     {
       return patternsRule(
@@ -944,12 +943,15 @@ function itemPatternsToRules(scopeName: ScopeName, itemPatterns: ParameterItemMa
     }
     return {
       match: itemPattern.match,
-      captures: Object.fromEntries(Object.entries(itemPattern.captures).map(([ key, value ]) => {
+      captures: Object.fromEntries(Object.entries(itemPattern.captures).map(([ index, matchers ]) => {
         return [
-          key,
-          'include' in value
-            ? value
-            : itemPatternsToRules(scopeName, [ value ]),
+          index + 1,
+          patternsRule(...matchers.flatMap((matcher): Rule[] => {
+            if ('include' in matcher) {
+              return [ matcher ];
+            }
+            return itemPatternsToRules(scopeName, Array.isArray(matcher) ? matcher : [ matcher ]);
+          })),
         ];
       })) as unknown as Captures,
     };

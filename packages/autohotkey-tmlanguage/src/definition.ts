@@ -2,10 +2,13 @@ import { mergeFlags } from '@zero-plusplus/utilities/src';
 import * as patterns_v1 from './autohotkeyl/patterns';
 import * as constants_common from './common/constants';
 import {
-  alt, char, endAnchor, group, groupMany1, ignoreCase, inlineSpace, inlineSpaces0, lookahead, lookbehind,
+  alt, capture, char, endAnchor, group, groupMany1, ignoreCase, inlineSpace, inlineSpaces0, lookahead, lookbehind,
   negChars0, negChars1, numbers0, numbers1, optional, optseq, ordalt, seq, text, textalt, wordBound,
 } from './oniguruma';
-import { RuleName, type ElementName, type IncludeRule } from './tmlanguage';
+import {
+  includeRule, Repository, RuleName,
+  type ElementName, type IncludeRule,
+} from './tmlanguage';
 
 // #region constants
 export const scopeNames = [ 'autohotkey', 'autohotkeynext', 'autohotkeyl', 'autohotkey2' ] as const;
@@ -140,7 +143,7 @@ export interface CommandParameterMatcher {
 }
 export interface CommandParameterCapturedMatcher {
   match: string;
-  captures: { [key in number ]: CommandParameterMatcher | IncludeRule };
+  captures: { [key in number ]: Array<CommandParameterMatcher | IncludeRule> };
 }
 export type ParameterItemMatcher = string | CommandParameterMatcher | CommandParameterCapturedMatcher;
 export interface CommandParameter {
@@ -475,7 +478,18 @@ export function restParams(values: string[] = [], flags: CommandParameterFlag = 
   };
 }
 export function labelName(values: string[] = [], flags: CommandParameterFlag = CommandParameterFlag.None): CommandParameter {
-  return { type: HighlightType.LabelName, flags, itemMatchers: values };
+  return {
+    type: HighlightType.LabelName,
+    flags,
+    itemMatchers: values.map((value) => {
+      return {
+        match: capture(ignoreCase(value)),
+        captures: {
+          1: [ includeRule(Repository.LabelName) ],
+        },
+      };
+    }),
+  };
 }
 export function expression(flags: CommandParameterFlag = CommandParameterFlag.None): CommandParameter {
   return { type: HighlightType.Expression, flags: mergeFlags(flags, CommandParameterFlag.Expression) };
