@@ -144,10 +144,6 @@ export interface CommandParameter {
   readonly flags: CommandParameterFlag;
   readonly itemPatterns?: ItemPattern[];
 }
-export interface SubCommandParameter extends CommandParameter {
-  readonly type: HighlightType.SubCommand | HighlightType.SubCommandLike | HighlightType.FlowSubCommand | HighlightType.GuiSubCommand;
-  readonly itemPatterns: ItemPattern[];
-}
 export interface CommandSignature {
   readonly flags: CommandSignatureFlag;
   readonly parameters: CommandParameter[];
@@ -405,7 +401,7 @@ export function subcommandlike(values: string | string[] = [], flags: CommandPar
     mergeFlags(flags, CommandParameterFlag.SubCommand),
   );
 }
-export function flowSubcommand(values: string | string[] = [], flags: CommandParameterFlag = CommandParameterFlag.None): SubCommandParameter {
+export function flowSubcommand(values: string | string[] = [], flags: CommandParameterFlag = CommandParameterFlag.None): CommandParameter {
   return {
     type: HighlightType.FlowSubCommand,
     flags: mergeFlags(flags, CommandParameterFlag.SubCommand),
