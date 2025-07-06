@@ -119,8 +119,11 @@ export const enum CommandParameterFlag {
   RestParams = 1 << 4,
   CompilerDirective = 1 << 5,
 
-  Labeled = 1 << 15,
-  CaseSensitive = 1 << 16,
+  Number = 1 << 14,
+  Keyword = 1 << 15,
+  Options = 1 << 16,
+  Labeled = 1 << 17,
+  CaseSensitive = 1 << 18,
 }
 export const enum CommandFlag {
   None = 0,
@@ -491,10 +494,14 @@ export function guiOptions(flags: CommandParameterFlag = CommandParameterFlag.No
   };
 }
 export function keywordOnly(values: string[] = [], flags: CommandParameterFlag = CommandParameterFlag.None): CommandParameter {
-  return { type: HighlightType.KeywordOnly, flags, itemPatterns: values };
+  return {
+    type: HighlightType.KeywordOnly,
+    flags: mergeFlags(flags, CommandParameterFlag.Keyword),
+    itemPatterns: values,
+  };
 }
 export function spacedKeywordsOnly(values: string[] = [], flags: CommandParameterFlag = CommandParameterFlag.None): CommandParameter {
-  return { type: HighlightType.SpacedKeywordsOnly, flags, itemPatterns: values };
+  return keywordOnly(values, flags);
 }
 export function input(flags: CommandParameterFlag = CommandParameterFlag.None): CommandParameter {
   return expression(flags);

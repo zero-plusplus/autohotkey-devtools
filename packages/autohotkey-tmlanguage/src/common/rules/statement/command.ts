@@ -16,7 +16,7 @@ import {
 } from '../../../tmlanguage';
 import * as constants_common from '../../constants';
 import * as patterns_common from '../../patterns';
-import { createAllowArgumentRule, createNumberRule, createSpacedArgumentTextRule } from '../misc/unquotedString';
+import { createNumberRule, createSpacedArgumentTextRule } from '../misc/unquotedString';
 
 interface Placeholder_CommandStatementRule {
   startAnchor: string;
@@ -708,23 +708,6 @@ function parameterToPatternsRule(scopeName: ScopeName, defenition: CommandDefini
         }),
       );
     }
-    case HighlightType.KeywordOnly:
-    case HighlightType.SpacedKeywordsOnly:
-    {
-      if (!parameter.itemPatterns || parameter.itemPatterns.length === 0) {
-        throw Error('keyword is not specified correctly');
-      }
-
-      return patternsRule(
-        includeRule(isLastParameter ? Repository.PercentExpressionInLastArgument : Repository.PercentExpression),
-
-        createAllowArgumentRule(scopeName, {
-          stringPattern: patterns_common.unquotedArgumentPattern,
-          stringRuleName: RuleName.UnquotedString,
-          allowRules: optionItemPatternsToRules(scopeName, itemPatternsToPattern(parameter.itemPatterns)),
-        }),
-      );
-    }
     case HighlightType.MenuItemName:
     {
       return patternsRule(
@@ -859,48 +842,63 @@ function parameterToPatternsRule(scopeName: ScopeName, defenition: CommandDefini
     createSpacedArgumentTextRule(scopeName, {
       stringRuleName: RuleName.UnquotedString,
       additionalRules: [
-        ...(isLastParameter ? [
-          { name: name(scopeName, RuleName.UnquotedString, StyleName.Escape), match: text('`,') },
-          { name: name(scopeName, RuleName.UnquotedString), match: seq(char(',')) },
-        ] : []),
-
         ...((): Rule[] => {
+          const prefixRules: Rule[] = [];
+
+          if (isLastParameter && !hasFlag(parameter.flags, CommandParameterFlag.Keyword)) {
+            prefixRules.push(
+              { name: name(scopeName, RuleName.UnquotedString, StyleName.Escape), match: text('`,') },
+              { name: name(scopeName, RuleName.UnquotedString), match: seq(char(',')) },
+            );
+          }
+
           if (hasFlag(parameter.flags, CommandParameterFlag.Labeled)) {
             // e.g. `Gui, GuiName:+Resize`
             //            ^^^^^^^^
-            return [
-              {
-                match: seq(
-                  lookbehind(seq(
-                    lookbehind(placeholder.startAnchor),
-                    inlineSpaces0(),
-                    ignoreCase(defenition.name),
-                    alt(inlineSpace(), seq(inlineSpaces0(), char(','))),
-                    inlineSpaces0(),
-                  )),
+            prefixRules.push({
+              match: seq(
+                lookbehind(seq(
+                  lookbehind(placeholder.startAnchor),
                   inlineSpaces0(),
-                  group(alt(
-                    capture(seq(char('%'), anyChars0(), char('%'))),
-                    seq(negativeLookahead(char('%')), capture(wordChars1())),
-                  )),
-                  capture(char(':')),
-                ),
-                captures: {
-                  1: patternsRule(includeRule(Repository.Dereference)),
-                  2: patternsRule(includeRule(Repository.LabelName)),
-                  3: nameRule(scopeName, RuleName.Colon),
-                },
+                  ignoreCase(defenition.name),
+                  alt(inlineSpace(), seq(inlineSpaces0(), char(','))),
+                  inlineSpaces0(),
+                )),
+                inlineSpaces0(),
+                group(alt(
+                  capture(seq(char('%'), anyChars0(), char('%'))),
+                  seq(negativeLookahead(char('%')), capture(wordChars1())),
+                )),
+                capture(char(':')),
+              ),
+              captures: {
+                1: patternsRule(includeRule(Repository.Dereference)),
+                2: patternsRule(includeRule(Repository.LabelName)),
+                3: nameRule(scopeName, RuleName.Colon),
               },
-            ];
+            });
           }
-          return [];
+          return prefixRules;
         })(),
 
         ...optionItemPatternsToRules(scopeName, itemPatternsToPattern(parameter.itemPatterns)),
-        {
-          name: name(scopeName, RuleName.UnquotedString),
-          match: negChars1('`', inlineSpace()),
-        },
+
+        ...((): Rule[] => {
+          if (hasFlag(parameter.flags, CommandParameterFlag.Keyword)) {
+            return [
+              {
+                name: name(scopeName, RuleName.UnquotedString, StyleName.Invalid),
+                match: negChars0('`', inlineSpace()),
+              },
+            ];
+          }
+          return [
+            {
+              name: name(scopeName, RuleName.UnquotedString),
+              match: negChars1('`', inlineSpace()),
+            },
+          ];
+        })(),
       ],
     }),
   );
