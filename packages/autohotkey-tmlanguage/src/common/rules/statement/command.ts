@@ -564,7 +564,12 @@ function parameterToPatternsRule(scopeName: ScopeName, defenition: CommandDefini
   const percentExpressionRule = includeRule(isLastParameter ? Repository.PercentExpressionInLastArgument : Repository.PercentExpression);
 
   if ('patterns' in parameter) {
-    return patternsRule(...parameter.patterns);
+    return patternsRule(
+      percentExpressionRule,
+      includeRule(Repository.Dereference),
+
+      ...parameter.patterns,
+    );
   }
 
   if (hasFlag(parameter.flags, CommandParameterFlag.CompilerDirective)) {
@@ -623,15 +628,6 @@ function parameterToPatternsRule(scopeName: ScopeName, defenition: CommandDefini
     case HighlightType.UnquotedBooleanLike:
     {
       return patternsRule(includeRule(Repository.CommandArgumentBooleanLike));
-    }
-    case HighlightType.SendKeyName:
-    {
-      return patternsRule(
-        includeRule(isLastParameter ? Repository.PercentExpressionInLastArgument : Repository.PercentExpression),
-
-        includeRule(Repository.Dereference),
-        includeRule(Repository.CommandArgumentSendKeyName),
-      );
     }
     case HighlightType.Style:
     {

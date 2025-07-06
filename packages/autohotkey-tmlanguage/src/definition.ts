@@ -639,8 +639,12 @@ export function hotkeyName(flags: CommandParameterFlag = CommandParameterFlag.No
   //   ];
   // }
 }
-export function sendKeys(flags: CommandParameterFlag = CommandParameterFlag.None): CommandParameter {
-  return { type: HighlightType.SendKeyName, flags };
+export function sendKeys(flags: CommandParameterFlag = CommandParameterFlag.None): PatternsRuleCommandParameter {
+  return {
+    type: HighlightType.SendKeyName,
+    flags,
+    patterns: [ includeRule(Repository.CommandArgumentSendKeyName) ],
+  };
 }
 export function timeunit(flags: CommandParameterFlag = CommandParameterFlag.None): CommandParameter {
   return keywordOnly([ optionItem('Seconds', 'S', 'Minutes', 'M', 'Hours', 'H', 'Days', 'D') ], flags);
