@@ -3,7 +3,7 @@ import * as patterns_v1 from './autohotkeyl/patterns';
 import * as constants_common from './common/constants';
 import {
   alt, capture, char, endAnchor, group, groupMany1, ignoreCase, inlineSpace, inlineSpaces0, lookahead, lookbehind,
-  negChars0, negChars1, numbers0, numbers1, optional, optseq, ordalt, seq, text, textalt, wordBound,
+  negChar, negChars0, negChars1, numbers0, numbers1, optional, optseq, ordalt, seq, text, textalt, wordBound,
 } from './oniguruma';
 import {
   includeRule, Repository, RuleName, StyleName,
@@ -145,7 +145,7 @@ export interface CommandParameterCapturedMatcher {
   match: string;
   captures: { [key in number ]: Array<CommandParameterMatcher | IncludeRule> };
 }
-export type ParameterItemMatcher = string | CommandParameterMatcher | CommandParameterCapturedMatcher;
+export type ParameterItemMatcher = string | CommandParameterMatcher | CommandParameterCapturedMatcher | IncludeRule;
 export interface CommandParameter {
   readonly type: HighlightType;
   readonly flags: CommandParameterFlag;
@@ -513,7 +513,24 @@ export function expression(flags: CommandParameterFlag = CommandParameterFlag.No
   return { type: HighlightType.Expression, flags: mergeFlags(flags, CommandParameterFlag.Expression) };
 }
 export function style(flags: CommandParameterFlag = CommandParameterFlag.None): CommandParameter {
-  return { type: HighlightType.Style, flags };
+  return {
+    type: HighlightType.Style,
+    flags,
+    itemMatchers: [
+      {
+        name: RuleName.Operator,
+        match: char('+', '-', '^'),
+      },
+      includeRule(Repository.Number),
+      {
+        name: RuleName.UnquotedString,
+        match: seq(
+          negChar('`', '0-9', '+', '-', '^', inlineSpace(), ','),
+          negChars0('`', inlineSpace(), ','),
+        ),
+      },
+    ],
+  };
 }
 export function fileAttributes(flags: CommandParameterFlag = CommandParameterFlag.None): CommandParameter {
   return keywordOnly([ flagedLetterOptionItem('R', 'A', 'S', 'H', 'N', 'O', 'T') ], flags);

@@ -590,27 +590,6 @@ function parameterToPatternsRule(scopeName: ScopeName, defenition: CommandDefini
     {
       return patternsRule(includeRule(Repository.CommandArgumentBooleanLike));
     }
-    case HighlightType.Style:
-    {
-      return patternsRule(
-        includeRule(isLastParameter ? Repository.PercentExpressionInLastArgument : Repository.PercentExpression),
-
-        createSpacedArgumentTextRule(scopeName, {
-          stringRuleName: RuleName.UnquotedString,
-          additionalRules: [
-            ...itemPatternsToRules(scopeName, parameter.itemMatchers ?? []),
-            createNumberRule(scopeName, { unaryOperator: [ '+', '-', '^' ] }),
-            {
-              name: name(scopeName, RuleName.UnquotedString),
-              match: seq(
-                negChar('`', '0-9', '+', '-', '^', inlineSpace(), ','),
-                negChars0('`', inlineSpace(), ','),
-              ),
-            },
-          ],
-        }),
-      );
-    }
     case HighlightType.IncludeLibrary:
     case HighlightType.QuotableIncludeLibrary:
     {
@@ -857,6 +836,9 @@ function itemPatternToRule(scopeName: ScopeName, itemPattern: ParameterItemMatch
       match: ignoreCase(itemPattern),
     };
   }
+  if ('include' in itemPattern) {
+    return itemPattern;
+  }
   if ('name' in itemPattern) {
     return {
       name: name(scopeName, ...Array.isArray(itemPattern.name) ? itemPattern.name : [ itemPattern.name ]),
@@ -883,7 +865,7 @@ function parameterToSubCommandPattern(parameter: CommandParameter): string {
     throw Error('');
   }
   const matcher = parameter.itemMatchers[0];
-  if (typeof matcher !== 'object') {
+  if (typeof matcher !== 'object' || !('match' in matcher)) {
     throw Error('');
   }
   return matcher.match;
