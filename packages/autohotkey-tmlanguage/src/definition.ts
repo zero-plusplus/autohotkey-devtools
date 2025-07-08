@@ -469,7 +469,11 @@ export function unquotedNumber(...optionItems: string[]): CommandParameter {
   };
 }
 export function unquotedAndBoolean(flags: CommandParameterFlag = CommandParameterFlag.None): CommandParameter {
-  return { type: HighlightType.UnquotedBooleanLike, flags, itemMatchers: [] };
+  return {
+    type: HighlightType.UnquotedBooleanLike,
+    flags,
+    itemMatchers: [ includeRule(Repository.CommandArgumentBooleanLike) ],
+  };
 }
 export function quotableUnquoted(itemPatterns: ParameterItemMatcher[] = [], flags: CommandParameterFlag = CommandParameterFlag.None): CommandParameter {
   return {

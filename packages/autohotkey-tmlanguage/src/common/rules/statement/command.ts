@@ -586,10 +586,6 @@ function parameterToPatternsRule(scopeName: ScopeName, defenition: CommandDefini
   }
 
   switch (parameter.type) {
-    case HighlightType.UnquotedBooleanLike:
-    {
-      return patternsRule(includeRule(Repository.CommandArgumentBooleanLike));
-    }
     case HighlightType.IncludeLibrary:
     case HighlightType.QuotableIncludeLibrary:
     {
