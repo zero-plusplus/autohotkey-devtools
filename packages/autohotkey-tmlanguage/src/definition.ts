@@ -6,7 +6,7 @@ import {
   negChars0, negChars1, numbers0, numbers1, optional, optseq, ordalt, seq, text, textalt, wordBound,
 } from './oniguruma';
 import {
-  includeRule, Repository, RuleName,
+  includeRule, Repository, RuleName, StyleName,
   type ElementName, type IncludeRule,
 } from './tmlanguage';
 
@@ -401,10 +401,16 @@ export function subcommand(values: string | string[] = [], flags: CommandParamet
   };
 }
 export function subcommandlike(values: string | string[] = [], flags: CommandParameterFlag = CommandParameterFlag.None): CommandParameter {
-  return unquoted(
-    Array.isArray(values) ? values : [ values ],
-    mergeFlags(flags, CommandParameterFlag.SubCommand),
-  );
+  return {
+    type: HighlightType.SubCommand,
+    flags: mergeFlags(flags, CommandParameterFlag.SubCommand),
+    itemMatchers: [
+      {
+        name: [ RuleName.UnquotedString, StyleName.Strong ],
+        match: ignoreCase(ordalt(...(Array.isArray(values) ? values : [ values ]))),
+      },
+    ],
+  };
 }
 export function flowSubcommand(values: string | string[] = [], flags: CommandParameterFlag = CommandParameterFlag.None): CommandParameter {
   return {

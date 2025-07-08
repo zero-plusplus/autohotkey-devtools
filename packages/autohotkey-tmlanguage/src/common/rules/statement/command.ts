@@ -504,15 +504,7 @@ function lookaheadOnigurumaByParameters(parameters: CommandParameter[]): string 
       ));
 
       if (hasFlag(parameter.flags, CommandParameterFlag.SubCommand)) {
-        if (parameter.itemMatchers?.length === undefined) {
-          throw Error('');
-        }
-
-        const subcommandPattern = seq(
-          wordBound(),
-          group(alt(...itemPatternsToPattern(parameter.itemMatchers))),
-          wordBound(),
-        );
+        const subcommandPattern = parameterToSubCommandPattern(parameter);
         if (hasFlag(parameter.flags, CommandParameterFlag.Labeled)) {
           return seq(
             labelPattern,
@@ -606,7 +598,7 @@ function parameterToPatternsRule(scopeName: ScopeName, defenition: CommandDefini
         createSpacedArgumentTextRule(scopeName, {
           stringRuleName: RuleName.UnquotedString,
           additionalRules: [
-            ...optionItemPatternsToRules(scopeName, itemPatternsToPattern(parameter.itemMatchers ?? [])),
+            ...itemPatternsToRules(scopeName, parameter.itemMatchers ?? []),
             createNumberRule(scopeName, { unaryOperator: [ '+', '-', '^' ] }),
             {
               name: name(scopeName, RuleName.UnquotedString),
@@ -855,55 +847,46 @@ function subcommandParameterToPatternsRule(scopeName: ScopeName, definition: Com
     includeRule(Repository.CommandInvalidArgument),
   );
 }
-function optionItemPatternsToRules(scopeName: ScopeName, optionItemPatterns: string[] | undefined): Rule[] {
-  if (optionItemPatterns === undefined || optionItemPatterns.length === 0) {
-    return [];
-  }
-  return optionItemPatterns.map((optionItemPattern) => {
+function itemPatternsToRules(scopeName: ScopeName, itemPatterns: ParameterItemMatcher[]): Rule[] {
+  return itemPatterns.map((itemPattern): Rule => itemPatternToRule(scopeName, itemPattern));
+}
+function itemPatternToRule(scopeName: ScopeName, itemPattern: ParameterItemMatcher): Rule {
+  if (typeof itemPattern === 'string') {
     return {
       name: name(scopeName, RuleName.UnquotedString, StyleName.Strong),
-      match: optionItemPattern,
+      match: ignoreCase(itemPattern),
     };
-  });
-}
-function itemPatternsToPattern(itemPatterns: ParameterItemMatcher[]): string[] {
-  return itemPatterns.map((itemPattern) => {
-    if (typeof itemPattern === 'string') {
-      return itemPattern;
-    }
-
-    return itemPattern.match;
-  });
-}
-function itemPatternsToRules(scopeName: ScopeName, itemPatterns: ParameterItemMatcher[]): Rule[] {
-  return itemPatterns.map((itemPattern): Rule => {
-    if (typeof itemPattern === 'string') {
-      return {
-        name: name(scopeName, RuleName.UnquotedString, StyleName.Strong),
-        match: ignoreCase(itemPattern),
-      };
-    }
-
-    if ('name' in itemPattern) {
-      return {
-        name: name(scopeName, ...Array.isArray(itemPattern.name) ? itemPattern.name : [ itemPattern.name ]),
-        match: itemPattern.match,
-      };
-    }
+  }
+  if ('name' in itemPattern) {
     return {
+      name: name(scopeName, ...Array.isArray(itemPattern.name) ? itemPattern.name : [ itemPattern.name ]),
       match: itemPattern.match,
-      captures: Object.fromEntries(Object.entries(itemPattern.captures).map(([ index, matchers ]) => {
-        return [
-          index + 1,
-          patternsRule(...matchers.flatMap((matcher): Rule[] => {
-            if ('include' in matcher) {
-              return [ matcher ];
-            }
-            return itemPatternsToRules(scopeName, Array.isArray(matcher) ? matcher : [ matcher ]);
-          })),
-        ];
-      })) as unknown as Captures,
     };
-  });
+  }
+  return {
+    match: itemPattern.match,
+    captures: Object.fromEntries(Object.entries(itemPattern.captures).map(([ index, matchers ]) => {
+      return [
+        index + 1,
+        patternsRule(...matchers.flatMap((matcher): Rule[] => {
+          if ('include' in matcher) {
+            return [ matcher ];
+          }
+          return itemPatternsToRules(scopeName, Array.isArray(matcher) ? matcher : [ matcher ]);
+        })),
+      ];
+    })) as unknown as Captures,
+  };
 }
+function parameterToSubCommandPattern(parameter: CommandParameter): string {
+  if (parameter.itemMatchers?.length === undefined) {
+    throw Error('');
+  }
+  const matcher = parameter.itemMatchers[0];
+  if (typeof matcher !== 'object') {
+    throw Error('');
+  }
+  return matcher.match;
+}
+
 // #endregion helpers
