@@ -575,7 +575,13 @@ export function keywordOnly(values: string[] = [], flags: CommandParameterFlag =
   return {
     type: HighlightType.KeywordOnly,
     flags: mergeFlags(flags, CommandParameterFlag.Keyword),
-    itemMatchers: values,
+    itemMatchers: [
+      ...values,
+      {
+        name: [ RuleName.UnquotedString, StyleName.Invalid ],
+        match: negChars0('`', inlineSpace()),
+      },
+    ],
   };
 }
 export function spacedKeywordsOnly(values: string[] = [], flags: CommandParameterFlag = CommandParameterFlag.None): CommandParameter {

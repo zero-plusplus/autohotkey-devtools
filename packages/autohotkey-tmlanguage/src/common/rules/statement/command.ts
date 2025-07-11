@@ -551,7 +551,7 @@ function parameterToOniguruma(parameter: CommandParameter, isLastParameter: bool
   }
   return isLastParameter ? patterns_common.unquotedLastArgumentPattern : patterns_common.unquotedArgumentPattern;
 }
-function parameterToPatternsRule(scopeName: ScopeName, defenition: CommandDefinition, parameter: CommandParameter | IncludeRulesCommandParameter, isLastParameter: boolean, placeholder: { startAnchor: string }): PatternsRule {
+function parameterToPatternsRule(scopeName: ScopeName, definition: CommandDefinition, parameter: CommandParameter | IncludeRulesCommandParameter, isLastParameter: boolean, placeholder: { startAnchor: string }): PatternsRule {
   const percentExpressionRule = includeRule(isLastParameter ? Repository.PercentExpressionInLastArgument : Repository.PercentExpression);
 
   if ('includes' in parameter) {
@@ -573,7 +573,7 @@ function parameterToPatternsRule(scopeName: ScopeName, defenition: CommandDefini
     return patternsRule(includeRule(isLastParameter ? Repository.CommandInvalidLastArgument : Repository.CommandInvalidArgument));
   }
   else if (hasFlag(parameter.flags, CommandParameterFlag.SubCommand)) {
-    return subcommandParameterToPatternsRule(scopeName, defenition, parameter, isLastParameter, placeholder);
+    return subcommandParameterToPatternsRule(scopeName, definition, parameter, isLastParameter, placeholder);
   }
   else if (hasFlag(parameter.flags, CommandParameterFlag.Expression)) {
     return patternsRule(
@@ -711,9 +711,45 @@ function parameterToPatternsRule(scopeName: ScopeName, defenition: CommandDefini
     createSpacedArgumentTextRule(scopeName, {
       stringRuleName: RuleName.UnquotedString,
       additionalRules: [
-        ...createHighPriorityRules(scopeName, defenition, parameter, isLastParameter, placeholder),
+        ...((): Rule[] => {
+          const rules: Rule[] = [];
+
+          if (isLastParameter && !hasFlag(parameter.flags, CommandParameterFlag.Keyword)) {
+            rules.push(
+              { name: name(scopeName, RuleName.UnquotedString, StyleName.Escape), match: text('`,') },
+              { name: name(scopeName, RuleName.UnquotedString), match: seq(char(',')) },
+            );
+          }
+
+          if (hasFlag(parameter.flags, CommandParameterFlag.Labeled)) {
+            // e.g. `Gui, GuiName:+Resize`
+            //            ^^^^^^^^
+            rules.push({
+              match: seq(
+                lookbehind(seq(
+                  lookbehind(placeholder.startAnchor),
+                  inlineSpaces0(),
+                  ignoreCase(definition.name),
+                  alt(inlineSpace(), seq(inlineSpaces0(), char(','))),
+                  inlineSpaces0(),
+                )),
+                inlineSpaces0(),
+                group(alt(
+                  capture(seq(char('%'), anyChars0(), char('%'))),
+                  seq(negativeLookahead(char('%')), capture(wordChars1())),
+                )),
+                capture(char(':')),
+              ),
+              captures: {
+                1: patternsRule(includeRule(Repository.Dereference)),
+                2: patternsRule(includeRule(Repository.LabelName)),
+                3: nameRule(scopeName, RuleName.Colon),
+              },
+            });
+          }
+          return rules;
+        })(),
         ...itemPatternsToRules(scopeName, parameter.itemMatchers),
-        ...createLowPriorityRules(scopeName, defenition, parameter, isLastParameter, placeholder),
       ],
     }),
   );
@@ -789,60 +825,5 @@ function parameterToSubCommandPattern(parameter: CommandParameter): string {
     throw Error('');
   }
   return matcher.match;
-}
-function createHighPriorityRules(scopeName: ScopeName, definition: CommandDefinition, parameter: CommandParameter, isLastParameter: boolean, placeholder: { startAnchor: string }): Rule[] {
-  const highPriorityRules: Rule[] = [];
-
-  if (isLastParameter && !hasFlag(parameter.flags, CommandParameterFlag.Keyword)) {
-    highPriorityRules.push(
-      { name: name(scopeName, RuleName.UnquotedString, StyleName.Escape), match: text('`,') },
-      { name: name(scopeName, RuleName.UnquotedString), match: seq(char(',')) },
-    );
-  }
-
-  if (hasFlag(parameter.flags, CommandParameterFlag.Labeled)) {
-    // e.g. `Gui, GuiName:+Resize`
-    //            ^^^^^^^^
-    highPriorityRules.push({
-      match: seq(
-        lookbehind(seq(
-          lookbehind(placeholder.startAnchor),
-          inlineSpaces0(),
-          ignoreCase(definition.name),
-          alt(inlineSpace(), seq(inlineSpaces0(), char(','))),
-          inlineSpaces0(),
-        )),
-        inlineSpaces0(),
-        group(alt(
-          capture(seq(char('%'), anyChars0(), char('%'))),
-          seq(negativeLookahead(char('%')), capture(wordChars1())),
-        )),
-        capture(char(':')),
-      ),
-      captures: {
-        1: patternsRule(includeRule(Repository.Dereference)),
-        2: patternsRule(includeRule(Repository.LabelName)),
-        3: nameRule(scopeName, RuleName.Colon),
-      },
-    });
-  }
-  return highPriorityRules;
-}
-function createLowPriorityRules(scopeName: ScopeName, definition: CommandDefinition, parameter: CommandParameter, isLastParameter: boolean, placeholder: { startAnchor: string }): Rule[] {
-  if (hasFlag(parameter.flags, CommandParameterFlag.Keyword)) {
-    return [
-      {
-        name: name(scopeName, RuleName.UnquotedString, StyleName.Invalid),
-        match: negChars0('`', inlineSpace()),
-      },
-    ];
-  }
-
-  const lowPriorityRules: Rule[] = [];
-  lowPriorityRules.push({
-    name: name(scopeName, RuleName.UnquotedString),
-    match: negChars1('`', inlineSpace()),
-  });
-  return lowPriorityRules;
 }
 // #endregion helpers
