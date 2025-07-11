@@ -2,7 +2,7 @@ import { mergeFlags } from '@zero-plusplus/utilities/src';
 import * as patterns_v1 from './autohotkeyl/patterns';
 import * as constants_common from './common/constants';
 import {
-  alt, capture, char, endAnchor, group, groupMany1, ignoreCase, inlineSpace, inlineSpaces0, lookahead, lookbehind,
+  alt, anyChars1, capture, char, endAnchor, group, groupMany1, ignoreCase, inlineSpace, inlineSpaces0, lookahead, lookbehind,
   negChar, negChars0, negChars1, numbers0, numbers1, optional, optseq, ordalt, seq, text, textalt, wordBound,
 } from './oniguruma';
 import {
@@ -143,7 +143,7 @@ export interface CommandParameterMatcher {
 }
 export interface CommandParameterCapturedMatcher {
   match: string;
-  captures: { [key in number ]: Array<CommandParameterMatcher | IncludeRule> };
+  captures: { [key in number ]: Array<ParameterItemMatcher | IncludeRule> };
 }
 export type ParameterItemMatcher = string | CommandParameterMatcher | CommandParameterCapturedMatcher | IncludeRule;
 export interface CommandParameter {
@@ -445,8 +445,16 @@ export function blank(flags: CommandParameterFlag = CommandParameterFlag.None): 
 export function invalid(flags: CommandParameterFlag = CommandParameterFlag.None): CommandParameter {
   return blank(flags);
 }
-export function unquoted(values: string[] = [], flags: CommandParameterFlag = CommandParameterFlag.None): CommandParameter {
-  return { type: HighlightType.UnquotedString, flags, itemMatchers: values };
+export function unquoted(itemMatchers: ParameterItemMatcher[] = [], flags: CommandParameterFlag = CommandParameterFlag.None): CommandParameter {
+  return {
+    type: HighlightType.UnquotedString,
+    flags,
+    itemMatchers: [
+      includeRule(Repository.Dereference),
+      ...itemMatchers,
+      includeRule(Repository.UnquotedStringEscapeSequence),
+    ],
+  };
 }
 export function unquotedShouldEscapeComma(optionItems: string[] = [], flags: CommandParameterFlag = CommandParameterFlag.None): CommandParameter {
   return restParams(optionItems, flags);
@@ -454,18 +462,30 @@ export function unquotedShouldEscapeComma(optionItems: string[] = [], flags: Com
 export function unquotedInteger(...optionItems: string[]): CommandParameter {
   return unquotedNumber(...optionItems);
 }
-export function unquotedWithNumber(values: string[] = [], flags: CommandParameterFlag = CommandParameterFlag.None): CommandParameter {
+export function unquotedWithNumber(itemMatchers: ParameterItemMatcher[] = [], flags: CommandParameterFlag = CommandParameterFlag.None): CommandParameter {
   return {
     type: HighlightType.UnquotedStringWithNumber,
-    flags: mergeFlags(flags, CommandParameterFlag.WithNumber),
-    itemMatchers: values,
+    flags,
+    itemMatchers: [
+      ...itemMatchers,
+      includeRule(Repository.Operator),
+      includeRule(Repository.Number),
+    ],
   };
 }
-export function unquotedNumber(...optionItems: string[]): CommandParameter {
+export function unquotedNumber(...itemMatchers: ParameterItemMatcher[]): CommandParameter {
   return {
     type: HighlightType.NumberInCommandArgument,
-    flags: CommandParameterFlag.Number,
-    itemMatchers: optionItems,
+    flags: CommandParameterFlag.None,
+    itemMatchers: [
+      ...itemMatchers,
+      includeRule(Repository.Operator),
+      includeRule(Repository.Number),
+      {
+        name: [ RuleName.UnquotedString, StyleName.Invalid ],
+        match: anyChars1(),
+      },
+    ],
   };
 }
 export function unquotedAndBoolean(flags: CommandParameterFlag = CommandParameterFlag.None): CommandParameter {

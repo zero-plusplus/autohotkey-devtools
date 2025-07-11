@@ -16,7 +16,7 @@ import {
 } from '../../../tmlanguage';
 import * as constants_common from '../../constants';
 import * as patterns_common from '../../patterns';
-import { createNumberRule, createSpacedArgumentTextRule } from '../misc/unquotedString';
+import { createSpacedArgumentTextRule } from '../misc/unquotedString';
 
 interface Placeholder_CommandStatementRule {
   startAnchor: string;
@@ -711,85 +711,9 @@ function parameterToPatternsRule(scopeName: ScopeName, defenition: CommandDefini
     createSpacedArgumentTextRule(scopeName, {
       stringRuleName: RuleName.UnquotedString,
       additionalRules: [
-        ...((): Rule[] => {
-          const highPriorityRules: Rule[] = [];
-
-          if (isLastParameter && !hasFlag(parameter.flags, CommandParameterFlag.Keyword)) {
-            highPriorityRules.push(
-              { name: name(scopeName, RuleName.UnquotedString, StyleName.Escape), match: text('`,') },
-              { name: name(scopeName, RuleName.UnquotedString), match: seq(char(',')) },
-            );
-          }
-
-          if (hasFlag(parameter.flags, CommandParameterFlag.Labeled)) {
-            // e.g. `Gui, GuiName:+Resize`
-            //            ^^^^^^^^
-            highPriorityRules.push({
-              match: seq(
-                lookbehind(seq(
-                  lookbehind(placeholder.startAnchor),
-                  inlineSpaces0(),
-                  ignoreCase(defenition.name),
-                  alt(inlineSpace(), seq(inlineSpaces0(), char(','))),
-                  inlineSpaces0(),
-                )),
-                inlineSpaces0(),
-                group(alt(
-                  capture(seq(char('%'), anyChars0(), char('%'))),
-                  seq(negativeLookahead(char('%')), capture(wordChars1())),
-                )),
-                capture(char(':')),
-              ),
-              captures: {
-                1: patternsRule(includeRule(Repository.Dereference)),
-                2: patternsRule(includeRule(Repository.LabelName)),
-                3: nameRule(scopeName, RuleName.Colon),
-              },
-            });
-          }
-          return highPriorityRules;
-        })(),
-
+        ...createHighPriorityRules(scopeName, defenition, parameter, isLastParameter, placeholder),
         ...itemPatternsToRules(scopeName, parameter.itemMatchers),
-
-        ...((): Rule[] => {
-          if (hasFlag(parameter.flags, CommandParameterFlag.Keyword)) {
-            return [
-              {
-                name: name(scopeName, RuleName.UnquotedString, StyleName.Invalid),
-                match: negChars0('`', inlineSpace()),
-              },
-            ];
-          }
-          else if (hasFlag(parameter.flags, CommandParameterFlag.Number)) {
-            return [
-              createNumberRule(scopeName),
-              includeRule(Repository.CommandInvalidArgument),
-            ];
-          }
-          else if (hasFlag(parameter.flags, CommandParameterFlag.WithNumber)) {
-            return [
-              createNumberRule(scopeName),
-              {
-                name: name(scopeName, RuleName.UnquotedString),
-                match: seq(
-                  negChar('`', '0-9', inlineSpace()),
-                  negChars0('`', inlineSpace()),
-                ),
-              },
-            ];
-          }
-
-          const lowPriorityRules: Rule[] = [];
-          if (hasFlag(parameter.flags, CommandParameterFlag.Number)) {
-            lowPriorityRules.push(createNumberRule(scopeName));
-          }
-          lowPriorityRules.push({
-            name: name(scopeName, RuleName.UnquotedString),
-            match: negChars1('`', inlineSpace()),
-          });
-          return lowPriorityRules;
-        })(),
+        ...createLowPriorityRules(scopeName, defenition, parameter, isLastParameter, placeholder),
       ],
     }),
   );
@@ -847,7 +771,7 @@ function itemPatternToRule(scopeName: ScopeName, itemPattern: ParameterItemMatch
       return [
         index + 1,
         patternsRule(...matchers.flatMap((matcher): Rule[] => {
-          if ('include' in matcher) {
+          if (typeof matcher === 'object' && 'include' in matcher) {
             return [ matcher ];
           }
           return itemPatternsToRules(scopeName, Array.isArray(matcher) ? matcher : [ matcher ]);
@@ -866,5 +790,59 @@ function parameterToSubCommandPattern(parameter: CommandParameter): string {
   }
   return matcher.match;
 }
+function createHighPriorityRules(scopeName: ScopeName, definition: CommandDefinition, parameter: CommandParameter, isLastParameter: boolean, placeholder: { startAnchor: string }): Rule[] {
+  const highPriorityRules: Rule[] = [];
 
+  if (isLastParameter && !hasFlag(parameter.flags, CommandParameterFlag.Keyword)) {
+    highPriorityRules.push(
+      { name: name(scopeName, RuleName.UnquotedString, StyleName.Escape), match: text('`,') },
+      { name: name(scopeName, RuleName.UnquotedString), match: seq(char(',')) },
+    );
+  }
+
+  if (hasFlag(parameter.flags, CommandParameterFlag.Labeled)) {
+    // e.g. `Gui, GuiName:+Resize`
+    //            ^^^^^^^^
+    highPriorityRules.push({
+      match: seq(
+        lookbehind(seq(
+          lookbehind(placeholder.startAnchor),
+          inlineSpaces0(),
+          ignoreCase(definition.name),
+          alt(inlineSpace(), seq(inlineSpaces0(), char(','))),
+          inlineSpaces0(),
+        )),
+        inlineSpaces0(),
+        group(alt(
+          capture(seq(char('%'), anyChars0(), char('%'))),
+          seq(negativeLookahead(char('%')), capture(wordChars1())),
+        )),
+        capture(char(':')),
+      ),
+      captures: {
+        1: patternsRule(includeRule(Repository.Dereference)),
+        2: patternsRule(includeRule(Repository.LabelName)),
+        3: nameRule(scopeName, RuleName.Colon),
+      },
+    });
+  }
+  return highPriorityRules;
+}
+function createLowPriorityRules(scopeName: ScopeName, definition: CommandDefinition, parameter: CommandParameter, isLastParameter: boolean, placeholder: { startAnchor: string }): Rule[] {
+  if (hasFlag(parameter.flags, CommandParameterFlag.Keyword)) {
+    return [
+      {
+        name: name(scopeName, RuleName.UnquotedString, StyleName.Invalid),
+        match: negChars0('`', inlineSpace()),
+      },
+    ];
+  }
+
+  const lowPriorityRules: Rule[] = [];
+  lowPriorityRules.push({
+    name: name(scopeName, RuleName.UnquotedString),
+    match: negChars1('`', inlineSpace()),
+  });
+  return lowPriorityRules;
+}
 // #endregion helpers
