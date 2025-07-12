@@ -1,7 +1,7 @@
 import {
   command, decimalOptionItem, expression, keywordOnly, optionItem, parameterless, quotableEncoding,
-  quotableIncludeLib, quotableUnquoted, requiresVersion, signature, signedNumberOptionItem, toggleOptionItem,
-  unquoted, unquotedAndBoolean, unquotedInteger,
+  quotableIncludeLib, quotableUnquoted, requiresVersion, signature, signedNumberOptionItem,
+  signOptionItem, toggleOptionItem, unquoted, unquotedAndBoolean, unquotedInteger,
   type CommandDefinition,
 } from '../definition';
 
@@ -11,7 +11,7 @@ export const directiveDefinitions: CommandDefinition[] = [
   command('#ClipboardTimeout', signature([ unquotedInteger() ])),
 
   // https://www.autohotkey.com/docs/v2/lib/_DllLoad.htm
-  command('#DllLoad', signature([ quotableUnquoted([ optionItem('*i') ]) ])),
+  command('#DllLoad', signature([ quotableUnquoted([ signOptionItem('*i') ]) ])),
 
   // https://www.autohotkey.com/docs/v2/lib/_ErrorStdOut.htm
   command('#ErrorStdOut', signature([ quotableEncoding() ])),

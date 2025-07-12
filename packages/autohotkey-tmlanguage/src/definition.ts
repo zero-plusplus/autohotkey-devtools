@@ -208,7 +208,10 @@ export function createSpacedOptionItemPattern(pattern: string): string {
   );
 }
 export function optionItem(...options: string[]): string {
-  return createSpacedOptionItemPattern(ignoreCase(textalt(...options)));
+  return seq(wordBound(), ignoreCase(textalt(...options)), wordBound());
+}
+export function signOptionItem(...options: string[]): string {
+  return seq(ignoreCase(textalt(...options)), wordBound());
 }
 export function flagedOptionItem(...options: string[]): string {
   return createSpacedOptionItemPattern(seq(
@@ -226,7 +229,7 @@ export function endKeyOptionItem(): string {
   );
 }
 export function matchKeyOptionItem(): string {
-  return createSpacedOptionItemPattern(negChars1(','));
+  return negChars1(',');
 }
 export function letterOptionItem(...options: string[]): string {
   return groupMany1(ignoreCase(textalt(...options)));
@@ -450,9 +453,14 @@ export function unquoted(itemMatchers: ParameterItemMatcher[] = [], flags: Comma
     type: HighlightType.UnquotedString,
     flags,
     itemMatchers: [
+      includeRule(Repository.DereferenceUnaryOperator),
       includeRule(Repository.Dereference),
-      ...itemMatchers,
       includeRule(Repository.UnquotedStringEscapeSequence),
+      ...itemMatchers,
+      {
+        name: [ RuleName.UnquotedString ],
+        match: negChars1('`', inlineSpace()),
+      },
     ],
   };
 }
@@ -495,16 +503,19 @@ export function unquotedAndBoolean(flags: CommandParameterFlag = CommandParamete
     itemMatchers: [ includeRule(Repository.CommandArgumentBooleanLike) ],
   };
 }
-export function quotableUnquoted(itemPatterns: ParameterItemMatcher[] = [], flags: CommandParameterFlag = CommandParameterFlag.None): CommandParameter {
+export function quotableUnquoted(itemMatchers: ParameterItemMatcher[] = [], flags: CommandParameterFlag = CommandParameterFlag.None): CommandParameter {
   return {
     type: HighlightType.QuotableUnquotedString,
     flags,
     itemMatchers: [
+      includeRule(Repository.DereferenceUnaryOperator),
+      includeRule(Repository.Dereference),
+      includeRule(Repository.UnquotedStringEscapeSequence),
       {
         name: RuleName.UnquotedString,
         match: char('"', `'`),
       },
-      ...itemPatterns,
+      ...itemMatchers,
       {
         name: RuleName.UnquotedString,
         match: negChars1('`', '"', `'`, inlineSpace()),

@@ -688,6 +688,26 @@ function parameterToPatternsRule(scopeName: ScopeName, definition: CommandDefini
     default: break;
   }
 
+  if (parameter.type === HighlightType.UnquotedString) {
+    return patternsRule(
+      percentExpressionRule,
+      ...(hasFlag(parameter.flags, CommandParameterFlag.RestParams) ? [ includeRule(Repository.Comma) ] : []),
+      ...((): Rule[] => {
+        if (hasFlag(parameter.flags, CommandParameterFlag.RestParams)) {
+          return [ includeRule(Repository.Comma) ];
+        }
+        else if (isLastParameter && !hasFlag(parameter.flags, CommandParameterFlag.Keyword)) {
+          return [
+            { name: name(scopeName, RuleName.UnquotedString, StyleName.Escape), match: text('`,') },
+            { name: name(scopeName, RuleName.UnquotedString), match: seq(char(',')) },
+          ];
+        }
+        return [];
+      })(),
+
+      ...(parameter.itemMatchers && 0 < parameter.itemMatchers.length ? itemPatternsToRules(scopeName, parameter.itemMatchers) : []),
+    );
+  }
   return patternsRule(
     percentExpressionRule,
     ...(hasFlag(parameter.flags, CommandParameterFlag.RestParams) ? [ includeRule(Repository.Comma) ] : []),

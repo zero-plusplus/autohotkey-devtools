@@ -4,9 +4,9 @@ import {
   guiControlOptions, guiControlType, guiOptions, guiSubcommand, hotkeyName, identifierOptionItem, imagePath, includeLib,
   input, invalid, keyName, keywordOnly, labelName, letterOptionItem, matchKeyOptionItem, menuItemName, menuOptions,
   numberOptionItem, onOff, onOffToggle, optionItem, output, parameterless, path, rangeOptionItem, requiresVersion,
-  restParams, sendKeys, signature, signedNumberOptionItem, sizeOptionItem, soundComponent, soundControlType, spacedKeywordsOnly,
-  stringOptionItem, style, subcommand, subcommandlike, timeunit, toggleOptionItem, unquoted, unquotedInteger, unquotedNumber,
-  unquotedShouldEscapeComma, unquotedWithNumber, whichButton, winParams, winTitle,
+  restParams, sendKeys, signature, signedNumberOptionItem, signOptionItem, sizeOptionItem, soundComponent, soundControlType,
+  spacedKeywordsOnly, stringOptionItem, style, subcommand, subcommandlike, timeunit, toggleOptionItem, unquoted, unquotedInteger,
+  unquotedNumber, unquotedShouldEscapeComma, unquotedWithNumber, whichButton, winParams, winTitle,
   type CommandDefinition,
 } from '../definition';
 
@@ -391,7 +391,7 @@ export const commandDefinitions: CommandDefinition[] = [
   command('IniWrite', signature([ unquoted(), unquoted(), path(), unquoted(), unquoted() ])),
 
   // https://www.autohotkey.com/docs/v1/lib/Input.htm
-  command('Input', signature([ output(), unquoted([ optionItem('B', 'C', 'V', '*', 'E', 'M'), numberOptionItem('I', 'L', 'T') ]), unquoted([ endKeyOptionItem() ]), unquoted([ matchKeyOptionItem() ]) ])),
+  command('Input', signature([ output(), unquoted([ optionItem('B', 'C', 'V', 'E', 'M'), signOptionItem('*'), numberOptionItem('I', 'L', 'T') ]), unquoted([ endKeyOptionItem() ]), unquoted([ matchKeyOptionItem() ]) ])),
 
   // https://www.autohotkey.com/docs/v1/lib/InputBox.htm
   command('InputBox', signature([ output(), unquoted(), unquoted(), unquoted(), expression(), expression(), expression(), expression(), unquoted(), expression(), unquoted() ])),
