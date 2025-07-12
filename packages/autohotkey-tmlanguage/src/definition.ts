@@ -512,11 +512,14 @@ export function quotableUnquoted(itemPatterns: ParameterItemMatcher[] = [], flag
     ],
   };
 }
-export function restParams(values: string[] = [], flags: CommandParameterFlag = CommandParameterFlag.None): CommandParameter {
+export function restParams(itemMatchers: ParameterItemMatcher[] = [], flags: CommandParameterFlag = CommandParameterFlag.None): CommandParameter {
   return {
     type: HighlightType.RestParams,
     flags: mergeFlags(flags, CommandParameterFlag.RestParams),
-    itemMatchers: values,
+    itemMatchers: [
+      ...itemMatchers,
+      includeRule(Repository.CommandArgument),
+    ],
   };
 }
 export function labelName(values: string[] = [], flags: CommandParameterFlag = CommandParameterFlag.None): CommandParameter {

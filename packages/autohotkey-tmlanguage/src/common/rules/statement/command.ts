@@ -12,7 +12,7 @@ import {
 } from '../../../oniguruma';
 import {
   includeRule, name, nameRule, patternsRule, Repository, RuleName, StyleName,
-  type BeginWhileRule, type Captures, type ElementName, type MatchRule, type PatternsRule, type Rule, type ScopeName,
+  type BeginWhileRule, type Captures, type ElementName, type IncludeRule, type MatchRule, type PatternsRule, type Rule, type ScopeName,
 } from '../../../tmlanguage';
 import * as constants_common from '../../constants';
 import * as patterns_common from '../../patterns';
@@ -173,7 +173,7 @@ export function createSingleLineCommandLikeStatementRule(scopeName: ScopeName, d
 
       // parameters
       ...signature.parameters.flatMap((parameter, i, parameters) => {
-        const isLastParameter = parameters.length - 1 === i && !hasFlag(parameter.flags, CommandParameterFlag.RestParams);
+        const isLastParameter = parameters.length - 1 === i;
 
         return [
           (!placeholder.allowFirstComma && i === 0)
@@ -552,7 +552,12 @@ function parameterToOniguruma(parameter: CommandParameter, isLastParameter: bool
   return isLastParameter ? patterns_common.unquotedLastArgumentPattern : patterns_common.unquotedArgumentPattern;
 }
 function parameterToPatternsRule(scopeName: ScopeName, definition: CommandDefinition, parameter: CommandParameter | IncludeRulesCommandParameter, isLastParameter: boolean, placeholder: { startAnchor: string }): PatternsRule {
-  const percentExpressionRule = includeRule(isLastParameter ? Repository.PercentExpressionInLastArgument : Repository.PercentExpression);
+  const percentExpressionRule = ((): IncludeRule => {
+    if (hasFlag(parameter.flags, CommandParameterFlag.RestParams)) {
+      return includeRule(Repository.PercentExpression);
+    }
+    return includeRule(isLastParameter ? Repository.PercentExpressionInLastArgument : Repository.PercentExpression);
+  })();
 
   if ('includes' in parameter) {
     return patternsRule(
@@ -683,30 +688,9 @@ function parameterToPatternsRule(scopeName: ScopeName, definition: CommandDefini
     default: break;
   }
 
-  if (parameter.itemMatchers === undefined || parameter.itemMatchers.length === 0) {
-    if (hasFlag(parameter.flags, CommandParameterFlag.RestParams)) {
-      return patternsRule(
-        includeRule(Repository.Comma),
-        includeRule(Repository.CommandArgument),
-      );
-    }
-    else if (hasFlag(parameter.flags, CommandParameterFlag.WithNumber)) {
-      return patternsRule(includeRule(isLastParameter ? Repository.CommandLastArgumentWithNumber : Repository.CommandArgumentWithNumber));
-    }
-    else if (hasFlag(parameter.flags, CommandParameterFlag.Number)) {
-      return patternsRule(
-        includeRule(isLastParameter ? Repository.PercentExpressionInLastArgument : Repository.PercentExpression),
-
-        includeRule(Repository.DereferenceUnaryOperator),
-        includeRule(Repository.Dereference),
-        includeRule(Repository.Number),
-        includeRule(Repository.CommandInvalidArgument),
-      );
-    }
-    return patternsRule(includeRule(isLastParameter ? Repository.CommandLastArgument : Repository.CommandArgument));
-  }
   return patternsRule(
     percentExpressionRule,
+    ...(hasFlag(parameter.flags, CommandParameterFlag.RestParams) ? [ includeRule(Repository.Comma) ] : []),
 
     createSpacedArgumentTextRule(scopeName, {
       stringRuleName: RuleName.UnquotedString,
@@ -714,7 +698,10 @@ function parameterToPatternsRule(scopeName: ScopeName, definition: CommandDefini
         ...((): Rule[] => {
           const rules: Rule[] = [];
 
-          if (isLastParameter && !hasFlag(parameter.flags, CommandParameterFlag.Keyword)) {
+          if (hasFlag(parameter.flags, CommandParameterFlag.RestParams)) {
+            rules.push(includeRule(Repository.Comma));
+          }
+          else if (isLastParameter && !hasFlag(parameter.flags, CommandParameterFlag.Keyword)) {
             rules.push(
               { name: name(scopeName, RuleName.UnquotedString, StyleName.Escape), match: text('`,') },
               { name: name(scopeName, RuleName.UnquotedString), match: seq(char(',')) },
@@ -749,7 +736,7 @@ function parameterToPatternsRule(scopeName: ScopeName, definition: CommandDefini
           }
           return rules;
         })(),
-        ...itemPatternsToRules(scopeName, parameter.itemMatchers),
+        ...(parameter.itemMatchers && 0 < parameter.itemMatchers.length ? itemPatternsToRules(scopeName, parameter.itemMatchers) : []),
       ],
     }),
   );
