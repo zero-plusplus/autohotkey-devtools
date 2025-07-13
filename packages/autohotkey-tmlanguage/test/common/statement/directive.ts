@@ -77,7 +77,9 @@ export function createDirectiveStatementExpectedData(scopeName: ScopeName, place
           `,
           [
             { text: directive, scopes: name(scopeName, RuleName.DirectiveName) },
-            { text: 'path\\to\\, file .ahk', scopes: name(scopeName, RuleName.UnquotedString) },
+            { text: 'path\\to\\,', scopes: name(scopeName, RuleName.UnquotedString) },
+            { text: 'file', scopes: name(scopeName, RuleName.UnquotedString) },
+            { text: '.ahk', scopes: name(scopeName, RuleName.UnquotedString) },
             { text: '; comment', scopes: name(scopeName, RuleName.InlineComment) },
           ],
         ],
@@ -87,7 +89,9 @@ export function createDirectiveStatementExpectedData(scopeName: ScopeName, place
           `,
           [
             { text: directive, scopes: name(scopeName, RuleName.DirectiveName) },
-            { text: '.\\path\\to\\, file .ahk', scopes: name(scopeName, RuleName.UnquotedString) },
+            { text: '.\\path\\to\\,', scopes: name(scopeName, RuleName.UnquotedString) },
+            { text: 'file', scopes: name(scopeName, RuleName.UnquotedString) },
+            { text: '.ahk', scopes: name(scopeName, RuleName.UnquotedString) },
             { text: '; comment', scopes: name(scopeName, RuleName.InlineComment) },
           ],
         ],

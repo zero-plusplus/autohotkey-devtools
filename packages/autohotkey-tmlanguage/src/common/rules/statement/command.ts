@@ -590,104 +590,6 @@ function parameterToPatternsRule(scopeName: ScopeName, definition: CommandDefini
     );
   }
 
-  switch (parameter.type) {
-    case HighlightType.IncludeLibrary:
-    case HighlightType.QuotableIncludeLibrary:
-    {
-      return patternsRule(
-        {
-          match: seq(
-            capture(negChars0('<')),
-            capture(char('<')),
-            capture(anyChars0()),
-            capture(char('>')),
-            capture(anyChars0()),
-          ),
-          captures: {
-            1: nameRule(scopeName, RuleName.UnquotedString, StyleName.Invalid),
-            2: nameRule(scopeName, RuleName.OpenAngleBracket),
-            3: nameRule(scopeName, RuleName.IncludeLibrary),
-            4: nameRule(scopeName, RuleName.CloseAngleBracket),
-            5: nameRule(scopeName, RuleName.UnquotedString, StyleName.Invalid),
-          },
-        },
-        ...parameter.type === HighlightType.QuotableIncludeLibrary
-          ? [
-            {
-              name: name(scopeName, RuleName.UnquotedString),
-              match: char('"', `'`),
-            },
-            {
-              match: capture(negChars1('`', '"', `'`)),
-              captures: {
-                1: patternsRule(includeRule(Repository.CommandLastArgument)),
-              },
-            },
-          ]
-          : [ includeRule(Repository.CommandLastArgument) ],
-      );
-    }
-    // Make each definition group easily distinguishable by underlining. However, if the underline is applied in TMLanguage, its color cannot be controlled. This should be implemented with semantic highlighting
-    // For example, three groups are underlined in the following cases
-    // e.g. `WinActivate abc ahk_exe abc.exe ahk_class abc`
-    //                   ^^^ ^^^^^^^^^^^^^^^ ^^^^^^^^^^^^^
-    // case HighlightType.WinTitle: {
-    //   return patternsRule(
-    //     includeRule(Repository.PercentExpressions),
-    //     {
-    //       match: seq(
-    //         lookbehind(group(seq(
-    //           char(','),
-    //           inlineSpaces0(),
-    //         ))),
-    //         capture(seq(
-    //           char('%'),
-    //           negChars0('%'),
-    //           char('%'),
-    //         )),
-    //         lookahead(seq(
-    //           inlineSpaces0(),
-    //           alt(char(','), placeholder.endAnchor),
-    //         )),
-    //       ),
-    //       captures: {
-    //         1: patternsRule(includeRule(Repository.Dereference)),
-    //       },
-    //     },
-    //     {
-    //       name: name(scopeName, StyleName.Underline),
-    //       match: capture(seq(
-    //         char('%'),
-    //         negChars0('%'),
-    //         char('%'),
-    //       )),
-    //       captures: {
-    //         1: patternsRule(includeRule(Repository.Dereference)),
-    //       },
-    //     },
-    //     {
-    //       match: capture(groupMany1(capture(seq(
-    //         negChar('%'),
-    //         negativeLookahead(ignoreCase(seq(
-    //           text('ahk_'),
-    //           group(alt(ordalt(
-    //             'class',
-    //             'id',
-    //             'pid',
-    //             'exe',
-    //             'group',
-    //           ))),
-    //         ))),
-    //       )))),
-    //       captures: {
-    //         1: nameRule(scopeName, RuleName.UnquotedString, StyleName.Underline),
-    //       },
-    //     },
-    //   );
-    // }
-    default: break;
-  }
-
   if (parameter.type === HighlightType.UnquotedString) {
     return patternsRule(
       percentExpressionRule,
@@ -803,22 +705,27 @@ function itemPatternToRule(scopeName: ScopeName, itemPattern: ParameterItemMatch
     return itemPattern;
   }
   if ('name' in itemPattern) {
+    if (itemPattern.match === undefined) {
+      return { name: name(scopeName, ...Array.isArray(itemPattern.name) ? itemPattern.name : [ itemPattern.name ]) };
+    }
     return {
       name: name(scopeName, ...Array.isArray(itemPattern.name) ? itemPattern.name : [ itemPattern.name ]),
       match: itemPattern.match,
     };
   }
   return {
+    name: 'name' in itemPattern ? name(scopeName, ...Array.isArray(itemPattern.name) ? itemPattern.name : [ itemPattern.name ]) : undefined,
     match: itemPattern.match,
     captures: Object.fromEntries(Object.entries(itemPattern.captures).map(([ index, matchers ]) => {
+      const rules = matchers.flatMap((matcher): Rule[] => {
+        if (typeof matcher === 'object' && 'include' in matcher) {
+          return [ matcher ];
+        }
+        return itemPatternsToRules(scopeName, Array.isArray(matcher) ? matcher : [ matcher ]);
+      });
       return [
-        index + 1,
-        patternsRule(...matchers.flatMap((matcher): Rule[] => {
-          if (typeof matcher === 'object' && 'include' in matcher) {
-            return [ matcher ];
-          }
-          return itemPatternsToRules(scopeName, Array.isArray(matcher) ? matcher : [ matcher ]);
-        })),
+        Number(index),
+        rules.length === 1 ? rules[0] : patternsRule(...rules),
       ];
     })) as unknown as Captures,
   };

@@ -1,10 +1,11 @@
 import { mergeFlags } from '@zero-plusplus/utilities/src';
 import {
   command, CommandFlag, CommandParameterFlag, encoding, HighlightType, invalid, keywordOnly, optionItem,
-  output, signature, unquotedNumber, unquotedWithNumber,
-  type CommandDefinition, type CommandParameter,
+  output, signature, signOptionItem, unquotedNumber, unquotedWithNumber,
+  type CommandDefinition, type CommandParameter, type ParameterItemMatcher,
 } from '../definition';
-import { seq, wordChars0 } from '../oniguruma';
+import { char, inlineSpace, negChars1, seq, wordChars0 } from '../oniguruma';
+import { includeRule, Repository, RuleName } from '../tmlanguage';
 
 export const undefinedDirective: CommandDefinition = command(seq('#', wordChars0()), signature([ invalid() ]));
 export const compilerDirectives: CommandDefinition[] = [
@@ -73,41 +74,70 @@ export const compilerDirectives: CommandDefinition[] = [
   command('@Ahk2Exe-UseResourceLang', signature([ unquotedWithNumber() ])),
 ];
 
-
-export function unquoted(optionItems?: string[], flags: CommandParameterFlag = CommandParameterFlag.None): CommandParameter {
+export function unquoted(itemMatchers: ParameterItemMatcher[] = [], flags: CommandParameterFlag = CommandParameterFlag.None): CommandParameter {
   return {
-    type: HighlightType.UnquotedStringInCompilerDirective,
+    type: HighlightType.UnquotedString,
     flags: mergeFlags(flags, CommandParameterFlag.CompilerDirective, CommandParameterFlag.WithNumber),
-    itemMatchers: optionItems ?? [],
+    itemMatchers: [
+      includeRule(Repository.DereferenceUnaryOperator),
+      includeRule(Repository.Dereference),
+      ...itemMatchers,
+      includeRule(Repository.Operator),
+      includeRule(Repository.Number),
+      {
+        name: [ RuleName.UnquotedString ],
+        match: char('"', `'`),
+      },
+      includeRule(Repository.UnquotedStringEscapeSequence),
+      {
+        name: [ RuleName.UnquotedString ],
+        match: negChars1('`', '%', inlineSpace(), '0-9'),
+      },
+    ],
   };
 }
 export function fileName(flags: CommandParameterFlag = CommandParameterFlag.None): CommandParameter {
-  return unquoted([
-    optionItem(
-      '*2',
-      '*RT_BITMAP',
-      '*4',
-      '*RT_MENU',
-      '*5',
-      '*RT_DIALOG',
-      '*6',
-      '*RT_STRING',
-      '*9',
-      '*RT_ACCELERATORS',
-      '*10',
-      '*RT_RCDATA',
-      '*11',
-      '*RT_MESSAGETABLE',
-      '*12',
-      '*RT_GROUP_CURSOR',
-      '*14',
-      '*RT_GROUP_ICON',
-      '*23',
-      '*RT_HTML',
-      '*24',
-      '*RT_MANIFEST',
-    ),
-  ], flags);
+  return {
+    type: HighlightType.UnquotedString,
+    flags,
+    itemMatchers: [
+      includeRule(Repository.DereferenceUnaryOperator),
+      includeRule(Repository.Dereference),
+      {
+        name: [ RuleName.UnquotedString ],
+        match: char('"', `'`),
+      },
+      signOptionItem(
+        '*2',
+        '*RT_BITMAP',
+        '*4',
+        '*RT_MENU',
+        '*5',
+        '*RT_DIALOG',
+        '*6',
+        '*RT_STRING',
+        '*9',
+        '*RT_ACCELERATORS',
+        '*10',
+        '*RT_RCDATA',
+        '*11',
+        '*RT_MESSAGETABLE',
+        '*12',
+        '*RT_GROUP_CURSOR',
+        '*14',
+        '*RT_GROUP_ICON',
+        '*23',
+        '*RT_HTML',
+        '*24',
+        '*RT_MANIFEST',
+      ),
+      includeRule(Repository.UnquotedStringEscapeSequenceInCompilerDirective),
+      {
+        name: [ RuleName.UnquotedString ],
+        match: negChars1('"', `'`, '`', '%', inlineSpace(), '0-9'),
+      },
+    ],
+  };
 }
 export function expression(): CommandParameter {
   return {

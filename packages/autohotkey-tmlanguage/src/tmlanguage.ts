@@ -389,7 +389,7 @@ export interface TmLanguage {
 // https://macromates.com/manual/en/language_grammars#rule_keys
 export type Rule = NameRule | PatternsRule | MatchRule | BeginEndRule | BeginWhileRule | IncludeRule;
 export interface RuleBase {
-  name?: ElementName;
+  name?: ElementName | undefined;
   contentName?: ElementName;
   comment?: string;
   disabled?: 1;

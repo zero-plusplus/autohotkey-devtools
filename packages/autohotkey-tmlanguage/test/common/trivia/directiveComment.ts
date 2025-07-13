@@ -14,7 +14,8 @@ export function createDirectiveCommentExpectedData(scopeName: ScopeName): Expect
       [
         { text: ';', scopes: name(scopeName, RuleName.DirectiveComment) },
         { text: '@Ahk2Exe-AddResource', scopes: name(scopeName, RuleName.DirectiveCommentName) },
-        { text: '*2 file\\to\\path', scopes: name(scopeName, RuleName.UnquotedString) },
+        { text: '*2', scopes: name(scopeName, RuleName.UnquotedString, StyleName.Strong) },
+        { text: 'file\\to\\path', scopes: name(scopeName, RuleName.UnquotedString) },
         { text: ',', scopes: name(scopeName, RuleName.Comma) },
         { text: 'X', scopes: name(scopeName, RuleName.UnquotedString) },
         { text: '; comment', scopes: name(scopeName, RuleName.InlineComment) },

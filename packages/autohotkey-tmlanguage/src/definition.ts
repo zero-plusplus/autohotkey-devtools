@@ -2,7 +2,7 @@ import { mergeFlags } from '@zero-plusplus/utilities/src';
 import * as patterns_v1 from './autohotkeyl/patterns';
 import * as constants_common from './common/constants';
 import {
-  alt, anyChars1, capture, char, endAnchor, group, groupMany1, ignoreCase, inlineSpace, inlineSpaces0, lookahead, lookbehind,
+  alt, anyChars0, anyChars1, capture, char, endAnchor, group, groupMany1, ignoreCase, inlineSpace, inlineSpaces0, lookahead, lookbehind,
   negChar, negChars0, negChars1, numbers0, numbers1, optional, optseq, ordalt, seq, text, textalt, wordBound,
 } from './oniguruma';
 import {
@@ -139,11 +139,12 @@ export const enum CommandFlag {
 // #region type
 export interface CommandParameterMatcher {
   name: ElementName | ElementName[];
-  match: string;
+  match?: string;
 }
 export interface CommandParameterCapturedMatcher {
+  name?: ElementName | ElementName[];
   match: string;
-  captures: { [key in number ]: Array<ParameterItemMatcher | IncludeRule> };
+  captures: { [key in number ]: ParameterItemMatcher[] };
 }
 export type ParameterItemMatcher = string | CommandParameterMatcher | CommandParameterCapturedMatcher | IncludeRule;
 export interface CommandParameter {
@@ -475,6 +476,9 @@ export function unquotedWithNumber(itemMatchers: ParameterItemMatcher[] = [], fl
     type: HighlightType.UnquotedStringWithNumber,
     flags,
     itemMatchers: [
+      includeRule(Repository.DereferenceUnaryOperator),
+      includeRule(Repository.Dereference),
+      includeRule(Repository.UnquotedStringEscapeSequence),
       ...itemMatchers,
       includeRule(Repository.Operator),
       includeRule(Repository.Number),
@@ -614,11 +618,59 @@ export function menuItemName(flags: CommandParameterFlag = CommandParameterFlag.
     includes: [ includeRule(Repository.MenuItemNameCommandArgument) ],
   };
 }
-export function includeLib(flags: CommandParameterFlag = CommandParameterFlag.None): CommandParameter {
-  return { type: HighlightType.IncludeLibrary, flags };
+export function includeLib(flags: CommandParameterFlag = CommandParameterFlag.None, quotable = false): CommandParameter {
+  return {
+    type: HighlightType.UnquotedString,
+    flags,
+    itemMatchers: [
+      {
+        match: seq(
+          capture(inlineSpaces0()),
+          capture(char('<')),
+          capture(anyChars0()),
+          capture(char('>')),
+          capture(anyChars0()),
+        ),
+        captures: {
+          1: [ { name: [ RuleName.UnquotedString, StyleName.Invalid ] } ],
+          2: [ { name: RuleName.OpenAngleBracket } ],
+          3: [ { name: RuleName.IncludeLibrary } ],
+          4: [ { name: RuleName.CloseAngleBracket } ],
+          5: [ { name: [ RuleName.UnquotedString, StyleName.Invalid ] } ],
+        },
+      },
+      {
+        match: capture(seq(negChar('<', inlineSpace()), anyChars1())),
+        captures: {
+          1: [
+            includeRule(Repository.DereferenceUnaryOperator),
+            includeRule(Repository.Dereference),
+            includeRule(Repository.UnquotedStringEscapeSequence),
+            ...quotable
+              ? [
+                {
+                  name: [ RuleName.UnquotedString ],
+                  match: char('"', `'`),
+                },
+                {
+                  name: [ RuleName.UnquotedString ],
+                  match: negChars1('`', '"', `'`, '%', inlineSpace()),
+                },
+              ]
+              : [
+                {
+                  name: [ RuleName.UnquotedString ],
+                  match: negChars1('`', '%', inlineSpace()),
+                },
+              ],
+          ],
+        },
+      },
+    ],
+  };
 }
 export function quotableIncludeLib(flags: CommandParameterFlag = CommandParameterFlag.None): CommandParameter {
-  return { type: HighlightType.QuotableIncludeLibrary, flags };
+  return includeLib(flags, true);
 }
 export function requiresVersion(flags: CommandParameterFlag = CommandParameterFlag.None): CommandParameter {
   return unquoted([
@@ -648,6 +700,66 @@ export function menuOptions(values: string[] = [], flags: CommandParameterFlag =
 }
 export function winTitle(flags: CommandParameterFlag = CommandParameterFlag.None): CommandParameter {
   return unquoted([ optionItem('ahk_class', 'ahk_id', 'ahk_pid', 'ahk_exe', 'ahk_group') ], flags);
+
+  // Make each definition group easily distinguishable by underlining. However, if the underline is applied in TMLanguage, its color cannot be controlled. This should be implemented with semantic highlighting
+  // For example, three groups are underlined in the following cases
+  // e.g. `WinActivate abc ahk_exe abc.exe ahk_class abc`
+  //                   ^^^ ^^^^^^^^^^^^^^^ ^^^^^^^^^^^^^
+  // return {
+  //   type: HighlightType.UnquotedString,
+  //   flags,
+  //   itemMatchers: [
+  //     {
+  //       match: seq(
+  //         lookbehind(group(seq(
+  //           char(','),
+  //           inlineSpaces0(),
+  //         ))),
+  //         capture(seq(
+  //           char('%'),
+  //           negChars0('%'),
+  //           char('%'),
+  //         )),
+  //         lookahead(seq(
+  //           inlineSpaces0(),
+  //           alt(char(','), endAnchor()),
+  //         )),
+  //       ),
+  //       captures: {
+  //         1: [ includeRule(Repository.Dereference) ],
+  //       },
+  //     },
+  //     {
+  //       name: [ StyleName.Underline ],
+  //       match: capture(seq(
+  //         char('%'),
+  //         negChars0('%'),
+  //         char('%'),
+  //       )),
+  //       captures: {
+  //         1: [ includeRule(Repository.Dereference) ],
+  //       },
+  //     },
+  //     {
+  //       match: capture(groupMany1(capture(seq(
+  //         negChar('%'),
+  //         negativeLookahead(ignoreCase(seq(
+  //           text('ahk_'),
+  //           group(alt(ordalt(
+  //             'class',
+  //             'id',
+  //             'pid',
+  //             'exe',
+  //             'group',
+  //           ))),
+  //         ))),
+  //       )))),
+  //       captures: {
+  //         1: [ { name: [ RuleName.UnquotedString, StyleName.Underline ] } ],
+  //       },
+  //     },
+  //   ],
+  // };
 }
 export function control(flags: CommandParameterFlag = CommandParameterFlag.None): CommandParameter {
   return unquoted([ optionItem('ahk_id') ], flags);
