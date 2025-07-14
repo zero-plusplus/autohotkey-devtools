@@ -152,14 +152,9 @@ export interface CommandParameter {
   readonly flags: CommandParameterFlag;
   readonly itemMatchers?: ParameterItemMatcher[];
 }
-export interface IncludeRulesCommandParameter {
-  readonly type: HighlightType;
-  readonly flags: CommandParameterFlag;
-  readonly includes: IncludeRule[];
-}
 export interface CommandSignature {
   readonly flags: CommandSignatureFlag;
-  readonly parameters: Array<CommandParameter | IncludeRulesCommandParameter>;
+  readonly parameters: CommandParameter[];
 }
 export interface CommandDefinition {
   readonly name: string;
@@ -635,11 +630,11 @@ export function input(flags: CommandParameterFlag = CommandParameterFlag.None): 
 export function output(flags: CommandParameterFlag = CommandParameterFlag.None): CommandParameter {
   return expression(flags);
 }
-export function menuItemName(flags: CommandParameterFlag = CommandParameterFlag.None): IncludeRulesCommandParameter {
+export function menuItemName(flags: CommandParameterFlag = CommandParameterFlag.None): CommandParameter {
   return {
-    type: HighlightType.MenuItemName,
+    type: HighlightType.UnquotedString,
     flags,
-    includes: [ includeRule(Repository.MenuItemNameCommandArgument) ],
+    itemMatchers: [ includeRule(Repository.MenuItemNameCommandArgument) ],
   };
 }
 export function includeLib(flags: CommandParameterFlag = CommandParameterFlag.None, quotable = false): CommandParameter {
@@ -849,11 +844,11 @@ export function hotkeyName(flags: CommandParameterFlag = CommandParameterFlag.No
   //   ];
   // }
 }
-export function sendKeys(flags: CommandParameterFlag = CommandParameterFlag.None): IncludeRulesCommandParameter {
+export function sendKeys(flags: CommandParameterFlag = CommandParameterFlag.None): CommandParameter {
   return {
-    type: HighlightType.SendKeyName,
+    type: HighlightType.UnquotedString,
     flags,
-    includes: [ includeRule(Repository.CommandArgumentSendKeyName) ],
+    itemMatchers: [ includeRule(Repository.CommandArgumentSendKeyName) ],
   };
 }
 export function timeunit(flags: CommandParameterFlag = CommandParameterFlag.None): CommandParameter {

@@ -1,8 +1,7 @@
 import { hasFlag } from '@zero-plusplus/utilities/src';
 import {
   CommandFlag, CommandParameterFlag, HighlightType,
-  type CommandDefinition, type CommandParameter, type CommandSignature,
-  type IncludeRulesCommandParameter, type ParameterItemMatcher,
+  type CommandDefinition, type CommandParameter, type CommandSignature, type ParameterItemMatcher,
 } from '../../../definition';
 import {
   alt, anyChars0, anyChars1, capture, char, chars1, endAnchor, group, groupMany0, groupMany1, ignoreCase,
@@ -551,22 +550,13 @@ function parameterToOniguruma(parameter: CommandParameter, isLastParameter: bool
   }
   return isLastParameter ? patterns_common.unquotedLastArgumentPattern : patterns_common.unquotedArgumentPattern;
 }
-function parameterToPatternsRule(scopeName: ScopeName, definition: CommandDefinition, parameter: CommandParameter | IncludeRulesCommandParameter, isLastParameter: boolean, placeholder: { startAnchor: string }): PatternsRule {
+function parameterToPatternsRule(scopeName: ScopeName, definition: CommandDefinition, parameter: CommandParameter, isLastParameter: boolean, placeholder: { startAnchor: string }): PatternsRule {
   const percentExpressionRule = ((): IncludeRule => {
     if (hasFlag(parameter.flags, CommandParameterFlag.RestParams)) {
       return includeRule(Repository.PercentExpression);
     }
     return includeRule(isLastParameter ? Repository.PercentExpressionInLastArgument : Repository.PercentExpression);
   })();
-
-  if ('includes' in parameter) {
-    return patternsRule(
-      percentExpressionRule,
-      includeRule(Repository.Dereference),
-
-      ...parameter.includes,
-    );
-  }
 
   if (hasFlag(parameter.flags, CommandParameterFlag.CompilerDirective)) {
     if (hasFlag(parameter.flags, CommandParameterFlag.Expression)) {
