@@ -74,12 +74,6 @@ export const enum HighlightType {
   UnquotedOrKeywords = 'UnquotedOrKeywords',
 
   // Accepts zero or more keywords. Each keyword must be preceded by `+` or `-` and each must have a space
-  // It also accepts an optional gui name for the first argument
-  // e.g. `Gui, GuiName: +Resize`, `Gui, New, +Resize`
-  //            ^^^^^^^^^^^^^^^^              ^^^^^^^
-  GuiOptions = 'GuiOptions',
-
-  // Accepts zero or more keywords. Each keyword must be preceded by `+` or `-` and each must have a space
   // e.g. `GuiControl, +Default`
   //                   ^^^^^^^^
   GuiControlOptions = 'GuiControlOptions',
@@ -597,16 +591,15 @@ export function fileAttributes(flags: CommandParameterFlag = CommandParameterFla
   return keywordOnly([ flagedLetterOptionItem('R', 'A', 'S', 'H', 'N', 'O', 'T') ], flags);
 }
 export function guiOptions(flags: CommandParameterFlag = CommandParameterFlag.None): CommandParameter {
-  return {
-    type: HighlightType.GuiOptions,
-    flags: mergeFlags(flags, CommandParameterFlag.Labeled),
-    itemMatchers: [
+  return unquoted(
+    [
       flagedOptionItem('AlwaysOnTop', 'Border', 'Caption', 'DelimiterSpace', 'DelimiterTab', 'Disabled', 'DPIScale', 'LastFoundExist', 'MaximizeBox', 'MinimizeBox', 'OwnDialogs', 'Owner', 'Parent', 'Resize', 'SysMenu', 'Theme', 'ToolWindow'),
       flagedStringOptionItem('Delimiter'),
       flagedIdentifierOptionItem('Hwnd', 'Label', 'LastFound'),
       flagedSizeOptionItem('MinSize', 'MaxSize'),
     ],
-  };
+    mergeFlags(flags, CommandParameterFlag.Labeled),
+  );
 }
 export function keywordOnly(values: string[] = [], flags: CommandParameterFlag = CommandParameterFlag.None): CommandParameter {
   return {
@@ -793,17 +786,16 @@ export function controlMoveOptions(): CommandParameter {
   return unquoted([ numberOptionItem('X', 'Y', 'W', 'H') ]);
 }
 export function guiControlOptions(_flaged = false): CommandParameter {
-  return {
-    type: HighlightType.GuiOptions,
-    flags: CommandParameterFlag.Labeled,
-    itemMatchers: [
+  return unquoted(
+    [
       (_flaged ? flagedSignedNumberOptionItem : signedNumberOptionItem)('R', 'W', 'H', 'WP', 'HP', 'X', 'Y', 'XP', 'YP', 'XM', 'YM', 'XS', 'YS', 'Choose', 'VScroll', 'HScroll'),
       (_flaged ? flagedOptionItem : optionItem)('X+M', 'X-M', 'Y+M', 'Y-M', 'Left', 'Right', 'Center', 'Section', 'Tabstop', 'Wrap', 'AltSubmit', 'CDefault', 'BackgroundTrans', 'Background', 'Border', 'Theme'),
       (_flaged ? flagedIdentifierOptionItem : identifierOptionItem)('V', 'G', 'Hwnd'),
       (_flaged ? flagedHexOptionItem : hexOptionItem)('C'),
       (_flaged ? flagedToggleOptionItem : toggleOptionItem)('Disabled', 'Hidden'),
     ],
-  };
+    CommandParameterFlag.Labeled,
+  );
 }
 export function flagedGuiControlOptions(): CommandParameter {
   return guiControlOptions(true);
