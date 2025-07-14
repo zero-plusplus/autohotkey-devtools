@@ -208,8 +208,18 @@ export function createSpacedOptionItemPattern(pattern: string): string {
     )),
   );
 }
+export function createQuotableOptionItemPattern(pattern: string): string {
+  return seq(
+    group(alt(lookahead(char('"', `'`)), wordBound())),
+    pattern,
+    group(alt(alt(lookahead(char('"', `'`)), wordBound()))),
+  );
+}
 export function optionItem(...options: string[]): string {
   return seq(wordBound(), ignoreCase(textalt(...options)), wordBound());
+}
+export function quotableOptionItem(...options: string[]): string {
+  return createQuotableOptionItemPattern(ignoreCase(textalt(...options)));
 }
 export function signOptionItem(...options: string[]): string {
   return seq(ignoreCase(textalt(...options)), wordBound());
@@ -327,6 +337,12 @@ export function decimalOptionItem(...options: string[]): string {
 }
 export function numberOptionItem(...options: string[]): string {
   return createSpacedOptionItemPattern(seq(
+    ignoreCase(textalt(...options)),
+    optional(numberPattern()),
+  ));
+}
+export function quotableNumberOptionItem(...options: string[]): string {
+  return createQuotableOptionItemPattern(seq(
     ignoreCase(textalt(...options)),
     optional(numberPattern()),
   ));
@@ -460,7 +476,7 @@ export function unquoted(itemMatchers: ParameterItemMatcher[] = [], flags: Comma
       ...itemMatchers,
       {
         name: [ RuleName.UnquotedString ],
-        match: negChars1('`', inlineSpace()),
+        match: negChars1('`', '%', inlineSpace()),
       },
     ],
   };
@@ -473,56 +489,64 @@ export function unquotedInteger(...optionItems: string[]): CommandParameter {
 }
 export function unquotedWithNumber(itemMatchers: ParameterItemMatcher[] = [], flags: CommandParameterFlag = CommandParameterFlag.None): CommandParameter {
   return {
-    type: HighlightType.UnquotedStringWithNumber,
+    type: HighlightType.UnquotedString,
     flags,
     itemMatchers: [
       includeRule(Repository.DereferenceUnaryOperator),
       includeRule(Repository.Dereference),
-      includeRule(Repository.UnquotedStringEscapeSequence),
-      ...itemMatchers,
       includeRule(Repository.Operator),
       includeRule(Repository.Number),
+      ...itemMatchers,
+
+      includeRule(Repository.UnquotedStringEscapeSequence),
+      {
+        name: [ RuleName.UnquotedString ],
+        match: negChars1('`', '%', '0-9', inlineSpace()),
+      },
     ],
   };
 }
 export function unquotedNumber(...itemMatchers: ParameterItemMatcher[]): CommandParameter {
   return {
-    type: HighlightType.NumberInCommandArgument,
+    type: HighlightType.UnquotedString,
     flags: CommandParameterFlag.None,
     itemMatchers: [
-      ...itemMatchers,
+      includeRule(Repository.DereferenceUnaryOperator),
+      includeRule(Repository.Dereference),
       includeRule(Repository.Operator),
       includeRule(Repository.Number),
+      ...itemMatchers,
       {
         name: [ RuleName.UnquotedString, StyleName.Invalid ],
-        match: anyChars1(),
+        match: negChars1('%', '0-9', inlineSpace()),
       },
     ],
   };
 }
 export function unquotedAndBoolean(flags: CommandParameterFlag = CommandParameterFlag.None): CommandParameter {
   return {
-    type: HighlightType.UnquotedBooleanLike,
+    type: HighlightType.UnquotedString,
     flags,
     itemMatchers: [ includeRule(Repository.CommandArgumentBooleanLike) ],
   };
 }
 export function quotableUnquoted(itemMatchers: ParameterItemMatcher[] = [], flags: CommandParameterFlag = CommandParameterFlag.None): CommandParameter {
   return {
-    type: HighlightType.QuotableUnquotedString,
+    type: HighlightType.UnquotedString,
     flags,
     itemMatchers: [
       includeRule(Repository.DereferenceUnaryOperator),
       includeRule(Repository.Dereference),
+
+      ...itemMatchers,
       includeRule(Repository.UnquotedStringEscapeSequence),
       {
-        name: RuleName.UnquotedString,
+        name: [ RuleName.UnquotedString ],
         match: char('"', `'`),
       },
-      ...itemMatchers,
       {
-        name: RuleName.UnquotedString,
-        match: negChars1('`', '"', `'`, inlineSpace()),
+        name: [ RuleName.UnquotedString ],
+        match: negChars1('`', '%', '"', `'`, inlineSpace()),
       },
     ],
   };
@@ -811,7 +835,7 @@ export function encoding(flags: CommandParameterFlag = CommandParameterFlag.None
   return unquoted([ optionItem('CP0', 'UTF-8', 'UTF-8-RAW', 'UTF-16', 'UTF-16-RAW'), numberOptionItem('CP') ], flags);
 }
 export function quotableEncoding(flags: CommandParameterFlag = CommandParameterFlag.None): CommandParameter {
-  return quotableUnquoted(encoding().itemMatchers, flags);
+  return quotableUnquoted([ quotableOptionItem('CP0', 'UTF-8', 'UTF-8-RAW', 'UTF-16', 'UTF-16-RAW'), quotableNumberOptionItem('CP') ], flags);
 }
 export function keyName(flags: CommandParameterFlag = CommandParameterFlag.None): CommandParameter {
   return unquoted([ optionItem(...constants_common.keyNameList), hexOptionItem('sc', 'vk') ], flags);
