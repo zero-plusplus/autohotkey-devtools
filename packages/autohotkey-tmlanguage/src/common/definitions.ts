@@ -75,6 +75,8 @@ export const compilerDirectives: CommandDefinition[] = [
 ];
 
 export function unquoted(itemMatchers: ParameterItemMatcher[] = [], flags: CommandParameterFlag = CommandParameterFlag.None): CommandParameter {
+  // e.g. `; @Ahk2Exe-AddResource fileName`
+  //                              ^^^^^^^^
   return {
     type: HighlightType.UnquotedString,
     flags: mergeFlags(flags, CommandParameterFlag.CompilerDirective, CommandParameterFlag.WithNumber),
@@ -140,8 +142,10 @@ export function fileName(flags: CommandParameterFlag = CommandParameterFlag.None
   };
 }
 export function expression(): CommandParameter {
+  // e.g. `; @Ahk2Exe-Let name = value`
+  //                      ^^^^^^^^^^^^
   return {
-    type: HighlightType.ExpressionInCompilerDirective,
+    type: HighlightType.Expression,
     flags: mergeFlags(CommandParameterFlag.Expression, CommandParameterFlag.CompilerDirective),
     itemMatchers: [],
   };

@@ -17,91 +17,10 @@ export const scopeNames = [ 'autohotkey', 'autohotkeynext', 'autohotkeyl', 'auto
 // #region enum
 export const enum HighlightType {
   Blank = 'Blank',
-  // e.g. `#If var + fn()`
-  //           ^^^^^^^^^^
-  Expression = 'Expression',
   UnquotedString = 'UnquotedString',
-  UnquotedStringWithNumber = 'UnquotedStringWithNumber',
-  UnquotedBooleanLike = 'UnquotedBooleanLike',
-  QuotableUnquotedString = 'QuotableUnquotedString',
-  NumberInCommandArgument = 'NumberInCommandArgument',
-  // e.g. `Send, {LButton 5}`
-  //             ^^^^^^^^^^^
-  SendKeyName = 'SendKeyName',
-  // e.g. `#Include path\to`, `#Include <lib>`
-  //                ^^^^^^^             ^^^^^
-  IncludeLibrary = 'IncludeLibrary',
-  QuotableIncludeLibrary = 'QuotableIncludeLibrary',
-
-  // e.g. `arg1, arg2`
-  //       ^^^^^^^^^^
-  RestParams = 'RestParams',
-  LabelName = 'LabelName',
-  // Keywords to distinguish between signatures
-  // e.g. `Control, Check`, `Control, UnCheck`
-  //                ^^^^^             ^^^^^^^
   SubCommand = 'SubCommand',
-  // Applies only to the first argument of the following two commands
-  // Not originally necessary. However, added to distinguish between strict signatures
-  // https://www.autohotkey.com/docs/v1/lib/Progress.htm
-  // https://www.autohotkey.com/docs/v1/lib/SplashImage.htm
-  // e.g. `Progress, Off`, `SplashImage, Off`
-  //                 ^^^                 ^^^
-  SubCommandLike = 'SubCommandLike',
-  // Basically the same as SubCommand, but the highlighted color is the same as the control flow keyword
-  // e.g. `Loop Files`, `Loop Parse`
-  //            ^^^^^         ^^^^^
-  FlowSubCommand = 'FlowSubCommand',
-  // In addition to SubCommand, a label-like syntax is added. Mainly used in commands that deal with Gui
-  // e.g. `Gui, Add`, `Gui, GuiName:Add`
-  //            ^^^         ^^^^^^^^^^^
-  GuiSubCommand = 'GuiSubCommand',
-  Input = 'Input',
-  Output = 'Output',
-  Invalid = 'Invalid',
-
-  // Accepts one arbitrary keyword, otherwise not accepted
-  // e.g. `Gui, Flash, Off`
-  //                   ^^^
-  KeywordOnly = 'KeywordOnly',
-  // e.g. `PixelGetColor, output, x, y, Fast RGB`
-  //                                    ^^^^ ^^^
-  SpacedKeywordsOnly = 'SpacedKeywordsOnly',
-
-  // Accepts zero or more unquoted strings or keywords. Must have a space between each
-  // e.g. `ControlClick x123 y123`, `Click, 100 100 LButton`
-  //                    ^^^^ ^^^^           ^^^ ^^^ ^^^^^^^
-  UnquotedOrKeywords = 'UnquotedOrKeywords',
-
-  // Accepts zero or more keywords. Each keyword must be preceded by `+` or `-` and each must have a space
-  // e.g. `GuiControl, +Default`
-  //                   ^^^^^^^^
-  GuiControlOptions = 'GuiControlOptions',
-
-  // https://www.autohotkey.com/docs/v1/lib/Menu.htm#MenuItemName
-  // In the following example, `&O` needs to be emphasized and `&&` needs to be escaped
-  // e.g. `Menu, MenuName, Add, &Open`, `Menu, MenuName, Add, Save && Exit`
-  MenuItemName = 'MenuItemName',
-
-  // e.g. `Control, Style, ^0x800000`, `WinSet, Style, -0xC00000`
-  //                       ^^^^^^^^^                   ^^^^^^^^^
-  Style = 'Style',
-
-  // e.g. `WinGet, output,ID, abc ahk_exe abc.exe ahk_class abc
-  //                          ^^^ ^^^^^^^^^^^^^^^ ^^^^^^^^^^^^^
-  WinTitle = 'WinTitle',
-
-  // e.g. `#Module ModuleName`
-  //               ^^^^^^^^^^
-  Namespace = 'Namespace',
-
-  // e.g. `; @Ahk2Exe-AddResource fileName`
-  //                              ^^^^^^^^
-  UnquotedStringInCompilerDirective = 'UnquotedStringInCompilerDirective',
-
-  // e.g. `; @Ahk2Exe-Let name = value`
-  //                      ^^^^^^^^^^^^
-  ExpressionInCompilerDirective = 'ExpressionInCompilerDirective',
+  Expression = 'Expression',
+  RestParams = 'RestParams',
 }
 export const enum CommandSignatureFlag {
   None = 0,
@@ -398,6 +317,9 @@ export function parameterless(): CommandParameter[] {
   return [ invalid() ];
 }
 export function subcommand(values: string | string[] = [], flags: CommandParameterFlag = CommandParameterFlag.None): CommandParameter {
+  // Keywords to distinguish between signatures
+  // e.g. `Control, Check`, `Control, UnCheck`
+  //                ^^^^^             ^^^^^^^
   return {
     type: HighlightType.SubCommand,
     flags: mergeFlags(flags, CommandParameterFlag.SubCommand),
@@ -410,6 +332,12 @@ export function subcommand(values: string | string[] = [], flags: CommandParamet
   };
 }
 export function subcommandlike(values: string | string[] = [], flags: CommandParameterFlag = CommandParameterFlag.None): CommandParameter {
+  // Applies only to the first argument of the following two commands
+  // Not originally necessary. However, added to distinguish between strict signatures
+  // https://www.autohotkey.com/docs/v1/lib/Progress.htm
+  // https://www.autohotkey.com/docs/v1/lib/SplashImage.htm
+  // e.g. `Progress, Off`, `SplashImage, Off`
+  //                 ^^^                 ^^^
   return {
     type: HighlightType.SubCommand,
     flags: mergeFlags(flags, CommandParameterFlag.SubCommand),
@@ -422,8 +350,11 @@ export function subcommandlike(values: string | string[] = [], flags: CommandPar
   };
 }
 export function flowSubcommand(values: string | string[] = [], flags: CommandParameterFlag = CommandParameterFlag.None): CommandParameter {
+  // Basically the same as SubCommand, but the highlighted color is the same as the control flow keyword
+  // e.g. `Loop Files`, `Loop Parse`
+  //            ^^^^^         ^^^^^
   return {
-    type: HighlightType.FlowSubCommand,
+    type: HighlightType.SubCommand,
     flags: mergeFlags(flags, CommandParameterFlag.SubCommand),
     itemMatchers: [
       {
@@ -434,8 +365,11 @@ export function flowSubcommand(values: string | string[] = [], flags: CommandPar
   };
 }
 export function guiSubcommand(values: string | string[] = [], flags: CommandParameterFlag = CommandParameterFlag.None): CommandParameter {
+  // In addition to SubCommand, a label-like syntax is added. Mainly used in commands that deal with Gui
+  // e.g. `Gui, Add`, `Gui, GuiName:Add`
+  //            ^^^         ^^^^^^^^^^^
   return {
-    type: HighlightType.GuiSubCommand,
+    type: HighlightType.SubCommand,
     flags: mergeFlags(flags, CommandParameterFlag.SubCommand, CommandParameterFlag.Labeled),
     itemMatchers: [
       {
@@ -550,26 +484,21 @@ export function restParams(itemMatchers: ParameterItemMatcher[] = [], flags: Com
     ],
   };
 }
-export function labelName(values: string[] = [], flags: CommandParameterFlag = CommandParameterFlag.None): CommandParameter {
+export function labelName(flags: CommandParameterFlag = CommandParameterFlag.None): CommandParameter {
   return {
-    type: HighlightType.LabelName,
+    type: HighlightType.UnquotedString,
     flags,
-    itemMatchers: values.map((value) => {
-      return {
-        match: capture(ignoreCase(value)),
-        captures: {
-          1: [ includeRule(Repository.LabelName) ],
-        },
-      };
-    }),
+    itemMatchers: [ includeRule(Repository.LabelName) ],
   };
 }
 export function expression(flags: CommandParameterFlag = CommandParameterFlag.None): CommandParameter {
   return { type: HighlightType.Expression, flags: mergeFlags(flags, CommandParameterFlag.Expression) };
 }
 export function style(flags: CommandParameterFlag = CommandParameterFlag.None): CommandParameter {
+  // e.g. `Control, Style, ^0x800000`, `WinSet, Style, -0xC00000`
+  //                       ^^^^^^^^^                   ^^^^^^^^^
   return {
-    type: HighlightType.Style,
+    type: HighlightType.UnquotedString,
     flags,
     itemMatchers: [
       {
@@ -601,20 +530,28 @@ export function guiOptions(flags: CommandParameterFlag = CommandParameterFlag.No
     mergeFlags(flags, CommandParameterFlag.Labeled),
   );
 }
-export function keywordOnly(values: string[] = [], flags: CommandParameterFlag = CommandParameterFlag.None): CommandParameter {
+export function keywordOnly(itemMatchers: ParameterItemMatcher[] = [], flags: CommandParameterFlag = CommandParameterFlag.None): CommandParameter {
+  // Accepts one arbitrary keyword, otherwise not accepted
+  // e.g. `Gui, Flash, Off`
+  //                   ^^^
   return {
-    type: HighlightType.KeywordOnly,
+    type: HighlightType.UnquotedString,
     flags: mergeFlags(flags, CommandParameterFlag.Keyword),
     itemMatchers: [
-      ...values,
+      includeRule(Repository.DereferenceUnaryOperator),
+      includeRule(Repository.Dereference),
+
+      ...itemMatchers,
       {
         name: [ RuleName.UnquotedString, StyleName.Invalid ],
-        match: negChars0('`', inlineSpace()),
+        match: negChars0(inlineSpace()),
       },
     ],
   };
 }
 export function spacedKeywordsOnly(values: string[] = [], flags: CommandParameterFlag = CommandParameterFlag.None): CommandParameter {
+  // e.g. `PixelGetColor, output, x, y, Fast RGB`
+  //                                    ^^^^ ^^^
   return keywordOnly(values, flags);
 }
 export function input(flags: CommandParameterFlag = CommandParameterFlag.None): CommandParameter {
@@ -624,6 +561,9 @@ export function output(flags: CommandParameterFlag = CommandParameterFlag.None):
   return expression(flags);
 }
 export function menuItemName(flags: CommandParameterFlag = CommandParameterFlag.None): CommandParameter {
+  // https://www.autohotkey.com/docs/v1/lib/Menu.htm#MenuItemName
+  // In the following example, `&O` needs to be emphasized and `&&` needs to be escaped
+  // e.g. `Menu, MenuName, Add, &Open`, `Menu, MenuName, Add, Save && Exit`
   return {
     type: HighlightType.UnquotedString,
     flags,
@@ -631,6 +571,8 @@ export function menuItemName(flags: CommandParameterFlag = CommandParameterFlag.
   };
 }
 export function includeLib(flags: CommandParameterFlag = CommandParameterFlag.None, quotable = false): CommandParameter {
+  // e.g. `#Include path\to`, `#Include <lib>`
+  //                ^^^^^^^             ^^^^^
   return {
     type: HighlightType.UnquotedString,
     flags,
@@ -711,6 +653,8 @@ export function menuOptions(values: string[] = [], flags: CommandParameterFlag =
   ], flags);
 }
 export function winTitle(flags: CommandParameterFlag = CommandParameterFlag.None): CommandParameter {
+  // e.g. `WinGet, output,ID, abc ahk_exe abc.exe ahk_class abc
+  //                          ^^^ ^^^^^^^^^^^^^^^ ^^^^^^^^^^^^^
   return unquoted([ optionItem('ahk_class', 'ahk_id', 'ahk_pid', 'ahk_exe', 'ahk_group') ], flags);
 
   // Make each definition group easily distinguishable by underlining. However, if the underline is applied in TMLanguage, its color cannot be controlled. This should be implemented with semantic highlighting
@@ -786,6 +730,9 @@ export function controlMoveOptions(): CommandParameter {
   return unquoted([ numberOptionItem('X', 'Y', 'W', 'H') ]);
 }
 export function guiControlOptions(_flaged = false): CommandParameter {
+  // Accepts zero or more keywords. Each keyword must be preceded by `+` or `-` and each must have a space
+  // e.g. `GuiControl, +Default`
+  //                   ^^^^^^^^
   return unquoted(
     [
       (_flaged ? flagedSignedNumberOptionItem : signedNumberOptionItem)('R', 'W', 'H', 'WP', 'HP', 'X', 'Y', 'XP', 'YP', 'XM', 'YM', 'XS', 'YS', 'Choose', 'VScroll', 'HScroll'),
@@ -816,7 +763,7 @@ export function imagePath(flags: CommandParameterFlag = CommandParameterFlag.Non
   return path([ stringOptionItem('HICON:', 'HBITMAP:') ], flags);
 }
 export function glob(flags: CommandParameterFlag = CommandParameterFlag.None): CommandParameter {
-  return { type: HighlightType.UnquotedString, flags, itemMatchers: [] };
+  return unquoted([], flags);
 }
 export function encoding(flags: CommandParameterFlag = CommandParameterFlag.None): CommandParameter {
   return unquoted([ optionItem('CP0', 'UTF-8', 'UTF-8-RAW', 'UTF-16', 'UTF-16-RAW'), numberOptionItem('CP') ], flags);
@@ -829,19 +776,11 @@ export function keyName(flags: CommandParameterFlag = CommandParameterFlag.None)
 }
 export function hotkeyName(flags: CommandParameterFlag = CommandParameterFlag.None): CommandParameter {
   return unquoted([], flags);
-  //   return {
-  //     type: HighlightType.HotkeyName,
-  //     flags,
-  //     values: [
-  //   ];
-  // }
 }
 export function sendKeys(flags: CommandParameterFlag = CommandParameterFlag.None): CommandParameter {
-  return {
-    type: HighlightType.UnquotedString,
-    flags,
-    itemMatchers: [ includeRule(Repository.CommandArgumentSendKeyName) ],
-  };
+  // e.g. `Send, {LButton 5}`
+  //             ^^^^^^^^^^^
+  return unquoted([ includeRule(Repository.CommandArgumentSendKeyName) ], flags);
 }
 export function timeunit(flags: CommandParameterFlag = CommandParameterFlag.None): CommandParameter {
   return keywordOnly([ optionItem('Seconds', 'S', 'Minutes', 'M', 'Hours', 'H', 'Days', 'D') ], flags);

@@ -16,8 +16,10 @@ export const directiveDefinitions: CommandDefinition[] = [
 ];
 
 export function namespace(): CommandParameter {
+  // e.g. `#Module ModuleName`
+  //               ^^^^^^^^^^
   return {
-    type: HighlightType.Namespace,
+    type: HighlightType.UnquotedString,
     flags: CommandParameterFlag.None,
     itemMatchers: [
       {
