@@ -29,7 +29,6 @@ export const enum CommandParameterFlag {
 
   Keyword = 1 << 16,
   GuiLabeled = 1 << 17,
-  CaseSensitive = 1 << 18,
 }
 export const enum CommandFlag {
   None = 0,
@@ -138,8 +137,11 @@ export function endKeyOptionItem(): string {
 export function matchKeyOptionItem(): string {
   return negChars1(',');
 }
+export function caseSensitiveLetterOptionItem(...options: string[]): string {
+  return groupMany1(textalt(...options));
+}
 export function letterOptionItem(...options: string[]): string {
-  return groupMany1(ignoreCase(textalt(...options)));
+  return ignoreCase(caseSensitiveLetterOptionItem(...options));
 }
 export function flagedLetterOptionItem(...options: string[]): string {
   return seq(
@@ -767,7 +769,10 @@ export function timeunit(flags: CommandParameterFlag = CommandParameterFlag.None
   return keywordOnly([ optionItem('Seconds', 'S', 'Minutes', 'M', 'Hours', 'H', 'Days', 'D') ], flags);
 }
 export function formatTime(flags: CommandParameterFlag = CommandParameterFlag.None): CommandParameter {
-  return unquoted([ letterOptionItem('d', 'dd', 'ddd', 'dddd', 'M', 'MM', 'MMM', 'MMMM', 'y', 'yy', 'yyyy', 'gg', 'h', 'hh', 'H', 'HH', 'm', 'mm', 's', 'ss', 't', 'tt') ], CommandParameterFlag.CaseSensitive | flags);
+  return unquoted(
+    [ caseSensitiveLetterOptionItem('d', 'dd', 'ddd', 'dddd', 'M', 'MM', 'MMM', 'MMMM', 'y', 'yy', 'yyyy', 'gg', 'h', 'hh', 'H', 'HH', 'm', 'mm', 's', 'ss', 't', 'tt') ],
+    flags,
+  );
 }
 export function color(flags: CommandParameterFlag = CommandParameterFlag.None): CommandParameter {
   return unquoted([ optionItem('Default', 'Black', 'Silver', 'Gray', 'White', 'Maroon', 'Red', 'Purple', 'Fuchsia', 'Green', 'Lime', 'Olive', 'Yellow', 'Navy', 'Blue', 'Teal', 'Aqua') ], flags);
