@@ -29,8 +29,8 @@ export const enum CommandParameterFlag {
   CompilerDirective = 1 << 5,
 
   Keyword = 1 << 16,
-  Labeled = 1 << 18,
-  CaseSensitive = 1 << 19,
+  GuiLabeled = 1 << 17,
+  CaseSensitive = 1 << 18,
 }
 export const enum CommandFlag {
   None = 0,
@@ -355,7 +355,7 @@ export function guiSubcommand(values: string | string[] = [], flags: CommandPara
   // e.g. `Gui, Add`, `Gui, GuiName:Add`
   //            ^^^         ^^^^^^^^^^^
   return {
-    flags: mergeFlags(flags, CommandParameterFlag.SubCommand, CommandParameterFlag.Labeled),
+    flags: mergeFlags(flags, CommandParameterFlag.SubCommand, CommandParameterFlag.GuiLabeled),
     itemMatchers: [
       {
         name: RuleName.SubCommandName,
@@ -509,7 +509,7 @@ export function guiOptions(flags: CommandParameterFlag = CommandParameterFlag.No
       flagedIdentifierOptionItem('Hwnd', 'Label', 'LastFound'),
       flagedSizeOptionItem('MinSize', 'MaxSize'),
     ],
-    mergeFlags(flags, CommandParameterFlag.Labeled),
+    mergeFlags(flags, CommandParameterFlag.GuiLabeled),
   );
 }
 export function keywordOnly(itemMatchers: ParameterItemMatcher[] = [], flags: CommandParameterFlag = CommandParameterFlag.None): CommandParameter {
@@ -720,7 +720,7 @@ export function guiControlOptions(_flaged = false): CommandParameter {
       (_flaged ? flagedHexOptionItem : hexOptionItem)('C'),
       (_flaged ? flagedToggleOptionItem : toggleOptionItem)('Disabled', 'Hidden'),
     ],
-    CommandParameterFlag.Labeled,
+    CommandParameterFlag.GuiLabeled,
   );
 }
 export function flagedGuiControlOptions(): CommandParameter {

@@ -495,7 +495,7 @@ function lookaheadOnigurumaByParameters(parameters: CommandParameter[]): string 
 
       if (hasFlag(parameter.flags, CommandParameterFlag.SubCommand)) {
         const subcommandPattern = parameterToSubCommandPattern(parameter);
-        if (hasFlag(parameter.flags, CommandParameterFlag.Labeled)) {
+        if (hasFlag(parameter.flags, CommandParameterFlag.GuiLabeled)) {
           return seq(
             labelPattern,
             inlineSpaces0(),
@@ -504,7 +504,7 @@ function lookaheadOnigurumaByParameters(parameters: CommandParameter[]): string 
         }
         return subcommandPattern;
       }
-      else if (hasFlag(parameter.flags, CommandParameterFlag.Labeled)) {
+      else if (hasFlag(parameter.flags, CommandParameterFlag.GuiLabeled)) {
         return labelPattern;
       }
       return optional(parameterToOniguruma(parameter, false));
@@ -587,7 +587,7 @@ function parameterToPatternsRule(scopeName: ScopeName, definition: CommandDefini
 
     // gui label
     ...((): Rule[] => {
-      if (hasFlag(parameter.flags, CommandParameterFlag.Labeled)) {
+      if (hasFlag(parameter.flags, CommandParameterFlag.GuiLabeled)) {
         // e.g. `Gui, GuiName:+Resize`
         //            ^^^^^^^^
         return [
