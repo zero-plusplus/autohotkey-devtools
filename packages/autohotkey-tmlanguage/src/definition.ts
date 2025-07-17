@@ -15,6 +15,11 @@ export const scopeNames = [ 'autohotkey', 'autohotkeynext', 'autohotkeyl', 'auto
 // #endregion constants
 
 // #region enum
+export const enum CommandFlag {
+  None = 0,
+  Deprecated = 1 << 0,
+  Removed = 1 << 1,
+}
 export const enum CommandSignatureFlag {
   None = 0,
   Deprecated = 1 << 0,
@@ -29,11 +34,6 @@ export const enum CommandParameterFlag {
 
   Keyword = 1 << 16,
   GuiLabeled = 1 << 17,
-}
-export const enum CommandFlag {
-  None = 0,
-  Deprecated = 1 << 0,
-  Removed = 1 << 1,
 }
 // #endregion enum
 
