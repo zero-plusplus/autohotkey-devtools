@@ -474,7 +474,10 @@ export function labelName(flags: CommandParameterFlag = CommandParameterFlag.Non
   };
 }
 export function expression(flags: CommandParameterFlag = CommandParameterFlag.None): CommandParameter {
-  return { flags: mergeFlags(flags, CommandParameterFlag.Expression) };
+  return {
+    flags: mergeFlags(flags, CommandParameterFlag.Expression),
+    itemMatchers: [ includeRule(Repository.Expression) ],
+  };
 }
 export function style(flags: CommandParameterFlag = CommandParameterFlag.None): CommandParameter {
   // e.g. `Control, Style, ^0x800000`, `WinSet, Style, -0xC00000`

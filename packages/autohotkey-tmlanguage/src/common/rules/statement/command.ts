@@ -549,16 +549,6 @@ function parameterToPatternsRule(scopeName: ScopeName, definition: CommandDefini
     return includeRule(isLastParameter ? Repository.PercentExpressionInLastArgument : Repository.PercentExpression);
   })();
 
-  if (hasFlag(parameter.flags, CommandParameterFlag.Expression)) {
-    return patternsRule(
-      percentExpressionRule,
-
-      includeRule(Repository.Comma),
-      includeRule(Repository.InlineTrivias),
-      includeRule(Repository.Expression),
-    );
-  }
-
   return patternsRule(
     // percent expression
     ...((): Rule[] => {
@@ -570,7 +560,7 @@ function parameterToPatternsRule(scopeName: ScopeName, definition: CommandDefini
 
     // comma
     ...((): Rule[] => {
-      if (hasFlag(parameter.flags, CommandParameterFlag.RestParams)) {
+      if (hasFlag(parameter.flags, CommandParameterFlag.RestParams) || hasFlag(parameter.flags, CommandParameterFlag.Expression)) {
         return [ includeRule(Repository.Comma) ];
       }
       if (isLastParameter && hasFlag(parameter.flags, CommandParameterFlag.Blank)) {
