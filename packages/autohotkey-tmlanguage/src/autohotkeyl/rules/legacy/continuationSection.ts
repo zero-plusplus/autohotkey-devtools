@@ -8,7 +8,7 @@ import {
 } from '../../../tmlanguage';
 
 interface Placeholder {
-  endAnchor: string;
+  endPattern: string;
 }
 export function createContinuationSectionRule(scopeName: ScopeName, placeholder: Placeholder): BeginEndRule {
   return {
@@ -18,7 +18,7 @@ export function createContinuationSectionRule(scopeName: ScopeName, placeholder:
       capture(char('(')),
       inlineSpaces0(),
       capture(negChars0(')')),
-      lookahead(placeholder.endAnchor),
+      lookahead(placeholder.endPattern),
     ),
     beginCaptures: {
       1: nameRule(scopeName, RuleName.OpenParen),
@@ -39,7 +39,7 @@ export function createContinuationSectionRule(scopeName: ScopeName, placeholder:
       inlineSpaces0(),
       optional(capture(char(','))),
       inlineSpaces0(),
-      lookahead(placeholder.endAnchor),
+      lookahead(placeholder.endPattern),
     ),
     endCaptures: {
       1: nameRule(scopeName, RuleName.CloseParen),

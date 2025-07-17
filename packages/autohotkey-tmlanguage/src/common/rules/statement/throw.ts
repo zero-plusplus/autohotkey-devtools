@@ -5,7 +5,7 @@ import {
 } from '../../../tmlanguage';
 
 interface Placeholder {
-  startAnchor: string;
+  startPattern: string;
   assignmentOperators: readonly string[];
 }
 export function createThrowStatementRule(scopeName: ScopeName, placeholder: Placeholder): PatternsRule {

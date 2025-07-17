@@ -5,13 +5,13 @@ import {
 } from '../../../tmlanguage';
 
 interface Placeholder {
-  startAnchor: string;
+  startPattern: string;
   labelPattern: string;
 }
 export function createLabelRule(scopeName: ScopeName, placeholder: Placeholder): MatchRule {
   return {
     match: seq(
-      lookbehind(placeholder.startAnchor),
+      lookbehind(placeholder.startPattern),
       inlineSpaces0(),
       capture(placeholder.labelPattern),
       capture(seq(char(':'), negativeLookahead(char(':', '=')))),

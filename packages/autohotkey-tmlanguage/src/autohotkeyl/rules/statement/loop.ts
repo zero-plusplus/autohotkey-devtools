@@ -7,8 +7,8 @@ import {
 } from '../../../tmlanguage';
 
 interface Placeholder {
-  startAnchor: string;
-  endAnchor: string;
+  startPattern: string;
+  endPattern: string;
   definitions: CommandDefinition[];
   expressionOperators: readonly string[];
 }
@@ -17,8 +17,8 @@ export function createLoopStatementRule(scopeName: ScopeName, placeholder: Place
     ...placeholder.definitions.flatMap((definition) => {
       return definition.signatures.map((signature) => {
         return rules_common.createSingleLineCommandLikeStatementRule(scopeName, definition, signature, {
-          startAnchor: placeholder.startAnchor,
-          endAnchor: placeholder.endAnchor,
+          startPattern: placeholder.startPattern,
+          endPattern: placeholder.endPattern,
           commandElementName: RuleName.ControlFlowKeyword,
           allowFirstComma: true,
         });
@@ -26,7 +26,7 @@ export function createLoopStatementRule(scopeName: ScopeName, placeholder: Place
     }),
     {
       match: seq(
-        lookbehind(placeholder.startAnchor),
+        lookbehind(placeholder.startPattern),
         inlineSpaces0(),
         capture(keyword('Loop')),
         lookahead(alt(

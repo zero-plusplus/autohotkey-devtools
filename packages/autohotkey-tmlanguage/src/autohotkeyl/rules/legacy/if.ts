@@ -9,8 +9,8 @@ import {
 } from '../../../tmlanguage';
 
 interface Placeholder {
-  startAnchor: string;
-  endAnchor: string;
+  startPattern: string;
+  endPattern: string;
   identifierPattern: string;
 }
 export function createLegacyIfStatementRule(scopeName: ScopeName, placeholder: Placeholder): BeginEndRule {
@@ -22,7 +22,7 @@ export function createLegacyIfStatementRule(scopeName: ScopeName, placeholder: P
   return {
     name: name(scopeName, Repository.LegacyIfStatement),
     begin: seq(
-      lookbehind(placeholder.startAnchor),
+      lookbehind(placeholder.startPattern),
       lookahead(seq(
         inlineSpaces0(),
         optseq(keyword('else'), inlineSpaces1()),
@@ -40,7 +40,7 @@ export function createLegacyIfStatementRule(scopeName: ScopeName, placeholder: P
         ),
       )),
     ),
-    end: lookahead(placeholder.endAnchor),
+    end: lookahead(placeholder.endPattern),
     patterns: [
       includeRule(Repository.IfStatement),
 
@@ -56,7 +56,7 @@ export function createLegacyIfStatementRule(scopeName: ScopeName, placeholder: P
         beginCaptures: {
           1: nameRule(scopeName, RuleName.KeywordInExpression),
         },
-        end: lookahead(placeholder.endAnchor),
+        end: lookahead(placeholder.endPattern),
         patterns: [
           invalidOnetTrueBraceStyleRule,
           rules_common.createReservedIdentifierRule(scopeName, {
@@ -92,7 +92,7 @@ export function createLegacyIfStatementRule(scopeName: ScopeName, placeholder: P
         beginCaptures: {
           1: nameRule(scopeName, RuleName.KeywordInExpression),
         },
-        end: lookahead(placeholder.endAnchor),
+        end: lookahead(placeholder.endPattern),
         patterns: [ includeRule(Repository.CommandLastArgument) ],
       },
 

@@ -9,14 +9,14 @@ import {
 } from '../../../tmlanguage';
 
 interface Placeholder {
-  startAnchor: string;
+  startPattern: string;
   identifierPattern: string;
-  endAnchor: string;
+  endPattern: string;
 }
 export function createSwitchStatementRule(scopeName: ScopeName, placeholder: Placeholder): BeginEndRule {
   return {
     begin: seq(
-      lookbehind(placeholder.startAnchor),
+      lookbehind(placeholder.startPattern),
       inlineSpaces0(),
       capture(keyword('switch')),
     ),
@@ -99,11 +99,11 @@ export function createSwitchStatementRule(scopeName: ScopeName, placeholder: Pla
 
           // break keyword in switch block
           rules_common.createJumpToLabelStatement(scopeName, {
-            startAnchor: alt(
-              group(placeholder.startAnchor),
+            startPattern: alt(
+              group(placeholder.startPattern),
               group(seq(char(':'), inlineSpaces0())),
             ),
-            endAnchor: placeholder.endAnchor,
+            endPattern: placeholder.endPattern,
             names: [ 'Break' ],
             labelPattern: placeholder.identifierPattern,
           }),

@@ -5,11 +5,11 @@ import {
 } from '../oniguruma';
 import * as constants_common from './constants';
 
-export const lineStartAnchor: string = seq(
+export const lineStartPattern: string = seq(
   group(alt(startAnchor(), '\\G')),
   inlineSpaces0(),
 );
-export const lineEndAnchor: string = alt(
+export const lineEndPattern: string = alt(
   seq(inlineSpaces1(), negativeLookahead(char('`')), char(';')),
   seq(inlineSpaces0(), endAnchor()),
 );

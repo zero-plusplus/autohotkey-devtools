@@ -96,25 +96,25 @@ export function createRepositories(scopeName: ScopeName): Repositories {
     ),
     [Repository.LegacyStatement]: patternsRule(includeRule(Repository.Legacy)),
     [Repository.CommandStatement]: rules_common.createCommandStatementRule(scopeName, definitions_v1.commandDefinitions, {
-      startAnchor: patterns_v1.statementStartAnchor,
-      endAnchor: patterns_common.lineEndAnchor,
+      startPattern: patterns_v1.statementStartPattern,
+      endPattern: patterns_common.lineEndPattern,
       commandElementName: RuleName.CommandName,
       expressionOperators: constants_v1.expressionOperators,
     }),
     [Repository.DirectiveStatement]: rules_common.createDirectiveStatementRule(scopeName, definitions_v1.directiveDefinitions, {
-      startAnchor: patterns_common.lineStartAnchor,
-      endAnchor: patterns_common.lineEndAnchor,
+      startPattern: patterns_common.lineStartPattern,
+      endPattern: patterns_common.lineEndPattern,
       allowFirstComma: true,
     }),
     [Repository.JumpStatement]: rules_common.createJumpStatement(scopeName, {
-      startAnchor: patterns_v1.statementStartAnchor,
+      startPattern: patterns_v1.statementStartPattern,
       assignmentOperators: constants_common.assignmentOperators,
-      endAnchor: patterns_common.lineEndAnchor,
+      endPattern: patterns_common.lineEndPattern,
       identifierPattern: ordalt('Exit', 'ExitApp', 'Return'),
     }),
     [Repository.JumpToLabelStatement]: rules_common.createJumpToLabelStatement(scopeName, {
-      startAnchor: patterns_v1.statementStartAnchor,
-      endAnchor: patterns_common.lineEndAnchor,
+      startPattern: patterns_v1.statementStartPattern,
+      endPattern: patterns_common.lineEndPattern,
       names: [
         'Break',
         'Continue',
@@ -124,45 +124,45 @@ export function createRepositories(scopeName: ScopeName): Repositories {
       labelPattern: patterns_v1.identifierPattern,
     }),
     [Repository.HotstringLabelStatement]: rules_common.createHotstringLabelRule(scopeName, {
-      startAnchor: patterns_v1.statementStartAnchor,
-      endAnchor: patterns_common.lineEndAnchor,
+      startPattern: patterns_v1.statementStartPattern,
+      endPattern: patterns_common.lineEndPattern,
     }),
     [Repository.HotkeyLabelStatement]: rules_common.createHotkeyLabelRule(scopeName, {
-      startAnchor: patterns_v1.statementStartAnchor,
+      startPattern: patterns_v1.statementStartPattern,
     }),
     [Repository.LabelStatement]: rules_common.createLabelRule(scopeName, {
-      startAnchor: patterns_common.lineStartAnchor,
+      startPattern: patterns_common.lineStartPattern,
       labelPattern: patterns_v1.identifierPattern,
     }),
 
     [Repository.IfStatement]: rules_common.createIfStatementRule(scopeName, {
-      startAnchor: patterns_v1.statementStartAnchor,
+      startPattern: patterns_v1.statementStartPattern,
     }),
     [Repository.SwitchStatement]: rules_common.createSwitchStatementRule(scopeName, {
-      startAnchor: patterns_v1.statementStartAnchor,
-      endAnchor: patterns_common.lineEndAnchor,
+      startPattern: patterns_v1.statementStartPattern,
+      endPattern: patterns_common.lineEndPattern,
       identifierPattern: patterns_v1.identifierPattern,
     }),
     [Repository.WhileStatement]: rules_common.createWhileStatementRule(scopeName, {
-      startAnchor: patterns_v1.statementStartAnchor,
+      startPattern: patterns_v1.statementStartPattern,
     }),
     [Repository.LoopStatement]: rule_v1.createLoopStatementRule(scopeName, {
-      startAnchor: patterns_v1.statementStartAnchor,
-      endAnchor: patterns_v1.controlFlowEndAnchor,
+      startPattern: patterns_v1.statementStartPattern,
+      endPattern: patterns_v1.controlFlowEndPattern,
       definitions: definitions_v1.loopCommandDefenitions,
       expressionOperators: constants_v1.expressionOperators,
     }),
     [Repository.UntilStatement]: rules_common.createUntilStatementRule(scopeName, {
-      startAnchor: patterns_v1.statementStartAnchor,
+      startPattern: patterns_v1.statementStartPattern,
     }),
     [Repository.ForStatement]: rules_common.createForStatementRule(scopeName, {
-      startAnchor: patterns_v1.statementStartAnchor,
+      startPattern: patterns_v1.statementStartPattern,
     }),
     [Repository.TryStatement]: rules_common.createTryStatementRule(scopeName, {
-      startAnchor: patterns_v1.statementStartAnchor,
+      startPattern: patterns_v1.statementStartPattern,
     }),
     [Repository.ThrowStatement]: rules_common.createThrowStatementRule(scopeName, {
-      startAnchor: patterns_v1.statementStartAnchor,
+      startPattern: patterns_v1.statementStartPattern,
       assignmentOperators: constants_common.assignmentOperators,
     }),
 
@@ -182,11 +182,11 @@ export function createRepositories(scopeName: ScopeName): Repositories {
       includeRule(Repository.Block),
     ),
     [Repository.Modifier]: rules_common.createModifierRule(scopeName, {
-      startAnchor: patterns_v1.statementStartAnchor,
+      startPattern: patterns_v1.statementStartPattern,
       modifiers: constants_common.accessModifiers,
     }),
     [Repository.AssignmentDeclaration]: rules_common.createAssignmentDeclarationRule(scopeName, {
-      startAnchor: patterns_v1.statementStartAnchor,
+      startPattern: patterns_v1.statementStartPattern,
       namePattern: patterns_v1.looseLeftHandPattern,
       operators: constants_common.assignmentOperators,
     }),
@@ -194,8 +194,8 @@ export function createRepositories(scopeName: ScopeName): Repositories {
       statementsInBlock: [ includeRule(Repository.Self) ],
     }),
     [Repository.ClassDeclaration]: rules_common.createClassDeclarationRule(scopeName, {
-      startAnchor: patterns_v1.statementStartAnchor,
-      endAnchor: patterns_common.lineEndAnchor,
+      startPattern: patterns_v1.statementStartPattern,
+      endPattern: patterns_common.lineEndPattern,
       identifierPattern: patterns_v1.identifierPattern,
       rulesInBody: [
         includeRule(Repository.Meta),
@@ -249,12 +249,12 @@ export function createRepositories(scopeName: ScopeName): Repositories {
     [Repository.ConstantLikeVariable]: rules_common.createIdentifierRule(scopeName, {
       ruleName: RuleName.ConstantLikeVariable,
       identifierPattern: patterns_v1.upperIdentifierPattern,
-      endAnchor: patterns_v1.identifierEndAnchor,
+      endPattern: patterns_v1.identifierEndPattern,
     }),
     [Repository.UserDefinedVariable]: rules_common.createIdentifierRule(scopeName, {
       ruleName: RuleName.Variable,
       identifierPattern: patterns_v1.identifierPattern,
-      endAnchor: patterns_v1.identifierEndAnchor,
+      endPattern: patterns_v1.identifierEndPattern,
     }),
     [Repository.KeywordLikeBuiltInVariable]: rules_common.createReservedIdentifierRule(scopeName, {
       ruleName: RuleName.KeywordLikeBuiltInVariable,
@@ -307,10 +307,10 @@ export function createRepositories(scopeName: ScopeName): Repositories {
 
     // #region object
     [Repository.ObjectInBrackets]: rules_common.createObjectRule(scopeName, {
-      startAnchor: patterns_common.lineStartAnchor,
+      startPattern: patterns_common.lineStartPattern,
     }),
     ...rules_common.createObjectRepositories(scopeName, {
-      startAnchor: patterns_v1.expressionContinuationStartAnchor,
+      startPattern: patterns_v1.expressionContinuationStartPattern,
       keyName: patterns_v1.keyName,
       contents: [
         includeRule(Repository.Meta),
@@ -329,7 +329,7 @@ export function createRepositories(scopeName: ScopeName): Repositories {
       includeRule(Repository.ContinuationDoubleString),
     ),
     ...rules_common.createDoubleStringRepositories(scopeName, {
-      endAnchor: patterns_common.lineEndAnchor,
+      endPattern: patterns_common.lineEndPattern,
       escapedQuotePattern: patterns_v1.escapedDoubleQuotePattern,
       escapeSequences: constants_v1.doubleQuoteEscapeSequences,
     }),
@@ -428,12 +428,12 @@ export function createRepositories(scopeName: ScopeName): Repositories {
     // #region legacy
     [Repository.Legacy]: patternsRule(includeRule(Repository.LegacyAssignmentDeclaration)),
     [Repository.LegacyIfStatement]: rule_v1.createLegacyIfStatementRule(scopeName, {
-      startAnchor: patterns_v1.statementStartAnchor,
-      endAnchor: patterns_common.lineEndAnchor,
+      startPattern: patterns_v1.statementStartPattern,
+      endPattern: patterns_common.lineEndPattern,
       identifierPattern: patterns_v1.identifierPattern,
     }),
     [Repository.LegacyAssignmentDeclaration]: rule_v1.createLegacyAssignmentRule(scopeName, {
-      startAnchor: patterns_v1.statementStartAnchor,
+      startPattern: patterns_v1.statementStartPattern,
       leftHandPattern: patterns_v1.looseLeftHandPattern,
     }),
     [Repository.PercentExpression]: rule_v1.createPercentExpressionRule(scopeName, {
@@ -443,7 +443,7 @@ export function createRepositories(scopeName: ScopeName): Repositories {
       expressionPattern: patterns_common.unquotedExpressionLastArgumentPattern,
     }),
     [Repository.ContinuationSection]: rule_v1.createContinuationSectionRule(scopeName, {
-      endAnchor: patterns_common.lineEndAnchor,
+      endPattern: patterns_common.lineEndPattern,
     }),
     [Repository.ContinuationSectionText]: rules_common.createUnquotedStringRule(scopeName, {
       stringRuleName: RuleName.UnquotedString,

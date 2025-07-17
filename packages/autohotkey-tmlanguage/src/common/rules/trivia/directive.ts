@@ -17,8 +17,8 @@ import { createDirectiveCommentRule } from '../statement/command';
 export function createDirectiveCommentRepositories(scopeName: ScopeName): Repositories {
   return {
     [Repository.CompilerDirectiveComment]: createDirectiveCommentPatternsRule(scopeName, {
-      startAnchor: patterns_common.lineStartAnchor,
-      endAnchor: patterns_common.lineEndAnchor,
+      startPattern: patterns_common.lineStartPattern,
+      endPattern: patterns_common.lineEndPattern,
       definitions: definitions_common.compilerDirectives,
     }),
     [Repository.UnquotedStringInCompilerDirective]: rules_common.createUnquotedStringRule(scopeName, {
@@ -55,8 +55,8 @@ export function createDirectiveCommentRepositories(scopeName: ScopeName): Reposi
 }
 
 interface Placeholder {
-  startAnchor: string;
-  endAnchor: string;
+  startPattern: string;
+  endPattern: string;
   definitions: CommandDefinition[];
 }
 export function createDirectiveCommentPatternsRule(scopeName: ScopeName, placeholder: Placeholder): PatternsRule {
@@ -64,8 +64,8 @@ export function createDirectiveCommentPatternsRule(scopeName: ScopeName, placeho
     return [
       ...definition.signatures.map((signature) => createDirectiveCommentRule(scopeName, definition, signature, {
         commandElementName: RuleName.DirectiveCommentName,
-        startAnchor: placeholder.startAnchor,
-        endAnchor: placeholder.endAnchor,
+        startPattern: placeholder.startPattern,
+        endPattern: placeholder.endPattern,
       })),
     ];
   }));

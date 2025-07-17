@@ -17,7 +17,7 @@ export const identifierPattern: string = group(seq(nameStart, manyLimit(nameBody
 export const nameStart_upper: string = group('[A-Z_]');
 export const nameBody_upper: string = group('[A-Z_]');
 export const upperIdentifierPattern: string = group(seq(nameStart_upper, manyLimit(nameBody_upper, nameLimitLength - 1)));
-export const identifierEndAnchor: string = group(alt(
+export const identifierEndPattern: string = group(alt(
   negChar(wordChar(), number(), '_', '#', '@', '$'),
   inlineSpace(),
   endAnchor(),
@@ -42,19 +42,19 @@ export const looseCallableNamePattern: string = seq(
 );
 // #endregion Names
 
-export const statementStartAnchor: string = alt(
-  patterns_common.lineStartAnchor,
-  seq(patterns_common.lineStartAnchor, inlineSpaces0(), groupMany1(alt(negChar(':', seq(char('`'), char(':'))))), text('::'), inlineSpaces0()),
-  seq(patterns_common.lineStartAnchor, inlineSpaces0(), ignoreCase('case'), inlineSpace(), reluctant(anyChars0()), char(':'), inlineSpaces0()),
-  seq(patterns_common.lineStartAnchor, inlineSpaces0(), identifierPattern, char(':'), inlineSpaces0()),
-  seq(patterns_common.lineStartAnchor, inlineSpaces0(), char('}')),
+export const statementStartPattern: string = alt(
+  patterns_common.lineStartPattern,
+  seq(patterns_common.lineStartPattern, inlineSpaces0(), groupMany1(alt(negChar(':', seq(char('`'), char(':'))))), text('::'), inlineSpaces0()),
+  seq(patterns_common.lineStartPattern, inlineSpaces0(), ignoreCase('case'), inlineSpace(), reluctant(anyChars0()), char(':'), inlineSpaces0()),
+  seq(patterns_common.lineStartPattern, inlineSpaces0(), identifierPattern, char(':'), inlineSpaces0()),
+  seq(patterns_common.lineStartPattern, inlineSpaces0(), char('}')),
 );
-export const expressionContinuationStartAnchor: string = group(textalt(...constants_v1.continuationOperators));
-export const expressionEndAnchor: string = alt(
+export const expressionContinuationStartPattern: string = group(textalt(...constants_v1.continuationOperators));
+export const expressionEndPattern: string = alt(
   seq(inlineSpaces1(), char(';')),
   seq(inlineSpaces0(), endAnchor()),
 );
-export const controlFlowEndAnchor: string = alt(
+export const controlFlowEndPattern: string = alt(
   seq(inlineSpaces1(), negativeLookahead(char('`')), char(';')),
   seq(inlineSpaces0(), char('{')),
   seq(inlineSpaces0(), endAnchor()),

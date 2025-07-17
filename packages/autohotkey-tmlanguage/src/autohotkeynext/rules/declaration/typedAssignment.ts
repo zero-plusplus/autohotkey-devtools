@@ -5,7 +5,7 @@ import {
 } from '../../../tmlanguage';
 
 interface Placeholder {
-  startAnchor: string;
+  startPattern: string;
   modifiers: readonly string[];
   namePattern: string;
   nameRule: Rule;
@@ -14,7 +14,7 @@ interface Placeholder {
 export function createTypedAssignmentDeclarationRule(scopeName: ScopeName, placeholder: Placeholder): MatchRule {
   return {
     match: seq(
-      lookbehind(placeholder.startAnchor),
+      lookbehind(placeholder.startPattern),
       inlineSpaces0(),
       optional(seq(
         capture(ordalt(...placeholder.modifiers)),

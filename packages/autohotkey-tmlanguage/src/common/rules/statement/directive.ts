@@ -4,14 +4,14 @@ import { RuleName, type BeginWhileRule, type ScopeName } from '../../../tmlangua
 import { createMultiLineCommandLikeStatementRule } from './command';
 
 interface Placholder_DirectiveStatementRule {
-  startAnchor: string;
-  endAnchor: string;
+  startPattern: string;
+  endPattern: string;
   allowFirstComma: boolean;
 }
 export function createDirectiveStatementRule(scopeName: ScopeName, definitions: CommandDefinition[], placeholder: Placholder_DirectiveStatementRule): BeginWhileRule {
   return createMultiLineCommandLikeStatementRule(scopeName, definitions, {
-    startAnchor: placeholder.startAnchor,
-    endAnchor: placeholder.endAnchor,
+    startPattern: placeholder.startPattern,
+    endPattern: placeholder.endPattern,
     allowFirstComma: placeholder.allowFirstComma,
     commandElementName: RuleName.DirectiveName,
     allowContinuation: false,

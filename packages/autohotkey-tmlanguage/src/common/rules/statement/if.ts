@@ -5,12 +5,12 @@ import {
 } from '../../../tmlanguage';
 
 interface Placeholder {
-  startAnchor: string;
+  startPattern: string;
 }
 export function createIfStatementRule(scopeName: ScopeName, placeholder: Placeholder): MatchRule {
   return {
     match: seq(
-      lookbehind(placeholder.startAnchor),
+      lookbehind(placeholder.startPattern),
       inlineSpaces0(),
       capture(alt(
         seq(keyword('else'), inlineSpaces1(), keyword('if')),

@@ -18,15 +18,15 @@ import * as patterns_common from '../../patterns';
 import { createSpacedArgumentTextRule } from '../misc/unquotedString';
 
 interface Placeholder_CommandStatementRule {
-  startAnchor: string;
-  endAnchor: string;
+  startPattern: string;
+  endPattern: string;
   commandElementName: ElementName;
   expressionOperators: readonly string[];
 }
 export function createCommandStatementRule(scopeName: ScopeName, definitions: CommandDefinition[], placeholder: Placeholder_CommandStatementRule): BeginWhileRule {
   return createMultiLineCommandLikeStatementRule(scopeName, definitions, {
-    startAnchor: placeholder.startAnchor,
-    endAnchor: placeholder.endAnchor,
+    startPattern: placeholder.startPattern,
+    endPattern: placeholder.endPattern,
     commandElementName: placeholder.commandElementName,
     allowFirstComma: true,
     allowContinuation: true,
@@ -39,8 +39,8 @@ export function createCommandStatementRule(scopeName: ScopeName, definitions: Co
 }
 
 interface Placeholder_MultiLineCommandLikeStatementRule {
-  startAnchor: string;
-  endAnchor: string;
+  startPattern: string;
+  endPattern: string;
   commandElementName: ElementName;
   argumentStartPattern: string;
   allowFirstComma: boolean;
@@ -52,13 +52,13 @@ export function createMultiLineCommandLikeStatementRule(scopeName: ScopeName, de
   return {
     begin: capture(seq(
       negativeLookbehind(seq(char('('), inlineSpaces0())),   // Disable within parentheses expression
-      lookbehind(placeholder.startAnchor),
+      lookbehind(placeholder.startPattern),
       inlineSpaces0(),
       ignoreCase(alt(...sortedDefinitions.map((definition) => definition.name))),
       negativeLookahead(alt(char('(', '['), wordChar())),
       lookahead(placeholder.argumentStartPattern),
       optional(anyChars0()),
-      lookahead(placeholder.endAnchor),
+      lookahead(placeholder.endPattern),
     )),
     beginCaptures: {
       1: patternsRule(
@@ -69,7 +69,7 @@ export function createMultiLineCommandLikeStatementRule(scopeName: ScopeName, de
       ),
     },
     while: seq(
-      lookbehind(placeholder.startAnchor),
+      lookbehind(placeholder.startPattern),
       lookahead(seq(
         inlineSpaces0(),
         char(','),
@@ -84,7 +84,7 @@ export function createMultiLineCommandLikeStatementRule(scopeName: ScopeName, de
       inlineSpaces0(),
       capture(optional(char(','))),
       inlineSpaces0(),
-      lookahead(placeholder.endAnchor),
+      lookahead(placeholder.endPattern),
     ),
     whileCaptures: placeholder.allowContinuation
       ? {
@@ -103,15 +103,15 @@ export function createMultiLineCommandLikeStatementRule(scopeName: ScopeName, de
 }
 
 export interface Placeholder_SingleLineCommandLikeStatementRule {
-  startAnchor: string;
-  endAnchor: string;
+  startPattern: string;
+  endPattern: string;
   commandElementName: ElementName;
   allowFirstComma: boolean;
 }
 export function createSingleLineCommandLikeStatementRule(scopeName: ScopeName, definition: CommandDefinition, signature: CommandSignature, placeholder: Placeholder_SingleLineCommandLikeStatementRule): Rule {
   return {
     begin: lookahead(seq(
-      lookbehind(placeholder.startAnchor),
+      lookbehind(placeholder.startPattern),
       inlineSpaces0(),
       ignoreCase(definition.name),
       negativeLookahead(char('(')),
@@ -120,7 +120,7 @@ export function createSingleLineCommandLikeStatementRule(scopeName: ScopeName, d
     end: seq(
       // command name
       seq(
-        lookbehind(placeholder.startAnchor),
+        lookbehind(placeholder.startPattern),
         inlineSpaces0(),
         capture(ignoreCase(definition.name)),
         negativeLookahead(char('(')),
@@ -156,7 +156,7 @@ export function createSingleLineCommandLikeStatementRule(scopeName: ScopeName, d
         seq(inlineSpaces1(), capture(optional(char(',')))),
         seq(inlineSpaces0(), capture(optional(char(',')))),
       ))),
-      lookahead(placeholder.endAnchor),
+      lookahead(placeholder.endPattern),
     ),
     endCaptures: Object.fromEntries([
       // command name
@@ -191,8 +191,8 @@ export function createSingleLineCommandLikeStatementRule(scopeName: ScopeName, d
 }
 
 interface Placeholder_DirectiveCommentRule {
-  startAnchor: string;
-  endAnchor: string;
+  startPattern: string;
+  endPattern: string;
   commandElementName: ElementName;
 }
 export function createDirectiveCommentRule(scopeName: ScopeName, definition: CommandDefinition, signature: CommandSignature, placeholder: Placeholder_DirectiveCommentRule): Rule {
@@ -200,7 +200,7 @@ export function createDirectiveCommentRule(scopeName: ScopeName, definition: Com
     match: seq(
       // command name
       seq(
-        lookbehind(placeholder.startAnchor),
+        lookbehind(placeholder.startPattern),
         inlineSpaces0(),
         capture(char(';')),
         inlineSpaces0(),
@@ -232,7 +232,7 @@ export function createDirectiveCommentRule(scopeName: ScopeName, definition: Com
         ]
         : [ seq(inlineSpaces0(), capture(anyChars0())) ]
       ),
-      lookahead(placeholder.endAnchor),
+      lookahead(placeholder.endPattern),
     ),
     captures: Object.fromEntries([
       nameRule(scopeName, RuleName.DirectiveComment),
@@ -541,7 +541,7 @@ function parameterToOniguruma(parameter: CommandParameter, isLastParameter: bool
   }
   return isLastParameter ? patterns_common.unquotedLastArgumentPattern : patterns_common.unquotedArgumentPattern;
 }
-function parameterToPatternsRule(scopeName: ScopeName, definition: CommandDefinition, parameter: CommandParameter, isLastParameter: boolean, placeholder: { startAnchor: string }): PatternsRule {
+function parameterToPatternsRule(scopeName: ScopeName, definition: CommandDefinition, parameter: CommandParameter, isLastParameter: boolean, placeholder: { startPattern: string }): PatternsRule {
   const percentExpressionRule = ((): IncludeRule => {
     if (hasFlag(parameter.flags, CommandParameterFlag.RestParams)) {
       return includeRule(Repository.PercentExpression);
@@ -584,7 +584,7 @@ function parameterToPatternsRule(scopeName: ScopeName, definition: CommandDefini
           {
             match: seq(
               lookbehind(seq(
-                lookbehind(placeholder.startAnchor),
+                lookbehind(placeholder.startPattern),
                 inlineSpaces0(),
                 ignoreCase(definition.name),
                 alt(inlineSpace(), seq(inlineSpaces0(), char(','))),

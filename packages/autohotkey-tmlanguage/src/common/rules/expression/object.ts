@@ -10,7 +10,7 @@ interface Placeholder extends Placeholder_ObjectRule, Placeholder_ObjectKeyRule 
 export function createObjectRepositories(scopeName: ScopeName, placeholder: Placeholder): Repositories {
   return {
     [Repository.Object]: createObjectRule(scopeName, {
-      startAnchor: placeholder.startAnchor,
+      startPattern: placeholder.startPattern,
     }),
     [Repository.ObjectKey]: createObjectKeyRule(scopeName, {
       keyName: placeholder.keyName,
@@ -19,12 +19,12 @@ export function createObjectRepositories(scopeName: ScopeName, placeholder: Plac
   };
 }
 interface Placeholder_ObjectRule {
-  startAnchor: string;
+  startPattern: string;
 }
 export function createObjectRule(scopeName: ScopeName, placeholder: Placeholder_ObjectRule): BeginEndRule {
   return {
     begin: seq(
-      lookbehind(placeholder.startAnchor),
+      lookbehind(placeholder.startPattern),
       inlineSpaces0(),
       capture(char('{')),
     ),

@@ -8,31 +8,31 @@ import {
 } from '../../../tmlanguage';
 
 interface Placeholder {
-  startAnchor: string;
+  startPattern: string;
   expressionOperators: readonly string[];
-  endAnchor: string;
+  endPattern: string;
 }
 export function createRequiresStatementRule(scopeName: ScopeName, placeholder: Placeholder): BeginEndRule {
   return {
     begin: lookahead(seq(
-      lookbehind(placeholder.startAnchor),
+      lookbehind(placeholder.startPattern),
       inlineSpaces0(),
       ignoreCase('#Requires'),
       inlineSpaces1(),
       negativeLookahead(textalt(...placeholder.expressionOperators)),
     )),
-    end: lookahead(placeholder.endAnchor),
+    end: lookahead(placeholder.endPattern),
     patterns: [
       {
         match: seq(
-          lookbehind(placeholder.startAnchor),
+          lookbehind(placeholder.startPattern),
           inlineSpaces0(),
           capture(ignoreCase('#Requires')),
           optseq(
             inlineSpaces1(),
             capture(reluctant(anyChars0())),
           ),
-          lookahead(placeholder.endAnchor),
+          lookahead(placeholder.endPattern),
         ),
         captures: {
           1: nameRule(scopeName, RuleName.DirectiveName),

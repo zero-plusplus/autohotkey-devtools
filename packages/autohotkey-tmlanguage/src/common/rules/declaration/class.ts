@@ -9,15 +9,15 @@ import {
 } from '../../../tmlanguage';
 
 interface Placeholder {
-  startAnchor: string;
-  endAnchor: string;
+  startPattern: string;
+  endPattern: string;
   identifierPattern: string;
   rulesInBody: Rule[];
 }
 export function createClassDeclarationRule(scopeName: ScopeName, placeholder: Placeholder): BeginEndRule {
   return {
     begin: lookahead(seq(
-      lookbehind(placeholder.startAnchor),
+      lookbehind(placeholder.startPattern),
       inlineSpaces0(),
       keyword('class'),
     )),
@@ -36,7 +36,7 @@ export function createClassDeclarationRule(scopeName: ScopeName, placeholder: Pl
         },
         end: lookahead(alt(
           seq(inlineSpaces0(), char('{')),
-          placeholder.endAnchor,
+          placeholder.endPattern,
         )),
         patterns: [
           {

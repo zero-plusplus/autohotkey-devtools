@@ -5,7 +5,7 @@ import {
 } from '../../../tmlanguage';
 
 interface Placeholder {
-  startAnchor: string;
+  startPattern: string;
 }
 export function createImportDeclarationRule(scopeName: ScopeName, placeholder: Placeholder): PatternsRule {
   const rulesInBrace: Rule[] = [
@@ -24,7 +24,7 @@ export function createImportDeclarationRule(scopeName: ScopeName, placeholder: P
     //       ^^^^^^ ^ ^^^^
     {
       match: seq(
-        lookbehind(placeholder.startAnchor),
+        lookbehind(placeholder.startPattern),
         inlineSpaces0(),
         capture(keyword('import')),
         inlineSpaces1(),
@@ -44,7 +44,7 @@ export function createImportDeclarationRule(scopeName: ScopeName, placeholder: P
     //       ^^^^^^ ^ ^ ^^ ^^ ^ ^^ ^ ^ ^^^^
     {
       begin: seq(
-        lookbehind(placeholder.startAnchor),
+        lookbehind(placeholder.startPattern),
         inlineSpaces0(),
         capture(keyword('import')),
         inlineSpaces1(),
@@ -69,7 +69,7 @@ export function createImportDeclarationRule(scopeName: ScopeName, placeholder: P
     //       ^^^^^^
     {
       begin: seq(
-        lookbehind(placeholder.startAnchor),
+        lookbehind(placeholder.startPattern),
         inlineSpaces0(),
         optseq(
           capture(keyword('export')),
@@ -99,7 +99,7 @@ export function createImportDeclarationRule(scopeName: ScopeName, placeholder: P
     //       ^^^^^^
     {
       match: seq(
-        lookbehind(placeholder.startAnchor),
+        lookbehind(placeholder.startPattern),
         inlineSpaces0(),
         optseq(
           capture(keyword('export')),

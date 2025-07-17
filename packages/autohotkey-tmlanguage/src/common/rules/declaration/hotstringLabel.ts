@@ -8,20 +8,20 @@ import {
 } from '../../../tmlanguage';
 
 interface Placeholder {
-  startAnchor: string;
-  endAnchor: string;
+  startPattern: string;
+  endPattern: string;
 }
 export function createHotstringLabelRule(scopeName: ScopeName, placeholder: Placeholder): MatchRule {
   return {
     match: seq(
-      lookbehind(placeholder.startAnchor),
+      lookbehind(placeholder.startPattern),
       capture(char(':')),
       capture(anyChars0()),
       capture(char(':')),
       capture(anyChars1()),
       capture(text('::')),
       capture(reluctant(anyChars0())),
-      lookahead(placeholder.endAnchor),
+      lookahead(placeholder.endPattern),
     ),
     captures: {
       1: nameRule(scopeName, RuleName.Colon),

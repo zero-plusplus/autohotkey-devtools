@@ -9,12 +9,12 @@ import {
 import * as constants_common from '../../constants';
 
 interface Placeholder {
-  startAnchor: string;
+  startPattern: string;
 }
 export function createHotkeyLabelRule(scopeName: ScopeName, placeholder: Placeholder): MatchRule {
   return {
     match: seq(
-      lookbehind(placeholder.startAnchor),
+      lookbehind(placeholder.startPattern),
       capture(negChars1('"', `'`)),
       capture(text('::')),
     ),
@@ -23,7 +23,7 @@ export function createHotkeyLabelRule(scopeName: ScopeName, placeholder: Placeho
         {
           name: name(scopeName, RuleName.HotkeyFlag),
           match: seq(
-            lookbehind(placeholder.startAnchor),
+            lookbehind(placeholder.startPattern),
             inlineSpaces0(),
             groupMany1(textalt(...constants_common.hotkeyFlags)),
           ),

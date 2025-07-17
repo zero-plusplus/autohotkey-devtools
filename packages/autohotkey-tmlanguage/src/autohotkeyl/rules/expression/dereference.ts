@@ -21,7 +21,7 @@ export function createDereferenceRule(scopeName: ScopeName): BeginEndRule {
     },
     end: alt(
       capture(char('%')),
-      lookahead(patterns_v1.expressionEndAnchor),
+      lookahead(patterns_v1.expressionEndPattern),
     ),
     endCaptures: {
       1: nameRule(scopeName, RuleName.PercentEnd),
@@ -70,7 +70,7 @@ export function createInvalidDereferenceRule(scopeName: ScopeName): PatternsRule
     {
       match: seq(
         capture(char('%')),
-        lookahead(patterns_v1.expressionEndAnchor),
+        lookahead(patterns_v1.expressionEndPattern),
       ),
       captures: {
         1: nameRule(scopeName, RuleName.PercentBegin, StyleName.Invalid),
@@ -83,7 +83,7 @@ export function createInvalidDereferenceRule(scopeName: ScopeName): PatternsRule
         capture(char('%')),
         capture(many0(dereferenceContent)),
         capture(dereferenceContent),
-        lookahead(patterns_v1.expressionEndAnchor),
+        lookahead(patterns_v1.expressionEndPattern),
       ),
       captures: {
         1: nameRule(scopeName, RuleName.PercentBegin),

@@ -9,10 +9,10 @@ import {
 } from '../../../tmlanguage';
 
 interface Placeholder {
-  startAnchor: string;
+  startPattern: string;
+  endPattern: string;
   identifierPattern: string;
   assignmentOperators: readonly string[];
-  endAnchor: string;
 }
 export function createJumpStatement(scopeName: ScopeName, placeholder: Placeholder): PatternsRule {
   return rule_common.createCallStatementRule(scopeName, {
@@ -23,15 +23,15 @@ export function createJumpStatement(scopeName: ScopeName, placeholder: Placehold
 }
 
 interface Placeholder2 {
-  startAnchor: string;
-  endAnchor: string;
+  startPattern: string;
+  endPattern: string;
   names: readonly string[];
   labelPattern: string;
 }
 export function createJumpToLabelStatement(scopeName: ScopeName, placeholder: Placeholder2): MatchRule {
   return {
     match: seq(
-      lookbehind(placeholder.startAnchor),
+      lookbehind(placeholder.startPattern),
       inlineSpaces0(),
       capture(ignoreCase(ordalt(...placeholder.names))),
       optseq(
@@ -42,7 +42,7 @@ export function createJumpToLabelStatement(scopeName: ScopeName, placeholder: Pl
         inlineSpaces0(),
         optional(capture(placeholder.labelPattern)),
       ),
-      lookahead(placeholder.endAnchor),
+      lookahead(placeholder.endPattern),
     ),
     captures: {
       1: nameRule(scopeName, RuleName.JumpCommandName),

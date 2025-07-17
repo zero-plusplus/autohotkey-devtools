@@ -4,10 +4,7 @@ import {
   type PatternsRule, type ScopeName,
 } from '../../../tmlanguage';
 
-interface Placeholder {
-  startAnchor: string;
-}
-export function createFunctionExpressionBlockRule(scopeName: ScopeName, placeholder: Placeholder): PatternsRule {
+export function createFunctionExpressionBlockRule(scopeName: ScopeName): PatternsRule {
   return patternsRule({
     begin: seq(
       lookbehind(seq(

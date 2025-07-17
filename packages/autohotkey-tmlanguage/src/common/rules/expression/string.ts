@@ -9,7 +9,7 @@ import {
 } from '../../../tmlanguage';
 
 interface Placeholder {
-  endAnchor: string;
+  endPattern: string;
   escapedQuotePattern: string;
   escapeSequences: readonly string[];
 }
@@ -28,7 +28,7 @@ export function createDoubleStringRepositories(scopeName: ScopeName, placeholder
     [Repository.ContinuationDoubleString]: createContinuationString(scopeName, {
       quoteChar,
       stringElementName,
-      endAnchor: placeholder.endAnchor,
+      endPattern: placeholder.endPattern,
       escapedQuotePattern: placeholder.escapedQuotePattern,
       escapeSequences: placeholder.escapeSequences,
     }),
@@ -49,7 +49,7 @@ export function createSingleStringRepositories(scopeName: ScopeName, placeholder
     [Repository.ContinuationSingleString]: createContinuationString(scopeName, {
       quoteChar,
       stringElementName,
-      endAnchor: placeholder.endAnchor,
+      endPattern: placeholder.endPattern,
       escapedQuotePattern: placeholder.escapedQuotePattern,
       escapeSequences: placeholder.escapeSequences,
     }),
@@ -98,7 +98,7 @@ export function createStringRule(scopeName: ScopeName, placeholder: Placeholder_
 }
 
 interface Placeholder_ContinuationString {
-  endAnchor: string;
+  endPattern: string;
   quoteChar: string;
   escapedQuotePattern: string;
   stringElementName: ElementName;
@@ -129,7 +129,7 @@ export function createContinuationString(scopeName: ScopeName, placeholder: Plac
         char(';'),
         anyChars0(),
       )),
-      lookahead(placeholder.endAnchor),
+      lookahead(placeholder.endPattern),
     ),
     beginCaptures: {
       1: nameRule(scopeName, placeholder.stringElementName, RuleDescriptor.Begin),

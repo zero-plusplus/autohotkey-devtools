@@ -5,14 +5,14 @@ import {
 } from '../../../tmlanguage';
 
 interface Placeholder {
-  startAnchor: string;
+  startPattern: string;
   namePattern: string;
   operators: readonly string[];
 }
 export function createAssignmentDeclarationRule(scopeName: ScopeName, placeholder: Placeholder): MatchRule {
   return {
     match: seq(
-      lookbehind(placeholder.startAnchor),
+      lookbehind(placeholder.startPattern),
       inlineSpaces0(),
       optional(capture(keyword('global', 'local', 'static'))),
       inlineSpaces0(),

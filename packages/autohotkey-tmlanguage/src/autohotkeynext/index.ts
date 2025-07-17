@@ -40,14 +40,14 @@ export function createTmLanguage(): TmLanguage {
 
       // #region declaration
       [Repository.Import]: rules_vnext.createImportDeclarationRule(scopeName, {
-        startAnchor: patterns_common.lineStartAnchor,
+        startPattern: patterns_common.lineStartPattern,
       }),
       [Repository.Export]: rules_vnext.createExportDeclarationRule(scopeName, {
-        startAnchor: patterns_common.lineStartAnchor,
+        startPattern: patterns_common.lineStartPattern,
       }),
       [Repository.ClassDeclaration]: rules_common.createClassDeclarationRule(scopeName, {
-        startAnchor: patterns_vnext.classStartAnchor,
-        endAnchor: patterns_common.lineEndAnchor,
+        startPattern: patterns_vnext.classStartPattern,
+        endPattern: patterns_common.lineEndPattern,
         identifierPattern: patterns_v2.identifierPattern,
         rulesInBody: [
           includeRule(Repository.Meta),
@@ -62,7 +62,7 @@ export function createTmLanguage(): TmLanguage {
         ],
       }),
       [Repository.TypedAssignmentDeclaration]: rules_vnext.createTypedAssignmentDeclarationRule(scopeName, {
-        startAnchor: patterns_common.lineStartAnchor,
+        startPattern: patterns_common.lineStartPattern,
         modifiers: constants_common.accessModifiers,
         namePattern: patterns_v2.looseLeftHandPattern,
         nameRule: patternsRule(includeRule(Repository.Variable)),
@@ -73,13 +73,13 @@ export function createTmLanguage(): TmLanguage {
       // #region statement
       [Repository.DirectiveStatement]: patternsRule(
         rules_common.createDirectiveStatementRule(scopeName, definitions_vnext.directiveDefinitions, {
-          startAnchor: patterns_v1.statementStartAnchor,
-          endAnchor: patterns_common.lineEndAnchor,
+          startPattern: patterns_v1.statementStartPattern,
+          endPattern: patterns_common.lineEndPattern,
           allowFirstComma: false,
         }),
         rules_common.createDirectiveStatementRule(scopeName, [ definitions_common.undefinedDirective ], {
-          startAnchor: patterns_v2.statementStartAnchor,
-          endAnchor: patterns_common.lineEndAnchor,
+          startPattern: patterns_v2.statementStartPattern,
+          endPattern: patterns_common.lineEndPattern,
           allowFirstComma: false,
         }),
       ),
@@ -91,9 +91,7 @@ export function createTmLanguage(): TmLanguage {
         includeRule(Repository.ExpressionInControlFlow),
         includeRule(Repository.FunctionExpressionBlock),
       ),
-      [Repository.FunctionExpressionBlock]: rules_vnext.createFunctionExpressionBlockRule(scopeName, {
-        startAnchor: patterns_common.lineStartAnchor,
-      }),
+      [Repository.FunctionExpressionBlock]: rules_vnext.createFunctionExpressionBlockRule(scopeName),
       // #endregion expression
     },
   };

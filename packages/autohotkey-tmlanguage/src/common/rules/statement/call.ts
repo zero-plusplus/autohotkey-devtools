@@ -8,7 +8,7 @@ import {
 } from '../../../tmlanguage';
 
 type Placeholder = {
-  startAnchor: string;
+  startPattern: string;
   commandRuleName: ElementName;
   identifierPattern: string;
   assignmentOperators: readonly string[];
@@ -19,7 +19,7 @@ export function createCallStatementRule(scopeName: ScopeName, placeholder: Place
     // No argument
     {
       match: seq(
-        lookbehind(placeholder.startAnchor),
+        lookbehind(placeholder.startPattern),
         inlineSpaces0(),
         negativeLookahead(number()),
         capture(ignoreCase(placeholder.identifierPattern)),
@@ -35,7 +35,7 @@ export function createCallStatementRule(scopeName: ScopeName, placeholder: Place
     // Rules for highlighting as an object, not a block
     {
       begin: seq(
-        lookbehind(placeholder.startAnchor),
+        lookbehind(placeholder.startPattern),
         inlineSpaces0(),
         negativeLookahead(number()),
         capture(ignoreCase(placeholder.identifierPattern)),
@@ -62,7 +62,7 @@ export function createCallStatementRule(scopeName: ScopeName, placeholder: Place
     // Otherwise
     {
       match: seq(
-        lookbehind(placeholder.startAnchor),
+        lookbehind(placeholder.startPattern),
         inlineSpaces0(),
         negativeLookahead(number()),
         capture(ignoreCase(placeholder.identifierPattern)),

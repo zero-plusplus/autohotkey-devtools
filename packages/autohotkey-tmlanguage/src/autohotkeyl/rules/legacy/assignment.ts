@@ -10,7 +10,7 @@ import {
 import * as constants_v1 from '../../constants';
 
 interface Placeholder {
-  startAnchor: string;
+  startPattern: string;
   leftHandPattern: string;
 }
 export function createLegacyAssignmentRule(scopeName: ScopeName, placeholder: Placeholder): MatchRule {
@@ -21,7 +21,7 @@ export function createLegacyAssignmentRule(scopeName: ScopeName, placeholder: Pl
 
   return {
     match: seq(
-      lookbehind(placeholder.startAnchor),
+      lookbehind(placeholder.startPattern),
       capture(placeholder.leftHandPattern),
       inlineSpaces0(),
       capture(char('=')),

@@ -33,13 +33,13 @@ export const looseLeftHandPattern: string = manyXtoY(1, nameLimitLength)(group(a
   nameBody,
   char('%', '[', ']', '.'),
 )));
-export const expressionContinuationStartAnchor: string = group(textalt(...constants_v2.continuationOperators, '('));
-export const statementStartAnchor: string = alt(
-  patterns_common.lineStartAnchor,
-  seq(patterns_common.lineStartAnchor, inlineSpaces0(), groupMany1(alt(negChar(':', seq(char('`'), char(':'))))), text('::'), inlineSpaces0()),
-  seq(patterns_common.lineStartAnchor, inlineSpaces0(), ignoreCase('case'), inlineSpace(), reluctant(anyChars0()), char(':'), inlineSpaces0()),
-  seq(patterns_common.lineStartAnchor, inlineSpaces0(), identifierPattern, char(':'), inlineSpaces0()),
-  seq(patterns_common.lineStartAnchor, inlineSpaces0(), char('}')),
+export const expressionContinuationStartPattern: string = group(textalt(...constants_v2.continuationOperators, '('));
+export const statementStartPattern: string = alt(
+  patterns_common.lineStartPattern,
+  seq(patterns_common.lineStartPattern, inlineSpaces0(), groupMany1(alt(negChar(':', seq(char('`'), char(':'))))), text('::'), inlineSpaces0()),
+  seq(patterns_common.lineStartPattern, inlineSpaces0(), ignoreCase('case'), inlineSpace(), reluctant(anyChars0()), char(':'), inlineSpaces0()),
+  seq(patterns_common.lineStartPattern, inlineSpaces0(), identifierPattern, char(':'), inlineSpaces0()),
+  seq(patterns_common.lineStartPattern, inlineSpaces0(), char('}')),
 );
 
 export const escapedDoubleQuotePattern: string = text('`"');
