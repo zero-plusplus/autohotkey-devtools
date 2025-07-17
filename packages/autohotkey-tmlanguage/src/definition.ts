@@ -15,13 +15,6 @@ export const scopeNames = [ 'autohotkey', 'autohotkeynext', 'autohotkeyl', 'auto
 // #endregion constants
 
 // #region enum
-export const enum HighlightType {
-  Blank = 'Blank',
-  UnquotedString = 'UnquotedString',
-  SubCommand = 'SubCommand',
-  Expression = 'Expression',
-  RestParams = 'RestParams',
-}
 export const enum CommandSignatureFlag {
   None = 0,
   Deprecated = 1 << 0,
@@ -61,7 +54,6 @@ export interface CommandParameterCapturedMatcher {
 }
 export type ParameterItemMatcher = string | CommandParameterMatcher | CommandParameterCapturedMatcher | IncludeRule;
 export interface CommandParameter {
-  readonly type: HighlightType;
   readonly flags: CommandParameterFlag;
   readonly itemMatchers?: ParameterItemMatcher[];
 }
@@ -321,7 +313,6 @@ export function subcommand(values: string | string[] = [], flags: CommandParamet
   // e.g. `Control, Check`, `Control, UnCheck`
   //                ^^^^^             ^^^^^^^
   return {
-    type: HighlightType.SubCommand,
     flags: mergeFlags(flags, CommandParameterFlag.SubCommand),
     itemMatchers: [
       {
@@ -339,7 +330,6 @@ export function subcommandlike(values: string | string[] = [], flags: CommandPar
   // e.g. `Progress, Off`, `SplashImage, Off`
   //                 ^^^                 ^^^
   return {
-    type: HighlightType.SubCommand,
     flags: mergeFlags(flags, CommandParameterFlag.SubCommand),
     itemMatchers: [
       {
@@ -354,7 +344,6 @@ export function flowSubcommand(values: string | string[] = [], flags: CommandPar
   // e.g. `Loop Files`, `Loop Parse`
   //            ^^^^^         ^^^^^
   return {
-    type: HighlightType.SubCommand,
     flags: mergeFlags(flags, CommandParameterFlag.SubCommand),
     itemMatchers: [
       {
@@ -369,7 +358,6 @@ export function guiSubcommand(values: string | string[] = [], flags: CommandPara
   // e.g. `Gui, Add`, `Gui, GuiName:Add`
   //            ^^^         ^^^^^^^^^^^
   return {
-    type: HighlightType.SubCommand,
     flags: mergeFlags(flags, CommandParameterFlag.SubCommand, CommandParameterFlag.Labeled),
     itemMatchers: [
       {
@@ -381,7 +369,6 @@ export function guiSubcommand(values: string | string[] = [], flags: CommandPara
 }
 export function blank(flags: CommandParameterFlag = CommandParameterFlag.None): CommandParameter {
   return {
-    type: HighlightType.UnquotedString,
     flags: mergeFlags(flags, CommandParameterFlag.Invalid),
     itemMatchers: [
       {
@@ -396,7 +383,6 @@ export function invalid(flags: CommandParameterFlag = CommandParameterFlag.None)
 }
 export function unquoted(itemMatchers: ParameterItemMatcher[] = [], flags: CommandParameterFlag = CommandParameterFlag.None): CommandParameter {
   return {
-    type: HighlightType.UnquotedString,
     flags,
     itemMatchers: [
       includeRule(Repository.DereferenceUnaryOperator),
@@ -418,7 +404,6 @@ export function unquotedInteger(...optionItems: string[]): CommandParameter {
 }
 export function unquotedWithNumber(itemMatchers: ParameterItemMatcher[] = [], flags: CommandParameterFlag = CommandParameterFlag.None): CommandParameter {
   return {
-    type: HighlightType.UnquotedString,
     flags,
     itemMatchers: [
       includeRule(Repository.DereferenceUnaryOperator),
@@ -437,7 +422,6 @@ export function unquotedWithNumber(itemMatchers: ParameterItemMatcher[] = [], fl
 }
 export function unquotedNumber(...itemMatchers: ParameterItemMatcher[]): CommandParameter {
   return {
-    type: HighlightType.UnquotedString,
     flags: CommandParameterFlag.None,
     itemMatchers: [
       includeRule(Repository.DereferenceUnaryOperator),
@@ -454,14 +438,12 @@ export function unquotedNumber(...itemMatchers: ParameterItemMatcher[]): Command
 }
 export function unquotedAndBoolean(flags: CommandParameterFlag = CommandParameterFlag.None): CommandParameter {
   return {
-    type: HighlightType.UnquotedString,
     flags,
     itemMatchers: [ includeRule(Repository.CommandArgumentBooleanLike) ],
   };
 }
 export function quotableUnquoted(itemMatchers: ParameterItemMatcher[] = [], flags: CommandParameterFlag = CommandParameterFlag.None): CommandParameter {
   return {
-    type: HighlightType.UnquotedString,
     flags,
     itemMatchers: [
       includeRule(Repository.DereferenceUnaryOperator),
@@ -482,7 +464,6 @@ export function quotableUnquoted(itemMatchers: ParameterItemMatcher[] = [], flag
 }
 export function restParams(itemMatchers: ParameterItemMatcher[] = [], flags: CommandParameterFlag = CommandParameterFlag.None): CommandParameter {
   return {
-    type: HighlightType.RestParams,
     flags: mergeFlags(flags, CommandParameterFlag.RestParams),
     itemMatchers: [
       ...itemMatchers,
@@ -492,19 +473,17 @@ export function restParams(itemMatchers: ParameterItemMatcher[] = [], flags: Com
 }
 export function labelName(flags: CommandParameterFlag = CommandParameterFlag.None): CommandParameter {
   return {
-    type: HighlightType.UnquotedString,
     flags,
     itemMatchers: [ includeRule(Repository.LabelName) ],
   };
 }
 export function expression(flags: CommandParameterFlag = CommandParameterFlag.None): CommandParameter {
-  return { type: HighlightType.Expression, flags: mergeFlags(flags, CommandParameterFlag.Expression) };
+  return { flags: mergeFlags(flags, CommandParameterFlag.Expression) };
 }
 export function style(flags: CommandParameterFlag = CommandParameterFlag.None): CommandParameter {
   // e.g. `Control, Style, ^0x800000`, `WinSet, Style, -0xC00000`
   //                       ^^^^^^^^^                   ^^^^^^^^^
   return {
-    type: HighlightType.UnquotedString,
     flags,
     itemMatchers: [
       {
@@ -541,7 +520,6 @@ export function keywordOnly(itemMatchers: ParameterItemMatcher[] = [], flags: Co
   // e.g. `Gui, Flash, Off`
   //                   ^^^
   return {
-    type: HighlightType.UnquotedString,
     flags: mergeFlags(flags, CommandParameterFlag.Keyword),
     itemMatchers: [
       includeRule(Repository.DereferenceUnaryOperator),
@@ -571,7 +549,6 @@ export function menuItemName(flags: CommandParameterFlag = CommandParameterFlag.
   // In the following example, `&O` needs to be emphasized and `&&` needs to be escaped
   // e.g. `Menu, MenuName, Add, &Open`, `Menu, MenuName, Add, Save && Exit`
   return {
-    type: HighlightType.UnquotedString,
     flags,
     itemMatchers: [ includeRule(Repository.MenuItemNameCommandArgument) ],
   };
@@ -580,7 +557,6 @@ export function includeLib(flags: CommandParameterFlag = CommandParameterFlag.No
   // e.g. `#Include path\to`, `#Include <lib>`
   //                ^^^^^^^             ^^^^^
   return {
-    type: HighlightType.UnquotedString,
     flags,
     itemMatchers: [
       {

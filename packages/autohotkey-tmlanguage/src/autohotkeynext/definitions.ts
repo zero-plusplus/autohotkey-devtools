@@ -1,7 +1,7 @@
 import * as definitions_v2 from '../autohotkey2/definitions';
 import * as patterns_v2 from '../autohotkey2/patterns';
 import {
-  command, CommandParameterFlag, HighlightType, signature,
+  command, CommandParameterFlag, signature,
   type CommandDefinition, type CommandParameter,
 } from '../definition';
 import { anyChars1, seq, wordBound } from '../oniguruma';
@@ -19,7 +19,6 @@ export function namespace(): CommandParameter {
   // e.g. `#Module ModuleName`
   //               ^^^^^^^^^^
   return {
-    type: HighlightType.UnquotedString,
     flags: CommandParameterFlag.None,
     itemMatchers: [
       {

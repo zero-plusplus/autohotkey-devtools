@@ -1,5 +1,5 @@
 import {
-  command, CommandFlag, CommandParameterFlag, encoding, HighlightType, invalid, keywordOnly, optionItem,
+  command, CommandFlag, CommandParameterFlag, encoding, invalid, keywordOnly, optionItem,
   output, signature, signOptionItem, unquotedNumber, unquotedWithNumber,
   type CommandDefinition, type CommandParameter, type ParameterItemMatcher,
 } from '../definition';
@@ -77,7 +77,6 @@ export function unquoted(itemMatchers: ParameterItemMatcher[] = [], flags: Comma
   // e.g. `; @Ahk2Exe-AddResource fileName`
   //                              ^^^^^^^^
   return {
-    type: HighlightType.UnquotedString,
     flags,
     itemMatchers: [
       includeRule(Repository.DereferenceUnaryOperator),
@@ -132,7 +131,6 @@ export function expression(): CommandParameter {
   // e.g. `; @Ahk2Exe-Let name = value`
   //                      ^^^^^^^^^^^^
   return {
-    type: HighlightType.Expression,
     flags: CommandParameterFlag.None,
     itemMatchers: [ includeRule(Repository.ExpressionInCompilerDirective) ],
   };

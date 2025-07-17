@@ -2,7 +2,7 @@ import { dedent, hasFlag } from '@zero-plusplus/utilities/src';
 import * as definitions_v1 from '../../../../src/autohotkeyl/definitions';
 import {
   CommandFlag, control, expression, fileAttributes, flagedGuiControlOptions, guiControlOptions, guiOptions,
-  HighlightType, keywordOnly, onOff, output, restParams, sendKeys, unquoted, winTitle,
+  keywordOnly, onOff, output, restParams, sendKeys, unquoted, winTitle,
 } from '../../../../src/definition';
 import {
   name, RuleDescriptor, RuleName, StyleName,
@@ -1357,7 +1357,7 @@ export function createCommandStatementExpectedData(scopeName: ScopeName): Expect
     })(),
 
     // #region highlight types
-    ...((_ = HighlightType.Blank): ExpectedTestData[] => {
+    ...((): ExpectedTestData[] => {
       return [
         [
           dedent`
