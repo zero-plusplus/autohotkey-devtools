@@ -4,7 +4,7 @@ import {
   type CommandDefinition, type CommandParameter, type CommandSignature, type ParameterItemMatcher,
 } from '../../../definition';
 import {
-  alt, anyChars0, anyChars1, capture, char, chars1, endAnchor, group, groupMany0, groupMany1, ignoreCase,
+  alt, anyChars0, capture, char, chars1, endAnchor, group, groupMany0, groupMany1, ignoreCase,
   inlineSpace, inlineSpaces0, inlineSpaces1, keyword, lookahead, lookbehind, negativeLookahead, negativeLookbehind,
   negChar, negChars0, negChars1, numbers1, optional, optseq, reluctant, seq, text, textalt, wordBound,
   wordChar, wordChars1,
@@ -558,10 +558,7 @@ function parameterToPatternsRule(scopeName: ScopeName, definition: CommandDefini
     return includeRule(isLastParameter ? Repository.PercentExpressionInLastArgument : Repository.PercentExpression);
   })();
 
-  if (hasFlag(parameter.flags, CommandParameterFlag.SubCommand)) {
-    return subcommandParameterToPatternsRule(scopeName, definition, parameter, isLastParameter, placeholder);
-  }
-  else if (hasFlag(parameter.flags, CommandParameterFlag.Expression)) {
+  if (hasFlag(parameter.flags, CommandParameterFlag.Expression)) {
     return patternsRule(
       percentExpressionRule,
 
@@ -637,34 +634,6 @@ function parameterToPatternsRule(scopeName: ScopeName, definition: CommandDefini
       }
       return [];
     })(),
-  );
-}
-function subcommandParameterToPatternsRule(scopeName: ScopeName, definition: CommandDefinition, parameter: CommandParameter, isLastParameter: boolean, placeholder: { startAnchor: string }): PatternsRule {
-  if (!parameter.itemMatchers || parameter.itemMatchers.length === 0) {
-    throw Error('The subcommand keyword is not specified correctly.');
-  }
-  if (hasFlag(parameter.flags, CommandParameterFlag.Labeled)) {
-    return patternsRule(
-      {
-        match: seq(
-          optseq(
-            capture(negChars0(':')),
-            capture(char(':')),
-          ),
-          capture(anyChars1()),
-        ),
-        captures: {
-          1: patternsRule(includeRule(Repository.LabelName)),
-          2: nameRule(scopeName, RuleName.Colon),
-          3: patternsRule(...itemPatternsToRules(scopeName, parameter.itemMatchers)),
-        },
-      },
-      includeRule(Repository.CommandInvalidArgument),
-    );
-  }
-  return patternsRule(
-    ...itemPatternsToRules(scopeName, parameter.itemMatchers),
-    includeRule(Repository.CommandInvalidArgument),
   );
 }
 function itemPatternsToRules(scopeName: ScopeName, itemPatterns: ParameterItemMatcher[]): Rule[] {
