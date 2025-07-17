@@ -491,7 +491,6 @@ export function createRepositories(scopeName: ScopeName, placeholder?: Placehold
       includeRule(Repository.InlineTrivias),
     ),
     [Repository.CommandInvalidArgument]: rules_common.createInvalidArgumentRule(scopeName),
-    [Repository.CommandInvalidLastArgument]: rules_common.createInvalidLastArgumentRule(scopeName),
     [Repository.UnquotedStringEscapeSequence]: rules_common.createUnquotedEscapeSequencesRule(scopeName, constants_v2.unquoteEscapeSequences),
     [Repository.CommandArgumentText]: rules_common.createUnquotedStringRule(scopeName, {
       stringRuleName: RuleName.UnquotedString,

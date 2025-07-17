@@ -465,15 +465,6 @@ export function createInvalidArgumentRule(scopeName: ScopeName): MatchRule {
     match: negChars1(',', inlineSpace()),
   };
 }
-export function createInvalidLastArgumentRule(scopeName: ScopeName): PatternsRule {
-  return patternsRule(
-    includeRule(Repository.CommandInvalidArgument),
-    {
-      name: name(scopeName, RuleName.Comma, StyleName.Invalid),
-      match: char(','),
-    },
-  );
-}
 
 
 // #region helpers
