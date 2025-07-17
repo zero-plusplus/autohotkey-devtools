@@ -473,20 +473,8 @@ export function createRepositories(scopeName: ScopeName, placeholder?: Placehold
       includeRule(Repository.CommandArgumentText),
       includeRule(Repository.InlineTrivias),
     ),
-    [Repository.CommandArgumentWithNumber]: patternsRule(
-      includeRule(Repository.Dereference),
-      includeRule(Repository.CommandArgumentNumber),
-      includeRule(Repository.CommandArgumentText),
-      includeRule(Repository.InlineTrivias),
-    ),
     [Repository.CommandLastArgument]: patternsRule(
       includeRule(Repository.Dereference),
-      includeRule(Repository.CommandLastArgumentText),
-      includeRule(Repository.InlineTrivias),
-    ),
-    [Repository.CommandLastArgumentWithNumber]: patternsRule(
-      includeRule(Repository.Dereference),
-      includeRule(Repository.CommandArgumentNumber),
       includeRule(Repository.CommandLastArgumentText),
       includeRule(Repository.InlineTrivias),
     ),
