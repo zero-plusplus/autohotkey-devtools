@@ -558,13 +558,7 @@ function parameterToPatternsRule(scopeName: ScopeName, definition: CommandDefini
     return includeRule(isLastParameter ? Repository.PercentExpressionInLastArgument : Repository.PercentExpression);
   })();
 
-  if (hasFlag(parameter.flags, CommandParameterFlag.CompilerDirective)) {
-    if (hasFlag(parameter.flags, CommandParameterFlag.Expression)) {
-      return patternsRule(includeRule(Repository.ExpressionInCompilerDirective));
-    }
-    return patternsRule(includeRule(Repository.UnquotedStringInCompilerDirective));
-  }
-  else if (hasFlag(parameter.flags, CommandParameterFlag.Invalid)) {
+  if (hasFlag(parameter.flags, CommandParameterFlag.Invalid)) {
     return patternsRule(includeRule(isLastParameter ? Repository.CommandInvalidLastArgument : Repository.CommandInvalidArgument));
   }
   else if (hasFlag(parameter.flags, CommandParameterFlag.SubCommand)) {

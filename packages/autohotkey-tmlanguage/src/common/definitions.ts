@@ -1,4 +1,3 @@
-import { mergeFlags } from '@zero-plusplus/utilities/src';
 import {
   command, CommandFlag, CommandParameterFlag, encoding, HighlightType, invalid, keywordOnly, optionItem,
   output, signature, signOptionItem, unquotedNumber, unquotedWithNumber,
@@ -79,75 +78,63 @@ export function unquoted(itemMatchers: ParameterItemMatcher[] = [], flags: Comma
   //                              ^^^^^^^^
   return {
     type: HighlightType.UnquotedString,
-    flags: mergeFlags(flags, CommandParameterFlag.CompilerDirective, CommandParameterFlag.WithNumber),
+    flags,
     itemMatchers: [
       includeRule(Repository.DereferenceUnaryOperator),
-      includeRule(Repository.Dereference),
+      includeRule(Repository.DereferenceInCompilerDirective),
+
       ...itemMatchers,
-      includeRule(Repository.Operator),
-      includeRule(Repository.Number),
       {
         name: [ RuleName.UnquotedString ],
         match: char('"', `'`),
       },
-      includeRule(Repository.UnquotedStringEscapeSequence),
+      includeRule(Repository.UnquotedStringEscapeSequenceInCompilerDirective),
       {
         name: [ RuleName.UnquotedString ],
-        match: negChars1('`', '%', inlineSpace(), '0-9'),
+        match: negChars1('`', '%', inlineSpace()),
       },
     ],
   };
 }
 export function fileName(flags: CommandParameterFlag = CommandParameterFlag.None): CommandParameter {
-  return {
-    type: HighlightType.UnquotedString,
-    flags,
-    itemMatchers: [
-      includeRule(Repository.DereferenceUnaryOperator),
-      includeRule(Repository.Dereference),
-      {
-        name: [ RuleName.UnquotedString ],
-        match: char('"', `'`),
-      },
-      signOptionItem(
-        '*2',
-        '*RT_BITMAP',
-        '*4',
-        '*RT_MENU',
-        '*5',
-        '*RT_DIALOG',
-        '*6',
-        '*RT_STRING',
-        '*9',
-        '*RT_ACCELERATORS',
-        '*10',
-        '*RT_RCDATA',
-        '*11',
-        '*RT_MESSAGETABLE',
-        '*12',
-        '*RT_GROUP_CURSOR',
-        '*14',
-        '*RT_GROUP_ICON',
-        '*23',
-        '*RT_HTML',
-        '*24',
-        '*RT_MANIFEST',
-      ),
-      includeRule(Repository.UnquotedStringEscapeSequenceInCompilerDirective),
-      {
-        name: [ RuleName.UnquotedString ],
-        match: negChars1('"', `'`, '`', '%', inlineSpace(), '0-9'),
-      },
-    ],
-  };
+  return unquoted([
+    {
+      name: [ RuleName.UnquotedString ],
+      match: char('"', `'`),
+    },
+    signOptionItem(
+      '*2',
+      '*RT_BITMAP',
+      '*4',
+      '*RT_MENU',
+      '*5',
+      '*RT_DIALOG',
+      '*6',
+      '*RT_STRING',
+      '*9',
+      '*RT_ACCELERATORS',
+      '*10',
+      '*RT_RCDATA',
+      '*11',
+      '*RT_MESSAGETABLE',
+      '*12',
+      '*RT_GROUP_CURSOR',
+      '*14',
+      '*RT_GROUP_ICON',
+      '*23',
+      '*RT_HTML',
+      '*24',
+      '*RT_MANIFEST',
+    ),
+  ]);
 }
 export function expression(): CommandParameter {
   // e.g. `; @Ahk2Exe-Let name = value`
   //                      ^^^^^^^^^^^^
   return {
     type: HighlightType.Expression,
-    flags: mergeFlags(CommandParameterFlag.Expression, CommandParameterFlag.CompilerDirective),
-    itemMatchers: [],
+    flags: CommandParameterFlag.None,
+    itemMatchers: [ includeRule(Repository.ExpressionInCompilerDirective) ],
   };
 }
 export function variableName(): CommandParameter {
