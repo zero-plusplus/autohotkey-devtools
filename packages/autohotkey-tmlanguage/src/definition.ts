@@ -383,7 +383,12 @@ export function blank(flags: CommandParameterFlag = CommandParameterFlag.None): 
   return {
     type: HighlightType.UnquotedString,
     flags: mergeFlags(flags, CommandParameterFlag.Invalid),
-    itemMatchers: [ includeRule(Repository.CommandInvalidArgument) ],
+    itemMatchers: [
+      {
+        name: [ RuleName.UnquotedString, StyleName.Invalid ],
+        match: negChars1(',', inlineSpace()),
+      },
+    ],
   };
 }
 export function invalid(flags: CommandParameterFlag = CommandParameterFlag.None): CommandParameter {

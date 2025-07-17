@@ -185,7 +185,6 @@ export const enum Repository {
   CommandArgumentText = '$CommandArgumentText',
   CommandLastArgumentText = '$CommandLastArgumentText',
   CommandArgumentNumber = '$CommandArgumentNumber',
-  CommandInvalidArgument = '$CommandInvalidArgument',
   CommandArgumentControlStyleText = '$CommandArgumentControlStyleText',
   CommandArgumentSendKeyName = '$CommandArgumentSendKeyName',
   CommandArgumentBooleanLike = '$CommandArgumentBooleanLike',

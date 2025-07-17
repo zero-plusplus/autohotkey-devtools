@@ -411,7 +411,6 @@ export function createRepositories(scopeName: ScopeName): Repositories {
       includeRule(Repository.CommandLastArgumentText),
       includeRule(Repository.InlineTrivias),
     ),
-    [Repository.CommandInvalidArgument]: rules_common.createInvalidArgumentRule(scopeName),
     [Repository.MenuItemNameCommandArgument]: rules_common.createMenuNameCommandArgumentRule(scopeName),
     [Repository.UnquotedStringEscapeSequence]: rules_common.createUnquotedEscapeSequencesRule(scopeName, constants_v1.unquoteEscapeSequences),
     [Repository.CommandArgumentText]: rules_common.createUnquotedStringRule(scopeName, {
