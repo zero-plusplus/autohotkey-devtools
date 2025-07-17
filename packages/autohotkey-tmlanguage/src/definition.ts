@@ -21,12 +21,11 @@ export const enum CommandSignatureFlag {
 }
 export const enum CommandParameterFlag {
   None = 0,
-  Invalid = 1 << 0,
-  Deprecated = 1 << 1,
-  SubCommand = 1 << 2,
-  Expression = 1 << 3,
-  RestParams = 1 << 4,
-  CompilerDirective = 1 << 5,
+  Blank = 1 << 0,
+  SubCommand = 1 << 1,
+  Expression = 1 << 2,
+  RestParams = 1 << 3,
+  CompilerDirective = 1 << 4,
 
   Keyword = 1 << 16,
   GuiLabeled = 1 << 17,
@@ -366,7 +365,7 @@ export function guiSubcommand(values: string | string[] = [], flags: CommandPara
 }
 export function blank(flags: CommandParameterFlag = CommandParameterFlag.None): CommandParameter {
   return {
-    flags: mergeFlags(flags, CommandParameterFlag.Invalid),
+    flags: mergeFlags(flags, CommandParameterFlag.Blank),
     itemMatchers: [
       {
         name: [ RuleName.UnquotedString, StyleName.Invalid ],

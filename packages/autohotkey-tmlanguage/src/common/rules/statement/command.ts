@@ -562,7 +562,7 @@ function parameterToPatternsRule(scopeName: ScopeName, definition: CommandDefini
   return patternsRule(
     // percent expression
     ...((): Rule[] => {
-      if (!hasFlag(parameter.flags, CommandParameterFlag.Invalid)) {
+      if (!hasFlag(parameter.flags, CommandParameterFlag.Blank)) {
         return [ percentExpressionRule ];
       }
       return [];
@@ -573,7 +573,7 @@ function parameterToPatternsRule(scopeName: ScopeName, definition: CommandDefini
       if (hasFlag(parameter.flags, CommandParameterFlag.RestParams)) {
         return [ includeRule(Repository.Comma) ];
       }
-      if (isLastParameter && hasFlag(parameter.flags, CommandParameterFlag.Invalid)) {
+      if (isLastParameter && hasFlag(parameter.flags, CommandParameterFlag.Blank)) {
         return [ { name: name(scopeName, RuleName.UnquotedString, StyleName.Invalid), match: textalt('`,', ',') } ];
       }
       if (isLastParameter && !hasFlag(parameter.flags, CommandParameterFlag.Keyword)) {
