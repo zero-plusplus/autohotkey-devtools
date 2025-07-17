@@ -171,7 +171,7 @@ export const commandDefinitions: CommandDefinition[] = [
     signature([ output(), subcommand('List'), unquoted([ optionItem('Selected'), optionItem('Focused'), optionItem('Col'), optionItem('Count') ]), control(), ...winParams ]),
     signature([ output(), subcommand([ 'Checked', 'Enabled', 'Visible', 'Tab', 'Choice', 'LineCount', 'CurrentLine', 'CurrentCol', 'Selected', 'Style', 'ExStyle', 'Hwnd' ]), blank(), control(), ...winParams ]),
     signature([ output(), subcommand([ 'FindString', 'Line' ]), unquoted(), control(), ...winParams ]),
-    signature([ output(), restParams() ]),
+    signature([ output(), invalid() ]),
   ]),
 
   // https://www.autohotkey.com/docs/v1/lib/ControlGetFocus.htm
@@ -212,14 +212,14 @@ export const commandDefinitions: CommandDefinition[] = [
     signature([ subcommand('Eject'), unquoted(), keywordOnly([ optionItem('1') ]) ]),
     signature([ subcommand('Label'), unquoted(), unquoted() ]),
     signature([ subcommand([ 'Lock', 'Unlock' ]), unquoted() ]),
-    signature([ restParams() ]),
+    signature([ invalid() ]),
   ]),
 
   // https://www.autohotkey.com/docs/v1/lib/DriveGet.htm
   command('DriveGet', [
     signature([ output(), subcommand('List'), keywordOnly([ optionItem('CDROM', 'REMOVABLE', 'FIXED', 'NETWORK', 'RAMDISK', 'UNKNOWN') ]) ]),
     signature([ output(), subcommand([ 'Capacity', 'Cap', 'FileSystem', 'FS', 'Label', 'Serial', 'Type', 'Status', 'StatusCD' ]), unquoted() ]),
-    signature([ output(), restParams() ]),
+    signature([ output(), invalid() ]),
   ]),
 
   // https://www.autohotkey.com/docs/v1/lib/DriveSpaceFree.htm

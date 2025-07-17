@@ -381,8 +381,9 @@ export function guiSubcommand(values: string | string[] = [], flags: CommandPara
 }
 export function blank(flags: CommandParameterFlag = CommandParameterFlag.None): CommandParameter {
   return {
-    type: HighlightType.Blank,
+    type: HighlightType.UnquotedString,
     flags: mergeFlags(flags, CommandParameterFlag.Invalid),
+    itemMatchers: [ includeRule(Repository.CommandInvalidArgument) ],
   };
 }
 export function invalid(flags: CommandParameterFlag = CommandParameterFlag.None): CommandParameter {

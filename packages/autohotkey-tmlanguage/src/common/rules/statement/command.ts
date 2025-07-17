@@ -558,10 +558,7 @@ function parameterToPatternsRule(scopeName: ScopeName, definition: CommandDefini
     return includeRule(isLastParameter ? Repository.PercentExpressionInLastArgument : Repository.PercentExpression);
   })();
 
-  if (hasFlag(parameter.flags, CommandParameterFlag.Invalid)) {
-    return patternsRule(includeRule(isLastParameter ? Repository.CommandInvalidLastArgument : Repository.CommandInvalidArgument));
-  }
-  else if (hasFlag(parameter.flags, CommandParameterFlag.SubCommand)) {
+  if (hasFlag(parameter.flags, CommandParameterFlag.SubCommand)) {
     return subcommandParameterToPatternsRule(scopeName, definition, parameter, isLastParameter, placeholder);
   }
   else if (hasFlag(parameter.flags, CommandParameterFlag.Expression)) {
@@ -574,49 +571,73 @@ function parameterToPatternsRule(scopeName: ScopeName, definition: CommandDefini
     );
   }
 
-  const rules: Rule[] = [ percentExpressionRule ];
-  if (hasFlag(parameter.flags, CommandParameterFlag.RestParams)) {
-    rules.push(includeRule(Repository.Comma));
-  }
-  else if (isLastParameter && !hasFlag(parameter.flags, CommandParameterFlag.Keyword)) {
-    rules.push(
-      { name: name(scopeName, RuleName.UnquotedString, StyleName.Escape), match: text('`,') },
-      { name: name(scopeName, RuleName.UnquotedString), match: seq(char(',')) },
-    );
-  }
+  return patternsRule(
+    // percent expression
+    ...((): Rule[] => {
+      if (!hasFlag(parameter.flags, CommandParameterFlag.Invalid)) {
+        return [ percentExpressionRule ];
+      }
+      return [];
+    })(),
 
-  if (hasFlag(parameter.flags, CommandParameterFlag.Labeled)) {
-    // e.g. `Gui, GuiName:+Resize`
-    //            ^^^^^^^^
-    rules.push({
-      match: seq(
-        lookbehind(seq(
-          lookbehind(placeholder.startAnchor),
-          inlineSpaces0(),
-          ignoreCase(definition.name),
-          alt(inlineSpace(), seq(inlineSpaces0(), char(','))),
-          inlineSpaces0(),
-        )),
-        inlineSpaces0(),
-        group(alt(
-          capture(seq(char('%'), anyChars0(), char('%'))),
-          seq(negativeLookahead(char('%')), capture(wordChars1())),
-        )),
-        capture(char(':')),
-      ),
-      captures: {
-        1: patternsRule(includeRule(Repository.Dereference)),
-        2: patternsRule(includeRule(Repository.LabelName)),
-        3: nameRule(scopeName, RuleName.Colon),
-      },
-    });
-  }
+    // comma
+    ...((): Rule[] => {
+      if (hasFlag(parameter.flags, CommandParameterFlag.RestParams)) {
+        return [ includeRule(Repository.Comma) ];
+      }
+      if (isLastParameter && hasFlag(parameter.flags, CommandParameterFlag.Invalid)) {
+        return [ { name: name(scopeName, RuleName.UnquotedString, StyleName.Invalid), match: textalt('`,', ',') } ];
+      }
+      if (isLastParameter && !hasFlag(parameter.flags, CommandParameterFlag.Keyword)) {
+        return [
+          { name: name(scopeName, RuleName.UnquotedString, StyleName.Escape), match: text('`,') },
+          { name: name(scopeName, RuleName.UnquotedString), match: seq(char(',')) },
+        ];
+      }
+      return [];
+    })(),
 
-  if (parameter.itemMatchers && 0 < parameter.itemMatchers.length) {
-    rules.push(...itemPatternsToRules(scopeName, parameter.itemMatchers));
-  }
+    // gui label
+    ...((): Rule[] => {
+      if (hasFlag(parameter.flags, CommandParameterFlag.Labeled)) {
+        // e.g. `Gui, GuiName:+Resize`
+        //            ^^^^^^^^
+        return [
+          {
+            match: seq(
+              lookbehind(seq(
+                lookbehind(placeholder.startAnchor),
+                inlineSpaces0(),
+                ignoreCase(definition.name),
+                alt(inlineSpace(), seq(inlineSpaces0(), char(','))),
+                inlineSpaces0(),
+              )),
+              inlineSpaces0(),
+              group(alt(
+                capture(seq(char('%'), anyChars0(), char('%'))),
+                seq(negativeLookahead(char('%')), capture(wordChars1())),
+              )),
+              capture(char(':')),
+            ),
+            captures: {
+              1: patternsRule(includeRule(Repository.Dereference)),
+              2: patternsRule(includeRule(Repository.LabelName)),
+              3: nameRule(scopeName, RuleName.Colon),
+            },
+          },
+        ];
+      }
+      return [];
+    })(),
 
-  return patternsRule(...rules);
+    // unique highlights
+    ...((): Rule[] => {
+      if (parameter.itemMatchers && 0 < parameter.itemMatchers.length) {
+        return itemPatternsToRules(scopeName, parameter.itemMatchers);
+      }
+      return [];
+    })(),
+  );
 }
 function subcommandParameterToPatternsRule(scopeName: ScopeName, definition: CommandDefinition, parameter: CommandParameter, isLastParameter: boolean, placeholder: { startAnchor: string }): PatternsRule {
   if (!parameter.itemMatchers || parameter.itemMatchers.length === 0) {
