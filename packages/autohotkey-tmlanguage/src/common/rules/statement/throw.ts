@@ -10,7 +10,9 @@ interface Placeholder {
 }
 export function createThrowStatementRule(scopeName: ScopeName, placeholder: Placeholder): PatternsRule {
   return rule_common.createCallStatementRule(scopeName, {
-    ...placeholder,
+    isDeprecated: false,
+    startPattern: placeholder.startPattern,
+    assignmentOperators: placeholder.assignmentOperators,
     commandRuleName: RuleName.ControlFlowKeyword,
     identifierPattern: 'throw',
   });
