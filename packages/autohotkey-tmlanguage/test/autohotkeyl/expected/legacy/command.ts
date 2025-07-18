@@ -1,7 +1,7 @@
-import { dedent, hasFlag } from '@zero-plusplus/utilities/src';
+import { dedent, hasFlag, repeatArray } from '@zero-plusplus/utilities/src';
 import * as definitions_v1 from '../../../../src/autohotkeyl/definitions';
 import {
-  CommandFlag, control, expression, fileAttributes, flagedGuiControlOptions, guiControlOptions, guiOptions,
+  blank, CommandFlag, control, expression, fileAttributes, flagedGuiControlOptions, guiControlOptions, guiOptions,
   keywordOnly, onOff, output, restParams, sendKeys, unquoted, winTitle,
 } from '../../../../src/definition';
 import {
@@ -1357,7 +1357,7 @@ export function createCommandStatementExpectedData(scopeName: ScopeName): Expect
     })(),
 
     // #region highlight types
-    ...((): ExpectedTestData[] => {
+    ...((_ = blank): ExpectedTestData[] => {
       return [
         [
           dedent`
@@ -1392,10 +1392,7 @@ export function createCommandStatementExpectedData(scopeName: ScopeName): Expect
       ];
     })(),
 
-    // onOff parameter
-    ...((): ExpectedTestData[] => {
-      onOff;
-
+    ...((_ = onOff): ExpectedTestData[] => {
       return [
         [
           dedent`
@@ -1517,11 +1514,88 @@ export function createCommandStatementExpectedData(scopeName: ScopeName): Expect
       ];
     })(),
 
-    // unquoted parameter
-    ...((): ExpectedTestData[] => {
-      unquoted;
-
+    ...((_ = unquoted): ExpectedTestData[] => {
       return [
+        ...((): ExpectedTestData[] => {
+          return [
+            [
+              dedent`
+                MsgBox, abc, abc, abc, abc,       ; comment
+              `,
+              [
+                { text: 'MsgBox', scopes: name(scopeName, RuleName.CommandName) },
+                ...repeatArray(3, [
+                  { text: ',', scopes: name(scopeName, RuleName.Comma) },
+                  { text: 'abc', scopes: name(scopeName, RuleName.UnquotedString) },
+                ]),
+                { text: ',', scopes: name(scopeName, RuleName.Comma) },
+                { text: 'abc,', scopes: name(scopeName, RuleName.UnquotedString) },
+                { text: '; comment', scopes: name(scopeName, RuleName.InlineComment) },
+              ],
+            ],
+            [
+              dedent`
+                MsgBox, \`,, \`,, \`,, \`,,       ; comment
+              `,
+              [
+                { text: 'MsgBox', scopes: name(scopeName, RuleName.CommandName) },
+                ...repeatArray(4, [
+                  { text: ',', scopes: name(scopeName, RuleName.Comma) },
+                  { text: '`,', scopes: name(scopeName, RuleName.UnquotedString, StyleName.Escape) },
+                ]),
+                { text: ',', scopes: name(scopeName, RuleName.UnquotedString) },
+                { text: '; comment', scopes: name(scopeName, RuleName.InlineComment) },
+              ],
+            ],
+            [
+              dedent`
+                MsgBox, %value%, %value%, %value%, %value%      ; comment
+              `,
+              [
+                { text: 'MsgBox', scopes: name(scopeName, RuleName.CommandName) },
+                ...repeatArray(4, [
+                  { text: ',', scopes: name(scopeName, RuleName.Comma) },
+                  { text: '%', scopes: name(scopeName, RuleName.PercentBegin) },
+                  { text: 'value', scopes: name(scopeName, RuleName.Variable) },
+                  { text: '%', scopes: name(scopeName, RuleName.PercentEnd) },
+                ]),
+                { text: '; comment', scopes: name(scopeName, RuleName.InlineComment) },
+              ],
+            ],
+            [
+              dedent`
+                MsgBox, %value% %value%, %value% %value%, %value% %value%, %value% %value%      ; comment
+              `,
+              [
+                { text: 'MsgBox', scopes: name(scopeName, RuleName.CommandName) },
+                ...repeatArray(4, [
+                  { text: ',', scopes: name(scopeName, RuleName.Comma) },
+                  { text: '%', scopes: name(scopeName, RuleName.PercentBegin) },
+                  { text: 'value', scopes: name(scopeName, RuleName.Variable) },
+                  { text: '%', scopes: name(scopeName, RuleName.PercentEnd) },
+                  { text: '%', scopes: name(scopeName, RuleName.PercentBegin) },
+                  { text: 'value', scopes: name(scopeName, RuleName.Variable) },
+                  { text: '%', scopes: name(scopeName, RuleName.PercentEnd) },
+                ]),
+                { text: '; comment', scopes: name(scopeName, RuleName.InlineComment) },
+              ],
+            ],
+            [
+              dedent`
+                MsgBox, % value, % value, % value, % value      ; comment
+              `,
+              [
+                { text: 'MsgBox', scopes: name(scopeName, RuleName.CommandName) },
+                ...repeatArray(4, [
+                  { text: ',', scopes: name(scopeName, RuleName.Comma) },
+                  { text: '%', scopes: name(scopeName, RuleName.PercentExpressionBegin) },
+                  { text: 'value', scopes: name(scopeName, RuleName.Variable) },
+                ]),
+                { text: '; comment', scopes: name(scopeName, RuleName.InlineComment) },
+              ],
+            ],
+          ];
+        })(),
         [
           dedent`
             Click, 100 200 Left       ; comment
@@ -1569,10 +1643,7 @@ export function createCommandStatementExpectedData(scopeName: ScopeName): Expect
       ];
     })(),
 
-    // expression parameter
-    ...((): ExpectedTestData[] => {
-      expression;
-
+    ...((_ = expression): ExpectedTestData[] => {
       return [
         [
           dedent`
@@ -1602,10 +1673,7 @@ export function createCommandStatementExpectedData(scopeName: ScopeName): Expect
       ];
     })(),
 
-    // control parameter
-    ...((): ExpectedTestData[] => {
-      control;
-
+    ...((_ = control): ExpectedTestData[] => {
       return [
         [
           dedent`
@@ -1640,10 +1708,7 @@ export function createCommandStatementExpectedData(scopeName: ScopeName): Expect
       ];
     })(),
 
-    // winTitle parameter
-    ...((): ExpectedTestData[] => {
-      winTitle;
-
+    ...((_ = winTitle): ExpectedTestData[] => {
       return [
         [
           dedent`
@@ -1680,10 +1745,7 @@ export function createCommandStatementExpectedData(scopeName: ScopeName): Expect
       ];
     })(),
 
-    // output parmeter
-    ...((): ExpectedTestData[] => {
-      output;
-
+    ...((_ = output): ExpectedTestData[] => {
       return [
         [
           dedent`
@@ -1699,10 +1761,7 @@ export function createCommandStatementExpectedData(scopeName: ScopeName): Expect
       ];
     })(),
 
-    // restParams parameter
-    ...((): ExpectedTestData[] => {
-      restParams;
-
+    ...((_ = restParams): ExpectedTestData[] => {
       return [
         [
           dedent`
@@ -1737,10 +1796,7 @@ export function createCommandStatementExpectedData(scopeName: ScopeName): Expect
       ];
     })(),
 
-    // sendKeys parameter
-    ...((): ExpectedTestData[] => {
-      sendKeys;
-
+    ...((_ = sendKeys): ExpectedTestData[] => {
       return [
         [
           dedent`
@@ -1841,10 +1897,7 @@ export function createCommandStatementExpectedData(scopeName: ScopeName): Expect
       ];
     })(),
 
-    // keywordOnly parameter
-    ...((): ExpectedTestData[] => {
-      keywordOnly;
-
+    ...((_ = keywordOnly): ExpectedTestData[] => {
       return [
         [
           dedent`
@@ -1895,10 +1948,7 @@ export function createCommandStatementExpectedData(scopeName: ScopeName): Expect
       ];
     })(),
 
-    // fileAttributes parameter
-    ...((): ExpectedTestData[] => {
-      fileAttributes;
-
+    ...((_ = fileAttributes): ExpectedTestData[] => {
       return [
         [
           dedent`
@@ -1924,10 +1974,7 @@ export function createCommandStatementExpectedData(scopeName: ScopeName): Expect
       ];
     })(),
 
-    // guiOptions parameter
-    ...((): ExpectedTestData[] => {
-      guiOptions;
-
+    ...((_ = guiOptions): ExpectedTestData[] => {
       return [
         [
           dedent`
@@ -1957,11 +2004,7 @@ export function createCommandStatementExpectedData(scopeName: ScopeName): Expect
       ];
     })(),
 
-    // guiControlOptions parameter
-    ...((): ExpectedTestData[] => {
-      guiControlOptions;
-      flagedGuiControlOptions;
-
+    ...((_ = guiControlOptions, __ = flagedGuiControlOptions): ExpectedTestData[] => {
       return [
         [
           dedent`
