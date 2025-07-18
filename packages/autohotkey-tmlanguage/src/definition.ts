@@ -32,7 +32,12 @@ export const enum CommandParameterFlag {
   RestParams = 1 << 3,
   CompilerDirective = 1 << 4,
 
-  Keyword = 1 << 16,
+  // Accept only one keyword
+  // [o] AutoTrim, On
+  // [x] AutoTrim, On Off
+  ExclusiveKeyword = 1 << 16,
+  // Gui, GuiName:
+  //      ^^^^^^^^
   GuiLabeled = 1 << 17,
 }
 // #endregion enum
@@ -521,7 +526,7 @@ export function keywordOnly(itemMatchers: ParameterItemMatcher[] = [], flags: Co
   // e.g. `Gui, Flash, Off`
   //                   ^^^
   return {
-    flags: mergeFlags(flags, CommandParameterFlag.Keyword),
+    flags: mergeFlags(flags, CommandParameterFlag.ExclusiveKeyword),
     itemMatchers: [
       includeRule(Repository.DereferenceUnaryOperator),
       includeRule(Repository.Dereference),
