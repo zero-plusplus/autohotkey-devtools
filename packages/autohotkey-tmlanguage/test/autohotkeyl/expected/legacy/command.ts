@@ -1564,15 +1564,17 @@ export function createCommandStatementExpectedData(scopeName: ScopeName): Expect
             ],
             [
               dedent`
-                MsgBox, %value% %value%, %value% %value%, %value% %value%, %value% %value%      ; comment
+                MsgBox, abc %value% 123 %value%, abc %value% 123 %value%, abc %value% 123 %value%, abc %value% 123 %value%      ; comment
               `,
               [
                 { text: 'MsgBox', scopes: name(scopeName, RuleName.CommandName) },
                 ...repeatArray(4, [
                   { text: ',', scopes: name(scopeName, RuleName.Comma) },
+                  { text: 'abc', scopes: name(scopeName, RuleName.UnquotedString) },
                   { text: '%', scopes: name(scopeName, RuleName.PercentBegin) },
                   { text: 'value', scopes: name(scopeName, RuleName.Variable) },
                   { text: '%', scopes: name(scopeName, RuleName.PercentEnd) },
+                  { text: '123', scopes: name(scopeName, RuleName.UnquotedString) },
                   { text: '%', scopes: name(scopeName, RuleName.PercentBegin) },
                   { text: 'value', scopes: name(scopeName, RuleName.Variable) },
                   { text: '%', scopes: name(scopeName, RuleName.PercentEnd) },
