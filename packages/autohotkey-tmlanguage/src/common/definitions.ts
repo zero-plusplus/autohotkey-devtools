@@ -3,12 +3,13 @@ import {
   output, signature, signOptionItem, unquotedNumber, unquotedWithNumber,
   type CommandDefinition, type CommandParameter, type ParameterItemMatcher,
 } from '../definition';
-import { char, inlineSpace, negChars1, seq, wordChars0 } from '../oniguruma';
+import { char, inlineSpace, negChars0, negChars1, seq, wordChars0 } from '../oniguruma';
 import { includeRule, Repository, RuleName } from '../tmlanguage';
 
 export const undefinedDirective: CommandDefinition = command(seq('#', wordChars0()), signature([ invalid() ]));
 export const compilerDirectives: CommandDefinition[] = [
   command('@Ahk2Exe', signature([])),
+  command(seq('@Ahk2Exe-', char('%'), negChars0('%', inlineSpace()), char('%')), signature([])),
   command('@Ahk2Exe-IgnoreBegin', signature([])),
   command('@Ahk2Exe-IgnoreEnd', signature([])),
 

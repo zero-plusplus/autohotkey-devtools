@@ -266,11 +266,20 @@ export function createDirectiveCommentExpectedData(scopeName: ScopeName): Expect
     ],
     [
       dedent`
-        ; @ahk2exe
+        ; @Ahk2Exe-%U_Var%
       `,
       [
         { text: ';', scopes: name(scopeName, RuleName.DirectiveComment) },
-        { text: '@ahk2exe', scopes: name(scopeName, RuleName.DirectiveCommentName) },
+        { text: '@Ahk2Exe-%U_Var%', scopes: name(scopeName, RuleName.DirectiveCommentName) },
+      ],
+    ],
+    [
+      dedent`
+        ; @Ahk2Exe
+      `,
+      [
+        { text: ';', scopes: name(scopeName, RuleName.DirectiveComment) },
+        { text: '@Ahk2Exe', scopes: name(scopeName, RuleName.DirectiveCommentName) },
       ],
     ],
   ];
