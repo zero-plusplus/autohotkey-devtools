@@ -3,7 +3,7 @@ import * as patterns_v1 from './autohotkeyl/patterns';
 import * as constants_common from './common/constants';
 import {
   alt, anyChars0, anyChars1, capture, char, endAnchor, group, groupMany1, ignoreCase, inlineSpace, inlineSpaces0, lookahead, lookbehind,
-  negChar, negChars0, negChars1, numbers0, numbers1, optional, optseq, ordalt, seq, text, textalt, wordBound,
+  negChar, negChars0, negChars1, numbers0, numbers1, optional, optseq, ordalt, reluctant, seq, text, textalt, wordBound,
 } from './oniguruma';
 import {
   includeRule, Repository, RuleName, StyleName,
@@ -121,8 +121,18 @@ export function keywordOption(...optionNames: string[]): ParameterItemMatcher {
     match: seq(wordBound(), ignoreCase(textalt(...optionNames)), wordBound()),
   };
 }
-export function quotableOptionItem(...options: string[]): string {
-  return createQuotableOptionItemPattern(ignoreCase(textalt(...options)));
+export function quotableKeywordOption(...keywords: string[]): ParameterItemMatcher {
+  return {
+    name: [ RuleName.UnquotedString ],
+    match: alt(
+      group(seq(char('"'), alt(capture(ignoreCase(textalt(...keywords))), reluctant(anyChars1())), char('"'))),
+      group(seq(char(`'`), alt(capture(ignoreCase(textalt(...keywords))), reluctant(anyChars1())), char(`'`))),
+    ),
+    captures: {
+      1: [ { name: [ StyleName.Strong ] } ],
+      2: [ { name: [ StyleName.Strong ] } ],
+    },
+  };
 }
 export function signOptionItem(...options: string[]): string {
   return seq(ignoreCase(textalt(...options)), wordBound());
@@ -393,8 +403,8 @@ export function unquoted(itemMatchers: ParameterItemMatcher[] = [], flags: Comma
     itemMatchers: [
       includeRule(Repository.DereferenceUnaryOperator),
       includeRule(Repository.DereferenceInCommandArgument),
-      includeRule(Repository.UnquotedStringEscapeSequence),
       ...itemMatchers,
+      includeRule(Repository.UnquotedStringEscapeSequence),
       {
         name: [ RuleName.UnquotedString ],
         match: negChars1('`', '%', inlineSpace()),
@@ -772,7 +782,7 @@ export function encoding(flags: CommandParameterFlag = CommandParameterFlag.None
   return unquoted([ keywordOption('CP0', 'UTF-8', 'UTF-8-RAW', 'UTF-16', 'UTF-16-RAW'), numberOptionItem('CP') ], flags);
 }
 export function quotableEncoding(flags: CommandParameterFlag = CommandParameterFlag.None): CommandParameter {
-  return quotableUnquoted([ quotableOptionItem('CP0', 'UTF-8', 'UTF-8-RAW', 'UTF-16', 'UTF-16-RAW'), quotableNumberOptionItem('CP') ], flags);
+  return unquoted([ quotableKeywordOption('CP0', 'UTF-8', 'UTF-8-RAW', 'UTF-16', 'UTF-16-RAW'), quotableNumberOptionItem('CP'), ...(encoding(flags).itemMatchers!) ], flags);
 }
 export function keyName(flags: CommandParameterFlag = CommandParameterFlag.None): CommandParameter {
   return unquoted([ keywordOption(...constants_common.keyNameList), hexOptionItem('sc', 'vk') ], flags);

@@ -630,7 +630,7 @@ function itemPatternToRule(scopeName: ScopeName, itemPattern: ParameterItemMatch
   if ('include' in itemPattern) {
     return itemPattern;
   }
-  if ('name' in itemPattern) {
+  if ('name' in itemPattern && !('captures' in itemPattern)) {
     if (itemPattern.match === undefined) {
       return { name: name(scopeName, ...Array.isArray(itemPattern.name) ? itemPattern.name : [ itemPattern.name ]) };
     }
