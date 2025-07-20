@@ -402,8 +402,8 @@ export function unquoted(itemMatchers: ParameterItemMatcher[] = [], flags: Comma
     ],
   };
 }
-export function unquotedShouldEscapeComma(optionItems: string[] = [], flags: CommandParameterFlag = CommandParameterFlag.None): CommandParameter {
-  return restParams(optionItems, flags);
+export function unquotedShouldEscapeComma(flags: CommandParameterFlag = CommandParameterFlag.None): CommandParameter {
+  return restParams([], flags);
 }
 export function unquotedInteger(): CommandParameter {
   return {
