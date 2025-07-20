@@ -115,8 +115,11 @@ export function createQuotableOptionItemPattern(pattern: string): string {
     group(alt(alt(lookahead(char('"', `'`)), wordBound()))),
   );
 }
-export function optionItem(...options: string[]): string {
-  return seq(wordBound(), ignoreCase(textalt(...options)), wordBound());
+export function keywordOption(...optionNames: string[]): ParameterItemMatcher {
+  return {
+    name: [ RuleName.UnquotedString, StyleName.Strong ],
+    match: seq(wordBound(), ignoreCase(textalt(...optionNames)), wordBound()),
+  };
 }
 export function quotableOptionItem(...options: string[]): string {
   return createQuotableOptionItemPattern(ignoreCase(textalt(...options)));
@@ -551,10 +554,10 @@ export function keywordOnly(itemMatchers: ParameterItemMatcher[] = [], flags: Co
     ],
   };
 }
-export function spacedKeywordsOnly(values: string[] = [], flags: CommandParameterFlag = CommandParameterFlag.None): CommandParameter {
+export function spacedKeywordsOnly(itemMatchers: ParameterItemMatcher[] = [], flags: CommandParameterFlag = CommandParameterFlag.None): CommandParameter {
   // e.g. `PixelGetColor, output, x, y, Fast RGB`
   //                                    ^^^^ ^^^
-  return keywordOnly(values, flags);
+  return keywordOnly(itemMatchers, flags);
 }
 export function input(flags: CommandParameterFlag = CommandParameterFlag.None): CommandParameter {
   return expression(flags);
@@ -655,7 +658,7 @@ export function menuOptions(values: string[] = [], flags: CommandParameterFlag =
 export function winTitle(flags: CommandParameterFlag = CommandParameterFlag.None): CommandParameter {
   // e.g. `WinGet, output,ID, abc ahk_exe abc.exe ahk_class abc
   //                          ^^^ ^^^^^^^^^^^^^^^ ^^^^^^^^^^^^^
-  return unquoted([ optionItem('ahk_class', 'ahk_id', 'ahk_pid', 'ahk_exe', 'ahk_group') ], flags);
+  return unquoted([ keywordOption('ahk_class', 'ahk_id', 'ahk_pid', 'ahk_exe', 'ahk_group') ], flags);
 
   // Make each definition group easily distinguishable by underlining. However, if the underline is applied in TMLanguage, its color cannot be controlled. This should be implemented with semantic highlighting
   // For example, three groups are underlined in the following cases
@@ -718,13 +721,13 @@ export function winTitle(flags: CommandParameterFlag = CommandParameterFlag.None
   // };
 }
 export function control(flags: CommandParameterFlag = CommandParameterFlag.None): CommandParameter {
-  return unquoted([ optionItem('ahk_id') ], flags);
+  return unquoted([ keywordOption('ahk_id') ], flags);
 }
 export function controlOrPos(flags: CommandParameterFlag = CommandParameterFlag.None): CommandParameter {
-  return unquoted([ optionItem('ahk_id'), decimalOptionItem('X', 'Y') ], flags);
+  return unquoted([ keywordOption('ahk_id'), decimalOptionItem('X', 'Y') ], flags);
 }
 export function guiControlType(): CommandParameter {
-  return keywordOnly([ optionItem('ActiveX', 'Button', 'CheckBox', 'ComboBox', 'Custom', 'DateTime', 'DropDownList', 'DDL', 'Edit', 'GroupBox', 'Hotkey', 'Link', 'ListBox', 'ListView', 'MonthCal', 'Picture', 'Pic', 'Progress', 'Radio', 'Slider', 'StatusBar', 'Tab', 'Tab2', 'Tab3', 'Text', 'TreeView', 'UpDown') ]);
+  return keywordOnly([ keywordOption('ActiveX', 'Button', 'CheckBox', 'ComboBox', 'Custom', 'DateTime', 'DropDownList', 'DDL', 'Edit', 'GroupBox', 'Hotkey', 'Link', 'ListBox', 'ListView', 'MonthCal', 'Picture', 'Pic', 'Progress', 'Radio', 'Slider', 'StatusBar', 'Tab', 'Tab2', 'Tab3', 'Text', 'TreeView', 'UpDown') ]);
 }
 export function controlMoveOptions(): CommandParameter {
   return unquoted([ numberOptionItem('X', 'Y', 'W', 'H') ]);
@@ -736,7 +739,7 @@ export function guiControlOptions(_flaged = false): CommandParameter {
   return unquoted(
     [
       (_flaged ? flagedSignedNumberOptionItem : signedNumberOptionItem)('R', 'W', 'H', 'WP', 'HP', 'X', 'Y', 'XP', 'YP', 'XM', 'YM', 'XS', 'YS', 'Choose', 'VScroll', 'HScroll'),
-      (_flaged ? flagedOptionItem : optionItem)('X+M', 'X-M', 'Y+M', 'Y-M', 'Left', 'Right', 'Center', 'Section', 'Tabstop', 'Wrap', 'AltSubmit', 'CDefault', 'BackgroundTrans', 'Background', 'Border', 'Theme'),
+      (_flaged ? flagedOptionItem : keywordOption)('X+M', 'X-M', 'Y+M', 'Y-M', 'Left', 'Right', 'Center', 'Section', 'Tabstop', 'Wrap', 'AltSubmit', 'CDefault', 'BackgroundTrans', 'Background', 'Border', 'Theme'),
       (_flaged ? flagedIdentifierOptionItem : identifierOptionItem)('V', 'G', 'Hwnd'),
       (_flaged ? flagedHexOptionItem : hexOptionItem)('C'),
       (_flaged ? flagedToggleOptionItem : toggleOptionItem)('Disabled', 'Hidden'),
@@ -747,17 +750,17 @@ export function guiControlOptions(_flaged = false): CommandParameter {
 export function flagedGuiControlOptions(): CommandParameter {
   return guiControlOptions(true);
 }
-export function onOff(values: string[] = [], flags: CommandParameterFlag = CommandParameterFlag.None): CommandParameter {
-  return keywordOnly([ optionItem('On', 'Off', '1', '0'), ...values ], flags);
+export function onOff(itemMatchers: ParameterItemMatcher[] = [], flags: CommandParameterFlag = CommandParameterFlag.None): CommandParameter {
+  return keywordOnly([ keywordOption('On', 'Off', '1', '0'), ...itemMatchers ], flags);
 }
-export function onOffToggle(values: string[] = [], flags: CommandParameterFlag = CommandParameterFlag.None): CommandParameter {
-  return onOff([ optionItem('Toggle'), ...values ], flags);
+export function onOffToggle(itemMatchers: ParameterItemMatcher[] = [], flags: CommandParameterFlag = CommandParameterFlag.None): CommandParameter {
+  return onOff([ keywordOption('Toggle'), ...itemMatchers ], flags);
 }
 export function whichButton(flags: CommandParameterFlag = CommandParameterFlag.None): CommandParameter {
-  return unquoted([ optionItem('Left', 'L', 'Right', 'R', 'Middle', 'M', 'WheelUp', 'WU', 'WheelDown', 'WD', 'WheelLeft', 'WL', 'WheelRight', 'WR') ], flags);
+  return unquoted([ keywordOption('Left', 'L', 'Right', 'R', 'Middle', 'M', 'WheelUp', 'WU', 'WheelDown', 'WD', 'WheelLeft', 'WL', 'WheelRight', 'WR') ], flags);
 }
-export function path(values: string[] = [], flags: CommandParameterFlag = CommandParameterFlag.None): CommandParameter {
-  return unquoted(values, flags);
+export function path(itemMatchers: ParameterItemMatcher[] = [], flags: CommandParameterFlag = CommandParameterFlag.None): CommandParameter {
+  return unquoted(itemMatchers, flags);
 }
 export function imagePath(flags: CommandParameterFlag = CommandParameterFlag.None): CommandParameter {
   return path([ stringOptionItem('HICON:', 'HBITMAP:') ], flags);
@@ -766,13 +769,13 @@ export function glob(flags: CommandParameterFlag = CommandParameterFlag.None): C
   return unquoted([], flags);
 }
 export function encoding(flags: CommandParameterFlag = CommandParameterFlag.None): CommandParameter {
-  return unquoted([ optionItem('CP0', 'UTF-8', 'UTF-8-RAW', 'UTF-16', 'UTF-16-RAW'), numberOptionItem('CP') ], flags);
+  return unquoted([ keywordOption('CP0', 'UTF-8', 'UTF-8-RAW', 'UTF-16', 'UTF-16-RAW'), numberOptionItem('CP') ], flags);
 }
 export function quotableEncoding(flags: CommandParameterFlag = CommandParameterFlag.None): CommandParameter {
   return quotableUnquoted([ quotableOptionItem('CP0', 'UTF-8', 'UTF-8-RAW', 'UTF-16', 'UTF-16-RAW'), quotableNumberOptionItem('CP') ], flags);
 }
 export function keyName(flags: CommandParameterFlag = CommandParameterFlag.None): CommandParameter {
-  return unquoted([ optionItem(...constants_common.keyNameList), hexOptionItem('sc', 'vk') ], flags);
+  return unquoted([ keywordOption(...constants_common.keyNameList), hexOptionItem('sc', 'vk') ], flags);
 }
 export function hotkeyName(flags: CommandParameterFlag = CommandParameterFlag.None): CommandParameter {
   return unquoted([], flags);
@@ -783,7 +786,7 @@ export function sendKeys(flags: CommandParameterFlag = CommandParameterFlag.None
   return unquoted([ includeRule(Repository.CommandArgumentSendKeyName) ], flags);
 }
 export function timeunit(flags: CommandParameterFlag = CommandParameterFlag.None): CommandParameter {
-  return keywordOnly([ optionItem('Seconds', 'S', 'Minutes', 'M', 'Hours', 'H', 'Days', 'D') ], flags);
+  return keywordOnly([ keywordOption('Seconds', 'S', 'Minutes', 'M', 'Hours', 'H', 'Days', 'D') ], flags);
 }
 export function formatTime(flags: CommandParameterFlag = CommandParameterFlag.None): CommandParameter {
   return unquoted(
@@ -792,13 +795,13 @@ export function formatTime(flags: CommandParameterFlag = CommandParameterFlag.No
   );
 }
 export function color(flags: CommandParameterFlag = CommandParameterFlag.None): CommandParameter {
-  return unquoted([ optionItem('Default', 'Black', 'Silver', 'Gray', 'White', 'Maroon', 'Red', 'Purple', 'Fuchsia', 'Green', 'Lime', 'Olive', 'Yellow', 'Navy', 'Blue', 'Teal', 'Aqua') ], flags);
+  return unquoted([ keywordOption('Default', 'Black', 'Silver', 'Gray', 'White', 'Maroon', 'Red', 'Purple', 'Fuchsia', 'Green', 'Lime', 'Olive', 'Yellow', 'Navy', 'Blue', 'Teal', 'Aqua') ], flags);
 }
 export function soundComponent(): CommandParameter {
-  return unquoted([ optionItem('MASTER', 'SPEAKERS', 'DIGITAL', 'LINE', 'MICROPHONE', 'SYNTH', 'CD', 'TELEPHONE', 'PCSPEAKER', 'WAVE', 'AUX', 'ANALOG', 'HEADPHONES', 'N/A') ]);
+  return unquoted([ keywordOption('MASTER', 'SPEAKERS', 'DIGITAL', 'LINE', 'MICROPHONE', 'SYNTH', 'CD', 'TELEPHONE', 'PCSPEAKER', 'WAVE', 'AUX', 'ANALOG', 'HEADPHONES', 'N/A') ]);
 }
 export function soundControlType(): CommandParameter {
-  return unquoted([ optionItem('VOLUME', 'VOL', 'ONOFF', 'MUTE', 'MONO', 'LOUDNESS', 'STEREOENH', 'BASSBOOST', 'PAN', 'QSOUNDPAN', 'BASS', 'TREBLE', 'EQUALIZER') ]);
+  return unquoted([ keywordOption('VOLUME', 'VOL', 'ONOFF', 'MUTE', 'MONO', 'LOUDNESS', 'STEREOENH', 'BASSBOOST', 'PAN', 'QSOUNDPAN', 'BASS', 'TREBLE', 'EQUALIZER') ]);
 }
 export const winParams: CommandParameter[] = [
   winTitle(),

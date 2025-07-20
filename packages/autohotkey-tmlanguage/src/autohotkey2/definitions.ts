@@ -1,5 +1,5 @@
 import {
-  command, decimalOptionItem, expression, keywordOnly, optionItem, parameterless, quotableEncoding,
+  command, decimalOptionItem, expression, keywordOnly, keywordOption, parameterless, quotableEncoding,
   quotableIncludeLib, quotableUnquoted, requiresVersion, signature, signedNumberOptionItem,
   signOptionItem, toggleOptionItem, unquoted, unquotedAndBoolean, unquotedInteger,
   type CommandDefinition,
@@ -23,7 +23,7 @@ export const directiveDefinitions: CommandDefinition[] = [
   command('#HotIfTimeout', signature([ unquotedInteger() ])),
 
   // https://www.autohotkey.com/docs/v2/lib/_Hotstring.htm
-  command('#Hotstring', signature([ unquoted([ optionItem('NoMouse', 'EndChars', 'SI', 'SP', 'SE', 'X'), toggleOptionItem('*', '?', 'B', 'C', 'O', 'R', 'T', 'Z'), decimalOptionItem('P'), signedNumberOptionItem('K') ]) ])),
+  command('#Hotstring', signature([ unquoted([ keywordOption('NoMouse', 'EndChars', 'SI', 'SP', 'SE', 'X'), toggleOptionItem('*', '?', 'B', 'C', 'O', 'R', 'T', 'Z'), decimalOptionItem('P'), signedNumberOptionItem('K') ]) ])),
 
   // https://www.autohotkey.com/docs/v2/lib/_Include.htm
   command('#Include', signature([ quotableIncludeLib() ])),
@@ -48,7 +48,7 @@ export const directiveDefinitions: CommandDefinition[] = [
   command('#Requires', signature([ requiresVersion() ])),
 
   // https://www.autohotkey.com/docs/v2/lib/_SingleInstance.htm
-  command('#SingleInstance', signature([ keywordOnly([ optionItem('Force', 'Ignore', 'Prompt', 'Off') ]) ])),
+  command('#SingleInstance', signature([ keywordOnly([ keywordOption('Force', 'Ignore', 'Prompt', 'Off') ]) ])),
 
   // https://www.autohotkey.com/docs/v2/lib/_SuspendExempt.htm
   command('#SuspendExempt', signature([ unquotedAndBoolean() ])),
@@ -57,7 +57,7 @@ export const directiveDefinitions: CommandDefinition[] = [
   command('#UseHook', signature([ unquotedAndBoolean() ])),
 
   // https://www.autohotkey.com/docs/v2/lib/_Warn.htm
-  command('#Warn', signature([ keywordOnly([ optionItem('VarUnset', 'LocalSameAsGlobal', 'Unreachable', 'All') ]), keywordOnly([ optionItem('MsgBox', 'StdOut', 'OutputDebug', 'Off') ]) ])),
+  command('#Warn', signature([ keywordOnly([ keywordOption('VarUnset', 'LocalSameAsGlobal', 'Unreachable', 'All') ]), keywordOnly([ keywordOption('MsgBox', 'StdOut', 'OutputDebug', 'Off') ]) ])),
 
   // https://www.autohotkey.com/docs/v2/lib/_WinActivateForce.htm
   command('#WinActivateForce', signature(parameterless())),

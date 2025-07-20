@@ -2,8 +2,8 @@ import {
   blank, color, colorOptionItem, command, CommandFlag, control, controlMoveOptions, controlOrPos, decimalOptionItem,
   encoding, endKeyOptionItem, expression, fileAttributes, flagedGuiControlOptions, flowSubcommand, formatTime, glob,
   guiControlOptions, guiControlType, guiOptions, guiSubcommand, hotkeyName, identifierOptionItem, imagePath, includeLib,
-  input, invalid, keyName, keywordOnly, labelName, letterOptionItem, matchKeyOptionItem, menuItemName, menuOptions,
-  numberOptionItem, onOff, onOffToggle, optionItem, output, parameterless, path, rangeOptionItem, requiresVersion,
+  input, invalid, keyName, keywordOnly, keywordOption, labelName, letterOptionItem, matchKeyOptionItem, menuItemName,
+  menuOptions, numberOptionItem, onOff, onOffToggle, output, parameterless, path, rangeOptionItem, requiresVersion,
   restParams, sendKeys, signature, signedNumberOptionItem, signOptionItem, sizeOptionItem, soundComponent, soundControlType,
   spacedKeywordsOnly, stringOptionItem, style, subcommand, subcommandlike, timeunit, toggleOptionItem, unquoted, unquotedInteger,
   unquotedNumber, unquotedShouldEscapeComma, unquotedWithNumber, whichButton, winParams, winTitle,
@@ -40,7 +40,7 @@ export const directiveDefinitions: CommandDefinition[] = [
   command('#HotkeyModifierTimeout', signature([ unquotedInteger() ])),
 
   // https://www.autohotkey.com/docs/v1/lib/_Hotstring.htm
-  command('#Hotstring', signature([ unquoted([ optionItem('NoMouse', 'EndChars', 'SI', 'SP', 'SE', 'X'), toggleOptionItem('*', '?', 'B', 'C', 'O', 'R', 'T', 'Z'), decimalOptionItem('P'), signedNumberOptionItem('K') ]) ])),
+  command('#Hotstring', signature([ unquoted([ keywordOption('NoMouse', 'EndChars', 'SI', 'SP', 'SE', 'X'), toggleOptionItem('*', '?', 'B', 'C', 'O', 'R', 'T', 'Z'), decimalOptionItem('P'), signedNumberOptionItem('K') ]) ])),
 
   // https://www.autohotkey.com/docs/v1/lib/_If.htm
   command('#If', signature([ expression() ])),
@@ -71,7 +71,7 @@ export const directiveDefinitions: CommandDefinition[] = [
   command('#KeyHistory', signature([ unquoted() ])),
 
   // https://www.autohotkey.com/docs/v1/Scripts.htm#LTrim
-  command('#LTrim', signature([ keywordOnly([ optionItem('Off') ]) ])),
+  command('#LTrim', signature([ keywordOnly([ keywordOption('Off') ]) ])),
 
   // https://www.autohotkey.com/docs/v1/lib/_MaxHotkeysPerInterval.htm
   command('#MaxHotkeysPerInterval', signature([ unquoted() ])),
@@ -104,13 +104,13 @@ export const directiveDefinitions: CommandDefinition[] = [
   command('#Requires', signature([ requiresVersion() ])),
 
   // https://www.autohotkey.com/docs/v1/lib/_SingleInstance.htm
-  command('#SingleInstance', signature([ keywordOnly([ optionItem('Force', 'Ignore', 'Prompt', 'Off') ]) ])),
+  command('#SingleInstance', signature([ keywordOnly([ keywordOption('Force', 'Ignore', 'Prompt', 'Off') ]) ])),
 
   // https://www.autohotkey.com/docs/v1/lib/_UseHook.htm
   command('#UseHook', signature([ onOff() ])),
 
   // https://www.autohotkey.com/docs/v1/lib/_Warn.htm
-  command('#Warn', signature([ keywordOnly([ optionItem('UseUnsetLocal', 'UseUnsetGlobal', 'UseEnv', 'LocalSameAsGlobal', 'ClassOverwrite', 'Unreachable', 'All') ]), keywordOnly([ optionItem('MsgBox', 'StdOut', 'OutputDebug', 'Off') ]) ])),
+  command('#Warn', signature([ keywordOnly([ keywordOption('UseUnsetLocal', 'UseUnsetGlobal', 'UseEnv', 'LocalSameAsGlobal', 'ClassOverwrite', 'Unreachable', 'All') ]), keywordOnly([ keywordOption('MsgBox', 'StdOut', 'OutputDebug', 'Off') ]) ])),
 
   // https://www.autohotkey.com/docs/v1/lib/_WinActivateForce.htm
   command('#WinActivateForce', signature(parameterless())),
@@ -124,7 +124,7 @@ export const loopCommandDefenitions: CommandDefinition[] = [
     signature([ flowSubcommand('Files'), path(), keywordOnly([ letterOptionItem('D', 'F', 'R') ]) ]),
 
     // https://www.autohotkey.com/docs/v1/lib/LoopParse.htm
-    signature([ flowSubcommand('Parse'), input(), unquoted([ optionItem('CSV') ]), unquotedShouldEscapeComma() ]),
+    signature([ flowSubcommand('Parse'), input(), unquoted([ keywordOption('CSV') ]), unquotedShouldEscapeComma() ]),
 
     // https://www.autohotkey.com/docs/v1/lib/LoopReadFile.htm
     signature([ flowSubcommand('Read'), path(), unquotedShouldEscapeComma() ]),
@@ -141,10 +141,10 @@ export const commandDefinitions: CommandDefinition[] = [
   command('AutoTrim', signature([ onOff() ])),
 
   // https://www.autohotkey.com/docs/v1/lib/BlockInput.htm
-  command('BlockInput', signature([ onOff([ optionItem('Send', 'Mouse', 'SendAndMouse', 'Default', 'MouseMove', 'MouseMoveOff') ]) ])),
+  command('BlockInput', signature([ onOff([ keywordOption('Send', 'Mouse', 'SendAndMouse', 'Default', 'MouseMove', 'MouseMoveOff') ]) ])),
 
   // https://www.autohotkey.com/docs/v1/lib/Click.htm
-  command('Click', signature([ unquotedWithNumber([ optionItem('Left', 'L', 'Right', 'R', 'Middle', 'M', 'X1', 'X2', 'Up', 'U', 'Down', 'D') ]) ])),
+  command('Click', signature([ unquotedWithNumber([ keywordOption('Left', 'L', 'Right', 'R', 'Middle', 'M', 'X1', 'X2', 'Up', 'U', 'Down', 'D') ]) ])),
 
   // https://www.autohotkey.com/docs/v1/lib/ClipWait.htm
   command('ClipWait', signature([ expression(), expression() ])),
@@ -161,14 +161,14 @@ export const commandDefinitions: CommandDefinition[] = [
   ),
 
   // https://www.autohotkey.com/docs/v1/lib/ControlClick.htm
-  command('ControlClick', signature([ controlOrPos(), winTitle(), unquoted(), whichButton(), expression(), unquoted([ optionItem('NA', 'D', 'U', 'Pos'), decimalOptionItem('X', 'Y') ]) ])),
+  command('ControlClick', signature([ controlOrPos(), winTitle(), unquoted(), whichButton(), expression(), unquoted([ keywordOption('NA', 'D', 'U', 'Pos'), decimalOptionItem('X', 'Y') ]) ])),
 
   // https://www.autohotkey.com/docs/v1/lib/ControlFocus.htm
   command('ControlFocus', signature([ control(), ...winParams ])),
 
   // https://www.autohotkey.com/docs/v1/lib/ControlGet.htm
   command('ControlGet', [
-    signature([ output(), subcommand('List'), unquoted([ optionItem('Selected'), optionItem('Focused'), optionItem('Col'), optionItem('Count') ]), control(), ...winParams ]),
+    signature([ output(), subcommand('List'), unquoted([ keywordOption('Selected', 'Focused', 'Col', 'Count') ]), control(), ...winParams ]),
     signature([ output(), subcommand([ 'Checked', 'Enabled', 'Visible', 'Tab', 'Choice', 'LineCount', 'CurrentLine', 'CurrentCol', 'Selected', 'Style', 'ExStyle', 'Hwnd' ]), blank(), control(), ...winParams ]),
     signature([ output(), subcommand([ 'FindString', 'Line' ]), unquoted(), control(), ...winParams ]),
     signature([ output(), invalid() ]),
@@ -196,10 +196,10 @@ export const commandDefinitions: CommandDefinition[] = [
   command('ControlSetText', signature([ control(), unquoted(), ...winParams ])),
 
   // https://www.autohotkey.com/docs/v1/lib/CoordMode.htm
-  command('CoordMode', signature([ keywordOnly([ optionItem('ToolTip', 'Pixel', 'Mouse', 'Caret', 'Menu') ]), keywordOnly([ optionItem('Screen', 'Relative', 'Window', 'Client') ]) ])),
+  command('CoordMode', signature([ keywordOnly([ keywordOption('ToolTip', 'Pixel', 'Mouse', 'Caret', 'Menu') ]), keywordOnly([ keywordOption('Screen', 'Relative', 'Window', 'Client') ]) ])),
 
   // https://www.autohotkey.com/docs/v1/lib/Critical.htm
-  command('Critical', signature([ unquoted([ optionItem('On', 'Off') ]) ])),
+  command('Critical', signature([ unquoted([ keywordOption('On', 'Off') ]) ])),
 
   // https://www.autohotkey.com/docs/v1/lib/DetectHiddenText.htm
   command('DetectHiddenText', signature([ onOff() ])),
@@ -209,7 +209,7 @@ export const commandDefinitions: CommandDefinition[] = [
 
   // https://www.autohotkey.com/docs/v1/lib/Drive.htm
   command('Drive', [
-    signature([ subcommand('Eject'), unquoted(), keywordOnly([ optionItem('1') ]) ]),
+    signature([ subcommand('Eject'), unquoted(), keywordOnly([ keywordOption('1') ]) ]),
     signature([ subcommand('Label'), unquoted(), unquoted() ]),
     signature([ subcommand([ 'Lock', 'Unlock' ]), unquoted() ]),
     signature([ invalid() ]),
@@ -217,7 +217,7 @@ export const commandDefinitions: CommandDefinition[] = [
 
   // https://www.autohotkey.com/docs/v1/lib/DriveGet.htm
   command('DriveGet', [
-    signature([ output(), subcommand('List'), keywordOnly([ optionItem('CDROM', 'REMOVABLE', 'FIXED', 'NETWORK', 'RAMDISK', 'UNKNOWN') ]) ]),
+    signature([ output(), subcommand('List'), keywordOnly([ keywordOption('CDROM', 'REMOVABLE', 'FIXED', 'NETWORK', 'RAMDISK', 'UNKNOWN') ]) ]),
     signature([ output(), subcommand([ 'Capacity', 'Cap', 'FileSystem', 'FS', 'Label', 'Serial', 'Type', 'Status', 'StatusCD' ]), unquoted() ]),
     signature([ output(), invalid() ]),
   ]),
@@ -280,10 +280,10 @@ export const commandDefinitions: CommandDefinition[] = [
   command('FileGetShortcut', signature([ path(), output(), output(), output(), output(), output(), output(), output() ])),
 
   // https://www.autohotkey.com/docs/v1/lib/FileGetSize.htm
-  command('FileGetSize', signature([ output(), path(), keywordOnly([ optionItem('B', 'K', 'M') ]) ])),
+  command('FileGetSize', signature([ output(), path(), keywordOnly([ keywordOption('B', 'K', 'M') ]) ])),
 
   // https://www.autohotkey.com/docs/v1/lib/FileGetTime.htm
-  command('FileGetTime', signature([ output(), path(), keywordOnly([ optionItem('M', 'C', 'A') ]) ])),
+  command('FileGetTime', signature([ output(), path(), keywordOnly([ keywordOption('M', 'C', 'A') ]) ])),
 
   // https://www.autohotkey.com/docs/v1/lib/FileGetVersion.htm
   command('FileGetVersion', signature([ output(), path() ])),
@@ -292,10 +292,10 @@ export const commandDefinitions: CommandDefinition[] = [
   command('FileMove', signature([ glob(), glob(), expression() ])),
 
   // https://www.autohotkey.com/docs/v1/lib/FileMoveDir.htm
-  command('FileMoveDir', signature([ path(), path(), keywordOnly([ optionItem('0', '1', '2', 'R') ]) ])),
+  command('FileMoveDir', signature([ path(), path(), keywordOnly([ keywordOption('0', '1', '2', 'R') ]) ])),
 
   // https://www.autohotkey.com/docs/v1/lib/FileRead.htm
-  command('FileRead', signature([ output(), path([ optionItem('*c', '*t'), decimalOptionItem('*m', '*P') ]) ])),
+  command('FileRead', signature([ output(), path([ keywordOption('*c', '*t'), decimalOptionItem('*m', '*P') ]) ])),
 
   // https://www.autohotkey.com/docs/v1/lib/FileReadLine.htm
   command('FileReadLine', signature([ output(), path(), expression() ])),
@@ -310,7 +310,7 @@ export const commandDefinitions: CommandDefinition[] = [
   command('FileRemoveDir', signature([ path(), expression() ])),
 
   // https://www.autohotkey.com/docs/v1/lib/FileSelectFile.htm
-  command('FileSelectFile', signature([ output(), unquoted([ optionItem('M', 'S') ]), path(), unquoted(), unquoted() ])),
+  command('FileSelectFile', signature([ output(), unquoted([ keywordOption('M', 'S') ]), path(), unquoted(), unquoted() ])),
 
   // https://www.autohotkey.com/docs/v1/lib/FileSelectFolder.htm
   command('FileSelectFolder', signature([ output(), unquoted(), expression(), unquoted() ])),
@@ -323,31 +323,31 @@ export const commandDefinitions: CommandDefinition[] = [
 
   // https://www.autohotkey.com/docs/v1/lib/FormatTime.htm
   command('FormatTime', [
-    signature([ output(), unquoted(), subcommandlike([ optionItem('Time', 'ShortDate', 'LongDate', 'YearMonth', 'YDay', 'YDay0', 'WDay', 'YWeek') ]), restParams() ]),
+    signature([ output(), unquoted(), subcommandlike([ 'Time', 'ShortDate', 'LongDate', 'YearMonth', 'YDay', 'YDay0', 'WDay', 'YWeek' ]), restParams() ]),
     signature([ output(), unquoted(), formatTime() ]),
   ]),
 
   // https://www.autohotkey.com/docs/v1/lib/GetKeyState.htm#command
-  command('GetKeyState', signature([ output(), keywordOnly([ optionItem('P', 'T') ]) ]), CommandFlag.Deprecated),
+  command('GetKeyState', signature([ output(), keywordOnly([ keywordOption('P', 'T') ]) ]), CommandFlag.Deprecated),
 
   // https://www.autohotkey.com/docs/v1/lib/GroupActivate.htm
-  command('GroupActivate', signature([ unquoted(), keywordOnly([ optionItem('R') ]) ])),
+  command('GroupActivate', signature([ unquoted(), keywordOnly([ keywordOption('R') ]) ])),
 
   // https://www.autohotkey.com/docs/v1/lib/GroupAdd.htm
   command('GroupAdd', signature([ unquoted(), winTitle(), unquoted(), unquoted(), winTitle(), unquoted() ])),
 
   // https://www.autohotkey.com/docs/v1/lib/GroupClose.htm
-  command('GroupClose', signature([ unquoted(), keywordOnly([ optionItem('R', 'A') ]) ])),
+  command('GroupClose', signature([ unquoted(), keywordOnly([ keywordOption('R', 'A') ]) ])),
 
   // https://www.autohotkey.com/docs/v1/lib/GroupDeactivate.htm
-  command('GroupDeactivate', signature([ unquoted(), keywordOnly([ optionItem('R') ]) ])),
+  command('GroupDeactivate', signature([ unquoted(), keywordOnly([ keywordOption('R') ]) ])),
 
   // https://www.autohotkey.com/docs/v1/lib/Gui.htm
   command('Gui', [
     signature([ guiSubcommand('New'), guiOptions(), unquoted() ]),
     signature([ guiSubcommand('Add'), guiControlType(), guiControlOptions(), unquoted() ]),
-    signature([ guiSubcommand('Show'), unquoted([ optionItem('xCenter', 'yCenter', 'AutoSize', 'Minimize', 'Maximize', 'Restore', 'NoActivate', 'NA', 'Hide', 'Center'), numberOptionItem('W', 'H', 'X', 'Y') ]), unquoted() ]),
-    signature([ guiSubcommand('Submit'), keywordOnly([ optionItem('NoHide') ]) ]),
+    signature([ guiSubcommand('Show'), unquoted([ keywordOption('xCenter', 'yCenter', 'AutoSize', 'Minimize', 'Maximize', 'Restore', 'NoActivate', 'NA', 'Hide', 'Center'), numberOptionItem('W', 'H', 'X', 'Y') ]), unquoted() ]),
+    signature([ guiSubcommand('Submit'), keywordOnly([ keywordOption('NoHide') ]) ]),
     signature([ guiSubcommand([ 'Cancel', 'Hide', 'Destroy', 'Minimize', 'Maximize', 'Restore', 'Default' ]), restParams() ]),
     signature([ guiSubcommand('Font'), unquoted([ colorOptionItem('C'), numberOptionItem('S', 'W', 'Q') ]), unquoted() ]),
     signature([ guiSubcommand('Color'), color(), color() ]),
@@ -375,7 +375,7 @@ export const commandDefinitions: CommandDefinition[] = [
   command('Hotkey', [
     signature([ subcommand([ 'IfWinActive', 'IfWinExist' ]), winTitle(), unquoted() ]),
     signature([ subcommand('If'), expression(), restParams() ]),
-    signature([ hotkeyName(), unquoted([ optionItem('On', 'Off', 'Toggle', 'AltTab') ]), unquoted([ optionItem('UseErrorLevel', 'On', 'Off', 'B', 'B0'), numberOptionItem('P', 'T', 'I') ]) ]),
+    signature([ hotkeyName(), unquoted([ keywordOption('On', 'Off', 'Toggle', 'AltTab') ]), unquoted([ keywordOption('UseErrorLevel', 'On', 'Off', 'B', 'B0'), numberOptionItem('P', 'T', 'I') ]) ]),
   ]),
 
   // https://www.autohotkey.com/docs/v1/lib/ImageSearch.htm
@@ -391,7 +391,7 @@ export const commandDefinitions: CommandDefinition[] = [
   command('IniWrite', signature([ unquoted(), unquoted(), path(), unquoted(), unquoted() ])),
 
   // https://www.autohotkey.com/docs/v1/lib/Input.htm
-  command('Input', signature([ output(), unquoted([ optionItem('B', 'C', 'V', 'E', 'M'), signOptionItem('*'), numberOptionItem('I', 'L', 'T') ]), unquoted([ endKeyOptionItem() ]), unquoted([ matchKeyOptionItem() ]) ])),
+  command('Input', signature([ output(), unquoted([ keywordOption('B', 'C', 'V', 'E', 'M'), signOptionItem('*'), numberOptionItem('I', 'L', 'T') ]), unquoted([ endKeyOptionItem() ]), unquoted([ matchKeyOptionItem() ]) ])),
 
   // https://www.autohotkey.com/docs/v1/lib/InputBox.htm
   command('InputBox', signature([ output(), unquoted(), unquoted(), unquoted(), expression(), expression(), expression(), expression(), unquoted(), expression(), unquoted() ])),
@@ -400,7 +400,7 @@ export const commandDefinitions: CommandDefinition[] = [
   command('KeyHistory', signature(parameterless())),
 
   // https://www.autohotkey.com/docs/v1/lib/KeyWait.htm
-  command('KeyWait', signature([ keyName(), unquoted([ optionItem('D', 'L'), decimalOptionItem('T') ]) ])),
+  command('KeyWait', signature([ keyName(), unquoted([ keywordOption('D', 'L'), decimalOptionItem('T') ]) ])),
 
   // https://www.autohotkey.com/docs/v1/lib/ListHotkeys.htm
   command('ListHotkeys', signature(parameterless())),
@@ -423,22 +423,22 @@ export const commandDefinitions: CommandDefinition[] = [
     signature([ unquoted(), subcommand([ 'Delete', 'Check', 'Uncheck', 'ToggleCheck', 'Enable', 'Disable', 'ToggleEnable', 'Default', 'NoIcon' ]), menuItemName() ]),
     signature([ unquoted(), subcommand('Rename'), menuItemName(), menuItemName() ]),
     signature([ unquoted(), subcommand('Icon'), unquoted(), path(), unquoted(), imagePath() ]),
-    signature([ unquoted(), subcommand('UseErrorLevel'), keywordOnly([ optionItem('Off') ]) ]),
+    signature([ unquoted(), subcommand('UseErrorLevel'), keywordOnly([ keywordOption('Off') ]) ]),
     signature([ unquoted(), subcommand([ 'Show', 'Color' ]), unquoted(), unquoted() ]),
     signature([ restParams() ]),
   ]),
 
   // https://www.autohotkey.com/docs/v1/lib/MouseClick.htm
-  command('MouseClick', signature([ whichButton(), expression(), expression(), expression(), expression(), keywordOnly([ optionItem('D', 'U') ]), keywordOnly([ optionItem('R') ]) ])),
+  command('MouseClick', signature([ whichButton(), expression(), expression(), expression(), expression(), keywordOnly([ keywordOption('D', 'U') ]), keywordOnly([ keywordOption('R') ]) ])),
 
   // https://www.autohotkey.com/docs/v1/lib/MouseClickDrag.htm
-  command('MouseClickDrag', signature([ whichButton(), expression(), expression(), expression(), expression(), expression(), keywordOnly([ optionItem('R') ]) ])),
+  command('MouseClickDrag', signature([ whichButton(), expression(), expression(), expression(), expression(), expression(), keywordOnly([ keywordOption('R') ]) ])),
 
   // https://www.autohotkey.com/docs/v1/lib/MouseGetPos.htm
   command('MouseGetPos', signature([ output(), output(), output(), output(), expression() ])),
 
   // https://www.autohotkey.com/docs/v1/lib/MouseMove.htm
-  command('MouseMove', signature([ expression(), expression(), expression(), keywordOnly([ optionItem('R') ]) ])),
+  command('MouseMove', signature([ expression(), expression(), expression(), keywordOnly([ keywordOption('R') ]) ])),
 
   // https://www.autohotkey.com/docs/v1/lib/MsgBox.htm
   command('MsgBox', signature([ unquoted(), unquoted(), unquoted(), unquoted() ])),
@@ -453,10 +453,10 @@ export const commandDefinitions: CommandDefinition[] = [
   command('Pause', signature([ onOffToggle(), unquoted() ])),
 
   // https://www.autohotkey.com/docs/v1/lib/PixelGetColor.htm
-  command('PixelGetColor', signature([ output(), expression(), expression(), spacedKeywordsOnly([ optionItem('Alt', 'Slow', 'RGB') ]) ])),
+  command('PixelGetColor', signature([ output(), expression(), expression(), spacedKeywordsOnly([ keywordOption('Alt', 'Slow', 'RGB') ]) ])),
 
   // https://www.autohotkey.com/docs/v1/lib/PixelSearch.htm
-  command('PixelSearch', signature([ output(), output(), expression(), expression(), expression(), expression(), expression(), expression(), spacedKeywordsOnly([ optionItem('Fast', 'RGB') ]) ])),
+  command('PixelSearch', signature([ output(), output(), expression(), expression(), expression(), expression(), expression(), expression(), spacedKeywordsOnly([ keywordOption('Fast', 'RGB') ]) ])),
 
   // https://www.autohotkey.com/docs/v1/lib/PostMessage.htm
   command('PostMessage', signature([ expression(), expression(), expression(), control(), ...winParams ])),
@@ -466,7 +466,7 @@ export const commandDefinitions: CommandDefinition[] = [
   command('Process', [
     signature([ subcommand([ 'Exist', 'Close' ]), unquoted() ]),
     signature([ subcommand([ 'Wait', 'WaitClose' ]), unquoted(), unquoted() ]),
-    signature([ subcommand([ 'Priority' ]), unquoted(), keywordOnly([ optionItem('Low', 'L', 'BelowNormal', 'B', 'Normal', 'N', 'AboveNormal', 'A', 'High', 'H', 'Realtime', 'R') ]) ]),
+    signature([ subcommand([ 'Priority' ]), unquoted(), keywordOnly([ keywordOption('Low', 'L', 'BelowNormal', 'B', 'Normal', 'N', 'AboveNormal', 'A', 'High', 'H', 'Realtime', 'R') ]) ]),
     signature([ subcommand([ 'List' ]), restParams() ]),
     signature(parameterless()),
   ]),
@@ -487,16 +487,16 @@ export const commandDefinitions: CommandDefinition[] = [
   command('RegRead', signature([ output(), unquoted(), unquoted(), unquoted() ])),
 
   // https://www.autohotkey.com/docs/v1/lib/RegWrite.htm
-  command('RegWrite', signature([ keywordOnly([ optionItem('REG_SZ', 'REG_EXPAND_SZ', 'REG_MULTI_SZ', 'REG_DWORD', 'REG_BINARY') ]), unquoted(), unquoted(), unquoted() ])),
+  command('RegWrite', signature([ keywordOnly([ keywordOption('REG_SZ', 'REG_EXPAND_SZ', 'REG_MULTI_SZ', 'REG_DWORD', 'REG_BINARY') ]), unquoted(), unquoted(), unquoted() ])),
 
   // https://www.autohotkey.com/docs/v1/lib/Reload.htm
   command('Reload', signature(parameterless())),
 
   // https://www.autohotkey.com/docs/v1/lib/Run.htm
-  command('Run', signature([ unquoted(), path(), spacedKeywordsOnly([ optionItem('Max', 'Min', 'Hide', 'UseErrorLevel') ]), output() ])),
+  command('Run', signature([ unquoted(), path(), spacedKeywordsOnly([ keywordOption('Max', 'Min', 'Hide', 'UseErrorLevel') ]), output() ])),
 
   // https://www.autohotkey.com/docs/v1/lib/RunWait.htm
-  command('RunWait', signature([ unquoted(), path(), spacedKeywordsOnly([ optionItem('Max', 'Min', 'Hide', 'UseErrorLevel') ]), output() ])),
+  command('RunWait', signature([ unquoted(), path(), spacedKeywordsOnly([ keywordOption('Max', 'Min', 'Hide', 'UseErrorLevel') ]), output() ])),
 
   // https://www.autohotkey.com/docs/v1/lib/Send.htm
   command('Send', signature([ sendKeys() ])),
@@ -517,13 +517,13 @@ export const commandDefinitions: CommandDefinition[] = [
   command('SendLevel', signature([ expression() ])),
 
   // https://www.autohotkey.com/docs/v1/lib/SendMode.htm
-  command('SendMode', signature([ keywordOnly([ optionItem('Event', 'Input', 'InputThenPlay', 'Play') ]) ])),
+  command('SendMode', signature([ keywordOnly([ keywordOption('Event', 'Input', 'InputThenPlay', 'Play') ]) ])),
 
   // https://www.autohotkey.com/docs/v1/lib/SetBatchLines.htm
   command('SetBatchLines', signature([ unquoted() ])),
 
   // https://www.autohotkey.com/docs/v1/lib/SetNumScrollCapsLockState.htm
-  command('SetCapsLockState', signature([ onOff([ optionItem('AlwaysOn', 'AlwaysOff') ]) ])),
+  command('SetCapsLockState', signature([ onOff([ keywordOption('AlwaysOn', 'AlwaysOff') ]) ])),
 
   // https://www.autohotkey.com/docs/v1/lib/SetControlDelay.htm
   command('SetControlDelay', signature([ expression() ])),
@@ -538,28 +538,28 @@ export const commandDefinitions: CommandDefinition[] = [
   command('SetFormat', signature([ unquoted(), unquoted() ]), CommandFlag.Deprecated),
 
   // https://www.autohotkey.com/docs/v1/lib/SetKeyDelay.htm
-  command('SetKeyDelay', signature([ expression(), expression(), keywordOnly([ optionItem('Play', '-1') ]) ])),
+  command('SetKeyDelay', signature([ expression(), expression(), keywordOnly([ keywordOption('Play', '-1') ]) ])),
 
   // https://www.autohotkey.com/docs/v1/lib/SetMouseDelay.htm
-  command('SetMouseDelay', signature([ expression(), keywordOnly([ optionItem('Play', '-1') ]) ])),
+  command('SetMouseDelay', signature([ expression(), keywordOnly([ keywordOption('Play', '-1') ]) ])),
 
   // https://www.autohotkey.com/docs/v1/lib/SetNumLockState.htm
-  command('SetNumLockState', signature([ onOff([ optionItem('AlwaysOn', 'AlwaysOff') ]) ])),
+  command('SetNumLockState', signature([ onOff([ keywordOption('AlwaysOn', 'AlwaysOff') ]) ])),
 
   // https://www.autohotkey.com/docs/v1/lib/SetScrollLockState.htm
-  command('SetScrollLockState', signature([ onOff([ optionItem('AlwaysOn', 'AlwaysOff') ]) ])),
+  command('SetScrollLockState', signature([ onOff([ keywordOption('AlwaysOn', 'AlwaysOff') ]) ])),
 
   // https://www.autohotkey.com/docs/v1/lib/SetRegView.htm
-  command('SetRegView', signature([ keywordOnly([ optionItem('32', '64', 'Default') ]) ])),
+  command('SetRegView', signature([ keywordOnly([ keywordOption('32', '64', 'Default') ]) ])),
 
   // https://www.autohotkey.com/docs/v1/lib/SetStoreCapsLockMode.htm
   command('SetStoreCapsLockMode', signature([ onOff() ])),
 
   // https://www.autohotkey.com/docs/v1/lib/SetTimer.htm
-  command('SetTimer', signature([ unquoted(), unquotedNumber(optionItem('On', 'Off', 'Delete')), expression() ])),
+  command('SetTimer', signature([ unquoted(), unquotedNumber(keywordOption('On', 'Off', 'Delete')), expression() ])),
 
   // https://www.autohotkey.com/docs/v1/lib/SetTitleMatchMode.htm
-  command('SetTitleMatchMode', signature([ keywordOnly([ optionItem('1', '2', '3', 'RegEx', 'Fast', 'Slow') ]) ])),
+  command('SetTitleMatchMode', signature([ keywordOnly([ keywordOption('1', '2', '3', 'RegEx', 'Fast', 'Slow') ]) ])),
 
   // https://www.autohotkey.com/docs/v1/lib/SetWinDelay.htm
   command('SetWinDelay', signature([ expression() ])),
@@ -571,7 +571,7 @@ export const commandDefinitions: CommandDefinition[] = [
   command('Sleep', signature([ expression() ])),
 
   // https://www.autohotkey.com/docs/v1/lib/Sort.htm
-  command('Sort', signature([ input(), unquoted([ optionItem('C', 'CL', 'N', 'R', 'Random', 'U', 'Z', '\\'), numberOptionItem('D', 'P'), identifierOptionItem('F') ]) ])),
+  command('Sort', signature([ input(), unquoted([ keywordOption('C', 'CL', 'N', 'R', 'Random', 'U', 'Z', '\\'), numberOptionItem('D', 'P'), identifierOptionItem('F') ]) ])),
 
   // https://www.autohotkey.com/docs/v1/lib/SoundBeep.htm
   command('SoundBeep', signature([ expression(), expression() ])),
@@ -583,7 +583,7 @@ export const commandDefinitions: CommandDefinition[] = [
   command('SoundGetWaveVolume', signature([ output(), unquoted() ])),
 
   // https://www.autohotkey.com/docs/v1/lib/SoundPlay.htm
-  command('SoundPlay', signature([ path(), keywordOnly([ optionItem('Wait', '1') ]) ])),
+  command('SoundPlay', signature([ path(), keywordOnly([ keywordOption('Wait', '1') ]) ])),
 
   // https://www.autohotkey.com/docs/v1/lib/SoundSet.htm
   command('SoundSet', signature([ expression(), soundComponent(), soundControlType(), expression() ])),
@@ -596,7 +596,7 @@ export const commandDefinitions: CommandDefinition[] = [
     signature([ subcommandlike('Off'), restParams() ]),
     signature([
       imagePath(), unquoted([
-        optionItem('A', 'T', 'Hide'),
+        keywordOption('A', 'T', 'Hide'),
         numberOptionItem('B', 'M', 'P', 'H', 'W', 'X', 'Y', 'C', 'ZH', 'ZW', 'ZX', 'ZY', 'FM', 'FS', 'WM', 'WS'),
         colorOptionItem('CB', 'CT', 'CW'),
         sizeOptionItem('R'),
@@ -620,7 +620,7 @@ export const commandDefinitions: CommandDefinition[] = [
   command('StatusBarWait', signature([ unquoted(), expression(), expression(), winTitle(), unquoted(), expression(), winTitle(), unquoted() ])),
 
   // https://www.autohotkey.com/docs/v1/lib/StringCaseSense.htm
-  command('StringCaseSense', signature([ onOff([ optionItem('Locale') ]) ])),
+  command('StringCaseSense', signature([ onOff([ keywordOption('Locale') ]) ])),
 
   // https://www.autohotkey.com/docs/v1/lib/StringGetPos.htm
   command('StringGetPos', signature([ output(), input(), unquoted(), keywordOnly([ numberOptionItem('L', 'R') ]), expression() ]), CommandFlag.Deprecated),
@@ -632,13 +632,13 @@ export const commandDefinitions: CommandDefinition[] = [
   command('StringLen', signature([ output(), input() ]), CommandFlag.Deprecated),
 
   // https://www.autohotkey.com/docs/v1/lib/StringLower.htm
-  command('StringLower', signature([ output(), input(), keywordOnly([ optionItem('T') ]) ])),
+  command('StringLower', signature([ output(), input(), keywordOnly([ keywordOption('T') ]) ])),
 
   // https://www.autohotkey.com/docs/v1/lib/StringMid.htm
-  command('StringMid', signature([ output(), input(), expression(), expression(), keywordOnly([ optionItem('L') ]) ]), CommandFlag.Deprecated),
+  command('StringMid', signature([ output(), input(), expression(), expression(), keywordOnly([ keywordOption('L') ]) ]), CommandFlag.Deprecated),
 
   // https://www.autohotkey.com/docs/v1/lib/StringReplace.htm
-  command('StringReplace', signature([ output(), input(), unquoted(), unquoted(), keywordOnly([ optionItem('All', 'A', '1') ]) ]), CommandFlag.Deprecated),
+  command('StringReplace', signature([ output(), input(), unquoted(), unquoted(), keywordOnly([ keywordOption('All', 'A', '1') ]) ]), CommandFlag.Deprecated),
 
   // https://www.autohotkey.com/docs/v1/lib/StringRight.htm
   command('StringRight', signature([ output(), input(), expression() ]), CommandFlag.Deprecated),
@@ -751,7 +751,7 @@ export const commandDefinitions: CommandDefinition[] = [
     signature([ subcommand([ 'Transparent', 'TransColor' ]), unquoted(), ...winParams ]),
     signature([ subcommand([ 'Style', 'ExStyle' ]), style(), ...winParams ]),
     signature([ subcommand([ 'Bottom', 'Top', 'Disable', 'Enable', 'Redraw' ]), blank(), ...winParams ]),
-    signature([ subcommand('Region'), unquoted([ optionItem('E'), numberOptionItem('W', 'H'), rangeOptionItem('R', '') ]), ...winParams ]),
+    signature([ subcommand('Region'), unquoted([ keywordOption('E'), numberOptionItem('W', 'H'), rangeOptionItem('R', '') ]), ...winParams ]),
     signature(parameterless()),
   ]),
 
