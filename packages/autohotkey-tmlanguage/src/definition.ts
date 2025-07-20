@@ -389,7 +389,7 @@ export function unquoted(itemMatchers: ParameterItemMatcher[] = [], flags: Comma
     flags,
     itemMatchers: [
       includeRule(Repository.DereferenceUnaryOperator),
-      includeRule(Repository.Dereference),
+      includeRule(Repository.DereferenceInCommandArgument),
       includeRule(Repository.UnquotedStringEscapeSequence),
       ...itemMatchers,
       {
@@ -402,15 +402,27 @@ export function unquoted(itemMatchers: ParameterItemMatcher[] = [], flags: Comma
 export function unquotedShouldEscapeComma(optionItems: string[] = [], flags: CommandParameterFlag = CommandParameterFlag.None): CommandParameter {
   return restParams(optionItems, flags);
 }
-export function unquotedInteger(...optionItems: string[]): CommandParameter {
-  return unquotedNumber(...optionItems);
+export function unquotedInteger(): CommandParameter {
+  return {
+    flags: CommandParameterFlag.None,
+    itemMatchers: [
+      includeRule(Repository.DereferenceUnaryOperator),
+      includeRule(Repository.DereferenceInCommandArgument),
+      includeRule(Repository.Operator),
+      includeRule(Repository.Integer),
+      {
+        name: [ RuleName.UnquotedString, StyleName.Invalid ],
+        match: anyChars1(),
+      },
+    ],
+  };
 }
 export function unquotedWithNumber(itemMatchers: ParameterItemMatcher[] = [], flags: CommandParameterFlag = CommandParameterFlag.None): CommandParameter {
   return {
     flags,
     itemMatchers: [
       includeRule(Repository.DereferenceUnaryOperator),
-      includeRule(Repository.Dereference),
+      includeRule(Repository.DereferenceInCommandArgument),
       includeRule(Repository.Operator),
       includeRule(Repository.Number),
       ...itemMatchers,
@@ -428,7 +440,7 @@ export function unquotedNumber(...itemMatchers: ParameterItemMatcher[]): Command
     flags: CommandParameterFlag.None,
     itemMatchers: [
       includeRule(Repository.DereferenceUnaryOperator),
-      includeRule(Repository.Dereference),
+      includeRule(Repository.DereferenceInCommandArgument),
       includeRule(Repository.Operator),
       includeRule(Repository.Number),
       ...itemMatchers,
@@ -450,7 +462,7 @@ export function quotableUnquoted(itemMatchers: ParameterItemMatcher[] = [], flag
     flags,
     itemMatchers: [
       includeRule(Repository.DereferenceUnaryOperator),
-      includeRule(Repository.Dereference),
+      includeRule(Repository.DereferenceInCommandArgument),
 
       ...itemMatchers,
       includeRule(Repository.UnquotedStringEscapeSequence),
@@ -529,7 +541,7 @@ export function keywordOnly(itemMatchers: ParameterItemMatcher[] = [], flags: Co
     flags: mergeFlags(flags, CommandParameterFlag.ExclusiveKeyword),
     itemMatchers: [
       includeRule(Repository.DereferenceUnaryOperator),
-      includeRule(Repository.Dereference),
+      includeRule(Repository.DereferenceInCommandArgument),
 
       ...itemMatchers,
       {
@@ -586,7 +598,7 @@ export function includeLib(flags: CommandParameterFlag = CommandParameterFlag.No
         captures: {
           1: [
             includeRule(Repository.DereferenceUnaryOperator),
-            includeRule(Repository.Dereference),
+            includeRule(Repository.DereferenceInCommandArgument),
             includeRule(Repository.UnquotedStringEscapeSequence),
             ...quotable
               ? [

@@ -2,7 +2,7 @@ import { dedent, hasFlag, repeatArray } from '@zero-plusplus/utilities/src';
 import * as definitions_v1 from '../../../../src/autohotkeyl/definitions';
 import {
   blank, CommandFlag, control, expression, fileAttributes, flagedGuiControlOptions, guiControlOptions, guiOptions,
-  keywordOnly, onOff, output, restParams, sendKeys, unquoted, winTitle,
+  keywordOnly, onOff, output, restParams, sendKeys, unquoted, unquotedInteger, winTitle,
 } from '../../../../src/definition';
 import {
   name, RuleDescriptor, RuleName, StyleName,
@@ -1444,11 +1444,11 @@ export function createCommandStatementExpectedData(scopeName: ScopeName): Expect
             { text: ',', scopes: name(scopeName, RuleName.Comma) },
             { text: '%', scopes: name(scopeName, RuleName.PercentBegin) },
             { text: 'o', scopes: name(scopeName, RuleName.Variable) },
-            { text: '%', scopes: name(scopeName, RuleName.PercentEnd) },
             { text: '%', scopes: name(scopeName, RuleName.PercentBegin) },
+            { text: '%', scopes: name(scopeName, RuleName.PercentEnd) },
             { text: 'f', scopes: name(scopeName, RuleName.Variable) },
-            { text: '%', scopes: name(scopeName, RuleName.PercentEnd) },
             { text: '%', scopes: name(scopeName, RuleName.PercentBegin) },
+            { text: '%', scopes: name(scopeName, RuleName.PercentEnd) },
             { text: 'f', scopes: name(scopeName, RuleName.Variable) },
             { text: '%', scopes: name(scopeName, RuleName.PercentEnd) },
             { text: '; comment', scopes: name(scopeName, RuleName.InlineComment) },
@@ -1495,11 +1495,11 @@ export function createCommandStatementExpectedData(scopeName: ScopeName): Expect
             { text: ',', scopes: name(scopeName, RuleName.Comma) },
             { text: '%', scopes: name(scopeName, RuleName.PercentBegin) },
             { text: 'o', scopes: name(scopeName, RuleName.Variable) },
-            { text: '%', scopes: name(scopeName, RuleName.PercentEnd) },
             { text: '%', scopes: name(scopeName, RuleName.PercentBegin) },
+            { text: '%', scopes: name(scopeName, RuleName.PercentEnd) },
             { text: 'f', scopes: name(scopeName, RuleName.Variable) },
-            { text: '%', scopes: name(scopeName, RuleName.PercentEnd) },
             { text: '%', scopes: name(scopeName, RuleName.PercentBegin) },
+            { text: '%', scopes: name(scopeName, RuleName.PercentEnd) },
             { text: 'f', scopes: name(scopeName, RuleName.Variable) },
             { text: '%', scopes: name(scopeName, RuleName.PercentEnd) },
             { text: '; comment', scopes: name(scopeName, RuleName.InlineComment) },
@@ -1640,6 +1640,94 @@ export function createCommandStatementExpectedData(scopeName: ScopeName): Expect
             { text: ',', scopes: name(scopeName, RuleName.UnquotedString) },
             { text: 'Tab', scopes: name(scopeName, RuleName.UnquotedString, StyleName.Strong) },
             { text: '; comment', scopes: name(scopeName, RuleName.InlineComment) },
+          ],
+        ],
+      ];
+    })(),
+
+    ...((_ = unquotedInteger): ExpectedTestData[] => {
+      return [
+        [
+          dedent`
+            #ClipboardTimeout, 123            ; comment
+            #ClipboardTimeout, % var          ; comment
+            #ClipboardTimeout, %var%          ; comment
+            #ClipboardTimeout, %a%b%c%        ; comment
+          `,
+          [
+            ...[
+              { text: '#ClipboardTimeout', scopes: name(scopeName, RuleName.DirectiveName) },
+              { text: ',', scopes: name(scopeName, RuleName.Comma) },
+              { text: '123', scopes: name(scopeName, RuleName.Integer) },
+              { text: '; comment', scopes: name(scopeName, RuleName.InlineComment) },
+            ],
+            ...[
+              { text: '#ClipboardTimeout', scopes: name(scopeName, RuleName.DirectiveName) },
+              { text: ',', scopes: name(scopeName, RuleName.Comma) },
+              { text: '%', scopes: name(scopeName, RuleName.PercentExpressionBegin) },
+              { text: 'var', scopes: name(scopeName, RuleName.Variable) },
+              { text: '; comment', scopes: name(scopeName, RuleName.InlineComment) },
+            ],
+            ...[
+              { text: '#ClipboardTimeout', scopes: name(scopeName, RuleName.DirectiveName) },
+              { text: ',', scopes: name(scopeName, RuleName.Comma) },
+              { text: '%', scopes: name(scopeName, RuleName.PercentBegin) },
+              { text: 'var', scopes: name(scopeName, RuleName.Variable) },
+              { text: '%', scopes: name(scopeName, RuleName.PercentEnd) },
+              { text: '; comment', scopes: name(scopeName, RuleName.InlineComment) },
+            ],
+            ...[
+              { text: '#ClipboardTimeout', scopes: name(scopeName, RuleName.DirectiveName) },
+              { text: ',', scopes: name(scopeName, RuleName.Comma) },
+              { text: '%', scopes: name(scopeName, RuleName.PercentBegin) },
+              { text: 'a', scopes: name(scopeName, RuleName.Variable) },
+              { text: '%', scopes: name(scopeName, RuleName.PercentBegin) },
+              { text: 'b', scopes: name(scopeName, RuleName.Variable) },
+              { text: '%', scopes: name(scopeName, RuleName.PercentEnd) },
+              { text: 'c', scopes: name(scopeName, RuleName.Variable) },
+              { text: '%', scopes: name(scopeName, RuleName.PercentEnd) },
+              { text: '; comment', scopes: name(scopeName, RuleName.InlineComment) },
+            ],
+          ],
+        ],
+        [
+          dedent`
+            #ClipboardTimeout, 123.123        ; comment
+            #ClipboardTimeout, 123 123        ; comment
+            #ClipboardTimeout, % var var      ; comment
+            #ClipboardTimeout, %var% %var%    ; comment
+          `,
+          [
+            ...[
+              { text: '#ClipboardTimeout', scopes: name(scopeName, RuleName.DirectiveName) },
+              { text: ',', scopes: name(scopeName, RuleName.Comma) },
+              { text: '123.123', scopes: name(scopeName, RuleName.UnquotedString, StyleName.Invalid) },
+              { text: '; comment', scopes: name(scopeName, RuleName.InlineComment) },
+            ],
+            ...[
+              { text: '#ClipboardTimeout', scopes: name(scopeName, RuleName.DirectiveName) },
+              { text: ',', scopes: name(scopeName, RuleName.Comma) },
+              { text: '123', scopes: name(scopeName, RuleName.Integer) },
+              { text: ' 123', scopes: name(scopeName, RuleName.UnquotedString, StyleName.Invalid) },
+              { text: '; comment', scopes: name(scopeName, RuleName.InlineComment) },
+            ],
+            ...[
+              { text: '#ClipboardTimeout', scopes: name(scopeName, RuleName.DirectiveName) },
+              { text: ',', scopes: name(scopeName, RuleName.Comma) },
+              { text: '%', scopes: name(scopeName, RuleName.PercentExpressionBegin) },
+              { text: 'var', scopes: name(scopeName, RuleName.Variable) },
+              { text: 'var', scopes: name(scopeName, RuleName.Variable) },
+              { text: '; comment', scopes: name(scopeName, RuleName.InlineComment) },
+            ],
+            ...[
+              { text: '#ClipboardTimeout', scopes: name(scopeName, RuleName.DirectiveName) },
+              { text: ',', scopes: name(scopeName, RuleName.Comma) },
+              { text: '%', scopes: name(scopeName, RuleName.PercentBegin) },
+              { text: 'var', scopes: name(scopeName, RuleName.Variable) },
+              { text: '%', scopes: name(scopeName, RuleName.PercentEnd) },
+              { text: ' %var%', scopes: name(scopeName, RuleName.UnquotedString, StyleName.Invalid) },
+              { text: '; comment', scopes: name(scopeName, RuleName.InlineComment) },
+            ],
           ],
         ],
       ];

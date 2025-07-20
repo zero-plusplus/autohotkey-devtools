@@ -329,6 +329,7 @@ export function createRepositories(scopeName: ScopeName, placeholder?: Placehold
 
     // #region access
     [Repository.Dereference]: rule_v2.createDereferenceRule(scopeName),
+    [Repository.DereferenceInCommandArgument]: patternsRule(includeRule(Repository.Dereference)),
     // #endregion access
 
     // #region literal

@@ -294,6 +294,7 @@ export function createRepositories(scopeName: ScopeName): Repositories {
     // #region access
     [Repository.Dereference]: rule_v1.createDereferenceRule(scopeName),
     [Repository.InvalidDereference]: rule_v1.createInvalidDereferenceRule(scopeName),
+    [Repository.DereferenceInCommandArgument]: rule_v1.createDereferenceInCommandArgumentRule(scopeName),
     // #endregion access
 
     // #region literal

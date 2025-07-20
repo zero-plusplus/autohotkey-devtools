@@ -1,10 +1,10 @@
 import {
-  alt, capture, char, inlineSpace, inlineSpaces1, lookahead, many0, negativeLookahead, negChar,
-  seq, whitespace,
+  alt, capture, char, inlineSpace, inlineSpaces1, lookahead, many0, negativeLookahead,
+  negChar, negChars0, seq, whitespace,
 } from '../../../oniguruma';
 import {
   includeRule, nameRule, patternsRule, Repository, RuleName, StyleName,
-  type BeginEndRule, type PatternsRule, type ScopeName,
+  type BeginEndRule, type MatchRule, type PatternsRule, type ScopeName,
 } from '../../../tmlanguage';
 import * as patterns_v1 from '../../patterns';
 
@@ -47,6 +47,23 @@ export function createDereferenceRule(scopeName: ScopeName): BeginEndRule {
       //  ^^^ valid
       includeRule(Repository.Variable),
     ],
+  };
+}
+export function createDereferenceInCommandArgumentRule(scopeName: ScopeName): MatchRule {
+  return {
+    match: seq(
+      capture(char('%')),
+      capture(negChars0(inlineSpace())),
+      capture(char('%')),
+    ),
+    captures: {
+      1: nameRule(scopeName, RuleName.PercentBegin),
+      2: patternsRule(
+        includeRule(Repository.Dereference),
+        includeRule(Repository.Variable),
+      ),
+      3: nameRule(scopeName, RuleName.PercentEnd),
+    },
   };
 }
 export function createInvalidDereferenceRule(scopeName: ScopeName): PatternsRule {
