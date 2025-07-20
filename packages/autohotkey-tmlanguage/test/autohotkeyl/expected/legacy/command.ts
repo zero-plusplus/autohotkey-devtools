@@ -834,7 +834,8 @@ export function createCommandStatementExpectedData(scopeName: ScopeName): Expect
             { text: ',', scopes: name(scopeName, RuleName.Comma) },
             { text: 'Icon', scopes: name(scopeName, RuleName.SubCommandName) },
             { text: ',', scopes: name(scopeName, RuleName.Comma) },
-            { text: 'HBITMAP:*\\path\\to', scopes: name(scopeName, RuleName.UnquotedString, StyleName.Strong) },
+            { text: 'HBITMAP:', scopes: name(scopeName, RuleName.UnquotedString, StyleName.Strong) },
+            { text: '*\\path\\to', scopes: name(scopeName, RuleName.UnquotedString, StyleName.Strong) },
             { text: ',', scopes: name(scopeName, RuleName.Comma) },
             { text: 'unquoted', scopes: name(scopeName, RuleName.UnquotedString) },
             { text: ',', scopes: name(scopeName, RuleName.Comma) },
@@ -967,7 +968,8 @@ export function createCommandStatementExpectedData(scopeName: ScopeName): Expect
             { text: ',', scopes: name(scopeName, RuleName.Comma) },
             { text: 'unquoted', scopes: name(scopeName, RuleName.UnquotedString) },
             { text: ',', scopes: name(scopeName, RuleName.Comma) },
-            { text: 'HBITMAP:*\\path\\to', scopes: name(scopeName, RuleName.UnquotedString, StyleName.Strong) },
+            { text: 'HBITMAP:', scopes: name(scopeName, RuleName.UnquotedString, StyleName.Strong) },
+            { text: '*\\path\\to', scopes: name(scopeName, RuleName.UnquotedString, StyleName.Strong) },
             { text: '; comment', scopes: name(scopeName, RuleName.InlineComment) },
 
             { text: 'Menu', scopes: name(scopeName, RuleName.CommandName) },
@@ -1079,6 +1081,7 @@ export function createCommandStatementExpectedData(scopeName: ScopeName): Expect
           dedent`
             SplashImage, Off                                                               ; comment
             SplashImage, HBITMAP:*\\path\\to, x1 y1, unquoted, unquoted, ahk_id, unquoted  ; comment
+            SplashImage, HBITMAP:%Path%                                                    ; comment
           `,
           [
             { text: 'SplashImage', scopes: name(scopeName, RuleName.CommandName, StyleName.Strikethrough) },
@@ -1088,7 +1091,8 @@ export function createCommandStatementExpectedData(scopeName: ScopeName): Expect
 
             { text: 'SplashImage', scopes: name(scopeName, RuleName.CommandName, StyleName.Strikethrough) },
             { text: ',', scopes: name(scopeName, RuleName.Comma) },
-            { text: 'HBITMAP:*\\path\\to', scopes: name(scopeName, RuleName.UnquotedString, StyleName.Strong) },
+            { text: 'HBITMAP:', scopes: name(scopeName, RuleName.UnquotedString, StyleName.Strong) },
+            { text: '*\\path\\to', scopes: name(scopeName, RuleName.UnquotedString, StyleName.Strong) },
             { text: ',', scopes: name(scopeName, RuleName.Comma) },
             { text: 'x1', scopes: name(scopeName, RuleName.UnquotedString, StyleName.Strong) },
             { text: 'y1', scopes: name(scopeName, RuleName.UnquotedString, StyleName.Strong) },
@@ -1100,6 +1104,14 @@ export function createCommandStatementExpectedData(scopeName: ScopeName): Expect
             { text: 'ahk_id', scopes: name(scopeName, RuleName.UnquotedString, StyleName.Strong) },
             { text: ',', scopes: name(scopeName, RuleName.Comma) },
             { text: 'unquoted', scopes: name(scopeName, RuleName.UnquotedString) },
+            { text: '; comment', scopes: name(scopeName, RuleName.InlineComment) },
+
+            { text: 'SplashImage', scopes: name(scopeName, RuleName.CommandName, StyleName.Strikethrough) },
+            { text: ',', scopes: name(scopeName, RuleName.Comma) },
+            { text: 'HBITMAP:', scopes: name(scopeName, RuleName.UnquotedString, StyleName.Strong) },
+            { text: '%', scopes: name(scopeName, RuleName.PercentBegin) },
+            { text: 'Path', scopes: name(scopeName, RuleName.Variable) },
+            { text: '%', scopes: name(scopeName, RuleName.PercentEnd) },
             { text: '; comment', scopes: name(scopeName, RuleName.InlineComment) },
           ],
         ],

@@ -5,7 +5,7 @@ import {
   input, invalid, keyName, keywordOnly, keywordOption, labelName, letterOptionItem, matchKeyOptionItem, menuItemName,
   menuOptions, numberOptionItem, onOff, onOffToggle, output, parameterless, path, rangeOptionItem, requiresVersion,
   restParams, sendKeys, signature, signedNumberOptionItem, signOptionItem, sizeOptionItem, soundComponent, soundControlType,
-  spacedKeywordsOnly, stringOptionItem, style, subcommand, subcommandlike, timeunit, toggleOptionItem, unquoted, unquotedInteger,
+  spacedKeywordsOnly, stringOption, style, subcommand, subcommandlike, timeunit, toggleOptionItem, unquoted, unquotedInteger,
   unquotedNumber, unquotedShouldEscapeComma, unquotedWithNumber, whichButton, winParams, winTitle,
   type CommandDefinition,
 } from '../definition';
@@ -379,7 +379,7 @@ export const commandDefinitions: CommandDefinition[] = [
   ]),
 
   // https://www.autohotkey.com/docs/v1/lib/ImageSearch.htm
-  command('ImageSearch', signature([ output(), output(), expression(), expression(), expression(), expression(), unquoted([ stringOptionItem('HBITMAP:'), numberOptionItem('*Icon', '*', '*Trans', '*w', '*h') ]) ])),
+  command('ImageSearch', signature([ output(), output(), expression(), expression(), expression(), expression(), unquoted([ stringOption('HBITMAP:'), numberOptionItem('*Icon', '*', '*Trans', '*w', '*h') ]) ])),
 
   // https://www.autohotkey.com/docs/v1/lib/IniDelete.htm
   command('IniDelete', signature([ path(), unquoted(), unquoted() ])),

@@ -219,11 +219,32 @@ export function flagedSizeOptionItem(...options: string[]): string {
     ),
   ));
 }
-export function stringOptionItem(...options: string[]): string {
-  return createSpacedOptionItemPattern(seq(
-    ignoreCase(textalt(...options)),
-    negChars0(inlineSpace()),
-  ));
+export function stringOption(...optionNames: string[]): ParameterItemMatcher {
+  return {
+    match: seq(
+      lookbehind(alt(
+        inlineSpace(),
+        char(','),
+      )),
+      capture(ignoreCase(textalt(...optionNames))),
+      capture(negChars0(inlineSpace())),
+      lookahead(alt(
+        inlineSpace(),
+        char(','),
+        endAnchor(),
+      )),
+    ),
+    captures: {
+      1: [ { name: [ RuleName.UnquotedString, StyleName.Strong ] } ],
+      2: [
+        includeRule(Repository.DereferenceInCommandArgument),
+        {
+          name: [ RuleName.UnquotedString, StyleName.Strong ],
+          match: negChars0('%', inlineSpace()),
+        },
+      ],
+    },
+  };
 }
 export function flagedStringOptionItem(...options: string[]): string {
   return createSpacedOptionItemPattern(seq(
@@ -773,7 +794,7 @@ export function path(itemMatchers: ParameterItemMatcher[] = [], flags: CommandPa
   return unquoted(itemMatchers, flags);
 }
 export function imagePath(flags: CommandParameterFlag = CommandParameterFlag.None): CommandParameter {
-  return path([ stringOptionItem('HICON:', 'HBITMAP:') ], flags);
+  return path([ stringOption('HICON:', 'HBITMAP:') ], flags);
 }
 export function glob(flags: CommandParameterFlag = CommandParameterFlag.None): CommandParameter {
   return unquoted([], flags);
