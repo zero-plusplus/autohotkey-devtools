@@ -1,5 +1,5 @@
 import {
-  $invalid, $shouldNumber, $withNumber, command, CommandFlag, CommandParameterFlag, encoding, keywordOnly, keywordOption,
+  $invalid, $shouldKeyword, $shouldNumber, $withNumber, command, CommandFlag, CommandParameterFlag, encoding, keywordOption,
   output, signature, signOptionItem,
   type CommandDefinition, type CommandParameter, type ParameterItemMatcher,
 } from '../definition';
@@ -42,7 +42,7 @@ export const compilerDirectives: CommandDefinition[] = [
   command('@Ahk2Exe-Obey', signature([ output(), expression(), $shouldNumber() ])),
 
   // [PostExec](https://www.autohotkey.com/docs/v2/misc/Ahk2ExeDirectives.htm#PostExec)
-  command('@Ahk2Exe-PostExec', signature([ unquoted(), keywordOnly([ keywordOption('0', '1', '2') ]), unquoted(), on(), on() ])),
+  command('@Ahk2Exe-PostExec', signature([ unquoted(), $shouldKeyword([ keywordOption('0', '1', '2') ]), unquoted(), on(), on() ])),
 
   // [ResourceID](https://www.autohotkey.com/docs/v2/misc/Ahk2ExeDirectives.htm#ResourceID)
   command('@Ahk2Exe-ResourceID', signature([ unquoted() ])),
@@ -68,7 +68,7 @@ export const compilerDirectives: CommandDefinition[] = [
   command('@Ahk2Exe-Set', signature([ unquoted(), $withNumber() ])),
 
   // [UpdateManifest](https://www.autohotkey.com/docs/v2/misc/Ahk2ExeDirectives.htm#UpdateManifest)
-  command('@Ahk2Exe-UpdateManifest', signature([ keywordOnly([ keywordOption('0', '1', '2') ]), unquoted(), unquoted(), on() ])),
+  command('@Ahk2Exe-UpdateManifest', signature([ $shouldKeyword([ keywordOption('0', '1', '2') ]), unquoted(), unquoted(), on() ])),
 
   // [UseResourceLang](https://www.autohotkey.com/docs/v2/misc/Ahk2ExeDirectives.htm#UseResourceLang)
   command('@Ahk2Exe-UseResourceLang', signature([ $withNumber() ])),
@@ -140,5 +140,5 @@ export function variableName(): CommandParameter {
   return expression();
 }
 export function on(): CommandParameter {
-  return keywordOnly([ keywordOption('1') ]);
+  return $shouldKeyword([ keywordOption('1') ]);
 }

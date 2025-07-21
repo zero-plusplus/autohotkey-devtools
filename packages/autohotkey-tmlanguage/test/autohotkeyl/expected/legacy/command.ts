@@ -1,8 +1,8 @@
 import { dedent, hasFlag, repeatArray } from '@zero-plusplus/utilities/src';
 import * as definitions_v1 from '../../../../src/autohotkeyl/definitions';
 import {
-  $, $blank, $expression, $rest, $shouldInteger, CommandFlag, control, fileAttributes, flagedGuiControlOptions, guiControlOptions,
-  guiOptions, keywordOnly, onOff, output, sendKeys, winTitle,
+  $, $blank, $expression, $fileAttributes, $rest, $shouldInteger, $shouldKeyword, CommandFlag, control,
+  flagedGuiControlOptions, guiControlOptions, guiOptions, onOff, output, sendKeys, winTitle,
 } from '../../../../src/definition';
 import {
   name, RuleDescriptor, RuleName, StyleName,
@@ -1999,7 +1999,7 @@ export function createCommandStatementExpectedData(scopeName: ScopeName): Expect
       ];
     })(),
 
-    ...((_ = keywordOnly): ExpectedTestData[] => {
+    ...((_ = $shouldKeyword): ExpectedTestData[] => {
       return [
         [
           dedent`
@@ -2050,7 +2050,7 @@ export function createCommandStatementExpectedData(scopeName: ScopeName): Expect
       ];
     })(),
 
-    ...((_ = fileAttributes): ExpectedTestData[] => {
+    ...((_ = $fileAttributes): ExpectedTestData[] => {
       return [
         [
           dedent`

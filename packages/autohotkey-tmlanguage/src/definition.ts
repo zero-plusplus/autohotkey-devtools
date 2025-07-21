@@ -533,6 +533,24 @@ export function $shouldLabel(flags: CommandParameterFlag = CommandParameterFlag.
     itemMatchers: [ includeRule(Repository.LabelName) ],
   };
 }
+export function $shouldKeyword(itemMatchers: ParameterItemMatcher[] = [], flags: CommandParameterFlag = CommandParameterFlag.None): CommandParameter {
+  // Accepts one arbitrary keyword, otherwise not accepted
+  // e.g. `Gui, Flash, Off`
+  //                   ^^^
+  return {
+    flags: mergeFlags(flags, CommandParameterFlag.ExclusiveKeyword),
+    itemMatchers: [
+      includeRule(Repository.DereferenceUnaryOperator),
+      includeRule(Repository.DereferenceInCommandArgument),
+
+      ...itemMatchers,
+      {
+        name: [ RuleName.UnquotedString, StyleName.Invalid ],
+        match: negChars0(inlineSpace()),
+      },
+    ],
+  };
+}
 export function $withNumber(itemMatchers: ParameterItemMatcher[] = [], flags: CommandParameterFlag = CommandParameterFlag.None): CommandParameter {
   return {
     flags,
@@ -566,8 +584,8 @@ export function $rest(itemMatchers: ParameterItemMatcher[] = [], flags: CommandP
     ],
   };
 }
-export function fileAttributes(flags: CommandParameterFlag = CommandParameterFlag.None): CommandParameter {
-  return keywordOnly([ flagedLetterOptionItem('R', 'A', 'S', 'H', 'N', 'O', 'T') ], flags);
+export function $fileAttributes(flags: CommandParameterFlag = CommandParameterFlag.None): CommandParameter {
+  return $shouldKeyword([ flagedLetterOptionItem('R', 'A', 'S', 'H', 'N', 'O', 'T') ], flags);
 }
 export function guiOptions(flags: CommandParameterFlag = CommandParameterFlag.None): CommandParameter {
   return $(
@@ -580,28 +598,10 @@ export function guiOptions(flags: CommandParameterFlag = CommandParameterFlag.No
     mergeFlags(flags, CommandParameterFlag.GuiLabeled),
   );
 }
-export function keywordOnly(itemMatchers: ParameterItemMatcher[] = [], flags: CommandParameterFlag = CommandParameterFlag.None): CommandParameter {
-  // Accepts one arbitrary keyword, otherwise not accepted
-  // e.g. `Gui, Flash, Off`
-  //                   ^^^
-  return {
-    flags: mergeFlags(flags, CommandParameterFlag.ExclusiveKeyword),
-    itemMatchers: [
-      includeRule(Repository.DereferenceUnaryOperator),
-      includeRule(Repository.DereferenceInCommandArgument),
-
-      ...itemMatchers,
-      {
-        name: [ RuleName.UnquotedString, StyleName.Invalid ],
-        match: negChars0(inlineSpace()),
-      },
-    ],
-  };
-}
 export function spacedKeywordsOnly(itemMatchers: ParameterItemMatcher[] = [], flags: CommandParameterFlag = CommandParameterFlag.None): CommandParameter {
   // e.g. `PixelGetColor, output, x, y, Fast RGB`
   //                                    ^^^^ ^^^
-  return keywordOnly(itemMatchers, flags);
+  return $shouldKeyword(itemMatchers, flags);
 }
 export function input(flags: CommandParameterFlag = CommandParameterFlag.None): CommandParameter {
   return $expression(flags);
@@ -771,7 +771,7 @@ export function controlOrPos(flags: CommandParameterFlag = CommandParameterFlag.
   return $([ keywordOption('ahk_id'), decimalOptionItem('X', 'Y') ], flags);
 }
 export function guiControlType(): CommandParameter {
-  return keywordOnly([ keywordOption('ActiveX', 'Button', 'CheckBox', 'ComboBox', 'Custom', 'DateTime', 'DropDownList', 'DDL', 'Edit', 'GroupBox', 'Hotkey', 'Link', 'ListBox', 'ListView', 'MonthCal', 'Picture', 'Pic', 'Progress', 'Radio', 'Slider', 'StatusBar', 'Tab', 'Tab2', 'Tab3', 'Text', 'TreeView', 'UpDown') ]);
+  return $shouldKeyword([ keywordOption('ActiveX', 'Button', 'CheckBox', 'ComboBox', 'Custom', 'DateTime', 'DropDownList', 'DDL', 'Edit', 'GroupBox', 'Hotkey', 'Link', 'ListBox', 'ListView', 'MonthCal', 'Picture', 'Pic', 'Progress', 'Radio', 'Slider', 'StatusBar', 'Tab', 'Tab2', 'Tab3', 'Text', 'TreeView', 'UpDown') ]);
 }
 export function controlMoveOptions(): CommandParameter {
   return $([ numberOptionItem('X', 'Y', 'W', 'H') ]);
@@ -795,7 +795,7 @@ export function flagedGuiControlOptions(): CommandParameter {
   return guiControlOptions(true);
 }
 export function onOff(itemMatchers: ParameterItemMatcher[] = [], flags: CommandParameterFlag = CommandParameterFlag.None): CommandParameter {
-  return keywordOnly([ keywordOption('On', 'Off', '1', '0'), ...itemMatchers ], flags);
+  return $shouldKeyword([ keywordOption('On', 'Off', '1', '0'), ...itemMatchers ], flags);
 }
 export function onOffToggle(itemMatchers: ParameterItemMatcher[] = [], flags: CommandParameterFlag = CommandParameterFlag.None): CommandParameter {
   return onOff([ keywordOption('Toggle'), ...itemMatchers ], flags);
@@ -830,7 +830,7 @@ export function sendKeys(flags: CommandParameterFlag = CommandParameterFlag.None
   return $([ includeRule(Repository.CommandArgumentSendKeyName) ], flags);
 }
 export function timeunit(flags: CommandParameterFlag = CommandParameterFlag.None): CommandParameter {
-  return keywordOnly([ keywordOption('Seconds', 'S', 'Minutes', 'M', 'Hours', 'H', 'Days', 'D') ], flags);
+  return $shouldKeyword([ keywordOption('Seconds', 'S', 'Minutes', 'M', 'Hours', 'H', 'Days', 'D') ], flags);
 }
 export function formatTime(flags: CommandParameterFlag = CommandParameterFlag.None): CommandParameter {
   return $(

@@ -1,5 +1,5 @@
 import {
-  $, $expression, $quotable, $shouldBoolean, $shouldInteger, command, decimalOptionItem, keywordOnly, keywordOption, parameterless,
+  $, $expression, $quotable, $shouldBoolean, $shouldInteger, $shouldKeyword, command, decimalOptionItem, keywordOption, parameterless,
   quotableEncoding, quotableIncludeLib, requiresVersion, signature, signedNumberOptionItem, signOptionItem, toggleOptionItem,
   type CommandDefinition,
 } from '../definition';
@@ -47,7 +47,7 @@ export const directiveDefinitions: CommandDefinition[] = [
   command('#Requires', signature([ requiresVersion() ])),
 
   // https://www.autohotkey.com/docs/v2/lib/_SingleInstance.htm
-  command('#SingleInstance', signature([ keywordOnly([ keywordOption('Force', 'Ignore', 'Prompt', 'Off') ]) ])),
+  command('#SingleInstance', signature([ $shouldKeyword([ keywordOption('Force', 'Ignore', 'Prompt', 'Off') ]) ])),
 
   // https://www.autohotkey.com/docs/v2/lib/_SuspendExempt.htm
   command('#SuspendExempt', signature([ $shouldBoolean() ])),
@@ -56,7 +56,7 @@ export const directiveDefinitions: CommandDefinition[] = [
   command('#UseHook', signature([ $shouldBoolean() ])),
 
   // https://www.autohotkey.com/docs/v2/lib/_Warn.htm
-  command('#Warn', signature([ keywordOnly([ keywordOption('VarUnset', 'LocalSameAsGlobal', 'Unreachable', 'All') ]), keywordOnly([ keywordOption('MsgBox', 'StdOut', 'OutputDebug', 'Off') ]) ])),
+  command('#Warn', signature([ $shouldKeyword([ keywordOption('VarUnset', 'LocalSameAsGlobal', 'Unreachable', 'All') ]), $shouldKeyword([ keywordOption('MsgBox', 'StdOut', 'OutputDebug', 'Off') ]) ])),
 
   // https://www.autohotkey.com/docs/v2/lib/_WinActivateForce.htm
   command('#WinActivateForce', signature(parameterless())),
