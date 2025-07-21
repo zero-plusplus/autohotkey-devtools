@@ -1,11 +1,11 @@
 import {
-  blank, color, colorOptionItem, command, CommandFlag, control, controlMoveOptions, controlOrPos, decimalOptionItem,
+  $integer, blank, color, colorOptionItem, command, CommandFlag, control, controlMoveOptions, controlOrPos, decimalOptionItem,
   encoding, endKeyOptionItem, expression, fileAttributes, flagedGuiControlOptions, flowSubcommand, formatTime, glob,
   guiControlOptions, guiControlType, guiOptions, guiSubcommand, hotkeyName, identifierOptionItem, imagePath, includeLib,
   input, invalid, keyName, keywordOnly, keywordOption, labelName, letterOptionItem, matchKeyOptionItem, menuItemName,
   menuOptions, numberOptionItem, onOff, onOffToggle, output, parameterless, path, rangeOptionItem, requiresVersion,
   restParams, sendKeys, signature, signedNumberOptionItem, signOptionItem, sizeOptionItem, soundComponent, soundControlType,
-  spacedKeywordsOnly, stringOption, style, subcommand, subcommandlike, timeunit, toggleOptionItem, unquoted, unquotedInteger,
+  spacedKeywordsOnly, stringOption, style, subcommand, subcommandlike, timeunit, toggleOptionItem, unquoted,
   unquotedNumber, unquotedShouldEscapeComma, unquotedWithNumber, whichButton, winParams, winTitle,
   type CommandDefinition,
 } from '../definition';
@@ -16,7 +16,7 @@ export const directiveDefinitions: CommandDefinition[] = [
   command('#AllowSameLineComments', signature([ invalid() ]), CommandFlag.Removed),
 
   // https://www.autohotkey.com/docs/v1/lib/_ClipboardTimeout.htm
-  command('#ClipboardTimeout', signature([ unquotedInteger() ])),
+  command('#ClipboardTimeout', signature([ $integer() ])),
 
   // https://www.autohotkey.com/docs/v1/lib/_CommentFlag.htm
   command('#CommentFlag', signature([ unquoted() ]), CommandFlag.Deprecated),
@@ -34,10 +34,10 @@ export const directiveDefinitions: CommandDefinition[] = [
   command('#EscapeChar', signature([ unquoted() ]), CommandFlag.Deprecated),
 
   // https://www.autohotkey.com/docs/v1/lib/_HotkeyInterval.htm
-  command('#HotkeyInterval', signature([ unquotedInteger() ])),
+  command('#HotkeyInterval', signature([ $integer() ])),
 
   // https://www.autohotkey.com/docs/v1/lib/_HotkeyModifierTimeout.htm
-  command('#HotkeyModifierTimeout', signature([ unquotedInteger() ])),
+  command('#HotkeyModifierTimeout', signature([ $integer() ])),
 
   // https://www.autohotkey.com/docs/v1/lib/_Hotstring.htm
   command('#Hotstring', signature([ unquoted([ keywordOption('NoMouse', 'EndChars', 'SI', 'SP', 'SE', 'X'), toggleOptionItem('*', '?', 'B', 'C', 'O', 'R', 'T', 'Z'), decimalOptionItem('P'), signedNumberOptionItem('K') ]) ])),

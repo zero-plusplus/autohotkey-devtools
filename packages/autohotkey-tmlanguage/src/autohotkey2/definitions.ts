@@ -1,14 +1,14 @@
 import {
-  command, decimalOptionItem, expression, keywordOnly, keywordOption, parameterless, quotableEncoding,
+  $integer, command, decimalOptionItem, expression, keywordOnly, keywordOption, parameterless, quotableEncoding,
   quotableIncludeLib, quotableUnquoted, requiresVersion, signature, signedNumberOptionItem,
-  signOptionItem, toggleOptionItem, unquoted, unquotedAndBoolean, unquotedInteger,
+  signOptionItem, toggleOptionItem, unquoted, unquotedAndBoolean,
   type CommandDefinition,
 } from '../definition';
 
 // #region directives
 export const directiveDefinitions: CommandDefinition[] = [
   // https://www.autohotkey.com/docs/v2/lib/_ClipboardTimeout.htm
-  command('#ClipboardTimeout', signature([ unquotedInteger() ])),
+  command('#ClipboardTimeout', signature([ $integer() ])),
 
   // https://www.autohotkey.com/docs/v2/lib/_DllLoad.htm
   command('#DllLoad', signature([ quotableUnquoted([ signOptionItem('*i') ]) ])),
@@ -20,7 +20,7 @@ export const directiveDefinitions: CommandDefinition[] = [
   command('#HotIf', signature([ expression() ])),
 
   // https://www.autohotkey.com/docs/v2/lib/_HotIfTimeout.htm
-  command('#HotIfTimeout', signature([ unquotedInteger() ])),
+  command('#HotIfTimeout', signature([ $integer() ])),
 
   // https://www.autohotkey.com/docs/v2/lib/_Hotstring.htm
   command('#Hotstring', signature([ unquoted([ keywordOption('NoMouse', 'EndChars', 'SI', 'SP', 'SE', 'X'), toggleOptionItem('*', '?', 'B', 'C', 'O', 'R', 'T', 'Z'), decimalOptionItem('P'), signedNumberOptionItem('K') ]) ])),
@@ -30,16 +30,16 @@ export const directiveDefinitions: CommandDefinition[] = [
   command('#IncludeAgain', signature([ quotableIncludeLib() ])),
 
   // https://www.autohotkey.com/docs/v2/lib/_InputLevel.htm
-  command('#InputLevel', signature([ unquotedInteger() ])),
+  command('#InputLevel', signature([ $integer() ])),
 
   // https://www.autohotkey.com/docs/v2/lib/_MaxThreads.htm
-  command('#MaxThreads', signature([ unquotedInteger() ])),
+  command('#MaxThreads', signature([ $integer() ])),
 
   // https://www.autohotkey.com/docs/v2/lib/_MaxThreadsBuffer.htm
   command('#MaxThreadsBuffer', signature([ unquotedAndBoolean() ])),
 
   // https://www.autohotkey.com/docs/v2/lib/_MaxThreadsPerHotkey.htm
-  command('#MaxThreadsPerHotkey', signature([ unquotedInteger() ])),
+  command('#MaxThreadsPerHotkey', signature([ $integer() ])),
 
   // https://www.autohotkey.com/docs/v2/lib/_NoTrayIcon.htm
   command('#NoTrayIcon', signature(parameterless())),

@@ -436,7 +436,7 @@ export function unquoted(itemMatchers: ParameterItemMatcher[] = [], flags: Comma
 export function unquotedShouldEscapeComma(flags: CommandParameterFlag = CommandParameterFlag.None): CommandParameter {
   return restParams([], flags);
 }
-export function unquotedInteger(): CommandParameter {
+export function $integer(): CommandParameter {
   return {
     flags: CommandParameterFlag.None,
     itemMatchers: [
