@@ -9,6 +9,7 @@ import {
   $fileAttributes,
   $flagedGuiControlOptions,
   $flowsubcommand,
+  $formatTime,
   $glob,
   $guiControlOptions,
   $guiControlType,
@@ -48,7 +49,6 @@ import {
   CommandFlag,
   decimalOptionItem,
   endKeyOptionItem,
-  formatTime,
   identifierOptionItem,
   keywordOption,
   letterOptionItem,
@@ -382,7 +382,7 @@ export const commandDefinitions: CommandDefinition[] = [
   // https://www.autohotkey.com/docs/v1/lib/FormatTime.htm
   command('FormatTime', [
     signature([ $output(), $(), $subcommandlike([ 'Time', 'ShortDate', 'LongDate', 'YearMonth', 'YDay', 'YDay0', 'WDay', 'YWeek' ]), $rest() ]),
-    signature([ $output(), $(), formatTime() ]),
+    signature([ $output(), $(), $formatTime() ]),
   ]),
 
   // https://www.autohotkey.com/docs/v1/lib/GetKeyState.htm#command

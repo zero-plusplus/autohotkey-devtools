@@ -807,7 +807,7 @@ export function $sendKeyName(flags: CommandParameterFlag = CommandParameterFlag.
 export function $timeunit(flags: CommandParameterFlag = CommandParameterFlag.None): CommandParameter {
   return $shouldKeyword([ keywordOption('Seconds', 'S', 'Minutes', 'M', 'Hours', 'H', 'Days', 'D') ], flags);
 }
-export function formatTime(flags: CommandParameterFlag = CommandParameterFlag.None): CommandParameter {
+export function $formatTime(flags: CommandParameterFlag = CommandParameterFlag.None): CommandParameter {
   return $(
     [ caseSensitiveLetterOptionItem('d', 'dd', 'ddd', 'dddd', 'M', 'MM', 'MMM', 'MMMM', 'y', 'yy', 'yyyy', 'gg', 'h', 'hh', 'H', 'HH', 'm', 'mm', 's', 'ss', 't', 'tt') ],
     flags,
