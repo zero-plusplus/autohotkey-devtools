@@ -1,8 +1,8 @@
 import {
-  $, $blank, $flowsubcommand, $guisubcommand, $integer, $subcommand, $subcommandlike, color, colorOptionItem, command, CommandFlag, control,
-  controlMoveOptions, controlOrPos, decimalOptionItem, encoding, endKeyOptionItem, expression, fileAttributes, flagedGuiControlOptions,
-  formatTime, glob, guiControlOptions, guiControlType, guiOptions, hotkeyName, identifierOptionItem, imagePath, includeLib,
-  input, invalid, keyName, keywordOnly, keywordOption, labelName, letterOptionItem, matchKeyOptionItem, menuItemName,
+  $, $blank, $flowsubcommand, $guisubcommand, $integer, $invalid, $subcommand, $subcommandlike, color, colorOptionItem, command,
+  CommandFlag, control, controlMoveOptions, controlOrPos, decimalOptionItem, encoding, endKeyOptionItem, expression, fileAttributes,
+  flagedGuiControlOptions, formatTime, glob, guiControlOptions, guiControlType, guiOptions, hotkeyName, identifierOptionItem, imagePath,
+  includeLib, input, keyName, keywordOnly, keywordOption, labelName, letterOptionItem, matchKeyOptionItem, menuItemName,
   menuOptions, numberOptionItem, onOff, onOffToggle, output, parameterless, path, rangeOptionItem, requiresVersion,
   restParams, sendKeys, signature, signedNumberOptionItem, signOptionItem, sizeOptionItem, soundComponent, soundControlType,
   spacedKeywordsOnly, stringOption, style, timeunit, toggleOptionItem, unquotedNumber, unquotedShouldEscapeComma,
@@ -13,7 +13,7 @@ import {
 // #region directives
 export const directiveDefinitions: CommandDefinition[] = [
   // https://www.autohotkey.com/docs/v1/lib/_AllowSameLineComments.htm
-  command('#AllowSameLineComments', signature([ invalid() ]), CommandFlag.Removed),
+  command('#AllowSameLineComments', signature([ $invalid() ]), CommandFlag.Removed),
 
   // https://www.autohotkey.com/docs/v1/lib/_ClipboardTimeout.htm
   command('#ClipboardTimeout', signature([ $integer() ])),
@@ -171,7 +171,7 @@ export const commandDefinitions: CommandDefinition[] = [
     signature([ output(), $subcommand('List'), $([ keywordOption('Selected', 'Focused', 'Col', 'Count') ]), control(), ...winParams ]),
     signature([ output(), $subcommand([ 'Checked', 'Enabled', 'Visible', 'Tab', 'Choice', 'LineCount', 'CurrentLine', 'CurrentCol', 'Selected', 'Style', 'ExStyle', 'Hwnd' ]), $blank(), control(), ...winParams ]),
     signature([ output(), $subcommand([ 'FindString', 'Line' ]), $(), control(), ...winParams ]),
-    signature([ output(), invalid() ]),
+    signature([ output(), $invalid() ]),
   ]),
 
   // https://www.autohotkey.com/docs/v1/lib/ControlGetFocus.htm
@@ -212,14 +212,14 @@ export const commandDefinitions: CommandDefinition[] = [
     signature([ $subcommand('Eject'), $(), keywordOnly([ keywordOption('1') ]) ]),
     signature([ $subcommand('Label'), $(), $() ]),
     signature([ $subcommand([ 'Lock', 'Unlock' ]), $() ]),
-    signature([ invalid() ]),
+    signature([ $invalid() ]),
   ]),
 
   // https://www.autohotkey.com/docs/v1/lib/DriveGet.htm
   command('DriveGet', [
     signature([ output(), $subcommand('List'), keywordOnly([ keywordOption('CDROM', 'REMOVABLE', 'FIXED', 'NETWORK', 'RAMDISK', 'UNKNOWN') ]) ]),
     signature([ output(), $subcommand([ 'Capacity', 'Cap', 'FileSystem', 'FS', 'Label', 'Serial', 'Type', 'Status', 'StatusCD' ]), $() ]),
-    signature([ output(), invalid() ]),
+    signature([ output(), $invalid() ]),
   ]),
 
   // https://www.autohotkey.com/docs/v1/lib/DriveSpaceFree.htm
@@ -676,7 +676,7 @@ export const commandDefinitions: CommandDefinition[] = [
   command('Transform', [
     signature([ output(), $subcommand([ 'Unicode', 'Deref', 'Asc', 'Chr', 'Exp', 'Sqrt', 'Log', 'Ln', 'Ceil', 'Floor', 'Abs', 'Sin', 'Cos', 'Tan', 'ASin', 'ACos', 'ATan', 'BitNot' ]), $() ]),
     signature([ output(), $subcommand([ 'HTML', 'Mod', 'Round', 'Pow', 'BitAnd', 'BitOr', 'BitXOr', 'BitShiftLeft', 'BitShiftRight' ]), $(), $() ]),
-    signature([ output(), invalid() ]),
+    signature([ output(), $invalid() ]),
   ], CommandFlag.Deprecated),
 
   // https://www.autohotkey.com/docs/v1/lib/TrayTip.htm
@@ -706,7 +706,7 @@ export const commandDefinitions: CommandDefinition[] = [
   // https://www.autohotkey.com/docs/v1/lib/WinGet.htm
   command('WinGet', [
     signature([ output(), $subcommand([ 'ID', 'IDLast', 'PID', 'ProcessName', 'ProcessPath', 'Count', 'List', 'MinMax', 'ControlList', 'ControlListHwnd', 'Transparent', 'TransColor', 'Style', 'ExStyle' ]), ...winParams ]),
-    signature([ output(), invalid() ]),
+    signature([ output(), $invalid() ]),
   ]),
 
   // https://www.autohotkey.com/docs/v1/lib/WinGetPos.htm

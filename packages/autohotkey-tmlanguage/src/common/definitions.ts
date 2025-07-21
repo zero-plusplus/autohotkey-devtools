@@ -1,12 +1,12 @@
 import {
-  command, CommandFlag, CommandParameterFlag, encoding, invalid, keywordOnly, keywordOption,
+  $invalid, command, CommandFlag, CommandParameterFlag, encoding, keywordOnly, keywordOption,
   output, signature, signOptionItem, unquotedNumber, unquotedWithNumber,
   type CommandDefinition, type CommandParameter, type ParameterItemMatcher,
 } from '../definition';
 import { char, inlineSpace, negChars0, negChars1, seq, wordChars0 } from '../oniguruma';
 import { includeRule, Repository, RuleName } from '../tmlanguage';
 
-export const undefinedDirective: CommandDefinition = command(seq('#', wordChars0()), signature([ invalid() ]));
+export const undefinedDirective: CommandDefinition = command(seq('#', wordChars0()), signature([ $invalid() ]));
 export const compilerDirectives: CommandDefinition[] = [
   command('@Ahk2Exe', signature([])),
   command(seq('@Ahk2Exe-', char('%'), negChars0('%', inlineSpace()), char('%')), signature([])),

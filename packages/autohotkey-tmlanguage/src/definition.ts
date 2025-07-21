@@ -430,7 +430,7 @@ export function $blank(flags: CommandParameterFlag = CommandParameterFlag.None):
     ],
   };
 }
-export function invalid(flags: CommandParameterFlag = CommandParameterFlag.None): CommandParameter {
+export function $invalid(flags: CommandParameterFlag = CommandParameterFlag.None): CommandParameter {
   return $blank(flags);
 }
 export function unquotedShouldEscapeComma(flags: CommandParameterFlag = CommandParameterFlag.None): CommandParameter {
@@ -841,6 +841,6 @@ export const winParams: CommandParameter[] = [
   $(),
 ] as const;
 export function parameterless(): CommandParameter[] {
-  return [ invalid() ];
+  return [ $invalid() ];
 }
 // #endregion command parameter definitions
