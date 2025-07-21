@@ -1,8 +1,8 @@
 import {
-  $, $blank, $expression, $fileAttributes, $flowsubcommand, $guisubcommand, $invalid, $rest, $shouldEscapeComma, $shouldInteger,
+  $, $blank, $expression, $fileAttributes, $flowsubcommand, $guiOptions, $guisubcommand, $invalid, $rest, $shouldEscapeComma, $shouldInteger,
   $shouldKeyword, $shouldLabel, $shouldNumber, $style, $subcommand, $subcommandlike, $withNumber, color, colorOptionItem, command,
   CommandFlag, control, controlMoveOptions, controlOrPos, decimalOptionItem, encoding, endKeyOptionItem, flagedGuiControlOptions,
-  formatTime, glob, guiControlOptions, guiControlType, guiOptions, hotkeyName, identifierOptionItem, imagePath, includeLib, input, keyName,
+  formatTime, glob, guiControlOptions, guiControlType, hotkeyName, identifierOptionItem, imagePath, includeLib, input, keyName,
   keywordOption, letterOptionItem, matchKeyOptionItem, menuItemName, menuOptions, numberOptionItem, onOff, onOffToggle, output, parameterless,
   path, rangeOptionItem, requiresVersion, sendKeys, signature, signedNumberOptionItem, signOptionItem, sizeOptionItem, soundComponent,
   soundControlType, spacedKeywordsOnly, stringOption, timeunit, toggleOptionItem, whichButton, winParams, winTitle,
@@ -343,7 +343,7 @@ export const commandDefinitions: CommandDefinition[] = [
 
   // https://www.autohotkey.com/docs/v1/lib/Gui.htm
   command('Gui', [
-    signature([ $guisubcommand('New'), guiOptions(), $() ]),
+    signature([ $guisubcommand('New'), $guiOptions(), $() ]),
     signature([ $guisubcommand('Add'), guiControlType(), guiControlOptions(), $() ]),
     signature([ $guisubcommand('Show'), $([ keywordOption('xCenter', 'yCenter', 'AutoSize', 'Minimize', 'Maximize', 'Restore', 'NoActivate', 'NA', 'Hide', 'Center'), numberOptionItem('W', 'H', 'X', 'Y') ]), $() ]),
     signature([ $guisubcommand('Submit'), $shouldKeyword([ keywordOption('NoHide') ]) ]),
@@ -353,7 +353,7 @@ export const commandDefinitions: CommandDefinition[] = [
     signature([ $guisubcommand('Margin'), $withNumber(), $withNumber() ]),
     signature([ $guisubcommand('Menu'), $() ]),
     signature([ $guisubcommand('Flash'), $shouldKeyword([ 'Off' ]) ]),
-    signature([ guiOptions() ]),
+    signature([ $guiOptions() ]),
   ]),
 
   // https://www.autohotkey.com/docs/v1/lib/GuiControl.htm

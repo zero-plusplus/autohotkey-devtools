@@ -587,7 +587,7 @@ export function $rest(itemMatchers: ParameterItemMatcher[] = [], flags: CommandP
 export function $fileAttributes(flags: CommandParameterFlag = CommandParameterFlag.None): CommandParameter {
   return $shouldKeyword([ flagedLetterOptionItem('R', 'A', 'S', 'H', 'N', 'O', 'T') ], flags);
 }
-export function guiOptions(flags: CommandParameterFlag = CommandParameterFlag.None): CommandParameter {
+export function $guiOptions(flags: CommandParameterFlag = CommandParameterFlag.None): CommandParameter {
   return $(
     [
       flagedOptionItem('AlwaysOnTop', 'Border', 'Caption', 'DelimiterSpace', 'DelimiterTab', 'Disabled', 'DPIScale', 'LastFoundExist', 'MaximizeBox', 'MinimizeBox', 'OwnDialogs', 'Owner', 'Parent', 'Resize', 'SysMenu', 'Theme', 'ToolWindow'),
