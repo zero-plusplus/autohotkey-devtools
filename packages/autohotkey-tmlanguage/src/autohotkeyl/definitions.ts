@@ -1,11 +1,11 @@
 import {
-  $, $blank, $flowsubcommand, $guisubcommand, $invalid, $shouldEscapeComma, $shouldInteger, $subcommand, $subcommandlike, $withNumber,
-  color, colorOptionItem, command, CommandFlag, control, controlMoveOptions, controlOrPos, decimalOptionItem, encoding, endKeyOptionItem,
+  $, $blank, $flowsubcommand, $guisubcommand, $invalid, $shouldEscapeComma, $shouldInteger, $shouldNumber, $subcommand, $subcommandlike,
+  $withNumber, color, colorOptionItem, command, CommandFlag, control, controlMoveOptions, controlOrPos, decimalOptionItem, encoding, endKeyOptionItem,
   expression, fileAttributes, flagedGuiControlOptions, formatTime, glob, guiControlOptions, guiControlType, guiOptions, hotkeyName,
   identifierOptionItem, imagePath, includeLib, input, keyName, keywordOnly, keywordOption, labelName, letterOptionItem, matchKeyOptionItem,
   menuItemName, menuOptions, numberOptionItem, onOff, onOffToggle, output, parameterless, path, rangeOptionItem, requiresVersion,
   restParams, sendKeys, signature, signedNumberOptionItem, signOptionItem, sizeOptionItem, soundComponent, soundControlType,
-  spacedKeywordsOnly, stringOption, style, timeunit, toggleOptionItem, unquotedNumber, whichButton, winParams, winTitle,
+  spacedKeywordsOnly, stringOption, style, timeunit, toggleOptionItem, whichButton, winParams, winTitle,
   type CommandDefinition,
 } from '../definition';
 
@@ -555,7 +555,7 @@ export const commandDefinitions: CommandDefinition[] = [
   command('SetStoreCapsLockMode', signature([ onOff() ])),
 
   // https://www.autohotkey.com/docs/v1/lib/SetTimer.htm
-  command('SetTimer', signature([ $(), unquotedNumber(keywordOption('On', 'Off', 'Delete')), expression() ])),
+  command('SetTimer', signature([ $(), $shouldNumber(keywordOption('On', 'Off', 'Delete')), expression() ])),
 
   // https://www.autohotkey.com/docs/v1/lib/SetTitleMatchMode.htm
   command('SetTitleMatchMode', signature([ keywordOnly([ keywordOption('1', '2', '3', 'RegEx', 'Fast', 'Slow') ]) ])),
@@ -658,13 +658,13 @@ export const commandDefinitions: CommandDefinition[] = [
   command('SysGet', [
     signature([ output(), $subcommand([ 'MonitorCount', 'MonitorPrimary' ]) ]),
     signature([ output(), $subcommand([ 'Monitor', 'MonitorWorkArea', 'MonitorName' ]), $withNumber() ]),
-    signature([ output(), unquotedNumber() ]),
+    signature([ output(), $shouldNumber() ]),
   ]),
 
   // https://www.autohotkey.com/docs/v1/lib/Thread.htm
   command('Thread', [
     signature([ $subcommand([ 'NoTimers', 'Priority' ]), expression() ]),
-    signature([ $subcommand('Interrupt'), unquotedNumber(), unquotedNumber() ]),
+    signature([ $subcommand('Interrupt'), $shouldNumber(), $shouldNumber() ]),
     signature(parameterless()),
   ]),
 

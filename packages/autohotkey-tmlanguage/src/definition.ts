@@ -451,6 +451,22 @@ export function $shouldInteger(): CommandParameter {
     ],
   };
 }
+export function $shouldNumber(...itemMatchers: ParameterItemMatcher[]): CommandParameter {
+  return {
+    flags: CommandParameterFlag.None,
+    itemMatchers: [
+      includeRule(Repository.DereferenceUnaryOperator),
+      includeRule(Repository.DereferenceInCommandArgument),
+      includeRule(Repository.Operator),
+      includeRule(Repository.Number),
+      ...itemMatchers,
+      {
+        name: [ RuleName.UnquotedString, StyleName.Invalid ],
+        match: negChars1('%', '0-9', inlineSpace()),
+      },
+    ],
+  };
+}
 export function $withNumber(itemMatchers: ParameterItemMatcher[] = [], flags: CommandParameterFlag = CommandParameterFlag.None): CommandParameter {
   return {
     flags,
@@ -465,22 +481,6 @@ export function $withNumber(itemMatchers: ParameterItemMatcher[] = [], flags: Co
       {
         name: [ RuleName.UnquotedString ],
         match: negChars1('`', '%', '0-9', inlineSpace()),
-      },
-    ],
-  };
-}
-export function unquotedNumber(...itemMatchers: ParameterItemMatcher[]): CommandParameter {
-  return {
-    flags: CommandParameterFlag.None,
-    itemMatchers: [
-      includeRule(Repository.DereferenceUnaryOperator),
-      includeRule(Repository.DereferenceInCommandArgument),
-      includeRule(Repository.Operator),
-      includeRule(Repository.Number),
-      ...itemMatchers,
-      {
-        name: [ RuleName.UnquotedString, StyleName.Invalid ],
-        match: negChars1('%', '0-9', inlineSpace()),
       },
     ],
   };
