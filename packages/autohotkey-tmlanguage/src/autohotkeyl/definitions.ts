@@ -28,6 +28,7 @@ import {
   $path,
   $requiresVersion,
   $rest,
+  $sendKeyName,
   $shouldEscapeComma,
   $shouldInteger,
   $shouldKeyword,
@@ -54,7 +55,6 @@ import {
   numberOptionItem,
   parameterless,
   rangeOptionItem,
-  sendKeys,
   signature,
   signedNumberOptionItem,
   signOptionItem,
@@ -245,7 +245,7 @@ export const commandDefinitions: CommandDefinition[] = [
   command('ControlMove', signature([ $control(), $expression(), $expression(), $expression(), $expression(), ...winParams ])),
 
   // https://www.autohotkey.com/docs/v1/lib/ControlSend.htm
-  command('ControlSend', signature([ $control(), sendKeys(), ...winParams ])),
+  command('ControlSend', signature([ $control(), $sendKeyName(), ...winParams ])),
 
   // https://www.autohotkey.com/docs/v1/lib/ControlSendRaw.htm
   command('ControlSendRaw', signature([ $control(), $(), ...winParams ])),
@@ -557,19 +557,19 @@ export const commandDefinitions: CommandDefinition[] = [
   command('RunWait', signature([ $(), $path(), $shouldSpacedKeywords([ keywordOption('Max', 'Min', 'Hide', 'UseErrorLevel') ]), $output() ])),
 
   // https://www.autohotkey.com/docs/v1/lib/Send.htm
-  command('Send', signature([ sendKeys() ])),
+  command('Send', signature([ $sendKeyName() ])),
 
   // https://www.autohotkey.com/docs/v1/lib/SendRaw.htm
-  command('SendRaw', signature([ sendKeys() ])),
+  command('SendRaw', signature([ $sendKeyName() ])),
 
   // https://www.autohotkey.com/docs/v1/lib/SendInput.htm
-  command('SendInput', signature([ sendKeys() ])),
+  command('SendInput', signature([ $sendKeyName() ])),
 
   // https://www.autohotkey.com/docs/v1/lib/SendPlay.htm
-  command('SendPlay', signature([ sendKeys() ])),
+  command('SendPlay', signature([ $sendKeyName() ])),
 
   // https://www.autohotkey.com/docs/v1/lib/SendEvent.htm
-  command('SendEvent', signature([ sendKeys() ])),
+  command('SendEvent', signature([ $sendKeyName() ])),
 
   // https://www.autohotkey.com/docs/v1/lib/SendLevel.htm
   command('SendLevel', signature([ $expression() ])),

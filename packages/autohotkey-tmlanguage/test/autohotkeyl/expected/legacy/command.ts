@@ -17,11 +17,11 @@ import {
   $onOff,
   $output,
   $rest,
+  $sendKeyName,
   $shouldInteger,
   $shouldKeyword,
   $winTitle,
   CommandFlag,
-  sendKeys,
 } from '../../../../src/definition';
 import {
   name,
@@ -1961,7 +1961,7 @@ export function createCommandStatementExpectedData(scopeName: ScopeName): Expect
       ];
     })(),
 
-    ...((_ = sendKeys): ExpectedTestData[] => {
+    ...((_ = $sendKeyName): ExpectedTestData[] => {
       return [
         [
           dedent`
