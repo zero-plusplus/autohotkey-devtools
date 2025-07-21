@@ -1,11 +1,11 @@
 import {
-  $, $blank, $control, $controlMoveOptions, $controlOrPos, $expression, $fileAttributes, $flowsubcommand, $guiControlType, $guiOptions,
-  $guisubcommand, $includeLib, $input, $invalid, $menuItemName, $menuOptions, $output, $requiresVersion, $rest, $shouldEscapeComma,
-  $shouldInteger, $shouldKeyword, $shouldLabel, $shouldNumber, $shouldSpacedKeywords, $style, $subcommand, $subcommandlike, $winTitle,
-  $withNumber, color, colorOptionItem, command, CommandFlag, decimalOptionItem, encoding, endKeyOptionItem, flagedGuiControlOptions,
-  formatTime, glob, guiControlOptions, hotkeyName, identifierOptionItem, imagePath, keyName, keywordOption, letterOptionItem,
-  matchKeyOptionItem, numberOptionItem, onOff, onOffToggle, parameterless, path, rangeOptionItem, sendKeys, signature, signedNumberOptionItem,
-  signOptionItem, sizeOptionItem, soundComponent, soundControlType, stringOption, timeunit, toggleOptionItem, whichButton, winParams,
+  $, $blank, $control, $controlMoveOptions, $controlOrPos, $expression, $fileAttributes, $flagedGuiControlOptions, $flowsubcommand,
+  $guiControlOptions, $guiControlType, $guiOptions, $guisubcommand, $includeLib, $input, $invalid, $menuItemName, $menuOptions, $output,
+  $requiresVersion, $rest, $shouldEscapeComma, $shouldInteger, $shouldKeyword, $shouldLabel, $shouldNumber, $shouldSpacedKeywords, $style,
+  $subcommand, $subcommandlike, $winTitle, $withNumber, color, colorOptionItem, command, CommandFlag, decimalOptionItem, encoding, endKeyOptionItem,
+  formatTime, glob, hotkeyName, identifierOptionItem, imagePath, keyName, keywordOption, letterOptionItem, matchKeyOptionItem, numberOptionItem,
+  onOff, onOffToggle, parameterless, path, rangeOptionItem, sendKeys, signature, signedNumberOptionItem, signOptionItem, sizeOptionItem, soundComponent,
+  soundControlType, stringOption, timeunit, toggleOptionItem, whichButton, winParams,
   type CommandDefinition,
 } from '../definition';
 
@@ -344,7 +344,7 @@ export const commandDefinitions: CommandDefinition[] = [
   // https://www.autohotkey.com/docs/v1/lib/Gui.htm
   command('Gui', [
     signature([ $guisubcommand('New'), $guiOptions(), $() ]),
-    signature([ $guisubcommand('Add'), $guiControlType(), guiControlOptions(), $() ]),
+    signature([ $guisubcommand('Add'), $guiControlType(), $guiControlOptions(), $() ]),
     signature([ $guisubcommand('Show'), $([ keywordOption('xCenter', 'yCenter', 'AutoSize', 'Minimize', 'Maximize', 'Restore', 'NoActivate', 'NA', 'Hide', 'Center'), numberOptionItem('W', 'H', 'X', 'Y') ]), $() ]),
     signature([ $guisubcommand('Submit'), $shouldKeyword([ keywordOption('NoHide') ]) ]),
     signature([ $guisubcommand([ 'Cancel', 'Hide', 'Destroy', 'Minimize', 'Maximize', 'Restore', 'Default' ]), $rest() ]),
@@ -361,7 +361,7 @@ export const commandDefinitions: CommandDefinition[] = [
     signature([ $guisubcommand([ 'Text', 'Choose', 'ChooseString' ]), $control(), $() ]),
     signature([ $guisubcommand([ 'Move', 'MoveDraw' ]), $control(), $controlMoveOptions() ]),
     signature([ $guisubcommand([ 'Focus', 'Disable', 'Enable', 'Hide', 'Show', 'Font' ]), $control() ]),
-    signature([ flagedGuiControlOptions(), $control(), $() ]),
+    signature([ $flagedGuiControlOptions(), $control(), $() ]),
   ]),
 
   // https://www.autohotkey.com/docs/v1/lib/GuiControlGet.htm

@@ -717,29 +717,29 @@ export function $control(flags: CommandParameterFlag = CommandParameterFlag.None
 export function $controlOrPos(flags: CommandParameterFlag = CommandParameterFlag.None): CommandParameter {
   return $([ keywordOption('ahk_id'), decimalOptionItem('X', 'Y') ], flags);
 }
-export function $guiControlType(): CommandParameter {
-  return $shouldKeyword([ keywordOption('ActiveX', 'Button', 'CheckBox', 'ComboBox', 'Custom', 'DateTime', 'DropDownList', 'DDL', 'Edit', 'GroupBox', 'Hotkey', 'Link', 'ListBox', 'ListView', 'MonthCal', 'Picture', 'Pic', 'Progress', 'Radio', 'Slider', 'StatusBar', 'Tab', 'Tab2', 'Tab3', 'Text', 'TreeView', 'UpDown') ]);
-}
 export function $controlMoveOptions(): CommandParameter {
   return $([ numberOptionItem('X', 'Y', 'W', 'H') ]);
 }
-export function guiControlOptions(_flaged = false): CommandParameter {
+export function $guiControlType(): CommandParameter {
+  return $shouldKeyword([ keywordOption('ActiveX', 'Button', 'CheckBox', 'ComboBox', 'Custom', 'DateTime', 'DropDownList', 'DDL', 'Edit', 'GroupBox', 'Hotkey', 'Link', 'ListBox', 'ListView', 'MonthCal', 'Picture', 'Pic', 'Progress', 'Radio', 'Slider', 'StatusBar', 'Tab', 'Tab2', 'Tab3', 'Text', 'TreeView', 'UpDown') ]);
+}
+export function $guiControlOptions(flaged = false): CommandParameter {
   // Accepts zero or more keywords. Each keyword must be preceded by `+` or `-` and each must have a space
   // e.g. `GuiControl, +Default`
   //                   ^^^^^^^^
   return $(
     [
-      (_flaged ? flagedSignedNumberOptionItem : signedNumberOptionItem)('R', 'W', 'H', 'WP', 'HP', 'X', 'Y', 'XP', 'YP', 'XM', 'YM', 'XS', 'YS', 'Choose', 'VScroll', 'HScroll'),
-      (_flaged ? flagedOptionItem : keywordOption)('X+M', 'X-M', 'Y+M', 'Y-M', 'Left', 'Right', 'Center', 'Section', 'Tabstop', 'Wrap', 'AltSubmit', 'CDefault', 'BackgroundTrans', 'Background', 'Border', 'Theme'),
-      (_flaged ? flagedIdentifierOptionItem : identifierOptionItem)('V', 'G', 'Hwnd'),
-      (_flaged ? flagedHexOptionItem : hexOptionItem)('C'),
-      (_flaged ? flagedToggleOptionItem : toggleOptionItem)('Disabled', 'Hidden'),
+      (flaged ? flagedSignedNumberOptionItem : signedNumberOptionItem)('R', 'W', 'H', 'WP', 'HP', 'X', 'Y', 'XP', 'YP', 'XM', 'YM', 'XS', 'YS', 'Choose', 'VScroll', 'HScroll'),
+      (flaged ? flagedOptionItem : keywordOption)('X+M', 'X-M', 'Y+M', 'Y-M', 'Left', 'Right', 'Center', 'Section', 'Tabstop', 'Wrap', 'AltSubmit', 'CDefault', 'BackgroundTrans', 'Background', 'Border', 'Theme'),
+      (flaged ? flagedIdentifierOptionItem : identifierOptionItem)('V', 'G', 'Hwnd'),
+      (flaged ? flagedHexOptionItem : hexOptionItem)('C'),
+      (flaged ? flagedToggleOptionItem : toggleOptionItem)('Disabled', 'Hidden'),
     ],
     CommandParameterFlag.GuiLabeled,
   );
 }
-export function flagedGuiControlOptions(): CommandParameter {
-  return guiControlOptions(true);
+export function $flagedGuiControlOptions(): CommandParameter {
+  return $guiControlOptions(true);
 }
 export function onOff(itemMatchers: ParameterItemMatcher[] = [], flags: CommandParameterFlag = CommandParameterFlag.None): CommandParameter {
   return $shouldKeyword([ keywordOption('On', 'Off', '1', '0'), ...itemMatchers ], flags);
