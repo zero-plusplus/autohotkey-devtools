@@ -530,6 +530,12 @@ export function $withNumber(itemMatchers: ParameterItemMatcher[] = [], flags: Co
     ],
   };
 }
+export function $expression(flags: CommandParameterFlag = CommandParameterFlag.None): CommandParameter {
+  return {
+    flags: mergeFlags(flags, CommandParameterFlag.Expression),
+    itemMatchers: [ includeRule(Repository.Expression) ],
+  };
+}
 export function $rest(itemMatchers: ParameterItemMatcher[] = [], flags: CommandParameterFlag = CommandParameterFlag.None): CommandParameter {
   return {
     flags: mergeFlags(flags, CommandParameterFlag.RestParams),
@@ -537,12 +543,6 @@ export function $rest(itemMatchers: ParameterItemMatcher[] = [], flags: CommandP
       ...itemMatchers,
       includeRule(Repository.CommandArgument),
     ],
-  };
-}
-export function expression(flags: CommandParameterFlag = CommandParameterFlag.None): CommandParameter {
-  return {
-    flags: mergeFlags(flags, CommandParameterFlag.Expression),
-    itemMatchers: [ includeRule(Repository.Expression) ],
   };
 }
 export function style(flags: CommandParameterFlag = CommandParameterFlag.None): CommandParameter {
@@ -604,10 +604,10 @@ export function spacedKeywordsOnly(itemMatchers: ParameterItemMatcher[] = [], fl
   return keywordOnly(itemMatchers, flags);
 }
 export function input(flags: CommandParameterFlag = CommandParameterFlag.None): CommandParameter {
-  return expression(flags);
+  return $expression(flags);
 }
 export function output(flags: CommandParameterFlag = CommandParameterFlag.None): CommandParameter {
-  return expression(flags);
+  return $expression(flags);
 }
 export function menuItemName(flags: CommandParameterFlag = CommandParameterFlag.None): CommandParameter {
   // https://www.autohotkey.com/docs/v1/lib/Menu.htm#MenuItemName

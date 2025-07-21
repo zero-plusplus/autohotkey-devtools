@@ -1,5 +1,5 @@
 import {
-  $, $quotable, $shouldBoolean, $shouldInteger, command, decimalOptionItem, expression, keywordOnly, keywordOption, parameterless,
+  $, $expression, $quotable, $shouldBoolean, $shouldInteger, command, decimalOptionItem, keywordOnly, keywordOption, parameterless,
   quotableEncoding, quotableIncludeLib, requiresVersion, signature, signedNumberOptionItem, signOptionItem, toggleOptionItem,
   type CommandDefinition,
 } from '../definition';
@@ -16,7 +16,7 @@ export const directiveDefinitions: CommandDefinition[] = [
   command('#ErrorStdOut', signature([ quotableEncoding() ])),
 
   // https://www.autohotkey.com/docs/v2/lib/_HotIf.htm
-  command('#HotIf', signature([ expression() ])),
+  command('#HotIf', signature([ $expression() ])),
 
   // https://www.autohotkey.com/docs/v2/lib/_HotIfTimeout.htm
   command('#HotIfTimeout', signature([ $shouldInteger() ])),
