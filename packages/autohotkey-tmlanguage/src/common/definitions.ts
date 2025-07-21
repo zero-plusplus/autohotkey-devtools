@@ -1,6 +1,6 @@
 import {
-  $invalid, $output, $shouldKeyword, $shouldNumber, $withNumber, command, CommandFlag, CommandParameterFlag, encoding, keywordOption,
-  signature, signOptionItem,
+  $encoding, $invalid, $output, $shouldKeyword, $shouldNumber, $withNumber, command, CommandFlag, CommandParameterFlag,
+  keywordOption, signature, signOptionItem,
   type CommandDefinition, type CommandParameter, type ParameterItemMatcher,
 } from '../definition';
 import { char, inlineSpace, negChars0, negChars1, seq, wordChars0 } from '../oniguruma';
@@ -17,8 +17,8 @@ export const compilerDirectives: CommandDefinition[] = [
   command('@Ahk2Exe-AddResource', signature([ fileName(), unquoted() ])),
 
   // [Bin/Base](https://www.autohotkey.com/docs/v2/misc/Ahk2ExeDirectives.htm#Bin)
-  command('@Ahk2Exe-Bin', signature([ unquoted(), unquoted(), encoding() ]), CommandFlag.Deprecated),
-  command('@Ahk2Exe-Base', signature([ unquoted(), unquoted(), encoding() ])),
+  command('@Ahk2Exe-Bin', signature([ unquoted(), unquoted(), $encoding() ]), CommandFlag.Deprecated),
+  command('@Ahk2Exe-Base', signature([ unquoted(), unquoted(), $encoding() ])),
 
   // [ConsoleApp](https://www.autohotkey.com/docs/v2/misc/Ahk2ExeDirectives.htm#ConsoleApp)
   command('@Ahk2Exe-ConsoleApp', signature([])),

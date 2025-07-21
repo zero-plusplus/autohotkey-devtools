@@ -1,9 +1,9 @@
 import {
-  $, $blank, $control, $controlMoveOptions, $controlOrPos, $expression, $fileAttributes, $flagedGuiControlOptions, $flowsubcommand,
+  $, $blank, $control, $controlMoveOptions, $controlOrPos, $encoding, $expression, $fileAttributes, $flagedGuiControlOptions, $flowsubcommand,
   $glob, $guiControlOptions, $guiControlType, $guiOptions, $guisubcommand, $imagePath, $includeLib, $input, $invalid, $menuItemName, $menuOptions,
   $onOff, $onOffToggle, $output, $path, $requiresVersion, $rest, $shouldEscapeComma, $shouldInteger, $shouldKeyword, $shouldLabel,
   $shouldNumber, $shouldSpacedKeywords, $style, $subcommand, $subcommandlike, $whichButton, $winTitle, $withNumber, color, colorOptionItem,
-  command, CommandFlag, decimalOptionItem, encoding, endKeyOptionItem, formatTime, hotkeyName, identifierOptionItem, keyName,
+  command, CommandFlag, decimalOptionItem, endKeyOptionItem, formatTime, hotkeyName, identifierOptionItem, keyName,
   keywordOption, letterOptionItem, matchKeyOptionItem, numberOptionItem, parameterless, rangeOptionItem, sendKeys, signature,
   signedNumberOptionItem, signOptionItem, sizeOptionItem, soundComponent, soundControlType, stringOption, timeunit, toggleOptionItem,
   winParams,
@@ -28,7 +28,7 @@ export const directiveDefinitions: CommandDefinition[] = [
   command('#DerefChar', signature([ $() ]), CommandFlag.Deprecated),
 
   // https://www.autohotkey.com/docs/v1/lib/_ErrorStdOut.htm
-  command('#ErrorStdOut', signature([ encoding() ])),
+  command('#ErrorStdOut', signature([ $encoding() ])),
 
   // https://www.autohotkey.com/docs/v1/lib/_EscapeChar.htm
   command('#EscapeChar', signature([ $() ]), CommandFlag.Deprecated),
@@ -250,7 +250,7 @@ export const commandDefinitions: CommandDefinition[] = [
   command('EnvUpdate', signature(parameterless())),
 
   // https://www.autohotkey.com/docs/v1/lib/FileAppend.htm
-  command('FileAppend', signature([ $(), $path(), encoding() ])),
+  command('FileAppend', signature([ $(), $path(), $encoding() ])),
 
   // https://www.autohotkey.com/docs/v1/lib/FileCopy.htm
   command('FileCopy', signature([ $glob(), $glob(), $expression() ])),
@@ -268,7 +268,7 @@ export const commandDefinitions: CommandDefinition[] = [
   command('FileDelete', signature([ $glob() ])),
 
   // https://www.autohotkey.com/docs/v1/lib/FileEncoding.htm
-  command('FileEncoding', signature([ encoding() ])),
+  command('FileEncoding', signature([ $encoding() ])),
 
   // https://www.autohotkey.com/docs/v1/lib/FileInstall.htm
   command('FileInstall', signature([ $path(), $path(), $expression() ])),
