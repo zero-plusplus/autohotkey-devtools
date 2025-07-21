@@ -1,7 +1,7 @@
 import {
-  $, $blank, $expression, $fileAttributes, $flowsubcommand, $guiOptions, $guisubcommand, $includeLib, $input, $invalid, $menuItemName, $menuOptions,
+  $, $blank, $control, $expression, $fileAttributes, $flowsubcommand, $guiOptions, $guisubcommand, $includeLib, $input, $invalid, $menuItemName, $menuOptions,
   $output, $requiresVersion, $rest, $shouldEscapeComma, $shouldInteger, $shouldKeyword, $shouldLabel, $shouldNumber, $shouldSpacedKeywords, $style,
-  $subcommand, $subcommandlike, $winTitle, $withNumber, color, colorOptionItem, command, CommandFlag, control, controlMoveOptions, controlOrPos, decimalOptionItem,
+  $subcommand, $subcommandlike, $winTitle, $withNumber, color, colorOptionItem, command, CommandFlag, controlMoveOptions, controlOrPos, decimalOptionItem,
   encoding, endKeyOptionItem, flagedGuiControlOptions, formatTime, glob, guiControlOptions, guiControlType, hotkeyName, identifierOptionItem, imagePath,
   keyName, keywordOption, letterOptionItem, matchKeyOptionItem, numberOptionItem, onOff, onOffToggle, parameterless, path, rangeOptionItem, sendKeys,
   signature, signedNumberOptionItem, signOptionItem, sizeOptionItem, soundComponent, soundControlType, stringOption, timeunit, toggleOptionItem, whichButton,
@@ -152,9 +152,9 @@ export const commandDefinitions: CommandDefinition[] = [
   command(
     'Control',
     [
-      signature([ $subcommand([ 'Check', 'UnCheck', 'Enable', 'Disable', 'Show', 'Hide', 'ShowDropDown', 'HideDropDown' ]), $blank(), control(), ...winParams ]),
-      signature([ $subcommand([ 'Style', 'ExStyle' ]), $style(), control(), ...winParams ]),
-      signature([ $subcommand([ 'TabLeft', 'TabRight', 'Add', 'Delete', 'Choose', 'ChooseString', 'EditPaste' ]), $(), control(), ...winParams ]),
+      signature([ $subcommand([ 'Check', 'UnCheck', 'Enable', 'Disable', 'Show', 'Hide', 'ShowDropDown', 'HideDropDown' ]), $blank(), $control(), ...winParams ]),
+      signature([ $subcommand([ 'Style', 'ExStyle' ]), $style(), $control(), ...winParams ]),
+      signature([ $subcommand([ 'TabLeft', 'TabRight', 'Add', 'Delete', 'Choose', 'ChooseString', 'EditPaste' ]), $(), $control(), ...winParams ]),
       signature(parameterless()),
     ],
   ),
@@ -163,13 +163,13 @@ export const commandDefinitions: CommandDefinition[] = [
   command('ControlClick', signature([ controlOrPos(), $winTitle(), $(), whichButton(), $expression(), $([ keywordOption('NA', 'D', 'U', 'Pos'), decimalOptionItem('X', 'Y') ]) ])),
 
   // https://www.autohotkey.com/docs/v1/lib/ControlFocus.htm
-  command('ControlFocus', signature([ control(), ...winParams ])),
+  command('ControlFocus', signature([ $control(), ...winParams ])),
 
   // https://www.autohotkey.com/docs/v1/lib/ControlGet.htm
   command('ControlGet', [
-    signature([ $output(), $subcommand('List'), $([ keywordOption('Selected', 'Focused', 'Col', 'Count') ]), control(), ...winParams ]),
-    signature([ $output(), $subcommand([ 'Checked', 'Enabled', 'Visible', 'Tab', 'Choice', 'LineCount', 'CurrentLine', 'CurrentCol', 'Selected', 'Style', 'ExStyle', 'Hwnd' ]), $blank(), control(), ...winParams ]),
-    signature([ $output(), $subcommand([ 'FindString', 'Line' ]), $(), control(), ...winParams ]),
+    signature([ $output(), $subcommand('List'), $([ keywordOption('Selected', 'Focused', 'Col', 'Count') ]), $control(), ...winParams ]),
+    signature([ $output(), $subcommand([ 'Checked', 'Enabled', 'Visible', 'Tab', 'Choice', 'LineCount', 'CurrentLine', 'CurrentCol', 'Selected', 'Style', 'ExStyle', 'Hwnd' ]), $blank(), $control(), ...winParams ]),
+    signature([ $output(), $subcommand([ 'FindString', 'Line' ]), $(), $control(), ...winParams ]),
     signature([ $output(), $invalid() ]),
   ]),
 
@@ -177,22 +177,22 @@ export const commandDefinitions: CommandDefinition[] = [
   command('ControlGetFocus', signature([ $output(), ...winParams ])),
 
   // https://www.autohotkey.com/docs/v1/lib/ControlGetPos.htm
-  command('ControlGetPos', signature([ $output(), $output(), $output(), $output(), control(), ...winParams ])),
+  command('ControlGetPos', signature([ $output(), $output(), $output(), $output(), $control(), ...winParams ])),
 
   // https://www.autohotkey.com/docs/v1/lib/ControlGetText.htm
-  command('ControlGetText', signature([ $output(), control(), ...winParams ])),
+  command('ControlGetText', signature([ $output(), $control(), ...winParams ])),
 
   // https://www.autohotkey.com/docs/v1/lib/ControlMove.htm
-  command('ControlMove', signature([ control(), $expression(), $expression(), $expression(), $expression(), ...winParams ])),
+  command('ControlMove', signature([ $control(), $expression(), $expression(), $expression(), $expression(), ...winParams ])),
 
   // https://www.autohotkey.com/docs/v1/lib/ControlSend.htm
-  command('ControlSend', signature([ control(), sendKeys(), ...winParams ])),
+  command('ControlSend', signature([ $control(), sendKeys(), ...winParams ])),
 
   // https://www.autohotkey.com/docs/v1/lib/ControlSendRaw.htm
-  command('ControlSendRaw', signature([ control(), $(), ...winParams ])),
+  command('ControlSendRaw', signature([ $control(), $(), ...winParams ])),
 
   // https://www.autohotkey.com/docs/v1/lib/ControlSetText.htm
-  command('ControlSetText', signature([ control(), $(), ...winParams ])),
+  command('ControlSetText', signature([ $control(), $(), ...winParams ])),
 
   // https://www.autohotkey.com/docs/v1/lib/CoordMode.htm
   command('CoordMode', signature([ $shouldKeyword([ keywordOption('ToolTip', 'Pixel', 'Mouse', 'Caret', 'Menu') ]), $shouldKeyword([ keywordOption('Screen', 'Relative', 'Window', 'Client') ]) ])),
@@ -358,16 +358,16 @@ export const commandDefinitions: CommandDefinition[] = [
 
   // https://www.autohotkey.com/docs/v1/lib/GuiControl.htm
   command('GuiControl', [
-    signature([ $guisubcommand([ 'Text', 'Choose', 'ChooseString' ]), control(), $() ]),
-    signature([ $guisubcommand([ 'Move', 'MoveDraw' ]), control(), controlMoveOptions() ]),
-    signature([ $guisubcommand([ 'Focus', 'Disable', 'Enable', 'Hide', 'Show', 'Font' ]), control() ]),
-    signature([ flagedGuiControlOptions(), control(), $() ]),
+    signature([ $guisubcommand([ 'Text', 'Choose', 'ChooseString' ]), $control(), $() ]),
+    signature([ $guisubcommand([ 'Move', 'MoveDraw' ]), $control(), controlMoveOptions() ]),
+    signature([ $guisubcommand([ 'Focus', 'Disable', 'Enable', 'Hide', 'Show', 'Font' ]), $control() ]),
+    signature([ flagedGuiControlOptions(), $control(), $() ]),
   ]),
 
   // https://www.autohotkey.com/docs/v1/lib/GuiControlGet.htm
   command('GuiControlGet', [
-    signature([ $output(), $guisubcommand([ 'Pos', 'Focus', 'FocusV', 'Visible', 'Hwnd', 'Name' ]), control() ]),
-    signature([ $output(), $blank(), control(), $() ]),
+    signature([ $output(), $guisubcommand([ 'Pos', 'Focus', 'FocusV', 'Visible', 'Hwnd', 'Name' ]), $control() ]),
+    signature([ $output(), $blank(), $control(), $() ]),
   ]),
 
   // https://www.autohotkey.com/docs/v1/lib/Hotkey.htm
@@ -458,8 +458,8 @@ export const commandDefinitions: CommandDefinition[] = [
   command('PixelSearch', signature([ $output(), $output(), $expression(), $expression(), $expression(), $expression(), $expression(), $expression(), $shouldSpacedKeywords([ keywordOption('Fast', 'RGB') ]) ])),
 
   // https://www.autohotkey.com/docs/v1/lib/PostMessage.htm
-  command('PostMessage', signature([ $expression(), $expression(), $expression(), control(), ...winParams ])),
-  command('SendMessage', signature([ $expression(), $expression(), $expression(), control(), ...winParams, $expression() ])),
+  command('PostMessage', signature([ $expression(), $expression(), $expression(), $control(), ...winParams ])),
+  command('SendMessage', signature([ $expression(), $expression(), $expression(), $control(), ...winParams, $expression() ])),
 
   // https://www.autohotkey.com/docs/v1/lib/Process.htm
   command('Process', [

@@ -711,7 +711,7 @@ export function $requiresVersion(flags: CommandParameterFlag = CommandParameterF
   ], flags);
   // return { type: HighlightType.RequiresVersion, flags };
 }
-export function control(flags: CommandParameterFlag = CommandParameterFlag.None): CommandParameter {
+export function $control(flags: CommandParameterFlag = CommandParameterFlag.None): CommandParameter {
   return $([ keywordOption('ahk_id') ], flags);
 }
 export function controlOrPos(flags: CommandParameterFlag = CommandParameterFlag.None): CommandParameter {
