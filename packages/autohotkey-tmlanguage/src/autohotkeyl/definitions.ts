@@ -37,6 +37,7 @@ import {
   $shouldLabel,
   $shouldNumber,
   $shouldSpacedKeywords,
+  $soundComponent,
   $style,
   $subcommand,
   $subcommandlike,
@@ -60,7 +61,6 @@ import {
   signedNumberOptionItem,
   signOptionItem,
   sizeOptionItem,
-  soundComponent,
   soundControlType,
   stringOption,
   toggleOptionItem,
@@ -635,7 +635,7 @@ export const commandDefinitions: CommandDefinition[] = [
   command('SoundBeep', signature([ $expression(), $expression() ])),
 
   // https://www.autohotkey.com/docs/v1/lib/SoundGet.htm
-  command('SoundGet', signature([ $output(), soundComponent(), soundControlType(), $expression() ])),
+  command('SoundGet', signature([ $output(), $soundComponent(), soundControlType(), $expression() ])),
 
   // https://www.autohotkey.com/docs/v1/lib/SoundGetWaveVolume.htm
   command('SoundGetWaveVolume', signature([ $output(), $() ])),
@@ -644,7 +644,7 @@ export const commandDefinitions: CommandDefinition[] = [
   command('SoundPlay', signature([ $path(), $shouldKeyword([ keywordOption('Wait', '1') ]) ])),
 
   // https://www.autohotkey.com/docs/v1/lib/SoundSet.htm
-  command('SoundSet', signature([ $expression(), soundComponent(), soundControlType(), $expression() ])),
+  command('SoundSet', signature([ $expression(), $soundComponent(), soundControlType(), $expression() ])),
 
   // https://www.autohotkey.com/docs/v1/lib/SoundSetWaveVolume.htm
   command('SoundSetWaveVolume', signature([ $expression(), $() ])),
