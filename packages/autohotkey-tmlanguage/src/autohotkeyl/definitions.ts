@@ -1,11 +1,11 @@
 import {
-  $, $integer, $subcommand, blank, color, colorOptionItem, command, CommandFlag, control, controlMoveOptions, controlOrPos, decimalOptionItem,
-  encoding, endKeyOptionItem, expression, fileAttributes, flagedGuiControlOptions, flowSubcommand, formatTime, glob,
-  guiControlOptions, guiControlType, guiOptions, guiSubcommand, hotkeyName, identifierOptionItem, imagePath, includeLib,
+  $, $integer, $subcommand, $subcommandlike, blank, color, colorOptionItem, command, CommandFlag, control, controlMoveOptions,
+  controlOrPos, decimalOptionItem, encoding, endKeyOptionItem, expression, fileAttributes, flagedGuiControlOptions, flowSubcommand,
+  formatTime, glob, guiControlOptions, guiControlType, guiOptions, guiSubcommand, hotkeyName, identifierOptionItem, imagePath, includeLib,
   input, invalid, keyName, keywordOnly, keywordOption, labelName, letterOptionItem, matchKeyOptionItem, menuItemName,
   menuOptions, numberOptionItem, onOff, onOffToggle, output, parameterless, path, rangeOptionItem, requiresVersion,
   restParams, sendKeys, signature, signedNumberOptionItem, signOptionItem, sizeOptionItem, soundComponent, soundControlType,
-  spacedKeywordsOnly, stringOption, style, subcommandlike, timeunit, toggleOptionItem, unquotedNumber, unquotedShouldEscapeComma,
+  spacedKeywordsOnly, stringOption, style, timeunit, toggleOptionItem, unquotedNumber, unquotedShouldEscapeComma,
   unquotedWithNumber, whichButton, winParams, winTitle,
   type CommandDefinition,
 } from '../definition';
@@ -323,7 +323,7 @@ export const commandDefinitions: CommandDefinition[] = [
 
   // https://www.autohotkey.com/docs/v1/lib/FormatTime.htm
   command('FormatTime', [
-    signature([ output(), $(), subcommandlike([ 'Time', 'ShortDate', 'LongDate', 'YearMonth', 'YDay', 'YDay0', 'WDay', 'YWeek' ]), restParams() ]),
+    signature([ output(), $(), $subcommandlike([ 'Time', 'ShortDate', 'LongDate', 'YearMonth', 'YDay', 'YDay0', 'WDay', 'YWeek' ]), restParams() ]),
     signature([ output(), $(), formatTime() ]),
   ]),
 
@@ -473,7 +473,7 @@ export const commandDefinitions: CommandDefinition[] = [
 
   // https://www.autohotkey.com/docs/v1/lib/Progress.htm
   command('Progress', [
-    signature([ subcommandlike('Off'), restParams() ]),
+    signature([ $subcommandlike('Off'), restParams() ]),
     signature([ $(), $(), $(), winTitle(), $() ]),
   ], CommandFlag.Deprecated),
 
@@ -593,7 +593,7 @@ export const commandDefinitions: CommandDefinition[] = [
 
   // https://www.autohotkey.com/docs/v1/lib/SplashImage.htm
   command('SplashImage', [
-    signature([ subcommandlike('Off'), restParams() ]),
+    signature([ $subcommandlike('Off'), restParams() ]),
     signature([
       imagePath(), $([
         keywordOption('A', 'T', 'Hide'),

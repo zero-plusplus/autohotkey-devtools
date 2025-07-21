@@ -374,7 +374,7 @@ export function $subcommand(values: string | string[] = [], flags: CommandParame
     ],
   };
 }
-export function subcommandlike(values: string | string[] = [], flags: CommandParameterFlag = CommandParameterFlag.None): CommandParameter {
+export function $subcommandlike(values: string | string[] = [], flags: CommandParameterFlag = CommandParameterFlag.None): CommandParameter {
   // Applies only to the first argument of the following two commands
   // Not originally necessary. However, added to distinguish between strict signatures
   // https://www.autohotkey.com/docs/v1/lib/Progress.htm
