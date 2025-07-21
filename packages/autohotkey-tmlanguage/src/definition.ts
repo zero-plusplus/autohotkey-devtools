@@ -630,7 +630,7 @@ export function $menuItemName(flags: CommandParameterFlag = CommandParameterFlag
     itemMatchers: [ includeRule(Repository.MenuItemNameCommandArgument) ],
   };
 }
-export function includeLib(flags: CommandParameterFlag = CommandParameterFlag.None, quotable = false): CommandParameter {
+export function $includeLib(flags: CommandParameterFlag = CommandParameterFlag.None, quotable = false): CommandParameter {
   // e.g. `#Include path\to`, `#Include <lib>`
   //                ^^^^^^^             ^^^^^
   return {
@@ -683,7 +683,7 @@ export function includeLib(flags: CommandParameterFlag = CommandParameterFlag.No
   };
 }
 export function quotableIncludeLib(flags: CommandParameterFlag = CommandParameterFlag.None): CommandParameter {
-  return includeLib(flags, true);
+  return $includeLib(flags, true);
 }
 export function requiresVersion(flags: CommandParameterFlag = CommandParameterFlag.None): CommandParameter {
   return $([
