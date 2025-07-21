@@ -433,9 +433,6 @@ export function $blank(flags: CommandParameterFlag = CommandParameterFlag.None):
 export function $invalid(flags: CommandParameterFlag = CommandParameterFlag.None): CommandParameter {
   return $blank(flags);
 }
-export function $shouldEscapeComma(flags: CommandParameterFlag = CommandParameterFlag.None): CommandParameter {
-  return $rest([], flags);
-}
 export function $style(flags: CommandParameterFlag = CommandParameterFlag.None): CommandParameter {
   // e.g. `Control, Style, ^0x800000`, `WinSet, Style, -0xC00000`
   //                       ^^^^^^^^^                   ^^^^^^^^^
@@ -476,6 +473,9 @@ export function $quotable(itemMatchers: ParameterItemMatcher[] = [], flags: Comm
       },
     ],
   };
+}
+export function $shouldEscapeComma(flags: CommandParameterFlag = CommandParameterFlag.None): CommandParameter {
+  return $rest([], flags);
 }
 export function $shouldBoolean(flags: CommandParameterFlag = CommandParameterFlag.None): CommandParameter {
   return {
