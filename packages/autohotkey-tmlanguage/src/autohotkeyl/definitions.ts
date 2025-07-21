@@ -1,11 +1,11 @@
 import {
   $, $blank, $control, $controlMoveOptions, $controlOrPos, $expression, $fileAttributes, $flagedGuiControlOptions, $flowsubcommand,
-  $guiControlOptions, $guiControlType, $guiOptions, $guisubcommand, $includeLib, $input, $invalid, $menuItemName, $menuOptions, $output,
-  $requiresVersion, $rest, $shouldEscapeComma, $shouldInteger, $shouldKeyword, $shouldLabel, $shouldNumber, $shouldSpacedKeywords, $style,
-  $subcommand, $subcommandlike, $winTitle, $withNumber, color, colorOptionItem, command, CommandFlag, decimalOptionItem, encoding, endKeyOptionItem,
-  formatTime, glob, hotkeyName, identifierOptionItem, imagePath, keyName, keywordOption, letterOptionItem, matchKeyOptionItem, numberOptionItem,
-  onOff, onOffToggle, parameterless, path, rangeOptionItem, sendKeys, signature, signedNumberOptionItem, signOptionItem, sizeOptionItem, soundComponent,
-  soundControlType, stringOption, timeunit, toggleOptionItem, whichButton, winParams,
+  $guiControlOptions, $guiControlType, $guiOptions, $guisubcommand, $includeLib, $input, $invalid, $menuItemName, $menuOptions, $onOff,
+  $onOffToggle, $output, $requiresVersion, $rest, $shouldEscapeComma, $shouldInteger, $shouldKeyword, $shouldLabel, $shouldNumber,
+  $shouldSpacedKeywords, $style, $subcommand, $subcommandlike, $winTitle, $withNumber, color, colorOptionItem, command, CommandFlag,
+  decimalOptionItem, encoding, endKeyOptionItem, formatTime, glob, hotkeyName, identifierOptionItem, imagePath, keyName, keywordOption,
+  letterOptionItem, matchKeyOptionItem, numberOptionItem, parameterless, path, rangeOptionItem, sendKeys, signature, signedNumberOptionItem,
+  signOptionItem, sizeOptionItem, soundComponent, soundControlType, stringOption, timeunit, toggleOptionItem, whichButton, winParams,
   type CommandDefinition,
 } from '../definition';
 
@@ -82,7 +82,7 @@ export const directiveDefinitions: CommandDefinition[] = [
   command('#MaxThreads', signature([ $() ])),
 
   // https://www.autohotkey.com/docs/v1/lib/_MaxThreadsBuffer.htm
-  command('#MaxThreadsBuffer', signature([ onOff() ])),
+  command('#MaxThreadsBuffer', signature([ $onOff() ])),
 
   // https://www.autohotkey.com/docs/v1/lib/_MaxThreadsPerHotkey.htm
   command('#MaxThreadsPerHotkey', signature([ $() ])),
@@ -106,7 +106,7 @@ export const directiveDefinitions: CommandDefinition[] = [
   command('#SingleInstance', signature([ $shouldKeyword([ keywordOption('Force', 'Ignore', 'Prompt', 'Off') ]) ])),
 
   // https://www.autohotkey.com/docs/v1/lib/_UseHook.htm
-  command('#UseHook', signature([ onOff() ])),
+  command('#UseHook', signature([ $onOff() ])),
 
   // https://www.autohotkey.com/docs/v1/lib/_Warn.htm
   command('#Warn', signature([ $shouldKeyword([ keywordOption('UseUnsetLocal', 'UseUnsetGlobal', 'UseEnv', 'LocalSameAsGlobal', 'ClassOverwrite', 'Unreachable', 'All') ]), $shouldKeyword([ keywordOption('MsgBox', 'StdOut', 'OutputDebug', 'Off') ]) ])),
@@ -137,10 +137,10 @@ export const loopCommandDefenitions: CommandDefinition[] = [
 // #region commands
 export const commandDefinitions: CommandDefinition[] = [
   // https://www.autohotkey.com/docs/v1/lib/AutoTrim.htm
-  command('AutoTrim', signature([ onOff() ])),
+  command('AutoTrim', signature([ $onOff() ])),
 
   // https://www.autohotkey.com/docs/v1/lib/BlockInput.htm
-  command('BlockInput', signature([ onOff([ keywordOption('Send', 'Mouse', 'SendAndMouse', 'Default', 'MouseMove', 'MouseMoveOff') ]) ])),
+  command('BlockInput', signature([ $onOff([ keywordOption('Send', 'Mouse', 'SendAndMouse', 'Default', 'MouseMove', 'MouseMoveOff') ]) ])),
 
   // https://www.autohotkey.com/docs/v1/lib/Click.htm
   command('Click', signature([ $withNumber([ keywordOption('Left', 'L', 'Right', 'R', 'Middle', 'M', 'X1', 'X2', 'Up', 'U', 'Down', 'D') ]) ])),
@@ -201,10 +201,10 @@ export const commandDefinitions: CommandDefinition[] = [
   command('Critical', signature([ $([ keywordOption('On', 'Off') ]) ])),
 
   // https://www.autohotkey.com/docs/v1/lib/DetectHiddenText.htm
-  command('DetectHiddenText', signature([ onOff() ])),
+  command('DetectHiddenText', signature([ $onOff() ])),
 
   // https://www.autohotkey.com/docs/v1/lib/DetectHiddenWindows.htm
-  command('DetectHiddenWindows', signature([ onOff() ])),
+  command('DetectHiddenWindows', signature([ $onOff() ])),
 
   // https://www.autohotkey.com/docs/v1/lib/Drive.htm
   command('Drive', [
@@ -405,7 +405,7 @@ export const commandDefinitions: CommandDefinition[] = [
   command('ListHotkeys', signature(parameterless())),
 
   // https://www.autohotkey.com/docs/v1/lib/ListLines.htm
-  command('ListLines', signature([ onOff() ])),
+  command('ListLines', signature([ $onOff() ])),
 
   // https://www.autohotkey.com/docs/v1/lib/ListVars.htm
   command('ListVars', signature(parameterless())),
@@ -449,7 +449,7 @@ export const commandDefinitions: CommandDefinition[] = [
   command('OutputDebug', signature([ $() ])),
 
   // https://www.autohotkey.com/docs/v1/lib/Pause.htm
-  command('Pause', signature([ onOffToggle(), $() ])),
+  command('Pause', signature([ $onOffToggle(), $() ])),
 
   // https://www.autohotkey.com/docs/v1/lib/PixelGetColor.htm
   command('PixelGetColor', signature([ $output(), $expression(), $expression(), $shouldSpacedKeywords([ keywordOption('Alt', 'Slow', 'RGB') ]) ])),
@@ -522,7 +522,7 @@ export const commandDefinitions: CommandDefinition[] = [
   command('SetBatchLines', signature([ $() ])),
 
   // https://www.autohotkey.com/docs/v1/lib/SetNumScrollCapsLockState.htm
-  command('SetCapsLockState', signature([ onOff([ keywordOption('AlwaysOn', 'AlwaysOff') ]) ])),
+  command('SetCapsLockState', signature([ $onOff([ keywordOption('AlwaysOn', 'AlwaysOff') ]) ])),
 
   // https://www.autohotkey.com/docs/v1/lib/SetControlDelay.htm
   command('SetControlDelay', signature([ $expression() ])),
@@ -543,16 +543,16 @@ export const commandDefinitions: CommandDefinition[] = [
   command('SetMouseDelay', signature([ $expression(), $shouldKeyword([ keywordOption('Play', '-1') ]) ])),
 
   // https://www.autohotkey.com/docs/v1/lib/SetNumLockState.htm
-  command('SetNumLockState', signature([ onOff([ keywordOption('AlwaysOn', 'AlwaysOff') ]) ])),
+  command('SetNumLockState', signature([ $onOff([ keywordOption('AlwaysOn', 'AlwaysOff') ]) ])),
 
   // https://www.autohotkey.com/docs/v1/lib/SetScrollLockState.htm
-  command('SetScrollLockState', signature([ onOff([ keywordOption('AlwaysOn', 'AlwaysOff') ]) ])),
+  command('SetScrollLockState', signature([ $onOff([ keywordOption('AlwaysOn', 'AlwaysOff') ]) ])),
 
   // https://www.autohotkey.com/docs/v1/lib/SetRegView.htm
   command('SetRegView', signature([ $shouldKeyword([ keywordOption('32', '64', 'Default') ]) ])),
 
   // https://www.autohotkey.com/docs/v1/lib/SetStoreCapsLockMode.htm
-  command('SetStoreCapsLockMode', signature([ onOff() ])),
+  command('SetStoreCapsLockMode', signature([ $onOff() ])),
 
   // https://www.autohotkey.com/docs/v1/lib/SetTimer.htm
   command('SetTimer', signature([ $(), $shouldNumber(keywordOption('On', 'Off', 'Delete')), $expression() ])),
@@ -619,7 +619,7 @@ export const commandDefinitions: CommandDefinition[] = [
   command('StatusBarWait', signature([ $(), $expression(), $expression(), $winTitle(), $(), $expression(), $winTitle(), $() ])),
 
   // https://www.autohotkey.com/docs/v1/lib/StringCaseSense.htm
-  command('StringCaseSense', signature([ onOff([ keywordOption('Locale') ]) ])),
+  command('StringCaseSense', signature([ $onOff([ keywordOption('Locale') ]) ])),
 
   // https://www.autohotkey.com/docs/v1/lib/StringGetPos.htm
   command('StringGetPos', signature([ $output(), $input(), $(), $shouldKeyword([ numberOptionItem('L', 'R') ]), $expression() ]), CommandFlag.Deprecated),
@@ -746,7 +746,7 @@ export const commandDefinitions: CommandDefinition[] = [
 
   // https://www.autohotkey.com/docs/v1/lib/WinSet.htm
   command('WinSet', [
-    signature([ $subcommand('AlwaysOnTop'), onOffToggle(), ...winParams ]),
+    signature([ $subcommand('AlwaysOnTop'), $onOffToggle(), ...winParams ]),
     signature([ $subcommand([ 'Transparent', 'TransColor' ]), $(), ...winParams ]),
     signature([ $subcommand([ 'Style', 'ExStyle' ]), $style(), ...winParams ]),
     signature([ $subcommand([ 'Bottom', 'Top', 'Disable', 'Enable', 'Redraw' ]), $blank(), ...winParams ]),

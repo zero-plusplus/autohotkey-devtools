@@ -2,7 +2,7 @@ import { dedent, hasFlag, repeatArray } from '@zero-plusplus/utilities/src';
 import * as definitions_v1 from '../../../../src/autohotkeyl/definitions';
 import {
   $, $blank, $control, $expression, $fileAttributes, $flagedGuiControlOptions, $guiControlOptions, $guiOptions, $input,
-  $output, $rest, $shouldInteger, $shouldKeyword, $winTitle, CommandFlag, onOff, sendKeys,
+  $onOff, $output, $rest, $shouldInteger, $shouldKeyword, $winTitle, CommandFlag, sendKeys,
 } from '../../../../src/definition';
 import {
   name, RuleDescriptor, RuleName, StyleName,
@@ -1404,7 +1404,7 @@ export function createCommandStatementExpectedData(scopeName: ScopeName): Expect
       ];
     })(),
 
-    ...((_ = onOff): ExpectedTestData[] => {
+    ...((_ = $onOff): ExpectedTestData[] => {
       return [
         [
           dedent`
@@ -1487,7 +1487,7 @@ export function createCommandStatementExpectedData(scopeName: ScopeName): Expect
               '1',
               '0',
             ].flatMap((arg) => {
-              onOff; // with keywords
+              $onOff; // with keywords
 
               return [
                 { text: 'BlockInput', scopes: name(scopeName, RuleName.CommandName) },

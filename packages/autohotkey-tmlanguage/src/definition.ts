@@ -741,11 +741,11 @@ export function $guiControlOptions(flaged = false): CommandParameter {
 export function $flagedGuiControlOptions(): CommandParameter {
   return $guiControlOptions(true);
 }
-export function onOff(itemMatchers: ParameterItemMatcher[] = [], flags: CommandParameterFlag = CommandParameterFlag.None): CommandParameter {
+export function $onOff(itemMatchers: ParameterItemMatcher[] = [], flags: CommandParameterFlag = CommandParameterFlag.None): CommandParameter {
   return $shouldKeyword([ keywordOption('On', 'Off', '1', '0'), ...itemMatchers ], flags);
 }
-export function onOffToggle(itemMatchers: ParameterItemMatcher[] = [], flags: CommandParameterFlag = CommandParameterFlag.None): CommandParameter {
-  return onOff([ keywordOption('Toggle'), ...itemMatchers ], flags);
+export function $onOffToggle(itemMatchers: ParameterItemMatcher[] = [], flags: CommandParameterFlag = CommandParameterFlag.None): CommandParameter {
+  return $onOff([ keywordOption('Toggle'), ...itemMatchers ], flags);
 }
 export function whichButton(flags: CommandParameterFlag = CommandParameterFlag.None): CommandParameter {
   return $([ keywordOption('Left', 'L', 'Right', 'R', 'Middle', 'M', 'WheelUp', 'WU', 'WheelDown', 'WD', 'WheelLeft', 'WL', 'WheelRight', 'WR') ], flags);
