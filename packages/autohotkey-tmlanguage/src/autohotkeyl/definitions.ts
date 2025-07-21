@@ -1,9 +1,9 @@
 import {
   $, $blank, $control, $controlMoveOptions, $controlOrPos, $expression, $fileAttributes, $flagedGuiControlOptions, $flowsubcommand,
-  $guiControlOptions, $guiControlType, $guiOptions, $guisubcommand, $imagePath, $includeLib, $input, $invalid, $menuItemName, $menuOptions,
+  $glob, $guiControlOptions, $guiControlType, $guiOptions, $guisubcommand, $imagePath, $includeLib, $input, $invalid, $menuItemName, $menuOptions,
   $onOff, $onOffToggle, $output, $path, $requiresVersion, $rest, $shouldEscapeComma, $shouldInteger, $shouldKeyword, $shouldLabel,
   $shouldNumber, $shouldSpacedKeywords, $style, $subcommand, $subcommandlike, $whichButton, $winTitle, $withNumber, color, colorOptionItem,
-  command, CommandFlag, decimalOptionItem, encoding, endKeyOptionItem, formatTime, glob, hotkeyName, identifierOptionItem, keyName,
+  command, CommandFlag, decimalOptionItem, encoding, endKeyOptionItem, formatTime, hotkeyName, identifierOptionItem, keyName,
   keywordOption, letterOptionItem, matchKeyOptionItem, numberOptionItem, parameterless, rangeOptionItem, sendKeys, signature,
   signedNumberOptionItem, signOptionItem, sizeOptionItem, soundComponent, soundControlType, stringOption, timeunit, toggleOptionItem,
   winParams,
@@ -253,7 +253,7 @@ export const commandDefinitions: CommandDefinition[] = [
   command('FileAppend', signature([ $(), $path(), encoding() ])),
 
   // https://www.autohotkey.com/docs/v1/lib/FileCopy.htm
-  command('FileCopy', signature([ glob(), glob(), $expression() ])),
+  command('FileCopy', signature([ $glob(), $glob(), $expression() ])),
 
   // https://www.autohotkey.com/docs/v1/lib/FileCopyDir.htm
   command('FileCopyDir', signature([ $path(), $path(), $expression() ])),
@@ -265,7 +265,7 @@ export const commandDefinitions: CommandDefinition[] = [
   command('FileCreateShortcut', signature([ $path(), $path(), $path(), $(), $(), $path(), $(), $expression(), $() ])),
 
   // https://www.autohotkey.com/docs/v1/lib/FileDelete.htm
-  command('FileDelete', signature([ glob() ])),
+  command('FileDelete', signature([ $glob() ])),
 
   // https://www.autohotkey.com/docs/v1/lib/FileEncoding.htm
   command('FileEncoding', signature([ encoding() ])),
@@ -289,7 +289,7 @@ export const commandDefinitions: CommandDefinition[] = [
   command('FileGetVersion', signature([ $output(), $path() ])),
 
   // https://www.autohotkey.com/docs/v1/lib/FileMove.htm
-  command('FileMove', signature([ glob(), glob(), $expression() ])),
+  command('FileMove', signature([ $glob(), $glob(), $expression() ])),
 
   // https://www.autohotkey.com/docs/v1/lib/FileMoveDir.htm
   command('FileMoveDir', signature([ $path(), $path(), $shouldKeyword([ keywordOption('0', '1', '2', 'R') ]) ])),
@@ -301,7 +301,7 @@ export const commandDefinitions: CommandDefinition[] = [
   command('FileReadLine', signature([ $output(), $path(), $expression() ])),
 
   // https://www.autohotkey.com/docs/v1/lib/FileRecycle.htm
-  command('FileRecycle', signature([ glob() ])),
+  command('FileRecycle', signature([ $glob() ])),
 
   // https://www.autohotkey.com/docs/v1/lib/FileRecycleEmpty.htm
   command('FileRecycleEmpty', signature([ $() ])),
@@ -316,10 +316,10 @@ export const commandDefinitions: CommandDefinition[] = [
   command('FileSelectFolder', signature([ $output(), $(), $expression(), $() ])),
 
   // https://www.autohotkey.com/docs/v1/lib/FileSetAttrib.htm
-  command('FileSetAttrib', signature([ $fileAttributes(), glob(), $expression(), $expression() ])),
+  command('FileSetAttrib', signature([ $fileAttributes(), $glob(), $expression(), $expression() ])),
 
   // https://www.autohotkey.com/docs/v1/lib/FileSetTime.htm
-  command('FileSetTime', signature([ $expression(), glob(), $shouldKeyword([ letterOptionItem('M', 'C', 'A') ]), $expression(), $expression() ])),
+  command('FileSetTime', signature([ $expression(), $glob(), $shouldKeyword([ letterOptionItem('M', 'C', 'A') ]), $expression(), $expression() ])),
 
   // https://www.autohotkey.com/docs/v1/lib/FormatTime.htm
   command('FormatTime', [

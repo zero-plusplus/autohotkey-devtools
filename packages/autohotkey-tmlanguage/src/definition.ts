@@ -756,7 +756,7 @@ export function $path(itemMatchers: ParameterItemMatcher[] = [], flags: CommandP
 export function $imagePath(flags: CommandParameterFlag = CommandParameterFlag.None): CommandParameter {
   return $path([ stringOption('HICON:', 'HBITMAP:') ], flags);
 }
-export function glob(flags: CommandParameterFlag = CommandParameterFlag.None): CommandParameter {
+export function $glob(flags: CommandParameterFlag = CommandParameterFlag.None): CommandParameter {
   return $([], flags);
 }
 export function encoding(flags: CommandParameterFlag = CommandParameterFlag.None): CommandParameter {
