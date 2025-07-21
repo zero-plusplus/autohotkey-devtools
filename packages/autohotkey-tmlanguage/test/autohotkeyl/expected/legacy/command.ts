@@ -2,7 +2,7 @@ import { dedent, hasFlag, repeatArray } from '@zero-plusplus/utilities/src';
 import * as definitions_v1 from '../../../../src/autohotkeyl/definitions';
 import {
   $, $blank, $expression, $fileAttributes, $guiOptions, $rest, $shouldInteger, $shouldKeyword, CommandFlag, control,
-  flagedGuiControlOptions, guiControlOptions, onOff, output, sendKeys, winTitle,
+  flagedGuiControlOptions, guiControlOptions, input, onOff, output, sendKeys, winTitle,
 } from '../../../../src/definition';
 import {
   name, RuleDescriptor, RuleName, StyleName,
@@ -1847,6 +1847,32 @@ export function createCommandStatementExpectedData(scopeName: ScopeName): Expect
       ];
     })(),
 
+    ...((_ = input): ExpectedTestData[] => {
+      return [
+        [
+          dedent`
+            EnvAdd, input    ; comment
+          `,
+          [
+            { text: 'EnvAdd', scopes: name(scopeName, RuleName.CommandName) },
+            { text: ',', scopes: name(scopeName, RuleName.Comma) },
+            { text: 'input', scopes: name(scopeName, RuleName.Variable) },
+            { text: '; comment', scopes: name(scopeName, RuleName.InlineComment) },
+          ],
+        ],
+        [
+          dedent`
+            EnvAdd, %input%    ; comment
+          `,
+          [
+            { text: 'EnvAdd', scopes: name(scopeName, RuleName.CommandName) },
+            { text: ',', scopes: name(scopeName, RuleName.Comma) },
+            { text: '%input%', scopes: name(scopeName, RuleName.Variable, StyleName.Invalid) },
+            { text: '; comment', scopes: name(scopeName, RuleName.InlineComment) },
+          ],
+        ],
+      ];
+    })(),
     ...((_ = output): ExpectedTestData[] => {
       return [
         [
@@ -1857,6 +1883,17 @@ export function createCommandStatementExpectedData(scopeName: ScopeName): Expect
             { text: 'ControlGet', scopes: name(scopeName, RuleName.CommandName) },
             { text: ',', scopes: name(scopeName, RuleName.Comma) },
             { text: 'output', scopes: name(scopeName, RuleName.Variable) },
+            { text: '; comment', scopes: name(scopeName, RuleName.InlineComment) },
+          ],
+        ],
+        [
+          dedent`
+            ControlGet, %output%    ; comment
+          `,
+          [
+            { text: 'ControlGet', scopes: name(scopeName, RuleName.CommandName) },
+            { text: ',', scopes: name(scopeName, RuleName.Comma) },
+            { text: '%output%', scopes: name(scopeName, RuleName.Variable, StyleName.Invalid) },
             { text: '; comment', scopes: name(scopeName, RuleName.InlineComment) },
           ],
         ],

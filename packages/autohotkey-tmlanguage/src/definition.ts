@@ -474,6 +474,18 @@ export function $quotable(itemMatchers: ParameterItemMatcher[] = [], flags: Comm
     ],
   };
 }
+export function $shouldIdentifier(flags: CommandParameterFlag = CommandParameterFlag.None): CommandParameter {
+  return {
+    flags: mergeFlags(flags, CommandParameterFlag.ExclusiveKeyword),
+    itemMatchers: [
+      includeRule(Repository.Variable),
+      {
+        name: [ RuleName.Variable, StyleName.Invalid ],
+        match: anyChars1(),
+      },
+    ],
+  };
+}
 export function $shouldEscapeComma(flags: CommandParameterFlag = CommandParameterFlag.None): CommandParameter {
   return $rest([], flags);
 }
@@ -604,10 +616,10 @@ export function $guiOptions(flags: CommandParameterFlag = CommandParameterFlag.N
   );
 }
 export function input(flags: CommandParameterFlag = CommandParameterFlag.None): CommandParameter {
-  return $expression(flags);
+  return $shouldIdentifier(flags);
 }
 export function output(flags: CommandParameterFlag = CommandParameterFlag.None): CommandParameter {
-  return $expression(flags);
+  return $shouldIdentifier(flags);
 }
 export function menuItemName(flags: CommandParameterFlag = CommandParameterFlag.None): CommandParameter {
   // https://www.autohotkey.com/docs/v1/lib/Menu.htm#MenuItemName
