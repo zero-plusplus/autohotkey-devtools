@@ -38,6 +38,7 @@ import {
   $style,
   $subcommand,
   $subcommandlike,
+  $timeunit,
   $whichButton,
   $winTitle,
   $withNumber,
@@ -62,7 +63,6 @@ import {
   soundComponent,
   soundControlType,
   stringOption,
-  timeunit,
   toggleOptionItem,
   winParams,
   type CommandDefinition,
@@ -287,7 +287,7 @@ export const commandDefinitions: CommandDefinition[] = [
   command('Edit', signature(parameterless())),
 
   // https://www.autohotkey.com/docs/v1/lib/EnvAdd.htm
-  command('EnvAdd', signature([ $input(), $expression(), timeunit() ])),
+  command('EnvAdd', signature([ $input(), $expression(), $timeunit() ])),
 
   // https://www.autohotkey.com/docs/v1/lib/EnvDiv.htm
   command('EnvDiv', signature([ $input(), $expression() ]), CommandFlag.Deprecated),
@@ -302,7 +302,7 @@ export const commandDefinitions: CommandDefinition[] = [
   command('EnvSet', signature([ $(), $() ])),
 
   // https://www.autohotkey.com/docs/v1/lib/EnvSub.htm
-  command('EnvSub', signature([ $input(), $expression(), timeunit() ])),
+  command('EnvSub', signature([ $input(), $expression(), $timeunit() ])),
 
   // https://www.autohotkey.com/docs/v1/lib/EnvUpdate.htm
   command('EnvUpdate', signature(parameterless())),

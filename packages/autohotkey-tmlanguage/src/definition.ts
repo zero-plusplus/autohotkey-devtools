@@ -804,7 +804,7 @@ export function $sendKeyName(flags: CommandParameterFlag = CommandParameterFlag.
   //             ^^^^^^^^^^^
   return $([ includeRule(Repository.CommandArgumentSendKeyName) ], flags);
 }
-export function timeunit(flags: CommandParameterFlag = CommandParameterFlag.None): CommandParameter {
+export function $timeunit(flags: CommandParameterFlag = CommandParameterFlag.None): CommandParameter {
   return $shouldKeyword([ keywordOption('Seconds', 'S', 'Minutes', 'M', 'Hours', 'H', 'Days', 'D') ], flags);
 }
 export function formatTime(flags: CommandParameterFlag = CommandParameterFlag.None): CommandParameter {
