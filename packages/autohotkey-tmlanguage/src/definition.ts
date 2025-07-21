@@ -360,7 +360,7 @@ export function $(itemMatchers: ParameterItemMatcher[] = [], flags: CommandParam
     ],
   };
 }
-export function subcommand(values: string | string[] = [], flags: CommandParameterFlag = CommandParameterFlag.None): CommandParameter {
+export function $subcommand(values: string | string[] = [], flags: CommandParameterFlag = CommandParameterFlag.None): CommandParameter {
   // Keywords to distinguish between signatures
   // e.g. `Control, Check`, `Control, UnCheck`
   //                ^^^^^             ^^^^^^^

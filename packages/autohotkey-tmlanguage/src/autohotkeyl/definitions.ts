@@ -1,12 +1,12 @@
 import {
-  $, $integer, blank, color, colorOptionItem, command, CommandFlag, control, controlMoveOptions, controlOrPos, decimalOptionItem,
+  $, $integer, $subcommand, blank, color, colorOptionItem, command, CommandFlag, control, controlMoveOptions, controlOrPos, decimalOptionItem,
   encoding, endKeyOptionItem, expression, fileAttributes, flagedGuiControlOptions, flowSubcommand, formatTime, glob,
   guiControlOptions, guiControlType, guiOptions, guiSubcommand, hotkeyName, identifierOptionItem, imagePath, includeLib,
   input, invalid, keyName, keywordOnly, keywordOption, labelName, letterOptionItem, matchKeyOptionItem, menuItemName,
   menuOptions, numberOptionItem, onOff, onOffToggle, output, parameterless, path, rangeOptionItem, requiresVersion,
   restParams, sendKeys, signature, signedNumberOptionItem, signOptionItem, sizeOptionItem, soundComponent, soundControlType,
-  spacedKeywordsOnly, stringOption, style, subcommand, subcommandlike, timeunit, toggleOptionItem, unquotedNumber,
-  unquotedShouldEscapeComma, unquotedWithNumber, whichButton, winParams, winTitle,
+  spacedKeywordsOnly, stringOption, style, subcommandlike, timeunit, toggleOptionItem, unquotedNumber, unquotedShouldEscapeComma,
+  unquotedWithNumber, whichButton, winParams, winTitle,
   type CommandDefinition,
 } from '../definition';
 
@@ -153,9 +153,9 @@ export const commandDefinitions: CommandDefinition[] = [
   command(
     'Control',
     [
-      signature([ subcommand([ 'Check', 'UnCheck', 'Enable', 'Disable', 'Show', 'Hide', 'ShowDropDown', 'HideDropDown' ]), blank(), control(), ...winParams ]),
-      signature([ subcommand([ 'Style', 'ExStyle' ]), style(), control(), ...winParams ]),
-      signature([ subcommand([ 'TabLeft', 'TabRight', 'Add', 'Delete', 'Choose', 'ChooseString', 'EditPaste' ]), $(), control(), ...winParams ]),
+      signature([ $subcommand([ 'Check', 'UnCheck', 'Enable', 'Disable', 'Show', 'Hide', 'ShowDropDown', 'HideDropDown' ]), blank(), control(), ...winParams ]),
+      signature([ $subcommand([ 'Style', 'ExStyle' ]), style(), control(), ...winParams ]),
+      signature([ $subcommand([ 'TabLeft', 'TabRight', 'Add', 'Delete', 'Choose', 'ChooseString', 'EditPaste' ]), $(), control(), ...winParams ]),
       signature(parameterless()),
     ],
   ),
@@ -168,9 +168,9 @@ export const commandDefinitions: CommandDefinition[] = [
 
   // https://www.autohotkey.com/docs/v1/lib/ControlGet.htm
   command('ControlGet', [
-    signature([ output(), subcommand('List'), $([ keywordOption('Selected', 'Focused', 'Col', 'Count') ]), control(), ...winParams ]),
-    signature([ output(), subcommand([ 'Checked', 'Enabled', 'Visible', 'Tab', 'Choice', 'LineCount', 'CurrentLine', 'CurrentCol', 'Selected', 'Style', 'ExStyle', 'Hwnd' ]), blank(), control(), ...winParams ]),
-    signature([ output(), subcommand([ 'FindString', 'Line' ]), $(), control(), ...winParams ]),
+    signature([ output(), $subcommand('List'), $([ keywordOption('Selected', 'Focused', 'Col', 'Count') ]), control(), ...winParams ]),
+    signature([ output(), $subcommand([ 'Checked', 'Enabled', 'Visible', 'Tab', 'Choice', 'LineCount', 'CurrentLine', 'CurrentCol', 'Selected', 'Style', 'ExStyle', 'Hwnd' ]), blank(), control(), ...winParams ]),
+    signature([ output(), $subcommand([ 'FindString', 'Line' ]), $(), control(), ...winParams ]),
     signature([ output(), invalid() ]),
   ]),
 
@@ -209,16 +209,16 @@ export const commandDefinitions: CommandDefinition[] = [
 
   // https://www.autohotkey.com/docs/v1/lib/Drive.htm
   command('Drive', [
-    signature([ subcommand('Eject'), $(), keywordOnly([ keywordOption('1') ]) ]),
-    signature([ subcommand('Label'), $(), $() ]),
-    signature([ subcommand([ 'Lock', 'Unlock' ]), $() ]),
+    signature([ $subcommand('Eject'), $(), keywordOnly([ keywordOption('1') ]) ]),
+    signature([ $subcommand('Label'), $(), $() ]),
+    signature([ $subcommand([ 'Lock', 'Unlock' ]), $() ]),
     signature([ invalid() ]),
   ]),
 
   // https://www.autohotkey.com/docs/v1/lib/DriveGet.htm
   command('DriveGet', [
-    signature([ output(), subcommand('List'), keywordOnly([ keywordOption('CDROM', 'REMOVABLE', 'FIXED', 'NETWORK', 'RAMDISK', 'UNKNOWN') ]) ]),
-    signature([ output(), subcommand([ 'Capacity', 'Cap', 'FileSystem', 'FS', 'Label', 'Serial', 'Type', 'Status', 'StatusCD' ]), $() ]),
+    signature([ output(), $subcommand('List'), keywordOnly([ keywordOption('CDROM', 'REMOVABLE', 'FIXED', 'NETWORK', 'RAMDISK', 'UNKNOWN') ]) ]),
+    signature([ output(), $subcommand([ 'Capacity', 'Cap', 'FileSystem', 'FS', 'Label', 'Serial', 'Type', 'Status', 'StatusCD' ]), $() ]),
     signature([ output(), invalid() ]),
   ]),
 
@@ -373,8 +373,8 @@ export const commandDefinitions: CommandDefinition[] = [
 
   // https://www.autohotkey.com/docs/v1/lib/Hotkey.htm
   command('Hotkey', [
-    signature([ subcommand([ 'IfWinActive', 'IfWinExist' ]), winTitle(), $() ]),
-    signature([ subcommand('If'), expression(), restParams() ]),
+    signature([ $subcommand([ 'IfWinActive', 'IfWinExist' ]), winTitle(), $() ]),
+    signature([ $subcommand('If'), expression(), restParams() ]),
     signature([ hotkeyName(), $([ keywordOption('On', 'Off', 'Toggle', 'AltTab') ]), $([ keywordOption('UseErrorLevel', 'On', 'Off', 'B', 'B0'), numberOptionItem('P', 'T', 'I') ]) ]),
   ]),
 
@@ -413,18 +413,18 @@ export const commandDefinitions: CommandDefinition[] = [
 
   // https://www.autohotkey.com/docs/v1/lib/Menu.htm
   command('Menu', [
-    signature([ subcommand('Tray'), subcommand('Icon'), imagePath(), $(), $() ]),
-    signature([ subcommand('Tray'), subcommand([ 'Tip', 'Click' ]), $() ]),
-    signature([ subcommand('Tray'), subcommand([ 'MainWindow', 'NoMainWindow', 'NoIcon' ]), restParams() ]),
-    signature([ subcommand('Tray'), $(), path(), $(), $() ]),
-    signature([ $(), subcommand('Add'), menuItemName(), $(), menuOptions() ]),
-    signature([ $(), subcommand('Insert'), menuItemName(), $(), $(), menuOptions() ]),
-    signature([ $(), subcommand([ 'DeleteAll', 'NoDefault', 'Standard', 'NoStandard' ]), restParams() ]),
-    signature([ $(), subcommand([ 'Delete', 'Check', 'Uncheck', 'ToggleCheck', 'Enable', 'Disable', 'ToggleEnable', 'Default', 'NoIcon' ]), menuItemName() ]),
-    signature([ $(), subcommand('Rename'), menuItemName(), menuItemName() ]),
-    signature([ $(), subcommand('Icon'), $(), path(), $(), imagePath() ]),
-    signature([ $(), subcommand('UseErrorLevel'), keywordOnly([ keywordOption('Off') ]) ]),
-    signature([ $(), subcommand([ 'Show', 'Color' ]), $(), $() ]),
+    signature([ $subcommand('Tray'), $subcommand('Icon'), imagePath(), $(), $() ]),
+    signature([ $subcommand('Tray'), $subcommand([ 'Tip', 'Click' ]), $() ]),
+    signature([ $subcommand('Tray'), $subcommand([ 'MainWindow', 'NoMainWindow', 'NoIcon' ]), restParams() ]),
+    signature([ $subcommand('Tray'), $(), path(), $(), $() ]),
+    signature([ $(), $subcommand('Add'), menuItemName(), $(), menuOptions() ]),
+    signature([ $(), $subcommand('Insert'), menuItemName(), $(), $(), menuOptions() ]),
+    signature([ $(), $subcommand([ 'DeleteAll', 'NoDefault', 'Standard', 'NoStandard' ]), restParams() ]),
+    signature([ $(), $subcommand([ 'Delete', 'Check', 'Uncheck', 'ToggleCheck', 'Enable', 'Disable', 'ToggleEnable', 'Default', 'NoIcon' ]), menuItemName() ]),
+    signature([ $(), $subcommand('Rename'), menuItemName(), menuItemName() ]),
+    signature([ $(), $subcommand('Icon'), $(), path(), $(), imagePath() ]),
+    signature([ $(), $subcommand('UseErrorLevel'), keywordOnly([ keywordOption('Off') ]) ]),
+    signature([ $(), $subcommand([ 'Show', 'Color' ]), $(), $() ]),
     signature([ restParams() ]),
   ]),
 
@@ -464,10 +464,10 @@ export const commandDefinitions: CommandDefinition[] = [
 
   // https://www.autohotkey.com/docs/v1/lib/Process.htm
   command('Process', [
-    signature([ subcommand([ 'Exist', 'Close' ]), $() ]),
-    signature([ subcommand([ 'Wait', 'WaitClose' ]), $(), $() ]),
-    signature([ subcommand([ 'Priority' ]), $(), keywordOnly([ keywordOption('Low', 'L', 'BelowNormal', 'B', 'Normal', 'N', 'AboveNormal', 'A', 'High', 'H', 'Realtime', 'R') ]) ]),
-    signature([ subcommand([ 'List' ]), restParams() ]),
+    signature([ $subcommand([ 'Exist', 'Close' ]), $() ]),
+    signature([ $subcommand([ 'Wait', 'WaitClose' ]), $(), $() ]),
+    signature([ $subcommand([ 'Priority' ]), $(), keywordOnly([ keywordOption('Low', 'L', 'BelowNormal', 'B', 'Normal', 'N', 'AboveNormal', 'A', 'High', 'H', 'Realtime', 'R') ]) ]),
+    signature([ $subcommand([ 'List' ]), restParams() ]),
     signature(parameterless()),
   ]),
 
@@ -657,15 +657,15 @@ export const commandDefinitions: CommandDefinition[] = [
 
   // https://www.autohotkey.com/docs/v1/lib/SysGet.htm
   command('SysGet', [
-    signature([ output(), subcommand([ 'MonitorCount', 'MonitorPrimary' ]) ]),
-    signature([ output(), subcommand([ 'Monitor', 'MonitorWorkArea', 'MonitorName' ]), unquotedWithNumber() ]),
+    signature([ output(), $subcommand([ 'MonitorCount', 'MonitorPrimary' ]) ]),
+    signature([ output(), $subcommand([ 'Monitor', 'MonitorWorkArea', 'MonitorName' ]), unquotedWithNumber() ]),
     signature([ output(), unquotedNumber() ]),
   ]),
 
   // https://www.autohotkey.com/docs/v1/lib/Thread.htm
   command('Thread', [
-    signature([ subcommand([ 'NoTimers', 'Priority' ]), expression() ]),
-    signature([ subcommand('Interrupt'), unquotedNumber(), unquotedNumber() ]),
+    signature([ $subcommand([ 'NoTimers', 'Priority' ]), expression() ]),
+    signature([ $subcommand('Interrupt'), unquotedNumber(), unquotedNumber() ]),
     signature(parameterless()),
   ]),
 
@@ -674,8 +674,8 @@ export const commandDefinitions: CommandDefinition[] = [
 
   // https://www.autohotkey.com/docs/v1/lib/Transform.htm
   command('Transform', [
-    signature([ output(), subcommand([ 'Unicode', 'Deref', 'Asc', 'Chr', 'Exp', 'Sqrt', 'Log', 'Ln', 'Ceil', 'Floor', 'Abs', 'Sin', 'Cos', 'Tan', 'ASin', 'ACos', 'ATan', 'BitNot' ]), $() ]),
-    signature([ output(), subcommand([ 'HTML', 'Mod', 'Round', 'Pow', 'BitAnd', 'BitOr', 'BitXOr', 'BitShiftLeft', 'BitShiftRight' ]), $(), $() ]),
+    signature([ output(), $subcommand([ 'Unicode', 'Deref', 'Asc', 'Chr', 'Exp', 'Sqrt', 'Log', 'Ln', 'Ceil', 'Floor', 'Abs', 'Sin', 'Cos', 'Tan', 'ASin', 'ACos', 'ATan', 'BitNot' ]), $() ]),
+    signature([ output(), $subcommand([ 'HTML', 'Mod', 'Round', 'Pow', 'BitAnd', 'BitOr', 'BitXOr', 'BitShiftLeft', 'BitShiftRight' ]), $(), $() ]),
     signature([ output(), invalid() ]),
   ], CommandFlag.Deprecated),
 
@@ -705,7 +705,7 @@ export const commandDefinitions: CommandDefinition[] = [
 
   // https://www.autohotkey.com/docs/v1/lib/WinGet.htm
   command('WinGet', [
-    signature([ output(), subcommand([ 'ID', 'IDLast', 'PID', 'ProcessName', 'ProcessPath', 'Count', 'List', 'MinMax', 'ControlList', 'ControlListHwnd', 'Transparent', 'TransColor', 'Style', 'ExStyle' ]), ...winParams ]),
+    signature([ output(), $subcommand([ 'ID', 'IDLast', 'PID', 'ProcessName', 'ProcessPath', 'Count', 'List', 'MinMax', 'ControlList', 'ControlListHwnd', 'Transparent', 'TransColor', 'Style', 'ExStyle' ]), ...winParams ]),
     signature([ output(), invalid() ]),
   ]),
 
@@ -747,11 +747,11 @@ export const commandDefinitions: CommandDefinition[] = [
 
   // https://www.autohotkey.com/docs/v1/lib/WinSet.htm
   command('WinSet', [
-    signature([ subcommand('AlwaysOnTop'), onOffToggle(), ...winParams ]),
-    signature([ subcommand([ 'Transparent', 'TransColor' ]), $(), ...winParams ]),
-    signature([ subcommand([ 'Style', 'ExStyle' ]), style(), ...winParams ]),
-    signature([ subcommand([ 'Bottom', 'Top', 'Disable', 'Enable', 'Redraw' ]), blank(), ...winParams ]),
-    signature([ subcommand('Region'), $([ keywordOption('E'), numberOptionItem('W', 'H'), rangeOptionItem('R', '') ]), ...winParams ]),
+    signature([ $subcommand('AlwaysOnTop'), onOffToggle(), ...winParams ]),
+    signature([ $subcommand([ 'Transparent', 'TransColor' ]), $(), ...winParams ]),
+    signature([ $subcommand([ 'Style', 'ExStyle' ]), style(), ...winParams ]),
+    signature([ $subcommand([ 'Bottom', 'Top', 'Disable', 'Enable', 'Redraw' ]), blank(), ...winParams ]),
+    signature([ $subcommand('Region'), $([ keywordOption('E'), numberOptionItem('W', 'H'), rangeOptionItem('R', '') ]), ...winParams ]),
     signature(parameterless()),
   ]),
 
