@@ -1,10 +1,10 @@
 import {
-  $, $blank, $expression, $fileAttributes, $flowsubcommand, $guiOptions, $guisubcommand, $includeLib, $input, $invalid, $menuItemName, $output, $rest, $shouldEscapeComma,
-  $shouldInteger, $shouldKeyword, $shouldLabel, $shouldNumber, $shouldSpacedKeywords, $style, $subcommand, $subcommandlike, $withNumber, color, colorOptionItem,
-  command, CommandFlag, control, controlMoveOptions, controlOrPos, decimalOptionItem, encoding, endKeyOptionItem, flagedGuiControlOptions, formatTime, glob,
-  guiControlOptions, guiControlType, hotkeyName, identifierOptionItem, imagePath, keyName, keywordOption, letterOptionItem, matchKeyOptionItem,
-  menuOptions, numberOptionItem, onOff, onOffToggle, parameterless, path, rangeOptionItem, requiresVersion, sendKeys, signature, signedNumberOptionItem,
-  signOptionItem, sizeOptionItem, soundComponent, soundControlType, stringOption, timeunit, toggleOptionItem, whichButton, winParams, winTitle,
+  $, $blank, $expression, $fileAttributes, $flowsubcommand, $guiOptions, $guisubcommand, $includeLib, $input, $invalid, $menuItemName, $output, $requiresVersion,
+  $rest, $shouldEscapeComma, $shouldInteger, $shouldKeyword, $shouldLabel, $shouldNumber, $shouldSpacedKeywords, $style, $subcommand, $subcommandlike, $withNumber,
+  color, colorOptionItem, command, CommandFlag, control, controlMoveOptions, controlOrPos, decimalOptionItem, encoding, endKeyOptionItem, flagedGuiControlOptions,
+  formatTime, glob, guiControlOptions, guiControlType, hotkeyName, identifierOptionItem, imagePath, keyName, keywordOption, letterOptionItem, matchKeyOptionItem,
+  menuOptions, numberOptionItem, onOff, onOffToggle, parameterless, path, rangeOptionItem, sendKeys, signature, signedNumberOptionItem, signOptionItem, sizeOptionItem,
+  soundComponent, soundControlType, stringOption, timeunit, toggleOptionItem, whichButton, winParams, winTitle,
   type CommandDefinition,
 } from '../definition';
 
@@ -99,7 +99,7 @@ export const directiveDefinitions: CommandDefinition[] = [
   command('#Persistent', signature(parameterless())),
 
   // https://www.autohotkey.com/docs/v1/lib/_Requires.htm
-  command('#Requires', signature([ requiresVersion() ])),
+  command('#Requires', signature([ $requiresVersion() ])),
 
   // https://www.autohotkey.com/docs/v1/lib/_SingleInstance.htm
   command('#SingleInstance', signature([ $shouldKeyword([ keywordOption('Force', 'Ignore', 'Prompt', 'Off') ]) ])),

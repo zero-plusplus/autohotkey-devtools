@@ -1,6 +1,6 @@
 import {
-  $, $expression, $quotable, $quotableIncludeLib, $shouldBoolean, $shouldInteger, $shouldKeyword, command, decimalOptionItem,
-  keywordOption, parameterless, quotableEncoding, requiresVersion, signature, signedNumberOptionItem, signOptionItem, toggleOptionItem,
+  $, $expression, $quotable, $quotableIncludeLib, $requiresVersion, $shouldBoolean, $shouldInteger, $shouldKeyword, command, decimalOptionItem,
+  keywordOption, parameterless, quotableEncoding, signature, signedNumberOptionItem, signOptionItem, toggleOptionItem,
   type CommandDefinition,
 } from '../definition';
 
@@ -44,7 +44,7 @@ export const directiveDefinitions: CommandDefinition[] = [
   command('#NoTrayIcon', signature(parameterless())),
 
   // https://www.autohotkey.com/docs/v2/lib/_Requires.htm
-  command('#Requires', signature([ requiresVersion() ])),
+  command('#Requires', signature([ $requiresVersion() ])),
 
   // https://www.autohotkey.com/docs/v2/lib/_SingleInstance.htm
   command('#SingleInstance', signature([ $shouldKeyword([ keywordOption('Force', 'Ignore', 'Prompt', 'Off') ]) ])),

@@ -685,7 +685,7 @@ export function $includeLib(flags: CommandParameterFlag = CommandParameterFlag.N
 export function $quotableIncludeLib(flags: CommandParameterFlag = CommandParameterFlag.None): CommandParameter {
   return $includeLib(flags, true);
 }
-export function requiresVersion(flags: CommandParameterFlag = CommandParameterFlag.None): CommandParameter {
+export function $requiresVersion(flags: CommandParameterFlag = CommandParameterFlag.None): CommandParameter {
   return $([
     createOptionItemPattern(ignoreCase('AutoHotkey')),
     group(seq(group(alt('32', '64')), char('-'), ignoreCase(text('bit')))),
