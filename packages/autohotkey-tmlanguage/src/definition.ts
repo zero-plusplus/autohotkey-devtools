@@ -765,7 +765,7 @@ export function $encoding(flags: CommandParameterFlag = CommandParameterFlag.Non
 export function $quotableEncoding(flags: CommandParameterFlag = CommandParameterFlag.None): CommandParameter {
   return $([ quotableKeywordOption('CP0', 'UTF-8', 'UTF-8-RAW', 'UTF-16', 'UTF-16-RAW'), quotableNumberOptionItem('CP'), ...($encoding(flags).itemMatchers!) ], flags);
 }
-export function keyName(flags: CommandParameterFlag = CommandParameterFlag.None): CommandParameter {
+export function $keyName(flags: CommandParameterFlag = CommandParameterFlag.None): CommandParameter {
   return $([ keywordOption(...constants_common.keyNameList), hexOptionItem('sc', 'vk') ], flags);
 }
 export function hotkeyName(flags: CommandParameterFlag = CommandParameterFlag.None): CommandParameter {

@@ -1,11 +1,11 @@
 import {
-  $, $blank, $control, $controlMoveOptions, $controlOrPos, $encoding, $expression, $fileAttributes, $flagedGuiControlOptions, $flowsubcommand,
-  $glob, $guiControlOptions, $guiControlType, $guiOptions, $guisubcommand, $imagePath, $includeLib, $input, $invalid, $menuItemName, $menuOptions,
-  $onOff, $onOffToggle, $output, $path, $requiresVersion, $rest, $shouldEscapeComma, $shouldInteger, $shouldKeyword, $shouldLabel,
-  $shouldNumber, $shouldSpacedKeywords, $style, $subcommand, $subcommandlike, $whichButton, $winTitle, $withNumber, color, colorOptionItem,
-  command, CommandFlag, decimalOptionItem, endKeyOptionItem, formatTime, hotkeyName, identifierOptionItem, keyName,
-  keywordOption, letterOptionItem, matchKeyOptionItem, numberOptionItem, parameterless, rangeOptionItem, sendKeys, signature,
-  signedNumberOptionItem, signOptionItem, sizeOptionItem, soundComponent, soundControlType, stringOption, timeunit, toggleOptionItem,
+  $, $blank, $control, $controlMoveOptions, $controlOrPos, $encoding, $expression, $fileAttributes, $flagedGuiControlOptions,
+  $flowsubcommand, $glob, $guiControlOptions, $guiControlType, $guiOptions, $guisubcommand, $imagePath, $includeLib, $input,
+  $invalid, $keyName, $menuItemName, $menuOptions, $onOff, $onOffToggle, $output, $path, $requiresVersion, $rest, $shouldEscapeComma,
+  $shouldInteger, $shouldKeyword, $shouldLabel, $shouldNumber, $shouldSpacedKeywords, $style, $subcommand, $subcommandlike, $whichButton,
+  $winTitle, $withNumber, color, colorOptionItem, command, CommandFlag, decimalOptionItem, endKeyOptionItem, formatTime, hotkeyName,
+  identifierOptionItem, keywordOption, letterOptionItem, matchKeyOptionItem, numberOptionItem, parameterless, rangeOptionItem, sendKeys,
+  signature, signedNumberOptionItem, signOptionItem, sizeOptionItem, soundComponent, soundControlType, stringOption, timeunit, toggleOptionItem,
   winParams,
   type CommandDefinition,
 } from '../definition';
@@ -89,7 +89,7 @@ export const directiveDefinitions: CommandDefinition[] = [
   command('#MaxThreadsPerHotkey', signature([ $() ])),
 
   // https://www.autohotkey.com/docs/v1/lib/_MenuMaskKey.htm
-  command('#MenuMaskKey', signature([ keyName() ])),
+  command('#MenuMaskKey', signature([ $keyName() ])),
 
   // https://www.autohotkey.com/docs/v1/lib/_NoEnv.htm
   command('#NoEnv', signature(parameterless())),
@@ -400,7 +400,7 @@ export const commandDefinitions: CommandDefinition[] = [
   command('KeyHistory', signature(parameterless())),
 
   // https://www.autohotkey.com/docs/v1/lib/KeyWait.htm
-  command('KeyWait', signature([ keyName(), $([ keywordOption('D', 'L'), decimalOptionItem('T') ]) ])),
+  command('KeyWait', signature([ $keyName(), $([ keywordOption('D', 'L'), decimalOptionItem('T') ]) ])),
 
   // https://www.autohotkey.com/docs/v1/lib/ListHotkeys.htm
   command('ListHotkeys', signature(parameterless())),
