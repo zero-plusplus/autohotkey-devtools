@@ -1,11 +1,11 @@
 import {
   $, $blank, $expression, $flowsubcommand, $guisubcommand, $invalid, $rest, $shouldEscapeComma, $shouldInteger, $shouldLabel, $shouldNumber,
-  $subcommand, $subcommandlike, $withNumber, color, colorOptionItem, command, CommandFlag, control, controlMoveOptions, controlOrPos,
+  $style, $subcommand, $subcommandlike, $withNumber, color, colorOptionItem, command, CommandFlag, control, controlMoveOptions, controlOrPos,
   decimalOptionItem, encoding, endKeyOptionItem, fileAttributes, flagedGuiControlOptions, formatTime, glob, guiControlOptions,
   guiControlType, guiOptions, hotkeyName, identifierOptionItem, imagePath, includeLib, input, keyName, keywordOnly, keywordOption,
   letterOptionItem, matchKeyOptionItem, menuItemName, menuOptions, numberOptionItem, onOff, onOffToggle, output, parameterless, path,
   rangeOptionItem, requiresVersion, sendKeys, signature, signedNumberOptionItem, signOptionItem, sizeOptionItem, soundComponent,
-  soundControlType, spacedKeywordsOnly, stringOption, style, timeunit, toggleOptionItem, whichButton, winParams, winTitle,
+  soundControlType, spacedKeywordsOnly, stringOption, timeunit, toggleOptionItem, whichButton, winParams, winTitle,
   type CommandDefinition,
 } from '../definition';
 
@@ -153,7 +153,7 @@ export const commandDefinitions: CommandDefinition[] = [
     'Control',
     [
       signature([ $subcommand([ 'Check', 'UnCheck', 'Enable', 'Disable', 'Show', 'Hide', 'ShowDropDown', 'HideDropDown' ]), $blank(), control(), ...winParams ]),
-      signature([ $subcommand([ 'Style', 'ExStyle' ]), style(), control(), ...winParams ]),
+      signature([ $subcommand([ 'Style', 'ExStyle' ]), $style(), control(), ...winParams ]),
       signature([ $subcommand([ 'TabLeft', 'TabRight', 'Add', 'Delete', 'Choose', 'ChooseString', 'EditPaste' ]), $(), control(), ...winParams ]),
       signature(parameterless()),
     ],
@@ -748,7 +748,7 @@ export const commandDefinitions: CommandDefinition[] = [
   command('WinSet', [
     signature([ $subcommand('AlwaysOnTop'), onOffToggle(), ...winParams ]),
     signature([ $subcommand([ 'Transparent', 'TransColor' ]), $(), ...winParams ]),
-    signature([ $subcommand([ 'Style', 'ExStyle' ]), style(), ...winParams ]),
+    signature([ $subcommand([ 'Style', 'ExStyle' ]), $style(), ...winParams ]),
     signature([ $subcommand([ 'Bottom', 'Top', 'Disable', 'Enable', 'Redraw' ]), $blank(), ...winParams ]),
     signature([ $subcommand('Region'), $([ keywordOption('E'), numberOptionItem('W', 'H'), rangeOptionItem('R', '') ]), ...winParams ]),
     signature(parameterless()),
