@@ -1,7 +1,7 @@
 import {
-  $integer, command, decimalOptionItem, expression, keywordOnly, keywordOption, parameterless, quotableEncoding,
-  quotableIncludeLib, quotableUnquoted, requiresVersion, signature, signedNumberOptionItem,
-  signOptionItem, toggleOptionItem, unquoted, unquotedAndBoolean,
+  $, $integer, command, decimalOptionItem, expression, keywordOnly, keywordOption, parameterless, quotableEncoding,
+  quotableIncludeLib, quotableUnquoted, requiresVersion, signature, signedNumberOptionItem, signOptionItem,
+  toggleOptionItem, unquotedAndBoolean,
   type CommandDefinition,
 } from '../definition';
 
@@ -23,7 +23,7 @@ export const directiveDefinitions: CommandDefinition[] = [
   command('#HotIfTimeout', signature([ $integer() ])),
 
   // https://www.autohotkey.com/docs/v2/lib/_Hotstring.htm
-  command('#Hotstring', signature([ unquoted([ keywordOption('NoMouse', 'EndChars', 'SI', 'SP', 'SE', 'X'), toggleOptionItem('*', '?', 'B', 'C', 'O', 'R', 'T', 'Z'), decimalOptionItem('P'), signedNumberOptionItem('K') ]) ])),
+  command('#Hotstring', signature([ $([ keywordOption('NoMouse', 'EndChars', 'SI', 'SP', 'SE', 'X'), toggleOptionItem('*', '?', 'B', 'C', 'O', 'R', 'T', 'Z'), decimalOptionItem('P'), signedNumberOptionItem('K') ]) ])),
 
   // https://www.autohotkey.com/docs/v2/lib/_Include.htm
   command('#Include', signature([ quotableIncludeLib() ])),

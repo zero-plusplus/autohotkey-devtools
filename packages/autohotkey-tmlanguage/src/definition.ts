@@ -334,7 +334,7 @@ export function colorOptionItem(...options: string[]): string {
 }
 // #endregion parameter item defenition
 
-// #region command / parameter definition
+// #region command definitions
 export function command(name: string, signatureOrSignatures: CommandSignature | CommandSignature[], flags: CommandFlag = CommandFlag.None): CommandDefinition {
   const signatures = Array.isArray(signatureOrSignatures) ? signatureOrSignatures : [ signatureOrSignatures ];
   return { name, signatures, flags };
@@ -342,8 +342,23 @@ export function command(name: string, signatureOrSignatures: CommandSignature | 
 export function signature(parameters: CommandParameter[], flags: CommandSignatureFlag = CommandSignatureFlag.None): CommandSignature {
   return { flags, parameters };
 }
-export function parameterless(): CommandParameter[] {
-  return [ invalid() ];
+// #endregion command definitions
+
+// #region command parameter definitions
+export function $(itemMatchers: ParameterItemMatcher[] = [], flags: CommandParameterFlag = CommandParameterFlag.None): CommandParameter {
+  return {
+    flags,
+    itemMatchers: [
+      includeRule(Repository.DereferenceUnaryOperator),
+      includeRule(Repository.DereferenceInCommandArgument),
+      ...itemMatchers,
+      includeRule(Repository.UnquotedStringEscapeSequence),
+      {
+        name: [ RuleName.UnquotedString ],
+        match: negChars1('`', '%', inlineSpace()),
+      },
+    ],
+  };
 }
 export function subcommand(values: string | string[] = [], flags: CommandParameterFlag = CommandParameterFlag.None): CommandParameter {
   // Keywords to distinguish between signatures
@@ -417,21 +432,6 @@ export function blank(flags: CommandParameterFlag = CommandParameterFlag.None): 
 }
 export function invalid(flags: CommandParameterFlag = CommandParameterFlag.None): CommandParameter {
   return blank(flags);
-}
-export function unquoted(itemMatchers: ParameterItemMatcher[] = [], flags: CommandParameterFlag = CommandParameterFlag.None): CommandParameter {
-  return {
-    flags,
-    itemMatchers: [
-      includeRule(Repository.DereferenceUnaryOperator),
-      includeRule(Repository.DereferenceInCommandArgument),
-      ...itemMatchers,
-      includeRule(Repository.UnquotedStringEscapeSequence),
-      {
-        name: [ RuleName.UnquotedString ],
-        match: negChars1('`', '%', inlineSpace()),
-      },
-    ],
-  };
 }
 export function unquotedShouldEscapeComma(flags: CommandParameterFlag = CommandParameterFlag.None): CommandParameter {
   return restParams([], flags);
@@ -557,7 +557,7 @@ export function fileAttributes(flags: CommandParameterFlag = CommandParameterFla
   return keywordOnly([ flagedLetterOptionItem('R', 'A', 'S', 'H', 'N', 'O', 'T') ], flags);
 }
 export function guiOptions(flags: CommandParameterFlag = CommandParameterFlag.None): CommandParameter {
-  return unquoted(
+  return $(
     [
       flagedOptionItem('AlwaysOnTop', 'Border', 'Caption', 'DelimiterSpace', 'DelimiterTab', 'Disabled', 'DPIScale', 'LastFoundExist', 'MaximizeBox', 'MinimizeBox', 'OwnDialogs', 'Owner', 'Parent', 'Resize', 'SysMenu', 'Theme', 'ToolWindow'),
       flagedStringOptionItem('Delimiter'),
@@ -661,7 +661,7 @@ export function quotableIncludeLib(flags: CommandParameterFlag = CommandParamete
   return includeLib(flags, true);
 }
 export function requiresVersion(flags: CommandParameterFlag = CommandParameterFlag.None): CommandParameter {
-  return unquoted([
+  return $([
     createOptionItemPattern(ignoreCase('AutoHotkey')),
     group(seq(group(alt('32', '64')), char('-'), ignoreCase(text('bit')))),
     group(ordalt(
@@ -680,7 +680,7 @@ export function requiresVersion(flags: CommandParameterFlag = CommandParameterFl
   // return { type: HighlightType.RequiresVersion, flags };
 }
 export function menuOptions(values: string[] = [], flags: CommandParameterFlag = CommandParameterFlag.None): CommandParameter {
-  return unquoted([
+  return $([
     decimalOptionItem('P'),
     flagedOptionItem('Radio', 'Right', 'Break', 'BarBreak'),
     ...values,
@@ -689,7 +689,7 @@ export function menuOptions(values: string[] = [], flags: CommandParameterFlag =
 export function winTitle(flags: CommandParameterFlag = CommandParameterFlag.None): CommandParameter {
   // e.g. `WinGet, output,ID, abc ahk_exe abc.exe ahk_class abc
   //                          ^^^ ^^^^^^^^^^^^^^^ ^^^^^^^^^^^^^
-  return unquoted([ keywordOption('ahk_class', 'ahk_id', 'ahk_pid', 'ahk_exe', 'ahk_group') ], flags);
+  return $([ keywordOption('ahk_class', 'ahk_id', 'ahk_pid', 'ahk_exe', 'ahk_group') ], flags);
 
   // Make each definition group easily distinguishable by underlining. However, if the underline is applied in TMLanguage, its color cannot be controlled. This should be implemented with semantic highlighting
   // For example, three groups are underlined in the following cases
@@ -752,22 +752,22 @@ export function winTitle(flags: CommandParameterFlag = CommandParameterFlag.None
   // };
 }
 export function control(flags: CommandParameterFlag = CommandParameterFlag.None): CommandParameter {
-  return unquoted([ keywordOption('ahk_id') ], flags);
+  return $([ keywordOption('ahk_id') ], flags);
 }
 export function controlOrPos(flags: CommandParameterFlag = CommandParameterFlag.None): CommandParameter {
-  return unquoted([ keywordOption('ahk_id'), decimalOptionItem('X', 'Y') ], flags);
+  return $([ keywordOption('ahk_id'), decimalOptionItem('X', 'Y') ], flags);
 }
 export function guiControlType(): CommandParameter {
   return keywordOnly([ keywordOption('ActiveX', 'Button', 'CheckBox', 'ComboBox', 'Custom', 'DateTime', 'DropDownList', 'DDL', 'Edit', 'GroupBox', 'Hotkey', 'Link', 'ListBox', 'ListView', 'MonthCal', 'Picture', 'Pic', 'Progress', 'Radio', 'Slider', 'StatusBar', 'Tab', 'Tab2', 'Tab3', 'Text', 'TreeView', 'UpDown') ]);
 }
 export function controlMoveOptions(): CommandParameter {
-  return unquoted([ numberOptionItem('X', 'Y', 'W', 'H') ]);
+  return $([ numberOptionItem('X', 'Y', 'W', 'H') ]);
 }
 export function guiControlOptions(_flaged = false): CommandParameter {
   // Accepts zero or more keywords. Each keyword must be preceded by `+` or `-` and each must have a space
   // e.g. `GuiControl, +Default`
   //                   ^^^^^^^^
-  return unquoted(
+  return $(
     [
       (_flaged ? flagedSignedNumberOptionItem : signedNumberOptionItem)('R', 'W', 'H', 'WP', 'HP', 'X', 'Y', 'XP', 'YP', 'XM', 'YM', 'XS', 'YS', 'Choose', 'VScroll', 'HScroll'),
       (_flaged ? flagedOptionItem : keywordOption)('X+M', 'X-M', 'Y+M', 'Y-M', 'Left', 'Right', 'Center', 'Section', 'Tabstop', 'Wrap', 'AltSubmit', 'CDefault', 'BackgroundTrans', 'Background', 'Border', 'Theme'),
@@ -788,56 +788,59 @@ export function onOffToggle(itemMatchers: ParameterItemMatcher[] = [], flags: Co
   return onOff([ keywordOption('Toggle'), ...itemMatchers ], flags);
 }
 export function whichButton(flags: CommandParameterFlag = CommandParameterFlag.None): CommandParameter {
-  return unquoted([ keywordOption('Left', 'L', 'Right', 'R', 'Middle', 'M', 'WheelUp', 'WU', 'WheelDown', 'WD', 'WheelLeft', 'WL', 'WheelRight', 'WR') ], flags);
+  return $([ keywordOption('Left', 'L', 'Right', 'R', 'Middle', 'M', 'WheelUp', 'WU', 'WheelDown', 'WD', 'WheelLeft', 'WL', 'WheelRight', 'WR') ], flags);
 }
 export function path(itemMatchers: ParameterItemMatcher[] = [], flags: CommandParameterFlag = CommandParameterFlag.None): CommandParameter {
-  return unquoted(itemMatchers, flags);
+  return $(itemMatchers, flags);
 }
 export function imagePath(flags: CommandParameterFlag = CommandParameterFlag.None): CommandParameter {
   return path([ stringOption('HICON:', 'HBITMAP:') ], flags);
 }
 export function glob(flags: CommandParameterFlag = CommandParameterFlag.None): CommandParameter {
-  return unquoted([], flags);
+  return $([], flags);
 }
 export function encoding(flags: CommandParameterFlag = CommandParameterFlag.None): CommandParameter {
-  return unquoted([ keywordOption('CP0', 'UTF-8', 'UTF-8-RAW', 'UTF-16', 'UTF-16-RAW'), numberOptionItem('CP') ], flags);
+  return $([ keywordOption('CP0', 'UTF-8', 'UTF-8-RAW', 'UTF-16', 'UTF-16-RAW'), numberOptionItem('CP') ], flags);
 }
 export function quotableEncoding(flags: CommandParameterFlag = CommandParameterFlag.None): CommandParameter {
-  return unquoted([ quotableKeywordOption('CP0', 'UTF-8', 'UTF-8-RAW', 'UTF-16', 'UTF-16-RAW'), quotableNumberOptionItem('CP'), ...(encoding(flags).itemMatchers!) ], flags);
+  return $([ quotableKeywordOption('CP0', 'UTF-8', 'UTF-8-RAW', 'UTF-16', 'UTF-16-RAW'), quotableNumberOptionItem('CP'), ...(encoding(flags).itemMatchers!) ], flags);
 }
 export function keyName(flags: CommandParameterFlag = CommandParameterFlag.None): CommandParameter {
-  return unquoted([ keywordOption(...constants_common.keyNameList), hexOptionItem('sc', 'vk') ], flags);
+  return $([ keywordOption(...constants_common.keyNameList), hexOptionItem('sc', 'vk') ], flags);
 }
 export function hotkeyName(flags: CommandParameterFlag = CommandParameterFlag.None): CommandParameter {
-  return unquoted([], flags);
+  return $([], flags);
 }
 export function sendKeys(flags: CommandParameterFlag = CommandParameterFlag.None): CommandParameter {
   // e.g. `Send, {LButton 5}`
   //             ^^^^^^^^^^^
-  return unquoted([ includeRule(Repository.CommandArgumentSendKeyName) ], flags);
+  return $([ includeRule(Repository.CommandArgumentSendKeyName) ], flags);
 }
 export function timeunit(flags: CommandParameterFlag = CommandParameterFlag.None): CommandParameter {
   return keywordOnly([ keywordOption('Seconds', 'S', 'Minutes', 'M', 'Hours', 'H', 'Days', 'D') ], flags);
 }
 export function formatTime(flags: CommandParameterFlag = CommandParameterFlag.None): CommandParameter {
-  return unquoted(
+  return $(
     [ caseSensitiveLetterOptionItem('d', 'dd', 'ddd', 'dddd', 'M', 'MM', 'MMM', 'MMMM', 'y', 'yy', 'yyyy', 'gg', 'h', 'hh', 'H', 'HH', 'm', 'mm', 's', 'ss', 't', 'tt') ],
     flags,
   );
 }
 export function color(flags: CommandParameterFlag = CommandParameterFlag.None): CommandParameter {
-  return unquoted([ keywordOption('Default', 'Black', 'Silver', 'Gray', 'White', 'Maroon', 'Red', 'Purple', 'Fuchsia', 'Green', 'Lime', 'Olive', 'Yellow', 'Navy', 'Blue', 'Teal', 'Aqua') ], flags);
+  return $([ keywordOption('Default', 'Black', 'Silver', 'Gray', 'White', 'Maroon', 'Red', 'Purple', 'Fuchsia', 'Green', 'Lime', 'Olive', 'Yellow', 'Navy', 'Blue', 'Teal', 'Aqua') ], flags);
 }
 export function soundComponent(): CommandParameter {
-  return unquoted([ keywordOption('MASTER', 'SPEAKERS', 'DIGITAL', 'LINE', 'MICROPHONE', 'SYNTH', 'CD', 'TELEPHONE', 'PCSPEAKER', 'WAVE', 'AUX', 'ANALOG', 'HEADPHONES', 'N/A') ]);
+  return $([ keywordOption('MASTER', 'SPEAKERS', 'DIGITAL', 'LINE', 'MICROPHONE', 'SYNTH', 'CD', 'TELEPHONE', 'PCSPEAKER', 'WAVE', 'AUX', 'ANALOG', 'HEADPHONES', 'N/A') ]);
 }
 export function soundControlType(): CommandParameter {
-  return unquoted([ keywordOption('VOLUME', 'VOL', 'ONOFF', 'MUTE', 'MONO', 'LOUDNESS', 'STEREOENH', 'BASSBOOST', 'PAN', 'QSOUNDPAN', 'BASS', 'TREBLE', 'EQUALIZER') ]);
+  return $([ keywordOption('VOLUME', 'VOL', 'ONOFF', 'MUTE', 'MONO', 'LOUDNESS', 'STEREOENH', 'BASSBOOST', 'PAN', 'QSOUNDPAN', 'BASS', 'TREBLE', 'EQUALIZER') ]);
 }
 export const winParams: CommandParameter[] = [
   winTitle(),
-  unquoted(),
+  $(),
   winTitle(),
-  unquoted(),
+  $(),
 ] as const;
-// #endregion command / parameter definition
+export function parameterless(): CommandParameter[] {
+  return [ invalid() ];
+}
+// #endregion command parameter definitions
