@@ -1,6 +1,6 @@
 import {
-  $invalid, $shouldKeyword, $shouldNumber, $withNumber, command, CommandFlag, CommandParameterFlag, encoding, keywordOption,
-  output, signature, signOptionItem,
+  $invalid, $output, $shouldKeyword, $shouldNumber, $withNumber, command, CommandFlag, CommandParameterFlag, encoding, keywordOption,
+  signature, signOptionItem,
   type CommandDefinition, type CommandParameter, type ParameterItemMatcher,
 } from '../definition';
 import { char, inlineSpace, negChars0, negChars1, seq, wordChars0 } from '../oniguruma';
@@ -39,7 +39,7 @@ export const compilerDirectives: CommandDefinition[] = [
   command('@Ahk2Exe-Nop', signature([])),
 
   // [Obey](https://www.autohotkey.com/docs/v2/misc/Ahk2ExeDirectives.htm#Obey)
-  command('@Ahk2Exe-Obey', signature([ output(), expression(), $shouldNumber() ])),
+  command('@Ahk2Exe-Obey', signature([ $output(), expression(), $shouldNumber() ])),
 
   // [PostExec](https://www.autohotkey.com/docs/v2/misc/Ahk2ExeDirectives.htm#PostExec)
   command('@Ahk2Exe-PostExec', signature([ unquoted(), $shouldKeyword([ keywordOption('0', '1', '2') ]), unquoted(), on(), on() ])),

@@ -1,11 +1,11 @@
 import {
-  $, $blank, $expression, $fileAttributes, $flowsubcommand, $guiOptions, $guisubcommand, $invalid, $rest, $shouldEscapeComma, $shouldInteger,
-  $shouldKeyword, $shouldLabel, $shouldNumber, $shouldSpacedKeywords, $style, $subcommand, $subcommandlike, $withNumber, color, colorOptionItem,
-  command, CommandFlag, control, controlMoveOptions, controlOrPos, decimalOptionItem, encoding, endKeyOptionItem, flagedGuiControlOptions,
-  formatTime, glob, guiControlOptions, guiControlType, hotkeyName, identifierOptionItem, imagePath, includeLib, input, keyName,
-  keywordOption, letterOptionItem, matchKeyOptionItem, menuItemName, menuOptions, numberOptionItem, onOff, onOffToggle, output, parameterless,
-  path, rangeOptionItem, requiresVersion, sendKeys, signature, signedNumberOptionItem, signOptionItem, sizeOptionItem, soundComponent,
-  soundControlType, stringOption, timeunit, toggleOptionItem, whichButton, winParams, winTitle,
+  $, $blank, $expression, $fileAttributes, $flowsubcommand, $guiOptions, $guisubcommand, $input, $invalid, $output, $rest, $shouldEscapeComma,
+  $shouldInteger, $shouldKeyword, $shouldLabel, $shouldNumber, $shouldSpacedKeywords, $style, $subcommand, $subcommandlike, $withNumber, color,
+  colorOptionItem, command, CommandFlag, control, controlMoveOptions, controlOrPos, decimalOptionItem, encoding, endKeyOptionItem, flagedGuiControlOptions,
+  formatTime, glob, guiControlOptions, guiControlType, hotkeyName, identifierOptionItem, imagePath, includeLib, keyName, keywordOption, letterOptionItem,
+  matchKeyOptionItem, menuItemName, menuOptions, numberOptionItem, onOff, onOffToggle, parameterless, path, rangeOptionItem, requiresVersion, sendKeys,
+  signature, signedNumberOptionItem, signOptionItem, sizeOptionItem, soundComponent, soundControlType, stringOption, timeunit, toggleOptionItem, whichButton,
+  winParams, winTitle,
   type CommandDefinition,
 } from '../definition';
 
@@ -123,7 +123,7 @@ export const loopCommandDefenitions: CommandDefinition[] = [
     signature([ $flowsubcommand('Files'), path(), $shouldKeyword([ letterOptionItem('D', 'F', 'R') ]) ]),
 
     // https://www.autohotkey.com/docs/v1/lib/LoopParse.htm
-    signature([ $flowsubcommand('Parse'), input(), $([ keywordOption('CSV') ]), $shouldEscapeComma() ]),
+    signature([ $flowsubcommand('Parse'), $input(), $([ keywordOption('CSV') ]), $shouldEscapeComma() ]),
 
     // https://www.autohotkey.com/docs/v1/lib/LoopReadFile.htm
     signature([ $flowsubcommand('Read'), path(), $shouldEscapeComma() ]),
@@ -167,20 +167,20 @@ export const commandDefinitions: CommandDefinition[] = [
 
   // https://www.autohotkey.com/docs/v1/lib/ControlGet.htm
   command('ControlGet', [
-    signature([ output(), $subcommand('List'), $([ keywordOption('Selected', 'Focused', 'Col', 'Count') ]), control(), ...winParams ]),
-    signature([ output(), $subcommand([ 'Checked', 'Enabled', 'Visible', 'Tab', 'Choice', 'LineCount', 'CurrentLine', 'CurrentCol', 'Selected', 'Style', 'ExStyle', 'Hwnd' ]), $blank(), control(), ...winParams ]),
-    signature([ output(), $subcommand([ 'FindString', 'Line' ]), $(), control(), ...winParams ]),
-    signature([ output(), $invalid() ]),
+    signature([ $output(), $subcommand('List'), $([ keywordOption('Selected', 'Focused', 'Col', 'Count') ]), control(), ...winParams ]),
+    signature([ $output(), $subcommand([ 'Checked', 'Enabled', 'Visible', 'Tab', 'Choice', 'LineCount', 'CurrentLine', 'CurrentCol', 'Selected', 'Style', 'ExStyle', 'Hwnd' ]), $blank(), control(), ...winParams ]),
+    signature([ $output(), $subcommand([ 'FindString', 'Line' ]), $(), control(), ...winParams ]),
+    signature([ $output(), $invalid() ]),
   ]),
 
   // https://www.autohotkey.com/docs/v1/lib/ControlGetFocus.htm
-  command('ControlGetFocus', signature([ output(), ...winParams ])),
+  command('ControlGetFocus', signature([ $output(), ...winParams ])),
 
   // https://www.autohotkey.com/docs/v1/lib/ControlGetPos.htm
-  command('ControlGetPos', signature([ output(), output(), output(), output(), control(), ...winParams ])),
+  command('ControlGetPos', signature([ $output(), $output(), $output(), $output(), control(), ...winParams ])),
 
   // https://www.autohotkey.com/docs/v1/lib/ControlGetText.htm
-  command('ControlGetText', signature([ output(), control(), ...winParams ])),
+  command('ControlGetText', signature([ $output(), control(), ...winParams ])),
 
   // https://www.autohotkey.com/docs/v1/lib/ControlMove.htm
   command('ControlMove', signature([ control(), $expression(), $expression(), $expression(), $expression(), ...winParams ])),
@@ -216,34 +216,34 @@ export const commandDefinitions: CommandDefinition[] = [
 
   // https://www.autohotkey.com/docs/v1/lib/DriveGet.htm
   command('DriveGet', [
-    signature([ output(), $subcommand('List'), $shouldKeyword([ keywordOption('CDROM', 'REMOVABLE', 'FIXED', 'NETWORK', 'RAMDISK', 'UNKNOWN') ]) ]),
-    signature([ output(), $subcommand([ 'Capacity', 'Cap', 'FileSystem', 'FS', 'Label', 'Serial', 'Type', 'Status', 'StatusCD' ]), $() ]),
-    signature([ output(), $invalid() ]),
+    signature([ $output(), $subcommand('List'), $shouldKeyword([ keywordOption('CDROM', 'REMOVABLE', 'FIXED', 'NETWORK', 'RAMDISK', 'UNKNOWN') ]) ]),
+    signature([ $output(), $subcommand([ 'Capacity', 'Cap', 'FileSystem', 'FS', 'Label', 'Serial', 'Type', 'Status', 'StatusCD' ]), $() ]),
+    signature([ $output(), $invalid() ]),
   ]),
 
   // https://www.autohotkey.com/docs/v1/lib/DriveSpaceFree.htm
-  command('DriveSpaceFree', signature([ output(), $() ])),
+  command('DriveSpaceFree', signature([ $output(), $() ])),
 
   // https://www.autohotkey.com/docs/v1/lib/Edit.htm
   command('Edit', signature(parameterless())),
 
   // https://www.autohotkey.com/docs/v1/lib/EnvAdd.htm
-  command('EnvAdd', signature([ input(), $expression(), timeunit() ])),
+  command('EnvAdd', signature([ $input(), $expression(), timeunit() ])),
 
   // https://www.autohotkey.com/docs/v1/lib/EnvDiv.htm
-  command('EnvDiv', signature([ input(), $expression() ]), CommandFlag.Deprecated),
+  command('EnvDiv', signature([ $input(), $expression() ]), CommandFlag.Deprecated),
 
   // https://www.autohotkey.com/docs/v1/lib/EnvGet.htm
-  command('EnvGet', signature([ input(), $() ])),
+  command('EnvGet', signature([ $input(), $() ])),
 
   // https://www.autohotkey.com/docs/v1/lib/EnvMult.htm
-  command('EnvMult', signature([ input(), $expression() ]), CommandFlag.Deprecated),
+  command('EnvMult', signature([ $input(), $expression() ]), CommandFlag.Deprecated),
 
   // https://www.autohotkey.com/docs/v1/lib/EnvSet.htm
   command('EnvSet', signature([ $(), $() ])),
 
   // https://www.autohotkey.com/docs/v1/lib/EnvSub.htm
-  command('EnvSub', signature([ input(), $expression(), timeunit() ])),
+  command('EnvSub', signature([ $input(), $expression(), timeunit() ])),
 
   // https://www.autohotkey.com/docs/v1/lib/EnvUpdate.htm
   command('EnvUpdate', signature(parameterless())),
@@ -273,19 +273,19 @@ export const commandDefinitions: CommandDefinition[] = [
   command('FileInstall', signature([ path(), path(), $expression() ])),
 
   // https://www.autohotkey.com/docs/v1/lib/FileGetAttrib.htm
-  command('FileGetAttrib', signature([ output(), path() ])),
+  command('FileGetAttrib', signature([ $output(), path() ])),
 
   // https://www.autohotkey.com/docs/v1/lib/FileGetShortcut.htm
-  command('FileGetShortcut', signature([ path(), output(), output(), output(), output(), output(), output(), output() ])),
+  command('FileGetShortcut', signature([ path(), $output(), $output(), $output(), $output(), $output(), $output(), $output() ])),
 
   // https://www.autohotkey.com/docs/v1/lib/FileGetSize.htm
-  command('FileGetSize', signature([ output(), path(), $shouldKeyword([ keywordOption('B', 'K', 'M') ]) ])),
+  command('FileGetSize', signature([ $output(), path(), $shouldKeyword([ keywordOption('B', 'K', 'M') ]) ])),
 
   // https://www.autohotkey.com/docs/v1/lib/FileGetTime.htm
-  command('FileGetTime', signature([ output(), path(), $shouldKeyword([ keywordOption('M', 'C', 'A') ]) ])),
+  command('FileGetTime', signature([ $output(), path(), $shouldKeyword([ keywordOption('M', 'C', 'A') ]) ])),
 
   // https://www.autohotkey.com/docs/v1/lib/FileGetVersion.htm
-  command('FileGetVersion', signature([ output(), path() ])),
+  command('FileGetVersion', signature([ $output(), path() ])),
 
   // https://www.autohotkey.com/docs/v1/lib/FileMove.htm
   command('FileMove', signature([ glob(), glob(), $expression() ])),
@@ -294,10 +294,10 @@ export const commandDefinitions: CommandDefinition[] = [
   command('FileMoveDir', signature([ path(), path(), $shouldKeyword([ keywordOption('0', '1', '2', 'R') ]) ])),
 
   // https://www.autohotkey.com/docs/v1/lib/FileRead.htm
-  command('FileRead', signature([ output(), path([ keywordOption('*c', '*t'), decimalOptionItem('*m', '*P') ]) ])),
+  command('FileRead', signature([ $output(), path([ keywordOption('*c', '*t'), decimalOptionItem('*m', '*P') ]) ])),
 
   // https://www.autohotkey.com/docs/v1/lib/FileReadLine.htm
-  command('FileReadLine', signature([ output(), path(), $expression() ])),
+  command('FileReadLine', signature([ $output(), path(), $expression() ])),
 
   // https://www.autohotkey.com/docs/v1/lib/FileRecycle.htm
   command('FileRecycle', signature([ glob() ])),
@@ -309,10 +309,10 @@ export const commandDefinitions: CommandDefinition[] = [
   command('FileRemoveDir', signature([ path(), $expression() ])),
 
   // https://www.autohotkey.com/docs/v1/lib/FileSelectFile.htm
-  command('FileSelectFile', signature([ output(), $([ keywordOption('M', 'S') ]), path(), $(), $() ])),
+  command('FileSelectFile', signature([ $output(), $([ keywordOption('M', 'S') ]), path(), $(), $() ])),
 
   // https://www.autohotkey.com/docs/v1/lib/FileSelectFolder.htm
-  command('FileSelectFolder', signature([ output(), $(), $expression(), $() ])),
+  command('FileSelectFolder', signature([ $output(), $(), $expression(), $() ])),
 
   // https://www.autohotkey.com/docs/v1/lib/FileSetAttrib.htm
   command('FileSetAttrib', signature([ $fileAttributes(), glob(), $expression(), $expression() ])),
@@ -322,12 +322,12 @@ export const commandDefinitions: CommandDefinition[] = [
 
   // https://www.autohotkey.com/docs/v1/lib/FormatTime.htm
   command('FormatTime', [
-    signature([ output(), $(), $subcommandlike([ 'Time', 'ShortDate', 'LongDate', 'YearMonth', 'YDay', 'YDay0', 'WDay', 'YWeek' ]), $rest() ]),
-    signature([ output(), $(), formatTime() ]),
+    signature([ $output(), $(), $subcommandlike([ 'Time', 'ShortDate', 'LongDate', 'YearMonth', 'YDay', 'YDay0', 'WDay', 'YWeek' ]), $rest() ]),
+    signature([ $output(), $(), formatTime() ]),
   ]),
 
   // https://www.autohotkey.com/docs/v1/lib/GetKeyState.htm#command
-  command('GetKeyState', signature([ output(), $shouldKeyword([ keywordOption('P', 'T') ]) ]), CommandFlag.Deprecated),
+  command('GetKeyState', signature([ $output(), $shouldKeyword([ keywordOption('P', 'T') ]) ]), CommandFlag.Deprecated),
 
   // https://www.autohotkey.com/docs/v1/lib/GroupActivate.htm
   command('GroupActivate', signature([ $(), $shouldKeyword([ keywordOption('R') ]) ])),
@@ -366,8 +366,8 @@ export const commandDefinitions: CommandDefinition[] = [
 
   // https://www.autohotkey.com/docs/v1/lib/GuiControlGet.htm
   command('GuiControlGet', [
-    signature([ output(), $guisubcommand([ 'Pos', 'Focus', 'FocusV', 'Visible', 'Hwnd', 'Name' ]), control() ]),
-    signature([ output(), $blank(), control(), $() ]),
+    signature([ $output(), $guisubcommand([ 'Pos', 'Focus', 'FocusV', 'Visible', 'Hwnd', 'Name' ]), control() ]),
+    signature([ $output(), $blank(), control(), $() ]),
   ]),
 
   // https://www.autohotkey.com/docs/v1/lib/Hotkey.htm
@@ -378,22 +378,22 @@ export const commandDefinitions: CommandDefinition[] = [
   ]),
 
   // https://www.autohotkey.com/docs/v1/lib/ImageSearch.htm
-  command('ImageSearch', signature([ output(), output(), $expression(), $expression(), $expression(), $expression(), $([ stringOption('HBITMAP:'), numberOptionItem('*Icon', '*', '*Trans', '*w', '*h') ]) ])),
+  command('ImageSearch', signature([ $output(), $output(), $expression(), $expression(), $expression(), $expression(), $([ stringOption('HBITMAP:'), numberOptionItem('*Icon', '*', '*Trans', '*w', '*h') ]) ])),
 
   // https://www.autohotkey.com/docs/v1/lib/IniDelete.htm
   command('IniDelete', signature([ path(), $(), $() ])),
 
   // https://www.autohotkey.com/docs/v1/lib/IniRead.htm
-  command('IniRead', signature([ output(), path(), $(), $(), $() ])),
+  command('IniRead', signature([ $output(), path(), $(), $(), $() ])),
 
   // https://www.autohotkey.com/docs/v1/lib/IniWrite.htm
   command('IniWrite', signature([ $(), $(), path(), $(), $() ])),
 
   // https://www.autohotkey.com/docs/v1/lib/Input.htm
-  command('Input', signature([ output(), $([ keywordOption('B', 'C', 'V', 'E', 'M'), signOptionItem('*'), numberOptionItem('I', 'L', 'T') ]), $([ endKeyOptionItem() ]), $([ matchKeyOptionItem() ]) ])),
+  command('Input', signature([ $output(), $([ keywordOption('B', 'C', 'V', 'E', 'M'), signOptionItem('*'), numberOptionItem('I', 'L', 'T') ]), $([ endKeyOptionItem() ]), $([ matchKeyOptionItem() ]) ])),
 
   // https://www.autohotkey.com/docs/v1/lib/InputBox.htm
-  command('InputBox', signature([ output(), $(), $(), $(), $expression(), $expression(), $expression(), $expression(), $(), $expression(), $() ])),
+  command('InputBox', signature([ $output(), $(), $(), $(), $expression(), $expression(), $expression(), $expression(), $(), $expression(), $() ])),
 
   // https://www.autohotkey.com/docs/v1/lib/KeyHistory.htm
   command('KeyHistory', signature(parameterless())),
@@ -434,7 +434,7 @@ export const commandDefinitions: CommandDefinition[] = [
   command('MouseClickDrag', signature([ whichButton(), $expression(), $expression(), $expression(), $expression(), $expression(), $shouldKeyword([ keywordOption('R') ]) ])),
 
   // https://www.autohotkey.com/docs/v1/lib/MouseGetPos.htm
-  command('MouseGetPos', signature([ output(), output(), output(), output(), $expression() ])),
+  command('MouseGetPos', signature([ $output(), $output(), $output(), $output(), $expression() ])),
 
   // https://www.autohotkey.com/docs/v1/lib/MouseMove.htm
   command('MouseMove', signature([ $expression(), $expression(), $expression(), $shouldKeyword([ keywordOption('R') ]) ])),
@@ -452,10 +452,10 @@ export const commandDefinitions: CommandDefinition[] = [
   command('Pause', signature([ onOffToggle(), $() ])),
 
   // https://www.autohotkey.com/docs/v1/lib/PixelGetColor.htm
-  command('PixelGetColor', signature([ output(), $expression(), $expression(), $shouldSpacedKeywords([ keywordOption('Alt', 'Slow', 'RGB') ]) ])),
+  command('PixelGetColor', signature([ $output(), $expression(), $expression(), $shouldSpacedKeywords([ keywordOption('Alt', 'Slow', 'RGB') ]) ])),
 
   // https://www.autohotkey.com/docs/v1/lib/PixelSearch.htm
-  command('PixelSearch', signature([ output(), output(), $expression(), $expression(), $expression(), $expression(), $expression(), $expression(), $shouldSpacedKeywords([ keywordOption('Fast', 'RGB') ]) ])),
+  command('PixelSearch', signature([ $output(), $output(), $expression(), $expression(), $expression(), $expression(), $expression(), $expression(), $shouldSpacedKeywords([ keywordOption('Fast', 'RGB') ]) ])),
 
   // https://www.autohotkey.com/docs/v1/lib/PostMessage.htm
   command('PostMessage', signature([ $expression(), $expression(), $expression(), control(), ...winParams ])),
@@ -477,13 +477,13 @@ export const commandDefinitions: CommandDefinition[] = [
   ], CommandFlag.Deprecated),
 
   // https://www.autohotkey.com/docs/v1/lib/Random.htm
-  command('Random', signature([ output(), $expression(), $expression() ])),
+  command('Random', signature([ $output(), $expression(), $expression() ])),
 
   // https://www.autohotkey.com/docs/v1/lib/RegDelete.htm
   command('RegDelete', signature([ $(), $(), $() ])),
 
   // https://www.autohotkey.com/docs/v1/lib/RegRead.htm
-  command('RegRead', signature([ output(), $(), $(), $() ])),
+  command('RegRead', signature([ $output(), $(), $(), $() ])),
 
   // https://www.autohotkey.com/docs/v1/lib/RegWrite.htm
   command('RegWrite', signature([ $shouldKeyword([ keywordOption('REG_SZ', 'REG_EXPAND_SZ', 'REG_MULTI_SZ', 'REG_DWORD', 'REG_BINARY') ]), $(), $(), $() ])),
@@ -492,10 +492,10 @@ export const commandDefinitions: CommandDefinition[] = [
   command('Reload', signature(parameterless())),
 
   // https://www.autohotkey.com/docs/v1/lib/Run.htm
-  command('Run', signature([ $(), path(), $shouldSpacedKeywords([ keywordOption('Max', 'Min', 'Hide', 'UseErrorLevel') ]), output() ])),
+  command('Run', signature([ $(), path(), $shouldSpacedKeywords([ keywordOption('Max', 'Min', 'Hide', 'UseErrorLevel') ]), $output() ])),
 
   // https://www.autohotkey.com/docs/v1/lib/RunWait.htm
-  command('RunWait', signature([ $(), path(), $shouldSpacedKeywords([ keywordOption('Max', 'Min', 'Hide', 'UseErrorLevel') ]), output() ])),
+  command('RunWait', signature([ $(), path(), $shouldSpacedKeywords([ keywordOption('Max', 'Min', 'Hide', 'UseErrorLevel') ]), $output() ])),
 
   // https://www.autohotkey.com/docs/v1/lib/Send.htm
   command('Send', signature([ sendKeys() ])),
@@ -531,7 +531,7 @@ export const commandDefinitions: CommandDefinition[] = [
   command('SetDefaultMouseSpeed', signature([ $expression() ])),
 
   // https://www.autohotkey.com/docs/v1/lib/SetEnv.htm
-  command('SetEnv', signature([ input(), $() ]), CommandFlag.Deprecated),
+  command('SetEnv', signature([ $input(), $() ]), CommandFlag.Deprecated),
 
   // https://www.autohotkey.com/docs/v1/lib/SetFormat.htm
   command('SetFormat', signature([ $(), $() ]), CommandFlag.Deprecated),
@@ -570,16 +570,16 @@ export const commandDefinitions: CommandDefinition[] = [
   command('Sleep', signature([ $expression() ])),
 
   // https://www.autohotkey.com/docs/v1/lib/Sort.htm
-  command('Sort', signature([ input(), $([ keywordOption('C', 'CL', 'N', 'R', 'Random', 'U', 'Z', '\\'), numberOptionItem('D', 'P'), identifierOptionItem('F') ]) ])),
+  command('Sort', signature([ $input(), $([ keywordOption('C', 'CL', 'N', 'R', 'Random', 'U', 'Z', '\\'), numberOptionItem('D', 'P'), identifierOptionItem('F') ]) ])),
 
   // https://www.autohotkey.com/docs/v1/lib/SoundBeep.htm
   command('SoundBeep', signature([ $expression(), $expression() ])),
 
   // https://www.autohotkey.com/docs/v1/lib/SoundGet.htm
-  command('SoundGet', signature([ output(), soundComponent(), soundControlType(), $expression() ])),
+  command('SoundGet', signature([ $output(), soundComponent(), soundControlType(), $expression() ])),
 
   // https://www.autohotkey.com/docs/v1/lib/SoundGetWaveVolume.htm
-  command('SoundGetWaveVolume', signature([ output(), $() ])),
+  command('SoundGetWaveVolume', signature([ $output(), $() ])),
 
   // https://www.autohotkey.com/docs/v1/lib/SoundPlay.htm
   command('SoundPlay', signature([ path(), $shouldKeyword([ keywordOption('Wait', '1') ]) ])),
@@ -610,10 +610,10 @@ export const commandDefinitions: CommandDefinition[] = [
   command('SplashTextOff', signature(parameterless()), CommandFlag.Deprecated),
 
   // https://www.autohotkey.com/docs/v1/lib/SplitPath.htm
-  command('SplitPath', signature([ input(), output(), output(), output(), output(), output() ])),
+  command('SplitPath', signature([ $input(), $output(), $output(), $output(), $output(), $output() ])),
 
   // https://www.autohotkey.com/docs/v1/lib/StatusBarGetText.htm
-  command('StatusBarGetText', signature([ output(), $expression(), ...winParams ])),
+  command('StatusBarGetText', signature([ $output(), $expression(), ...winParams ])),
 
   // https://www.autohotkey.com/docs/v1/lib/StatusBarWait.htm
   command('StatusBarWait', signature([ $(), $expression(), $expression(), winTitle(), $(), $expression(), winTitle(), $() ])),
@@ -622,43 +622,43 @@ export const commandDefinitions: CommandDefinition[] = [
   command('StringCaseSense', signature([ onOff([ keywordOption('Locale') ]) ])),
 
   // https://www.autohotkey.com/docs/v1/lib/StringGetPos.htm
-  command('StringGetPos', signature([ output(), input(), $(), $shouldKeyword([ numberOptionItem('L', 'R') ]), $expression() ]), CommandFlag.Deprecated),
+  command('StringGetPos', signature([ $output(), $input(), $(), $shouldKeyword([ numberOptionItem('L', 'R') ]), $expression() ]), CommandFlag.Deprecated),
 
   // https://www.autohotkey.com/docs/v1/lib/StringLeft.htm
-  command('StringLeft', signature([ output(), input(), $expression() ]), CommandFlag.Deprecated),
+  command('StringLeft', signature([ $output(), $input(), $expression() ]), CommandFlag.Deprecated),
 
   // https://www.autohotkey.com/docs/v1/lib/StringLen.htm
-  command('StringLen', signature([ output(), input() ]), CommandFlag.Deprecated),
+  command('StringLen', signature([ $output(), $input() ]), CommandFlag.Deprecated),
 
   // https://www.autohotkey.com/docs/v1/lib/StringLower.htm
-  command('StringLower', signature([ output(), input(), $shouldKeyword([ keywordOption('T') ]) ])),
+  command('StringLower', signature([ $output(), $input(), $shouldKeyword([ keywordOption('T') ]) ])),
 
   // https://www.autohotkey.com/docs/v1/lib/StringMid.htm
-  command('StringMid', signature([ output(), input(), $expression(), $expression(), $shouldKeyword([ keywordOption('L') ]) ]), CommandFlag.Deprecated),
+  command('StringMid', signature([ $output(), $input(), $expression(), $expression(), $shouldKeyword([ keywordOption('L') ]) ]), CommandFlag.Deprecated),
 
   // https://www.autohotkey.com/docs/v1/lib/StringReplace.htm
-  command('StringReplace', signature([ output(), input(), $(), $(), $shouldKeyword([ keywordOption('All', 'A', '1') ]) ]), CommandFlag.Deprecated),
+  command('StringReplace', signature([ $output(), $input(), $(), $(), $shouldKeyword([ keywordOption('All', 'A', '1') ]) ]), CommandFlag.Deprecated),
 
   // https://www.autohotkey.com/docs/v1/lib/StringRight.htm
-  command('StringRight', signature([ output(), input(), $expression() ]), CommandFlag.Deprecated),
+  command('StringRight', signature([ $output(), $input(), $expression() ]), CommandFlag.Deprecated),
 
   // https://www.autohotkey.com/docs/v1/lib/StringSplit.htm
-  command('StringSplit', signature([ output(), input(), $(), $shouldEscapeComma() ]), CommandFlag.Deprecated),
+  command('StringSplit', signature([ $output(), $input(), $(), $shouldEscapeComma() ]), CommandFlag.Deprecated),
 
   // https://www.autohotkey.com/docs/v1/lib/StringTrimLeft.htm
-  command('StringTrimLeft', signature([ output(), input(), $expression() ]), CommandFlag.Deprecated),
+  command('StringTrimLeft', signature([ $output(), $input(), $expression() ]), CommandFlag.Deprecated),
 
   // https://www.autohotkey.com/docs/v1/lib/StringTrimRight.htm
-  command('StringTrimRight', signature([ output(), input(), $expression() ]), CommandFlag.Deprecated),
+  command('StringTrimRight', signature([ $output(), $input(), $expression() ]), CommandFlag.Deprecated),
 
   // https://www.autohotkey.com/docs/v1/lib/StringUpper.htm
-  command('StringUpper', signature([ output(), input(), $shouldKeyword([ 'T' ]) ])),
+  command('StringUpper', signature([ $output(), $input(), $shouldKeyword([ 'T' ]) ])),
 
   // https://www.autohotkey.com/docs/v1/lib/SysGet.htm
   command('SysGet', [
-    signature([ output(), $subcommand([ 'MonitorCount', 'MonitorPrimary' ]) ]),
-    signature([ output(), $subcommand([ 'Monitor', 'MonitorWorkArea', 'MonitorName' ]), $withNumber() ]),
-    signature([ output(), $shouldNumber() ]),
+    signature([ $output(), $subcommand([ 'MonitorCount', 'MonitorPrimary' ]) ]),
+    signature([ $output(), $subcommand([ 'Monitor', 'MonitorWorkArea', 'MonitorName' ]), $withNumber() ]),
+    signature([ $output(), $shouldNumber() ]),
   ]),
 
   // https://www.autohotkey.com/docs/v1/lib/Thread.htm
@@ -673,9 +673,9 @@ export const commandDefinitions: CommandDefinition[] = [
 
   // https://www.autohotkey.com/docs/v1/lib/Transform.htm
   command('Transform', [
-    signature([ output(), $subcommand([ 'Unicode', 'Deref', 'Asc', 'Chr', 'Exp', 'Sqrt', 'Log', 'Ln', 'Ceil', 'Floor', 'Abs', 'Sin', 'Cos', 'Tan', 'ASin', 'ACos', 'ATan', 'BitNot' ]), $() ]),
-    signature([ output(), $subcommand([ 'HTML', 'Mod', 'Round', 'Pow', 'BitAnd', 'BitOr', 'BitXOr', 'BitShiftLeft', 'BitShiftRight' ]), $(), $() ]),
-    signature([ output(), $invalid() ]),
+    signature([ $output(), $subcommand([ 'Unicode', 'Deref', 'Asc', 'Chr', 'Exp', 'Sqrt', 'Log', 'Ln', 'Ceil', 'Floor', 'Abs', 'Sin', 'Cos', 'Tan', 'ASin', 'ACos', 'ATan', 'BitNot' ]), $() ]),
+    signature([ $output(), $subcommand([ 'HTML', 'Mod', 'Round', 'Pow', 'BitAnd', 'BitOr', 'BitXOr', 'BitShiftLeft', 'BitShiftRight' ]), $(), $() ]),
+    signature([ $output(), $invalid() ]),
   ], CommandFlag.Deprecated),
 
   // https://www.autohotkey.com/docs/v1/lib/TrayTip.htm
@@ -694,28 +694,28 @@ export const commandDefinitions: CommandDefinition[] = [
   command('WinClose', signature([ winTitle(), $(), $expression(), winTitle(), $() ])),
 
   // https://www.autohotkey.com/docs/v1/lib/WinGetActiveStats.htm
-  command('WinGetActiveStats', signature([ output(), output(), output(), output(), output(), output() ])),
+  command('WinGetActiveStats', signature([ $output(), $output(), $output(), $output(), $output(), $output() ])),
 
   // https://www.autohotkey.com/docs/v1/lib/WinGetActiveTitle.htm
-  command('WinGetActiveTitle', signature([ output() ])),
+  command('WinGetActiveTitle', signature([ $output() ])),
 
   // https://www.autohotkey.com/docs/v1/lib/WinGetClass.htm
-  command('WinGetClass', signature([ output(), ...winParams ])),
+  command('WinGetClass', signature([ $output(), ...winParams ])),
 
   // https://www.autohotkey.com/docs/v1/lib/WinGet.htm
   command('WinGet', [
-    signature([ output(), $subcommand([ 'ID', 'IDLast', 'PID', 'ProcessName', 'ProcessPath', 'Count', 'List', 'MinMax', 'ControlList', 'ControlListHwnd', 'Transparent', 'TransColor', 'Style', 'ExStyle' ]), ...winParams ]),
-    signature([ output(), $invalid() ]),
+    signature([ $output(), $subcommand([ 'ID', 'IDLast', 'PID', 'ProcessName', 'ProcessPath', 'Count', 'List', 'MinMax', 'ControlList', 'ControlListHwnd', 'Transparent', 'TransColor', 'Style', 'ExStyle' ]), ...winParams ]),
+    signature([ $output(), $invalid() ]),
   ]),
 
   // https://www.autohotkey.com/docs/v1/lib/WinGetPos.htm
-  command('WinGetPos', signature([ output(), output(), output(), output(), ...winParams ])),
+  command('WinGetPos', signature([ $output(), $output(), $output(), $output(), ...winParams ])),
 
   // https://www.autohotkey.com/docs/v1/lib/WinGetText.htm
-  command('WinGetText', signature([ output(), ...winParams ])),
+  command('WinGetText', signature([ $output(), ...winParams ])),
 
   // https://www.autohotkey.com/docs/v1/lib/WinGetTitle.htm
-  command('WinGetTitle', signature([ output(), ...winParams ])),
+  command('WinGetTitle', signature([ $output(), ...winParams ])),
 
   // https://www.autohotkey.com/docs/v1/lib/WinHide.htm
   command('WinHide', signature(winParams)),

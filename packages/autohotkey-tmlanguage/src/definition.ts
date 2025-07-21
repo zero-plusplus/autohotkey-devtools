@@ -615,10 +615,10 @@ export function $guiOptions(flags: CommandParameterFlag = CommandParameterFlag.N
     mergeFlags(flags, CommandParameterFlag.GuiLabeled),
   );
 }
-export function input(flags: CommandParameterFlag = CommandParameterFlag.None): CommandParameter {
+export function $input(flags: CommandParameterFlag = CommandParameterFlag.None): CommandParameter {
   return $shouldIdentifier(flags);
 }
-export function output(flags: CommandParameterFlag = CommandParameterFlag.None): CommandParameter {
+export function $output(flags: CommandParameterFlag = CommandParameterFlag.None): CommandParameter {
   return $shouldIdentifier(flags);
 }
 export function menuItemName(flags: CommandParameterFlag = CommandParameterFlag.None): CommandParameter {
