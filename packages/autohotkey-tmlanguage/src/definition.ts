@@ -434,7 +434,7 @@ export function $invalid(flags: CommandParameterFlag = CommandParameterFlag.None
   return $blank(flags);
 }
 export function $shouldEscapeComma(flags: CommandParameterFlag = CommandParameterFlag.None): CommandParameter {
-  return restParams([], flags);
+  return $rest([], flags);
 }
 export function $quotable(itemMatchers: ParameterItemMatcher[] = [], flags: CommandParameterFlag = CommandParameterFlag.None): CommandParameter {
   return {
@@ -524,7 +524,7 @@ export function $withNumber(itemMatchers: ParameterItemMatcher[] = [], flags: Co
     ],
   };
 }
-export function restParams(itemMatchers: ParameterItemMatcher[] = [], flags: CommandParameterFlag = CommandParameterFlag.None): CommandParameter {
+export function $rest(itemMatchers: ParameterItemMatcher[] = [], flags: CommandParameterFlag = CommandParameterFlag.None): CommandParameter {
   return {
     flags: mergeFlags(flags, CommandParameterFlag.RestParams),
     itemMatchers: [

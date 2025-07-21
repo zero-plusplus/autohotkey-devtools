@@ -1,10 +1,10 @@
 import {
-  $, $blank, $flowsubcommand, $guisubcommand, $invalid, $shouldEscapeComma, $shouldInteger, $shouldNumber, $subcommand, $subcommandlike,
+  $, $blank, $flowsubcommand, $guisubcommand, $invalid, $rest, $shouldEscapeComma, $shouldInteger, $shouldNumber, $subcommand, $subcommandlike,
   $withNumber, color, colorOptionItem, command, CommandFlag, control, controlMoveOptions, controlOrPos, decimalOptionItem, encoding, endKeyOptionItem,
   expression, fileAttributes, flagedGuiControlOptions, formatTime, glob, guiControlOptions, guiControlType, guiOptions, hotkeyName,
   identifierOptionItem, imagePath, includeLib, input, keyName, keywordOnly, keywordOption, labelName, letterOptionItem, matchKeyOptionItem,
   menuItemName, menuOptions, numberOptionItem, onOff, onOffToggle, output, parameterless, path, rangeOptionItem, requiresVersion,
-  restParams, sendKeys, signature, signedNumberOptionItem, signOptionItem, sizeOptionItem, soundComponent, soundControlType,
+  sendKeys, signature, signedNumberOptionItem, signOptionItem, sizeOptionItem, soundComponent, soundControlType,
   spacedKeywordsOnly, stringOption, style, timeunit, toggleOptionItem, whichButton, winParams, winTitle,
   type CommandDefinition,
 } from '../definition';
@@ -322,7 +322,7 @@ export const commandDefinitions: CommandDefinition[] = [
 
   // https://www.autohotkey.com/docs/v1/lib/FormatTime.htm
   command('FormatTime', [
-    signature([ output(), $(), $subcommandlike([ 'Time', 'ShortDate', 'LongDate', 'YearMonth', 'YDay', 'YDay0', 'WDay', 'YWeek' ]), restParams() ]),
+    signature([ output(), $(), $subcommandlike([ 'Time', 'ShortDate', 'LongDate', 'YearMonth', 'YDay', 'YDay0', 'WDay', 'YWeek' ]), $rest() ]),
     signature([ output(), $(), formatTime() ]),
   ]),
 
@@ -347,7 +347,7 @@ export const commandDefinitions: CommandDefinition[] = [
     signature([ $guisubcommand('Add'), guiControlType(), guiControlOptions(), $() ]),
     signature([ $guisubcommand('Show'), $([ keywordOption('xCenter', 'yCenter', 'AutoSize', 'Minimize', 'Maximize', 'Restore', 'NoActivate', 'NA', 'Hide', 'Center'), numberOptionItem('W', 'H', 'X', 'Y') ]), $() ]),
     signature([ $guisubcommand('Submit'), keywordOnly([ keywordOption('NoHide') ]) ]),
-    signature([ $guisubcommand([ 'Cancel', 'Hide', 'Destroy', 'Minimize', 'Maximize', 'Restore', 'Default' ]), restParams() ]),
+    signature([ $guisubcommand([ 'Cancel', 'Hide', 'Destroy', 'Minimize', 'Maximize', 'Restore', 'Default' ]), $rest() ]),
     signature([ $guisubcommand('Font'), $([ colorOptionItem('C'), numberOptionItem('S', 'W', 'Q') ]), $() ]),
     signature([ $guisubcommand('Color'), color(), color() ]),
     signature([ $guisubcommand('Margin'), $withNumber(), $withNumber() ]),
@@ -373,7 +373,7 @@ export const commandDefinitions: CommandDefinition[] = [
   // https://www.autohotkey.com/docs/v1/lib/Hotkey.htm
   command('Hotkey', [
     signature([ $subcommand([ 'IfWinActive', 'IfWinExist' ]), winTitle(), $() ]),
-    signature([ $subcommand('If'), expression(), restParams() ]),
+    signature([ $subcommand('If'), expression(), $rest() ]),
     signature([ hotkeyName(), $([ keywordOption('On', 'Off', 'Toggle', 'AltTab') ]), $([ keywordOption('UseErrorLevel', 'On', 'Off', 'B', 'B0'), numberOptionItem('P', 'T', 'I') ]) ]),
   ]),
 
@@ -414,17 +414,17 @@ export const commandDefinitions: CommandDefinition[] = [
   command('Menu', [
     signature([ $subcommand('Tray'), $subcommand('Icon'), imagePath(), $(), $() ]),
     signature([ $subcommand('Tray'), $subcommand([ 'Tip', 'Click' ]), $() ]),
-    signature([ $subcommand('Tray'), $subcommand([ 'MainWindow', 'NoMainWindow', 'NoIcon' ]), restParams() ]),
+    signature([ $subcommand('Tray'), $subcommand([ 'MainWindow', 'NoMainWindow', 'NoIcon' ]), $rest() ]),
     signature([ $subcommand('Tray'), $(), path(), $(), $() ]),
     signature([ $(), $subcommand('Add'), menuItemName(), $(), menuOptions() ]),
     signature([ $(), $subcommand('Insert'), menuItemName(), $(), $(), menuOptions() ]),
-    signature([ $(), $subcommand([ 'DeleteAll', 'NoDefault', 'Standard', 'NoStandard' ]), restParams() ]),
+    signature([ $(), $subcommand([ 'DeleteAll', 'NoDefault', 'Standard', 'NoStandard' ]), $rest() ]),
     signature([ $(), $subcommand([ 'Delete', 'Check', 'Uncheck', 'ToggleCheck', 'Enable', 'Disable', 'ToggleEnable', 'Default', 'NoIcon' ]), menuItemName() ]),
     signature([ $(), $subcommand('Rename'), menuItemName(), menuItemName() ]),
     signature([ $(), $subcommand('Icon'), $(), path(), $(), imagePath() ]),
     signature([ $(), $subcommand('UseErrorLevel'), keywordOnly([ keywordOption('Off') ]) ]),
     signature([ $(), $subcommand([ 'Show', 'Color' ]), $(), $() ]),
-    signature([ restParams() ]),
+    signature([ $rest() ]),
   ]),
 
   // https://www.autohotkey.com/docs/v1/lib/MouseClick.htm
@@ -466,13 +466,13 @@ export const commandDefinitions: CommandDefinition[] = [
     signature([ $subcommand([ 'Exist', 'Close' ]), $() ]),
     signature([ $subcommand([ 'Wait', 'WaitClose' ]), $(), $() ]),
     signature([ $subcommand([ 'Priority' ]), $(), keywordOnly([ keywordOption('Low', 'L', 'BelowNormal', 'B', 'Normal', 'N', 'AboveNormal', 'A', 'High', 'H', 'Realtime', 'R') ]) ]),
-    signature([ $subcommand([ 'List' ]), restParams() ]),
+    signature([ $subcommand([ 'List' ]), $rest() ]),
     signature(parameterless()),
   ]),
 
   // https://www.autohotkey.com/docs/v1/lib/Progress.htm
   command('Progress', [
-    signature([ $subcommandlike('Off'), restParams() ]),
+    signature([ $subcommandlike('Off'), $rest() ]),
     signature([ $(), $(), $(), winTitle(), $() ]),
   ], CommandFlag.Deprecated),
 
@@ -592,7 +592,7 @@ export const commandDefinitions: CommandDefinition[] = [
 
   // https://www.autohotkey.com/docs/v1/lib/SplashImage.htm
   command('SplashImage', [
-    signature([ $subcommandlike('Off'), restParams() ]),
+    signature([ $subcommandlike('Off'), $rest() ]),
     signature([
       imagePath(), $([
         keywordOption('A', 'T', 'Hide'),
