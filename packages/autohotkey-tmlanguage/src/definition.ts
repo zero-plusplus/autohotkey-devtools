@@ -506,6 +506,12 @@ export function $shouldNumber(...itemMatchers: ParameterItemMatcher[]): CommandP
     ],
   };
 }
+export function $shouldLabel(flags: CommandParameterFlag = CommandParameterFlag.None): CommandParameter {
+  return {
+    flags,
+    itemMatchers: [ includeRule(Repository.LabelName) ],
+  };
+}
 export function $withNumber(itemMatchers: ParameterItemMatcher[] = [], flags: CommandParameterFlag = CommandParameterFlag.None): CommandParameter {
   return {
     flags,
@@ -531,12 +537,6 @@ export function $rest(itemMatchers: ParameterItemMatcher[] = [], flags: CommandP
       ...itemMatchers,
       includeRule(Repository.CommandArgument),
     ],
-  };
-}
-export function labelName(flags: CommandParameterFlag = CommandParameterFlag.None): CommandParameter {
-  return {
-    flags,
-    itemMatchers: [ includeRule(Repository.LabelName) ],
   };
 }
 export function expression(flags: CommandParameterFlag = CommandParameterFlag.None): CommandParameter {

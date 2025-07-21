@@ -1,11 +1,11 @@
 import {
-  $, $blank, $flowsubcommand, $guisubcommand, $invalid, $rest, $shouldEscapeComma, $shouldInteger, $shouldNumber, $subcommand, $subcommandlike,
-  $withNumber, color, colorOptionItem, command, CommandFlag, control, controlMoveOptions, controlOrPos, decimalOptionItem, encoding, endKeyOptionItem,
-  expression, fileAttributes, flagedGuiControlOptions, formatTime, glob, guiControlOptions, guiControlType, guiOptions, hotkeyName,
-  identifierOptionItem, imagePath, includeLib, input, keyName, keywordOnly, keywordOption, labelName, letterOptionItem, matchKeyOptionItem,
-  menuItemName, menuOptions, numberOptionItem, onOff, onOffToggle, output, parameterless, path, rangeOptionItem, requiresVersion,
-  sendKeys, signature, signedNumberOptionItem, signOptionItem, sizeOptionItem, soundComponent, soundControlType,
-  spacedKeywordsOnly, stringOption, style, timeunit, toggleOptionItem, whichButton, winParams, winTitle,
+  $, $blank, $flowsubcommand, $guisubcommand, $invalid, $rest, $shouldEscapeComma, $shouldInteger, $shouldLabel, $shouldNumber,
+  $subcommand, $subcommandlike, $withNumber, color, colorOptionItem, command, CommandFlag, control, controlMoveOptions, controlOrPos,
+  decimalOptionItem, encoding, endKeyOptionItem, expression, fileAttributes, flagedGuiControlOptions, formatTime, glob, guiControlOptions,
+  guiControlType, guiOptions, hotkeyName, identifierOptionItem, imagePath, includeLib, input, keyName, keywordOnly, keywordOption,
+  letterOptionItem, matchKeyOptionItem, menuItemName, menuOptions, numberOptionItem, onOff, onOffToggle, output, parameterless, path,
+  rangeOptionItem, requiresVersion, sendKeys, signature, signedNumberOptionItem, signOptionItem, sizeOptionItem, soundComponent,
+  soundControlType, spacedKeywordsOnly, stringOption, style, timeunit, toggleOptionItem, whichButton, winParams, winTitle,
   type CommandDefinition,
 } from '../definition';
 
@@ -777,7 +777,7 @@ export const commandDefinitions: CommandDefinition[] = [
 // #region jump
 export const jumpCommandDefenitions: CommandDefinition[] = [
   // https://www.autohotkey.com/docs/v1/lib/Break.htm
-  command('Break', signature([ labelName() ])),
+  command('Break', signature([ $shouldLabel() ])),
 
   // https://www.autohotkey.com/docs/v1/lib/Exit.htm
   command('Exit', signature([ expression() ])),
@@ -786,10 +786,10 @@ export const jumpCommandDefenitions: CommandDefinition[] = [
   command('ExitApp', signature([ expression() ])),
 
   // https://www.autohotkey.com/docs/v1/lib/Gosub.htm
-  command('Gosub', signature([ labelName() ])),
+  command('Gosub', signature([ $shouldLabel() ])),
 
   // https://www.autohotkey.com/docs/v1/lib/Goto.htm
-  command('Goto', signature([ labelName() ])),
+  command('Goto', signature([ $shouldLabel() ])),
 
   // https://www.autohotkey.com/docs/v1/lib/Return.htm
   command('Return', signature([ expression() ])),
