@@ -717,10 +717,10 @@ export function $control(flags: CommandParameterFlag = CommandParameterFlag.None
 export function $controlOrPos(flags: CommandParameterFlag = CommandParameterFlag.None): CommandParameter {
   return $([ keywordOption('ahk_id'), decimalOptionItem('X', 'Y') ], flags);
 }
-export function guiControlType(): CommandParameter {
+export function $guiControlType(): CommandParameter {
   return $shouldKeyword([ keywordOption('ActiveX', 'Button', 'CheckBox', 'ComboBox', 'Custom', 'DateTime', 'DropDownList', 'DDL', 'Edit', 'GroupBox', 'Hotkey', 'Link', 'ListBox', 'ListView', 'MonthCal', 'Picture', 'Pic', 'Progress', 'Radio', 'Slider', 'StatusBar', 'Tab', 'Tab2', 'Tab3', 'Text', 'TreeView', 'UpDown') ]);
 }
-export function controlMoveOptions(): CommandParameter {
+export function $controlMoveOptions(): CommandParameter {
   return $([ numberOptionItem('X', 'Y', 'W', 'H') ]);
 }
 export function guiControlOptions(_flaged = false): CommandParameter {
