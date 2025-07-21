@@ -2,10 +2,11 @@ import {
   $, $blank, $control, $controlMoveOptions, $controlOrPos, $expression, $fileAttributes, $flagedGuiControlOptions, $flowsubcommand,
   $guiControlOptions, $guiControlType, $guiOptions, $guisubcommand, $includeLib, $input, $invalid, $menuItemName, $menuOptions, $onOff,
   $onOffToggle, $output, $requiresVersion, $rest, $shouldEscapeComma, $shouldInteger, $shouldKeyword, $shouldLabel, $shouldNumber,
-  $shouldSpacedKeywords, $style, $subcommand, $subcommandlike, $winTitle, $withNumber, color, colorOptionItem, command, CommandFlag,
-  decimalOptionItem, encoding, endKeyOptionItem, formatTime, glob, hotkeyName, identifierOptionItem, imagePath, keyName, keywordOption,
-  letterOptionItem, matchKeyOptionItem, numberOptionItem, parameterless, path, rangeOptionItem, sendKeys, signature, signedNumberOptionItem,
-  signOptionItem, sizeOptionItem, soundComponent, soundControlType, stringOption, timeunit, toggleOptionItem, whichButton, winParams,
+  $shouldSpacedKeywords, $style, $subcommand, $subcommandlike, $whichButton, $winTitle, $withNumber, color, colorOptionItem, command,
+  CommandFlag, decimalOptionItem, encoding, endKeyOptionItem, formatTime, glob, hotkeyName, identifierOptionItem, imagePath, keyName,
+  keywordOption, letterOptionItem, matchKeyOptionItem, numberOptionItem, parameterless, path, rangeOptionItem, sendKeys, signature,
+  signedNumberOptionItem, signOptionItem, sizeOptionItem, soundComponent, soundControlType, stringOption, timeunit, toggleOptionItem,
+  winParams,
   type CommandDefinition,
 } from '../definition';
 
@@ -160,7 +161,7 @@ export const commandDefinitions: CommandDefinition[] = [
   ),
 
   // https://www.autohotkey.com/docs/v1/lib/ControlClick.htm
-  command('ControlClick', signature([ $controlOrPos(), $winTitle(), $(), whichButton(), $expression(), $([ keywordOption('NA', 'D', 'U', 'Pos'), decimalOptionItem('X', 'Y') ]) ])),
+  command('ControlClick', signature([ $controlOrPos(), $winTitle(), $(), $whichButton(), $expression(), $([ keywordOption('NA', 'D', 'U', 'Pos'), decimalOptionItem('X', 'Y') ]) ])),
 
   // https://www.autohotkey.com/docs/v1/lib/ControlFocus.htm
   command('ControlFocus', signature([ $control(), ...winParams ])),
@@ -428,10 +429,10 @@ export const commandDefinitions: CommandDefinition[] = [
   ]),
 
   // https://www.autohotkey.com/docs/v1/lib/MouseClick.htm
-  command('MouseClick', signature([ whichButton(), $expression(), $expression(), $expression(), $expression(), $shouldKeyword([ keywordOption('D', 'U') ]), $shouldKeyword([ keywordOption('R') ]) ])),
+  command('MouseClick', signature([ $whichButton(), $expression(), $expression(), $expression(), $expression(), $shouldKeyword([ keywordOption('D', 'U') ]), $shouldKeyword([ keywordOption('R') ]) ])),
 
   // https://www.autohotkey.com/docs/v1/lib/MouseClickDrag.htm
-  command('MouseClickDrag', signature([ whichButton(), $expression(), $expression(), $expression(), $expression(), $expression(), $shouldKeyword([ keywordOption('R') ]) ])),
+  command('MouseClickDrag', signature([ $whichButton(), $expression(), $expression(), $expression(), $expression(), $expression(), $shouldKeyword([ keywordOption('R') ]) ])),
 
   // https://www.autohotkey.com/docs/v1/lib/MouseGetPos.htm
   command('MouseGetPos', signature([ $output(), $output(), $output(), $output(), $expression() ])),

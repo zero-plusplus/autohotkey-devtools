@@ -747,7 +747,7 @@ export function $onOff(itemMatchers: ParameterItemMatcher[] = [], flags: Command
 export function $onOffToggle(itemMatchers: ParameterItemMatcher[] = [], flags: CommandParameterFlag = CommandParameterFlag.None): CommandParameter {
   return $onOff([ keywordOption('Toggle'), ...itemMatchers ], flags);
 }
-export function whichButton(flags: CommandParameterFlag = CommandParameterFlag.None): CommandParameter {
+export function $whichButton(flags: CommandParameterFlag = CommandParameterFlag.None): CommandParameter {
   return $([ keywordOption('Left', 'L', 'Right', 'R', 'Middle', 'M', 'WheelUp', 'WU', 'WheelDown', 'WD', 'WheelLeft', 'WL', 'WheelRight', 'WR') ], flags);
 }
 export function path(itemMatchers: ParameterItemMatcher[] = [], flags: CommandParameterFlag = CommandParameterFlag.None): CommandParameter {
