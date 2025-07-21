@@ -711,71 +711,6 @@ export function $requiresVersion(flags: CommandParameterFlag = CommandParameterF
   ], flags);
   // return { type: HighlightType.RequiresVersion, flags };
 }
-export function winTitle(flags: CommandParameterFlag = CommandParameterFlag.None): CommandParameter {
-  // e.g. `WinGet, output,ID, abc ahk_exe abc.exe ahk_class abc
-  //                          ^^^ ^^^^^^^^^^^^^^^ ^^^^^^^^^^^^^
-  return $([ keywordOption('ahk_class', 'ahk_id', 'ahk_pid', 'ahk_exe', 'ahk_group') ], flags);
-
-  // Make each definition group easily distinguishable by underlining. However, if the underline is applied in TMLanguage, its color cannot be controlled. This should be implemented with semantic highlighting
-  // For example, three groups are underlined in the following cases
-  // e.g. `WinActivate abc ahk_exe abc.exe ahk_class abc`
-  //                   ^^^ ^^^^^^^^^^^^^^^ ^^^^^^^^^^^^^
-  // return {
-  //   type: HighlightType.UnquotedString,
-  //   flags,
-  //   itemMatchers: [
-  //     {
-  //       match: seq(
-  //         lookbehind(group(seq(
-  //           char(','),
-  //           inlineSpaces0(),
-  //         ))),
-  //         capture(seq(
-  //           char('%'),
-  //           negChars0('%'),
-  //           char('%'),
-  //         )),
-  //         lookahead(seq(
-  //           inlineSpaces0(),
-  //           alt(char(','), endAnchor()),
-  //         )),
-  //       ),
-  //       captures: {
-  //         1: [ includeRule(Repository.Dereference) ],
-  //       },
-  //     },
-  //     {
-  //       name: [ StyleName.Underline ],
-  //       match: capture(seq(
-  //         char('%'),
-  //         negChars0('%'),
-  //         char('%'),
-  //       )),
-  //       captures: {
-  //         1: [ includeRule(Repository.Dereference) ],
-  //       },
-  //     },
-  //     {
-  //       match: capture(groupMany1(capture(seq(
-  //         negChar('%'),
-  //         negativeLookahead(ignoreCase(seq(
-  //           text('ahk_'),
-  //           group(alt(ordalt(
-  //             'class',
-  //             'id',
-  //             'pid',
-  //             'exe',
-  //             'group',
-  //           ))),
-  //         ))),
-  //       )))),
-  //       captures: {
-  //         1: [ { name: [ RuleName.UnquotedString, StyleName.Underline ] } ],
-  //       },
-  //     },
-  //   ],
-  // };
-}
 export function control(flags: CommandParameterFlag = CommandParameterFlag.None): CommandParameter {
   return $([ keywordOption('ahk_id') ], flags);
 }
@@ -859,10 +794,75 @@ export function soundComponent(): CommandParameter {
 export function soundControlType(): CommandParameter {
   return $([ keywordOption('VOLUME', 'VOL', 'ONOFF', 'MUTE', 'MONO', 'LOUDNESS', 'STEREOENH', 'BASSBOOST', 'PAN', 'QSOUNDPAN', 'BASS', 'TREBLE', 'EQUALIZER') ]);
 }
+export function $winTitle(flags: CommandParameterFlag = CommandParameterFlag.None): CommandParameter {
+  // e.g. `WinGet, output,ID, abc ahk_exe abc.exe ahk_class abc
+  //                          ^^^ ^^^^^^^^^^^^^^^ ^^^^^^^^^^^^^
+  return $([ keywordOption('ahk_class', 'ahk_id', 'ahk_pid', 'ahk_exe', 'ahk_group') ], flags);
+
+  // Make each definition group easily distinguishable by underlining. However, if the underline is applied in TMLanguage, its color cannot be controlled. This should be implemented with semantic highlighting
+  // For example, three groups are underlined in the following cases
+  // e.g. `WinActivate abc ahk_exe abc.exe ahk_class abc`
+  //                   ^^^ ^^^^^^^^^^^^^^^ ^^^^^^^^^^^^^
+  // return {
+  //   type: HighlightType.UnquotedString,
+  //   flags,
+  //   itemMatchers: [
+  //     {
+  //       match: seq(
+  //         lookbehind(group(seq(
+  //           char(','),
+  //           inlineSpaces0(),
+  //         ))),
+  //         capture(seq(
+  //           char('%'),
+  //           negChars0('%'),
+  //           char('%'),
+  //         )),
+  //         lookahead(seq(
+  //           inlineSpaces0(),
+  //           alt(char(','), endAnchor()),
+  //         )),
+  //       ),
+  //       captures: {
+  //         1: [ includeRule(Repository.Dereference) ],
+  //       },
+  //     },
+  //     {
+  //       name: [ StyleName.Underline ],
+  //       match: capture(seq(
+  //         char('%'),
+  //         negChars0('%'),
+  //         char('%'),
+  //       )),
+  //       captures: {
+  //         1: [ includeRule(Repository.Dereference) ],
+  //       },
+  //     },
+  //     {
+  //       match: capture(groupMany1(capture(seq(
+  //         negChar('%'),
+  //         negativeLookahead(ignoreCase(seq(
+  //           text('ahk_'),
+  //           group(alt(ordalt(
+  //             'class',
+  //             'id',
+  //             'pid',
+  //             'exe',
+  //             'group',
+  //           ))),
+  //         ))),
+  //       )))),
+  //       captures: {
+  //         1: [ { name: [ RuleName.UnquotedString, StyleName.Underline ] } ],
+  //       },
+  //     },
+  //   ],
+  // };
+}
 export const winParams: CommandParameter[] = [
-  winTitle(),
+  $winTitle(),
   $(),
-  winTitle(),
+  $winTitle(),
   $(),
 ] as const;
 export function parameterless(): CommandParameter[] {

@@ -1,11 +1,11 @@
 import {
   $, $blank, $expression, $fileAttributes, $flowsubcommand, $guiOptions, $guisubcommand, $includeLib, $input, $invalid, $menuItemName, $menuOptions,
   $output, $requiresVersion, $rest, $shouldEscapeComma, $shouldInteger, $shouldKeyword, $shouldLabel, $shouldNumber, $shouldSpacedKeywords, $style,
-  $subcommand, $subcommandlike, $withNumber, color, colorOptionItem, command, CommandFlag, control, controlMoveOptions, controlOrPos, decimalOptionItem,
+  $subcommand, $subcommandlike, $winTitle, $withNumber, color, colorOptionItem, command, CommandFlag, control, controlMoveOptions, controlOrPos, decimalOptionItem,
   encoding, endKeyOptionItem, flagedGuiControlOptions, formatTime, glob, guiControlOptions, guiControlType, hotkeyName, identifierOptionItem, imagePath,
   keyName, keywordOption, letterOptionItem, matchKeyOptionItem, numberOptionItem, onOff, onOffToggle, parameterless, path, rangeOptionItem, sendKeys,
   signature, signedNumberOptionItem, signOptionItem, sizeOptionItem, soundComponent, soundControlType, stringOption, timeunit, toggleOptionItem, whichButton,
-  winParams, winTitle,
+  winParams,
   type CommandDefinition,
 } from '../definition';
 
@@ -52,10 +52,10 @@ export const directiveDefinitions: CommandDefinition[] = [
   command('#IncludeAgain', signature([ $includeLib() ])),
 
   // https://www.autohotkey.com/docs/v1/lib/_IfWinActive.htm
-  command('#IfWinActive', signature([ winTitle(), $() ])),
-  command('#IfWinNotActive', signature([ winTitle(), $() ])),
-  command('#IfWinExist', signature([ winTitle(), $() ])),
-  command('#IfWinNotExist', signature([ winTitle(), $() ])),
+  command('#IfWinActive', signature([ $winTitle(), $() ])),
+  command('#IfWinNotActive', signature([ $winTitle(), $() ])),
+  command('#IfWinExist', signature([ $winTitle(), $() ])),
+  command('#IfWinNotExist', signature([ $winTitle(), $() ])),
 
   // https://www.autohotkey.com/docs/v1/lib/_InputLevel.htm
   command('#InputLevel', signature([ $() ])),
@@ -160,7 +160,7 @@ export const commandDefinitions: CommandDefinition[] = [
   ),
 
   // https://www.autohotkey.com/docs/v1/lib/ControlClick.htm
-  command('ControlClick', signature([ controlOrPos(), winTitle(), $(), whichButton(), $expression(), $([ keywordOption('NA', 'D', 'U', 'Pos'), decimalOptionItem('X', 'Y') ]) ])),
+  command('ControlClick', signature([ controlOrPos(), $winTitle(), $(), whichButton(), $expression(), $([ keywordOption('NA', 'D', 'U', 'Pos'), decimalOptionItem('X', 'Y') ]) ])),
 
   // https://www.autohotkey.com/docs/v1/lib/ControlFocus.htm
   command('ControlFocus', signature([ control(), ...winParams ])),
@@ -333,7 +333,7 @@ export const commandDefinitions: CommandDefinition[] = [
   command('GroupActivate', signature([ $(), $shouldKeyword([ keywordOption('R') ]) ])),
 
   // https://www.autohotkey.com/docs/v1/lib/GroupAdd.htm
-  command('GroupAdd', signature([ $(), winTitle(), $(), $(), winTitle(), $() ])),
+  command('GroupAdd', signature([ $(), $winTitle(), $(), $(), $winTitle(), $() ])),
 
   // https://www.autohotkey.com/docs/v1/lib/GroupClose.htm
   command('GroupClose', signature([ $(), $shouldKeyword([ keywordOption('R', 'A') ]) ])),
@@ -372,7 +372,7 @@ export const commandDefinitions: CommandDefinition[] = [
 
   // https://www.autohotkey.com/docs/v1/lib/Hotkey.htm
   command('Hotkey', [
-    signature([ $subcommand([ 'IfWinActive', 'IfWinExist' ]), winTitle(), $() ]),
+    signature([ $subcommand([ 'IfWinActive', 'IfWinExist' ]), $winTitle(), $() ]),
     signature([ $subcommand('If'), $expression(), $rest() ]),
     signature([ hotkeyName(), $([ keywordOption('On', 'Off', 'Toggle', 'AltTab') ]), $([ keywordOption('UseErrorLevel', 'On', 'Off', 'B', 'B0'), numberOptionItem('P', 'T', 'I') ]) ]),
   ]),
@@ -473,7 +473,7 @@ export const commandDefinitions: CommandDefinition[] = [
   // https://www.autohotkey.com/docs/v1/lib/Progress.htm
   command('Progress', [
     signature([ $subcommandlike('Off'), $rest() ]),
-    signature([ $(), $(), $(), winTitle(), $() ]),
+    signature([ $(), $(), $(), $winTitle(), $() ]),
   ], CommandFlag.Deprecated),
 
   // https://www.autohotkey.com/docs/v1/lib/Random.htm
@@ -599,7 +599,7 @@ export const commandDefinitions: CommandDefinition[] = [
         numberOptionItem('B', 'M', 'P', 'H', 'W', 'X', 'Y', 'C', 'ZH', 'ZW', 'ZX', 'ZY', 'FM', 'FS', 'WM', 'WS'),
         colorOptionItem('CB', 'CT', 'CW'),
         sizeOptionItem('R'),
-      ]), $(), $(), winTitle(), $(),
+      ]), $(), $(), $winTitle(), $(),
     ]),
   ], CommandFlag.Deprecated),
 
@@ -616,7 +616,7 @@ export const commandDefinitions: CommandDefinition[] = [
   command('StatusBarGetText', signature([ $output(), $expression(), ...winParams ])),
 
   // https://www.autohotkey.com/docs/v1/lib/StatusBarWait.htm
-  command('StatusBarWait', signature([ $(), $expression(), $expression(), winTitle(), $(), $expression(), winTitle(), $() ])),
+  command('StatusBarWait', signature([ $(), $expression(), $expression(), $winTitle(), $(), $expression(), $winTitle(), $() ])),
 
   // https://www.autohotkey.com/docs/v1/lib/StringCaseSense.htm
   command('StringCaseSense', signature([ onOff([ keywordOption('Locale') ]) ])),
@@ -691,7 +691,7 @@ export const commandDefinitions: CommandDefinition[] = [
   command('WinActivateBottom', signature(winParams)),
 
   // https://www.autohotkey.com/docs/v1/lib/WinClose.htm
-  command('WinClose', signature([ winTitle(), $(), $expression(), winTitle(), $() ])),
+  command('WinClose', signature([ $winTitle(), $(), $expression(), $winTitle(), $() ])),
 
   // https://www.autohotkey.com/docs/v1/lib/WinGetActiveStats.htm
   command('WinGetActiveStats', signature([ $output(), $output(), $output(), $output(), $output(), $output() ])),
@@ -721,13 +721,13 @@ export const commandDefinitions: CommandDefinition[] = [
   command('WinHide', signature(winParams)),
 
   // https://www.autohotkey.com/docs/v1/lib/WinKill.htm
-  command('WinKill', signature([ winTitle(), $(), $expression(), winTitle(), $() ])),
+  command('WinKill', signature([ $winTitle(), $(), $expression(), $winTitle(), $() ])),
 
   // https://www.autohotkey.com/docs/v1/lib/WinMaximize.htm
   command('WinMaximize', signature(winParams)),
 
   // https://www.autohotkey.com/docs/v1/lib/WinMenuSelectItem.htm
-  command('WinMenuSelectItem', signature([ winTitle(), $(), $(), $(), $(), $(), $(), $(), winTitle(), $() ])),
+  command('WinMenuSelectItem', signature([ $winTitle(), $(), $(), $(), $(), $(), $(), $(), $winTitle(), $() ])),
 
   // https://www.autohotkey.com/docs/v1/lib/WinMinimize.htm
   command('WinMinimize', signature(winParams)),
@@ -739,7 +739,7 @@ export const commandDefinitions: CommandDefinition[] = [
   command('WinMinimizeAllUndo', signature(parameterless())),
 
   // https://www.autohotkey.com/docs/v1/lib/WinMove.htm
-  command('WinMove', signature([ winTitle(), $(), $expression(), $expression(), $expression(), $expression(), winTitle(), $() ])),
+  command('WinMove', signature([ $winTitle(), $(), $expression(), $expression(), $expression(), $expression(), $winTitle(), $() ])),
 
   // https://www.autohotkey.com/docs/v1/lib/WinRestore.htm
   command('WinRestore', signature(winParams)),
@@ -755,22 +755,22 @@ export const commandDefinitions: CommandDefinition[] = [
   ]),
 
   // https://www.autohotkey.com/docs/v1/lib/WinSetTitle.htm
-  command('WinSetTitle', signature([ winTitle(), $(), $(), winTitle(), $() ])),
+  command('WinSetTitle', signature([ $winTitle(), $(), $(), $winTitle(), $() ])),
 
   // https://www.autohotkey.com/docs/v1/lib/WinShow.htm
   command('WinShow', signature(winParams)),
 
   // https://www.autohotkey.com/docs/v1/lib/WinWait.htm
-  command('WinWait', signature([ winTitle(), $(), $expression(), winTitle(), $() ])),
+  command('WinWait', signature([ $winTitle(), $(), $expression(), $winTitle(), $() ])),
 
   // https://www.autohotkey.com/docs/v1/lib/WinWaitActive.htm
-  command('WinWaitActive', signature([ winTitle(), $(), $expression(), winTitle(), $() ])),
+  command('WinWaitActive', signature([ $winTitle(), $(), $expression(), $winTitle(), $() ])),
 
   // https://www.autohotkey.com/docs/v1/lib/WinWaitNotActive.htm
-  command('WinWaitNotActive', signature([ winTitle(), $(), $expression(), winTitle(), $() ])),
+  command('WinWaitNotActive', signature([ $winTitle(), $(), $expression(), $winTitle(), $() ])),
 
   // https://www.autohotkey.com/docs/v1/lib/WinWaitClose.htm
-  command('WinWaitClose', signature([ winTitle(), $(), $expression(), winTitle(), $() ])),
+  command('WinWaitClose', signature([ $winTitle(), $(), $expression(), $winTitle(), $() ])),
 ] as const;
 // #endregion commands
 
