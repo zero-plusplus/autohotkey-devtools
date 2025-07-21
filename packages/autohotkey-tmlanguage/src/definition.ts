@@ -630,6 +630,13 @@ export function $menuItemName(flags: CommandParameterFlag = CommandParameterFlag
     itemMatchers: [ includeRule(Repository.MenuItemNameCommandArgument) ],
   };
 }
+export function $menuOptions(values: string[] = [], flags: CommandParameterFlag = CommandParameterFlag.None): CommandParameter {
+  return $([
+    decimalOptionItem('P'),
+    flagedOptionItem('Radio', 'Right', 'Break', 'BarBreak'),
+    ...values,
+  ], flags);
+}
 export function $includeLib(flags: CommandParameterFlag = CommandParameterFlag.None, quotable = false): CommandParameter {
   // e.g. `#Include path\to`, `#Include <lib>`
   //                ^^^^^^^             ^^^^^
@@ -703,13 +710,6 @@ export function $requiresVersion(flags: CommandParameterFlag = CommandParameterF
     )),
   ], flags);
   // return { type: HighlightType.RequiresVersion, flags };
-}
-export function menuOptions(values: string[] = [], flags: CommandParameterFlag = CommandParameterFlag.None): CommandParameter {
-  return $([
-    decimalOptionItem('P'),
-    flagedOptionItem('Radio', 'Right', 'Break', 'BarBreak'),
-    ...values,
-  ], flags);
 }
 export function winTitle(flags: CommandParameterFlag = CommandParameterFlag.None): CommandParameter {
   // e.g. `WinGet, output,ID, abc ahk_exe abc.exe ahk_class abc

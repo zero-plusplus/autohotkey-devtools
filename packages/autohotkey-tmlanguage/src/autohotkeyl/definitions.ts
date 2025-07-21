@@ -1,10 +1,11 @@
 import {
-  $, $blank, $expression, $fileAttributes, $flowsubcommand, $guiOptions, $guisubcommand, $includeLib, $input, $invalid, $menuItemName, $output, $requiresVersion,
-  $rest, $shouldEscapeComma, $shouldInteger, $shouldKeyword, $shouldLabel, $shouldNumber, $shouldSpacedKeywords, $style, $subcommand, $subcommandlike, $withNumber,
-  color, colorOptionItem, command, CommandFlag, control, controlMoveOptions, controlOrPos, decimalOptionItem, encoding, endKeyOptionItem, flagedGuiControlOptions,
-  formatTime, glob, guiControlOptions, guiControlType, hotkeyName, identifierOptionItem, imagePath, keyName, keywordOption, letterOptionItem, matchKeyOptionItem,
-  menuOptions, numberOptionItem, onOff, onOffToggle, parameterless, path, rangeOptionItem, sendKeys, signature, signedNumberOptionItem, signOptionItem, sizeOptionItem,
-  soundComponent, soundControlType, stringOption, timeunit, toggleOptionItem, whichButton, winParams, winTitle,
+  $, $blank, $expression, $fileAttributes, $flowsubcommand, $guiOptions, $guisubcommand, $includeLib, $input, $invalid, $menuItemName, $menuOptions,
+  $output, $requiresVersion, $rest, $shouldEscapeComma, $shouldInteger, $shouldKeyword, $shouldLabel, $shouldNumber, $shouldSpacedKeywords, $style,
+  $subcommand, $subcommandlike, $withNumber, color, colorOptionItem, command, CommandFlag, control, controlMoveOptions, controlOrPos, decimalOptionItem,
+  encoding, endKeyOptionItem, flagedGuiControlOptions, formatTime, glob, guiControlOptions, guiControlType, hotkeyName, identifierOptionItem, imagePath,
+  keyName, keywordOption, letterOptionItem, matchKeyOptionItem, numberOptionItem, onOff, onOffToggle, parameterless, path, rangeOptionItem, sendKeys,
+  signature, signedNumberOptionItem, signOptionItem, sizeOptionItem, soundComponent, soundControlType, stringOption, timeunit, toggleOptionItem, whichButton,
+  winParams, winTitle,
   type CommandDefinition,
 } from '../definition';
 
@@ -415,8 +416,8 @@ export const commandDefinitions: CommandDefinition[] = [
     signature([ $subcommand('Tray'), $subcommand([ 'Tip', 'Click' ]), $() ]),
     signature([ $subcommand('Tray'), $subcommand([ 'MainWindow', 'NoMainWindow', 'NoIcon' ]), $rest() ]),
     signature([ $subcommand('Tray'), $(), path(), $(), $() ]),
-    signature([ $(), $subcommand('Add'), $menuItemName(), $(), menuOptions() ]),
-    signature([ $(), $subcommand('Insert'), $menuItemName(), $(), $(), menuOptions() ]),
+    signature([ $(), $subcommand('Add'), $menuItemName(), $(), $menuOptions() ]),
+    signature([ $(), $subcommand('Insert'), $menuItemName(), $(), $(), $menuOptions() ]),
     signature([ $(), $subcommand([ 'DeleteAll', 'NoDefault', 'Standard', 'NoStandard' ]), $rest() ]),
     signature([ $(), $subcommand([ 'Delete', 'Check', 'Uncheck', 'ToggleCheck', 'Enable', 'Disable', 'ToggleEnable', 'Default', 'NoIcon' ]), $menuItemName() ]),
     signature([ $(), $subcommand('Rename'), $menuItemName(), $menuItemName() ]),
