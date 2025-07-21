@@ -1,7 +1,6 @@
 import {
-  $, $shouldBoolean, $shouldInteger, command, decimalOptionItem, expression, keywordOnly, keywordOption,
-  parameterless, quotableEncoding, quotableIncludeLib, quotableUnquoted, requiresVersion, signature,
-  signedNumberOptionItem, signOptionItem, toggleOptionItem,
+  $, $quotable, $shouldBoolean, $shouldInteger, command, decimalOptionItem, expression, keywordOnly, keywordOption, parameterless,
+  quotableEncoding, quotableIncludeLib, requiresVersion, signature, signedNumberOptionItem, signOptionItem, toggleOptionItem,
   type CommandDefinition,
 } from '../definition';
 
@@ -11,7 +10,7 @@ export const directiveDefinitions: CommandDefinition[] = [
   command('#ClipboardTimeout', signature([ $shouldInteger() ])),
 
   // https://www.autohotkey.com/docs/v2/lib/_DllLoad.htm
-  command('#DllLoad', signature([ quotableUnquoted([ signOptionItem('*i') ]) ])),
+  command('#DllLoad', signature([ $quotable([ signOptionItem('*i') ]) ])),
 
   // https://www.autohotkey.com/docs/v2/lib/_ErrorStdOut.htm
   command('#ErrorStdOut', signature([ quotableEncoding() ])),

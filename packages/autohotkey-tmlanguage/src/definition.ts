@@ -436,6 +436,26 @@ export function $invalid(flags: CommandParameterFlag = CommandParameterFlag.None
 export function $shouldEscapeComma(flags: CommandParameterFlag = CommandParameterFlag.None): CommandParameter {
   return restParams([], flags);
 }
+export function $quotable(itemMatchers: ParameterItemMatcher[] = [], flags: CommandParameterFlag = CommandParameterFlag.None): CommandParameter {
+  return {
+    flags,
+    itemMatchers: [
+      includeRule(Repository.DereferenceUnaryOperator),
+      includeRule(Repository.DereferenceInCommandArgument),
+
+      ...itemMatchers,
+      includeRule(Repository.UnquotedStringEscapeSequence),
+      {
+        name: [ RuleName.UnquotedString ],
+        match: char('"', `'`),
+      },
+      {
+        name: [ RuleName.UnquotedString ],
+        match: negChars1('`', '%', '"', `'`, inlineSpace()),
+      },
+    ],
+  };
+}
 export function $shouldBoolean(flags: CommandParameterFlag = CommandParameterFlag.None): CommandParameter {
   return {
     flags: mergeFlags(flags, CommandParameterFlag.ExclusiveKeyword),
@@ -500,26 +520,6 @@ export function $withNumber(itemMatchers: ParameterItemMatcher[] = [], flags: Co
       {
         name: [ RuleName.UnquotedString ],
         match: negChars1('`', '%', '0-9', inlineSpace()),
-      },
-    ],
-  };
-}
-export function quotableUnquoted(itemMatchers: ParameterItemMatcher[] = [], flags: CommandParameterFlag = CommandParameterFlag.None): CommandParameter {
-  return {
-    flags,
-    itemMatchers: [
-      includeRule(Repository.DereferenceUnaryOperator),
-      includeRule(Repository.DereferenceInCommandArgument),
-
-      ...itemMatchers,
-      includeRule(Repository.UnquotedStringEscapeSequence),
-      {
-        name: [ RuleName.UnquotedString ],
-        match: char('"', `'`),
-      },
-      {
-        name: [ RuleName.UnquotedString ],
-        match: negChars1('`', '%', '"', `'`, inlineSpace()),
       },
     ],
   };
