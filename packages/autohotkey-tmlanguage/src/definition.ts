@@ -753,7 +753,7 @@ export function $whichButton(flags: CommandParameterFlag = CommandParameterFlag.
 export function $path(itemMatchers: ParameterItemMatcher[] = [], flags: CommandParameterFlag = CommandParameterFlag.None): CommandParameter {
   return $(itemMatchers, flags);
 }
-export function imagePath(flags: CommandParameterFlag = CommandParameterFlag.None): CommandParameter {
+export function $imagePath(flags: CommandParameterFlag = CommandParameterFlag.None): CommandParameter {
   return $path([ stringOption('HICON:', 'HBITMAP:') ], flags);
 }
 export function glob(flags: CommandParameterFlag = CommandParameterFlag.None): CommandParameter {

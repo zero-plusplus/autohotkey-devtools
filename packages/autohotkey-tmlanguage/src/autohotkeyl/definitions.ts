@@ -1,9 +1,9 @@
 import {
   $, $blank, $control, $controlMoveOptions, $controlOrPos, $expression, $fileAttributes, $flagedGuiControlOptions, $flowsubcommand,
-  $guiControlOptions, $guiControlType, $guiOptions, $guisubcommand, $includeLib, $input, $invalid, $menuItemName, $menuOptions, $onOff,
-  $onOffToggle, $output, $path, $requiresVersion, $rest, $shouldEscapeComma, $shouldInteger, $shouldKeyword, $shouldLabel, $shouldNumber,
-  $shouldSpacedKeywords, $style, $subcommand, $subcommandlike, $whichButton, $winTitle, $withNumber, color, colorOptionItem, command,
-  CommandFlag, decimalOptionItem, encoding, endKeyOptionItem, formatTime, glob, hotkeyName, identifierOptionItem, imagePath, keyName,
+  $guiControlOptions, $guiControlType, $guiOptions, $guisubcommand, $imagePath, $includeLib, $input, $invalid, $menuItemName, $menuOptions,
+  $onOff, $onOffToggle, $output, $path, $requiresVersion, $rest, $shouldEscapeComma, $shouldInteger, $shouldKeyword, $shouldLabel,
+  $shouldNumber, $shouldSpacedKeywords, $style, $subcommand, $subcommandlike, $whichButton, $winTitle, $withNumber, color, colorOptionItem,
+  command, CommandFlag, decimalOptionItem, encoding, endKeyOptionItem, formatTime, glob, hotkeyName, identifierOptionItem, keyName,
   keywordOption, letterOptionItem, matchKeyOptionItem, numberOptionItem, parameterless, rangeOptionItem, sendKeys, signature,
   signedNumberOptionItem, signOptionItem, sizeOptionItem, soundComponent, soundControlType, stringOption, timeunit, toggleOptionItem,
   winParams,
@@ -413,7 +413,7 @@ export const commandDefinitions: CommandDefinition[] = [
 
   // https://www.autohotkey.com/docs/v1/lib/Menu.htm
   command('Menu', [
-    signature([ $subcommand('Tray'), $subcommand('Icon'), imagePath(), $(), $() ]),
+    signature([ $subcommand('Tray'), $subcommand('Icon'), $imagePath(), $(), $() ]),
     signature([ $subcommand('Tray'), $subcommand([ 'Tip', 'Click' ]), $() ]),
     signature([ $subcommand('Tray'), $subcommand([ 'MainWindow', 'NoMainWindow', 'NoIcon' ]), $rest() ]),
     signature([ $subcommand('Tray'), $(), $path(), $(), $() ]),
@@ -422,7 +422,7 @@ export const commandDefinitions: CommandDefinition[] = [
     signature([ $(), $subcommand([ 'DeleteAll', 'NoDefault', 'Standard', 'NoStandard' ]), $rest() ]),
     signature([ $(), $subcommand([ 'Delete', 'Check', 'Uncheck', 'ToggleCheck', 'Enable', 'Disable', 'ToggleEnable', 'Default', 'NoIcon' ]), $menuItemName() ]),
     signature([ $(), $subcommand('Rename'), $menuItemName(), $menuItemName() ]),
-    signature([ $(), $subcommand('Icon'), $(), $path(), $(), imagePath() ]),
+    signature([ $(), $subcommand('Icon'), $(), $path(), $(), $imagePath() ]),
     signature([ $(), $subcommand('UseErrorLevel'), $shouldKeyword([ keywordOption('Off') ]) ]),
     signature([ $(), $subcommand([ 'Show', 'Color' ]), $(), $() ]),
     signature([ $rest() ]),
@@ -595,7 +595,7 @@ export const commandDefinitions: CommandDefinition[] = [
   command('SplashImage', [
     signature([ $subcommandlike('Off'), $rest() ]),
     signature([
-      imagePath(), $([
+      $imagePath(), $([
         keywordOption('A', 'T', 'Hide'),
         numberOptionItem('B', 'M', 'P', 'H', 'W', 'X', 'Y', 'C', 'ZH', 'ZW', 'ZX', 'ZY', 'FM', 'FS', 'WM', 'WS'),
         colorOptionItem('CB', 'CT', 'CW'),
