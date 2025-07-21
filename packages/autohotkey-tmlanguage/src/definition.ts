@@ -405,7 +405,7 @@ export function $flowsubcommand(values: string | string[] = [], flags: CommandPa
     ],
   };
 }
-export function guiSubcommand(values: string | string[] = [], flags: CommandParameterFlag = CommandParameterFlag.None): CommandParameter {
+export function $guisubcommand(values: string | string[] = [], flags: CommandParameterFlag = CommandParameterFlag.None): CommandParameter {
   // In addition to SubCommand, a label-like syntax is added. Mainly used in commands that deal with Gui
   // e.g. `Gui, Add`, `Gui, GuiName:Add`
   //            ^^^         ^^^^^^^^^^^

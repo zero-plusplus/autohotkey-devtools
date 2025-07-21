@@ -1,7 +1,7 @@
 import {
-  $, $flowsubcommand, $integer, $subcommand, $subcommandlike, blank, color, colorOptionItem, command, CommandFlag, control,
+  $, $flowsubcommand, $guisubcommand, $integer, $subcommand, $subcommandlike, blank, color, colorOptionItem, command, CommandFlag, control,
   controlMoveOptions, controlOrPos, decimalOptionItem, encoding, endKeyOptionItem, expression, fileAttributes, flagedGuiControlOptions,
-  formatTime, glob, guiControlOptions, guiControlType, guiOptions, guiSubcommand, hotkeyName, identifierOptionItem, imagePath, includeLib,
+  formatTime, glob, guiControlOptions, guiControlType, guiOptions, hotkeyName, identifierOptionItem, imagePath, includeLib,
   input, invalid, keyName, keywordOnly, keywordOption, labelName, letterOptionItem, matchKeyOptionItem, menuItemName,
   menuOptions, numberOptionItem, onOff, onOffToggle, output, parameterless, path, rangeOptionItem, requiresVersion,
   restParams, sendKeys, signature, signedNumberOptionItem, signOptionItem, sizeOptionItem, soundComponent, soundControlType,
@@ -344,30 +344,30 @@ export const commandDefinitions: CommandDefinition[] = [
 
   // https://www.autohotkey.com/docs/v1/lib/Gui.htm
   command('Gui', [
-    signature([ guiSubcommand('New'), guiOptions(), $() ]),
-    signature([ guiSubcommand('Add'), guiControlType(), guiControlOptions(), $() ]),
-    signature([ guiSubcommand('Show'), $([ keywordOption('xCenter', 'yCenter', 'AutoSize', 'Minimize', 'Maximize', 'Restore', 'NoActivate', 'NA', 'Hide', 'Center'), numberOptionItem('W', 'H', 'X', 'Y') ]), $() ]),
-    signature([ guiSubcommand('Submit'), keywordOnly([ keywordOption('NoHide') ]) ]),
-    signature([ guiSubcommand([ 'Cancel', 'Hide', 'Destroy', 'Minimize', 'Maximize', 'Restore', 'Default' ]), restParams() ]),
-    signature([ guiSubcommand('Font'), $([ colorOptionItem('C'), numberOptionItem('S', 'W', 'Q') ]), $() ]),
-    signature([ guiSubcommand('Color'), color(), color() ]),
-    signature([ guiSubcommand('Margin'), unquotedWithNumber(), unquotedWithNumber() ]),
-    signature([ guiSubcommand('Menu'), $() ]),
-    signature([ guiSubcommand('Flash'), keywordOnly([ 'Off' ]) ]),
+    signature([ $guisubcommand('New'), guiOptions(), $() ]),
+    signature([ $guisubcommand('Add'), guiControlType(), guiControlOptions(), $() ]),
+    signature([ $guisubcommand('Show'), $([ keywordOption('xCenter', 'yCenter', 'AutoSize', 'Minimize', 'Maximize', 'Restore', 'NoActivate', 'NA', 'Hide', 'Center'), numberOptionItem('W', 'H', 'X', 'Y') ]), $() ]),
+    signature([ $guisubcommand('Submit'), keywordOnly([ keywordOption('NoHide') ]) ]),
+    signature([ $guisubcommand([ 'Cancel', 'Hide', 'Destroy', 'Minimize', 'Maximize', 'Restore', 'Default' ]), restParams() ]),
+    signature([ $guisubcommand('Font'), $([ colorOptionItem('C'), numberOptionItem('S', 'W', 'Q') ]), $() ]),
+    signature([ $guisubcommand('Color'), color(), color() ]),
+    signature([ $guisubcommand('Margin'), unquotedWithNumber(), unquotedWithNumber() ]),
+    signature([ $guisubcommand('Menu'), $() ]),
+    signature([ $guisubcommand('Flash'), keywordOnly([ 'Off' ]) ]),
     signature([ guiOptions() ]),
   ]),
 
   // https://www.autohotkey.com/docs/v1/lib/GuiControl.htm
   command('GuiControl', [
-    signature([ guiSubcommand([ 'Text', 'Choose', 'ChooseString' ]), control(), $() ]),
-    signature([ guiSubcommand([ 'Move', 'MoveDraw' ]), control(), controlMoveOptions() ]),
-    signature([ guiSubcommand([ 'Focus', 'Disable', 'Enable', 'Hide', 'Show', 'Font' ]), control() ]),
+    signature([ $guisubcommand([ 'Text', 'Choose', 'ChooseString' ]), control(), $() ]),
+    signature([ $guisubcommand([ 'Move', 'MoveDraw' ]), control(), controlMoveOptions() ]),
+    signature([ $guisubcommand([ 'Focus', 'Disable', 'Enable', 'Hide', 'Show', 'Font' ]), control() ]),
     signature([ flagedGuiControlOptions(), control(), $() ]),
   ]),
 
   // https://www.autohotkey.com/docs/v1/lib/GuiControlGet.htm
   command('GuiControlGet', [
-    signature([ output(), guiSubcommand([ 'Pos', 'Focus', 'FocusV', 'Visible', 'Hwnd', 'Name' ]), control() ]),
+    signature([ output(), $guisubcommand([ 'Pos', 'Focus', 'FocusV', 'Visible', 'Hwnd', 'Name' ]), control() ]),
     signature([ output(), blank(), control(), $() ]),
   ]),
 
