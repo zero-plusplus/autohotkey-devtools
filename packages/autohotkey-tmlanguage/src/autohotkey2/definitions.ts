@@ -1,6 +1,6 @@
 import {
-  $, $expression, $quotable, $quotableIncludeLib, $requiresVersion, $shouldBoolean, $shouldInteger, $shouldKeyword, command, decimalOptionItem,
-  keywordOption, parameterless, quotableEncoding, signature, signedNumberOptionItem, signOptionItem, toggleOptionItem,
+  $, $expression, $quotable, $quotableEncoding, $quotableIncludeLib, $requiresVersion, $shouldBoolean, $shouldInteger, $shouldKeyword,
+  command, decimalOptionItem, keywordOption, parameterless, signature, signedNumberOptionItem, signOptionItem, toggleOptionItem,
   type CommandDefinition,
 } from '../definition';
 
@@ -13,7 +13,7 @@ export const directiveDefinitions: CommandDefinition[] = [
   command('#DllLoad', signature([ $quotable([ signOptionItem('*i') ]) ])),
 
   // https://www.autohotkey.com/docs/v2/lib/_ErrorStdOut.htm
-  command('#ErrorStdOut', signature([ quotableEncoding() ])),
+  command('#ErrorStdOut', signature([ $quotableEncoding() ])),
 
   // https://www.autohotkey.com/docs/v2/lib/_HotIf.htm
   command('#HotIf', signature([ $expression() ])),

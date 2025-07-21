@@ -762,7 +762,7 @@ export function $glob(flags: CommandParameterFlag = CommandParameterFlag.None): 
 export function $encoding(flags: CommandParameterFlag = CommandParameterFlag.None): CommandParameter {
   return $([ keywordOption('CP0', 'UTF-8', 'UTF-8-RAW', 'UTF-16', 'UTF-16-RAW'), numberOptionItem('CP') ], flags);
 }
-export function quotableEncoding(flags: CommandParameterFlag = CommandParameterFlag.None): CommandParameter {
+export function $quotableEncoding(flags: CommandParameterFlag = CommandParameterFlag.None): CommandParameter {
   return $([ quotableKeywordOption('CP0', 'UTF-8', 'UTF-8-RAW', 'UTF-16', 'UTF-16-RAW'), quotableNumberOptionItem('CP'), ...($encoding(flags).itemMatchers!) ], flags);
 }
 export function keyName(flags: CommandParameterFlag = CommandParameterFlag.None): CommandParameter {
