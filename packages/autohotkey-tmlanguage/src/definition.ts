@@ -887,13 +887,11 @@ export function $winTitle(flags: CommandParameterFlag = CommandParameterFlag.Non
   //   ],
   // };
 }
-export const winParams: CommandParameter[] = [
+export const $winParams: CommandParameter[] = [
   $winTitle(),
   $(),
   $winTitle(),
   $(),
 ] as const;
-export function parameterless(): CommandParameter[] {
-  return [ $invalid() ];
-}
+export const $parameterless: CommandParameter[] = [ $invalid() ] as const;
 // #endregion command parameter definitions

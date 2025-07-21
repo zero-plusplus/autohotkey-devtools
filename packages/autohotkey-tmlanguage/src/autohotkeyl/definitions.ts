@@ -27,6 +27,7 @@ import {
   $onOff,
   $onOffToggle,
   $output,
+  $parameterless,
   $path,
   $requiresVersion,
   $rest,
@@ -44,6 +45,7 @@ import {
   $subcommandlike,
   $timeunit,
   $whichButton,
+  $winParams,
   $winTitle,
   $withNumber,
   colorOptionItem,
@@ -56,7 +58,6 @@ import {
   letterOptionItem,
   matchKeyOptionItem,
   numberOptionItem,
-  parameterless,
   rangeOptionItem,
   signature,
   signedNumberOptionItem,
@@ -64,7 +65,6 @@ import {
   sizeOptionItem,
   stringOption,
   toggleOptionItem,
-  winParams,
   type CommandDefinition,
 } from '../definition';
 
@@ -120,10 +120,10 @@ export const directiveDefinitions: CommandDefinition[] = [
   command('#InputLevel', signature([ $() ])),
 
   // https://www.autohotkey.com/docs/v1/lib/_InstallKeybdHook.htm
-  command('#InstallKeybdHook', signature(parameterless())),
+  command('#InstallKeybdHook', signature($parameterless)),
 
   // https://www.autohotkey.com/docs/v1/lib/_InstallMouseHook.htm
-  command('#InstallMouseHook', signature(parameterless())),
+  command('#InstallMouseHook', signature($parameterless)),
 
   // https://www.autohotkey.com/docs/v1/lib/_KeyHistory.htm
   command('#KeyHistory', signature([ $() ])),
@@ -150,13 +150,13 @@ export const directiveDefinitions: CommandDefinition[] = [
   command('#MenuMaskKey', signature([ $keyName() ])),
 
   // https://www.autohotkey.com/docs/v1/lib/_NoEnv.htm
-  command('#NoEnv', signature(parameterless())),
+  command('#NoEnv', signature($parameterless)),
 
   // https://www.autohotkey.com/docs/v1/lib/_NoTrayIcon.htm
-  command('#NoTrayIcon', signature(parameterless())),
+  command('#NoTrayIcon', signature($parameterless)),
 
   // https://www.autohotkey.com/docs/v1/lib/_Persistent.htm
-  command('#Persistent', signature(parameterless())),
+  command('#Persistent', signature($parameterless)),
 
   // https://www.autohotkey.com/docs/v1/lib/_Requires.htm
   command('#Requires', signature([ $requiresVersion() ])),
@@ -171,7 +171,7 @@ export const directiveDefinitions: CommandDefinition[] = [
   command('#Warn', signature([ $shouldKeyword([ keywordOption('UseUnsetLocal', 'UseUnsetGlobal', 'UseEnv', 'LocalSameAsGlobal', 'ClassOverwrite', 'Unreachable', 'All') ]), $shouldKeyword([ keywordOption('MsgBox', 'StdOut', 'OutputDebug', 'Off') ]) ])),
 
   // https://www.autohotkey.com/docs/v1/lib/_WinActivateForce.htm
-  command('#WinActivateForce', signature(parameterless())),
+  command('#WinActivateForce', signature($parameterless)),
 ];
 // #endregion directives
 
@@ -211,10 +211,10 @@ export const commandDefinitions: CommandDefinition[] = [
   command(
     'Control',
     [
-      signature([ $subcommand([ 'Check', 'UnCheck', 'Enable', 'Disable', 'Show', 'Hide', 'ShowDropDown', 'HideDropDown' ]), $blank(), $control(), ...winParams ]),
-      signature([ $subcommand([ 'Style', 'ExStyle' ]), $style(), $control(), ...winParams ]),
-      signature([ $subcommand([ 'TabLeft', 'TabRight', 'Add', 'Delete', 'Choose', 'ChooseString', 'EditPaste' ]), $(), $control(), ...winParams ]),
-      signature(parameterless()),
+      signature([ $subcommand([ 'Check', 'UnCheck', 'Enable', 'Disable', 'Show', 'Hide', 'ShowDropDown', 'HideDropDown' ]), $blank(), $control(), ...$winParams ]),
+      signature([ $subcommand([ 'Style', 'ExStyle' ]), $style(), $control(), ...$winParams ]),
+      signature([ $subcommand([ 'TabLeft', 'TabRight', 'Add', 'Delete', 'Choose', 'ChooseString', 'EditPaste' ]), $(), $control(), ...$winParams ]),
+      signature($parameterless),
     ],
   ),
 
@@ -222,36 +222,36 @@ export const commandDefinitions: CommandDefinition[] = [
   command('ControlClick', signature([ $controlOrPos(), $winTitle(), $(), $whichButton(), $expression(), $([ keywordOption('NA', 'D', 'U', 'Pos'), decimalOptionItem('X', 'Y') ]) ])),
 
   // https://www.autohotkey.com/docs/v1/lib/ControlFocus.htm
-  command('ControlFocus', signature([ $control(), ...winParams ])),
+  command('ControlFocus', signature([ $control(), ...$winParams ])),
 
   // https://www.autohotkey.com/docs/v1/lib/ControlGet.htm
   command('ControlGet', [
-    signature([ $output(), $subcommand('List'), $([ keywordOption('Selected', 'Focused', 'Col', 'Count') ]), $control(), ...winParams ]),
-    signature([ $output(), $subcommand([ 'Checked', 'Enabled', 'Visible', 'Tab', 'Choice', 'LineCount', 'CurrentLine', 'CurrentCol', 'Selected', 'Style', 'ExStyle', 'Hwnd' ]), $blank(), $control(), ...winParams ]),
-    signature([ $output(), $subcommand([ 'FindString', 'Line' ]), $(), $control(), ...winParams ]),
+    signature([ $output(), $subcommand('List'), $([ keywordOption('Selected', 'Focused', 'Col', 'Count') ]), $control(), ...$winParams ]),
+    signature([ $output(), $subcommand([ 'Checked', 'Enabled', 'Visible', 'Tab', 'Choice', 'LineCount', 'CurrentLine', 'CurrentCol', 'Selected', 'Style', 'ExStyle', 'Hwnd' ]), $blank(), $control(), ...$winParams ]),
+    signature([ $output(), $subcommand([ 'FindString', 'Line' ]), $(), $control(), ...$winParams ]),
     signature([ $output(), $invalid() ]),
   ]),
 
   // https://www.autohotkey.com/docs/v1/lib/ControlGetFocus.htm
-  command('ControlGetFocus', signature([ $output(), ...winParams ])),
+  command('ControlGetFocus', signature([ $output(), ...$winParams ])),
 
   // https://www.autohotkey.com/docs/v1/lib/ControlGetPos.htm
-  command('ControlGetPos', signature([ $output(), $output(), $output(), $output(), $control(), ...winParams ])),
+  command('ControlGetPos', signature([ $output(), $output(), $output(), $output(), $control(), ...$winParams ])),
 
   // https://www.autohotkey.com/docs/v1/lib/ControlGetText.htm
-  command('ControlGetText', signature([ $output(), $control(), ...winParams ])),
+  command('ControlGetText', signature([ $output(), $control(), ...$winParams ])),
 
   // https://www.autohotkey.com/docs/v1/lib/ControlMove.htm
-  command('ControlMove', signature([ $control(), $expression(), $expression(), $expression(), $expression(), ...winParams ])),
+  command('ControlMove', signature([ $control(), $expression(), $expression(), $expression(), $expression(), ...$winParams ])),
 
   // https://www.autohotkey.com/docs/v1/lib/ControlSend.htm
-  command('ControlSend', signature([ $control(), $sendKeyName(), ...winParams ])),
+  command('ControlSend', signature([ $control(), $sendKeyName(), ...$winParams ])),
 
   // https://www.autohotkey.com/docs/v1/lib/ControlSendRaw.htm
-  command('ControlSendRaw', signature([ $control(), $(), ...winParams ])),
+  command('ControlSendRaw', signature([ $control(), $(), ...$winParams ])),
 
   // https://www.autohotkey.com/docs/v1/lib/ControlSetText.htm
-  command('ControlSetText', signature([ $control(), $(), ...winParams ])),
+  command('ControlSetText', signature([ $control(), $(), ...$winParams ])),
 
   // https://www.autohotkey.com/docs/v1/lib/CoordMode.htm
   command('CoordMode', signature([ $shouldKeyword([ keywordOption('ToolTip', 'Pixel', 'Mouse', 'Caret', 'Menu') ]), $shouldKeyword([ keywordOption('Screen', 'Relative', 'Window', 'Client') ]) ])),
@@ -284,7 +284,7 @@ export const commandDefinitions: CommandDefinition[] = [
   command('DriveSpaceFree', signature([ $output(), $() ])),
 
   // https://www.autohotkey.com/docs/v1/lib/Edit.htm
-  command('Edit', signature(parameterless())),
+  command('Edit', signature($parameterless)),
 
   // https://www.autohotkey.com/docs/v1/lib/EnvAdd.htm
   command('EnvAdd', signature([ $input(), $expression(), $timeunit() ])),
@@ -305,7 +305,7 @@ export const commandDefinitions: CommandDefinition[] = [
   command('EnvSub', signature([ $input(), $expression(), $timeunit() ])),
 
   // https://www.autohotkey.com/docs/v1/lib/EnvUpdate.htm
-  command('EnvUpdate', signature(parameterless())),
+  command('EnvUpdate', signature($parameterless)),
 
   // https://www.autohotkey.com/docs/v1/lib/FileAppend.htm
   command('FileAppend', signature([ $(), $path(), $encoding() ])),
@@ -455,19 +455,19 @@ export const commandDefinitions: CommandDefinition[] = [
   command('InputBox', signature([ $output(), $(), $(), $(), $expression(), $expression(), $expression(), $expression(), $(), $expression(), $() ])),
 
   // https://www.autohotkey.com/docs/v1/lib/KeyHistory.htm
-  command('KeyHistory', signature(parameterless())),
+  command('KeyHistory', signature($parameterless)),
 
   // https://www.autohotkey.com/docs/v1/lib/KeyWait.htm
   command('KeyWait', signature([ $keyName(), $([ keywordOption('D', 'L'), decimalOptionItem('T') ]) ])),
 
   // https://www.autohotkey.com/docs/v1/lib/ListHotkeys.htm
-  command('ListHotkeys', signature(parameterless())),
+  command('ListHotkeys', signature($parameterless)),
 
   // https://www.autohotkey.com/docs/v1/lib/ListLines.htm
   command('ListLines', signature([ $onOff() ])),
 
   // https://www.autohotkey.com/docs/v1/lib/ListVars.htm
-  command('ListVars', signature(parameterless())),
+  command('ListVars', signature($parameterless)),
 
   // https://www.autohotkey.com/docs/v1/lib/Menu.htm
   command('Menu', [
@@ -517,8 +517,8 @@ export const commandDefinitions: CommandDefinition[] = [
   command('PixelSearch', signature([ $output(), $output(), $expression(), $expression(), $expression(), $expression(), $expression(), $expression(), $shouldSpacedKeywords([ keywordOption('Fast', 'RGB') ]) ])),
 
   // https://www.autohotkey.com/docs/v1/lib/PostMessage.htm
-  command('PostMessage', signature([ $expression(), $expression(), $expression(), $control(), ...winParams ])),
-  command('SendMessage', signature([ $expression(), $expression(), $expression(), $control(), ...winParams, $expression() ])),
+  command('PostMessage', signature([ $expression(), $expression(), $expression(), $control(), ...$winParams ])),
+  command('SendMessage', signature([ $expression(), $expression(), $expression(), $control(), ...$winParams, $expression() ])),
 
   // https://www.autohotkey.com/docs/v1/lib/Process.htm
   command('Process', [
@@ -526,7 +526,7 @@ export const commandDefinitions: CommandDefinition[] = [
     signature([ $subcommand([ 'Wait', 'WaitClose' ]), $(), $() ]),
     signature([ $subcommand([ 'Priority' ]), $(), $shouldKeyword([ keywordOption('Low', 'L', 'BelowNormal', 'B', 'Normal', 'N', 'AboveNormal', 'A', 'High', 'H', 'Realtime', 'R') ]) ]),
     signature([ $subcommand([ 'List' ]), $rest() ]),
-    signature(parameterless()),
+    signature($parameterless),
   ]),
 
   // https://www.autohotkey.com/docs/v1/lib/Progress.htm
@@ -548,7 +548,7 @@ export const commandDefinitions: CommandDefinition[] = [
   command('RegWrite', signature([ $shouldKeyword([ keywordOption('REG_SZ', 'REG_EXPAND_SZ', 'REG_MULTI_SZ', 'REG_DWORD', 'REG_BINARY') ]), $(), $(), $() ])),
 
   // https://www.autohotkey.com/docs/v1/lib/Reload.htm
-  command('Reload', signature(parameterless())),
+  command('Reload', signature($parameterless)),
 
   // https://www.autohotkey.com/docs/v1/lib/Run.htm
   command('Run', signature([ $(), $path(), $shouldSpacedKeywords([ keywordOption('Max', 'Min', 'Hide', 'UseErrorLevel') ]), $output() ])),
@@ -666,13 +666,13 @@ export const commandDefinitions: CommandDefinition[] = [
   command('SplashTextOn', signature([ $expression(), $expression(), $(), $() ]), CommandFlag.Deprecated),
 
   // https://www.autohotkey.com/docs/v1/lib/SplashTextOff.htm
-  command('SplashTextOff', signature(parameterless()), CommandFlag.Deprecated),
+  command('SplashTextOff', signature($parameterless), CommandFlag.Deprecated),
 
   // https://www.autohotkey.com/docs/v1/lib/SplitPath.htm
   command('SplitPath', signature([ $input(), $output(), $output(), $output(), $output(), $output() ])),
 
   // https://www.autohotkey.com/docs/v1/lib/StatusBarGetText.htm
-  command('StatusBarGetText', signature([ $output(), $expression(), ...winParams ])),
+  command('StatusBarGetText', signature([ $output(), $expression(), ...$winParams ])),
 
   // https://www.autohotkey.com/docs/v1/lib/StatusBarWait.htm
   command('StatusBarWait', signature([ $(), $expression(), $expression(), $winTitle(), $(), $expression(), $winTitle(), $() ])),
@@ -724,7 +724,7 @@ export const commandDefinitions: CommandDefinition[] = [
   command('Thread', [
     signature([ $subcommand([ 'NoTimers', 'Priority' ]), $expression() ]),
     signature([ $subcommand('Interrupt'), $shouldNumber(), $shouldNumber() ]),
-    signature(parameterless()),
+    signature($parameterless),
   ]),
 
   // https://www.autohotkey.com/docs/v1/lib/ToolTip.htm
@@ -744,10 +744,10 @@ export const commandDefinitions: CommandDefinition[] = [
   command('UrlDownloadToFile', signature([ $(), $path() ])),
 
   // https://www.autohotkey.com/docs/v1/lib/WinActivate.htm
-  command('WinActivate', signature(winParams)),
+  command('WinActivate', signature($winParams)),
 
   // https://www.autohotkey.com/docs/v1/lib/WinActivateBottom.htm
-  command('WinActivateBottom', signature(winParams)),
+  command('WinActivateBottom', signature($winParams)),
 
   // https://www.autohotkey.com/docs/v1/lib/WinClose.htm
   command('WinClose', signature([ $winTitle(), $(), $expression(), $winTitle(), $() ])),
@@ -759,65 +759,65 @@ export const commandDefinitions: CommandDefinition[] = [
   command('WinGetActiveTitle', signature([ $output() ])),
 
   // https://www.autohotkey.com/docs/v1/lib/WinGetClass.htm
-  command('WinGetClass', signature([ $output(), ...winParams ])),
+  command('WinGetClass', signature([ $output(), ...$winParams ])),
 
   // https://www.autohotkey.com/docs/v1/lib/WinGet.htm
   command('WinGet', [
-    signature([ $output(), $subcommand([ 'ID', 'IDLast', 'PID', 'ProcessName', 'ProcessPath', 'Count', 'List', 'MinMax', 'ControlList', 'ControlListHwnd', 'Transparent', 'TransColor', 'Style', 'ExStyle' ]), ...winParams ]),
+    signature([ $output(), $subcommand([ 'ID', 'IDLast', 'PID', 'ProcessName', 'ProcessPath', 'Count', 'List', 'MinMax', 'ControlList', 'ControlListHwnd', 'Transparent', 'TransColor', 'Style', 'ExStyle' ]), ...$winParams ]),
     signature([ $output(), $invalid() ]),
   ]),
 
   // https://www.autohotkey.com/docs/v1/lib/WinGetPos.htm
-  command('WinGetPos', signature([ $output(), $output(), $output(), $output(), ...winParams ])),
+  command('WinGetPos', signature([ $output(), $output(), $output(), $output(), ...$winParams ])),
 
   // https://www.autohotkey.com/docs/v1/lib/WinGetText.htm
-  command('WinGetText', signature([ $output(), ...winParams ])),
+  command('WinGetText', signature([ $output(), ...$winParams ])),
 
   // https://www.autohotkey.com/docs/v1/lib/WinGetTitle.htm
-  command('WinGetTitle', signature([ $output(), ...winParams ])),
+  command('WinGetTitle', signature([ $output(), ...$winParams ])),
 
   // https://www.autohotkey.com/docs/v1/lib/WinHide.htm
-  command('WinHide', signature(winParams)),
+  command('WinHide', signature($winParams)),
 
   // https://www.autohotkey.com/docs/v1/lib/WinKill.htm
   command('WinKill', signature([ $winTitle(), $(), $expression(), $winTitle(), $() ])),
 
   // https://www.autohotkey.com/docs/v1/lib/WinMaximize.htm
-  command('WinMaximize', signature(winParams)),
+  command('WinMaximize', signature($winParams)),
 
   // https://www.autohotkey.com/docs/v1/lib/WinMenuSelectItem.htm
   command('WinMenuSelectItem', signature([ $winTitle(), $(), $(), $(), $(), $(), $(), $(), $winTitle(), $() ])),
 
   // https://www.autohotkey.com/docs/v1/lib/WinMinimize.htm
-  command('WinMinimize', signature(winParams)),
+  command('WinMinimize', signature($winParams)),
 
   // https://www.autohotkey.com/docs/v1/lib/WinMinimizeAll.htm
-  command('WinMinimizeAll', signature(parameterless())),
+  command('WinMinimizeAll', signature($parameterless)),
 
   // https://www.autohotkey.com/docs/v1/lib/WinMinimizeAllUndo.htm
-  command('WinMinimizeAllUndo', signature(parameterless())),
+  command('WinMinimizeAllUndo', signature($parameterless)),
 
   // https://www.autohotkey.com/docs/v1/lib/WinMove.htm
   command('WinMove', signature([ $winTitle(), $(), $expression(), $expression(), $expression(), $expression(), $winTitle(), $() ])),
 
   // https://www.autohotkey.com/docs/v1/lib/WinRestore.htm
-  command('WinRestore', signature(winParams)),
+  command('WinRestore', signature($winParams)),
 
   // https://www.autohotkey.com/docs/v1/lib/WinSet.htm
   command('WinSet', [
-    signature([ $subcommand('AlwaysOnTop'), $onOffToggle(), ...winParams ]),
-    signature([ $subcommand([ 'Transparent', 'TransColor' ]), $(), ...winParams ]),
-    signature([ $subcommand([ 'Style', 'ExStyle' ]), $style(), ...winParams ]),
-    signature([ $subcommand([ 'Bottom', 'Top', 'Disable', 'Enable', 'Redraw' ]), $blank(), ...winParams ]),
-    signature([ $subcommand('Region'), $([ keywordOption('E'), numberOptionItem('W', 'H'), rangeOptionItem('R', '') ]), ...winParams ]),
-    signature(parameterless()),
+    signature([ $subcommand('AlwaysOnTop'), $onOffToggle(), ...$winParams ]),
+    signature([ $subcommand([ 'Transparent', 'TransColor' ]), $(), ...$winParams ]),
+    signature([ $subcommand([ 'Style', 'ExStyle' ]), $style(), ...$winParams ]),
+    signature([ $subcommand([ 'Bottom', 'Top', 'Disable', 'Enable', 'Redraw' ]), $blank(), ...$winParams ]),
+    signature([ $subcommand('Region'), $([ keywordOption('E'), numberOptionItem('W', 'H'), rangeOptionItem('R', '') ]), ...$winParams ]),
+    signature($parameterless),
   ]),
 
   // https://www.autohotkey.com/docs/v1/lib/WinSetTitle.htm
   command('WinSetTitle', signature([ $winTitle(), $(), $(), $winTitle(), $() ])),
 
   // https://www.autohotkey.com/docs/v1/lib/WinShow.htm
-  command('WinShow', signature(winParams)),
+  command('WinShow', signature($winParams)),
 
   // https://www.autohotkey.com/docs/v1/lib/WinWait.htm
   command('WinWait', signature([ $winTitle(), $(), $expression(), $winTitle(), $() ])),

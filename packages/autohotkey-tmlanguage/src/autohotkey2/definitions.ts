@@ -1,6 +1,7 @@
 import {
   $,
   $expression,
+  $parameterless,
   $quotable,
   $quotableEncoding,
   $quotableIncludeLib,
@@ -11,7 +12,6 @@ import {
   command,
   decimalOptionItem,
   keywordOption,
-  parameterless,
   signature,
   signedNumberOptionItem,
   signOptionItem,
@@ -56,7 +56,7 @@ export const directiveDefinitions: CommandDefinition[] = [
   command('#MaxThreadsPerHotkey', signature([ $shouldInteger() ])),
 
   // https://www.autohotkey.com/docs/v2/lib/_NoTrayIcon.htm
-  command('#NoTrayIcon', signature(parameterless())),
+  command('#NoTrayIcon', signature($parameterless)),
 
   // https://www.autohotkey.com/docs/v2/lib/_Requires.htm
   command('#Requires', signature([ $requiresVersion() ])),
@@ -74,6 +74,6 @@ export const directiveDefinitions: CommandDefinition[] = [
   command('#Warn', signature([ $shouldKeyword([ keywordOption('VarUnset', 'LocalSameAsGlobal', 'Unreachable', 'All') ]), $shouldKeyword([ keywordOption('MsgBox', 'StdOut', 'OutputDebug', 'Off') ]) ])),
 
   // https://www.autohotkey.com/docs/v2/lib/_WinActivateForce.htm
-  command('#WinActivateForce', signature(parameterless())),
+  command('#WinActivateForce', signature($parameterless)),
 ];
 // #endregion directives
