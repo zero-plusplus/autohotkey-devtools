@@ -1,6 +1,8 @@
 import { dedent } from '@zero-plusplus/utilities/src';
 import {
-  name, RuleDescriptor, RuleName,
+  name,
+  RuleDescriptor,
+  RuleName,
   type ScopeName,
 } from '../../../../src/tmlanguage';
 import * as common from '../../../common';

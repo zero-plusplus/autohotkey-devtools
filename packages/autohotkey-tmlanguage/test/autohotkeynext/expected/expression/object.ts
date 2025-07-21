@@ -1,6 +1,7 @@
 import { dedent } from '@zero-plusplus/utilities/src';
 import {
-  name, RuleName,
+  name,
+  RuleName,
   type ScopeName,
 } from '../../../../src/tmlanguage';
 import * as v2 from '../../../autohotkey2/expected/expression/object';

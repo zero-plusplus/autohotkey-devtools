@@ -1,10 +1,21 @@
 import {
-  capture, char, ignoreCase, lookahead, lookbehind, negativeLookbehind, optional, seq,
-  textalt, wordBound,
+  capture,
+  char,
+  ignoreCase,
+  lookahead,
+  lookbehind,
+  negativeLookbehind,
+  optional,
+  seq,
+  textalt,
+  wordBound,
 } from '../../../oniguruma';
 import {
-  nameRule, RuleName, StyleName,
-  type MatchRule, type ScopeName,
+  nameRule,
+  RuleName,
+  StyleName,
+  type MatchRule,
+  type ScopeName,
 } from '../../../tmlanguage';
 
 interface Placeholder_IdentifierRule {

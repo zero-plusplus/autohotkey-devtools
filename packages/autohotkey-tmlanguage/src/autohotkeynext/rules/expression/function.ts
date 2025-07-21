@@ -1,7 +1,18 @@
-import { capture, char, inlineSpaces0, lookbehind, seq } from '../../../oniguruma';
 import {
-  includeRule, nameRule, patternsRule, Repository, RuleName,
-  type PatternsRule, type ScopeName,
+  capture,
+  char,
+  inlineSpaces0,
+  lookbehind,
+  seq,
+} from '../../../oniguruma';
+import {
+  includeRule,
+  nameRule,
+  patternsRule,
+  Repository,
+  RuleName,
+  type PatternsRule,
+  type ScopeName,
 } from '../../../tmlanguage';
 
 export function createFunctionExpressionBlockRule(scopeName: ScopeName): PatternsRule {

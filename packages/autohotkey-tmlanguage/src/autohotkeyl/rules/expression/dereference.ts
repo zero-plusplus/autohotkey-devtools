@@ -1,10 +1,28 @@
 import {
-  alt, capture, char, inlineSpace, inlineSpaces1, lookahead, many0, negativeLookahead,
-  negChar, negChars0, seq, whitespace,
+  alt,
+  capture,
+  char,
+  inlineSpace,
+  inlineSpaces1,
+  lookahead,
+  many0,
+  negativeLookahead,
+  negChar,
+  negChars0,
+  seq,
+  whitespace,
 } from '../../../oniguruma';
 import {
-  includeRule, nameRule, patternsRule, Repository, RuleName, StyleName,
-  type BeginEndRule, type MatchRule, type PatternsRule, type ScopeName,
+  includeRule,
+  nameRule,
+  patternsRule,
+  Repository,
+  RuleName,
+  StyleName,
+  type BeginEndRule,
+  type MatchRule,
+  type PatternsRule,
+  type ScopeName,
 } from '../../../tmlanguage';
 import * as patterns_v1 from '../../patterns';
 

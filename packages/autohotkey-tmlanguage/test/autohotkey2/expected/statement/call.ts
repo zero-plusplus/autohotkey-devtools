@@ -1,7 +1,13 @@
 import { dedent } from '@zero-plusplus/utilities/src';
-import { builtInFunctionNames, deprecatedBuiltinFunctionNames } from '../../../../src/autohotkey2/constants';
 import {
-  name, RuleDescriptor, RuleName, StyleName,
+  builtInFunctionNames,
+  deprecatedBuiltinFunctionNames,
+} from '../../../../src/autohotkey2/constants';
+import {
+  name,
+  RuleDescriptor,
+  RuleName,
+  StyleName,
   type ScopeName,
 } from '../../../../src/tmlanguage';
 import type { ExpectedTestData } from '../../../types';

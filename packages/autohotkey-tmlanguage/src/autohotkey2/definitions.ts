@@ -1,6 +1,21 @@
 import {
-  $, $expression, $quotable, $quotableEncoding, $quotableIncludeLib, $requiresVersion, $shouldBoolean, $shouldInteger, $shouldKeyword,
-  command, decimalOptionItem, keywordOption, parameterless, signature, signedNumberOptionItem, signOptionItem, toggleOptionItem,
+  $,
+  $expression,
+  $quotable,
+  $quotableEncoding,
+  $quotableIncludeLib,
+  $requiresVersion,
+  $shouldBoolean,
+  $shouldInteger,
+  $shouldKeyword,
+  command,
+  decimalOptionItem,
+  keywordOption,
+  parameterless,
+  signature,
+  signedNumberOptionItem,
+  signOptionItem,
+  toggleOptionItem,
   type CommandDefinition,
 } from '../definition';
 

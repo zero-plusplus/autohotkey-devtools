@@ -1,14 +1,39 @@
-import { dedent, hasFlag, repeatArray } from '@zero-plusplus/utilities/src';
+import {
+  dedent,
+  hasFlag,
+  repeatArray,
+} from '@zero-plusplus/utilities/src';
 import * as definitions_v1 from '../../../../src/autohotkeyl/definitions';
 import {
-  $, $blank, $control, $expression, $fileAttributes, $flagedGuiControlOptions, $guiControlOptions, $guiOptions, $input,
-  $onOff, $output, $rest, $shouldInteger, $shouldKeyword, $winTitle, CommandFlag, sendKeys,
+  $,
+  $blank,
+  $control,
+  $expression,
+  $fileAttributes,
+  $flagedGuiControlOptions,
+  $guiControlOptions,
+  $guiOptions,
+  $input,
+  $onOff,
+  $output,
+  $rest,
+  $shouldInteger,
+  $shouldKeyword,
+  $winTitle,
+  CommandFlag,
+  sendKeys,
 } from '../../../../src/definition';
 import {
-  name, RuleDescriptor, RuleName, StyleName,
+  name,
+  RuleDescriptor,
+  RuleName,
+  StyleName,
   type ScopeName,
 } from '../../../../src/tmlanguage';
-import type { ExpectedTestData, ParsedResult } from '../../../types';
+import type {
+  ExpectedTestData,
+  ParsedResult,
+} from '../../../types';
 
 export function createCommandStatementExpectedData(scopeName: ScopeName): ExpectedTestData[] {
   return [

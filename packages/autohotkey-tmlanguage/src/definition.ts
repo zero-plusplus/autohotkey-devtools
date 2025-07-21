@@ -2,12 +2,40 @@ import { mergeFlags } from '@zero-plusplus/utilities/src';
 import * as patterns_v1 from './autohotkeyl/patterns';
 import * as constants_common from './common/constants';
 import {
-  alt, anyChars0, anyChars1, capture, char, endAnchor, group, groupMany1, ignoreCase, inlineSpace, inlineSpaces0, lookahead, lookbehind,
-  negChar, negChars0, negChars1, numbers0, numbers1, optional, optseq, ordalt, reluctant, seq, text, textalt, wordBound,
+  alt,
+  anyChars0,
+  anyChars1,
+  capture,
+  char,
+  endAnchor,
+  group,
+  groupMany1,
+  ignoreCase,
+  inlineSpace,
+  inlineSpaces0,
+  lookahead,
+  lookbehind,
+  negChar,
+  negChars0,
+  negChars1,
+  numbers0,
+  numbers1,
+  optional,
+  optseq,
+  ordalt,
+  reluctant,
+  seq,
+  text,
+  textalt,
+  wordBound,
 } from './oniguruma';
 import {
-  includeRule, Repository, RuleName, StyleName,
-  type ElementName, type IncludeRule,
+  includeRule,
+  Repository,
+  RuleName,
+  StyleName,
+  type ElementName,
+  type IncludeRule,
 } from './tmlanguage';
 
 // #region constants

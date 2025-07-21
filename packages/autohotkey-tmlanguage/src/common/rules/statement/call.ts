@@ -1,10 +1,30 @@
 import {
-  alt, capture, char, endAnchor, group, ignoreCase, inlineSpace, inlineSpaces0, inlineSpaces1,
-  lookahead, lookbehind, negativeLookahead, number, seq, textalt,
+  alt,
+  capture,
+  char,
+  endAnchor,
+  group,
+  ignoreCase,
+  inlineSpace,
+  inlineSpaces0,
+  inlineSpaces1,
+  lookahead,
+  lookbehind,
+  negativeLookahead,
+  number,
+  seq,
+  textalt,
 } from '../../../oniguruma';
 import {
-  includeRule, nameRule, patternsRule, Repository, RuleName, StyleName,
-  type ElementName, type PatternsRule, type ScopeName,
+  includeRule,
+  nameRule,
+  patternsRule,
+  Repository,
+  RuleName,
+  StyleName,
+  type ElementName,
+  type PatternsRule,
+  type ScopeName,
 } from '../../../tmlanguage';
 
 type Placeholder = {

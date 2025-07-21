@@ -1,9 +1,22 @@
 import * as rules_common from '../../../common/rules';
 import type { CommandDefinition } from '../../../definition';
-import { alt, capture, char, inlineSpace, inlineSpaces0, keyword, lookahead, lookbehind, seq } from '../../../oniguruma';
 import {
-  nameRule, patternsRule, RuleName,
-  type PatternsRule, type ScopeName,
+  alt,
+  capture,
+  char,
+  inlineSpace,
+  inlineSpaces0,
+  keyword,
+  lookahead,
+  lookbehind,
+  seq,
+} from '../../../oniguruma';
+import {
+  nameRule,
+  patternsRule,
+  RuleName,
+  type PatternsRule,
+  type ScopeName,
 } from '../../../tmlanguage';
 
 interface Placeholder {

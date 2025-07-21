@@ -1,8 +1,28 @@
 import * as patterns_common from '../common/patterns';
 import {
-  alt, anyChars0, anyChars1, char, endAnchor, group, groupMany0, groupMany1, ignoreCase, inlineSpace, inlineSpaces0,
-  inlineSpaces1, lookahead, manyLimit, manyRange, negativeLookahead, negChar, number, reluctant,
-  seq, text, textalt, wordChar,
+  alt,
+  anyChars0,
+  anyChars1,
+  char,
+  endAnchor,
+  group,
+  groupMany0,
+  groupMany1,
+  ignoreCase,
+  inlineSpace,
+  inlineSpaces0,
+  inlineSpaces1,
+  lookahead,
+  manyLimit,
+  manyRange,
+  negativeLookahead,
+  negChar,
+  number,
+  reluctant,
+  seq,
+  text,
+  textalt,
+  wordChar,
 } from '../oniguruma';
 import * as constants_v1 from './constants';
 

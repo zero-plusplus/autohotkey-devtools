@@ -1,11 +1,21 @@
 import * as definitions_v2 from '../autohotkey2/definitions';
 import * as patterns_v2 from '../autohotkey2/patterns';
 import {
-  command, CommandParameterFlag, signature,
-  type CommandDefinition, type CommandParameter,
+  command,
+  CommandParameterFlag,
+  signature,
+  type CommandDefinition,
+  type CommandParameter,
 } from '../definition';
-import { anyChars1, seq, wordBound } from '../oniguruma';
-import { RuleName, StyleName } from '../tmlanguage';
+import {
+  anyChars1,
+  seq,
+  wordBound,
+} from '../oniguruma';
+import {
+  RuleName,
+  StyleName,
+} from '../tmlanguage';
 
 export const directiveDefinitions: CommandDefinition[] = [
   ...definitions_v2.directiveDefinitions,

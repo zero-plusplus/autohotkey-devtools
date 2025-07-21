@@ -1,10 +1,25 @@
 import {
-  capture, char, groupMany0, groupMany1, inlineSpace, inlineSpaces0, keyword, lookbehind, negChars1,
-  seq, text, textalt,
+  capture,
+  char,
+  groupMany0,
+  groupMany1,
+  inlineSpace,
+  inlineSpaces0,
+  keyword,
+  lookbehind,
+  negChars1,
+  seq,
+  text,
+  textalt,
 } from '../../../oniguruma';
 import {
-  name, nameRule, patternsRule, RuleName, StyleName,
-  type MatchRule, type ScopeName,
+  name,
+  nameRule,
+  patternsRule,
+  RuleName,
+  StyleName,
+  type MatchRule,
+  type ScopeName,
 } from '../../../tmlanguage';
 import * as constants_common from '../../constants';
 

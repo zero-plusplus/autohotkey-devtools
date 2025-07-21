@@ -1,7 +1,9 @@
 import { dedent } from '@zero-plusplus/utilities/src';
 import * as constants_v2 from '../../../../src/autohotkey2/constants';
 import {
-  name, RuleName, StyleName,
+  name,
+  RuleName,
+  StyleName,
   type ScopeName,
 } from '../../../../src/tmlanguage';
 import * as common from '../../../common/expression/variable';

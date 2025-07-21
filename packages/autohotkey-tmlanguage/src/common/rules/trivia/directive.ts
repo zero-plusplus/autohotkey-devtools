@@ -1,12 +1,38 @@
 import * as patterns_v1 from '../../../autohotkeyl/patterns';
 import type { CommandDefinition } from '../../../definition';
 import {
-  alt, anyChars0, capture, char, group, ignoreCase, many0, negChar, negChars1, number, numbers0,
-  optional, optseq, seq, text, textalt,
+  alt,
+  anyChars0,
+  capture,
+  char,
+  group,
+  ignoreCase,
+  many0,
+  negChar,
+  negChars1,
+  number,
+  numbers0,
+  optional,
+  optseq,
+  seq,
+  text,
+  textalt,
 } from '../../../oniguruma';
 import {
-  includeRule, name, namedPatternsRule, nameRule, patternsRule, Repository, RuleDescriptor, RuleName, StyleName, TokenType,
-  type MatchRule, type PatternsRule, type Repositories, type ScopeName,
+  includeRule,
+  name,
+  namedPatternsRule,
+  nameRule,
+  patternsRule,
+  Repository,
+  RuleDescriptor,
+  RuleName,
+  StyleName,
+  TokenType,
+  type MatchRule,
+  type PatternsRule,
+  type Repositories,
+  type ScopeName,
 } from '../../../tmlanguage';
 import * as constants_common from '../../constants';
 import * as definitions_common from '../../definitions';

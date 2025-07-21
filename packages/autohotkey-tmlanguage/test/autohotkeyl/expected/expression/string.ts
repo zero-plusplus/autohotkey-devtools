@@ -12,6 +12,6 @@ export function createStringLiteralExpectedData(scopeName: ScopeName): ExpectedT
       ruleName: RuleName.DoubleString,
       quote: '"',
       escapeSequences: constants_v1.doubleQuoteEscapeSequences,
-    }), 
+    }),
   ];
 }

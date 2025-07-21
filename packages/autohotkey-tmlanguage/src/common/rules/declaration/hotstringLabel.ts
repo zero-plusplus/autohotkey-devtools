@@ -1,10 +1,26 @@
 import {
-  alt, anyChars0, anyChars1, capture, char, ignoreCase, lookahead, lookbehind, numbers1, optional,
-  reluctant, seq, text,
+  alt,
+  anyChars0,
+  anyChars1,
+  capture,
+  char,
+  ignoreCase,
+  lookahead,
+  lookbehind,
+  numbers1,
+  optional,
+  reluctant,
+  seq,
+  text,
 } from '../../../oniguruma';
 import {
-  name, nameRule, patternsRule, RuleName, StyleName,
-  type MatchRule, type ScopeName,
+  name,
+  nameRule,
+  patternsRule,
+  RuleName,
+  StyleName,
+  type MatchRule,
+  type ScopeName,
 } from '../../../tmlanguage';
 
 interface Placeholder {

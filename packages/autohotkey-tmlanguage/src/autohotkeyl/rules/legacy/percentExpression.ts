@@ -1,7 +1,17 @@
-import { capture, char, inlineSpaces1, seq } from '../../../oniguruma';
 import {
-  includeRule, nameRule, patternsRule, Repository, RuleName,
-  type MatchRule, type ScopeName,
+  capture,
+  char,
+  inlineSpaces1,
+  seq,
+} from '../../../oniguruma';
+import {
+  includeRule,
+  nameRule,
+  patternsRule,
+  Repository,
+  RuleName,
+  type MatchRule,
+  type ScopeName,
 } from '../../../tmlanguage';
 
 interface Placeholder {

@@ -1,10 +1,33 @@
 import {
-  $encoding, $invalid, $output, $shouldKeyword, $shouldNumber, $withNumber, command, CommandFlag, CommandParameterFlag,
-  keywordOption, signature, signOptionItem,
-  type CommandDefinition, type CommandParameter, type ParameterItemMatcher,
+  $encoding,
+  $invalid,
+  $output,
+  $shouldKeyword,
+  $shouldNumber,
+  $withNumber,
+  command,
+  CommandFlag,
+  CommandParameterFlag,
+  keywordOption,
+  signature,
+  signOptionItem,
+  type CommandDefinition,
+  type CommandParameter,
+  type ParameterItemMatcher,
 } from '../definition';
-import { char, inlineSpace, negChars0, negChars1, seq, wordChars0 } from '../oniguruma';
-import { includeRule, Repository, RuleName } from '../tmlanguage';
+import {
+  char,
+  inlineSpace,
+  negChars0,
+  negChars1,
+  seq,
+  wordChars0,
+} from '../oniguruma';
+import {
+  includeRule,
+  Repository,
+  RuleName,
+} from '../tmlanguage';
 
 export const undefinedDirective: CommandDefinition = command(seq('#', wordChars0()), signature([ $invalid() ]));
 export const compilerDirectives: CommandDefinition[] = [

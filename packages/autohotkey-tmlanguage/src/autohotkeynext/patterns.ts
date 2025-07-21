@@ -1,6 +1,16 @@
 import * as patterns_v1 from '../autohotkeyl/patterns';
 import * as patterns_common from '../common/patterns';
-import { alt, group, ignoreCase, inlineSpace, inlineSpaces0, inlineSpaces1, lookbehind, optseq, seq } from '../oniguruma';
+import {
+  alt,
+  group,
+  ignoreCase,
+  inlineSpace,
+  inlineSpaces0,
+  inlineSpaces1,
+  lookbehind,
+  optseq,
+  seq,
+} from '../oniguruma';
 
 export const exportStartPattern: string = group(seq(
   lookbehind(patterns_common.lineStartPattern),

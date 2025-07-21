@@ -1,11 +1,28 @@
 import * as rule_common from '..';
 import {
-  alt, capture, char, group, ignoreCase, inlineSpace, inlineSpaces0, lookahead, lookbehind, optional,
-  optseq, ordalt, seq,
+  alt,
+  capture,
+  char,
+  group,
+  ignoreCase,
+  inlineSpace,
+  inlineSpaces0,
+  lookahead,
+  lookbehind,
+  optional,
+  optseq,
+  ordalt,
+  seq,
 } from '../../../oniguruma';
 import {
-  includeRule, nameRule, patternsRule, Repository, RuleName,
-  type MatchRule, type PatternsRule, type ScopeName,
+  includeRule,
+  nameRule,
+  patternsRule,
+  Repository,
+  RuleName,
+  type MatchRule,
+  type PatternsRule,
+  type ScopeName,
 } from '../../../tmlanguage';
 
 interface Placeholder {

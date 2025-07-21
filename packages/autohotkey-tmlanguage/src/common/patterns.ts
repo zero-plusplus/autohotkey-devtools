@@ -1,7 +1,22 @@
 import {
-  alt, anyChar, char, endAnchor, group, groupMany0, groupMany1, inlineSpace,
-  inlineSpaces0, inlineSpaces1, negativeLookahead, negativeLookbehind, negChar,
-  negChars0, optional, seq, startAnchor, textalt,
+  alt,
+  anyChar,
+  char,
+  endAnchor,
+  group,
+  groupMany0,
+  groupMany1,
+  inlineSpace,
+  inlineSpaces0,
+  inlineSpaces1,
+  negativeLookahead,
+  negativeLookbehind,
+  negChar,
+  negChars0,
+  optional,
+  seq,
+  startAnchor,
+  textalt,
 } from '../oniguruma';
 import * as constants_common from './constants';
 

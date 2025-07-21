@@ -1,10 +1,32 @@
 import {
-  alt, capture, char, chars0, endAnchor, ignoreCase, inlineSpace, inlineSpaces0, lookahead,
-  lookbehind, negChars0, negChars1, numbers1, optional, optseq, seq, textalt,
+  alt,
+  capture,
+  char,
+  chars0,
+  endAnchor,
+  ignoreCase,
+  inlineSpace,
+  inlineSpaces0,
+  lookahead,
+  lookbehind,
+  negChars0,
+  negChars1,
+  numbers1,
+  optional,
+  optseq,
+  seq,
+  textalt,
 } from '../../../oniguruma';
 import {
-  includeRule, name, patternsRule, Repository, RuleName, StyleName,
-  type MatchRule, type Rule, type ScopeName,
+  includeRule,
+  name,
+  patternsRule,
+  Repository,
+  RuleName,
+  StyleName,
+  type MatchRule,
+  type Rule,
+  type ScopeName,
 } from '../../../tmlanguage';
 
 interface Placeholder_UnquotedStringRule {

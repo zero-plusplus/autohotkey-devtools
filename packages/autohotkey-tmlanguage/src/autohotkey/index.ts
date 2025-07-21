@@ -1,10 +1,30 @@
 import {
-  alt, anyChars0, capture, char, charRange, endAnchor, group, ignoreCase, inlineSpaces0, inlineSpaces1,
-  lookahead, lookbehind, negativeLookahead, optional, optseq, reluctant, seq, startAnchor, wordBound,
+  alt,
+  anyChars0,
+  capture,
+  char,
+  charRange,
+  endAnchor,
+  group,
+  ignoreCase,
+  inlineSpaces0,
+  inlineSpaces1,
+  lookahead,
+  lookbehind,
+  negativeLookahead,
+  optional,
+  optseq,
+  reluctant,
+  seq,
+  startAnchor,
+  wordBound,
 } from '../oniguruma';
 import {
-  includeScope, patternsRule,
-  type Rule, type ScopeName, type TmLanguage,
+  includeScope,
+  patternsRule,
+  type Rule,
+  type ScopeName,
+  type TmLanguage,
 } from '../tmlanguage';
 
 export function createTmLanguage(): TmLanguage {

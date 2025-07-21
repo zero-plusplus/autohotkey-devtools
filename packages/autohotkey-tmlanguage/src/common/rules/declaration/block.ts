@@ -1,7 +1,13 @@
-import { capture, char } from '../../../oniguruma';
 import {
-  nameRule, RuleName,
-  type BeginEndRule, type Rule, type ScopeName,
+  capture,
+  char,
+} from '../../../oniguruma';
+import {
+  nameRule,
+  RuleName,
+  type BeginEndRule,
+  type Rule,
+  type ScopeName,
 } from '../../../tmlanguage';
 
 interface Placeholder {

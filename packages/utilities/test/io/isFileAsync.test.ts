@@ -1,4 +1,7 @@
-import { describe, test } from '@jest/globals';
+import {
+  describe,
+  test,
+} from '@jest/globals';
 import { isFileAsync } from '../../src';
 
 describe('isFileAsync', () => {

@@ -1,7 +1,10 @@
 import { dedent } from '@zero-plusplus/utilities/src';
 import { directiveDefinitions } from '../../../../src/autohotkeyl/definitions';
 import {
-  name, RuleDescriptor, RuleName, StyleName,
+  name,
+  RuleDescriptor,
+  RuleName,
+  StyleName,
   type ScopeName,
 } from '../../../../src/tmlanguage';
 import * as common from '../../../common';

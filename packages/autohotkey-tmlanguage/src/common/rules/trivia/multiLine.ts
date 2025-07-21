@@ -1,7 +1,17 @@
-import { capture, char, negativeLookahead, seq, text } from '../../../oniguruma';
 import {
-  name, nameRule, RuleDescriptor, RuleName,
-  type BeginEndRule, type ScopeName,
+  capture,
+  char,
+  negativeLookahead,
+  seq,
+  text,
+} from '../../../oniguruma';
+import {
+  name,
+  nameRule,
+  RuleDescriptor,
+  RuleName,
+  type BeginEndRule,
+  type ScopeName,
 } from '../../../tmlanguage';
 
 export function createMultiLineCommentRule(scopeName: ScopeName): BeginEndRule {

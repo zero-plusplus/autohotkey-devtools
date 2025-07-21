@@ -4,7 +4,10 @@ import * as path from 'path';
 import * as oniguruma from 'vscode-oniguruma';
 import * as vsctm from 'vscode-textmate';
 import * as grammars from '../../src';
-import type { ScopeName, TmLanguage } from '../../src/tmlanguage';
+import type {
+  ScopeName,
+  TmLanguage,
+} from '../../src/tmlanguage';
 import type { ParsedResult } from '../types';
 
 const rootDirectory = path.resolve(__dirname, '../../../../');

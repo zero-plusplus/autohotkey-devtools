@@ -5,8 +5,15 @@ import * as patterns_common from '../common/patterns';
 import * as rules_common from '../common/rules';
 import { ordalt } from '../oniguruma';
 import {
-  includeRule, name, namedPatternsRule, patternsRule, Repository, RuleName,
-  type Repositories, type ScopeName, type TmLanguage,
+  includeRule,
+  name,
+  namedPatternsRule,
+  patternsRule,
+  Repository,
+  RuleName,
+  type Repositories,
+  type ScopeName,
+  type TmLanguage,
 } from '../tmlanguage';
 import * as constants_v2 from './constants';
 import * as definitions_v2 from './definitions';

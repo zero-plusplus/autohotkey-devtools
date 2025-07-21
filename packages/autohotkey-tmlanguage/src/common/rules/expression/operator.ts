@@ -1,7 +1,19 @@
-import { alt, char, inlineSpace, lookahead, negativeLookahead, seq, textalt } from '../../../oniguruma';
 import {
-  name, Repository, RuleName,
-  type MatchRule, type Repositories, type ScopeName,
+  alt,
+  char,
+  inlineSpace,
+  lookahead,
+  negativeLookahead,
+  seq,
+  textalt,
+} from '../../../oniguruma';
+import {
+  name,
+  Repository,
+  RuleName,
+  type MatchRule,
+  type Repositories,
+  type ScopeName,
 } from '../../../tmlanguage';
 
 interface Placeholder {

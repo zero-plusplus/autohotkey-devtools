@@ -1,7 +1,14 @@
-import { capture, char } from '../../../oniguruma';
 import {
-  includeRule, nameRule, Repository, RuleName,
-  type BeginEndRule, type ScopeName,
+  capture,
+  char,
+} from '../../../oniguruma';
+import {
+  includeRule,
+  nameRule,
+  Repository,
+  RuleName,
+  type BeginEndRule,
+  type ScopeName,
 } from '../../../tmlanguage';
 
 export function createParenthesizedExpressionRule(scopeName: ScopeName): BeginEndRule {

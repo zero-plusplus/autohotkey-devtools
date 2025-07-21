@@ -1,10 +1,34 @@
 import {
-  alt, capture, char, group, hexPrefix, hexValue, ignoreCase, integer, lookahead, lookbehind, negativeLookahead,
-  number, numbers0, numbers1, opt, seq, wordBound,
+  alt,
+  capture,
+  char,
+  group,
+  hexPrefix,
+  hexValue,
+  ignoreCase,
+  integer,
+  lookahead,
+  lookbehind,
+  negativeLookahead,
+  number,
+  numbers0,
+  numbers1,
+  opt,
+  seq,
+  wordBound,
 } from '../../../oniguruma';
 import {
-  includeRule, name, nameRule, patternsRule, Repository, RuleName, StyleName,
-  type MatchRule, type PatternsRule, type Repositories, type ScopeName,
+  includeRule,
+  name,
+  nameRule,
+  patternsRule,
+  Repository,
+  RuleName,
+  StyleName,
+  type MatchRule,
+  type PatternsRule,
+  type Repositories,
+  type ScopeName,
 } from '../../../tmlanguage';
 
 export function createNumberRepositories(scopeName: ScopeName): Repositories {

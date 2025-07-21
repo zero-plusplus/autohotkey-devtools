@@ -1,10 +1,15 @@
-import { dedent, hasFlag } from '@zero-plusplus/utilities/src';
+import {
+  dedent,
+  hasFlag,
+} from '@zero-plusplus/utilities/src';
 import {
   CommandFlag,
   type CommandDefinition,
 } from '../../../src/definition';
 import {
-  name, RuleName, StyleName,
+  name,
+  RuleName,
+  StyleName,
   type ScopeName,
 } from '../../../src/tmlanguage';
 import type { ExpectedTestData } from '../../types';

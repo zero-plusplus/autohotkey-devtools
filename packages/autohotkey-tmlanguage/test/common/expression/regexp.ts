@@ -1,10 +1,17 @@
 import { dedent } from '@zero-plusplus/utilities/src';
 import * as constants_common from '../../../src/common/constants';
 import {
-  name, RuleDescriptor, RuleName, StyleName, TokenType,
+  name,
+  RuleDescriptor,
+  RuleName,
+  StyleName,
+  TokenType,
   type ScopeName,
 } from '../../../src/tmlanguage';
-import type { ExpectedTestData, ParsedResult } from '../../types';
+import type {
+  ExpectedTestData,
+  ParsedResult,
+} from '../../types';
 
 interface Placeholder {
   quote: string;

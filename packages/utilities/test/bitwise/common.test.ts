@@ -1,5 +1,14 @@
-import { describe, expect, test } from '@jest/globals';
-import { hasFlag, mergeFlags, offFlag, onFlag } from '../../src';
+import {
+  describe,
+  expect,
+  test,
+} from '@jest/globals';
+import {
+  hasFlag,
+  mergeFlags,
+  offFlag,
+  onFlag,
+} from '../../src';
 
 describe('hasFlag', () => {
   test('hasFlag / mergeFlags / onFlag / offFlag', () => {

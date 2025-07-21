@@ -1,6 +1,11 @@
-import { dedent, repeatArray } from '@zero-plusplus/utilities/src';
 import {
-  name, RuleDescriptor, RuleName,
+  dedent,
+  repeatArray,
+} from '@zero-plusplus/utilities/src';
+import {
+  name,
+  RuleDescriptor,
+  RuleName,
   type ScopeName,
 } from '../../../src/tmlanguage';
 import type { ExpectedTestData } from '../../types';

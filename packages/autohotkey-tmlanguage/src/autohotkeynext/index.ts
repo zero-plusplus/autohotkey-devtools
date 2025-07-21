@@ -6,8 +6,11 @@ import * as definitions_common from '../common/definitions';
 import * as patterns_common from '../common/patterns';
 import * as rules_common from '../common/rules';
 import {
-  includeRule, patternsRule, Repository,
-  type ScopeName, type TmLanguage,
+  includeRule,
+  patternsRule,
+  Repository,
+  type ScopeName,
+  type TmLanguage,
 } from '../tmlanguage';
 import * as constants_vnext from './constants';
 import * as definitions_vnext from './definitions';

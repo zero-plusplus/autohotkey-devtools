@@ -30,7 +30,8 @@
 		"[typescript]": {
 			"editor.codeActionsOnSave": {
 				"source.organizeImports": "always"
-			}
+			},
+			"editor.foldingImportsByDefault": true,
 		},
 	}
 }

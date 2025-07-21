@@ -1,7 +1,25 @@
-import { alt, capture, char, group, inlineSpaces0, keyword, lookbehind, seq, startAnchor } from '../../../oniguruma';
 import {
-  includeRule, nameRule, patternsRule, Repository, RuleName,
-  type BeginEndRule, type MatchRule, type PatternsRule, type Rule, type ScopeName,
+  alt,
+  capture,
+  char,
+  group,
+  inlineSpaces0,
+  keyword,
+  lookbehind,
+  seq,
+  startAnchor,
+} from '../../../oniguruma';
+import {
+  includeRule,
+  nameRule,
+  patternsRule,
+  Repository,
+  RuleName,
+  type BeginEndRule,
+  type MatchRule,
+  type PatternsRule,
+  type Rule,
+  type ScopeName,
 } from '../../../tmlanguage';
 
 interface Placeholder {

@@ -1,6 +1,16 @@
 import type { CommandDefinition } from '../../../definition';
-import { alt, char, inlineSpaces0, inlineSpaces1, seq } from '../../../oniguruma';
-import { RuleName, type BeginWhileRule, type ScopeName } from '../../../tmlanguage';
+import {
+  alt,
+  char,
+  inlineSpaces0,
+  inlineSpaces1,
+  seq,
+} from '../../../oniguruma';
+import {
+  RuleName,
+  type BeginWhileRule,
+  type ScopeName,
+} from '../../../tmlanguage';
 import { createMultiLineCommandLikeStatementRule } from './command';
 
 interface Placholder_DirectiveStatementRule {

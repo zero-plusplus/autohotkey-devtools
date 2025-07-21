@@ -1,11 +1,31 @@
 import * as patterns_common from '../../../common/patterns';
 import {
-  alt, capture, char, endAnchor, group, groupMany0, inlineSpaces0, inlineSpaces1, lookahead,
-  lookbehind, negativeLookahead, negChars1, ordalt, seq, textalt,
+  alt,
+  capture,
+  char,
+  endAnchor,
+  group,
+  groupMany0,
+  inlineSpaces0,
+  inlineSpaces1,
+  lookahead,
+  lookbehind,
+  negativeLookahead,
+  negChars1,
+  ordalt,
+  seq,
+  textalt,
 } from '../../../oniguruma';
 import {
-  includeRule, name, nameRule, patternsRule, Repository, RuleName, StyleName,
-  type MatchRule, type ScopeName,
+  includeRule,
+  name,
+  nameRule,
+  patternsRule,
+  Repository,
+  RuleName,
+  StyleName,
+  type MatchRule,
+  type ScopeName,
 } from '../../../tmlanguage';
 import * as constants_v1 from '../../constants';
 

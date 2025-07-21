@@ -1,6 +1,9 @@
 import { dedent } from '@zero-plusplus/utilities/src';
 import {
-  name, RuleDescriptor, RuleName, StyleName,
+  name,
+  RuleDescriptor,
+  RuleName,
+  StyleName,
   type ScopeName,
 } from '../../../src/tmlanguage';
 import type { ExpectedTestData } from '../../types';

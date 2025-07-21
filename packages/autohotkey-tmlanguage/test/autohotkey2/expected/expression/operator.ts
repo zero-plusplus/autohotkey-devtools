@@ -1,7 +1,8 @@
 import * as constant_v2 from '../../../../src/autohotkey2/constants';
 import * as constant_common from '../../../../src/common/constants';
 import {
-  name, RuleName,
+  name,
+  RuleName,
   type ScopeName,
 } from '../../../../src/tmlanguage';
 import * as common from '../../../common';

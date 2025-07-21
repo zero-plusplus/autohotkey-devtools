@@ -1,7 +1,8 @@
 import * as rule_common from '..';
 import {
   RuleName,
-  type PatternsRule, type ScopeName,
+  type PatternsRule,
+  type ScopeName,
 } from '../../../tmlanguage';
 
 interface Placeholder {
