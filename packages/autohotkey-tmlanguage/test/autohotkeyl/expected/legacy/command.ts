@@ -778,7 +778,8 @@ export function createCommandStatementExpectedData(scopeName: ScopeName): Expect
           [
             { text: 'Hotkey', scopes: name(scopeName, RuleName.CommandName) },
             { text: ',', scopes: name(scopeName, RuleName.Comma) },
-            { text: '^a', scopes: name(scopeName, RuleName.UnquotedString) },
+            { text: '^', scopes: name(scopeName, RuleName.HotkeyModifier) },
+            { text: 'a', scopes: name(scopeName, RuleName.HotkeyLabelName) },
             { text: ',', scopes: name(scopeName, RuleName.Comma) },
             { text: 'Off', scopes: name(scopeName, RuleName.UnquotedString, StyleName.Strong) },
             { text: ',', scopes: name(scopeName, RuleName.Comma) },

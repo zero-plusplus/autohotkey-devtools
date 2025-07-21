@@ -286,6 +286,9 @@ export function createRepositories(scopeName: ScopeName): Repositories {
       ruleName: RuleName.LabelName,
       identifierPattern: patterns_v1.identifierPattern,
     }),
+    [Repository.HotkeyName]: rules_common.createHotkeyNameRule(scopeName, {
+      startPattern: patterns_v1.statementStartPattern,
+    }),
     [Repository.KeywordInExpression]: rules_common.createReservedIdentifierRule(scopeName, {
       ruleName: RuleName.KeywordInExpression,
       identifiers: [

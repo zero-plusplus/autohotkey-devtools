@@ -14,6 +14,7 @@ import {
   $guiControlType,
   $guiOptions,
   $guisubcommand,
+  $hotkeyName,
   $imagePath,
   $includeLib,
   $input,
@@ -46,7 +47,6 @@ import {
   decimalOptionItem,
   endKeyOptionItem,
   formatTime,
-  hotkeyName,
   identifierOptionItem,
   keywordOption,
   letterOptionItem,
@@ -433,7 +433,7 @@ export const commandDefinitions: CommandDefinition[] = [
   command('Hotkey', [
     signature([ $subcommand([ 'IfWinActive', 'IfWinExist' ]), $winTitle(), $() ]),
     signature([ $subcommand('If'), $expression(), $rest() ]),
-    signature([ hotkeyName(), $([ keywordOption('On', 'Off', 'Toggle', 'AltTab') ]), $([ keywordOption('UseErrorLevel', 'On', 'Off', 'B', 'B0'), numberOptionItem('P', 'T', 'I') ]) ]),
+    signature([ $hotkeyName(), $([ keywordOption('On', 'Off', 'Toggle', 'AltTab') ]), $([ keywordOption('UseErrorLevel', 'On', 'Off', 'B', 'B0'), numberOptionItem('P', 'T', 'I') ]) ]),
   ]),
 
   // https://www.autohotkey.com/docs/v1/lib/ImageSearch.htm

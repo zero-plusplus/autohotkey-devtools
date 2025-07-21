@@ -796,8 +796,8 @@ export function $quotableEncoding(flags: CommandParameterFlag = CommandParameter
 export function $keyName(flags: CommandParameterFlag = CommandParameterFlag.None): CommandParameter {
   return $([ keywordOption(...constants_common.keyNameList), hexOptionItem('sc', 'vk') ], flags);
 }
-export function hotkeyName(flags: CommandParameterFlag = CommandParameterFlag.None): CommandParameter {
-  return $([], flags);
+export function $hotkeyName(flags: CommandParameterFlag = CommandParameterFlag.None): CommandParameter {
+  return $([ includeRule(Repository.HotkeyName) ], flags);
 }
 export function sendKeys(flags: CommandParameterFlag = CommandParameterFlag.None): CommandParameter {
   // e.g. `Send, {LButton 5}`

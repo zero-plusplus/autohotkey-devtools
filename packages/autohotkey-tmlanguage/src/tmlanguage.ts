@@ -145,6 +145,7 @@ export const enum Repository {
   MetaFunctionName = '$MetaFunctionName',
   FunctionName = '$FunctionName',
   LabelName = '$LabelName',
+  HotkeyName = '$HotkeyName',
   // #endregion name
   // #region regexp
   StringAsRegExp = '$StringAsRegExp',
