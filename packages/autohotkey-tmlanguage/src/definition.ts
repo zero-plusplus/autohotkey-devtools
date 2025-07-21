@@ -433,10 +433,10 @@ export function $blank(flags: CommandParameterFlag = CommandParameterFlag.None):
 export function $invalid(flags: CommandParameterFlag = CommandParameterFlag.None): CommandParameter {
   return $blank(flags);
 }
-export function unquotedShouldEscapeComma(flags: CommandParameterFlag = CommandParameterFlag.None): CommandParameter {
+export function $shouldEscapeComma(flags: CommandParameterFlag = CommandParameterFlag.None): CommandParameter {
   return restParams([], flags);
 }
-export function $integer(): CommandParameter {
+export function $shouldInteger(): CommandParameter {
   return {
     flags: CommandParameterFlag.None,
     itemMatchers: [

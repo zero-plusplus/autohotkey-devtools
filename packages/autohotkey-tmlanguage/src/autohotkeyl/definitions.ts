@@ -1,11 +1,11 @@
 import {
-  $, $blank, $flowsubcommand, $guisubcommand, $integer, $invalid, $subcommand, $subcommandlike, color, colorOptionItem, command,
-  CommandFlag, control, controlMoveOptions, controlOrPos, decimalOptionItem, encoding, endKeyOptionItem, expression, fileAttributes,
-  flagedGuiControlOptions, formatTime, glob, guiControlOptions, guiControlType, guiOptions, hotkeyName, identifierOptionItem, imagePath,
-  includeLib, input, keyName, keywordOnly, keywordOption, labelName, letterOptionItem, matchKeyOptionItem, menuItemName,
-  menuOptions, numberOptionItem, onOff, onOffToggle, output, parameterless, path, rangeOptionItem, requiresVersion,
+  $, $blank, $flowsubcommand, $guisubcommand, $invalid, $shouldEscapeComma, $shouldInteger, $subcommand, $subcommandlike, color,
+  colorOptionItem, command, CommandFlag, control, controlMoveOptions, controlOrPos, decimalOptionItem, encoding, endKeyOptionItem,
+  expression, fileAttributes, flagedGuiControlOptions, formatTime, glob, guiControlOptions, guiControlType, guiOptions, hotkeyName,
+  identifierOptionItem, imagePath, includeLib, input, keyName, keywordOnly, keywordOption, labelName, letterOptionItem, matchKeyOptionItem,
+  menuItemName, menuOptions, numberOptionItem, onOff, onOffToggle, output, parameterless, path, rangeOptionItem, requiresVersion,
   restParams, sendKeys, signature, signedNumberOptionItem, signOptionItem, sizeOptionItem, soundComponent, soundControlType,
-  spacedKeywordsOnly, stringOption, style, timeunit, toggleOptionItem, unquotedNumber, unquotedShouldEscapeComma,
+  spacedKeywordsOnly, stringOption, style, timeunit, toggleOptionItem, unquotedNumber,
   unquotedWithNumber, whichButton, winParams, winTitle,
   type CommandDefinition,
 } from '../definition';
@@ -16,7 +16,7 @@ export const directiveDefinitions: CommandDefinition[] = [
   command('#AllowSameLineComments', signature([ $invalid() ]), CommandFlag.Removed),
 
   // https://www.autohotkey.com/docs/v1/lib/_ClipboardTimeout.htm
-  command('#ClipboardTimeout', signature([ $integer() ])),
+  command('#ClipboardTimeout', signature([ $shouldInteger() ])),
 
   // https://www.autohotkey.com/docs/v1/lib/_CommentFlag.htm
   command('#CommentFlag', signature([ $() ]), CommandFlag.Deprecated),
@@ -34,10 +34,10 @@ export const directiveDefinitions: CommandDefinition[] = [
   command('#EscapeChar', signature([ $() ]), CommandFlag.Deprecated),
 
   // https://www.autohotkey.com/docs/v1/lib/_HotkeyInterval.htm
-  command('#HotkeyInterval', signature([ $integer() ])),
+  command('#HotkeyInterval', signature([ $shouldInteger() ])),
 
   // https://www.autohotkey.com/docs/v1/lib/_HotkeyModifierTimeout.htm
-  command('#HotkeyModifierTimeout', signature([ $integer() ])),
+  command('#HotkeyModifierTimeout', signature([ $shouldInteger() ])),
 
   // https://www.autohotkey.com/docs/v1/lib/_Hotstring.htm
   command('#Hotstring', signature([ $([ keywordOption('NoMouse', 'EndChars', 'SI', 'SP', 'SE', 'X'), toggleOptionItem('*', '?', 'B', 'C', 'O', 'R', 'T', 'Z'), decimalOptionItem('P'), signedNumberOptionItem('K') ]) ])),
@@ -124,10 +124,10 @@ export const loopCommandDefenitions: CommandDefinition[] = [
     signature([ $flowsubcommand('Files'), path(), keywordOnly([ letterOptionItem('D', 'F', 'R') ]) ]),
 
     // https://www.autohotkey.com/docs/v1/lib/LoopParse.htm
-    signature([ $flowsubcommand('Parse'), input(), $([ keywordOption('CSV') ]), unquotedShouldEscapeComma() ]),
+    signature([ $flowsubcommand('Parse'), input(), $([ keywordOption('CSV') ]), $shouldEscapeComma() ]),
 
     // https://www.autohotkey.com/docs/v1/lib/LoopReadFile.htm
-    signature([ $flowsubcommand('Read'), path(), unquotedShouldEscapeComma() ]),
+    signature([ $flowsubcommand('Read'), path(), $shouldEscapeComma() ]),
 
     // https://www.autohotkey.com/docs/v1/lib/LoopReg.htm#new
     signature([ $flowsubcommand('Reg'), $(), keywordOnly([ letterOptionItem('K', 'V', 'R') ]) ]),
@@ -644,7 +644,7 @@ export const commandDefinitions: CommandDefinition[] = [
   command('StringRight', signature([ output(), input(), expression() ]), CommandFlag.Deprecated),
 
   // https://www.autohotkey.com/docs/v1/lib/StringSplit.htm
-  command('StringSplit', signature([ output(), input(), $(), unquotedShouldEscapeComma() ]), CommandFlag.Deprecated),
+  command('StringSplit', signature([ output(), input(), $(), $shouldEscapeComma() ]), CommandFlag.Deprecated),
 
   // https://www.autohotkey.com/docs/v1/lib/StringTrimLeft.htm
   command('StringTrimLeft', signature([ output(), input(), expression() ]), CommandFlag.Deprecated),
