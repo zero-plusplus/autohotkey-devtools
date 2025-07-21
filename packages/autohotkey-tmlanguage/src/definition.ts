@@ -436,6 +436,25 @@ export function $invalid(flags: CommandParameterFlag = CommandParameterFlag.None
 export function $shouldEscapeComma(flags: CommandParameterFlag = CommandParameterFlag.None): CommandParameter {
   return restParams([], flags);
 }
+export function $shouldBoolean(flags: CommandParameterFlag = CommandParameterFlag.None): CommandParameter {
+  return {
+    flags: mergeFlags(flags, CommandParameterFlag.ExclusiveKeyword),
+    itemMatchers: [
+      includeRule(Repository.DereferenceInCommandArgument),
+
+      {
+        match: capture(ignoreCase(ordalt('true', 'false', '0', '1'))),
+        captures: {
+          1: [ includeRule(Repository.Expression) ],
+        },
+      },
+      {
+        name: [ RuleName.UnquotedString, StyleName.Invalid ],
+        match: anyChars1(),
+      },
+    ],
+  };
+}
 export function $shouldInteger(): CommandParameter {
   return {
     flags: CommandParameterFlag.None,
@@ -483,12 +502,6 @@ export function $withNumber(itemMatchers: ParameterItemMatcher[] = [], flags: Co
         match: negChars1('`', '%', '0-9', inlineSpace()),
       },
     ],
-  };
-}
-export function unquotedAndBoolean(flags: CommandParameterFlag = CommandParameterFlag.None): CommandParameter {
-  return {
-    flags,
-    itemMatchers: [ includeRule(Repository.CommandArgumentBooleanLike) ],
   };
 }
 export function quotableUnquoted(itemMatchers: ParameterItemMatcher[] = [], flags: CommandParameterFlag = CommandParameterFlag.None): CommandParameter {

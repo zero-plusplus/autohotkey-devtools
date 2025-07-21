@@ -484,10 +484,6 @@ export function createRepositories(scopeName: ScopeName, placeholder?: Placehold
       stringRuleName: RuleName.UnquotedString,
       stringPattern: patterns_common.unquotedArgumentPattern,
     }),
-    [Repository.CommandArgumentBooleanLike]: rules_common.createBooleanLike(scopeName, {
-      stringRuleName: RuleName.UnquotedString,
-      stringPattern: patterns_common.unquotedArgumentPattern,
-    }),
     [Repository.CommandArgumentNumber]: rules_common.createNumberRule(scopeName),
     [Repository.CommandLastArgumentText]: rules_common.createUnquotedStringRule(scopeName, {
       stringRuleName: RuleName.UnquotedString,

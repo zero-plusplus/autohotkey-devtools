@@ -1,6 +1,6 @@
 import {
-  alt, anyChars1, capture, char, chars0, endAnchor, ignoreCase, inlineSpace, inlineSpaces0, lookahead,
-  lookbehind, negChars0, negChars1, numbers1, optional, optseq, ordalt, seq, textalt,
+  alt, capture, char, chars0, endAnchor, ignoreCase, inlineSpace, inlineSpaces0, lookahead,
+  lookbehind, negChars0, negChars1, numbers1, optional, optseq, seq, textalt,
 } from '../../../oniguruma';
 import {
   includeRule, name, patternsRule, Repository, RuleName, StyleName,
@@ -25,25 +25,6 @@ export function createUnquotedStringRule(scopeName: ScopeName, placeholder: Plac
         {
           name: name(scopeName, placeholder.stringRuleName),
           match: negChars1('`', '%'),
-        },
-      ),
-    },
-  };
-}
-export function createBooleanLike(scopeName: ScopeName, placeholder: Placeholder_UnquotedStringRule): MatchRule {
-  return {
-    match: seq(inlineSpaces0(), capture(placeholder.stringPattern)),
-    captures: {
-      1: patternsRule(
-        {
-          match: capture(ignoreCase(ordalt('true', 'false', '0', '1'))),
-          captures: {
-            1: patternsRule(includeRule(Repository.Expression)),
-          },
-        },
-        {
-          name: name(scopeName, RuleName.UnquotedString, StyleName.Invalid),
-          match: anyChars1(),
         },
       ),
     },

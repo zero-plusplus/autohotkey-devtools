@@ -1,7 +1,7 @@
 import {
-  $, $shouldInteger, command, decimalOptionItem, expression, keywordOnly, keywordOption, parameterless, quotableEncoding,
-  quotableIncludeLib, quotableUnquoted, requiresVersion, signature, signedNumberOptionItem, signOptionItem,
-  toggleOptionItem, unquotedAndBoolean,
+  $, $shouldBoolean, $shouldInteger, command, decimalOptionItem, expression, keywordOnly, keywordOption,
+  parameterless, quotableEncoding, quotableIncludeLib, quotableUnquoted, requiresVersion, signature,
+  signedNumberOptionItem, signOptionItem, toggleOptionItem,
   type CommandDefinition,
 } from '../definition';
 
@@ -36,7 +36,7 @@ export const directiveDefinitions: CommandDefinition[] = [
   command('#MaxThreads', signature([ $shouldInteger() ])),
 
   // https://www.autohotkey.com/docs/v2/lib/_MaxThreadsBuffer.htm
-  command('#MaxThreadsBuffer', signature([ unquotedAndBoolean() ])),
+  command('#MaxThreadsBuffer', signature([ $shouldBoolean() ])),
 
   // https://www.autohotkey.com/docs/v2/lib/_MaxThreadsPerHotkey.htm
   command('#MaxThreadsPerHotkey', signature([ $shouldInteger() ])),
@@ -51,10 +51,10 @@ export const directiveDefinitions: CommandDefinition[] = [
   command('#SingleInstance', signature([ keywordOnly([ keywordOption('Force', 'Ignore', 'Prompt', 'Off') ]) ])),
 
   // https://www.autohotkey.com/docs/v2/lib/_SuspendExempt.htm
-  command('#SuspendExempt', signature([ unquotedAndBoolean() ])),
+  command('#SuspendExempt', signature([ $shouldBoolean() ])),
 
   // https://www.autohotkey.com/docs/v2/lib/_UseHook.htm
-  command('#UseHook', signature([ unquotedAndBoolean() ])),
+  command('#UseHook', signature([ $shouldBoolean() ])),
 
   // https://www.autohotkey.com/docs/v2/lib/_Warn.htm
   command('#Warn', signature([ keywordOnly([ keywordOption('VarUnset', 'LocalSameAsGlobal', 'Unreachable', 'All') ]), keywordOnly([ keywordOption('MsgBox', 'StdOut', 'OutputDebug', 'Off') ]) ])),

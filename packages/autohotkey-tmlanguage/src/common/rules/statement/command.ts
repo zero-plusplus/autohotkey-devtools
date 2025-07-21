@@ -644,14 +644,13 @@ function itemPatternToRule(scopeName: ScopeName, itemPattern: ParameterItemMatch
     match: itemPattern.match,
     captures: Object.fromEntries(Object.entries(itemPattern.captures).map(([ index, matchers ]) => {
       const rules = matchers.flatMap((matcher): Rule[] => {
-        if (typeof matcher === 'object' && 'include' in matcher) {
-          return [ matcher ];
-        }
         return itemPatternsToRules(scopeName, Array.isArray(matcher) ? matcher : [ matcher ]);
       });
+
+      const isNameRule = rules.length === 1 && typeof rules[0] === 'object' && 'name' in rules[0];
       return [
         Number(index),
-        rules.length === 1 ? rules[0] : patternsRule(...rules),
+        isNameRule ? rules[0] : patternsRule(...rules),
       ];
     })) as unknown as Captures,
   };
