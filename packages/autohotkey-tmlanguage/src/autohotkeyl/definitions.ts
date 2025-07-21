@@ -1,12 +1,11 @@
 import {
-  $, $blank, $flowsubcommand, $guisubcommand, $invalid, $shouldEscapeComma, $shouldInteger, $subcommand, $subcommandlike, color,
-  colorOptionItem, command, CommandFlag, control, controlMoveOptions, controlOrPos, decimalOptionItem, encoding, endKeyOptionItem,
+  $, $blank, $flowsubcommand, $guisubcommand, $invalid, $shouldEscapeComma, $shouldInteger, $subcommand, $subcommandlike, $withNumber,
+  color, colorOptionItem, command, CommandFlag, control, controlMoveOptions, controlOrPos, decimalOptionItem, encoding, endKeyOptionItem,
   expression, fileAttributes, flagedGuiControlOptions, formatTime, glob, guiControlOptions, guiControlType, guiOptions, hotkeyName,
   identifierOptionItem, imagePath, includeLib, input, keyName, keywordOnly, keywordOption, labelName, letterOptionItem, matchKeyOptionItem,
   menuItemName, menuOptions, numberOptionItem, onOff, onOffToggle, output, parameterless, path, rangeOptionItem, requiresVersion,
   restParams, sendKeys, signature, signedNumberOptionItem, signOptionItem, sizeOptionItem, soundComponent, soundControlType,
-  spacedKeywordsOnly, stringOption, style, timeunit, toggleOptionItem, unquotedNumber,
-  unquotedWithNumber, whichButton, winParams, winTitle,
+  spacedKeywordsOnly, stringOption, style, timeunit, toggleOptionItem, unquotedNumber, whichButton, winParams, winTitle,
   type CommandDefinition,
 } from '../definition';
 
@@ -144,7 +143,7 @@ export const commandDefinitions: CommandDefinition[] = [
   command('BlockInput', signature([ onOff([ keywordOption('Send', 'Mouse', 'SendAndMouse', 'Default', 'MouseMove', 'MouseMoveOff') ]) ])),
 
   // https://www.autohotkey.com/docs/v1/lib/Click.htm
-  command('Click', signature([ unquotedWithNumber([ keywordOption('Left', 'L', 'Right', 'R', 'Middle', 'M', 'X1', 'X2', 'Up', 'U', 'Down', 'D') ]) ])),
+  command('Click', signature([ $withNumber([ keywordOption('Left', 'L', 'Right', 'R', 'Middle', 'M', 'X1', 'X2', 'Up', 'U', 'Down', 'D') ]) ])),
 
   // https://www.autohotkey.com/docs/v1/lib/ClipWait.htm
   command('ClipWait', signature([ expression(), expression() ])),
@@ -351,7 +350,7 @@ export const commandDefinitions: CommandDefinition[] = [
     signature([ $guisubcommand([ 'Cancel', 'Hide', 'Destroy', 'Minimize', 'Maximize', 'Restore', 'Default' ]), restParams() ]),
     signature([ $guisubcommand('Font'), $([ colorOptionItem('C'), numberOptionItem('S', 'W', 'Q') ]), $() ]),
     signature([ $guisubcommand('Color'), color(), color() ]),
-    signature([ $guisubcommand('Margin'), unquotedWithNumber(), unquotedWithNumber() ]),
+    signature([ $guisubcommand('Margin'), $withNumber(), $withNumber() ]),
     signature([ $guisubcommand('Menu'), $() ]),
     signature([ $guisubcommand('Flash'), keywordOnly([ 'Off' ]) ]),
     signature([ guiOptions() ]),
@@ -658,7 +657,7 @@ export const commandDefinitions: CommandDefinition[] = [
   // https://www.autohotkey.com/docs/v1/lib/SysGet.htm
   command('SysGet', [
     signature([ output(), $subcommand([ 'MonitorCount', 'MonitorPrimary' ]) ]),
-    signature([ output(), $subcommand([ 'Monitor', 'MonitorWorkArea', 'MonitorName' ]), unquotedWithNumber() ]),
+    signature([ output(), $subcommand([ 'Monitor', 'MonitorWorkArea', 'MonitorName' ]), $withNumber() ]),
     signature([ output(), unquotedNumber() ]),
   ]),
 

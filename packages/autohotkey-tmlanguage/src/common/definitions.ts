@@ -1,6 +1,6 @@
 import {
-  $invalid, command, CommandFlag, CommandParameterFlag, encoding, keywordOnly, keywordOption,
-  output, signature, signOptionItem, unquotedNumber, unquotedWithNumber,
+  $invalid, $withNumber, command, CommandFlag, CommandParameterFlag, encoding, keywordOnly, keywordOption,
+  output, signature, signOptionItem, unquotedNumber,
   type CommandDefinition, type CommandParameter, type ParameterItemMatcher,
 } from '../definition';
 import { char, inlineSpace, negChars0, negChars1, seq, wordChars0 } from '../oniguruma';
@@ -56,7 +56,7 @@ export const compilerDirectives: CommandDefinition[] = [
   command('@Ahk2Exe-SetDescription', signature([ unquoted() ])),
   command('@Ahk2Exe-SetFileVersion', signature([ unquoted() ])),
   command('@Ahk2Exe-SetInternalName', signature([ unquoted() ])),
-  command('@Ahk2Exe-SetLanguage', signature([ unquotedWithNumber() ])),
+  command('@Ahk2Exe-SetLanguage', signature([ $withNumber() ])),
   command('@Ahk2Exe-SetLegalTrademarks', signature([ unquoted() ])),
   command('@Ahk2Exe-SetName', signature([ unquoted() ])),
   command('@Ahk2Exe-SetOrigFilename', signature([ unquoted() ])),
@@ -65,13 +65,13 @@ export const compilerDirectives: CommandDefinition[] = [
   command('@Ahk2Exe-SetVersion', signature([ unquoted() ])),
 
   // [Set](https://www.autohotkey.com/docs/v2/misc/Ahk2ExeDirectives.htm#Set)
-  command('@Ahk2Exe-Set', signature([ unquoted(), unquotedWithNumber() ])),
+  command('@Ahk2Exe-Set', signature([ unquoted(), $withNumber() ])),
 
   // [UpdateManifest](https://www.autohotkey.com/docs/v2/misc/Ahk2ExeDirectives.htm#UpdateManifest)
   command('@Ahk2Exe-UpdateManifest', signature([ keywordOnly([ keywordOption('0', '1', '2') ]), unquoted(), unquoted(), on() ])),
 
   // [UseResourceLang](https://www.autohotkey.com/docs/v2/misc/Ahk2ExeDirectives.htm#UseResourceLang)
-  command('@Ahk2Exe-UseResourceLang', signature([ unquotedWithNumber() ])),
+  command('@Ahk2Exe-UseResourceLang', signature([ $withNumber() ])),
 ];
 
 export function unquoted(itemMatchers: ParameterItemMatcher[] = [], flags: CommandParameterFlag = CommandParameterFlag.None): CommandParameter {

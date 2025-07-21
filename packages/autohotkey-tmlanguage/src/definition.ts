@@ -451,7 +451,7 @@ export function $shouldInteger(): CommandParameter {
     ],
   };
 }
-export function unquotedWithNumber(itemMatchers: ParameterItemMatcher[] = [], flags: CommandParameterFlag = CommandParameterFlag.None): CommandParameter {
+export function $withNumber(itemMatchers: ParameterItemMatcher[] = [], flags: CommandParameterFlag = CommandParameterFlag.None): CommandParameter {
   return {
     flags,
     itemMatchers: [
