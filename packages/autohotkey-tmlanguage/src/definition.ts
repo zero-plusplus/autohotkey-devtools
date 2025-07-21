@@ -391,7 +391,7 @@ export function $subcommandlike(values: string | string[] = [], flags: CommandPa
     ],
   };
 }
-export function flowSubcommand(values: string | string[] = [], flags: CommandParameterFlag = CommandParameterFlag.None): CommandParameter {
+export function $flowsubcommand(values: string | string[] = [], flags: CommandParameterFlag = CommandParameterFlag.None): CommandParameter {
   // Basically the same as SubCommand, but the highlighted color is the same as the control flow keyword
   // e.g. `Loop Files`, `Loop Parse`
   //            ^^^^^         ^^^^^
