@@ -621,7 +621,7 @@ export function $input(flags: CommandParameterFlag = CommandParameterFlag.None):
 export function $output(flags: CommandParameterFlag = CommandParameterFlag.None): CommandParameter {
   return $shouldIdentifier(flags);
 }
-export function menuItemName(flags: CommandParameterFlag = CommandParameterFlag.None): CommandParameter {
+export function $menuItemName(flags: CommandParameterFlag = CommandParameterFlag.None): CommandParameter {
   // https://www.autohotkey.com/docs/v1/lib/Menu.htm#MenuItemName
   // In the following example, `&O` needs to be emphasized and `&&` needs to be escaped
   // e.g. `Menu, MenuName, Add, &Open`, `Menu, MenuName, Add, Save && Exit`
