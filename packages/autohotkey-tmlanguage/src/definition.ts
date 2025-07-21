@@ -551,6 +551,11 @@ export function $shouldKeyword(itemMatchers: ParameterItemMatcher[] = [], flags:
     ],
   };
 }
+export function $shouldSpacedKeywords(itemMatchers: ParameterItemMatcher[] = [], flags: CommandParameterFlag = CommandParameterFlag.None): CommandParameter {
+  // e.g. `PixelGetColor, output, x, y, Fast RGB`
+  //                                    ^^^^ ^^^
+  return $shouldKeyword(itemMatchers, flags);
+}
 export function $withNumber(itemMatchers: ParameterItemMatcher[] = [], flags: CommandParameterFlag = CommandParameterFlag.None): CommandParameter {
   return {
     flags,
@@ -597,11 +602,6 @@ export function $guiOptions(flags: CommandParameterFlag = CommandParameterFlag.N
     ],
     mergeFlags(flags, CommandParameterFlag.GuiLabeled),
   );
-}
-export function spacedKeywordsOnly(itemMatchers: ParameterItemMatcher[] = [], flags: CommandParameterFlag = CommandParameterFlag.None): CommandParameter {
-  // e.g. `PixelGetColor, output, x, y, Fast RGB`
-  //                                    ^^^^ ^^^
-  return $shouldKeyword(itemMatchers, flags);
 }
 export function input(flags: CommandParameterFlag = CommandParameterFlag.None): CommandParameter {
   return $expression(flags);

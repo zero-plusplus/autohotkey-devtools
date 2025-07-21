@@ -1,11 +1,11 @@
 import {
   $, $blank, $expression, $fileAttributes, $flowsubcommand, $guiOptions, $guisubcommand, $invalid, $rest, $shouldEscapeComma, $shouldInteger,
-  $shouldKeyword, $shouldLabel, $shouldNumber, $style, $subcommand, $subcommandlike, $withNumber, color, colorOptionItem, command,
-  CommandFlag, control, controlMoveOptions, controlOrPos, decimalOptionItem, encoding, endKeyOptionItem, flagedGuiControlOptions,
+  $shouldKeyword, $shouldLabel, $shouldNumber, $shouldSpacedKeywords, $style, $subcommand, $subcommandlike, $withNumber, color, colorOptionItem,
+  command, CommandFlag, control, controlMoveOptions, controlOrPos, decimalOptionItem, encoding, endKeyOptionItem, flagedGuiControlOptions,
   formatTime, glob, guiControlOptions, guiControlType, hotkeyName, identifierOptionItem, imagePath, includeLib, input, keyName,
   keywordOption, letterOptionItem, matchKeyOptionItem, menuItemName, menuOptions, numberOptionItem, onOff, onOffToggle, output, parameterless,
   path, rangeOptionItem, requiresVersion, sendKeys, signature, signedNumberOptionItem, signOptionItem, sizeOptionItem, soundComponent,
-  soundControlType, spacedKeywordsOnly, stringOption, timeunit, toggleOptionItem, whichButton, winParams, winTitle,
+  soundControlType, stringOption, timeunit, toggleOptionItem, whichButton, winParams, winTitle,
   type CommandDefinition,
 } from '../definition';
 
@@ -452,10 +452,10 @@ export const commandDefinitions: CommandDefinition[] = [
   command('Pause', signature([ onOffToggle(), $() ])),
 
   // https://www.autohotkey.com/docs/v1/lib/PixelGetColor.htm
-  command('PixelGetColor', signature([ output(), $expression(), $expression(), spacedKeywordsOnly([ keywordOption('Alt', 'Slow', 'RGB') ]) ])),
+  command('PixelGetColor', signature([ output(), $expression(), $expression(), $shouldSpacedKeywords([ keywordOption('Alt', 'Slow', 'RGB') ]) ])),
 
   // https://www.autohotkey.com/docs/v1/lib/PixelSearch.htm
-  command('PixelSearch', signature([ output(), output(), $expression(), $expression(), $expression(), $expression(), $expression(), $expression(), spacedKeywordsOnly([ keywordOption('Fast', 'RGB') ]) ])),
+  command('PixelSearch', signature([ output(), output(), $expression(), $expression(), $expression(), $expression(), $expression(), $expression(), $shouldSpacedKeywords([ keywordOption('Fast', 'RGB') ]) ])),
 
   // https://www.autohotkey.com/docs/v1/lib/PostMessage.htm
   command('PostMessage', signature([ $expression(), $expression(), $expression(), control(), ...winParams ])),
@@ -492,10 +492,10 @@ export const commandDefinitions: CommandDefinition[] = [
   command('Reload', signature(parameterless())),
 
   // https://www.autohotkey.com/docs/v1/lib/Run.htm
-  command('Run', signature([ $(), path(), spacedKeywordsOnly([ keywordOption('Max', 'Min', 'Hide', 'UseErrorLevel') ]), output() ])),
+  command('Run', signature([ $(), path(), $shouldSpacedKeywords([ keywordOption('Max', 'Min', 'Hide', 'UseErrorLevel') ]), output() ])),
 
   // https://www.autohotkey.com/docs/v1/lib/RunWait.htm
-  command('RunWait', signature([ $(), path(), spacedKeywordsOnly([ keywordOption('Max', 'Min', 'Hide', 'UseErrorLevel') ]), output() ])),
+  command('RunWait', signature([ $(), path(), $shouldSpacedKeywords([ keywordOption('Max', 'Min', 'Hide', 'UseErrorLevel') ]), output() ])),
 
   // https://www.autohotkey.com/docs/v1/lib/Send.htm
   command('Send', signature([ sendKeys() ])),
