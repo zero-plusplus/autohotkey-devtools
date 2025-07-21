@@ -714,7 +714,7 @@ export function $requiresVersion(flags: CommandParameterFlag = CommandParameterF
 export function $control(flags: CommandParameterFlag = CommandParameterFlag.None): CommandParameter {
   return $([ keywordOption('ahk_id') ], flags);
 }
-export function controlOrPos(flags: CommandParameterFlag = CommandParameterFlag.None): CommandParameter {
+export function $controlOrPos(flags: CommandParameterFlag = CommandParameterFlag.None): CommandParameter {
   return $([ keywordOption('ahk_id'), decimalOptionItem('X', 'Y') ], flags);
 }
 export function guiControlType(): CommandParameter {

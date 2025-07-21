@@ -1,7 +1,7 @@
 import {
-  $, $blank, $control, $expression, $fileAttributes, $flowsubcommand, $guiOptions, $guisubcommand, $includeLib, $input, $invalid, $menuItemName, $menuOptions,
-  $output, $requiresVersion, $rest, $shouldEscapeComma, $shouldInteger, $shouldKeyword, $shouldLabel, $shouldNumber, $shouldSpacedKeywords, $style,
-  $subcommand, $subcommandlike, $winTitle, $withNumber, color, colorOptionItem, command, CommandFlag, controlMoveOptions, controlOrPos, decimalOptionItem,
+  $, $blank, $control, $controlOrPos, $expression, $fileAttributes, $flowsubcommand, $guiOptions, $guisubcommand, $includeLib, $input, $invalid, $menuItemName,
+  $menuOptions, $output, $requiresVersion, $rest, $shouldEscapeComma, $shouldInteger, $shouldKeyword, $shouldLabel, $shouldNumber, $shouldSpacedKeywords, $style,
+  $subcommand, $subcommandlike, $winTitle, $withNumber, color, colorOptionItem, command, CommandFlag, controlMoveOptions, decimalOptionItem,
   encoding, endKeyOptionItem, flagedGuiControlOptions, formatTime, glob, guiControlOptions, guiControlType, hotkeyName, identifierOptionItem, imagePath,
   keyName, keywordOption, letterOptionItem, matchKeyOptionItem, numberOptionItem, onOff, onOffToggle, parameterless, path, rangeOptionItem, sendKeys,
   signature, signedNumberOptionItem, signOptionItem, sizeOptionItem, soundComponent, soundControlType, stringOption, timeunit, toggleOptionItem, whichButton,
@@ -160,7 +160,7 @@ export const commandDefinitions: CommandDefinition[] = [
   ),
 
   // https://www.autohotkey.com/docs/v1/lib/ControlClick.htm
-  command('ControlClick', signature([ controlOrPos(), $winTitle(), $(), whichButton(), $expression(), $([ keywordOption('NA', 'D', 'U', 'Pos'), decimalOptionItem('X', 'Y') ]) ])),
+  command('ControlClick', signature([ $controlOrPos(), $winTitle(), $(), whichButton(), $expression(), $([ keywordOption('NA', 'D', 'U', 'Pos'), decimalOptionItem('X', 'Y') ]) ])),
 
   // https://www.autohotkey.com/docs/v1/lib/ControlFocus.htm
   command('ControlFocus', signature([ $control(), ...winParams ])),
