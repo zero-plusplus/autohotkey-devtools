@@ -1,5 +1,5 @@
 import {
-  $, $flowsubcommand, $guisubcommand, $integer, $subcommand, $subcommandlike, blank, color, colorOptionItem, command, CommandFlag, control,
+  $, $blank, $flowsubcommand, $guisubcommand, $integer, $subcommand, $subcommandlike, color, colorOptionItem, command, CommandFlag, control,
   controlMoveOptions, controlOrPos, decimalOptionItem, encoding, endKeyOptionItem, expression, fileAttributes, flagedGuiControlOptions,
   formatTime, glob, guiControlOptions, guiControlType, guiOptions, hotkeyName, identifierOptionItem, imagePath, includeLib,
   input, invalid, keyName, keywordOnly, keywordOption, labelName, letterOptionItem, matchKeyOptionItem, menuItemName,
@@ -153,7 +153,7 @@ export const commandDefinitions: CommandDefinition[] = [
   command(
     'Control',
     [
-      signature([ $subcommand([ 'Check', 'UnCheck', 'Enable', 'Disable', 'Show', 'Hide', 'ShowDropDown', 'HideDropDown' ]), blank(), control(), ...winParams ]),
+      signature([ $subcommand([ 'Check', 'UnCheck', 'Enable', 'Disable', 'Show', 'Hide', 'ShowDropDown', 'HideDropDown' ]), $blank(), control(), ...winParams ]),
       signature([ $subcommand([ 'Style', 'ExStyle' ]), style(), control(), ...winParams ]),
       signature([ $subcommand([ 'TabLeft', 'TabRight', 'Add', 'Delete', 'Choose', 'ChooseString', 'EditPaste' ]), $(), control(), ...winParams ]),
       signature(parameterless()),
@@ -169,7 +169,7 @@ export const commandDefinitions: CommandDefinition[] = [
   // https://www.autohotkey.com/docs/v1/lib/ControlGet.htm
   command('ControlGet', [
     signature([ output(), $subcommand('List'), $([ keywordOption('Selected', 'Focused', 'Col', 'Count') ]), control(), ...winParams ]),
-    signature([ output(), $subcommand([ 'Checked', 'Enabled', 'Visible', 'Tab', 'Choice', 'LineCount', 'CurrentLine', 'CurrentCol', 'Selected', 'Style', 'ExStyle', 'Hwnd' ]), blank(), control(), ...winParams ]),
+    signature([ output(), $subcommand([ 'Checked', 'Enabled', 'Visible', 'Tab', 'Choice', 'LineCount', 'CurrentLine', 'CurrentCol', 'Selected', 'Style', 'ExStyle', 'Hwnd' ]), $blank(), control(), ...winParams ]),
     signature([ output(), $subcommand([ 'FindString', 'Line' ]), $(), control(), ...winParams ]),
     signature([ output(), invalid() ]),
   ]),
@@ -368,7 +368,7 @@ export const commandDefinitions: CommandDefinition[] = [
   // https://www.autohotkey.com/docs/v1/lib/GuiControlGet.htm
   command('GuiControlGet', [
     signature([ output(), $guisubcommand([ 'Pos', 'Focus', 'FocusV', 'Visible', 'Hwnd', 'Name' ]), control() ]),
-    signature([ output(), blank(), control(), $() ]),
+    signature([ output(), $blank(), control(), $() ]),
   ]),
 
   // https://www.autohotkey.com/docs/v1/lib/Hotkey.htm
@@ -750,7 +750,7 @@ export const commandDefinitions: CommandDefinition[] = [
     signature([ $subcommand('AlwaysOnTop'), onOffToggle(), ...winParams ]),
     signature([ $subcommand([ 'Transparent', 'TransColor' ]), $(), ...winParams ]),
     signature([ $subcommand([ 'Style', 'ExStyle' ]), style(), ...winParams ]),
-    signature([ $subcommand([ 'Bottom', 'Top', 'Disable', 'Enable', 'Redraw' ]), blank(), ...winParams ]),
+    signature([ $subcommand([ 'Bottom', 'Top', 'Disable', 'Enable', 'Redraw' ]), $blank(), ...winParams ]),
     signature([ $subcommand('Region'), $([ keywordOption('E'), numberOptionItem('W', 'H'), rangeOptionItem('R', '') ]), ...winParams ]),
     signature(parameterless()),
   ]),

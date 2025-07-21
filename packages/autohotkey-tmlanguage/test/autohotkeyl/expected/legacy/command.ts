@@ -1,7 +1,7 @@
 import { dedent, hasFlag, repeatArray } from '@zero-plusplus/utilities/src';
 import * as definitions_v1 from '../../../../src/autohotkeyl/definitions';
 import {
-  $, $integer, blank, CommandFlag, control, expression, fileAttributes, flagedGuiControlOptions, guiControlOptions, guiOptions,
+  $, $blank, $integer, CommandFlag, control, expression, fileAttributes, flagedGuiControlOptions, guiControlOptions, guiOptions,
   keywordOnly, onOff, output, restParams, sendKeys, winTitle,
 } from '../../../../src/definition';
 import {
@@ -1369,7 +1369,7 @@ export function createCommandStatementExpectedData(scopeName: ScopeName): Expect
     })(),
 
     // #region highlight types
-    ...((_ = blank): ExpectedTestData[] => {
+    ...((_ = $blank): ExpectedTestData[] => {
       return [
         [
           dedent`

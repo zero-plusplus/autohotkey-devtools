@@ -419,7 +419,7 @@ export function $guisubcommand(values: string | string[] = [], flags: CommandPar
     ],
   };
 }
-export function blank(flags: CommandParameterFlag = CommandParameterFlag.None): CommandParameter {
+export function $blank(flags: CommandParameterFlag = CommandParameterFlag.None): CommandParameter {
   return {
     flags: mergeFlags(flags, CommandParameterFlag.Blank),
     itemMatchers: [
@@ -431,7 +431,7 @@ export function blank(flags: CommandParameterFlag = CommandParameterFlag.None): 
   };
 }
 export function invalid(flags: CommandParameterFlag = CommandParameterFlag.None): CommandParameter {
-  return blank(flags);
+  return $blank(flags);
 }
 export function unquotedShouldEscapeComma(flags: CommandParameterFlag = CommandParameterFlag.None): CommandParameter {
   return restParams([], flags);
