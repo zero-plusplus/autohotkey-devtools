@@ -750,11 +750,11 @@ export function $onOffToggle(itemMatchers: ParameterItemMatcher[] = [], flags: C
 export function $whichButton(flags: CommandParameterFlag = CommandParameterFlag.None): CommandParameter {
   return $([ keywordOption('Left', 'L', 'Right', 'R', 'Middle', 'M', 'WheelUp', 'WU', 'WheelDown', 'WD', 'WheelLeft', 'WL', 'WheelRight', 'WR') ], flags);
 }
-export function path(itemMatchers: ParameterItemMatcher[] = [], flags: CommandParameterFlag = CommandParameterFlag.None): CommandParameter {
+export function $path(itemMatchers: ParameterItemMatcher[] = [], flags: CommandParameterFlag = CommandParameterFlag.None): CommandParameter {
   return $(itemMatchers, flags);
 }
 export function imagePath(flags: CommandParameterFlag = CommandParameterFlag.None): CommandParameter {
-  return path([ stringOption('HICON:', 'HBITMAP:') ], flags);
+  return $path([ stringOption('HICON:', 'HBITMAP:') ], flags);
 }
 export function glob(flags: CommandParameterFlag = CommandParameterFlag.None): CommandParameter {
   return $([], flags);

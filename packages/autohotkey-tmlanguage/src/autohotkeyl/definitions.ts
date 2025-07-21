@@ -1,10 +1,10 @@
 import {
   $, $blank, $control, $controlMoveOptions, $controlOrPos, $expression, $fileAttributes, $flagedGuiControlOptions, $flowsubcommand,
   $guiControlOptions, $guiControlType, $guiOptions, $guisubcommand, $includeLib, $input, $invalid, $menuItemName, $menuOptions, $onOff,
-  $onOffToggle, $output, $requiresVersion, $rest, $shouldEscapeComma, $shouldInteger, $shouldKeyword, $shouldLabel, $shouldNumber,
+  $onOffToggle, $output, $path, $requiresVersion, $rest, $shouldEscapeComma, $shouldInteger, $shouldKeyword, $shouldLabel, $shouldNumber,
   $shouldSpacedKeywords, $style, $subcommand, $subcommandlike, $whichButton, $winTitle, $withNumber, color, colorOptionItem, command,
   CommandFlag, decimalOptionItem, encoding, endKeyOptionItem, formatTime, glob, hotkeyName, identifierOptionItem, imagePath, keyName,
-  keywordOption, letterOptionItem, matchKeyOptionItem, numberOptionItem, parameterless, path, rangeOptionItem, sendKeys, signature,
+  keywordOption, letterOptionItem, matchKeyOptionItem, numberOptionItem, parameterless, rangeOptionItem, sendKeys, signature,
   signedNumberOptionItem, signOptionItem, sizeOptionItem, soundComponent, soundControlType, stringOption, timeunit, toggleOptionItem,
   winParams,
   type CommandDefinition,
@@ -121,13 +121,13 @@ export const directiveDefinitions: CommandDefinition[] = [
 export const loopCommandDefenitions: CommandDefinition[] = [
   command('Loop', [
     // https://www.autohotkey.com/docs/v1/lib/LoopFile.htm
-    signature([ $flowsubcommand('Files'), path(), $shouldKeyword([ letterOptionItem('D', 'F', 'R') ]) ]),
+    signature([ $flowsubcommand('Files'), $path(), $shouldKeyword([ letterOptionItem('D', 'F', 'R') ]) ]),
 
     // https://www.autohotkey.com/docs/v1/lib/LoopParse.htm
     signature([ $flowsubcommand('Parse'), $input(), $([ keywordOption('CSV') ]), $shouldEscapeComma() ]),
 
     // https://www.autohotkey.com/docs/v1/lib/LoopReadFile.htm
-    signature([ $flowsubcommand('Read'), path(), $shouldEscapeComma() ]),
+    signature([ $flowsubcommand('Read'), $path(), $shouldEscapeComma() ]),
 
     // https://www.autohotkey.com/docs/v1/lib/LoopReg.htm#new
     signature([ $flowsubcommand('Reg'), $(), $shouldKeyword([ letterOptionItem('K', 'V', 'R') ]) ]),
@@ -250,19 +250,19 @@ export const commandDefinitions: CommandDefinition[] = [
   command('EnvUpdate', signature(parameterless())),
 
   // https://www.autohotkey.com/docs/v1/lib/FileAppend.htm
-  command('FileAppend', signature([ $(), path(), encoding() ])),
+  command('FileAppend', signature([ $(), $path(), encoding() ])),
 
   // https://www.autohotkey.com/docs/v1/lib/FileCopy.htm
   command('FileCopy', signature([ glob(), glob(), $expression() ])),
 
   // https://www.autohotkey.com/docs/v1/lib/FileCopyDir.htm
-  command('FileCopyDir', signature([ path(), path(), $expression() ])),
+  command('FileCopyDir', signature([ $path(), $path(), $expression() ])),
 
   // https://www.autohotkey.com/docs/v1/lib/FileCreateDir.htm
-  command('FileCreateDir', signature([ path() ])),
+  command('FileCreateDir', signature([ $path() ])),
 
   // https://www.autohotkey.com/docs/v1/lib/FileCreateShortcut.htm
-  command('FileCreateShortcut', signature([ path(), path(), path(), $(), $(), path(), $(), $expression(), $() ])),
+  command('FileCreateShortcut', signature([ $path(), $path(), $path(), $(), $(), $path(), $(), $expression(), $() ])),
 
   // https://www.autohotkey.com/docs/v1/lib/FileDelete.htm
   command('FileDelete', signature([ glob() ])),
@@ -271,34 +271,34 @@ export const commandDefinitions: CommandDefinition[] = [
   command('FileEncoding', signature([ encoding() ])),
 
   // https://www.autohotkey.com/docs/v1/lib/FileInstall.htm
-  command('FileInstall', signature([ path(), path(), $expression() ])),
+  command('FileInstall', signature([ $path(), $path(), $expression() ])),
 
   // https://www.autohotkey.com/docs/v1/lib/FileGetAttrib.htm
-  command('FileGetAttrib', signature([ $output(), path() ])),
+  command('FileGetAttrib', signature([ $output(), $path() ])),
 
   // https://www.autohotkey.com/docs/v1/lib/FileGetShortcut.htm
-  command('FileGetShortcut', signature([ path(), $output(), $output(), $output(), $output(), $output(), $output(), $output() ])),
+  command('FileGetShortcut', signature([ $path(), $output(), $output(), $output(), $output(), $output(), $output(), $output() ])),
 
   // https://www.autohotkey.com/docs/v1/lib/FileGetSize.htm
-  command('FileGetSize', signature([ $output(), path(), $shouldKeyword([ keywordOption('B', 'K', 'M') ]) ])),
+  command('FileGetSize', signature([ $output(), $path(), $shouldKeyword([ keywordOption('B', 'K', 'M') ]) ])),
 
   // https://www.autohotkey.com/docs/v1/lib/FileGetTime.htm
-  command('FileGetTime', signature([ $output(), path(), $shouldKeyword([ keywordOption('M', 'C', 'A') ]) ])),
+  command('FileGetTime', signature([ $output(), $path(), $shouldKeyword([ keywordOption('M', 'C', 'A') ]) ])),
 
   // https://www.autohotkey.com/docs/v1/lib/FileGetVersion.htm
-  command('FileGetVersion', signature([ $output(), path() ])),
+  command('FileGetVersion', signature([ $output(), $path() ])),
 
   // https://www.autohotkey.com/docs/v1/lib/FileMove.htm
   command('FileMove', signature([ glob(), glob(), $expression() ])),
 
   // https://www.autohotkey.com/docs/v1/lib/FileMoveDir.htm
-  command('FileMoveDir', signature([ path(), path(), $shouldKeyword([ keywordOption('0', '1', '2', 'R') ]) ])),
+  command('FileMoveDir', signature([ $path(), $path(), $shouldKeyword([ keywordOption('0', '1', '2', 'R') ]) ])),
 
   // https://www.autohotkey.com/docs/v1/lib/FileRead.htm
-  command('FileRead', signature([ $output(), path([ keywordOption('*c', '*t'), decimalOptionItem('*m', '*P') ]) ])),
+  command('FileRead', signature([ $output(), $path([ keywordOption('*c', '*t'), decimalOptionItem('*m', '*P') ]) ])),
 
   // https://www.autohotkey.com/docs/v1/lib/FileReadLine.htm
-  command('FileReadLine', signature([ $output(), path(), $expression() ])),
+  command('FileReadLine', signature([ $output(), $path(), $expression() ])),
 
   // https://www.autohotkey.com/docs/v1/lib/FileRecycle.htm
   command('FileRecycle', signature([ glob() ])),
@@ -307,10 +307,10 @@ export const commandDefinitions: CommandDefinition[] = [
   command('FileRecycleEmpty', signature([ $() ])),
 
   // https://www.autohotkey.com/docs/v1/lib/FileRemoveDir.htm
-  command('FileRemoveDir', signature([ path(), $expression() ])),
+  command('FileRemoveDir', signature([ $path(), $expression() ])),
 
   // https://www.autohotkey.com/docs/v1/lib/FileSelectFile.htm
-  command('FileSelectFile', signature([ $output(), $([ keywordOption('M', 'S') ]), path(), $(), $() ])),
+  command('FileSelectFile', signature([ $output(), $([ keywordOption('M', 'S') ]), $path(), $(), $() ])),
 
   // https://www.autohotkey.com/docs/v1/lib/FileSelectFolder.htm
   command('FileSelectFolder', signature([ $output(), $(), $expression(), $() ])),
@@ -382,13 +382,13 @@ export const commandDefinitions: CommandDefinition[] = [
   command('ImageSearch', signature([ $output(), $output(), $expression(), $expression(), $expression(), $expression(), $([ stringOption('HBITMAP:'), numberOptionItem('*Icon', '*', '*Trans', '*w', '*h') ]) ])),
 
   // https://www.autohotkey.com/docs/v1/lib/IniDelete.htm
-  command('IniDelete', signature([ path(), $(), $() ])),
+  command('IniDelete', signature([ $path(), $(), $() ])),
 
   // https://www.autohotkey.com/docs/v1/lib/IniRead.htm
-  command('IniRead', signature([ $output(), path(), $(), $(), $() ])),
+  command('IniRead', signature([ $output(), $path(), $(), $(), $() ])),
 
   // https://www.autohotkey.com/docs/v1/lib/IniWrite.htm
-  command('IniWrite', signature([ $(), $(), path(), $(), $() ])),
+  command('IniWrite', signature([ $(), $(), $path(), $(), $() ])),
 
   // https://www.autohotkey.com/docs/v1/lib/Input.htm
   command('Input', signature([ $output(), $([ keywordOption('B', 'C', 'V', 'E', 'M'), signOptionItem('*'), numberOptionItem('I', 'L', 'T') ]), $([ endKeyOptionItem() ]), $([ matchKeyOptionItem() ]) ])),
@@ -416,13 +416,13 @@ export const commandDefinitions: CommandDefinition[] = [
     signature([ $subcommand('Tray'), $subcommand('Icon'), imagePath(), $(), $() ]),
     signature([ $subcommand('Tray'), $subcommand([ 'Tip', 'Click' ]), $() ]),
     signature([ $subcommand('Tray'), $subcommand([ 'MainWindow', 'NoMainWindow', 'NoIcon' ]), $rest() ]),
-    signature([ $subcommand('Tray'), $(), path(), $(), $() ]),
+    signature([ $subcommand('Tray'), $(), $path(), $(), $() ]),
     signature([ $(), $subcommand('Add'), $menuItemName(), $(), $menuOptions() ]),
     signature([ $(), $subcommand('Insert'), $menuItemName(), $(), $(), $menuOptions() ]),
     signature([ $(), $subcommand([ 'DeleteAll', 'NoDefault', 'Standard', 'NoStandard' ]), $rest() ]),
     signature([ $(), $subcommand([ 'Delete', 'Check', 'Uncheck', 'ToggleCheck', 'Enable', 'Disable', 'ToggleEnable', 'Default', 'NoIcon' ]), $menuItemName() ]),
     signature([ $(), $subcommand('Rename'), $menuItemName(), $menuItemName() ]),
-    signature([ $(), $subcommand('Icon'), $(), path(), $(), imagePath() ]),
+    signature([ $(), $subcommand('Icon'), $(), $path(), $(), imagePath() ]),
     signature([ $(), $subcommand('UseErrorLevel'), $shouldKeyword([ keywordOption('Off') ]) ]),
     signature([ $(), $subcommand([ 'Show', 'Color' ]), $(), $() ]),
     signature([ $rest() ]),
@@ -493,10 +493,10 @@ export const commandDefinitions: CommandDefinition[] = [
   command('Reload', signature(parameterless())),
 
   // https://www.autohotkey.com/docs/v1/lib/Run.htm
-  command('Run', signature([ $(), path(), $shouldSpacedKeywords([ keywordOption('Max', 'Min', 'Hide', 'UseErrorLevel') ]), $output() ])),
+  command('Run', signature([ $(), $path(), $shouldSpacedKeywords([ keywordOption('Max', 'Min', 'Hide', 'UseErrorLevel') ]), $output() ])),
 
   // https://www.autohotkey.com/docs/v1/lib/RunWait.htm
-  command('RunWait', signature([ $(), path(), $shouldSpacedKeywords([ keywordOption('Max', 'Min', 'Hide', 'UseErrorLevel') ]), $output() ])),
+  command('RunWait', signature([ $(), $path(), $shouldSpacedKeywords([ keywordOption('Max', 'Min', 'Hide', 'UseErrorLevel') ]), $output() ])),
 
   // https://www.autohotkey.com/docs/v1/lib/Send.htm
   command('Send', signature([ sendKeys() ])),
@@ -565,7 +565,7 @@ export const commandDefinitions: CommandDefinition[] = [
   command('SetWinDelay', signature([ $expression() ])),
 
   // https://www.autohotkey.com/docs/v1/lib/SetWorkingDir.htm
-  command('SetWorkingDir', signature([ path() ])),
+  command('SetWorkingDir', signature([ $path() ])),
 
   // https://www.autohotkey.com/docs/v1/lib/Sleep.htm
   command('Sleep', signature([ $expression() ])),
@@ -583,7 +583,7 @@ export const commandDefinitions: CommandDefinition[] = [
   command('SoundGetWaveVolume', signature([ $output(), $() ])),
 
   // https://www.autohotkey.com/docs/v1/lib/SoundPlay.htm
-  command('SoundPlay', signature([ path(), $shouldKeyword([ keywordOption('Wait', '1') ]) ])),
+  command('SoundPlay', signature([ $path(), $shouldKeyword([ keywordOption('Wait', '1') ]) ])),
 
   // https://www.autohotkey.com/docs/v1/lib/SoundSet.htm
   command('SoundSet', signature([ $expression(), soundComponent(), soundControlType(), $expression() ])),
@@ -683,7 +683,7 @@ export const commandDefinitions: CommandDefinition[] = [
   command('TrayTip', signature([ $(), $(), $expression(), $expression() ])),
 
   // https://www.autohotkey.com/docs/v1/lib/URLDownloadToFile.htm
-  command('UrlDownloadToFile', signature([ $(), path() ])),
+  command('UrlDownloadToFile', signature([ $(), $path() ])),
 
   // https://www.autohotkey.com/docs/v1/lib/WinActivate.htm
   command('WinActivate', signature(winParams)),
