@@ -1,6 +1,6 @@
 import {
-  $, $expression, $quotable, $shouldBoolean, $shouldInteger, $shouldKeyword, command, decimalOptionItem, keywordOption, parameterless,
-  quotableEncoding, quotableIncludeLib, requiresVersion, signature, signedNumberOptionItem, signOptionItem, toggleOptionItem,
+  $, $expression, $quotable, $quotableIncludeLib, $shouldBoolean, $shouldInteger, $shouldKeyword, command, decimalOptionItem,
+  keywordOption, parameterless, quotableEncoding, requiresVersion, signature, signedNumberOptionItem, signOptionItem, toggleOptionItem,
   type CommandDefinition,
 } from '../definition';
 
@@ -25,8 +25,8 @@ export const directiveDefinitions: CommandDefinition[] = [
   command('#Hotstring', signature([ $([ keywordOption('NoMouse', 'EndChars', 'SI', 'SP', 'SE', 'X'), toggleOptionItem('*', '?', 'B', 'C', 'O', 'R', 'T', 'Z'), decimalOptionItem('P'), signedNumberOptionItem('K') ]) ])),
 
   // https://www.autohotkey.com/docs/v2/lib/_Include.htm
-  command('#Include', signature([ quotableIncludeLib() ])),
-  command('#IncludeAgain', signature([ quotableIncludeLib() ])),
+  command('#Include', signature([ $quotableIncludeLib() ])),
+  command('#IncludeAgain', signature([ $quotableIncludeLib() ])),
 
   // https://www.autohotkey.com/docs/v2/lib/_InputLevel.htm
   command('#InputLevel', signature([ $shouldInteger() ])),

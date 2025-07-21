@@ -682,7 +682,7 @@ export function $includeLib(flags: CommandParameterFlag = CommandParameterFlag.N
     ],
   };
 }
-export function quotableIncludeLib(flags: CommandParameterFlag = CommandParameterFlag.None): CommandParameter {
+export function $quotableIncludeLib(flags: CommandParameterFlag = CommandParameterFlag.None): CommandParameter {
   return $includeLib(flags, true);
 }
 export function requiresVersion(flags: CommandParameterFlag = CommandParameterFlag.None): CommandParameter {
