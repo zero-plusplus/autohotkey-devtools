@@ -813,7 +813,7 @@ export function $formatTime(flags: CommandParameterFlag = CommandParameterFlag.N
     flags,
   );
 }
-export function color(flags: CommandParameterFlag = CommandParameterFlag.None): CommandParameter {
+export function $color(flags: CommandParameterFlag = CommandParameterFlag.None): CommandParameter {
   return $([ keywordOption('Default', 'Black', 'Silver', 'Gray', 'White', 'Maroon', 'Red', 'Purple', 'Fuchsia', 'Green', 'Lime', 'Olive', 'Yellow', 'Navy', 'Blue', 'Teal', 'Aqua') ], flags);
 }
 export function soundComponent(): CommandParameter {
