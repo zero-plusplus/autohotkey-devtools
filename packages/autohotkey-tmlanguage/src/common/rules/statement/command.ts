@@ -662,42 +662,52 @@ function parameterToPatternsRule(scopeName: ScopeName, definition: CommandDefini
   );
 }
 function itemPatternsToRules(scopeName: ScopeName, itemPatterns: ParameterItemMatcher[]): Rule[] {
-  return itemPatterns.map((itemPattern): Rule => itemPatternToRule(scopeName, itemPattern));
+  return itemPatterns.flatMap((itemPattern) => itemPatternToRules(scopeName, itemPattern));
 }
-function itemPatternToRule(scopeName: ScopeName, itemPattern: ParameterItemMatcher): Rule {
+function itemPatternToRules(scopeName: ScopeName, itemPattern: ParameterItemMatcher): Rule[] {
+  if (Array.isArray(itemPattern)) {
+    return itemPatternsToRules(scopeName, itemPattern);
+  }
+
   if (typeof itemPattern === 'string') {
-    return {
-      name: name(scopeName, RuleName.UnquotedString, StyleName.Strong),
-      match: ignoreCase(itemPattern),
-    };
+    return [
+      {
+        name: name(scopeName, RuleName.UnquotedString, StyleName.Strong),
+        match: ignoreCase(itemPattern),
+      },
+    ];
   }
   if ('include' in itemPattern) {
-    return itemPattern;
+    return [ itemPattern ];
   }
   if ('name' in itemPattern && !('captures' in itemPattern)) {
     if (itemPattern.match === undefined) {
-      return { name: name(scopeName, ...Array.isArray(itemPattern.name) ? itemPattern.name : [ itemPattern.name ]) };
+      return [ { name: name(scopeName, ...Array.isArray(itemPattern.name) ? itemPattern.name : [ itemPattern.name ]) } ];
     }
-    return {
-      name: name(scopeName, ...Array.isArray(itemPattern.name) ? itemPattern.name : [ itemPattern.name ]),
-      match: itemPattern.match,
-    };
+    return [
+      {
+        name: name(scopeName, ...Array.isArray(itemPattern.name) ? itemPattern.name : [ itemPattern.name ]),
+        match: itemPattern.match,
+      },
+    ];
   }
-  return {
-    name: 'name' in itemPattern ? name(scopeName, ...Array.isArray(itemPattern.name) ? itemPattern.name : [ itemPattern.name ]) : undefined,
-    match: itemPattern.match,
-    captures: Object.fromEntries(Object.entries(itemPattern.captures).map(([ index, matchers ]) => {
-      const rules = matchers.flatMap((matcher): Rule[] => {
-        return itemPatternsToRules(scopeName, Array.isArray(matcher) ? matcher : [ matcher ]);
-      });
+  return [
+    {
+      name: 'name' in itemPattern ? name(scopeName, ...Array.isArray(itemPattern.name) ? itemPattern.name : [ itemPattern.name ]) : undefined,
+      match: itemPattern.match,
+      captures: Object.fromEntries(Object.entries(itemPattern.captures).map(([ index, matchers ]) => {
+        const rules = matchers.flatMap((matcher): Rule[] => {
+          return itemPatternsToRules(scopeName, Array.isArray(matcher) ? matcher : [ matcher ]);
+        });
 
-      const isNameRule = rules.length === 1 && typeof rules[0] === 'object' && 'name' in rules[0];
-      return [
-        Number(index),
-        isNameRule ? rules[0] : patternsRule(...rules),
-      ];
-    })) as unknown as Captures,
-  };
+        const isNameRule = rules.length === 1 && typeof rules[0] === 'object' && 'name' in rules[0];
+        return [
+          Number(index),
+          isNameRule ? rules[0] : patternsRule(...rules),
+        ];
+      })) as unknown as Captures,
+    },
+  ];
 }
 function parameterToSubCommandPattern(parameter: CommandParameter): string {
   if (parameter.itemMatchers?.length === undefined) {

@@ -23,7 +23,6 @@ import {
   optional,
   optseq,
   ordalt,
-  reluctant,
   seq,
   text,
   textalt,
@@ -80,7 +79,7 @@ export interface CommandParameterCapturedMatcher {
   match: string;
   captures: { [key in number ]: ParameterItemMatcher[] };
 }
-export type ParameterItemMatcher = string | CommandParameterMatcher | CommandParameterCapturedMatcher | IncludeRule;
+export type ParameterItemMatcher = string | CommandParameterMatcher | CommandParameterCapturedMatcher | IncludeRule | ParameterItemMatcher[];
 export interface CommandParameter {
   readonly flags: CommandParameterFlag;
   readonly itemMatchers?: ParameterItemMatcher[];
@@ -122,6 +121,20 @@ export function createOptionItemPattern(pattern: string): string {
     lookahead(alt(inlineSpace(), wordBound())),
   );
 }
+export function createOptionPattern(pattern: string, extraPrefixSeparators: string[] = [], extraSuffixSeparators: string[] = []): string {
+  return seq(
+    lookbehind(alt(
+      inlineSpace(),
+      char(',', ...extraPrefixSeparators),
+    )),
+    pattern,
+    lookahead(alt(
+      endAnchor(),
+      inlineSpace(),
+      char(',', ...extraSuffixSeparators),
+    )),
+  );
+}
 export function createSpacedOptionItemPattern(pattern: string): string {
   return seq(
     lookbehind(alt(
@@ -143,24 +156,23 @@ export function createQuotableOptionItemPattern(pattern: string): string {
     group(alt(alt(lookahead(char('"', `'`)), wordBound()))),
   );
 }
-export function keywordOption(...optionNames: string[]): ParameterItemMatcher {
+export function createOption(pattern: string, extraPrefixSeparators: string[] = [], extraSuffixSeparators: string[] = []): ParameterItemMatcher {
   return {
     name: [ RuleName.UnquotedString, StyleName.Strong ],
-    match: seq(wordBound(), ignoreCase(textalt(...optionNames)), wordBound()),
+    match: createOptionPattern(pattern, extraPrefixSeparators, extraSuffixSeparators),
   };
 }
+export function keywordOption(...optionNames: string[]): ParameterItemMatcher {
+  return createOption(ignoreCase(textalt(...optionNames)));
+}
 export function quotableKeywordOption(...keywords: string[]): ParameterItemMatcher {
-  return {
-    name: [ RuleName.UnquotedString ],
-    match: alt(
-      group(seq(char('"'), alt(capture(ignoreCase(textalt(...keywords))), reluctant(anyChars1())), char('"'))),
-      group(seq(char(`'`), alt(capture(ignoreCase(textalt(...keywords))), reluctant(anyChars1())), char(`'`))),
-    ),
-    captures: {
-      1: [ { name: [ StyleName.Strong ] } ],
-      2: [ { name: [ StyleName.Strong ] } ],
+  return [
+    {
+      name: RuleName.UnquotedString,
+      match: char('"', `'`),
     },
-  };
+    createOption(ignoreCase(textalt(...keywords)), [ '"', `'` ], [ '"', `'` ]),
+  ];
 }
 export function signOptionItem(...options: string[]): string {
   return seq(ignoreCase(textalt(...options)), wordBound());
@@ -757,8 +769,11 @@ export function $guiControlOptions(flaged = false): CommandParameter {
   //                   ^^^^^^^^
   return $(
     [
+      createOption(seq(
+        ...(flaged ? [ optional(char('+', '-', '^')) ] : []),
+        ignoreCase(textalt('X+M', 'X-M', 'Y+M', 'Y-M', 'Left', 'Right', 'Center', 'Section', 'Tabstop', 'Wrap', 'AltSubmit', 'CDefault', 'BackgroundTrans', 'Background', 'Border', 'Theme')),
+      ), [ ':' ]),
       (flaged ? flagedSignedNumberOptionItem : signedNumberOptionItem)('R', 'W', 'H', 'WP', 'HP', 'X', 'Y', 'XP', 'YP', 'XM', 'YM', 'XS', 'YS', 'Choose', 'VScroll', 'HScroll'),
-      (flaged ? flagedOptionItem : keywordOption)('X+M', 'X-M', 'Y+M', 'Y-M', 'Left', 'Right', 'Center', 'Section', 'Tabstop', 'Wrap', 'AltSubmit', 'CDefault', 'BackgroundTrans', 'Background', 'Border', 'Theme'),
       (flaged ? flagedIdentifierOptionItem : identifierOptionItem)('V', 'G', 'Hwnd'),
       (flaged ? flagedHexOptionItem : hexOptionItem)('C'),
       (flaged ? flagedToggleOptionItem : toggleOptionItem)('Disabled', 'Hidden'),
@@ -791,7 +806,7 @@ export function $encoding(flags: CommandParameterFlag = CommandParameterFlag.Non
   return $([ keywordOption('CP0', 'UTF-8', 'UTF-8-RAW', 'UTF-16', 'UTF-16-RAW'), numberOptionItem('CP') ], flags);
 }
 export function $quotableEncoding(flags: CommandParameterFlag = CommandParameterFlag.None): CommandParameter {
-  return $([ quotableKeywordOption('CP0', 'UTF-8', 'UTF-8-RAW', 'UTF-16', 'UTF-16-RAW'), quotableNumberOptionItem('CP'), ...($encoding(flags).itemMatchers!) ], flags);
+  return $([ quotableKeywordOption('CP0', 'UTF-8', 'UTF-8-RAW', 'UTF-16', 'UTF-16-RAW'), quotableNumberOptionItem('CP') ], flags);
 }
 export function $keyName(flags: CommandParameterFlag = CommandParameterFlag.None): CommandParameter {
   return $([ keywordOption(...constants_common.keyNameList), hexOptionItem('sc', 'vk') ], flags);
