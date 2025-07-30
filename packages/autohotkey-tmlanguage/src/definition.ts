@@ -177,7 +177,7 @@ export function quotableKeywordOption(...keywords: string[]): ParameterItemMatch
 export function signOptionItem(...options: string[]): string {
   return seq(ignoreCase(textalt(...options)), wordBound());
 }
-export function flagedOptionItem(...options: string[]): string {
+export function flagedOption(...options: string[]): string {
   return createSpacedOptionItemPattern(seq(
     optional(char('+', '-', '^')),
     ignoreCase(textalt(...options)),
@@ -647,7 +647,7 @@ export function $fileAttributes(flags: CommandParameterFlag = CommandParameterFl
 export function $guiOptions(flags: CommandParameterFlag = CommandParameterFlag.None): CommandParameter {
   return $(
     [
-      flagedOptionItem('AlwaysOnTop', 'Border', 'Caption', 'DelimiterSpace', 'DelimiterTab', 'Disabled', 'DPIScale', 'LastFoundExist', 'MaximizeBox', 'MinimizeBox', 'OwnDialogs', 'Owner', 'Parent', 'Resize', 'SysMenu', 'Theme', 'ToolWindow'),
+      flagedOption('AlwaysOnTop', 'Border', 'Caption', 'DelimiterSpace', 'DelimiterTab', 'Disabled', 'DPIScale', 'LastFoundExist', 'MaximizeBox', 'MinimizeBox', 'OwnDialogs', 'Owner', 'Parent', 'Resize', 'SysMenu', 'Theme', 'ToolWindow'),
       flagedStringOptionItem('Delimiter'),
       flagedIdentifierOptionItem('Hwnd', 'Label', 'LastFound'),
       flagedSizeOptionItem('MinSize', 'MaxSize'),
@@ -673,7 +673,7 @@ export function $menuItemName(flags: CommandParameterFlag = CommandParameterFlag
 export function $menuOptions(values: string[] = [], flags: CommandParameterFlag = CommandParameterFlag.None): CommandParameter {
   return $([
     decimalOptionItem('P'),
-    flagedOptionItem('Radio', 'Right', 'Break', 'BarBreak'),
+    flagedOption('Radio', 'Right', 'Break', 'BarBreak'),
     ...values,
   ], flags);
 }
