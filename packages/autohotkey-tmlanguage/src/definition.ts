@@ -174,9 +174,6 @@ export function quotableKeywordOption(...keywords: string[]): ParameterItemMatch
     createOption(ignoreCase(textalt(...keywords)), [ '"', `'` ], [ '"', `'` ]),
   ];
 }
-export function signOptionItem(...options: string[]): string {
-  return seq(ignoreCase(textalt(...options)), wordBound());
-}
 export function flagedOption(...options: string[]): string {
   return createSpacedOptionItemPattern(seq(
     optional(char('+', '-', '^')),

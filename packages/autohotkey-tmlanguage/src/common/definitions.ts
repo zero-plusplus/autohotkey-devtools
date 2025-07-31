@@ -10,7 +10,6 @@ import {
   CommandParameterFlag,
   keywordOption,
   signature,
-  signOptionItem,
   type CommandDefinition,
   type CommandParameter,
   type ParameterItemMatcher,
@@ -121,11 +120,7 @@ export function unquoted(itemMatchers: ParameterItemMatcher[] = [], flags: Comma
 }
 export function fileName(flags: CommandParameterFlag = CommandParameterFlag.None): CommandParameter {
   return unquoted([
-    {
-      name: [ RuleName.UnquotedString ],
-      match: char('"', `'`),
-    },
-    signOptionItem(
+    keywordOption(
       '*2',
       '*RT_BITMAP',
       '*4',

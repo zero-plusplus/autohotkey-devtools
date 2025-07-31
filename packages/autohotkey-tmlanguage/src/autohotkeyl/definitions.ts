@@ -61,7 +61,6 @@ import {
   rangeOptionItem,
   signature,
   signedNumberOptionItem,
-  signOptionItem,
   sizeOptionItem,
   stringOption,
   toggleOptionItem,
@@ -449,7 +448,7 @@ export const commandDefinitions: CommandDefinition[] = [
   command('IniWrite', signature([ $(), $(), $path(), $(), $() ])),
 
   // https://www.autohotkey.com/docs/v1/lib/Input.htm
-  command('Input', signature([ $output(), $([ keywordOption('B', 'C', 'V', 'E', 'M'), signOptionItem('*'), numberOptionItem('I', 'L', 'T') ]), $([ endKeyOptionItem() ]), $([ matchKeyOptionItem() ]) ])),
+  command('Input', signature([ $output(), $([ keywordOption('B', 'C', 'V', 'E', 'M'), keywordOption('*'), numberOptionItem('I', 'L', 'T') ]), $([ endKeyOptionItem() ]), $([ matchKeyOptionItem() ]) ])),
 
   // https://www.autohotkey.com/docs/v1/lib/InputBox.htm
   command('InputBox', signature([ $output(), $(), $(), $(), $expression(), $expression(), $expression(), $expression(), $(), $expression(), $() ])),
