@@ -137,7 +137,7 @@ export const directiveDefinitions: CommandDefinition[] = [
   command('#MaxMem', signature([ $shouldInteger() ])),
 
   // https://www.autohotkey.com/docs/v1/lib/_MaxThreads.htm
-  command('#MaxThreads', signature([ $() ])),
+  command('#MaxThreads', signature([ $shouldInteger() ])),
 
   // https://www.autohotkey.com/docs/v1/lib/_MaxThreadsBuffer.htm
   command('#MaxThreadsBuffer', signature([ $onOff() ])),

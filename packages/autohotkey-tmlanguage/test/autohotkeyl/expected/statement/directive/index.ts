@@ -26,6 +26,7 @@ import { createKeyHistoryExpectedDataList } from './#KeyHistory';
 import { createLTrimExpectedDataList } from './#LTrim';
 import { createMaxHotkeysPerIntervalExpectedDataList } from './#MaxHotkeysPerInterval';
 import { createMaxMemExpectedDataList } from './#MaxMem';
+import { createMaxThreadsExpectedDataList } from './#MaxThreads';
 
 export function createDirectiveStatementExpectedData(scopeName: ScopeName): ExpectedTestData[] {
   return [
@@ -91,6 +92,7 @@ export function createDirectiveStatementExpectedData(scopeName: ScopeName): Expe
     ...createLTrimExpectedDataList(scopeName),
     ...createMaxHotkeysPerIntervalExpectedDataList(scopeName),
     ...createMaxMemExpectedDataList(scopeName),
+    ...createMaxThreadsExpectedDataList(scopeName),
 
     // https://www.autohotkey.com/docs/v1/lib/_Requires.htm
     ...((): ExpectedTestData[] => {
