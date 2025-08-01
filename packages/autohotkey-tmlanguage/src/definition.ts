@@ -26,7 +26,6 @@ import {
   seq,
   text,
   textalt,
-  wordBound,
 } from './oniguruma';
 import {
   includeRule,
@@ -114,13 +113,6 @@ export function hexPattern(): string {
     groupMany1('[0-9a-fA-F]'),
   );
 }
-export function createOptionItemPattern(pattern: string): string {
-  return seq(
-    lookbehind(alt(inlineSpace(), wordBound())),
-    pattern,
-    lookahead(alt(inlineSpace(), wordBound())),
-  );
-}
 export function createOptionPattern(pattern: string, extraPrefixSeparators: string[] = [], extraSuffixSeparators: string[] = []): string {
   return seq(
     lookbehind(alt(
@@ -133,13 +125,6 @@ export function createOptionPattern(pattern: string, extraPrefixSeparators: stri
       inlineSpace(),
       char(',', ...extraSuffixSeparators),
     )),
-  );
-}
-export function createQuotableOptionItemPattern(pattern: string): string {
-  return seq(
-    group(alt(lookahead(char('"', `'`)), wordBound())),
-    pattern,
-    group(alt(alt(lookahead(char('"', `'`)), wordBound()))),
   );
 }
 export function createOption(pattern: string, extraPrefixSeparators: string[] = [], extraSuffixSeparators: string[] = []): ParameterItemMatcher {
@@ -303,16 +288,14 @@ export function numberOption(...options: string[]): ParameterItemMatcher {
 }
 export function quotableNumberOption(...options: string[]): ParameterItemMatcher {
   return [
-    [
-      {
-        name: RuleName.UnquotedString,
-        match: char('"', `'`),
-      },
-      seq(
-        ignoreCase(textalt(...options)),
-        optional(numberPattern()),
-      ),
-    ],
+    {
+      name: RuleName.UnquotedString,
+      match: char('"', `'`),
+    },
+    createOption(seq(
+      ignoreCase(textalt(...options)),
+      optional(numberPattern()),
+    ), [ '"', `'` ]),
   ];
 }
 export function signedNumberOption(...options: string[]): ParameterItemMatcher {
@@ -718,7 +701,7 @@ export function $quotableIncludeLib(flags: CommandParameterFlag = CommandParamet
 }
 export function $requiresVersion(flags: CommandParameterFlag = CommandParameterFlag.None): CommandParameter {
   return $([
-    createOptionItemPattern(ignoreCase('AutoHotkey')),
+    createOptionPattern(ignoreCase('AutoHotkey')),
     group(seq(group(alt('32', '64')), char('-'), ignoreCase(text('bit')))),
     group(ordalt(
       '<',
@@ -727,7 +710,7 @@ export function $requiresVersion(flags: CommandParameterFlag = CommandParameterF
       '>=',
       '=',
     )),
-    createOptionItemPattern(seq(
+    createOptionPattern(seq(
       optional(ignoreCase('v')),
       optional(textalt('2.', '1.')),
       numberPattern(),
