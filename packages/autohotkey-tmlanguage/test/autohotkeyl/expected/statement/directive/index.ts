@@ -18,6 +18,7 @@ import { createHotkeyModifierTimeoutExpectedDataList } from './#HotkeyModifierTi
 import { createHotstringExpectedDataList } from './#Hotstring';
 import { createIfExpectedDataList } from './#If';
 import { createIfWinActiveExpectedDataList } from './#IfWinActive';
+import { createIncludeExpectedDataList } from './#Include';
 
 export function createDirectiveStatementExpectedData(scopeName: ScopeName): ExpectedTestData[] {
   return [
@@ -75,61 +76,7 @@ export function createDirectiveStatementExpectedData(scopeName: ScopeName): Expe
     ...createHotstringExpectedDataList(scopeName),
     ...createIfExpectedDataList(scopeName),
     ...createIfWinActiveExpectedDataList(scopeName),
-
-    // https://www.autohotkey.com/docs/v1/lib/_Include.htm
-    ...[ '#Include', '#IncludeAgain' ].flatMap((directive): ExpectedTestData[] => {
-      return [
-        [
-          dedent`
-            ${directive} <LIBRARY>      ; comment
-          `,
-          [
-            { text: directive, scopes: name(scopeName, RuleName.DirectiveName) },
-            { text: '<', scopes: name(scopeName, RuleName.OpenAngleBracket) },
-            { text: 'LIBRARY', scopes: name(scopeName, RuleName.IncludeLibrary) },
-            { text: '>', scopes: name(scopeName, RuleName.CloseAngleBracket) },
-            { text: '; comment', scopes: name(scopeName, RuleName.InlineComment) },
-          ],
-        ],
-        [
-          dedent`
-            ${directive} path\\to\\, file .ahk      ; comment
-          `,
-          [
-            { text: directive, scopes: name(scopeName, RuleName.DirectiveName) },
-            { text: 'path\\to\\,', scopes: name(scopeName, RuleName.UnquotedString) },
-            { text: 'file', scopes: name(scopeName, RuleName.UnquotedString) },
-            { text: '.ahk', scopes: name(scopeName, RuleName.UnquotedString) },
-            { text: '; comment', scopes: name(scopeName, RuleName.InlineComment) },
-          ],
-        ],
-        [
-          dedent`
-            ${directive} .\\path\\to\\, file .ahk       ; comment
-          `,
-          [
-            { text: directive, scopes: name(scopeName, RuleName.DirectiveName) },
-            { text: '.\\path\\to\\,', scopes: name(scopeName, RuleName.UnquotedString) },
-            { text: 'file', scopes: name(scopeName, RuleName.UnquotedString) },
-            { text: '.ahk', scopes: name(scopeName, RuleName.UnquotedString) },
-            { text: '; comment', scopes: name(scopeName, RuleName.InlineComment) },
-          ],
-        ],
-        [
-          dedent`
-            ${directive} %A_LineFile%\\..\\file.ahk     ; comment
-          `,
-          [
-            { text: directive, scopes: name(scopeName, RuleName.DirectiveName) },
-            { text: '%', scopes: name(scopeName, RuleName.PercentBegin) },
-            { text: 'A_LineFile', scopes: name(scopeName, RuleName.BuiltInVariable) },
-            { text: '%', scopes: name(scopeName, RuleName.PercentEnd) },
-            { text: '\\..\\file.ahk', scopes: name(scopeName, RuleName.UnquotedString) },
-            { text: '; comment', scopes: name(scopeName, RuleName.InlineComment) },
-          ],
-        ],
-      ];
-    }),
+    ...createIncludeExpectedDataList(scopeName),
 
     // https://www.autohotkey.com/docs/v1/lib/_InputLevel.htm
     ...((directiveName = '#InputLevel'): ExpectedTestData[] => {
