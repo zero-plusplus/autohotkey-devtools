@@ -14,6 +14,7 @@ import { createHotIfExpectedDataList } from './#HotIf';
 import { createHotIfTimeoutExpectedDataList } from './#HotIfTimeout';
 import { createHotstringExpectedDataList } from './#Hotstring';
 import { createIncludeExpectedDataList } from './#Include';
+import { createInputLevelExpectedDataList } from './#InputLevel';
 
 export function createDirectiveStatementExpectedData(scopeName: ScopeName): ExpectedTestData[] {
   return [
@@ -25,6 +26,7 @@ export function createDirectiveStatementExpectedData(scopeName: ScopeName): Expe
     ...createHotIfTimeoutExpectedDataList(scopeName),
     ...createHotstringExpectedDataList(scopeName),
     ...createIncludeExpectedDataList(scopeName),
+    ...createInputLevelExpectedDataList(scopeName),
     // #endregion directives
 
     // https://www.autohotkey.com/docs/v2/lib/_ErrorStdOut.htm
