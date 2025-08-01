@@ -36,6 +36,7 @@ import { createPersistentExpectedDataList } from './#Persistent';
 import { createRequiresExpectedDataList } from './#Requires';
 import { createSingleInstanceExpectedDataList } from './#SingleInstance';
 import { createUseHookBufferExpectedDataList } from './#UseHook';
+import { createWarnExpectedDataList } from './#Warn';
 
 export function createDirectiveStatementExpectedData(scopeName: ScopeName): ExpectedTestData[] {
   return [
@@ -111,6 +112,7 @@ export function createDirectiveStatementExpectedData(scopeName: ScopeName): Expe
     ...createRequiresExpectedDataList(scopeName),
     ...createSingleInstanceExpectedDataList(scopeName),
     ...createUseHookBufferExpectedDataList(scopeName),
+    ...createWarnExpectedDataList(scopeName),
     // #endregion commands
 
     ...((): ExpectedTestData[] => {
