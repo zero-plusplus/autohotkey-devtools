@@ -18,6 +18,7 @@ import { createInputLevelExpectedDataList } from './#InputLevel';
 import { createMaxThreadsExpectedDataList } from './#MaxThreads';
 import { createMaxThreadsBufferExpectedDataList } from './#MaxThreadsBuffer';
 import { createMaxThreadsPerHotkeyExpectedDataList } from './#MaxThreadsPerHotkey';
+import { createNoTrayIconExpectedDataList } from './#NoTrayIcon';
 
 export function createDirectiveStatementExpectedData(scopeName: ScopeName): ExpectedTestData[] {
   return [
@@ -33,6 +34,7 @@ export function createDirectiveStatementExpectedData(scopeName: ScopeName): Expe
     ...createMaxThreadsExpectedDataList(scopeName),
     ...createMaxThreadsBufferExpectedDataList(scopeName),
     ...createMaxThreadsPerHotkeyExpectedDataList(scopeName),
+    ...createNoTrayIconExpectedDataList(scopeName),
     // #endregion directives
 
     // https://www.autohotkey.com/docs/v2/lib/_ErrorStdOut.htm
