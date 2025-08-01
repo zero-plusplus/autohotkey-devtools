@@ -22,6 +22,7 @@ import { createNoTrayIconExpectedDataList } from './#NoTrayIcon';
 import { createRequiresExpectedDataList } from './#Requires';
 import { createSingleInstanceExpectedDataList } from './#SingleInstance';
 import { createSuspendExemptExpectedDataList } from './#SuspendExempt';
+import { createUseHookExpectedDataList } from './#UseHook';
 
 export function createDirectiveStatementExpectedData(scopeName: ScopeName): ExpectedTestData[] {
   return [
@@ -41,6 +42,7 @@ export function createDirectiveStatementExpectedData(scopeName: ScopeName): Expe
     ...createRequiresExpectedDataList(scopeName),
     ...createSingleInstanceExpectedDataList(scopeName),
     ...createSuspendExemptExpectedDataList(scopeName),
+    ...createUseHookExpectedDataList(scopeName),
     // #endregion directives
 
     // https://www.autohotkey.com/docs/v2/lib/_ErrorStdOut.htm
