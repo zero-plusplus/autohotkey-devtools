@@ -9,12 +9,14 @@ import {
 import type { ExpectedTestData } from '../../../../types';
 import { createClipboardTimeoutExpectedDataList } from './#ClipboardTimeout';
 import { createDllLoadExpectedDataList } from './#DllLoad';
+import { createErrorStdOutExpectedDataList } from './#ErrorStdOut';
 
 export function createDirectiveStatementExpectedData(scopeName: ScopeName): ExpectedTestData[] {
   return [
     // #region directives
     ...createClipboardTimeoutExpectedDataList(scopeName),
     ...createDllLoadExpectedDataList(scopeName),
+    ...createErrorStdOutExpectedDataList(scopeName),
     // #endregion directives
 
     // https://www.autohotkey.com/docs/v2/lib/_ErrorStdOut.htm

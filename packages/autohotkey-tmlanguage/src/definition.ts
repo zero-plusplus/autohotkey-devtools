@@ -295,7 +295,7 @@ export function quotableNumberOption(...options: string[]): ParameterItemMatcher
     createOption(seq(
       ignoreCase(textalt(...options)),
       optional(numberPattern()),
-    ), [ '"', `'` ]),
+    ), [ '"', `'` ], [ '"', `'` ]),
   ];
 }
 export function signedNumberOption(...options: string[]): ParameterItemMatcher {
