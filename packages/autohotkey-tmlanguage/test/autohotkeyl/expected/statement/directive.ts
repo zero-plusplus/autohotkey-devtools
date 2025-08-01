@@ -61,20 +61,6 @@ export function createDirectiveStatementExpectedData(scopeName: ScopeName): Expe
       return [
         [
           dedent`
-            #AllowSameLineComments                ; comment
-            #AllowSameLineComments,               ; comment
-          `,
-          [
-            { text: '#AllowSameLineComments', scopes: name(scopeName, RuleName.DirectiveName, StyleName.Invalid, StyleName.Strikethrough) },
-            { text: '; comment', scopes: name(scopeName, RuleName.InlineComment) },
-
-            { text: '#AllowSameLineComments', scopes: name(scopeName, RuleName.DirectiveName, StyleName.Invalid, StyleName.Strikethrough) },
-            { text: ',', scopes: name(scopeName, RuleName.Comma) },
-            { text: '; comment', scopes: name(scopeName, RuleName.InlineComment) },
-          ],
-        ],
-        [
-          dedent`
             #AllowSameLineComments, invalid       ; comment
           `,
           [
@@ -90,20 +76,6 @@ export function createDirectiveStatementExpectedData(scopeName: ScopeName): Expe
     // https://www.autohotkey.com/docs/v1/lib/_ClipboardTimeout.htm
     ...((): ExpectedTestData[] => {
       return [
-        [
-          dedent`
-            #ClipboardTimeout           ; comment
-            #ClipboardTimeout,          ; comment
-          `,
-          [
-            { text: '#ClipboardTimeout', scopes: name(scopeName, RuleName.DirectiveName) },
-            { text: '; comment', scopes: name(scopeName, RuleName.InlineComment) },
-
-            { text: '#ClipboardTimeout', scopes: name(scopeName, RuleName.DirectiveName) },
-            { text: ',', scopes: name(scopeName, RuleName.Comma) },
-            { text: '; comment', scopes: name(scopeName, RuleName.InlineComment) },
-          ],
-        ],
         [
           dedent`
             #ClipboardTimeout 123         ; comment
@@ -133,20 +105,6 @@ export function createDirectiveStatementExpectedData(scopeName: ScopeName): Expe
       return [
         [
           dedent`
-            #CommentFlag          ; comment
-            #CommentFlag,         ; comment
-          `,
-          [
-            { text: '#CommentFlag', scopes: name(scopeName, RuleName.DirectiveName, StyleName.Strikethrough) },
-            { text: '; comment', scopes: name(scopeName, RuleName.InlineComment) },
-
-            { text: '#CommentFlag', scopes: name(scopeName, RuleName.DirectiveName, StyleName.Strikethrough) },
-            { text: ',', scopes: name(scopeName, RuleName.Comma) },
-            { text: '; comment', scopes: name(scopeName, RuleName.InlineComment) },
-          ],
-        ],
-        [
-          dedent`
             #CommentFlag //       ; comment
           `,
           [
@@ -161,20 +119,6 @@ export function createDirectiveStatementExpectedData(scopeName: ScopeName): Expe
     // https://www.autohotkey.com/docs/v1/lib/_ErrorStdOut.htm
     ...((): ExpectedTestData[] => {
       return [
-        [
-          dedent`
-            #ErrorStdOut          ; comment
-            #ErrorStdOut,         ; comment
-          `,
-          [
-            { text: '#ErrorStdOut', scopes: name(scopeName, RuleName.DirectiveName) },
-            { text: '; comment', scopes: name(scopeName, RuleName.InlineComment) },
-
-            { text: '#ErrorStdOut', scopes: name(scopeName, RuleName.DirectiveName) },
-            { text: ',', scopes: name(scopeName, RuleName.Comma) },
-            { text: '; comment', scopes: name(scopeName, RuleName.InlineComment) },
-          ],
-        ],
         [
           dedent`
             #ErrorStdOut x        ; comment
@@ -208,20 +152,6 @@ export function createDirectiveStatementExpectedData(scopeName: ScopeName): Expe
       return [
         [
           dedent`
-            #EscapeChar         ; comment
-            #EscapeChar,        ; comment
-          `,
-          [
-            { text: '#EscapeChar', scopes: name(scopeName, RuleName.DirectiveName, StyleName.Strikethrough) },
-            { text: '; comment', scopes: name(scopeName, RuleName.InlineComment) },
-
-            { text: '#EscapeChar', scopes: name(scopeName, RuleName.DirectiveName, StyleName.Strikethrough) },
-            { text: ',', scopes: name(scopeName, RuleName.Comma) },
-            { text: '; comment', scopes: name(scopeName, RuleName.InlineComment) },
-          ],
-        ],
-        [
-          dedent`
             #EscapeChar \\        ; comment
           `,
           [
@@ -236,20 +166,6 @@ export function createDirectiveStatementExpectedData(scopeName: ScopeName): Expe
     // https://www.autohotkey.com/docs/v1/lib/_HotkeyInterval.htm
     ...((): ExpectedTestData[] => {
       return [
-        [
-          dedent`
-            #HotkeyInterval         ; comment
-            #HotkeyInterval,        ; comment
-          `,
-          [
-            { text: '#HotkeyInterval', scopes: name(scopeName, RuleName.DirectiveName) },
-            { text: '; comment', scopes: name(scopeName, RuleName.InlineComment) },
-
-            { text: '#HotkeyInterval', scopes: name(scopeName, RuleName.DirectiveName) },
-            { text: ',', scopes: name(scopeName, RuleName.Comma) },
-            { text: '; comment', scopes: name(scopeName, RuleName.InlineComment) },
-          ],
-        ],
         [
           dedent`
             #HotkeyInterval 123     ; comment
@@ -278,20 +194,6 @@ export function createDirectiveStatementExpectedData(scopeName: ScopeName): Expe
       return [
         [
           dedent`
-            #HotkeyModifierTimeout            ; comment
-            #HotkeyModifierTimeout,           ; comment
-          `,
-          [
-            { text: '#HotkeyModifierTimeout', scopes: name(scopeName, RuleName.DirectiveName) },
-            { text: '; comment', scopes: name(scopeName, RuleName.InlineComment) },
-
-            { text: '#HotkeyModifierTimeout', scopes: name(scopeName, RuleName.DirectiveName) },
-            { text: ',', scopes: name(scopeName, RuleName.Comma) },
-            { text: '; comment', scopes: name(scopeName, RuleName.InlineComment) },
-          ],
-        ],
-        [
-          dedent`
             #HotkeyModifierTimeout 123        ; comment
           `,
           [
@@ -316,20 +218,6 @@ export function createDirectiveStatementExpectedData(scopeName: ScopeName): Expe
     // https://www.autohotkey.com/docs/v1/lib/_Hotstring.htm
     ...((): ExpectedTestData[] => {
       return [
-        [
-          dedent`
-            #Hotstring                    ; comment
-            #Hotstring,                   ; comment
-          `,
-          [
-            { text: '#Hotstring', scopes: name(scopeName, RuleName.DirectiveName) },
-            { text: '; comment', scopes: name(scopeName, RuleName.InlineComment) },
-
-            { text: '#Hotstring', scopes: name(scopeName, RuleName.DirectiveName) },
-            { text: ',', scopes: name(scopeName, RuleName.Comma) },
-            { text: '; comment', scopes: name(scopeName, RuleName.InlineComment) },
-          ],
-        ],
         [
           dedent`
             #Hotstring NoMouse              ; comment
@@ -367,20 +255,6 @@ export function createDirectiveStatementExpectedData(scopeName: ScopeName): Expe
       return [
         [
           dedent`
-            #If                                     ; comment
-            #If,                                    ; comment
-          `,
-          [
-            { text: '#If', scopes: name(scopeName, RuleName.DirectiveName) },
-            { text: '; comment', scopes: name(scopeName, RuleName.InlineComment) },
-
-            { text: '#If', scopes: name(scopeName, RuleName.DirectiveName) },
-            { text: ',', scopes: name(scopeName, RuleName.Comma) },
-            { text: '; comment', scopes: name(scopeName, RuleName.InlineComment) },
-          ],
-        ],
-        [
-          dedent`
             #If WinActive("ahk_exe xxx.exe")        ; comment
           `,
           [
@@ -400,21 +274,6 @@ export function createDirectiveStatementExpectedData(scopeName: ScopeName): Expe
     // https://www.autohotkey.com/docs/v1/lib/_IfWinActive.htm
     ...[ '#IfWinActive', '#IfWinExist', '#IfWinNotActive', '#IfWinNotExist' ].flatMap((directive): ExpectedTestData[] => {
       return [
-        [
-          dedent`
-            ${directive}                                    ; comment
-            ${directive},                                   ; comment
-          `,
-          [
-            { text: directive, scopes: name(scopeName, RuleName.DirectiveName) },
-            { text: '; comment', scopes: name(scopeName, RuleName.InlineComment) },
-
-            { text: directive, scopes: name(scopeName, RuleName.DirectiveName) },
-            { text: ',', scopes: name(scopeName, RuleName.Comma) },
-            { text: '; comment', scopes: name(scopeName, RuleName.InlineComment) },
-          ],
-        ],
-
         [
           dedent`
             ${directive} ahk_exe Code.exe           ; comment
@@ -483,6 +342,49 @@ export function createDirectiveStatementExpectedData(scopeName: ScopeName): Expe
         ],
       ];
     }),
+
+    // https://www.autohotkey.com/docs/v1/lib/_InputLevel.htm
+    ...((directiveName = '#InputLevel'): ExpectedTestData[] => {
+      return [
+        ...[ '0', '50', '100' ].map((param): ExpectedTestData => {
+          return [
+            dedent`
+              ${directiveName} ${param}        ; comment
+              ${directiveName}, ${param}       ; comment
+            `,
+            [
+              { text: directiveName, scopes: name(scopeName, RuleName.DirectiveName) },
+              { text: param, scopes: name(scopeName, RuleName.Integer) },
+              { text: '; comment', scopes: name(scopeName, RuleName.InlineComment) },
+
+              { text: directiveName, scopes: name(scopeName, RuleName.DirectiveName) },
+              { text: ',', scopes: name(scopeName, RuleName.Comma) },
+              { text: param, scopes: name(scopeName, RuleName.Integer) },
+              { text: '; comment', scopes: name(scopeName, RuleName.InlineComment) },
+            ],
+          ];
+        }),
+        // Allow values outside the range
+        [
+          dedent`
+            ${directiveName}, -10       ; comment
+            ${directiveName}, 101       ; comment
+          `,
+          [
+            { text: directiveName, scopes: name(scopeName, RuleName.DirectiveName) },
+            { text: ',', scopes: name(scopeName, RuleName.Comma) },
+            { text: '-', scopes: name(scopeName, RuleName.Operator) },
+            { text: '10', scopes: name(scopeName, RuleName.Integer) },
+            { text: '; comment', scopes: name(scopeName, RuleName.InlineComment) },
+
+            { text: directiveName, scopes: name(scopeName, RuleName.DirectiveName) },
+            { text: ',', scopes: name(scopeName, RuleName.Comma) },
+            { text: '101', scopes: name(scopeName, RuleName.Integer) },
+            { text: '; comment', scopes: name(scopeName, RuleName.InlineComment) },
+          ],
+        ],
+      ];
+    })(),
 
     // https://www.autohotkey.com/docs/v1/lib/_Requires.htm
     ...((): ExpectedTestData[] => {

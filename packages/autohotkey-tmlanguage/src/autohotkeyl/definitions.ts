@@ -116,7 +116,7 @@ export const directiveDefinitions: CommandDefinition[] = [
   command('#IfWinNotExist', signature([ $winTitle(), $() ])),
 
   // https://www.autohotkey.com/docs/v1/lib/_InputLevel.htm
-  command('#InputLevel', signature([ $() ])),
+  command('#InputLevel', signature([ $shouldInteger() ])),
 
   // https://www.autohotkey.com/docs/v1/lib/_InstallKeybdHook.htm
   command('#InstallKeybdHook', signature($parameterless)),
