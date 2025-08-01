@@ -25,6 +25,7 @@ import { createInstallMouseHookExpectedDataList } from './#InstallMouseHook';
 import { createKeyHistoryExpectedDataList } from './#KeyHistory';
 import { createLTrimExpectedDataList } from './#LTrim';
 import { createMaxHotkeysPerIntervalExpectedDataList } from './#MaxHotkeysPerInterval';
+import { createMaxMemExpectedDataList } from './#MaxMem';
 
 export function createDirectiveStatementExpectedData(scopeName: ScopeName): ExpectedTestData[] {
   return [
@@ -89,6 +90,7 @@ export function createDirectiveStatementExpectedData(scopeName: ScopeName): Expe
     ...createKeyHistoryExpectedDataList(scopeName),
     ...createLTrimExpectedDataList(scopeName),
     ...createMaxHotkeysPerIntervalExpectedDataList(scopeName),
+    ...createMaxMemExpectedDataList(scopeName),
 
     // https://www.autohotkey.com/docs/v1/lib/_Requires.htm
     ...((): ExpectedTestData[] => {
