@@ -8,62 +8,14 @@ import {
 } from '../../../../../src/tmlanguage';
 import type { ExpectedTestData } from '../../../../types';
 import { createClipboardTimeoutExpectedDataList } from './#ClipboardTimeout';
+import { createDllLoadExpectedDataList } from './#DllLoad';
 
 export function createDirectiveStatementExpectedData(scopeName: ScopeName): ExpectedTestData[] {
   return [
     // #region directives
     ...createClipboardTimeoutExpectedDataList(scopeName),
+    ...createDllLoadExpectedDataList(scopeName),
     // #endregion directives
-
-    // https://www.autohotkey.com/docs/v2/lib/_DllLoad.htm
-    ...((): ExpectedTestData[] => {
-      return [
-        [
-          dedent`
-            #DllLoad                              ; comment
-          `,
-          [
-            { text: '#DllLoad', scopes: name(scopeName, RuleName.DirectiveName) },
-            { text: '; comment', scopes: name(scopeName, RuleName.InlineComment) },
-          ],
-        ],
-        [
-          dedent`
-            #DllLoad "*i path\\to\\file.exe"      ; comment
-            #DllLoad '*i path\\to\\file.exe'      ; comment
-          `,
-          [
-            ...[
-              { text: '#DllLoad', scopes: name(scopeName, RuleName.DirectiveName) },
-              { text: '"', scopes: name(scopeName, RuleName.UnquotedString) },
-              { text: '*i', scopes: name(scopeName, RuleName.UnquotedString, StyleName.Strong) },
-              { text: 'path\\to\\file.exe', scopes: name(scopeName, RuleName.UnquotedString) },
-              { text: '"', scopes: name(scopeName, RuleName.UnquotedString) },
-              { text: '; comment', scopes: name(scopeName, RuleName.InlineComment) },
-            ],
-
-            ...[
-              { text: '#DllLoad', scopes: name(scopeName, RuleName.DirectiveName) },
-              { text: `'`, scopes: name(scopeName, RuleName.UnquotedString) },
-              { text: '*i', scopes: name(scopeName, RuleName.UnquotedString, StyleName.Strong) },
-              { text: 'path\\to\\file.exe', scopes: name(scopeName, RuleName.UnquotedString) },
-              { text: `'`, scopes: name(scopeName, RuleName.UnquotedString) },
-              { text: '; comment', scopes: name(scopeName, RuleName.InlineComment) },
-            ],
-          ],
-        ],
-        [
-          dedent`
-            #DllLoad,       ; comment
-          `,
-          [
-            { text: '#DllLoad', scopes: name(scopeName, RuleName.DirectiveName) },
-            { text: ',', scopes: name(scopeName, RuleName.Comma, StyleName.Invalid) },
-            { text: '; comment', scopes: name(scopeName, RuleName.InlineComment) },
-          ],
-        ],
-      ];
-    })(),
 
     // https://www.autohotkey.com/docs/v2/lib/_ErrorStdOut.htm
     ...((): ExpectedTestData[] => {
