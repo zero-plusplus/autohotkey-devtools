@@ -35,6 +35,7 @@ import { createNoTrayIconExpectedDataList } from './#NoTrayIcon';
 import { createPersistentExpectedDataList } from './#Persistent';
 import { createRequiresExpectedDataList } from './#Requires';
 import { createSingleInstanceExpectedDataList } from './#SingleInstance';
+import { createUseHookBufferExpectedDataList } from './#UseHook';
 
 export function createDirectiveStatementExpectedData(scopeName: ScopeName): ExpectedTestData[] {
   return [
@@ -109,6 +110,7 @@ export function createDirectiveStatementExpectedData(scopeName: ScopeName): Expe
     ...createPersistentExpectedDataList(scopeName),
     ...createRequiresExpectedDataList(scopeName),
     ...createSingleInstanceExpectedDataList(scopeName),
+    ...createUseHookBufferExpectedDataList(scopeName),
     // #endregion commands
 
     ...((): ExpectedTestData[] => {

@@ -164,7 +164,7 @@ export const directiveDefinitions: CommandDefinition[] = [
   command('#SingleInstance', signature([ $shouldKeyword([ keywordOption('Force', 'Ignore', 'Prompt', 'Off') ]) ])),
 
   // https://www.autohotkey.com/docs/v1/lib/_UseHook.htm
-  command('#UseHook', signature([ $onOff() ])),
+  command('#UseHook', signature([ $shouldKeyword([ keywordOption('On', 'Off') ]) ])),
 
   // https://www.autohotkey.com/docs/v1/lib/_Warn.htm
   command('#Warn', signature([ $shouldKeyword([ keywordOption('UseUnsetLocal', 'UseUnsetGlobal', 'UseEnv', 'LocalSameAsGlobal', 'ClassOverwrite', 'Unreachable', 'All') ]), $shouldKeyword([ keywordOption('MsgBox', 'StdOut', 'OutputDebug', 'Off') ]) ])),
