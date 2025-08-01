@@ -21,6 +21,7 @@ import { createMaxThreadsPerHotkeyExpectedDataList } from './#MaxThreadsPerHotke
 import { createNoTrayIconExpectedDataList } from './#NoTrayIcon';
 import { createRequiresExpectedDataList } from './#Requires';
 import { createSingleInstanceExpectedDataList } from './#SingleInstance';
+import { createSuspendExemptExpectedDataList } from './#SuspendExempt';
 
 export function createDirectiveStatementExpectedData(scopeName: ScopeName): ExpectedTestData[] {
   return [
@@ -39,6 +40,7 @@ export function createDirectiveStatementExpectedData(scopeName: ScopeName): Expe
     ...createNoTrayIconExpectedDataList(scopeName),
     ...createRequiresExpectedDataList(scopeName),
     ...createSingleInstanceExpectedDataList(scopeName),
+    ...createSuspendExemptExpectedDataList(scopeName),
     // #endregion directives
 
     // https://www.autohotkey.com/docs/v2/lib/_ErrorStdOut.htm
