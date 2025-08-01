@@ -37,6 +37,7 @@ import { createRequiresExpectedDataList } from './#Requires';
 import { createSingleInstanceExpectedDataList } from './#SingleInstance';
 import { createUseHookBufferExpectedDataList } from './#UseHook';
 import { createWarnExpectedDataList } from './#Warn';
+import { createWinActivateForceExpectedDataList } from './#WinActivateForce';
 
 export function createDirectiveStatementExpectedData(scopeName: ScopeName): ExpectedTestData[] {
   return [
@@ -113,6 +114,7 @@ export function createDirectiveStatementExpectedData(scopeName: ScopeName): Expe
     ...createSingleInstanceExpectedDataList(scopeName),
     ...createUseHookBufferExpectedDataList(scopeName),
     ...createWarnExpectedDataList(scopeName),
+    ...createWinActivateForceExpectedDataList(scopeName),
     // #endregion commands
 
     ...((): ExpectedTestData[] => {
