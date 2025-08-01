@@ -13,6 +13,7 @@ import { createAllowSameLineCommentsExpectedDataList } from './#AllowSameLineCom
 import { createClipboardTimeoutExpectedDataList } from './#ClipboardTimeout';
 import { createCommentFlagExpectedDataList } from './#CommentFlag';
 import { createErrorStdOutExpectedDataList } from './#ErrorStdOut';
+import { createEscapeCharExpectedDataList } from './#EscapeChar';
 
 export function createDirectiveStatementExpectedData(scopeName: ScopeName): ExpectedTestData[] {
   return [
@@ -64,54 +65,7 @@ export function createDirectiveStatementExpectedData(scopeName: ScopeName): Expe
     ...createClipboardTimeoutExpectedDataList(scopeName),
     ...createCommentFlagExpectedDataList(scopeName),
     ...createErrorStdOutExpectedDataList(scopeName),
-
-    // https://www.autohotkey.com/docs/v1/lib/_EscapeChar.htm
-    ...((directiveName = '#EscapeChar'): ExpectedTestData[] => {
-      return [
-        [
-          dedent`
-            ${directiveName} \\        ; comment
-          `,
-          [
-            { text: directiveName, scopes: name(scopeName, RuleName.DirectiveName, StyleName.Strikethrough) },
-            { text: '\\', scopes: name(scopeName, RuleName.UnquotedString) },
-            { text: '; comment', scopes: name(scopeName, RuleName.InlineComment) },
-          ],
-        ],
-        [
-          dedent`
-            ${directiveName}, % var                 ; comment
-            ${directiveName}, %var%                 ; comment
-            ${directiveName}, %var%var%var%         ; comment
-          `,
-          [
-            { text: directiveName, scopes: name(scopeName, RuleName.DirectiveName, StyleName.Strikethrough) },
-            { text: ',', scopes: name(scopeName, RuleName.Comma) },
-            { text: '%', scopes: name(scopeName, RuleName.PercentExpressionBegin) },
-            { text: 'var', scopes: name(scopeName, RuleName.Variable) },
-            { text: '; comment', scopes: name(scopeName, RuleName.InlineComment) },
-
-            { text: directiveName, scopes: name(scopeName, RuleName.DirectiveName, StyleName.Strikethrough) },
-            { text: ',', scopes: name(scopeName, RuleName.Comma) },
-            { text: '%', scopes: name(scopeName, RuleName.PercentBegin) },
-            { text: 'var', scopes: name(scopeName, RuleName.Variable) },
-            { text: '%', scopes: name(scopeName, RuleName.PercentEnd) },
-            { text: '; comment', scopes: name(scopeName, RuleName.InlineComment) },
-
-            { text: directiveName, scopes: name(scopeName, RuleName.DirectiveName, StyleName.Strikethrough) },
-            { text: ',', scopes: name(scopeName, RuleName.Comma) },
-            { text: '%', scopes: name(scopeName, RuleName.PercentBegin) },
-            { text: 'var', scopes: name(scopeName, RuleName.Variable) },
-            { text: '%', scopes: name(scopeName, RuleName.PercentBegin) },
-            { text: 'var', scopes: name(scopeName, RuleName.Variable) },
-            { text: '%', scopes: name(scopeName, RuleName.PercentEnd) },
-            { text: 'var', scopes: name(scopeName, RuleName.Variable) },
-            { text: '%', scopes: name(scopeName, RuleName.PercentEnd) },
-            { text: '; comment', scopes: name(scopeName, RuleName.InlineComment) },
-          ],
-        ],
-      ];
-    })(),
+    ...createEscapeCharExpectedDataList(scopeName),
 
     // https://www.autohotkey.com/docs/v1/lib/_HotkeyInterval.htm
     ...((directiveName = '#HotkeyInterval'): ExpectedTestData[] => {
