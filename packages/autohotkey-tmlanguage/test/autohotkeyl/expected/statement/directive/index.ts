@@ -11,6 +11,7 @@ import {
 import type { ExpectedTestData } from '../../../../types';
 import { createAllowSameLineCommentsExpectedDataList } from './#AllowSameLineComments';
 import { createClipboardTimeoutExpectedDataList } from './#ClipboardTimeout';
+import { createCommentFlagExpectedDataList } from './#CommentFlag';
 
 export function createDirectiveStatementExpectedData(scopeName: ScopeName): ExpectedTestData[] {
   return [
@@ -60,54 +61,7 @@ export function createDirectiveStatementExpectedData(scopeName: ScopeName): Expe
     // #region commands
     ...createAllowSameLineCommentsExpectedDataList(scopeName),
     ...createClipboardTimeoutExpectedDataList(scopeName),
-
-    // https://www.autohotkey.com/docs/v1/lib/_CommentFlag.htm
-    ...((directiveName = '#CommentFlag'): ExpectedTestData[] => {
-      return [
-        [
-          dedent`
-            ${directiveName} //       ; comment
-          `,
-          [
-            { text: directiveName, scopes: name(scopeName, RuleName.DirectiveName, StyleName.Strikethrough) },
-            { text: '//', scopes: name(scopeName, RuleName.UnquotedString) },
-            { text: '; comment', scopes: name(scopeName, RuleName.InlineComment) },
-          ],
-        ],
-        [
-          dedent`
-            ${directiveName}, % var                 ; comment
-            ${directiveName}, %var%                 ; comment
-            ${directiveName}, %var%var%var%         ; comment
-          `,
-          [
-            { text: directiveName, scopes: name(scopeName, RuleName.DirectiveName, StyleName.Strikethrough) },
-            { text: ',', scopes: name(scopeName, RuleName.Comma) },
-            { text: '%', scopes: name(scopeName, RuleName.PercentExpressionBegin) },
-            { text: 'var', scopes: name(scopeName, RuleName.Variable) },
-            { text: '; comment', scopes: name(scopeName, RuleName.InlineComment) },
-
-            { text: directiveName, scopes: name(scopeName, RuleName.DirectiveName, StyleName.Strikethrough) },
-            { text: ',', scopes: name(scopeName, RuleName.Comma) },
-            { text: '%', scopes: name(scopeName, RuleName.PercentBegin) },
-            { text: 'var', scopes: name(scopeName, RuleName.Variable) },
-            { text: '%', scopes: name(scopeName, RuleName.PercentEnd) },
-            { text: '; comment', scopes: name(scopeName, RuleName.InlineComment) },
-
-            { text: directiveName, scopes: name(scopeName, RuleName.DirectiveName, StyleName.Strikethrough) },
-            { text: ',', scopes: name(scopeName, RuleName.Comma) },
-            { text: '%', scopes: name(scopeName, RuleName.PercentBegin) },
-            { text: 'var', scopes: name(scopeName, RuleName.Variable) },
-            { text: '%', scopes: name(scopeName, RuleName.PercentBegin) },
-            { text: 'var', scopes: name(scopeName, RuleName.Variable) },
-            { text: '%', scopes: name(scopeName, RuleName.PercentEnd) },
-            { text: 'var', scopes: name(scopeName, RuleName.Variable) },
-            { text: '%', scopes: name(scopeName, RuleName.PercentEnd) },
-            { text: '; comment', scopes: name(scopeName, RuleName.InlineComment) },
-          ],
-        ],
-      ];
-    })(),
+    ...createCommentFlagExpectedDataList(scopeName),
 
     // https://www.autohotkey.com/docs/v1/lib/_ErrorStdOut.htm
     ...((directiveName = '#ErrorStdOut'): ExpectedTestData[] => {
