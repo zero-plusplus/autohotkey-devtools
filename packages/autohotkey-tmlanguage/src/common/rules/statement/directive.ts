@@ -16,13 +16,13 @@ import { createMultiLineCommandLikeStatementRule } from './command';
 interface Placholder_DirectiveStatementRule {
   startPattern: string;
   endPattern: string;
-  allowFirstComma: boolean;
+  legacyMode: boolean;
 }
 export function createDirectiveStatementRule(scopeName: ScopeName, definitions: CommandDefinition[], placeholder: Placholder_DirectiveStatementRule): BeginWhileRule {
   return createMultiLineCommandLikeStatementRule(scopeName, definitions, {
     startPattern: placeholder.startPattern,
     endPattern: placeholder.endPattern,
-    allowFirstComma: placeholder.allowFirstComma,
+    legacyMode: placeholder.legacyMode,
     commandElementName: RuleName.DirectiveName,
     allowContinuation: false,
     argumentStartPattern: alt(

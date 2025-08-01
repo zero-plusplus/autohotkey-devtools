@@ -111,12 +111,12 @@ export function createRepositories(scopeName: ScopeName, placeholder?: Placehold
       rules_common.createDirectiveStatementRule(scopeName, definitions_v2.directiveDefinitions, {
         startPattern: patterns_v2.statementStartPattern,
         endPattern: patterns_common.lineEndPattern,
-        allowFirstComma: false,
+        legacyMode: false,
       }),
       rules_common.createDirectiveStatementRule(scopeName, [ definitions_common.undefinedDirective ], {
         startPattern: patterns_v2.statementStartPattern,
         endPattern: patterns_common.lineEndPattern,
-        allowFirstComma: false,
+        legacyMode: false,
       }),
     ),
     [Repository.JumpStatement]: rules_common.createJumpStatement(scopeName, {
@@ -339,7 +339,7 @@ export function createRepositories(scopeName: ScopeName, placeholder?: Placehold
 
     // #region access
     [Repository.Dereference]: rule_v2.createDereferenceRule(scopeName),
-    [Repository.DereferenceInCommandArgument]: patternsRule(includeRule(Repository.Dereference)),
+    [Repository.DereferenceInCommandArgument]: rule_v2.createDereferenceInCommandArgumentRule(scopeName),
     // #endregion access
 
     // #region literal

@@ -33,7 +33,7 @@ export function createLoopStatementRule(scopeName: ScopeName, placeholder: Place
           startPattern: placeholder.startPattern,
           endPattern: placeholder.endPattern,
           commandElementName: RuleName.ControlFlowKeyword,
-          allowFirstComma: true,
+          legacyMode: true,
         });
       });
     }),

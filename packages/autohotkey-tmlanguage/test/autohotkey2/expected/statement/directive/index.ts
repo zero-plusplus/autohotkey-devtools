@@ -7,48 +7,13 @@ import {
   type ScopeName,
 } from '../../../../../src/tmlanguage';
 import type { ExpectedTestData } from '../../../../types';
+import { createClipboardTimeoutExpectedDataList } from './#ClipboardTimeout';
 
 export function createDirectiveStatementExpectedData(scopeName: ScopeName): ExpectedTestData[] {
   return [
-    // https://www.autohotkey.com/docs/v2/lib/_ClipboardTimeout.htm
-    ...((): ExpectedTestData[] => {
-      return [
-        [
-          dedent`
-            #ClipboardTimeout           ; comment
-          `,
-          [
-            { text: '#ClipboardTimeout', scopes: name(scopeName, RuleName.DirectiveName) },
-            { text: '; comment', scopes: name(scopeName, RuleName.InlineComment) },
-          ],
-        ],
-        [
-          dedent`
-            #ClipboardTimeout 123         ; comment
-          `,
-          [
-            { text: '#ClipboardTimeout', scopes: name(scopeName, RuleName.DirectiveName) },
-            { text: '123', scopes: name(scopeName, RuleName.Integer) },
-            { text: '; comment', scopes: name(scopeName, RuleName.InlineComment) },
-          ],
-        ],
-        [
-          dedent`
-            #ClipboardTimeout,            ; comment
-            #ClipboardTimeout invalid     ; comment
-          `,
-          [
-            { text: '#ClipboardTimeout', scopes: name(scopeName, RuleName.DirectiveName) },
-            { text: ',', scopes: name(scopeName, RuleName.Comma, StyleName.Invalid) },
-            { text: '; comment', scopes: name(scopeName, RuleName.InlineComment) },
-
-            { text: '#ClipboardTimeout', scopes: name(scopeName, RuleName.DirectiveName) },
-            { text: 'invalid', scopes: name(scopeName, RuleName.UnquotedString, StyleName.Invalid) },
-            { text: '; comment', scopes: name(scopeName, RuleName.InlineComment) },
-          ],
-        ],
-      ];
-    })(),
+    // #region directives
+    ...createClipboardTimeoutExpectedDataList(scopeName),
+    // #endregion directives
 
     // https://www.autohotkey.com/docs/v2/lib/_DllLoad.htm
     ...((): ExpectedTestData[] => {

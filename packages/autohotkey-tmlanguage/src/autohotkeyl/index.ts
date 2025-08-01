@@ -114,7 +114,7 @@ export function createRepositories(scopeName: ScopeName): Repositories {
     [Repository.DirectiveStatement]: rules_common.createDirectiveStatementRule(scopeName, definitions_v1.directiveDefinitions, {
       startPattern: patterns_common.lineStartPattern,
       endPattern: patterns_common.lineEndPattern,
-      allowFirstComma: true,
+      legacyMode: true,
     }),
     [Repository.JumpStatement]: rules_common.createJumpStatement(scopeName, {
       startPattern: patterns_v1.statementStartPattern,

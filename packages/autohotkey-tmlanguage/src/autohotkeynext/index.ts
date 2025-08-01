@@ -78,12 +78,12 @@ export function createTmLanguage(): TmLanguage {
         rules_common.createDirectiveStatementRule(scopeName, definitions_vnext.directiveDefinitions, {
           startPattern: patterns_v1.statementStartPattern,
           endPattern: patterns_common.lineEndPattern,
-          allowFirstComma: false,
+          legacyMode: false,
         }),
         rules_common.createDirectiveStatementRule(scopeName, [ definitions_common.undefinedDirective ], {
           startPattern: patterns_v2.statementStartPattern,
           endPattern: patterns_common.lineEndPattern,
-          allowFirstComma: false,
+          legacyMode: false,
         }),
       ),
       // #endregion statement

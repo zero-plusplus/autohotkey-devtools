@@ -51,7 +51,6 @@ import {
   type BeginWhileRule,
   type Captures,
   type ElementName,
-  type IncludeRule,
   type MatchRule,
   type PatternsRule,
   type Rule,
@@ -59,7 +58,6 @@ import {
 } from '../../../tmlanguage';
 import * as constants_common from '../../constants';
 import * as patterns_common from '../../patterns';
-import { createSpacedArgumentTextRule } from '../misc/unquotedString';
 
 interface Placeholder_CommandStatementRule {
   startPattern: string;
@@ -72,7 +70,7 @@ export function createCommandStatementRule(scopeName: ScopeName, definitions: Co
     startPattern: placeholder.startPattern,
     endPattern: placeholder.endPattern,
     commandElementName: placeholder.commandElementName,
-    allowFirstComma: true,
+    legacyMode: true,
     allowContinuation: true,
     argumentStartPattern: alt(
       seq(inlineSpaces0(), negativeLookahead(textalt(...placeholder.expressionOperators))),
@@ -87,7 +85,7 @@ interface Placeholder_MultiLineCommandLikeStatementRule {
   endPattern: string;
   commandElementName: ElementName;
   argumentStartPattern: string;
-  allowFirstComma: boolean;
+  legacyMode: boolean;
   allowContinuation: boolean;
 }
 export function createMultiLineCommandLikeStatementRule(scopeName: ScopeName, definitions: CommandDefinition[], placeholder: Placeholder_MultiLineCommandLikeStatementRule): BeginWhileRule {
@@ -150,7 +148,7 @@ export interface Placeholder_SingleLineCommandLikeStatementRule {
   startPattern: string;
   endPattern: string;
   commandElementName: ElementName;
-  allowFirstComma: boolean;
+  legacyMode: boolean;
 }
 export function createSingleLineCommandLikeStatementRule(scopeName: ScopeName, definition: CommandDefinition, signature: CommandSignature, placeholder: Placeholder_SingleLineCommandLikeStatementRule): Rule {
   return {
@@ -176,7 +174,7 @@ export function createSingleLineCommandLikeStatementRule(scopeName: ScopeName, d
           reluctant(optional(signature.parameters.reduceRight<string>((prev, parameter, i, parameters) => {
             const isLastParameter = parameters.length - 1 === i;
 
-            const capturedCommaSeparator = placeholder.allowFirstComma
+            const capturedCommaSeparator = placeholder.legacyMode
               ? seq(inlineSpaces0(), capture(char(',')))
               : capture(char(','));
             const capturedFirstSeparator = group(alt(
@@ -219,15 +217,18 @@ export function createSingleLineCommandLikeStatementRule(scopeName: ScopeName, d
         const isLastParameter = parameters.length - 1 === i;
 
         return [
-          (!placeholder.allowFirstComma && i === 0)
+          (!placeholder.legacyMode && i === 0)
             ? nameRule(scopeName, RuleName.Comma, StyleName.Invalid)
             : patternsRule(includeRule(Repository.Comma)),
-          parameterToPatternsRule(scopeName, definition, parameter, isLastParameter, placeholder),
+          parameterToPatternsRule(scopeName, definition, parameter, isLastParameter, {
+            startPattern: placeholder.startPattern,
+            legacyMode: placeholder.legacyMode,
+          }),
         ];
       }),
 
       patternsRule(includeRule(Repository.Comma)),
-      placeholder.allowFirstComma
+      placeholder.legacyMode
         ? patternsRule(includeRule(Repository.Comma))
         : nameRule(scopeName, RuleName.Comma, StyleName.Invalid),
     ].map((rule, i) => [ i + 1, rule ])),
@@ -297,7 +298,10 @@ export function createDirectiveCommentRule(scopeName: ScopeName, definition: Com
         const isLastParameter = parameters.length - 1 === i;
         return [
           patternsRule(includeRule(Repository.Comma)),
-          parameterToPatternsRule(scopeName, definition, parameter, isLastParameter, placeholder),
+          parameterToPatternsRule(scopeName, definition, parameter, isLastParameter, {
+            startPattern: placeholder.startPattern,
+            legacyMode: true,
+          }),
         ];
       }),
 
@@ -457,28 +461,6 @@ export function createSendKeyCommandArgumentRule(scopeName: ScopeName): Patterns
     },
   );
 }
-export function createCommandRestArgumentsRule(scopeName: ScopeName): PatternsRule {
-  return patternsRule(
-    includeRule(Repository.PercentExpression),
-    includeRule(Repository.Comma),
-    createSpacedArgumentTextRule(scopeName, {
-      stringRuleName: RuleName.UnquotedString,
-      additionalRules: [
-        {
-          match: seq(
-            negativeLookahead('`'),
-            capture(char(',')),
-          ),
-          captures: { 1: patternsRule(includeRule(Repository.Comma)) },
-        },
-        {
-          name: name(scopeName, RuleName.UnquotedString),
-          match: negChars1('`', inlineSpace(), ','),
-        },
-      ],
-    }),
-  );
-}
 export function createMenuNameCommandArgumentRule(scopeName: ScopeName): PatternsRule {
   return patternsRule(
     // e.g. `Menu, MenuName, Add, &test`
@@ -585,19 +567,23 @@ function parameterToOniguruma(parameter: CommandParameter, isLastParameter: bool
   }
   return isLastParameter ? patterns_common.unquotedLastArgumentPattern : patterns_common.unquotedArgumentPattern;
 }
-function parameterToPatternsRule(scopeName: ScopeName, definition: CommandDefinition, parameter: CommandParameter, isLastParameter: boolean, placeholder: { startPattern: string }): PatternsRule {
-  const percentExpressionRule = ((): IncludeRule => {
-    if (hasFlag(parameter.flags, CommandParameterFlag.RestParams)) {
-      return includeRule(Repository.PercentExpression);
+function parameterToPatternsRule(scopeName: ScopeName, definition: CommandDefinition, parameter: CommandParameter, isLastParameter: boolean, placeholder: { startPattern: string; legacyMode: boolean }): PatternsRule {
+  const legacyRules = ((): Rule[] => {
+    if (!placeholder.legacyMode) {
+      return [];
     }
-    return includeRule(isLastParameter ? Repository.PercentExpressionInLastArgument : Repository.PercentExpression);
+
+    if (hasFlag(parameter.flags, CommandParameterFlag.RestParams)) {
+      return [ includeRule(Repository.PercentExpression) ];
+    }
+    return [ includeRule(isLastParameter ? Repository.PercentExpressionInLastArgument : Repository.PercentExpression) ];
   })();
 
   return patternsRule(
     // percent expression
     ...((): Rule[] => {
       if (!hasFlag(parameter.flags, CommandParameterFlag.Blank)) {
-        return [ percentExpressionRule ];
+        return [ ...legacyRules ];
       }
       return [];
     })(),
