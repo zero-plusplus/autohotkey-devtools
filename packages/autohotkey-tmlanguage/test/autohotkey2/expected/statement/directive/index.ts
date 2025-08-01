@@ -23,6 +23,7 @@ import { createRequiresExpectedDataList } from './#Requires';
 import { createSingleInstanceExpectedDataList } from './#SingleInstance';
 import { createSuspendExemptExpectedDataList } from './#SuspendExempt';
 import { createUseHookExpectedDataList } from './#UseHook';
+import { createWarnExpectedDataList } from './#Warn';
 
 export function createDirectiveStatementExpectedData(scopeName: ScopeName): ExpectedTestData[] {
   return [
@@ -43,6 +44,7 @@ export function createDirectiveStatementExpectedData(scopeName: ScopeName): Expe
     ...createSingleInstanceExpectedDataList(scopeName),
     ...createSuspendExemptExpectedDataList(scopeName),
     ...createUseHookExpectedDataList(scopeName),
+    ...createWarnExpectedDataList(scopeName),
     // #endregion directives
 
     // https://www.autohotkey.com/docs/v2/lib/_ErrorStdOut.htm
