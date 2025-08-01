@@ -22,6 +22,7 @@ import { createIncludeExpectedDataList } from './#Include';
 import { createInputLevelExpectedDataList } from './#InputLevel';
 import { createInstallKeybdHookExpectedDataList } from './#InstallKeybdHook';
 import { createInstallMouseHookExpectedDataList } from './#InstallMouseHook';
+import { createKeyHistoryExpectedDataList } from './#KeyHistory';
 
 export function createDirectiveStatementExpectedData(scopeName: ScopeName): ExpectedTestData[] {
   return [
@@ -83,6 +84,7 @@ export function createDirectiveStatementExpectedData(scopeName: ScopeName): Expe
     ...createInputLevelExpectedDataList(scopeName),
     ...createInstallKeybdHookExpectedDataList(scopeName),
     ...createInstallMouseHookExpectedDataList(scopeName),
+    ...createKeyHistoryExpectedDataList(scopeName),
 
     // https://www.autohotkey.com/docs/v1/lib/_Requires.htm
     ...((): ExpectedTestData[] => {

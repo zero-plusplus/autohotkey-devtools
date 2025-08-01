@@ -125,7 +125,7 @@ export const directiveDefinitions: CommandDefinition[] = [
   command('#InstallMouseHook', signature($parameterless)),
 
   // https://www.autohotkey.com/docs/v1/lib/_KeyHistory.htm
-  command('#KeyHistory', signature([ $() ])),
+  command('#KeyHistory', signature([ $shouldInteger() ])),
 
   // https://www.autohotkey.com/docs/v1/Scripts.htm#LTrim
   command('#LTrim', signature([ $shouldKeyword([ keywordOption('Off') ]) ])),
