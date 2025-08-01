@@ -11,6 +11,7 @@ import { createClipboardTimeoutExpectedDataList } from './#ClipboardTimeout';
 import { createDllLoadExpectedDataList } from './#DllLoad';
 import { createErrorStdOutExpectedDataList } from './#ErrorStdOut';
 import { createHotIfExpectedDataList } from './#HotIf';
+import { createHotIfTimeoutExpectedDataList } from './#HotIfTimeout';
 
 export function createDirectiveStatementExpectedData(scopeName: ScopeName): ExpectedTestData[] {
   return [
@@ -19,6 +20,7 @@ export function createDirectiveStatementExpectedData(scopeName: ScopeName): Expe
     ...createDllLoadExpectedDataList(scopeName),
     ...createErrorStdOutExpectedDataList(scopeName),
     ...createHotIfExpectedDataList(scopeName),
+    ...createHotIfTimeoutExpectedDataList(scopeName),
     // #endregion directives
 
     // https://www.autohotkey.com/docs/v2/lib/_ErrorStdOut.htm
