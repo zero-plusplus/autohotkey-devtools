@@ -48,22 +48,22 @@ import {
   $winParams,
   $winTitle,
   $withNumber,
-  colorOptionItem,
+  colorOption,
   command,
   CommandFlag,
-  decimalOptionItem,
-  endKeyOptionItem,
-  identifierOptionItem,
+  decimalOption,
+  endKeyOption,
+  identifierOption,
   keywordOption,
-  letterOptionItem,
-  matchKeyOptionItem,
-  numberOptionItem,
-  rangeOptionItem,
+  letterOption,
+  matchKeyOption,
+  numberOption,
+  rangeOption,
   signature,
-  signedNumberOptionItem,
-  sizeOptionItem,
+  signedNumberOption,
+  sizeOption,
   stringOption,
-  toggleOptionItem,
+  toggleOption,
   type CommandDefinition,
 } from '../definition';
 
@@ -97,7 +97,7 @@ export const directiveDefinitions: CommandDefinition[] = [
   command('#HotkeyModifierTimeout', signature([ $shouldInteger() ])),
 
   // https://www.autohotkey.com/docs/v1/lib/_Hotstring.htm
-  command('#Hotstring', signature([ $([ keywordOption('NoMouse', 'EndChars', 'SI', 'SP', 'SE', 'X'), toggleOptionItem('*', '?', 'B', 'C', 'O', 'R', 'T', 'Z'), decimalOptionItem('P'), signedNumberOptionItem('K') ]) ])),
+  command('#Hotstring', signature([ $([ keywordOption('NoMouse', 'EndChars', 'SI', 'SP', 'SE', 'X'), toggleOption('*', '?', 'B', 'C', 'O', 'R', 'T', 'Z'), decimalOption('P'), signedNumberOption('K') ]) ])),
 
   // https://www.autohotkey.com/docs/v1/lib/_If.htm
   command('#If', signature([ $expression() ])),
@@ -178,7 +178,7 @@ export const directiveDefinitions: CommandDefinition[] = [
 export const loopCommandDefenitions: CommandDefinition[] = [
   command('Loop', [
     // https://www.autohotkey.com/docs/v1/lib/LoopFile.htm
-    signature([ $flowsubcommand('Files'), $path(), $shouldKeyword([ letterOptionItem('D', 'F', 'R') ]) ]),
+    signature([ $flowsubcommand('Files'), $path(), $shouldKeyword([ letterOption('D', 'F', 'R') ]) ]),
 
     // https://www.autohotkey.com/docs/v1/lib/LoopParse.htm
     signature([ $flowsubcommand('Parse'), $input(), $([ keywordOption('CSV') ]), $shouldEscapeComma() ]),
@@ -187,7 +187,7 @@ export const loopCommandDefenitions: CommandDefinition[] = [
     signature([ $flowsubcommand('Read'), $path(), $shouldEscapeComma() ]),
 
     // https://www.autohotkey.com/docs/v1/lib/LoopReg.htm#new
-    signature([ $flowsubcommand('Reg'), $(), $shouldKeyword([ letterOptionItem('K', 'V', 'R') ]) ]),
+    signature([ $flowsubcommand('Reg'), $(), $shouldKeyword([ letterOption('K', 'V', 'R') ]) ]),
   ]),
 ];
 // #endregion loop
@@ -218,7 +218,7 @@ export const commandDefinitions: CommandDefinition[] = [
   ),
 
   // https://www.autohotkey.com/docs/v1/lib/ControlClick.htm
-  command('ControlClick', signature([ $controlOrPos(), $winTitle(), $(), $whichButton(), $expression(), $([ keywordOption('NA', 'D', 'U', 'Pos'), decimalOptionItem('X', 'Y') ]) ])),
+  command('ControlClick', signature([ $controlOrPos(), $winTitle(), $(), $whichButton(), $expression(), $([ keywordOption('NA', 'D', 'U', 'Pos'), decimalOption('X', 'Y') ]) ])),
 
   // https://www.autohotkey.com/docs/v1/lib/ControlFocus.htm
   command('ControlFocus', signature([ $control(), ...$winParams ])),
@@ -352,7 +352,7 @@ export const commandDefinitions: CommandDefinition[] = [
   command('FileMoveDir', signature([ $path(), $path(), $shouldKeyword([ keywordOption('0', '1', '2', 'R') ]) ])),
 
   // https://www.autohotkey.com/docs/v1/lib/FileRead.htm
-  command('FileRead', signature([ $output(), $path([ keywordOption('*c', '*t'), decimalOptionItem('*m', '*P') ]) ])),
+  command('FileRead', signature([ $output(), $path([ keywordOption('*c', '*t'), decimalOption('*m', '*P') ]) ])),
 
   // https://www.autohotkey.com/docs/v1/lib/FileReadLine.htm
   command('FileReadLine', signature([ $output(), $path(), $expression() ])),
@@ -376,7 +376,7 @@ export const commandDefinitions: CommandDefinition[] = [
   command('FileSetAttrib', signature([ $fileAttributes(), $glob(), $expression(), $expression() ])),
 
   // https://www.autohotkey.com/docs/v1/lib/FileSetTime.htm
-  command('FileSetTime', signature([ $expression(), $glob(), $shouldKeyword([ letterOptionItem('M', 'C', 'A') ]), $expression(), $expression() ])),
+  command('FileSetTime', signature([ $expression(), $glob(), $shouldKeyword([ letterOption('M', 'C', 'A') ]), $expression(), $expression() ])),
 
   // https://www.autohotkey.com/docs/v1/lib/FormatTime.htm
   command('FormatTime', [
@@ -403,10 +403,10 @@ export const commandDefinitions: CommandDefinition[] = [
   command('Gui', [
     signature([ $guisubcommand('New'), $guiOptions(), $() ]),
     signature([ $guisubcommand('Add'), $guiControlType(), $guiControlOptions(), $() ]),
-    signature([ $guisubcommand('Show'), $([ keywordOption('xCenter', 'yCenter', 'AutoSize', 'Minimize', 'Maximize', 'Restore', 'NoActivate', 'NA', 'Hide', 'Center'), numberOptionItem('W', 'H', 'X', 'Y') ]), $() ]),
+    signature([ $guisubcommand('Show'), $([ keywordOption('xCenter', 'yCenter', 'AutoSize', 'Minimize', 'Maximize', 'Restore', 'NoActivate', 'NA', 'Hide', 'Center'), numberOption('W', 'H', 'X', 'Y') ]), $() ]),
     signature([ $guisubcommand('Submit'), $shouldKeyword([ keywordOption('NoHide') ]) ]),
     signature([ $guisubcommand([ 'Cancel', 'Hide', 'Destroy', 'Minimize', 'Maximize', 'Restore', 'Default' ]), $rest() ]),
-    signature([ $guisubcommand('Font'), $([ colorOptionItem('C'), numberOptionItem('S', 'W', 'Q') ]), $() ]),
+    signature([ $guisubcommand('Font'), $([ colorOption('C'), numberOption('S', 'W', 'Q') ]), $() ]),
     signature([ $guisubcommand('Color'), $color(), $color() ]),
     signature([ $guisubcommand('Margin'), $withNumber(), $withNumber() ]),
     signature([ $guisubcommand('Menu'), $() ]),
@@ -432,11 +432,11 @@ export const commandDefinitions: CommandDefinition[] = [
   command('Hotkey', [
     signature([ $subcommand([ 'IfWinActive', 'IfWinExist' ]), $winTitle(), $() ]),
     signature([ $subcommand('If'), $expression(), $rest() ]),
-    signature([ $hotkeyName(), $([ keywordOption('On', 'Off', 'Toggle', 'AltTab') ]), $([ keywordOption('UseErrorLevel', 'On', 'Off', 'B', 'B0'), numberOptionItem('P', 'T', 'I') ]) ]),
+    signature([ $hotkeyName(), $([ keywordOption('On', 'Off', 'Toggle', 'AltTab') ]), $([ keywordOption('UseErrorLevel', 'On', 'Off', 'B', 'B0'), numberOption('P', 'T', 'I') ]) ]),
   ]),
 
   // https://www.autohotkey.com/docs/v1/lib/ImageSearch.htm
-  command('ImageSearch', signature([ $output(), $output(), $expression(), $expression(), $expression(), $expression(), $([ stringOption('HBITMAP:'), numberOptionItem('*Icon', '*', '*Trans', '*w', '*h') ]) ])),
+  command('ImageSearch', signature([ $output(), $output(), $expression(), $expression(), $expression(), $expression(), $([ stringOption('HBITMAP:'), numberOption('*Icon', '*', '*Trans', '*w', '*h') ]) ])),
 
   // https://www.autohotkey.com/docs/v1/lib/IniDelete.htm
   command('IniDelete', signature([ $path(), $(), $() ])),
@@ -448,7 +448,7 @@ export const commandDefinitions: CommandDefinition[] = [
   command('IniWrite', signature([ $(), $(), $path(), $(), $() ])),
 
   // https://www.autohotkey.com/docs/v1/lib/Input.htm
-  command('Input', signature([ $output(), $([ keywordOption('B', 'C', 'V', 'E', 'M'), keywordOption('*'), numberOptionItem('I', 'L', 'T') ]), $([ endKeyOptionItem() ]), $([ matchKeyOptionItem() ]) ])),
+  command('Input', signature([ $output(), $([ keywordOption('B', 'C', 'V', 'E', 'M'), keywordOption('*'), numberOption('I', 'L', 'T') ]), $([ endKeyOption() ]), $([ matchKeyOption() ]) ])),
 
   // https://www.autohotkey.com/docs/v1/lib/InputBox.htm
   command('InputBox', signature([ $output(), $(), $(), $(), $expression(), $expression(), $expression(), $expression(), $(), $expression(), $() ])),
@@ -457,7 +457,7 @@ export const commandDefinitions: CommandDefinition[] = [
   command('KeyHistory', signature($parameterless)),
 
   // https://www.autohotkey.com/docs/v1/lib/KeyWait.htm
-  command('KeyWait', signature([ $keyName(), $([ keywordOption('D', 'L'), decimalOptionItem('T') ]) ])),
+  command('KeyWait', signature([ $keyName(), $([ keywordOption('D', 'L'), decimalOption('T') ]) ])),
 
   // https://www.autohotkey.com/docs/v1/lib/ListHotkeys.htm
   command('ListHotkeys', signature($parameterless)),
@@ -628,7 +628,7 @@ export const commandDefinitions: CommandDefinition[] = [
   command('Sleep', signature([ $expression() ])),
 
   // https://www.autohotkey.com/docs/v1/lib/Sort.htm
-  command('Sort', signature([ $input(), $([ keywordOption('C', 'CL', 'N', 'R', 'Random', 'U', 'Z', '\\'), numberOptionItem('D', 'P'), identifierOptionItem('F') ]) ])),
+  command('Sort', signature([ $input(), $([ keywordOption('C', 'CL', 'N', 'R', 'Random', 'U', 'Z', '\\'), numberOption('D', 'P'), identifierOption('F') ]) ])),
 
   // https://www.autohotkey.com/docs/v1/lib/SoundBeep.htm
   command('SoundBeep', signature([ $expression(), $expression() ])),
@@ -654,9 +654,9 @@ export const commandDefinitions: CommandDefinition[] = [
     signature([
       $imagePath(), $([
         keywordOption('A', 'T', 'Hide'),
-        numberOptionItem('B', 'M', 'P', 'H', 'W', 'X', 'Y', 'C', 'ZH', 'ZW', 'ZX', 'ZY', 'FM', 'FS', 'WM', 'WS'),
-        colorOptionItem('CB', 'CT', 'CW'),
-        sizeOptionItem('R'),
+        numberOption('B', 'M', 'P', 'H', 'W', 'X', 'Y', 'C', 'ZH', 'ZW', 'ZX', 'ZY', 'FM', 'FS', 'WM', 'WS'),
+        colorOption('CB', 'CT', 'CW'),
+        sizeOption('R'),
       ]), $(), $(), $winTitle(), $(),
     ]),
   ], CommandFlag.Deprecated),
@@ -680,7 +680,7 @@ export const commandDefinitions: CommandDefinition[] = [
   command('StringCaseSense', signature([ $onOff([ keywordOption('Locale') ]) ])),
 
   // https://www.autohotkey.com/docs/v1/lib/StringGetPos.htm
-  command('StringGetPos', signature([ $output(), $input(), $(), $shouldKeyword([ numberOptionItem('L', 'R') ]), $expression() ]), CommandFlag.Deprecated),
+  command('StringGetPos', signature([ $output(), $input(), $(), $shouldKeyword([ numberOption('L', 'R') ]), $expression() ]), CommandFlag.Deprecated),
 
   // https://www.autohotkey.com/docs/v1/lib/StringLeft.htm
   command('StringLeft', signature([ $output(), $input(), $expression() ]), CommandFlag.Deprecated),
@@ -808,7 +808,7 @@ export const commandDefinitions: CommandDefinition[] = [
     signature([ $subcommand([ 'Transparent', 'TransColor' ]), $(), ...$winParams ]),
     signature([ $subcommand([ 'Style', 'ExStyle' ]), $style(), ...$winParams ]),
     signature([ $subcommand([ 'Bottom', 'Top', 'Disable', 'Enable', 'Redraw' ]), $blank(), ...$winParams ]),
-    signature([ $subcommand('Region'), $([ keywordOption('E'), numberOptionItem('W', 'H'), rangeOptionItem('R', '') ]), ...$winParams ]),
+    signature([ $subcommand('Region'), $([ keywordOption('E'), numberOption('W', 'H'), rangeOption('R', '') ]), ...$winParams ]),
     signature($parameterless),
   ]),
 

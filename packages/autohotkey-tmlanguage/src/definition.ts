@@ -180,7 +180,7 @@ export function flagedOption(...options: string[]): string {
     ignoreCase(textalt(...options)),
   ));
 }
-export function endKeyOptionItem(): string {
+export function endKeyOption(): string {
   return seq(
     char('{'),
     inlineSpaces0(),
@@ -189,29 +189,29 @@ export function endKeyOptionItem(): string {
     char('}'),
   );
 }
-export function matchKeyOptionItem(): string {
+export function matchKeyOption(): string {
   return negChars1(',');
 }
-export function caseSensitiveLetterOptionItem(...options: string[]): string {
+export function caseSensitiveLetterOption(...options: string[]): string {
   return groupMany1(textalt(...options));
 }
-export function letterOptionItem(...options: string[]): string {
-  return ignoreCase(caseSensitiveLetterOptionItem(...options));
+export function letterOption(...options: string[]): string {
+  return ignoreCase(caseSensitiveLetterOption(...options));
 }
-export function flagedLetterOptionItem(...options: string[]): string {
+export function flagedLetterOption(...options: string[]): string {
   return seq(
     optional(char('+', '-', '^')),
-    letterOptionItem(...options),
+    letterOption(...options),
   );
 }
-export function toggleOptionItem(...options: string[]): string {
+export function toggleOption(...options: string[]): string {
   // e.g. `Disabled0`, `Hidden1`
   return createSpacedOptionItemPattern(seq(
     ignoreCase(textalt(...options)),
     optional(char('0', '1')),
   ));
 }
-export function flagedToggleOptionItem(...options: string[]): string {
+export function flagedToggleOption(...options: string[]): string {
   // e.g. `Disabled0`, `Hidden1`
   return createSpacedOptionItemPattern(seq(
     optional(char('+', '-')),
@@ -219,7 +219,7 @@ export function flagedToggleOptionItem(...options: string[]): string {
     optional(char('0', '1')),
   ));
 }
-export function rangeOptionItem(...options: string[]): string {
+export function rangeOption(...options: string[]): string {
   return createSpacedOptionItemPattern(seq(
     ignoreCase(textalt(...options)),
     optseq(
@@ -231,7 +231,7 @@ export function rangeOptionItem(...options: string[]): string {
     ),
   ));
 }
-export function sizeOptionItem(...options: string[]): string {
+export function sizeOption(...options: string[]): string {
   return createSpacedOptionItemPattern(seq(
     ignoreCase(textalt(...options)),
     optseq(
@@ -243,7 +243,7 @@ export function sizeOptionItem(...options: string[]): string {
     ),
   ));
 }
-export function flagedSizeOptionItem(...options: string[]): string {
+export function flagedSizeOption(...options: string[]): string {
   return createSpacedOptionItemPattern(seq(
     optional(char('+', '-')),
     ignoreCase(textalt(...options)),
@@ -283,52 +283,52 @@ export function stringOption(...optionNames: string[]): ParameterItemMatcher {
     },
   };
 }
-export function flagedStringOptionItem(...options: string[]): string {
+export function flagedStringOption(...options: string[]): string {
   return createSpacedOptionItemPattern(seq(
     optional(char('+', '-')),
     ignoreCase(textalt(...options)),
     negChars0(inlineSpace()),
   ));
 }
-export function identifierOptionItem(...options: string[]): string {
+export function identifierOption(...options: string[]): string {
   return createSpacedOptionItemPattern(seq(
     ignoreCase(textalt(...options)),
     optional(patterns_v1.identifierPattern),
   ));
 }
-export function flagedIdentifierOptionItem(...options: string[]): string {
+export function flagedIdentifierOption(...options: string[]): string {
   return createSpacedOptionItemPattern(seq(
     optional(char('+', '-')),
     ignoreCase(textalt(...options)),
     optional(patterns_v1.identifierPattern),
   ));
 }
-export function decimalOptionItem(...options: string[]): string {
+export function decimalOption(...options: string[]): string {
   return createSpacedOptionItemPattern(seq(
     ignoreCase(textalt(...options)),
     optional(decimalPattern()),
   ));
 }
-export function numberOptionItem(...options: string[]): string {
+export function numberOption(...options: string[]): string {
   return createSpacedOptionItemPattern(seq(
     ignoreCase(textalt(...options)),
     optional(numberPattern()),
   ));
 }
-export function quotableNumberOptionItem(...options: string[]): string {
+export function quotableNumberOption(...options: string[]): string {
   return createQuotableOptionItemPattern(seq(
     ignoreCase(textalt(...options)),
     optional(numberPattern()),
   ));
 }
-// export function flagedNumberOptionItem(...options: string[]): string {
+// export function flagedNumberOption(...options: string[]): string {
 //   return createSpacedOptionItemPattern(seq(
 //     optional(char('+', '-')),
 //     ignoreCase(textalt(...options)),
 //     optional(numberPattern()),
 //   ));
 // }
-export function signedNumberOptionItem(...options: string[]): string {
+export function signedNumberOption(...options: string[]): string {
   return createSpacedOptionItemPattern(seq(
     ignoreCase(textalt(...options)),
     optseq(
@@ -337,7 +337,7 @@ export function signedNumberOptionItem(...options: string[]): string {
     ),
   ));
 }
-export function flagedSignedNumberOptionItem(...options: string[]): string {
+export function flagedSignedNumberOption(...options: string[]): string {
   return createSpacedOptionItemPattern(seq(
     optional(char('+', '-')),
     ignoreCase(textalt(...options)),
@@ -347,20 +347,20 @@ export function flagedSignedNumberOptionItem(...options: string[]): string {
     ),
   ));
 }
-export function hexOptionItem(...options: string[]): string {
+export function hexOption(...options: string[]): string {
   return createSpacedOptionItemPattern(seq(
     ignoreCase(ordalt(...options)),
     optional(hexPattern()),
   ));
 }
-export function flagedHexOptionItem(...options: string[]): string {
+export function flagedHexOption(...options: string[]): string {
   return createSpacedOptionItemPattern(seq(
     optional(char('+', '-')),
     ignoreCase(ordalt(...options)),
     optional(hexPattern()),
   ));
 }
-export function colorOptionItem(...options: string[]): string {
+export function colorOption(...options: string[]): string {
   return createSpacedOptionItemPattern(seq(
     ignoreCase(textalt(...options)),
     group(alt(
@@ -639,15 +639,15 @@ export function $rest(itemMatchers: ParameterItemMatcher[] = [], flags: CommandP
   };
 }
 export function $fileAttributes(flags: CommandParameterFlag = CommandParameterFlag.None): CommandParameter {
-  return $shouldKeyword([ flagedLetterOptionItem('R', 'A', 'S', 'H', 'N', 'O', 'T') ], flags);
+  return $shouldKeyword([ flagedLetterOption('R', 'A', 'S', 'H', 'N', 'O', 'T') ], flags);
 }
 export function $guiOptions(flags: CommandParameterFlag = CommandParameterFlag.None): CommandParameter {
   return $(
     [
       flagedOption('AlwaysOnTop', 'Border', 'Caption', 'DelimiterSpace', 'DelimiterTab', 'Disabled', 'DPIScale', 'LastFoundExist', 'MaximizeBox', 'MinimizeBox', 'OwnDialogs', 'Owner', 'Parent', 'Resize', 'SysMenu', 'Theme', 'ToolWindow'),
-      flagedStringOptionItem('Delimiter'),
-      flagedIdentifierOptionItem('Hwnd', 'Label', 'LastFound'),
-      flagedSizeOptionItem('MinSize', 'MaxSize'),
+      flagedStringOption('Delimiter'),
+      flagedIdentifierOption('Hwnd', 'Label', 'LastFound'),
+      flagedSizeOption('MinSize', 'MaxSize'),
     ],
     mergeFlags(flags, CommandParameterFlag.GuiLabeled),
   );
@@ -669,7 +669,7 @@ export function $menuItemName(flags: CommandParameterFlag = CommandParameterFlag
 }
 export function $menuOptions(values: string[] = [], flags: CommandParameterFlag = CommandParameterFlag.None): CommandParameter {
   return $([
-    decimalOptionItem('P'),
+    decimalOption('P'),
     flagedOption('Radio', 'Right', 'Break', 'BarBreak'),
     ...values,
   ], flags);
@@ -752,10 +752,10 @@ export function $control(flags: CommandParameterFlag = CommandParameterFlag.None
   return $([ keywordOption('ahk_id') ], flags);
 }
 export function $controlOrPos(flags: CommandParameterFlag = CommandParameterFlag.None): CommandParameter {
-  return $([ keywordOption('ahk_id'), decimalOptionItem('X', 'Y') ], flags);
+  return $([ keywordOption('ahk_id'), decimalOption('X', 'Y') ], flags);
 }
 export function $controlMoveOptions(): CommandParameter {
-  return $([ numberOptionItem('X', 'Y', 'W', 'H') ]);
+  return $([ numberOption('X', 'Y', 'W', 'H') ]);
 }
 export function $guiControlType(): CommandParameter {
   return $shouldKeyword([ keywordOption('ActiveX', 'Button', 'CheckBox', 'ComboBox', 'Custom', 'DateTime', 'DropDownList', 'DDL', 'Edit', 'GroupBox', 'Hotkey', 'Link', 'ListBox', 'ListView', 'MonthCal', 'Picture', 'Pic', 'Progress', 'Radio', 'Slider', 'StatusBar', 'Tab', 'Tab2', 'Tab3', 'Text', 'TreeView', 'UpDown') ]);
@@ -770,10 +770,10 @@ export function $guiControlOptions(flaged = false): CommandParameter {
         ...(flaged ? [ optional(char('+', '-', '^')) ] : []),
         ignoreCase(textalt('X+M', 'X-M', 'Y+M', 'Y-M', 'Left', 'Right', 'Center', 'Section', 'Tabstop', 'Wrap', 'AltSubmit', 'CDefault', 'BackgroundTrans', 'Background', 'Border', 'Theme')),
       ), [ ':' ]),
-      (flaged ? flagedSignedNumberOptionItem : signedNumberOptionItem)('R', 'W', 'H', 'WP', 'HP', 'X', 'Y', 'XP', 'YP', 'XM', 'YM', 'XS', 'YS', 'Choose', 'VScroll', 'HScroll'),
-      (flaged ? flagedIdentifierOptionItem : identifierOptionItem)('V', 'G', 'Hwnd'),
-      (flaged ? flagedHexOptionItem : hexOptionItem)('C'),
-      (flaged ? flagedToggleOptionItem : toggleOptionItem)('Disabled', 'Hidden'),
+      (flaged ? flagedSignedNumberOption : signedNumberOption)('R', 'W', 'H', 'WP', 'HP', 'X', 'Y', 'XP', 'YP', 'XM', 'YM', 'XS', 'YS', 'Choose', 'VScroll', 'HScroll'),
+      (flaged ? flagedIdentifierOption : identifierOption)('V', 'G', 'Hwnd'),
+      (flaged ? flagedHexOption : hexOption)('C'),
+      (flaged ? flagedToggleOption : toggleOption)('Disabled', 'Hidden'),
     ],
     CommandParameterFlag.GuiLabeled,
   );
@@ -800,13 +800,13 @@ export function $glob(flags: CommandParameterFlag = CommandParameterFlag.None): 
   return $([], flags);
 }
 export function $encoding(flags: CommandParameterFlag = CommandParameterFlag.None): CommandParameter {
-  return $([ keywordOption('CP0', 'UTF-8', 'UTF-8-RAW', 'UTF-16', 'UTF-16-RAW'), numberOptionItem('CP') ], flags);
+  return $([ keywordOption('CP0', 'UTF-8', 'UTF-8-RAW', 'UTF-16', 'UTF-16-RAW'), numberOption('CP') ], flags);
 }
 export function $quotableEncoding(flags: CommandParameterFlag = CommandParameterFlag.None): CommandParameter {
-  return $([ quotableKeywordOption('CP0', 'UTF-8', 'UTF-8-RAW', 'UTF-16', 'UTF-16-RAW'), quotableNumberOptionItem('CP') ], flags);
+  return $([ quotableKeywordOption('CP0', 'UTF-8', 'UTF-8-RAW', 'UTF-16', 'UTF-16-RAW'), quotableNumberOption('CP') ], flags);
 }
 export function $keyName(flags: CommandParameterFlag = CommandParameterFlag.None): CommandParameter {
-  return $([ keywordOption(...constants_common.keyNameList), hexOptionItem('sc', 'vk') ], flags);
+  return $([ keywordOption(...constants_common.keyNameList), hexOption('sc', 'vk') ], flags);
 }
 export function $hotkeyName(flags: CommandParameterFlag = CommandParameterFlag.None): CommandParameter {
   return $([ includeRule(Repository.HotkeyName) ], flags);
@@ -821,7 +821,7 @@ export function $timeunit(flags: CommandParameterFlag = CommandParameterFlag.Non
 }
 export function $formatTime(flags: CommandParameterFlag = CommandParameterFlag.None): CommandParameter {
   return $(
-    [ caseSensitiveLetterOptionItem('d', 'dd', 'ddd', 'dddd', 'M', 'MM', 'MMM', 'MMMM', 'y', 'yy', 'yyyy', 'gg', 'h', 'hh', 'H', 'HH', 'm', 'mm', 's', 'ss', 't', 'tt') ],
+    [ caseSensitiveLetterOption('d', 'dd', 'ddd', 'dddd', 'M', 'MM', 'MMM', 'MMMM', 'y', 'yy', 'yyyy', 'gg', 'h', 'hh', 'H', 'HH', 'm', 'mm', 's', 'ss', 't', 'tt') ],
     flags,
   );
 }
