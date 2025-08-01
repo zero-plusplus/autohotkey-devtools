@@ -28,6 +28,7 @@ import { createMaxHotkeysPerIntervalExpectedDataList } from './#MaxHotkeysPerInt
 import { createMaxMemExpectedDataList } from './#MaxMem';
 import { createMaxThreadsExpectedDataList } from './#MaxThreads';
 import { createMaxThreadsBufferExpectedDataList } from './#MaxThreadsBuffer';
+import { createMaxThreadsPerHotkeyExpectedDataList } from './#MaxThreadsPerHotkey';
 
 export function createDirectiveStatementExpectedData(scopeName: ScopeName): ExpectedTestData[] {
   return [
@@ -95,6 +96,7 @@ export function createDirectiveStatementExpectedData(scopeName: ScopeName): Expe
     ...createMaxMemExpectedDataList(scopeName),
     ...createMaxThreadsExpectedDataList(scopeName),
     ...createMaxThreadsBufferExpectedDataList(scopeName),
+    ...createMaxThreadsPerHotkeyExpectedDataList(scopeName),
 
     // https://www.autohotkey.com/docs/v1/lib/_Requires.htm
     ...((): ExpectedTestData[] => {

@@ -143,7 +143,7 @@ export const directiveDefinitions: CommandDefinition[] = [
   command('#MaxThreadsBuffer', signature([ $shouldKeyword([ keywordOption('On', 'Off') ]) ])),
 
   // https://www.autohotkey.com/docs/v1/lib/_MaxThreadsPerHotkey.htm
-  command('#MaxThreadsPerHotkey', signature([ $() ])),
+  command('#MaxThreadsPerHotkey', signature([ $shouldInteger() ])),
 
   // https://www.autohotkey.com/docs/v1/lib/_MenuMaskKey.htm
   command('#MenuMaskKey', signature([ $keyName() ])),
