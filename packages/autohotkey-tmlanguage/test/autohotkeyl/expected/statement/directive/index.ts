@@ -30,6 +30,7 @@ import { createMaxThreadsExpectedDataList } from './#MaxThreads';
 import { createMaxThreadsBufferExpectedDataList } from './#MaxThreadsBuffer';
 import { createMaxThreadsPerHotkeyExpectedDataList } from './#MaxThreadsPerHotkey';
 import { createMenuMaskKeyExpectedDataList } from './#MenuMaskKey';
+import { createNoEnvExpectedDataList } from './#NoEnv';
 
 export function createDirectiveStatementExpectedData(scopeName: ScopeName): ExpectedTestData[] {
   return [
@@ -99,6 +100,7 @@ export function createDirectiveStatementExpectedData(scopeName: ScopeName): Expe
     ...createMaxThreadsBufferExpectedDataList(scopeName),
     ...createMaxThreadsPerHotkeyExpectedDataList(scopeName),
     ...createMenuMaskKeyExpectedDataList(scopeName),
+    ...createNoEnvExpectedDataList(scopeName),
 
     // https://www.autohotkey.com/docs/v1/lib/_Requires.htm
     ...((): ExpectedTestData[] => {
