@@ -32,6 +32,7 @@ import { createMaxThreadsPerHotkeyExpectedDataList } from './#MaxThreadsPerHotke
 import { createMenuMaskKeyExpectedDataList } from './#MenuMaskKey';
 import { createNoEnvExpectedDataList } from './#NoEnv';
 import { createNoTrayIconExpectedDataList } from './#NoTrayIcon';
+import { createPersistentExpectedDataList } from './#Persistent';
 
 export function createDirectiveStatementExpectedData(scopeName: ScopeName): ExpectedTestData[] {
   return [
@@ -103,6 +104,7 @@ export function createDirectiveStatementExpectedData(scopeName: ScopeName): Expe
     ...createMenuMaskKeyExpectedDataList(scopeName),
     ...createNoEnvExpectedDataList(scopeName),
     ...createNoTrayIconExpectedDataList(scopeName),
+    ...createPersistentExpectedDataList(scopeName),
 
     // https://www.autohotkey.com/docs/v1/lib/_Requires.htm
     ...((): ExpectedTestData[] => {
