@@ -19,6 +19,7 @@ import { createHotstringExpectedDataList } from './#Hotstring';
 import { createIfExpectedDataList } from './#If';
 import { createIfWinActiveExpectedDataList } from './#IfWinActive';
 import { createIncludeExpectedDataList } from './#Include';
+import { createInputLevelExpectedDataList } from './#InputLevel';
 
 export function createDirectiveStatementExpectedData(scopeName: ScopeName): ExpectedTestData[] {
   return [
@@ -77,81 +78,7 @@ export function createDirectiveStatementExpectedData(scopeName: ScopeName): Expe
     ...createIfExpectedDataList(scopeName),
     ...createIfWinActiveExpectedDataList(scopeName),
     ...createIncludeExpectedDataList(scopeName),
-
-    // https://www.autohotkey.com/docs/v1/lib/_InputLevel.htm
-    ...((directiveName = '#InputLevel'): ExpectedTestData[] => {
-      return [
-        ...[ '0', '50', '100' ].map((param): ExpectedTestData => {
-          return [
-            dedent`
-              ${directiveName} ${param}        ; comment
-              ${directiveName}, ${param}       ; comment
-            `,
-            [
-              { text: directiveName, scopes: name(scopeName, RuleName.DirectiveName) },
-              { text: param, scopes: name(scopeName, RuleName.Integer) },
-              { text: '; comment', scopes: name(scopeName, RuleName.InlineComment) },
-
-              { text: directiveName, scopes: name(scopeName, RuleName.DirectiveName) },
-              { text: ',', scopes: name(scopeName, RuleName.Comma) },
-              { text: param, scopes: name(scopeName, RuleName.Integer) },
-              { text: '; comment', scopes: name(scopeName, RuleName.InlineComment) },
-            ],
-          ];
-        }),
-        // Allow values outside the range
-        [
-          dedent`
-            ${directiveName}, -10       ; comment
-            ${directiveName}, 101       ; comment
-          `,
-          [
-            { text: directiveName, scopes: name(scopeName, RuleName.DirectiveName) },
-            { text: ',', scopes: name(scopeName, RuleName.Comma) },
-            { text: '-', scopes: name(scopeName, RuleName.Operator) },
-            { text: '10', scopes: name(scopeName, RuleName.Integer) },
-            { text: '; comment', scopes: name(scopeName, RuleName.InlineComment) },
-
-            { text: directiveName, scopes: name(scopeName, RuleName.DirectiveName) },
-            { text: ',', scopes: name(scopeName, RuleName.Comma) },
-            { text: '101', scopes: name(scopeName, RuleName.Integer) },
-            { text: '; comment', scopes: name(scopeName, RuleName.InlineComment) },
-          ],
-        ],
-        [
-          dedent`
-            ${directiveName}, % var                 ; comment
-            ${directiveName}, %var%                 ; comment
-            ${directiveName}, %var%var%var%         ; comment
-          `,
-          [
-            { text: directiveName, scopes: name(scopeName, RuleName.DirectiveName) },
-            { text: ',', scopes: name(scopeName, RuleName.Comma) },
-            { text: '%', scopes: name(scopeName, RuleName.PercentExpressionBegin) },
-            { text: 'var', scopes: name(scopeName, RuleName.Variable) },
-            { text: '; comment', scopes: name(scopeName, RuleName.InlineComment) },
-
-            { text: directiveName, scopes: name(scopeName, RuleName.DirectiveName) },
-            { text: ',', scopes: name(scopeName, RuleName.Comma) },
-            { text: '%', scopes: name(scopeName, RuleName.PercentBegin) },
-            { text: 'var', scopes: name(scopeName, RuleName.Variable) },
-            { text: '%', scopes: name(scopeName, RuleName.PercentEnd) },
-            { text: '; comment', scopes: name(scopeName, RuleName.InlineComment) },
-
-            { text: directiveName, scopes: name(scopeName, RuleName.DirectiveName) },
-            { text: ',', scopes: name(scopeName, RuleName.Comma) },
-            { text: '%', scopes: name(scopeName, RuleName.PercentBegin) },
-            { text: 'var', scopes: name(scopeName, RuleName.Variable) },
-            { text: '%', scopes: name(scopeName, RuleName.PercentBegin) },
-            { text: 'var', scopes: name(scopeName, RuleName.Variable) },
-            { text: '%', scopes: name(scopeName, RuleName.PercentEnd) },
-            { text: 'var', scopes: name(scopeName, RuleName.Variable) },
-            { text: '%', scopes: name(scopeName, RuleName.PercentEnd) },
-            { text: '; comment', scopes: name(scopeName, RuleName.InlineComment) },
-          ],
-        ],
-      ];
-    })(),
+    ...createInputLevelExpectedDataList(scopeName),
 
     // https://www.autohotkey.com/docs/v1/lib/_InstallKeybdHook.htm
     ...((directiveName = '#InstallKeybdHook'): ExpectedTestData[] => {
