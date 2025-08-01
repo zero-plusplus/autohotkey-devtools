@@ -135,20 +135,6 @@ export function createOptionPattern(pattern: string, extraPrefixSeparators: stri
     )),
   );
 }
-export function createSpacedOptionItemPattern(pattern: string): string {
-  return seq(
-    lookbehind(alt(
-      inlineSpace(),
-      char(',', ':', '"', `'`),
-    )),
-    pattern,
-    lookahead(alt(
-      inlineSpace(),
-      char(',', '%', '"', `'`),
-      endAnchor(),
-    )),
-  );
-}
 export function createQuotableOptionItemPattern(pattern: string): string {
   return seq(
     group(alt(lookahead(char('"', `'`)), wordBound())),
@@ -174,23 +160,23 @@ export function quotableKeywordOption(...keywords: string[]): ParameterItemMatch
     createOption(ignoreCase(textalt(...keywords)), [ '"', `'` ], [ '"', `'` ]),
   ];
 }
-export function flagedOption(...options: string[]): string {
-  return createSpacedOptionItemPattern(seq(
+export function flagedOption(...options: string[]): ParameterItemMatcher {
+  return createOption(seq(
     optional(char('+', '-', '^')),
     ignoreCase(textalt(...options)),
   ));
 }
-export function endKeyOption(): string {
-  return seq(
+export function endKeyOption(): ParameterItemMatcher {
+  return createOption(seq(
     char('{'),
     inlineSpaces0(),
     negChars1(inlineSpace()),
     inlineSpaces0(),
     char('}'),
-  );
+  ));
 }
-export function matchKeyOption(): string {
-  return negChars1(',');
+export function matchKeyOption(): ParameterItemMatcher {
+  return createOption(negChars1(','));
 }
 export function caseSensitiveLetterOption(...options: string[]): string {
   return groupMany1(textalt(...options));
@@ -204,23 +190,23 @@ export function flagedLetterOption(...options: string[]): string {
     letterOption(...options),
   );
 }
-export function toggleOption(...options: string[]): string {
+export function toggleOption(...options: string[]): ParameterItemMatcher {
   // e.g. `Disabled0`, `Hidden1`
-  return createSpacedOptionItemPattern(seq(
+  return createOption(seq(
     ignoreCase(textalt(...options)),
     optional(char('0', '1')),
   ));
 }
-export function flagedToggleOption(...options: string[]): string {
+export function flagedToggleOption(...options: string[]): ParameterItemMatcher {
   // e.g. `Disabled0`, `Hidden1`
-  return createSpacedOptionItemPattern(seq(
+  return createOption(seq(
     optional(char('+', '-')),
     ignoreCase(textalt(...options)),
     optional(char('0', '1')),
   ));
 }
-export function rangeOption(...options: string[]): string {
-  return createSpacedOptionItemPattern(seq(
+export function rangeOption(...options: string[]): ParameterItemMatcher {
+  return createOption(seq(
     ignoreCase(textalt(...options)),
     optseq(
       numberPattern(),
@@ -231,8 +217,8 @@ export function rangeOption(...options: string[]): string {
     ),
   ));
 }
-export function sizeOption(...options: string[]): string {
-  return createSpacedOptionItemPattern(seq(
+export function sizeOption(...options: string[]): ParameterItemMatcher {
+  return createOption(seq(
     ignoreCase(textalt(...options)),
     optseq(
       numberPattern(),
@@ -243,8 +229,8 @@ export function sizeOption(...options: string[]): string {
     ),
   ));
 }
-export function flagedSizeOption(...options: string[]): string {
-  return createSpacedOptionItemPattern(seq(
+export function flagedSizeOption(...options: string[]): ParameterItemMatcher {
+  return createOption(seq(
     optional(char('+', '-')),
     ignoreCase(textalt(...options)),
     optseq(
@@ -283,53 +269,54 @@ export function stringOption(...optionNames: string[]): ParameterItemMatcher {
     },
   };
 }
-export function flagedStringOption(...options: string[]): string {
-  return createSpacedOptionItemPattern(seq(
+export function flagedStringOption(...options: string[]): ParameterItemMatcher {
+  return createOption(seq(
     optional(char('+', '-')),
     ignoreCase(textalt(...options)),
     negChars0(inlineSpace()),
   ));
 }
-export function identifierOption(...options: string[]): string {
-  return createSpacedOptionItemPattern(seq(
+export function identifierOption(...options: string[]): ParameterItemMatcher {
+  return createOption(seq(
     ignoreCase(textalt(...options)),
     optional(patterns_v1.identifierPattern),
   ));
 }
-export function flagedIdentifierOption(...options: string[]): string {
-  return createSpacedOptionItemPattern(seq(
+export function flagedIdentifierOption(...options: string[]): ParameterItemMatcher {
+  return createOption(seq(
     optional(char('+', '-')),
     ignoreCase(textalt(...options)),
     optional(patterns_v1.identifierPattern),
   ));
 }
-export function decimalOption(...options: string[]): string {
-  return createSpacedOptionItemPattern(seq(
+export function decimalOption(...options: string[]): ParameterItemMatcher {
+  return createOption(seq(
     ignoreCase(textalt(...options)),
     optional(decimalPattern()),
   ));
 }
-export function numberOption(...options: string[]): string {
-  return createSpacedOptionItemPattern(seq(
+export function numberOption(...options: string[]): ParameterItemMatcher {
+  return createOption(seq(
     ignoreCase(textalt(...options)),
     optional(numberPattern()),
   ));
 }
-export function quotableNumberOption(...options: string[]): string {
-  return createQuotableOptionItemPattern(seq(
-    ignoreCase(textalt(...options)),
-    optional(numberPattern()),
-  ));
+export function quotableNumberOption(...options: string[]): ParameterItemMatcher {
+  return [
+    [
+      {
+        name: RuleName.UnquotedString,
+        match: char('"', `'`),
+      },
+      seq(
+        ignoreCase(textalt(...options)),
+        optional(numberPattern()),
+      ),
+    ],
+  ];
 }
-// export function flagedNumberOption(...options: string[]): string {
-//   return createSpacedOptionItemPattern(seq(
-//     optional(char('+', '-')),
-//     ignoreCase(textalt(...options)),
-//     optional(numberPattern()),
-//   ));
-// }
-export function signedNumberOption(...options: string[]): string {
-  return createSpacedOptionItemPattern(seq(
+export function signedNumberOption(...options: string[]): ParameterItemMatcher {
+  return createOption(seq(
     ignoreCase(textalt(...options)),
     optseq(
       optional(char('+', '-')),
@@ -337,8 +324,8 @@ export function signedNumberOption(...options: string[]): string {
     ),
   ));
 }
-export function flagedSignedNumberOption(...options: string[]): string {
-  return createSpacedOptionItemPattern(seq(
+export function flagedSignedNumberOption(...options: string[]): ParameterItemMatcher {
+  return createOption(seq(
     optional(char('+', '-')),
     ignoreCase(textalt(...options)),
     optseq(
@@ -347,21 +334,21 @@ export function flagedSignedNumberOption(...options: string[]): string {
     ),
   ));
 }
-export function hexOption(...options: string[]): string {
-  return createSpacedOptionItemPattern(seq(
+export function hexOption(...options: string[]): ParameterItemMatcher {
+  return createOption(seq(
     ignoreCase(ordalt(...options)),
     optional(hexPattern()),
   ));
 }
-export function flagedHexOption(...options: string[]): string {
-  return createSpacedOptionItemPattern(seq(
+export function flagedHexOption(...options: string[]): ParameterItemMatcher {
+  return createOption(seq(
     optional(char('+', '-')),
     ignoreCase(ordalt(...options)),
     optional(hexPattern()),
   ));
 }
-export function colorOption(...options: string[]): string {
-  return createSpacedOptionItemPattern(seq(
+export function colorOption(...options: string[]): ParameterItemMatcher {
+  return createOption(seq(
     ignoreCase(textalt(...options)),
     group(alt(
       group(textalt(...constants_common.colorNames, 'Default')),
