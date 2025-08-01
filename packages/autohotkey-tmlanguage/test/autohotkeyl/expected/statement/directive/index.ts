@@ -34,6 +34,7 @@ import { createNoEnvExpectedDataList } from './#NoEnv';
 import { createNoTrayIconExpectedDataList } from './#NoTrayIcon';
 import { createPersistentExpectedDataList } from './#Persistent';
 import { createRequiresExpectedDataList } from './#Requires';
+import { createSingleInstanceExpectedDataList } from './#SingleInstance';
 
 export function createDirectiveStatementExpectedData(scopeName: ScopeName): ExpectedTestData[] {
   return [
@@ -107,6 +108,7 @@ export function createDirectiveStatementExpectedData(scopeName: ScopeName): Expe
     ...createNoTrayIconExpectedDataList(scopeName),
     ...createPersistentExpectedDataList(scopeName),
     ...createRequiresExpectedDataList(scopeName),
+    ...createSingleInstanceExpectedDataList(scopeName),
     // #endregion commands
 
     ...((): ExpectedTestData[] => {
