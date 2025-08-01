@@ -33,6 +33,7 @@ import { createMenuMaskKeyExpectedDataList } from './#MenuMaskKey';
 import { createNoEnvExpectedDataList } from './#NoEnv';
 import { createNoTrayIconExpectedDataList } from './#NoTrayIcon';
 import { createPersistentExpectedDataList } from './#Persistent';
+import { createRequiresExpectedDataList } from './#Requires';
 
 export function createDirectiveStatementExpectedData(scopeName: ScopeName): ExpectedTestData[] {
   return [
@@ -105,39 +106,7 @@ export function createDirectiveStatementExpectedData(scopeName: ScopeName): Expe
     ...createNoEnvExpectedDataList(scopeName),
     ...createNoTrayIconExpectedDataList(scopeName),
     ...createPersistentExpectedDataList(scopeName),
-
-    // https://www.autohotkey.com/docs/v1/lib/_Requires.htm
-    ...((): ExpectedTestData[] => {
-      return [
-        [
-          dedent`
-            #Requires                         ; comment
-            #Requires AutoHotkey v2.1         ; comment
-          `,
-          [
-            { text: '#Requires', scopes: name(scopeName, RuleName.DirectiveName) },
-            { text: '; comment', scopes: name(scopeName, RuleName.InlineComment) },
-
-            { text: '#Requires', scopes: name(scopeName, RuleName.DirectiveName) },
-            { text: 'AutoHotkey', scopes: name(scopeName, RuleName.UnquotedString, StyleName.Strong) },
-            { text: 'v2.1', scopes: name(scopeName, RuleName.UnquotedString, StyleName.Strong) },
-            { text: '; comment', scopes: name(scopeName, RuleName.InlineComment) },
-          ],
-        ],
-        [
-          dedent`
-            #Requires AutoHotkey v2.1 64-bit         ; comment
-          `,
-          [
-            { text: '#Requires', scopes: name(scopeName, RuleName.DirectiveName) },
-            { text: 'AutoHotkey', scopes: name(scopeName, RuleName.UnquotedString, StyleName.Strong) },
-            { text: 'v2.1', scopes: name(scopeName, RuleName.UnquotedString, StyleName.Strong) },
-            { text: '64-bit', scopes: name(scopeName, RuleName.UnquotedString, StyleName.Strong) },
-            { text: '; comment', scopes: name(scopeName, RuleName.InlineComment) },
-          ],
-        ],
-      ];
-    })(),
+    ...createRequiresExpectedDataList(scopeName),
     // #endregion commands
 
     ...((): ExpectedTestData[] => {
