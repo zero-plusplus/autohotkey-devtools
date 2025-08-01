@@ -131,7 +131,7 @@ export const directiveDefinitions: CommandDefinition[] = [
   command('#LTrim', signature([ $shouldKeyword([ keywordOption('Off') ]) ])),
 
   // https://www.autohotkey.com/docs/v1/lib/_MaxHotkeysPerInterval.htm
-  command('#MaxHotkeysPerInterval', signature([ $() ])),
+  command('#MaxHotkeysPerInterval', signature([ $shouldInteger() ])),
 
   // https://www.autohotkey.com/docs/v1/lib/_MaxMem.htm
   command('#MaxMem', signature([ $() ])),
