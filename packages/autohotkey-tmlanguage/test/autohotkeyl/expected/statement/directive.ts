@@ -74,26 +74,64 @@ export function createDirectiveStatementExpectedData(scopeName: ScopeName): Expe
     })(),
 
     // https://www.autohotkey.com/docs/v1/lib/_ClipboardTimeout.htm
-    ...((): ExpectedTestData[] => {
+    ...((directiveName = '#ClipboardTimeout'): ExpectedTestData[] => {
       return [
         [
           dedent`
-            #ClipboardTimeout 123         ; comment
+            ${directiveName} 123         ; comment
+            ${directiveName}, 123         ; comment
           `,
           [
-            { text: '#ClipboardTimeout', scopes: name(scopeName, RuleName.DirectiveName) },
+            { text: directiveName, scopes: name(scopeName, RuleName.DirectiveName) },
+            { text: '123', scopes: name(scopeName, RuleName.Integer) },
+            { text: '; comment', scopes: name(scopeName, RuleName.InlineComment) },
+
+            { text: directiveName, scopes: name(scopeName, RuleName.DirectiveName) },
+            { text: ',', scopes: name(scopeName, RuleName.Comma) },
             { text: '123', scopes: name(scopeName, RuleName.Integer) },
             { text: '; comment', scopes: name(scopeName, RuleName.InlineComment) },
           ],
         ],
         [
           dedent`
-            #ClipboardTimeout, invalid     ; comment
+            ${directiveName}, invalid     ; comment
           `,
           [
-            { text: '#ClipboardTimeout', scopes: name(scopeName, RuleName.DirectiveName) },
+            { text: directiveName, scopes: name(scopeName, RuleName.DirectiveName) },
             { text: ',', scopes: name(scopeName, RuleName.Comma) },
             { text: 'invalid', scopes: name(scopeName, RuleName.UnquotedString, StyleName.Invalid) },
+            { text: '; comment', scopes: name(scopeName, RuleName.InlineComment) },
+          ],
+        ],
+        [
+          dedent`
+            ${directiveName}, % var                 ; comment
+            ${directiveName}, %var%                 ; comment
+            ${directiveName}, %var%var%var%         ; comment
+          `,
+          [
+            { text: directiveName, scopes: name(scopeName, RuleName.DirectiveName) },
+            { text: ',', scopes: name(scopeName, RuleName.Comma) },
+            { text: '%', scopes: name(scopeName, RuleName.PercentExpressionBegin) },
+            { text: 'var', scopes: name(scopeName, RuleName.Variable) },
+            { text: '; comment', scopes: name(scopeName, RuleName.InlineComment) },
+
+            { text: directiveName, scopes: name(scopeName, RuleName.DirectiveName) },
+            { text: ',', scopes: name(scopeName, RuleName.Comma) },
+            { text: '%', scopes: name(scopeName, RuleName.PercentBegin) },
+            { text: 'var', scopes: name(scopeName, RuleName.Variable) },
+            { text: '%', scopes: name(scopeName, RuleName.PercentEnd) },
+            { text: '; comment', scopes: name(scopeName, RuleName.InlineComment) },
+
+            { text: directiveName, scopes: name(scopeName, RuleName.DirectiveName) },
+            { text: ',', scopes: name(scopeName, RuleName.Comma) },
+            { text: '%', scopes: name(scopeName, RuleName.PercentBegin) },
+            { text: 'var', scopes: name(scopeName, RuleName.Variable) },
+            { text: '%', scopes: name(scopeName, RuleName.PercentBegin) },
+            { text: 'var', scopes: name(scopeName, RuleName.Variable) },
+            { text: '%', scopes: name(scopeName, RuleName.PercentEnd) },
+            { text: 'var', scopes: name(scopeName, RuleName.Variable) },
+            { text: '%', scopes: name(scopeName, RuleName.PercentEnd) },
             { text: '; comment', scopes: name(scopeName, RuleName.InlineComment) },
           ],
         ],
@@ -101,15 +139,47 @@ export function createDirectiveStatementExpectedData(scopeName: ScopeName): Expe
     })(),
 
     // https://www.autohotkey.com/docs/v1/lib/_CommentFlag.htm
-    ...((): ExpectedTestData[] => {
+    ...((directiveName = '#CommentFlag'): ExpectedTestData[] => {
       return [
         [
           dedent`
-            #CommentFlag //       ; comment
+            ${directiveName} //       ; comment
           `,
           [
-            { text: '#CommentFlag', scopes: name(scopeName, RuleName.DirectiveName, StyleName.Strikethrough) },
+            { text: directiveName, scopes: name(scopeName, RuleName.DirectiveName, StyleName.Strikethrough) },
             { text: '//', scopes: name(scopeName, RuleName.UnquotedString) },
+            { text: '; comment', scopes: name(scopeName, RuleName.InlineComment) },
+          ],
+        ],
+        [
+          dedent`
+            ${directiveName}, % var                 ; comment
+            ${directiveName}, %var%                 ; comment
+            ${directiveName}, %var%var%var%         ; comment
+          `,
+          [
+            { text: directiveName, scopes: name(scopeName, RuleName.DirectiveName, StyleName.Strikethrough) },
+            { text: ',', scopes: name(scopeName, RuleName.Comma) },
+            { text: '%', scopes: name(scopeName, RuleName.PercentExpressionBegin) },
+            { text: 'var', scopes: name(scopeName, RuleName.Variable) },
+            { text: '; comment', scopes: name(scopeName, RuleName.InlineComment) },
+
+            { text: directiveName, scopes: name(scopeName, RuleName.DirectiveName, StyleName.Strikethrough) },
+            { text: ',', scopes: name(scopeName, RuleName.Comma) },
+            { text: '%', scopes: name(scopeName, RuleName.PercentBegin) },
+            { text: 'var', scopes: name(scopeName, RuleName.Variable) },
+            { text: '%', scopes: name(scopeName, RuleName.PercentEnd) },
+            { text: '; comment', scopes: name(scopeName, RuleName.InlineComment) },
+
+            { text: directiveName, scopes: name(scopeName, RuleName.DirectiveName, StyleName.Strikethrough) },
+            { text: ',', scopes: name(scopeName, RuleName.Comma) },
+            { text: '%', scopes: name(scopeName, RuleName.PercentBegin) },
+            { text: 'var', scopes: name(scopeName, RuleName.Variable) },
+            { text: '%', scopes: name(scopeName, RuleName.PercentBegin) },
+            { text: 'var', scopes: name(scopeName, RuleName.Variable) },
+            { text: '%', scopes: name(scopeName, RuleName.PercentEnd) },
+            { text: 'var', scopes: name(scopeName, RuleName.Variable) },
+            { text: '%', scopes: name(scopeName, RuleName.PercentEnd) },
             { text: '; comment', scopes: name(scopeName, RuleName.InlineComment) },
           ],
         ],
@@ -117,30 +187,67 @@ export function createDirectiveStatementExpectedData(scopeName: ScopeName): Expe
     })(),
 
     // https://www.autohotkey.com/docs/v1/lib/_ErrorStdOut.htm
-    ...((): ExpectedTestData[] => {
+    ...((directiveName = '#ErrorStdOut'): ExpectedTestData[] => {
       return [
         [
           dedent`
-            #ErrorStdOut x        ; comment
+            ${directiveName} x          ; comment
+            ${directiveName}, x         ; comment
           `,
           [
-            { text: '#ErrorStdOut', scopes: name(scopeName, RuleName.DirectiveName) },
+            { text: directiveName, scopes: name(scopeName, RuleName.DirectiveName) },
+            { text: 'x', scopes: name(scopeName, RuleName.UnquotedString) },
+            { text: '; comment', scopes: name(scopeName, RuleName.InlineComment) },
+
+            { text: directiveName, scopes: name(scopeName, RuleName.DirectiveName) },
+            { text: ',', scopes: name(scopeName, RuleName.Comma) },
             { text: 'x', scopes: name(scopeName, RuleName.UnquotedString) },
             { text: '; comment', scopes: name(scopeName, RuleName.InlineComment) },
           ],
         ],
+        ...[ 'UTF-8', 'CP65001' ].flatMap((param): ExpectedTestData[] => {
+          return [
+            [
+              dedent`
+                ${directiveName} ${param}        ; comment
+              `,
+              [
+                { text: directiveName, scopes: name(scopeName, RuleName.DirectiveName) },
+                { text: param, scopes: name(scopeName, RuleName.UnquotedString, StyleName.Strong) },
+                { text: '; comment', scopes: name(scopeName, RuleName.InlineComment) },
+              ],
+            ],
+          ];
+        }),
         [
           dedent`
-            #ErrorStdOut UTF-8        ; comment
-            #ErrorStdOut CP65001      ; comment
+            ${directiveName}, % var                 ; comment
+            ${directiveName}, %var%                 ; comment
+            ${directiveName}, %var%var%var%         ; comment
           `,
           [
-            { text: '#ErrorStdOut', scopes: name(scopeName, RuleName.DirectiveName) },
-            { text: 'UTF-8', scopes: name(scopeName, RuleName.UnquotedString, StyleName.Strong) },
+            { text: directiveName, scopes: name(scopeName, RuleName.DirectiveName) },
+            { text: ',', scopes: name(scopeName, RuleName.Comma) },
+            { text: '%', scopes: name(scopeName, RuleName.PercentExpressionBegin) },
+            { text: 'var', scopes: name(scopeName, RuleName.Variable) },
             { text: '; comment', scopes: name(scopeName, RuleName.InlineComment) },
 
-            { text: '#ErrorStdOut', scopes: name(scopeName, RuleName.DirectiveName) },
-            { text: 'CP65001', scopes: name(scopeName, RuleName.UnquotedString, StyleName.Strong) },
+            { text: directiveName, scopes: name(scopeName, RuleName.DirectiveName) },
+            { text: ',', scopes: name(scopeName, RuleName.Comma) },
+            { text: '%', scopes: name(scopeName, RuleName.PercentBegin) },
+            { text: 'var', scopes: name(scopeName, RuleName.Variable) },
+            { text: '%', scopes: name(scopeName, RuleName.PercentEnd) },
+            { text: '; comment', scopes: name(scopeName, RuleName.InlineComment) },
+
+            { text: directiveName, scopes: name(scopeName, RuleName.DirectiveName) },
+            { text: ',', scopes: name(scopeName, RuleName.Comma) },
+            { text: '%', scopes: name(scopeName, RuleName.PercentBegin) },
+            { text: 'var', scopes: name(scopeName, RuleName.Variable) },
+            { text: '%', scopes: name(scopeName, RuleName.PercentBegin) },
+            { text: 'var', scopes: name(scopeName, RuleName.Variable) },
+            { text: '%', scopes: name(scopeName, RuleName.PercentEnd) },
+            { text: 'var', scopes: name(scopeName, RuleName.Variable) },
+            { text: '%', scopes: name(scopeName, RuleName.PercentEnd) },
             { text: '; comment', scopes: name(scopeName, RuleName.InlineComment) },
           ],
         ],
@@ -148,15 +255,47 @@ export function createDirectiveStatementExpectedData(scopeName: ScopeName): Expe
     })(),
 
     // https://www.autohotkey.com/docs/v1/lib/_EscapeChar.htm
-    ...((): ExpectedTestData[] => {
+    ...((directiveName = '#EscapeChar'): ExpectedTestData[] => {
       return [
         [
           dedent`
-            #EscapeChar \\        ; comment
+            ${directiveName} \\        ; comment
           `,
           [
-            { text: '#EscapeChar', scopes: name(scopeName, RuleName.DirectiveName, StyleName.Strikethrough) },
+            { text: directiveName, scopes: name(scopeName, RuleName.DirectiveName, StyleName.Strikethrough) },
             { text: '\\', scopes: name(scopeName, RuleName.UnquotedString) },
+            { text: '; comment', scopes: name(scopeName, RuleName.InlineComment) },
+          ],
+        ],
+        [
+          dedent`
+            ${directiveName}, % var                 ; comment
+            ${directiveName}, %var%                 ; comment
+            ${directiveName}, %var%var%var%         ; comment
+          `,
+          [
+            { text: directiveName, scopes: name(scopeName, RuleName.DirectiveName, StyleName.Strikethrough) },
+            { text: ',', scopes: name(scopeName, RuleName.Comma) },
+            { text: '%', scopes: name(scopeName, RuleName.PercentExpressionBegin) },
+            { text: 'var', scopes: name(scopeName, RuleName.Variable) },
+            { text: '; comment', scopes: name(scopeName, RuleName.InlineComment) },
+
+            { text: directiveName, scopes: name(scopeName, RuleName.DirectiveName, StyleName.Strikethrough) },
+            { text: ',', scopes: name(scopeName, RuleName.Comma) },
+            { text: '%', scopes: name(scopeName, RuleName.PercentBegin) },
+            { text: 'var', scopes: name(scopeName, RuleName.Variable) },
+            { text: '%', scopes: name(scopeName, RuleName.PercentEnd) },
+            { text: '; comment', scopes: name(scopeName, RuleName.InlineComment) },
+
+            { text: directiveName, scopes: name(scopeName, RuleName.DirectiveName, StyleName.Strikethrough) },
+            { text: ',', scopes: name(scopeName, RuleName.Comma) },
+            { text: '%', scopes: name(scopeName, RuleName.PercentBegin) },
+            { text: 'var', scopes: name(scopeName, RuleName.Variable) },
+            { text: '%', scopes: name(scopeName, RuleName.PercentBegin) },
+            { text: 'var', scopes: name(scopeName, RuleName.Variable) },
+            { text: '%', scopes: name(scopeName, RuleName.PercentEnd) },
+            { text: 'var', scopes: name(scopeName, RuleName.Variable) },
+            { text: '%', scopes: name(scopeName, RuleName.PercentEnd) },
             { text: '; comment', scopes: name(scopeName, RuleName.InlineComment) },
           ],
         ],
@@ -164,25 +303,57 @@ export function createDirectiveStatementExpectedData(scopeName: ScopeName): Expe
     })(),
 
     // https://www.autohotkey.com/docs/v1/lib/_HotkeyInterval.htm
-    ...((): ExpectedTestData[] => {
+    ...((directiveName = '#HotkeyInterval'): ExpectedTestData[] => {
       return [
         [
           dedent`
-            #HotkeyInterval 123     ; comment
+            ${directiveName} 123     ; comment
           `,
           [
-            { text: '#HotkeyInterval', scopes: name(scopeName, RuleName.DirectiveName) },
+            { text: directiveName, scopes: name(scopeName, RuleName.DirectiveName) },
             { text: '123', scopes: name(scopeName, RuleName.Integer) },
             { text: '; comment', scopes: name(scopeName, RuleName.InlineComment) },
           ],
         ],
         [
           dedent`
-            #HotkeyInterval invalid     ; comment
+            ${directiveName} invalid     ; comment
           `,
           [
-            { text: '#HotkeyInterval', scopes: name(scopeName, RuleName.DirectiveName) },
+            { text: directiveName, scopes: name(scopeName, RuleName.DirectiveName) },
             { text: 'invalid', scopes: name(scopeName, RuleName.UnquotedString, StyleName.Invalid) },
+            { text: '; comment', scopes: name(scopeName, RuleName.InlineComment) },
+          ],
+        ],
+        [
+          dedent`
+            ${directiveName}, % var                 ; comment
+            ${directiveName}, %var%                 ; comment
+            ${directiveName}, %var%var%var%         ; comment
+          `,
+          [
+            { text: directiveName, scopes: name(scopeName, RuleName.DirectiveName) },
+            { text: ',', scopes: name(scopeName, RuleName.Comma) },
+            { text: '%', scopes: name(scopeName, RuleName.PercentExpressionBegin) },
+            { text: 'var', scopes: name(scopeName, RuleName.Variable) },
+            { text: '; comment', scopes: name(scopeName, RuleName.InlineComment) },
+
+            { text: directiveName, scopes: name(scopeName, RuleName.DirectiveName) },
+            { text: ',', scopes: name(scopeName, RuleName.Comma) },
+            { text: '%', scopes: name(scopeName, RuleName.PercentBegin) },
+            { text: 'var', scopes: name(scopeName, RuleName.Variable) },
+            { text: '%', scopes: name(scopeName, RuleName.PercentEnd) },
+            { text: '; comment', scopes: name(scopeName, RuleName.InlineComment) },
+
+            { text: directiveName, scopes: name(scopeName, RuleName.DirectiveName) },
+            { text: ',', scopes: name(scopeName, RuleName.Comma) },
+            { text: '%', scopes: name(scopeName, RuleName.PercentBegin) },
+            { text: 'var', scopes: name(scopeName, RuleName.Variable) },
+            { text: '%', scopes: name(scopeName, RuleName.PercentBegin) },
+            { text: 'var', scopes: name(scopeName, RuleName.Variable) },
+            { text: '%', scopes: name(scopeName, RuleName.PercentEnd) },
+            { text: 'var', scopes: name(scopeName, RuleName.Variable) },
+            { text: '%', scopes: name(scopeName, RuleName.PercentEnd) },
             { text: '; comment', scopes: name(scopeName, RuleName.InlineComment) },
           ],
         ],
@@ -190,25 +361,57 @@ export function createDirectiveStatementExpectedData(scopeName: ScopeName): Expe
     })(),
 
     // https://www.autohotkey.com/docs/v1/lib/_HotkeyModifierTimeout.htm
-    ...((): ExpectedTestData[] => {
+    ...((directiveName = '#HotkeyModifierTimeout'): ExpectedTestData[] => {
       return [
         [
           dedent`
-            #HotkeyModifierTimeout 123        ; comment
+            ${directiveName} 123        ; comment
           `,
           [
-            { text: '#HotkeyModifierTimeout', scopes: name(scopeName, RuleName.DirectiveName) },
+            { text: directiveName, scopes: name(scopeName, RuleName.DirectiveName) },
             { text: '123', scopes: name(scopeName, RuleName.Integer) },
             { text: '; comment', scopes: name(scopeName, RuleName.InlineComment) },
           ],
         ],
         [
           dedent`
-            #HotkeyModifierTimeout invalid    ; comment
+            ${directiveName} invalid    ; comment
           `,
           [
-            { text: '#HotkeyModifierTimeout', scopes: name(scopeName, RuleName.DirectiveName) },
+            { text: directiveName, scopes: name(scopeName, RuleName.DirectiveName) },
             { text: 'invalid', scopes: name(scopeName, RuleName.UnquotedString, StyleName.Invalid) },
+            { text: '; comment', scopes: name(scopeName, RuleName.InlineComment) },
+          ],
+        ],
+        [
+          dedent`
+            ${directiveName}, % var                 ; comment
+            ${directiveName}, %var%                 ; comment
+            ${directiveName}, %var%var%var%         ; comment
+          `,
+          [
+            { text: directiveName, scopes: name(scopeName, RuleName.DirectiveName) },
+            { text: ',', scopes: name(scopeName, RuleName.Comma) },
+            { text: '%', scopes: name(scopeName, RuleName.PercentExpressionBegin) },
+            { text: 'var', scopes: name(scopeName, RuleName.Variable) },
+            { text: '; comment', scopes: name(scopeName, RuleName.InlineComment) },
+
+            { text: directiveName, scopes: name(scopeName, RuleName.DirectiveName) },
+            { text: ',', scopes: name(scopeName, RuleName.Comma) },
+            { text: '%', scopes: name(scopeName, RuleName.PercentBegin) },
+            { text: 'var', scopes: name(scopeName, RuleName.Variable) },
+            { text: '%', scopes: name(scopeName, RuleName.PercentEnd) },
+            { text: '; comment', scopes: name(scopeName, RuleName.InlineComment) },
+
+            { text: directiveName, scopes: name(scopeName, RuleName.DirectiveName) },
+            { text: ',', scopes: name(scopeName, RuleName.Comma) },
+            { text: '%', scopes: name(scopeName, RuleName.PercentBegin) },
+            { text: 'var', scopes: name(scopeName, RuleName.Variable) },
+            { text: '%', scopes: name(scopeName, RuleName.PercentBegin) },
+            { text: 'var', scopes: name(scopeName, RuleName.Variable) },
+            { text: '%', scopes: name(scopeName, RuleName.PercentEnd) },
+            { text: 'var', scopes: name(scopeName, RuleName.Variable) },
+            { text: '%', scopes: name(scopeName, RuleName.PercentEnd) },
             { text: '; comment', scopes: name(scopeName, RuleName.InlineComment) },
           ],
         ],
@@ -216,23 +419,29 @@ export function createDirectiveStatementExpectedData(scopeName: ScopeName): Expe
     })(),
 
     // https://www.autohotkey.com/docs/v1/lib/_Hotstring.htm
-    ...((): ExpectedTestData[] => {
+    ...((directiveName = '#Hotstring'): ExpectedTestData[] => {
       return [
         [
           dedent`
-            #Hotstring NoMouse              ; comment
-            #Hotstring EndChars ,\`t        ; comment
-            #Hotstring B0 C1                ; comment
+            ${directiveName} NoMouse              ; comment
+            ${directiveName}, NoMouse             ; comment
+            ${directiveName} EndChars ,\`t        ; comment
+            ${directiveName} B0 C1                ; comment
           `,
           [
             ...[
-              { text: '#Hotstring', scopes: name(scopeName, RuleName.DirectiveName) },
+              { text: directiveName, scopes: name(scopeName, RuleName.DirectiveName) },
+              { text: 'NoMouse', scopes: name(scopeName, RuleName.UnquotedString, StyleName.Strong) },
+              { text: '; comment', scopes: name(scopeName, RuleName.InlineComment) },
+
+              { text: directiveName, scopes: name(scopeName, RuleName.DirectiveName) },
+              { text: ',', scopes: name(scopeName, RuleName.Comma) },
               { text: 'NoMouse', scopes: name(scopeName, RuleName.UnquotedString, StyleName.Strong) },
               { text: '; comment', scopes: name(scopeName, RuleName.InlineComment) },
             ],
 
             ...[
-              { text: '#Hotstring', scopes: name(scopeName, RuleName.DirectiveName) },
+              { text: directiveName, scopes: name(scopeName, RuleName.DirectiveName) },
               { text: 'EndChars', scopes: name(scopeName, RuleName.UnquotedString, StyleName.Strong) },
               { text: ',', scopes: name(scopeName, RuleName.UnquotedString) },
               { text: '`t', scopes: name(scopeName, RuleName.UnquotedString, StyleName.Escape) },
@@ -240,11 +449,43 @@ export function createDirectiveStatementExpectedData(scopeName: ScopeName): Expe
             ],
 
             ...[
-              { text: '#Hotstring', scopes: name(scopeName, RuleName.DirectiveName) },
+              { text: directiveName, scopes: name(scopeName, RuleName.DirectiveName) },
               { text: 'B0', scopes: name(scopeName, RuleName.UnquotedString, StyleName.Strong) },
               { text: 'C1', scopes: name(scopeName, RuleName.UnquotedString, StyleName.Strong) },
               { text: '; comment', scopes: name(scopeName, RuleName.InlineComment) },
             ],
+          ],
+        ],
+        [
+          dedent`
+            ${directiveName}, % var                 ; comment
+            ${directiveName}, %var%                 ; comment
+            ${directiveName}, %var%var%var%         ; comment
+          `,
+          [
+            { text: directiveName, scopes: name(scopeName, RuleName.DirectiveName) },
+            { text: ',', scopes: name(scopeName, RuleName.Comma) },
+            { text: '%', scopes: name(scopeName, RuleName.PercentExpressionBegin) },
+            { text: 'var', scopes: name(scopeName, RuleName.Variable) },
+            { text: '; comment', scopes: name(scopeName, RuleName.InlineComment) },
+
+            { text: directiveName, scopes: name(scopeName, RuleName.DirectiveName) },
+            { text: ',', scopes: name(scopeName, RuleName.Comma) },
+            { text: '%', scopes: name(scopeName, RuleName.PercentBegin) },
+            { text: 'var', scopes: name(scopeName, RuleName.Variable) },
+            { text: '%', scopes: name(scopeName, RuleName.PercentEnd) },
+            { text: '; comment', scopes: name(scopeName, RuleName.InlineComment) },
+
+            { text: directiveName, scopes: name(scopeName, RuleName.DirectiveName) },
+            { text: ',', scopes: name(scopeName, RuleName.Comma) },
+            { text: '%', scopes: name(scopeName, RuleName.PercentBegin) },
+            { text: 'var', scopes: name(scopeName, RuleName.Variable) },
+            { text: '%', scopes: name(scopeName, RuleName.PercentBegin) },
+            { text: 'var', scopes: name(scopeName, RuleName.Variable) },
+            { text: '%', scopes: name(scopeName, RuleName.PercentEnd) },
+            { text: 'var', scopes: name(scopeName, RuleName.Variable) },
+            { text: '%', scopes: name(scopeName, RuleName.PercentEnd) },
+            { text: '; comment', scopes: name(scopeName, RuleName.InlineComment) },
           ],
         ],
       ];
@@ -272,16 +513,55 @@ export function createDirectiveStatementExpectedData(scopeName: ScopeName): Expe
     })(),
 
     // https://www.autohotkey.com/docs/v1/lib/_IfWinActive.htm
-    ...[ '#IfWinActive', '#IfWinExist', '#IfWinNotActive', '#IfWinNotExist' ].flatMap((directive): ExpectedTestData[] => {
+    ...[ '#IfWinActive', '#IfWinExist', '#IfWinNotActive', '#IfWinNotExist' ].flatMap((directiveName): ExpectedTestData[] => {
       return [
         [
           dedent`
-            ${directive} ahk_exe Code.exe           ; comment
+            ${directiveName} ahk_exe Code.exe           ; comment
+            ${directiveName}, ahk_exe Code.exe           ; comment
           `,
           [
-            { text: directive, scopes: name(scopeName, RuleName.DirectiveName) },
+            { text: directiveName, scopes: name(scopeName, RuleName.DirectiveName) },
             { text: 'ahk_exe', scopes: name(scopeName, RuleName.UnquotedString, StyleName.Strong) },
             { text: 'Code.exe', scopes: name(scopeName, RuleName.UnquotedString) },
+            { text: '; comment', scopes: name(scopeName, RuleName.InlineComment) },
+
+            { text: directiveName, scopes: name(scopeName, RuleName.DirectiveName) },
+            { text: ',', scopes: name(scopeName, RuleName.Comma) },
+            { text: 'ahk_exe', scopes: name(scopeName, RuleName.UnquotedString, StyleName.Strong) },
+            { text: 'Code.exe', scopes: name(scopeName, RuleName.UnquotedString) },
+            { text: '; comment', scopes: name(scopeName, RuleName.InlineComment) },
+          ],
+        ],
+        [
+          dedent`
+            ${directiveName}, % var                 ; comment
+            ${directiveName}, %var%                 ; comment
+            ${directiveName}, %var%var%var%         ; comment
+          `,
+          [
+            { text: directiveName, scopes: name(scopeName, RuleName.DirectiveName) },
+            { text: ',', scopes: name(scopeName, RuleName.Comma) },
+            { text: '%', scopes: name(scopeName, RuleName.PercentExpressionBegin) },
+            { text: 'var', scopes: name(scopeName, RuleName.Variable) },
+            { text: '; comment', scopes: name(scopeName, RuleName.InlineComment) },
+
+            { text: directiveName, scopes: name(scopeName, RuleName.DirectiveName) },
+            { text: ',', scopes: name(scopeName, RuleName.Comma) },
+            { text: '%', scopes: name(scopeName, RuleName.PercentBegin) },
+            { text: 'var', scopes: name(scopeName, RuleName.Variable) },
+            { text: '%', scopes: name(scopeName, RuleName.PercentEnd) },
+            { text: '; comment', scopes: name(scopeName, RuleName.InlineComment) },
+
+            { text: directiveName, scopes: name(scopeName, RuleName.DirectiveName) },
+            { text: ',', scopes: name(scopeName, RuleName.Comma) },
+            { text: '%', scopes: name(scopeName, RuleName.PercentBegin) },
+            { text: 'var', scopes: name(scopeName, RuleName.Variable) },
+            { text: '%', scopes: name(scopeName, RuleName.PercentBegin) },
+            { text: 'var', scopes: name(scopeName, RuleName.Variable) },
+            { text: '%', scopes: name(scopeName, RuleName.PercentEnd) },
+            { text: 'var', scopes: name(scopeName, RuleName.Variable) },
+            { text: '%', scopes: name(scopeName, RuleName.PercentEnd) },
             { text: '; comment', scopes: name(scopeName, RuleName.InlineComment) },
           ],
         ],
@@ -383,6 +663,38 @@ export function createDirectiveStatementExpectedData(scopeName: ScopeName): Expe
             { text: '; comment', scopes: name(scopeName, RuleName.InlineComment) },
           ],
         ],
+        [
+          dedent`
+            ${directiveName}, % var                 ; comment
+            ${directiveName}, %var%                 ; comment
+            ${directiveName}, %var%var%var%         ; comment
+          `,
+          [
+            { text: directiveName, scopes: name(scopeName, RuleName.DirectiveName) },
+            { text: ',', scopes: name(scopeName, RuleName.Comma) },
+            { text: '%', scopes: name(scopeName, RuleName.PercentExpressionBegin) },
+            { text: 'var', scopes: name(scopeName, RuleName.Variable) },
+            { text: '; comment', scopes: name(scopeName, RuleName.InlineComment) },
+
+            { text: directiveName, scopes: name(scopeName, RuleName.DirectiveName) },
+            { text: ',', scopes: name(scopeName, RuleName.Comma) },
+            { text: '%', scopes: name(scopeName, RuleName.PercentBegin) },
+            { text: 'var', scopes: name(scopeName, RuleName.Variable) },
+            { text: '%', scopes: name(scopeName, RuleName.PercentEnd) },
+            { text: '; comment', scopes: name(scopeName, RuleName.InlineComment) },
+
+            { text: directiveName, scopes: name(scopeName, RuleName.DirectiveName) },
+            { text: ',', scopes: name(scopeName, RuleName.Comma) },
+            { text: '%', scopes: name(scopeName, RuleName.PercentBegin) },
+            { text: 'var', scopes: name(scopeName, RuleName.Variable) },
+            { text: '%', scopes: name(scopeName, RuleName.PercentBegin) },
+            { text: 'var', scopes: name(scopeName, RuleName.Variable) },
+            { text: '%', scopes: name(scopeName, RuleName.PercentEnd) },
+            { text: 'var', scopes: name(scopeName, RuleName.Variable) },
+            { text: '%', scopes: name(scopeName, RuleName.PercentEnd) },
+            { text: '; comment', scopes: name(scopeName, RuleName.InlineComment) },
+          ],
+        ],
       ];
     })(),
 
@@ -407,8 +719,9 @@ export function createDirectiveStatementExpectedData(scopeName: ScopeName): Expe
         ],
         [
           dedent`
-            ${directiveName}, % var         ; comment
-            ${directiveName}, %var%         ; comment
+            ${directiveName}, % var               ; comment
+            ${directiveName}, %var%               ; comment
+            ${directiveName}, %var%var%var%       ; comment
           `,
           [
             { text: directiveName, scopes: name(scopeName, RuleName.DirectiveName) },
@@ -421,10 +734,16 @@ export function createDirectiveStatementExpectedData(scopeName: ScopeName): Expe
             { text: ',', scopes: name(scopeName, RuleName.Comma) },
             { text: '%var%', scopes: name(scopeName, RuleName.UnquotedString, StyleName.Invalid) },
             { text: '; comment', scopes: name(scopeName, RuleName.InlineComment) },
+
+            { text: directiveName, scopes: name(scopeName, RuleName.DirectiveName) },
+            { text: ',', scopes: name(scopeName, RuleName.Comma) },
+            { text: '%var%var%var%', scopes: name(scopeName, RuleName.UnquotedString, StyleName.Invalid) },
+            { text: '; comment', scopes: name(scopeName, RuleName.InlineComment) },
           ],
         ],
       ];
     })(),
+
     // https://www.autohotkey.com/docs/v1/lib/_Requires.htm
     ...((): ExpectedTestData[] => {
       return [
