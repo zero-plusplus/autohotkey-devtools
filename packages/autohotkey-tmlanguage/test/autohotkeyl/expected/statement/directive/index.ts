@@ -1,14 +1,14 @@
 import { dedent, hasFlag } from '@zero-plusplus/utilities/src';
-import * as definitions_v2 from '../../../../src/autohotkeyl/definitions';
-import { CommandFlag } from '../../../../src/definition';
+import * as definitions_v2 from '../../../../../src/autohotkeyl/definitions';
+import { CommandFlag } from '../../../../../src/definition';
 import {
   name,
   RuleDescriptor,
   RuleName,
   StyleName,
   type ScopeName,
-} from '../../../../src/tmlanguage';
-import type { ExpectedTestData } from '../../../types';
+} from '../../../../../src/tmlanguage';
+import type { ExpectedTestData } from '../../../../types';
 
 export function createDirectiveStatementExpectedData(scopeName: ScopeName): ExpectedTestData[] {
   return [
