@@ -5,8 +5,8 @@ import {
   RuleName,
   StyleName,
   type ScopeName,
-} from '../../../../src/tmlanguage';
-import type { ExpectedTestData } from '../../../types';
+} from '../../../../../src/tmlanguage';
+import type { ExpectedTestData } from '../../../../types';
 
 export function createDirectiveStatementExpectedData(scopeName: ScopeName): ExpectedTestData[] {
   return [
