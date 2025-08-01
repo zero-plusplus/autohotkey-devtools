@@ -779,7 +779,7 @@ export function $quotableEncoding(flags: CommandParameterFlag = CommandParameter
   return $([ quotableKeywordOption('CP0', 'UTF-8', 'UTF-8-RAW', 'UTF-16', 'UTF-16-RAW'), quotableNumberOption('CP') ], flags);
 }
 export function $keyName(flags: CommandParameterFlag = CommandParameterFlag.None): CommandParameter {
-  return $([ keywordOption(...constants_common.keyNameList), hexOption('sc', 'vk') ], flags);
+  return $shouldKeyword([ keywordOption(...constants_common.keyNameList), hexOption('sc', 'vk') ], flags);
 }
 export function $hotkeyName(flags: CommandParameterFlag = CommandParameterFlag.None): CommandParameter {
   return $([ includeRule(Repository.HotkeyName) ], flags);
