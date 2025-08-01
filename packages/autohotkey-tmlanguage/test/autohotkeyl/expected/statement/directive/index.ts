@@ -9,6 +9,7 @@ import {
   type ScopeName,
 } from '../../../../../src/tmlanguage';
 import type { ExpectedTestData } from '../../../../types';
+import { createAllowSameLineCommentsExpectedDataList } from './#AllowSameLineComments';
 
 export function createDirectiveStatementExpectedData(scopeName: ScopeName): ExpectedTestData[] {
   return [
@@ -56,22 +57,7 @@ export function createDirectiveStatementExpectedData(scopeName: ScopeName): Expe
     }),
 
     // #region commands
-    // https://www.autohotkey.com/docs/v1/lib/_AllowSameLineComments.htm
-    ...((): ExpectedTestData[] => {
-      return [
-        [
-          dedent`
-            #AllowSameLineComments, invalid       ; comment
-          `,
-          [
-            { text: '#AllowSameLineComments', scopes: name(scopeName, RuleName.DirectiveName, StyleName.Invalid, StyleName.Strikethrough) },
-            { text: ',', scopes: name(scopeName, RuleName.Comma) },
-            { text: 'invalid', scopes: name(scopeName, RuleName.UnquotedString, StyleName.Invalid) },
-            { text: '; comment', scopes: name(scopeName, RuleName.InlineComment) },
-          ],
-        ],
-      ];
-    })(),
+    ...createAllowSameLineCommentsExpectedDataList(scopeName),
 
     // https://www.autohotkey.com/docs/v1/lib/_ClipboardTimeout.htm
     ...((directiveName = '#ClipboardTimeout'): ExpectedTestData[] => {
