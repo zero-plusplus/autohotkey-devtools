@@ -18,5 +18,29 @@ export function createAllowSameLineCommentsExpectedDataList(scopeName: ScopeName
         { text: '; comment', scopes: name(scopeName, RuleName.InlineComment) },
       ],
     ],
+    [
+      dedent`
+        ${directiveName}, % var               ; comment
+        ${directiveName}, %var%               ; comment
+        ${directiveName}, %var%var%var%       ; comment
+      `,
+      [
+        { text: directiveName, scopes: name(scopeName, RuleName.DirectiveName, StyleName.Invalid, StyleName.Strikethrough) },
+        { text: ',', scopes: name(scopeName, RuleName.Comma) },
+        { text: '%', scopes: name(scopeName, RuleName.UnquotedString, StyleName.Invalid) },
+        { text: 'var', scopes: name(scopeName, RuleName.UnquotedString, StyleName.Invalid) },
+        { text: '; comment', scopes: name(scopeName, RuleName.InlineComment) },
+
+        { text: directiveName, scopes: name(scopeName, RuleName.DirectiveName, StyleName.Invalid, StyleName.Strikethrough) },
+        { text: ',', scopes: name(scopeName, RuleName.Comma) },
+        { text: '%var%', scopes: name(scopeName, RuleName.UnquotedString, StyleName.Invalid) },
+        { text: '; comment', scopes: name(scopeName, RuleName.InlineComment) },
+
+        { text: directiveName, scopes: name(scopeName, RuleName.DirectiveName, StyleName.Invalid, StyleName.Strikethrough) },
+        { text: ',', scopes: name(scopeName, RuleName.Comma) },
+        { text: '%var%var%var%', scopes: name(scopeName, RuleName.UnquotedString, StyleName.Invalid) },
+        { text: '; comment', scopes: name(scopeName, RuleName.InlineComment) },
+      ],
+    ],
   ];
 }
