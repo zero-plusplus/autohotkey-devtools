@@ -1,5 +1,6 @@
-import { dedent } from '@zero-plusplus/utilities/src';
-import { directiveDefinitions } from '../../../../src/autohotkeyl/definitions';
+import { dedent, hasFlag } from '@zero-plusplus/utilities/src';
+import * as definitions_v2 from '../../../../src/autohotkeyl/definitions';
+import { CommandFlag } from '../../../../src/definition';
 import {
   name,
   RuleDescriptor,
@@ -7,15 +8,54 @@ import {
   StyleName,
   type ScopeName,
 } from '../../../../src/tmlanguage';
-import * as common from '../../../common';
 import type { ExpectedTestData } from '../../../types';
 
 export function createDirectiveStatementExpectedData(scopeName: ScopeName): ExpectedTestData[] {
   return [
-    ...common.createDirectiveStatementExpectedData(scopeName, {
-      directiveDefinitions,
+    ...definitions_v2.directiveDefinitions.flatMap((definition): ExpectedTestData[] => {
+      const directiveScopes = ((): string => {
+        if (hasFlag(definition.flags, CommandFlag.Removed)) {
+          return name(scopeName, RuleName.DirectiveName, StyleName.Invalid, StyleName.Strikethrough);
+        }
+        if (hasFlag(definition.flags, CommandFlag.Deprecated)) {
+          return name(scopeName, RuleName.DirectiveName, StyleName.Strikethrough);
+        }
+        return name(scopeName, RuleName.DirectiveName);
+      })();
+      return [
+        [
+          dedent`
+            ${definition.name}      ; comment
+            ${definition.name},     ; comment
+          `,
+          [
+            { text: definition.name, scopes: directiveScopes },
+            { text: '; comment', scopes: name(scopeName, RuleName.InlineComment) },
+
+            { text: definition.name, scopes: directiveScopes },
+            { text: ',', scopes: name(scopeName, RuleName.Comma) },
+            { text: '; comment', scopes: name(scopeName, RuleName.InlineComment) },
+          ],
+        ],
+
+        // continuation
+        [
+          dedent`
+            ${definition.name}      ; comment
+              , invalid             ; comment
+          `,
+          [
+            { text: definition.name, scopes: directiveScopes },
+            { text: '; comment', scopes: name(scopeName, RuleName.InlineComment) },
+
+            { text: ', invalid', scopes: name(scopeName, RuleName.UnquotedString, StyleName.Invalid) },
+            { text: '; comment', scopes: name(scopeName, RuleName.InlineComment) },
+          ],
+        ],
+      ];
     }),
 
+    // #region commands
     // https://www.autohotkey.com/docs/v1/lib/_AllowSameLineComments.htm
     ...((): ExpectedTestData[] => {
       return [
@@ -389,6 +429,94 @@ export function createDirectiveStatementExpectedData(scopeName: ScopeName): Expe
       ];
     }),
 
+    // https://www.autohotkey.com/docs/v1/lib/_Include.htm
+    ...[ '#Include', '#IncludeAgain' ].flatMap((directive): ExpectedTestData[] => {
+      return [
+        [
+          dedent`
+            ${directive} <LIBRARY>      ; comment
+          `,
+          [
+            { text: directive, scopes: name(scopeName, RuleName.DirectiveName) },
+            { text: '<', scopes: name(scopeName, RuleName.OpenAngleBracket) },
+            { text: 'LIBRARY', scopes: name(scopeName, RuleName.IncludeLibrary) },
+            { text: '>', scopes: name(scopeName, RuleName.CloseAngleBracket) },
+            { text: '; comment', scopes: name(scopeName, RuleName.InlineComment) },
+          ],
+        ],
+        [
+          dedent`
+            ${directive} path\\to\\, file .ahk      ; comment
+          `,
+          [
+            { text: directive, scopes: name(scopeName, RuleName.DirectiveName) },
+            { text: 'path\\to\\,', scopes: name(scopeName, RuleName.UnquotedString) },
+            { text: 'file', scopes: name(scopeName, RuleName.UnquotedString) },
+            { text: '.ahk', scopes: name(scopeName, RuleName.UnquotedString) },
+            { text: '; comment', scopes: name(scopeName, RuleName.InlineComment) },
+          ],
+        ],
+        [
+          dedent`
+            ${directive} .\\path\\to\\, file .ahk       ; comment
+          `,
+          [
+            { text: directive, scopes: name(scopeName, RuleName.DirectiveName) },
+            { text: '.\\path\\to\\,', scopes: name(scopeName, RuleName.UnquotedString) },
+            { text: 'file', scopes: name(scopeName, RuleName.UnquotedString) },
+            { text: '.ahk', scopes: name(scopeName, RuleName.UnquotedString) },
+            { text: '; comment', scopes: name(scopeName, RuleName.InlineComment) },
+          ],
+        ],
+        [
+          dedent`
+            ${directive} %A_LineFile%\\..\\file.ahk     ; comment
+          `,
+          [
+            { text: directive, scopes: name(scopeName, RuleName.DirectiveName) },
+            { text: '%', scopes: name(scopeName, RuleName.PercentBegin) },
+            { text: 'A_LineFile', scopes: name(scopeName, RuleName.BuiltInVariable) },
+            { text: '%', scopes: name(scopeName, RuleName.PercentEnd) },
+            { text: '\\..\\file.ahk', scopes: name(scopeName, RuleName.UnquotedString) },
+            { text: '; comment', scopes: name(scopeName, RuleName.InlineComment) },
+          ],
+        ],
+      ];
+    }),
+
+    // https://www.autohotkey.com/docs/v1/lib/_Requires.htm
+    ...((): ExpectedTestData[] => {
+      return [
+        [
+          dedent`
+            #Requires                         ; comment
+            #Requires AutoHotkey v2.1         ; comment
+          `,
+          [
+            { text: '#Requires', scopes: name(scopeName, RuleName.DirectiveName) },
+            { text: '; comment', scopes: name(scopeName, RuleName.InlineComment) },
+
+            { text: '#Requires', scopes: name(scopeName, RuleName.DirectiveName) },
+            { text: 'AutoHotkey', scopes: name(scopeName, RuleName.UnquotedString, StyleName.Strong) },
+            { text: 'v2.1', scopes: name(scopeName, RuleName.UnquotedString, StyleName.Strong) },
+            { text: '; comment', scopes: name(scopeName, RuleName.InlineComment) },
+          ],
+        ],
+        [
+          dedent`
+            #Requires AutoHotkey v2.1 64-bit         ; comment
+          `,
+          [
+            { text: '#Requires', scopes: name(scopeName, RuleName.DirectiveName) },
+            { text: 'AutoHotkey', scopes: name(scopeName, RuleName.UnquotedString, StyleName.Strong) },
+            { text: 'v2.1', scopes: name(scopeName, RuleName.UnquotedString, StyleName.Strong) },
+            { text: '64-bit', scopes: name(scopeName, RuleName.UnquotedString, StyleName.Strong) },
+            { text: '; comment', scopes: name(scopeName, RuleName.InlineComment) },
+          ],
+        ],
+      ];
+    })(),
+    // #endregion commands
 
     ...((): ExpectedTestData[] => {
       return [
