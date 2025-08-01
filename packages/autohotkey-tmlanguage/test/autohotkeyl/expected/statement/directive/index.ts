@@ -12,6 +12,7 @@ import type { ExpectedTestData } from '../../../../types';
 import { createAllowSameLineCommentsExpectedDataList } from './#AllowSameLineComments';
 import { createClipboardTimeoutExpectedDataList } from './#ClipboardTimeout';
 import { createCommentFlagExpectedDataList } from './#CommentFlag';
+import { createErrorStdOutExpectedDataList } from './#ErrorStdOut';
 
 export function createDirectiveStatementExpectedData(scopeName: ScopeName): ExpectedTestData[] {
   return [
@@ -62,74 +63,7 @@ export function createDirectiveStatementExpectedData(scopeName: ScopeName): Expe
     ...createAllowSameLineCommentsExpectedDataList(scopeName),
     ...createClipboardTimeoutExpectedDataList(scopeName),
     ...createCommentFlagExpectedDataList(scopeName),
-
-    // https://www.autohotkey.com/docs/v1/lib/_ErrorStdOut.htm
-    ...((directiveName = '#ErrorStdOut'): ExpectedTestData[] => {
-      return [
-        [
-          dedent`
-            ${directiveName} x          ; comment
-            ${directiveName}, x         ; comment
-          `,
-          [
-            { text: directiveName, scopes: name(scopeName, RuleName.DirectiveName) },
-            { text: 'x', scopes: name(scopeName, RuleName.UnquotedString) },
-            { text: '; comment', scopes: name(scopeName, RuleName.InlineComment) },
-
-            { text: directiveName, scopes: name(scopeName, RuleName.DirectiveName) },
-            { text: ',', scopes: name(scopeName, RuleName.Comma) },
-            { text: 'x', scopes: name(scopeName, RuleName.UnquotedString) },
-            { text: '; comment', scopes: name(scopeName, RuleName.InlineComment) },
-          ],
-        ],
-        ...[ 'UTF-8', 'CP65001' ].flatMap((param): ExpectedTestData[] => {
-          return [
-            [
-              dedent`
-                ${directiveName} ${param}        ; comment
-              `,
-              [
-                { text: directiveName, scopes: name(scopeName, RuleName.DirectiveName) },
-                { text: param, scopes: name(scopeName, RuleName.UnquotedString, StyleName.Strong) },
-                { text: '; comment', scopes: name(scopeName, RuleName.InlineComment) },
-              ],
-            ],
-          ];
-        }),
-        [
-          dedent`
-            ${directiveName}, % var                 ; comment
-            ${directiveName}, %var%                 ; comment
-            ${directiveName}, %var%var%var%         ; comment
-          `,
-          [
-            { text: directiveName, scopes: name(scopeName, RuleName.DirectiveName) },
-            { text: ',', scopes: name(scopeName, RuleName.Comma) },
-            { text: '%', scopes: name(scopeName, RuleName.PercentExpressionBegin) },
-            { text: 'var', scopes: name(scopeName, RuleName.Variable) },
-            { text: '; comment', scopes: name(scopeName, RuleName.InlineComment) },
-
-            { text: directiveName, scopes: name(scopeName, RuleName.DirectiveName) },
-            { text: ',', scopes: name(scopeName, RuleName.Comma) },
-            { text: '%', scopes: name(scopeName, RuleName.PercentBegin) },
-            { text: 'var', scopes: name(scopeName, RuleName.Variable) },
-            { text: '%', scopes: name(scopeName, RuleName.PercentEnd) },
-            { text: '; comment', scopes: name(scopeName, RuleName.InlineComment) },
-
-            { text: directiveName, scopes: name(scopeName, RuleName.DirectiveName) },
-            { text: ',', scopes: name(scopeName, RuleName.Comma) },
-            { text: '%', scopes: name(scopeName, RuleName.PercentBegin) },
-            { text: 'var', scopes: name(scopeName, RuleName.Variable) },
-            { text: '%', scopes: name(scopeName, RuleName.PercentBegin) },
-            { text: 'var', scopes: name(scopeName, RuleName.Variable) },
-            { text: '%', scopes: name(scopeName, RuleName.PercentEnd) },
-            { text: 'var', scopes: name(scopeName, RuleName.Variable) },
-            { text: '%', scopes: name(scopeName, RuleName.PercentEnd) },
-            { text: '; comment', scopes: name(scopeName, RuleName.InlineComment) },
-          ],
-        ],
-      ];
-    })(),
+    ...createErrorStdOutExpectedDataList(scopeName),
 
     // https://www.autohotkey.com/docs/v1/lib/_EscapeChar.htm
     ...((directiveName = '#EscapeChar'): ExpectedTestData[] => {
