@@ -3,7 +3,7 @@ import {
   hasFlag,
   repeatArray,
 } from '@zero-plusplus/utilities/src';
-import * as definitions_v1 from '../../../../src/autohotkeyl/definitions';
+import * as definitions_v1 from '../../../../../src/autohotkeyl/definitions';
 import {
   $,
   $blank,
@@ -22,18 +22,18 @@ import {
   $shouldKeyword,
   $winTitle,
   CommandFlag,
-} from '../../../../src/definition';
+} from '../../../../../src/definition';
 import {
   name,
   RuleDescriptor,
   RuleName,
   StyleName,
   type ScopeName,
-} from '../../../../src/tmlanguage';
+} from '../../../../../src/tmlanguage';
 import type {
   ExpectedTestData,
   ParsedResult,
-} from '../../../types';
+} from '../../../../types';
 
 export function createCommandStatementExpectedData(scopeName: ScopeName): ExpectedTestData[] {
   return [
