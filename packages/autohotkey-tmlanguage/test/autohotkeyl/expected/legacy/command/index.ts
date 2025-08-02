@@ -31,7 +31,6 @@ import {
 } from '../../../../../src/tmlanguage';
 import type {
   ExpectedTestData,
-  ParsedResult,
 } from '../../../../types';
 import { createAutoTrimExpectedDataList } from './AutoTrim';
 import { createBlockInputExpectedDataList } from './BlockInput';
@@ -175,84 +174,6 @@ export function createCommandStatementExpectedData(scopeName: ScopeName): Expect
     // signatures
     ...((): ExpectedTestData[] => {
       return [
-        // https://www.autohotkey.com/docs/v1/lib/Control.htm
-        [
-          dedent`
-            Control, Check, blank, control-id             ; comment
-            Control, UnCheck, blank, control-id           ; comment
-            Control, Enable, blank, control-id            ; comment
-            Control, Disable, blank, control-id           ; comment
-            Control, Show, blank, control-id              ; comment
-            Control, Hide, blank, control-id              ; comment
-            Control, ShowDropDown, blank, control-id      ; comment
-            Control, HideDropDown, blank, control-id      ; comment
-
-            Control, Style, +0x123, control-id            ; comment
-            Control, ExStyle, +0x123, control-id          ; comment
-
-            Control, TabLeft, unquoted, control-id        ; comment
-            Control, TabRight, unquoted, control-id       ; comment
-            Control, Add, unquoted, control-id            ; comment
-            Control, Delete, unquoted, control-id         ; comment
-            Control, Choose, unquoted, control-id         ; comment
-            Control, ChooseString, unquoted, control-id   ; comment
-            Control, EditPaste, unquoted, control-id      ; comment
-
-            Control, unquoted, blank, control-id          ; comment
-          `,
-          [
-            ...[ 'Check', 'UnCheck', 'Enable', 'Disable', 'Show', 'Hide', 'ShowDropDown', 'HideDropDown' ].flatMap((subcommand): ParsedResult[] => {
-              return [
-                { text: 'Control', scopes: name(scopeName, RuleName.CommandName) },
-                { text: ',', scopes: name(scopeName, RuleName.Comma) },
-                { text: subcommand, scopes: name(scopeName, RuleName.SubCommandName) },
-                { text: ',', scopes: name(scopeName, RuleName.Comma) },
-                { text: 'blank', scopes: name(scopeName, RuleName.UnquotedString, StyleName.Invalid) },
-                { text: ',', scopes: name(scopeName, RuleName.Comma) },
-                { text: 'control-id', scopes: name(scopeName, RuleName.UnquotedString) },
-                { text: '; comment', scopes: name(scopeName, RuleName.InlineComment) },
-              ];
-            }),
-
-            ...[ 'Style', 'ExStyle' ].flatMap((subcommand) => {
-              return [
-                { text: 'Control', scopes: name(scopeName, RuleName.CommandName) },
-                { text: ',', scopes: name(scopeName, RuleName.Comma) },
-                { text: subcommand, scopes: name(scopeName, RuleName.SubCommandName) },
-                { text: ',', scopes: name(scopeName, RuleName.Comma) },
-                { text: '+', scopes: name(scopeName, RuleName.Operator) },
-                { text: '0x', scopes: name(scopeName, RuleName.Hex, RuleName.HexPrefix) },
-                { text: '123', scopes: name(scopeName, RuleName.Hex, RuleName.HexValue) },
-                { text: ',', scopes: name(scopeName, RuleName.Comma) },
-                { text: 'control-id', scopes: name(scopeName, RuleName.UnquotedString) },
-                { text: '; comment', scopes: name(scopeName, RuleName.InlineComment) },
-              ];
-            }),
-
-            ...[ 'TabLeft', 'TabRight', 'Add', 'Delete', 'Choose', 'ChooseString', 'EditPaste' ].flatMap((subcommand) => {
-              return [
-                { text: 'Control', scopes: name(scopeName, RuleName.CommandName) },
-                { text: ',', scopes: name(scopeName, RuleName.Comma) },
-                { text: subcommand, scopes: name(scopeName, RuleName.SubCommandName) },
-                { text: ',', scopes: name(scopeName, RuleName.Comma) },
-                { text: 'unquoted', scopes: name(scopeName, RuleName.UnquotedString) },
-                { text: ',', scopes: name(scopeName, RuleName.Comma) },
-                { text: 'control-id', scopes: name(scopeName, RuleName.UnquotedString) },
-                { text: '; comment', scopes: name(scopeName, RuleName.InlineComment) },
-              ];
-            }),
-
-            { text: 'Control', scopes: name(scopeName, RuleName.CommandName) },
-            { text: ',', scopes: name(scopeName, RuleName.Comma) },
-            { text: 'unquoted', scopes: name(scopeName, RuleName.UnquotedString, StyleName.Invalid) },
-            { text: ',', scopes: name(scopeName, RuleName.UnquotedString, StyleName.Invalid) },
-            { text: 'blank', scopes: name(scopeName, RuleName.UnquotedString, StyleName.Invalid) },
-            { text: ',', scopes: name(scopeName, RuleName.UnquotedString, StyleName.Invalid) },
-            { text: 'control-id', scopes: name(scopeName, RuleName.UnquotedString, StyleName.Invalid) },
-            { text: '; comment', scopes: name(scopeName, RuleName.InlineComment) },
-          ],
-        ],
-
         // https://www.autohotkey.com/docs/v1/lib/ControlGet.htm
         [
           dedent`

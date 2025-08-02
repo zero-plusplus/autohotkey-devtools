@@ -213,7 +213,8 @@ export const commandDefinitions: CommandDefinition[] = [
     [
       signature([ $subcommand([ 'Check', 'UnCheck', 'Enable', 'Disable', 'Show', 'Hide', 'ShowDropDown', 'HideDropDown' ]), $blank(), $control(), ...$winParams ]),
       signature([ $subcommand([ 'Style', 'ExStyle' ]), $style(), $control(), ...$winParams ]),
-      signature([ $subcommand([ 'TabLeft', 'TabRight', 'Add', 'Delete', 'Choose', 'ChooseString', 'EditPaste' ]), $(), $control(), ...$winParams ]),
+      signature([ $subcommand([ 'TabLeft', 'TabRight', 'Delete', 'Choose' ]), $shouldInteger(), $control(), ...$winParams ]),
+      signature([ $subcommand([ 'Add', 'ChooseString', 'EditPaste' ]), $(), $control(), ...$winParams ]),
       signature($parameterless),
     ],
   ),
