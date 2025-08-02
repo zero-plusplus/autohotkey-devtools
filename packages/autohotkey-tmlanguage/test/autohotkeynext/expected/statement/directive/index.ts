@@ -3,9 +3,9 @@ import {
   name,
   RuleName,
   type ScopeName,
-} from '../../../../src/tmlanguage';
-import * as expected_v2 from '../../../autohotkey2/expected/statement/directive';
-import type { ExpectedTestData } from '../../../types';
+} from '../../../../../src/tmlanguage';
+import * as expected_v2 from '../../../../autohotkey2/expected/statement/directive';
+import type { ExpectedTestData } from '../../../../types';
 
 export function createDirectiveStatementExpectedData(scopeName: ScopeName): ExpectedTestData[] {
   return [
