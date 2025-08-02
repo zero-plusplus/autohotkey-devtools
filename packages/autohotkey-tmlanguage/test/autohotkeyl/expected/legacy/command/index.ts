@@ -14,7 +14,6 @@ import {
   $guiControlOptions,
   $guiOptions,
   $input,
-  $onOff,
   $output,
   $rest,
   $sendKeyName,
@@ -35,6 +34,7 @@ import type {
   ParsedResult,
 } from '../../../../types';
 import { createAutoTrimExpectedDataList } from './AutoTrim';
+import { createBlockInputExpectedDataList } from './BlockInput';
 
 export function createCommandStatementExpectedData(scopeName: ScopeName): ExpectedTestData[] {
   return [
@@ -83,6 +83,7 @@ export function createCommandStatementExpectedData(scopeName: ScopeName): Expect
 
     // #region commands
     ...createAutoTrimExpectedDataList(scopeName),
+    ...createBlockInputExpectedDataList(scopeName),
 
     // https://www.autohotkey.com/docs/v1/lib/SetTimer.htm
     ...((): ExpectedTestData[] => {
@@ -1427,128 +1428,6 @@ export function createCommandStatementExpectedData(scopeName: ScopeName): Expect
             { text: ',', scopes: name(scopeName, RuleName.Comma) },
             { text: '%', scopes: name(scopeName, RuleName.UnquotedString, StyleName.Invalid) },
             { text: 'blank', scopes: name(scopeName, RuleName.UnquotedString, StyleName.Invalid) },
-            { text: '; comment', scopes: name(scopeName, RuleName.InlineComment) },
-          ],
-        ],
-      ];
-    })(),
-
-    ...((_ = $onOff): ExpectedTestData[] => {
-      return [
-        [
-          dedent`
-            AutoTrim, on                  ; comment
-            AutoTrim, ON                  ; comment
-            AutoTrim, off                 ; comment
-            AutoTrim, OFF                 ; comment
-            AutoTrim, 1                   ; comment
-            AutoTrim, 0                   ; comment
-
-            AutoTrim, % on                ; comment
-            AutoTrim, %o%%f%%f%           ; comment
-            AutoTrim, on,                 ; comment
-
-            BlockInput, Send              ; comment
-            BlockInput, Mouse             ; comment
-            BlockInput, SendAndMouse      ; comment
-            BlockInput, Default           ; comment
-            BlockInput, MouseMove         ; comment
-            BlockInput, MouseMoveOff      ; comment
-            BlockInput, on                ; comment
-            BlockInput, ON                ; comment
-            BlockInput, off               ; comment
-            BlockInput, OFF               ; comment
-            BlockInput, 1                 ; comment
-            BlockInput, 0                 ; comment
-
-            BlockInput, % on              ; comment
-            BlockInput, %o%%f%%f%         ; comment
-            BlockInput, on,               ; comment
-          `,
-          [
-            ...[ 'on', 'ON', 'off', 'OFF', '1', '0' ].flatMap((arg) => {
-              return [
-                { text: 'AutoTrim', scopes: name(scopeName, RuleName.CommandName) },
-                { text: ',', scopes: name(scopeName, RuleName.Comma) },
-                { text: arg, scopes: name(scopeName, RuleName.UnquotedString, StyleName.Strong) },
-                { text: '; comment', scopes: name(scopeName, RuleName.InlineComment) },
-              ];
-            }),
-
-            { text: 'AutoTrim', scopes: name(scopeName, RuleName.CommandName) },
-            { text: ',', scopes: name(scopeName, RuleName.Comma) },
-            { text: '%', scopes: name(scopeName, RuleName.PercentExpressionBegin) },
-            { text: 'on', scopes: name(scopeName, RuleName.Variable) },
-            { text: '; comment', scopes: name(scopeName, RuleName.InlineComment) },
-
-            { text: 'AutoTrim', scopes: name(scopeName, RuleName.CommandName) },
-            { text: ',', scopes: name(scopeName, RuleName.Comma) },
-            { text: '%', scopes: name(scopeName, RuleName.PercentBegin) },
-            { text: 'o', scopes: name(scopeName, RuleName.Variable) },
-            { text: '%', scopes: name(scopeName, RuleName.PercentBegin) },
-            { text: '%', scopes: name(scopeName, RuleName.PercentEnd) },
-            { text: 'f', scopes: name(scopeName, RuleName.Variable) },
-            { text: '%', scopes: name(scopeName, RuleName.PercentBegin) },
-            { text: '%', scopes: name(scopeName, RuleName.PercentEnd) },
-            { text: 'f', scopes: name(scopeName, RuleName.Variable) },
-            { text: '%', scopes: name(scopeName, RuleName.PercentEnd) },
-            { text: '; comment', scopes: name(scopeName, RuleName.InlineComment) },
-
-            { text: 'AutoTrim', scopes: name(scopeName, RuleName.CommandName) },
-            { text: ',', scopes: name(scopeName, RuleName.Comma) },
-            { text: 'on', scopes: name(scopeName, RuleName.UnquotedString, StyleName.Strong) },
-            { text: ',', scopes: name(scopeName, RuleName.UnquotedString, StyleName.Invalid) },
-            { text: '; comment', scopes: name(scopeName, RuleName.InlineComment) },
-
-            ...[
-              ...[ // keywords
-                'Send',
-                'Mouse',
-                'SendAndMouse',
-                'Default',
-                'MouseMove',
-                'MouseMoveOff',
-              ],
-              'on',
-              'ON',
-              'off',
-              'OFF',
-              '1',
-              '0',
-            ].flatMap((arg) => {
-              $onOff; // with keywords
-
-              return [
-                { text: 'BlockInput', scopes: name(scopeName, RuleName.CommandName) },
-                { text: ',', scopes: name(scopeName, RuleName.Comma) },
-                { text: arg, scopes: name(scopeName, RuleName.UnquotedString, StyleName.Strong) },
-                { text: '; comment', scopes: name(scopeName, RuleName.InlineComment) },
-              ];
-            }),
-
-            { text: 'BlockInput', scopes: name(scopeName, RuleName.CommandName) },
-            { text: ',', scopes: name(scopeName, RuleName.Comma) },
-            { text: '%', scopes: name(scopeName, RuleName.PercentExpressionBegin) },
-            { text: 'on', scopes: name(scopeName, RuleName.Variable) },
-            { text: '; comment', scopes: name(scopeName, RuleName.InlineComment) },
-
-            { text: 'BlockInput', scopes: name(scopeName, RuleName.CommandName) },
-            { text: ',', scopes: name(scopeName, RuleName.Comma) },
-            { text: '%', scopes: name(scopeName, RuleName.PercentBegin) },
-            { text: 'o', scopes: name(scopeName, RuleName.Variable) },
-            { text: '%', scopes: name(scopeName, RuleName.PercentBegin) },
-            { text: '%', scopes: name(scopeName, RuleName.PercentEnd) },
-            { text: 'f', scopes: name(scopeName, RuleName.Variable) },
-            { text: '%', scopes: name(scopeName, RuleName.PercentBegin) },
-            { text: '%', scopes: name(scopeName, RuleName.PercentEnd) },
-            { text: 'f', scopes: name(scopeName, RuleName.Variable) },
-            { text: '%', scopes: name(scopeName, RuleName.PercentEnd) },
-            { text: '; comment', scopes: name(scopeName, RuleName.InlineComment) },
-
-            { text: 'BlockInput', scopes: name(scopeName, RuleName.CommandName) },
-            { text: ',', scopes: name(scopeName, RuleName.Comma) },
-            { text: 'on', scopes: name(scopeName, RuleName.UnquotedString, StyleName.Strong) },
-            { text: ',', scopes: name(scopeName, RuleName.UnquotedString, StyleName.Invalid) },
             { text: '; comment', scopes: name(scopeName, RuleName.InlineComment) },
           ],
         ],
