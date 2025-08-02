@@ -443,23 +443,7 @@ export function $invalid(flags: CommandParameterFlag = CommandParameterFlag.None
 export function $style(flags: CommandParameterFlag = CommandParameterFlag.None): CommandParameter {
   // e.g. `Control, Style, ^0x800000`, `WinSet, Style, -0xC00000`
   //                       ^^^^^^^^^                   ^^^^^^^^^
-  return {
-    flags,
-    itemMatchers: [
-      {
-        name: RuleName.Operator,
-        match: char('+', '-', '^'),
-      },
-      includeRule(Repository.Number),
-      {
-        name: RuleName.UnquotedString,
-        match: seq(
-          negChar('`', '0-9', '+', '-', '^', inlineSpace(), ','),
-          negChars0('`', inlineSpace(), ','),
-        ),
-      },
-    ],
-  };
+  return $([ includeRule(Repository.CommandArgumentControlStyle) ], flags);
 }
 export function $quotable(itemMatchers: ParameterItemMatcher[] = [], flags: CommandParameterFlag = CommandParameterFlag.None): CommandParameter {
   return {

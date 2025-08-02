@@ -37,6 +37,7 @@ import { createAutoTrimExpectedDataList } from './AutoTrim';
 import { createBlockInputExpectedDataList } from './BlockInput';
 import { createClickExpectedDataList } from './Click';
 import { createClipWaitExpectedDataList } from './ClipWait';
+import { createControlExpectedDataList } from './Control';
 
 export function createCommandStatementExpectedData(scopeName: ScopeName): ExpectedTestData[] {
   return [
@@ -88,6 +89,7 @@ export function createCommandStatementExpectedData(scopeName: ScopeName): Expect
     ...createBlockInputExpectedDataList(scopeName),
     ...createClickExpectedDataList(scopeName),
     ...createClipWaitExpectedDataList(scopeName),
+    ...createControlExpectedDataList(scopeName),
 
     // https://www.autohotkey.com/docs/v1/lib/SetTimer.htm
     ...((): ExpectedTestData[] => {

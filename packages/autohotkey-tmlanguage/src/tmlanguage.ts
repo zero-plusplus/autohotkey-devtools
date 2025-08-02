@@ -187,9 +187,9 @@ export const enum Repository {
   CommandArgumentText = '$CommandArgumentText',
   CommandLastArgumentText = '$CommandLastArgumentText',
   CommandArgumentNumber = '$CommandArgumentNumber',
-  CommandArgumentControlStyleText = '$CommandArgumentControlStyleText',
   CommandArgumentSendKeyName = '$CommandArgumentSendKeyName',
   CommandArgumentClick = '$CommandArgumentClick',
+  CommandArgumentControlStyle = '$CommandArgumentControlStyle',
   // #endregion v1 syntax
   // #region legacy
   Legacy = '$Legacy',

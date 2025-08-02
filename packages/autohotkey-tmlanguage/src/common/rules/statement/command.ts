@@ -463,6 +463,22 @@ export function createClickCommandArgumentRule(scopeName: ScopeName): PatternsRu
     },
   );
 }
+export function createControlStyleCommandArgumentRule(scopeName: ScopeName): PatternsRule {
+  return patternsRule(...itemPatternToRules(scopeName, [
+    {
+      name: RuleName.Operator,
+      match: char('+', '-', '^'),
+    },
+    includeRule(Repository.Number),
+    {
+      name: RuleName.UnquotedString,
+      match: seq(
+        negChar('`', '0-9', '+', '-', '^', inlineSpace(), ','),
+        negChars0('`', inlineSpace(), ','),
+      ),
+    },
+  ]));
+}
 export function createMenuNameCommandArgumentRule(scopeName: ScopeName): PatternsRule {
   return patternsRule(
     // e.g. `Menu, MenuName, Add, &test`
