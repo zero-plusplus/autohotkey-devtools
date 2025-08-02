@@ -1,11 +1,11 @@
 import * as fs from 'fs/promises';
 
 /**
- * Checks asynchronously if the specified path is a file.
+ * Asynchronously checks whether a file exists in the specified path.
  * @param path
  * @returns
  */
-export async function isFileAsync(path: string): Promise<boolean> {
+export async function existsFileAsync(path: string): Promise<boolean> {
   try {
     if ((await fs.stat(path)).isFile()) {
       return true;

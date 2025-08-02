@@ -1,11 +1,11 @@
 import * as fs from 'fs';
 
 /**
- * Checks synchronously if the specified path is a file.
+ * Synchronously checks whether a file exists in the specified path.
  * @param path
  * @returns
  */
-export function isFileSync(path: string): boolean {
+export function existsFileSync(path: string): boolean {
   try {
     if (fs.statSync(path).isFile()) {
       return true;

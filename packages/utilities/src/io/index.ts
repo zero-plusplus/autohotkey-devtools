@@ -1,2 +1,2 @@
-export * from './isFileAsync';
-export * from './isFileSync';
+export * from './existsFileAsync';
+export * from './existsFileSync';
