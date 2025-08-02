@@ -437,6 +437,7 @@ export function createRepositories(scopeName: ScopeName): Repositories {
       stringPattern: patterns_common.unquotedLastArgumentPattern,
     }),
     [Repository.CommandArgumentSendKeyName]: rules_common.createSendKeyCommandArgumentRule(scopeName),
+    [Repository.CommandArgumentClick]: rules_common.createClickCommandArgumentRule(scopeName),
     // #endregion command
 
     // #region legacy

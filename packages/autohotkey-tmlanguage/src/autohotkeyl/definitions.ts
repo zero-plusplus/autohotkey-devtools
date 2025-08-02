@@ -1,6 +1,7 @@
 import {
   $,
   $blank,
+  $click,
   $color,
   $control,
   $controlMoveOptions,
@@ -201,7 +202,7 @@ export const commandDefinitions: CommandDefinition[] = [
   command('BlockInput', signature([ $onOff([ keywordOption('Send', 'Mouse', 'SendAndMouse', 'Default', 'MouseMove', 'MouseMoveOff') ]) ])),
 
   // https://www.autohotkey.com/docs/v1/lib/Click.htm
-  command('Click', signature([ $withNumber([ keywordOption('Left', 'L', 'Right', 'R', 'Middle', 'M', 'X1', 'X2', 'Up', 'U', 'Down', 'D') ]) ])),
+  command('Click', signature([ $click() ])),
 
   // https://www.autohotkey.com/docs/v1/lib/ClipWait.htm
   command('ClipWait', signature([ $expression(), $expression() ])),

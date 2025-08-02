@@ -35,6 +35,7 @@ import type {
 } from '../../../../types';
 import { createAutoTrimExpectedDataList } from './AutoTrim';
 import { createBlockInputExpectedDataList } from './BlockInput';
+import { createClickExpectedDataList } from './Click';
 
 export function createCommandStatementExpectedData(scopeName: ScopeName): ExpectedTestData[] {
   return [
@@ -84,6 +85,7 @@ export function createCommandStatementExpectedData(scopeName: ScopeName): Expect
     // #region commands
     ...createAutoTrimExpectedDataList(scopeName),
     ...createBlockInputExpectedDataList(scopeName),
+    ...createClickExpectedDataList(scopeName),
 
     // https://www.autohotkey.com/docs/v1/lib/SetTimer.htm
     ...((): ExpectedTestData[] => {
@@ -1520,34 +1522,6 @@ export function createCommandStatementExpectedData(scopeName: ScopeName): Expect
         })(),
         [
           dedent`
-            Click, 100 200 Left       ; comment
-            Click, 100 200 L          ; comment
-            Click, 100 200 Right      ; comment
-            Click, 100 200 R          ; comment
-            Click, 100 200 Middle     ; comment
-            Click, 100 200 M          ; comment
-            Click, 100 200 X1         ; comment
-            Click, 100 200 X2         ; comment
-            Click, 100 200 Up         ; comment
-            Click, 100 200 U          ; comment
-            Click, 100 200 Down       ; comment
-            Click, 100 200 D          ; comment
-          `,
-          [
-            ...[ 'Left', 'L', 'Right', 'R', 'Middle', 'M', 'X1', 'X2', 'Up', 'U', 'Down', 'D' ].flatMap((keyword) => {
-              return [
-                { text: 'Click', scopes: name(scopeName, RuleName.CommandName) },
-                { text: ',', scopes: name(scopeName, RuleName.Comma) },
-                { text: '100', scopes: name(scopeName, RuleName.Integer) },
-                { text: '200', scopes: name(scopeName, RuleName.Integer) },
-                { text: keyword, scopes: name(scopeName, RuleName.UnquotedString, StyleName.Strong) },
-                { text: '; comment', scopes: name(scopeName, RuleName.InlineComment) },
-              ];
-            }),
-          ],
-        ],
-        [
-          dedent`
             Input,,,, Tab,Tab          ; comment
           `,
           [
@@ -1896,8 +1870,8 @@ export function createCommandStatementExpectedData(scopeName: ScopeName): Expect
             { text: ',', scopes: name(scopeName, RuleName.Comma) },
             { text: '{', scopes: name(scopeName, RuleName.UnquotedString, StyleName.Strong) },
             { text: 'Click', scopes: name(scopeName, RuleName.UnquotedString, StyleName.Strong) },
-            { text: '100', scopes: name(scopeName, RuleName.UnquotedString, StyleName.Strong) },
-            { text: '100', scopes: name(scopeName, RuleName.UnquotedString, StyleName.Strong) },
+            { text: '100', scopes: name(scopeName, RuleName.Integer) },
+            { text: '100', scopes: name(scopeName, RuleName.Integer) },
             { text: 'Left', scopes: name(scopeName, RuleName.UnquotedString, StyleName.Strong) },
             { text: '}', scopes: name(scopeName, RuleName.UnquotedString, StyleName.Strong) },
             { text: '; comment', scopes: name(scopeName, RuleName.InlineComment) },

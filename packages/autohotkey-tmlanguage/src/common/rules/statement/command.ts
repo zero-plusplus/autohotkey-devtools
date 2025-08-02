@@ -2,6 +2,7 @@ import { hasFlag } from '@zero-plusplus/utilities/src';
 import {
   CommandFlag,
   CommandParameterFlag,
+  keywordOption,
   type CommandDefinition,
   type CommandParameter,
   type CommandSignature,
@@ -390,21 +391,7 @@ export function createSendKeyCommandArgumentRule(scopeName: ScopeName): Patterns
       captures: {
         1: nameRule(scopeName, RuleName.UnquotedString, StyleName.Strong),
         2: nameRule(scopeName, RuleName.UnquotedString, StyleName.Strong),
-        3: patternsRule(
-          includeRule(Repository.Dereference),
-          {
-            name: name(scopeName, RuleName.UnquotedString, StyleName.Strong),
-            match: keyword('Left', 'L', 'Right', 'R', 'Middle', 'M', 'X1', 'X2', 'Up', 'U', 'Down', 'D'),
-          },
-          {
-            name: name(scopeName, RuleName.UnquotedString, StyleName.Strong),
-            match: numbers1(),
-          },
-          {
-            name: name(scopeName, RuleName.UnquotedString),
-            match: negChar('}', '%'),
-          },
-        ),
+        3: patternsRule(includeRule(Repository.CommandArgumentClick)),
         4: nameRule(scopeName, RuleName.UnquotedString, StyleName.Strong),
       },
     },
@@ -458,6 +445,21 @@ export function createSendKeyCommandArgumentRule(scopeName: ScopeName): Patterns
     {
       name: name(scopeName, RuleName.UnquotedString),
       match: negChars1('`', '{', '}', '%', inlineSpace()),
+    },
+  );
+}
+export function createClickCommandArgumentRule(scopeName: ScopeName): PatternsRule {
+  return patternsRule(
+    includeRule(Repository.DereferenceUnaryOperator),
+    includeRule(Repository.Dereference),
+    ...itemPatternToRules(scopeName, keywordOption('Left', 'L', 'Right', 'R', 'Middle', 'M', 'X1', 'X2', 'Up', 'U', 'Down', 'D', 'Relative')),
+    {
+      name: name(scopeName, RuleName.Integer),
+      match: numbers1(),
+    },
+    {
+      name: name(scopeName, RuleName.UnquotedString, StyleName.Invalid),
+      match: negChars1('0-9', '%', inlineSpace()),
     },
   );
 }
