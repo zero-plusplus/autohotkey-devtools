@@ -1,12 +1,12 @@
 /**
- * Checks whether the specified value can be converted to a number.
+ * Checks whether the specified value can be converted to an integer.
  * @param {unknown} value
  * @return {boolean}
  */
-export function isNumberLike(value: unknown): boolean {
+export function isIntegerLike(value: unknown): boolean {
   switch (typeof value) {
-    case 'number': return isFinite(value);
-    case 'bigint': return isFinite(Number(value));
+    case 'number': return Number.isInteger(value);
+    case 'bigint': return Number.isInteger(value);
     case 'string':
     {
       // Blank spaces are converted to 0, so exclude them
@@ -15,7 +15,7 @@ export function isNumberLike(value: unknown): boolean {
       }
 
       const converted = Number(value);
-      return !isNaN(converted) && isFinite(converted);
+      return Number.isInteger(converted);
     }
     default: break;
   }
