@@ -34,6 +34,7 @@ import type {
   ExpectedTestData,
   ParsedResult,
 } from '../../../../types';
+import { createAutoTrimExpectedDataList } from './AutoTrim';
 
 export function createCommandStatementExpectedData(scopeName: ScopeName): ExpectedTestData[] {
   return [
@@ -81,6 +82,8 @@ export function createCommandStatementExpectedData(scopeName: ScopeName): Expect
     })(),
 
     // #region commands
+    ...createAutoTrimExpectedDataList(scopeName),
+
     // https://www.autohotkey.com/docs/v1/lib/SetTimer.htm
     ...((): ExpectedTestData[] => {
       return [
