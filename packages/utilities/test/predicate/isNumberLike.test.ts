@@ -3,7 +3,7 @@ import {
   expect,
   test,
 } from '@jest/globals';
-import { isNumberLike } from '../../src/string/isNumberLike';
+import { isNumberLike } from '../../src/predicate/isNumberLike';
 
 describe('isNumberLike', () => {
   test('isNumberLike', () => {
