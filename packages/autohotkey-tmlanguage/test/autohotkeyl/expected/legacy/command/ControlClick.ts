@@ -306,5 +306,29 @@ export function createControlClickExpectedDataList(scopeName: ScopeName): Expect
         ],
       ];
     })(),
+
+    // Parameter 5: ClickCount
+    ...((): ExpectedTestData[] => {
+      return [
+        [
+          dedent`
+            ${commandName},,,,, 1 + 1,          ; comment
+          `,
+          [
+            { text: commandName, scopes: name(scopeName, RuleName.CommandName) },
+            { text: ',', scopes: name(scopeName, RuleName.Comma) },
+            { text: ',', scopes: name(scopeName, RuleName.Comma) },
+            { text: ',', scopes: name(scopeName, RuleName.Comma) },
+            { text: ',', scopes: name(scopeName, RuleName.Comma) },
+            { text: ',', scopes: name(scopeName, RuleName.Comma) },
+            { text: '1', scopes: name(scopeName, RuleName.Integer) },
+            { text: '+', scopes: name(scopeName, RuleName.Operator) },
+            { text: '1', scopes: name(scopeName, RuleName.Integer) },
+            { text: ',', scopes: name(scopeName, RuleName.Comma) },
+            { text: '; comment', scopes: name(scopeName, RuleName.InlineComment) },
+          ],
+        ],
+      ];
+    })(),
   ];
 }
