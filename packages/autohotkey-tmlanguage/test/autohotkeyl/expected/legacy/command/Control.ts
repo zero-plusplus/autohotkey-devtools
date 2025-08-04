@@ -275,91 +275,89 @@ export function createControlExpectedDataList(scopeName: ScopeName): ExpectedTes
     })(),
 
     // Parameter 3: Control
-    ...((): ExpectedTestData[] => {
-      return [ 'Check' /* , 'UnCheck', 'Enable', 'Disable', 'Show', 'Hide', 'ShowDropDown', 'HideDropDown', 'Style', 'ExStyle', 'TabLeft', 'TabRight', 'Delete', 'Choose', 'Add', 'ChooseString', 'EditPaste' */ ].flatMap((subcommand): ExpectedTestData[] => {
-        return [
-          [
-            dedent`
+    ...((subcommand = 'Check'): ExpectedTestData[] => {
+      return [
+        [
+          dedent`
               ${commandName} ${subcommand},, ahk_id %hwnd%          ; comment
             `,
-            [
-              { text: commandName, scopes: name(scopeName, RuleName.CommandName) },
-              { text: subcommand, scopes: name(scopeName, RuleName.SubCommandName) },
-              { text: ',', scopes: name(scopeName, RuleName.Comma) },
-              { text: ',', scopes: name(scopeName, RuleName.Comma) },
-              { text: 'ahk_id', scopes: name(scopeName, RuleName.UnquotedString, StyleName.Strong) },
-              { text: '%', scopes: name(scopeName, RuleName.PercentBegin) },
-              { text: 'hwnd', scopes: name(scopeName, RuleName.Variable) },
-              { text: '%', scopes: name(scopeName, RuleName.PercentEnd) },
-              { text: '; comment', scopes: name(scopeName, RuleName.InlineComment) },
-            ],
-          ],
           [
-            dedent`
+            { text: commandName, scopes: name(scopeName, RuleName.CommandName) },
+            { text: subcommand, scopes: name(scopeName, RuleName.SubCommandName) },
+            { text: ',', scopes: name(scopeName, RuleName.Comma) },
+            { text: ',', scopes: name(scopeName, RuleName.Comma) },
+            { text: 'ahk_id', scopes: name(scopeName, RuleName.UnquotedString, StyleName.Strong) },
+            { text: '%', scopes: name(scopeName, RuleName.PercentBegin) },
+            { text: 'hwnd', scopes: name(scopeName, RuleName.Variable) },
+            { text: '%', scopes: name(scopeName, RuleName.PercentEnd) },
+            { text: '; comment', scopes: name(scopeName, RuleName.InlineComment) },
+          ],
+        ],
+        [
+          dedent`
               ${commandName} ${subcommand},, i)^[^a](?C123:abc)regexp*          ; comment
             `,
-            [
-              { text: commandName, scopes: name(scopeName, RuleName.CommandName) },
-              { text: subcommand, scopes: name(scopeName, RuleName.SubCommandName) },
-              { text: ',', scopes: name(scopeName, RuleName.Comma) },
-              { text: ',', scopes: name(scopeName, RuleName.Comma) },
-              { text: 'i)', scopes: name(scopeName, RuleName.RegExpString, RuleName.RegExpOption) },
-              { text: '^', scopes: name(scopeName, RuleName.RegExpString, RuleName.RegExpAnchor) },
-              { text: '[^', scopes: name(scopeName, RuleName.RegExpString, RuleName.RegExpCharacterClassSet, RuleName.RegExpCharacterClass, RuleDescriptor.Begin) },
-              { text: 'a', scopes: name(scopeName, RuleName.RegExpString, RuleName.RegExpCharacterClassSet) },
-              { text: ']', scopes: name(scopeName, RuleName.RegExpString, RuleName.RegExpCharacterClassSet, RuleName.RegExpCharacterClass, RuleDescriptor.End) },
-              { text: '(?C123', scopes: name(scopeName, RuleName.RegExpString, RuleName.RegExpGroup, RuleDescriptor.Begin) },
-              { text: ':', scopes: name(scopeName, RuleName.RegExpString, RuleName.RegExpGroup) },
-              { text: 'abc', scopes: name(scopeName, RuleName.RegExpString, RuleName.FunctionName) },
-              { text: ')', scopes: name(scopeName, RuleName.RegExpString, RuleName.RegExpGroup, RuleDescriptor.End) },
-              { text: 'regexp', scopes: name(scopeName, RuleName.RegExpString) },
-              { text: '*', scopes: name(scopeName, RuleName.RegExpString, RuleName.RegExpQuantifier) },
-              { text: '; comment', scopes: name(scopeName, RuleName.InlineComment) },
-            ],
-          ],
           [
-            dedent`
+            { text: commandName, scopes: name(scopeName, RuleName.CommandName) },
+            { text: subcommand, scopes: name(scopeName, RuleName.SubCommandName) },
+            { text: ',', scopes: name(scopeName, RuleName.Comma) },
+            { text: ',', scopes: name(scopeName, RuleName.Comma) },
+            { text: 'i)', scopes: name(scopeName, RuleName.RegExpString, RuleName.RegExpOption) },
+            { text: '^', scopes: name(scopeName, RuleName.RegExpString, RuleName.RegExpAnchor) },
+            { text: '[^', scopes: name(scopeName, RuleName.RegExpString, RuleName.RegExpCharacterClassSet, RuleName.RegExpCharacterClass, RuleDescriptor.Begin) },
+            { text: 'a', scopes: name(scopeName, RuleName.RegExpString, RuleName.RegExpCharacterClassSet) },
+            { text: ']', scopes: name(scopeName, RuleName.RegExpString, RuleName.RegExpCharacterClassSet, RuleName.RegExpCharacterClass, RuleDescriptor.End) },
+            { text: '(?C123', scopes: name(scopeName, RuleName.RegExpString, RuleName.RegExpGroup, RuleDescriptor.Begin) },
+            { text: ':', scopes: name(scopeName, RuleName.RegExpString, RuleName.RegExpGroup) },
+            { text: 'abc', scopes: name(scopeName, RuleName.RegExpString, RuleName.FunctionName) },
+            { text: ')', scopes: name(scopeName, RuleName.RegExpString, RuleName.RegExpGroup, RuleDescriptor.End) },
+            { text: 'regexp', scopes: name(scopeName, RuleName.RegExpString) },
+            { text: '*', scopes: name(scopeName, RuleName.RegExpString, RuleName.RegExpQuantifier) },
+            { text: '; comment', scopes: name(scopeName, RuleName.InlineComment) },
+          ],
+        ],
+        [
+          dedent`
               ${commandName} ${subcommand},, % var                 ; comment
               ${commandName} ${subcommand},, %var%                 ; comment
               ${commandName} ${subcommand},, %var%var%var%         ; comment
             `,
-            [
-              { text: commandName, scopes: name(scopeName, RuleName.CommandName) },
-              { text: subcommand, scopes: name(scopeName, RuleName.SubCommandName) },
-              { text: ',', scopes: name(scopeName, RuleName.Comma) },
-              { text: ',', scopes: name(scopeName, RuleName.Comma) },
-              { text: '%', scopes: name(scopeName, RuleName.PercentExpressionBegin) },
-              { text: 'var', scopes: name(scopeName, RuleName.Variable) },
-              { text: '; comment', scopes: name(scopeName, RuleName.InlineComment) },
+          [
+            { text: commandName, scopes: name(scopeName, RuleName.CommandName) },
+            { text: subcommand, scopes: name(scopeName, RuleName.SubCommandName) },
+            { text: ',', scopes: name(scopeName, RuleName.Comma) },
+            { text: ',', scopes: name(scopeName, RuleName.Comma) },
+            { text: '%', scopes: name(scopeName, RuleName.PercentExpressionBegin) },
+            { text: 'var', scopes: name(scopeName, RuleName.Variable) },
+            { text: '; comment', scopes: name(scopeName, RuleName.InlineComment) },
 
-              { text: commandName, scopes: name(scopeName, RuleName.CommandName) },
-              { text: subcommand, scopes: name(scopeName, RuleName.SubCommandName) },
-              { text: ',', scopes: name(scopeName, RuleName.Comma) },
-              { text: ',', scopes: name(scopeName, RuleName.Comma) },
-              { text: '%', scopes: name(scopeName, RuleName.PercentBegin) },
-              { text: 'var', scopes: name(scopeName, RuleName.Variable) },
-              { text: '%', scopes: name(scopeName, RuleName.PercentEnd) },
-              { text: '; comment', scopes: name(scopeName, RuleName.InlineComment) },
+            { text: commandName, scopes: name(scopeName, RuleName.CommandName) },
+            { text: subcommand, scopes: name(scopeName, RuleName.SubCommandName) },
+            { text: ',', scopes: name(scopeName, RuleName.Comma) },
+            { text: ',', scopes: name(scopeName, RuleName.Comma) },
+            { text: '%', scopes: name(scopeName, RuleName.PercentBegin) },
+            { text: 'var', scopes: name(scopeName, RuleName.Variable) },
+            { text: '%', scopes: name(scopeName, RuleName.PercentEnd) },
+            { text: '; comment', scopes: name(scopeName, RuleName.InlineComment) },
 
-              { text: commandName, scopes: name(scopeName, RuleName.CommandName) },
-              { text: subcommand, scopes: name(scopeName, RuleName.SubCommandName) },
-              { text: ',', scopes: name(scopeName, RuleName.Comma) },
-              { text: ',', scopes: name(scopeName, RuleName.Comma) },
-              { text: '%', scopes: name(scopeName, RuleName.PercentBegin) },
-              { text: 'var', scopes: name(scopeName, RuleName.Variable) },
-              { text: '%', scopes: name(scopeName, RuleName.PercentBegin) },
-              { text: 'var', scopes: name(scopeName, RuleName.Variable) },
-              { text: '%', scopes: name(scopeName, RuleName.PercentEnd) },
-              { text: 'var', scopes: name(scopeName, RuleName.Variable) },
-              { text: '%', scopes: name(scopeName, RuleName.PercentEnd) },
-              { text: '; comment', scopes: name(scopeName, RuleName.InlineComment) },
-            ],
+            { text: commandName, scopes: name(scopeName, RuleName.CommandName) },
+            { text: subcommand, scopes: name(scopeName, RuleName.SubCommandName) },
+            { text: ',', scopes: name(scopeName, RuleName.Comma) },
+            { text: ',', scopes: name(scopeName, RuleName.Comma) },
+            { text: '%', scopes: name(scopeName, RuleName.PercentBegin) },
+            { text: 'var', scopes: name(scopeName, RuleName.Variable) },
+            { text: '%', scopes: name(scopeName, RuleName.PercentBegin) },
+            { text: 'var', scopes: name(scopeName, RuleName.Variable) },
+            { text: '%', scopes: name(scopeName, RuleName.PercentEnd) },
+            { text: 'var', scopes: name(scopeName, RuleName.Variable) },
+            { text: '%', scopes: name(scopeName, RuleName.PercentEnd) },
+            { text: '; comment', scopes: name(scopeName, RuleName.InlineComment) },
           ],
-        ];
-      });
+        ],
+      ];
     })(),
 
-    // Parameter 3: WinTitle
+    // Parameter 4: WinTitle
     ...((subcommand = 'Check'): ExpectedTestData[] => {
       return [
         [
@@ -407,6 +405,71 @@ export function createControlExpectedDataList(scopeName: ScopeName): ExpectedTes
 
             { text: commandName, scopes: name(scopeName, RuleName.CommandName) },
             { text: subcommand, scopes: name(scopeName, RuleName.SubCommandName) },
+            { text: ',', scopes: name(scopeName, RuleName.Comma) },
+            { text: ',', scopes: name(scopeName, RuleName.Comma) },
+            { text: ',', scopes: name(scopeName, RuleName.Comma) },
+            { text: '%', scopes: name(scopeName, RuleName.PercentBegin) },
+            { text: 'var', scopes: name(scopeName, RuleName.Variable) },
+            { text: '%', scopes: name(scopeName, RuleName.PercentBegin) },
+            { text: 'var', scopes: name(scopeName, RuleName.Variable) },
+            { text: '%', scopes: name(scopeName, RuleName.PercentEnd) },
+            { text: 'var', scopes: name(scopeName, RuleName.Variable) },
+            { text: '%', scopes: name(scopeName, RuleName.PercentEnd) },
+            { text: '; comment', scopes: name(scopeName, RuleName.InlineComment) },
+          ],
+        ],
+      ];
+    })(),
+
+    // Parameter 5: WinText
+    ...((subcommand = 'Check'): ExpectedTestData[] => {
+      return [
+        [
+          dedent`
+            ${commandName} ${subcommand},,,, unquoted          ; comment
+          `,
+          [
+            { text: commandName, scopes: name(scopeName, RuleName.CommandName) },
+            { text: subcommand, scopes: name(scopeName, RuleName.SubCommandName) },
+            { text: ',', scopes: name(scopeName, RuleName.Comma) },
+            { text: ',', scopes: name(scopeName, RuleName.Comma) },
+            { text: ',', scopes: name(scopeName, RuleName.Comma) },
+            { text: ',', scopes: name(scopeName, RuleName.Comma) },
+            { text: 'unquoted', scopes: name(scopeName, RuleName.UnquotedString) },
+            { text: '; comment', scopes: name(scopeName, RuleName.InlineComment) },
+          ],
+        ],
+        [
+          dedent`
+            ${commandName} ${subcommand},,,, % var                 ; comment
+            ${commandName} ${subcommand},,,, %var%                 ; comment
+            ${commandName} ${subcommand},,,, %var%var%var%         ; comment
+          `,
+          [
+            { text: commandName, scopes: name(scopeName, RuleName.CommandName) },
+            { text: subcommand, scopes: name(scopeName, RuleName.SubCommandName) },
+            { text: ',', scopes: name(scopeName, RuleName.Comma) },
+            { text: ',', scopes: name(scopeName, RuleName.Comma) },
+            { text: ',', scopes: name(scopeName, RuleName.Comma) },
+            { text: ',', scopes: name(scopeName, RuleName.Comma) },
+            { text: '%', scopes: name(scopeName, RuleName.PercentExpressionBegin) },
+            { text: 'var', scopes: name(scopeName, RuleName.Variable) },
+            { text: '; comment', scopes: name(scopeName, RuleName.InlineComment) },
+
+            { text: commandName, scopes: name(scopeName, RuleName.CommandName) },
+            { text: subcommand, scopes: name(scopeName, RuleName.SubCommandName) },
+            { text: ',', scopes: name(scopeName, RuleName.Comma) },
+            { text: ',', scopes: name(scopeName, RuleName.Comma) },
+            { text: ',', scopes: name(scopeName, RuleName.Comma) },
+            { text: ',', scopes: name(scopeName, RuleName.Comma) },
+            { text: '%', scopes: name(scopeName, RuleName.PercentBegin) },
+            { text: 'var', scopes: name(scopeName, RuleName.Variable) },
+            { text: '%', scopes: name(scopeName, RuleName.PercentEnd) },
+            { text: '; comment', scopes: name(scopeName, RuleName.InlineComment) },
+
+            { text: commandName, scopes: name(scopeName, RuleName.CommandName) },
+            { text: subcommand, scopes: name(scopeName, RuleName.SubCommandName) },
+            { text: ',', scopes: name(scopeName, RuleName.Comma) },
             { text: ',', scopes: name(scopeName, RuleName.Comma) },
             { text: ',', scopes: name(scopeName, RuleName.Comma) },
             { text: ',', scopes: name(scopeName, RuleName.Comma) },
