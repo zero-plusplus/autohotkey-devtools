@@ -220,7 +220,7 @@ export const commandDefinitions: CommandDefinition[] = [
   ),
 
   // https://www.autohotkey.com/docs/v1/lib/ControlClick.htm
-  command('ControlClick', signature([ $controlOrPos(), $winTitle(), $(), $whichButton(), $expression(), $([ keywordOption('NA', 'D', 'U', 'Pos'), decimalOption('X', 'Y') ]) ])),
+  command('ControlClick', signature([ $controlOrPos(), $winTitle(), $(), $whichButton(), $expression(), $([ keywordOption('NA', 'D', 'U', 'Pos'), decimalOption('X', 'Y') ]), $winTitle(), $() ])),
 
   // https://www.autohotkey.com/docs/v1/lib/ControlFocus.htm
   command('ControlFocus', signature([ $control(), ...$winParams ])),
