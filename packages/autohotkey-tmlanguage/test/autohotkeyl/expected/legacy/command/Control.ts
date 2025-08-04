@@ -426,7 +426,7 @@ export function createControlExpectedDataList(scopeName: ScopeName): ExpectedTes
       return [
         [
           dedent`
-            ${commandName} ${subcommand},,,, unquoted          ; comment
+            ${commandName} ${subcommand},,,, unquoted,          ; comment
           `,
           [
             { text: commandName, scopes: name(scopeName, RuleName.CommandName) },
@@ -436,6 +436,7 @@ export function createControlExpectedDataList(scopeName: ScopeName): ExpectedTes
             { text: ',', scopes: name(scopeName, RuleName.Comma) },
             { text: ',', scopes: name(scopeName, RuleName.Comma) },
             { text: 'unquoted', scopes: name(scopeName, RuleName.UnquotedString) },
+            { text: ',', scopes: name(scopeName, RuleName.Comma) },
             { text: '; comment', scopes: name(scopeName, RuleName.InlineComment) },
           ],
         ],
