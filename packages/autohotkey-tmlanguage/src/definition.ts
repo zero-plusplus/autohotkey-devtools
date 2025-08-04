@@ -123,7 +123,7 @@ export function createOptionPattern(pattern: string, extraPrefixSeparators: stri
     lookahead(alt(
       endAnchor(),
       inlineSpace(),
-      char(',', ...extraSuffixSeparators),
+      char(',', '%', ...extraSuffixSeparators),
     )),
   );
 }
@@ -436,12 +436,6 @@ export function $regexp(itemMatchers: ParameterItemMatcher[] = [], flags: Comman
       {
         name: RuleName.RegExpString,
         match: seq(
-          lookbehind(seq(
-            negChar('`'),
-            char(','),
-            inlineSpaces0(),
-          )),
-          inlineSpaces0(),
           capture(patterns_v1.regexpOptionsPattern),
           capture(anyChars0()),
         ),
