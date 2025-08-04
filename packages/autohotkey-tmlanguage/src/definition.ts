@@ -76,7 +76,7 @@ export interface CommandParameterMatcher {
 export interface CommandParameterCapturedMatcher {
   name?: ElementName | ElementName[];
   match: string;
-  captures: { [key in number ]: ParameterItemMatcher[] };
+  captures: { [key in number ]: ParameterItemMatcher | ParameterItemMatcher[] };
 }
 export type ParameterItemMatcher = string | CommandParameterMatcher | CommandParameterCapturedMatcher | IncludeRule | ParameterItemMatcher[];
 export interface CommandParameter {
@@ -426,6 +426,38 @@ export function $guisubcommand(values: string | string[] = [], flags: CommandPar
     ],
   };
 }
+export function $regexp(itemMatchers: ParameterItemMatcher[] = [], flags: CommandParameterFlag = CommandParameterFlag.None): CommandParameter {
+  return {
+    flags,
+    itemMatchers: [
+      includeRule(Repository.DereferenceUnaryOperator),
+      includeRule(Repository.DereferenceInCommandArgument),
+      ...itemMatchers,
+      {
+        name: RuleName.RegExpString,
+        match: seq(
+          lookbehind(seq(
+            negChar('`'),
+            char(','),
+            inlineSpaces0(),
+          )),
+          inlineSpaces0(),
+          capture(patterns_v1.regexpOptionsPattern),
+          capture(anyChars0()),
+        ),
+        captures: {
+          1: { name: RuleName.RegExpOption },
+          2: [ includeRule(Repository.UnquotedRegExp) ],
+        },
+      },
+      includeRule(Repository.UnquotedStringEscapeSequence),
+      {
+        name: [ RuleName.UnquotedString ],
+        match: negChars1('`', '%', inlineSpace()),
+      },
+    ],
+  };
+}
 export function $blank(flags: CommandParameterFlag = CommandParameterFlag.None): CommandParameter {
   return {
     flags: mergeFlags(flags, CommandParameterFlag.Blank),
@@ -709,10 +741,10 @@ export function $requiresVersion(flags: CommandParameterFlag = CommandParameterF
   // return { type: HighlightType.RequiresVersion, flags };
 }
 export function $control(flags: CommandParameterFlag = CommandParameterFlag.None): CommandParameter {
-  return $([ keywordOption('ahk_id') ], flags);
+  return $regexp([ keywordOption('ahk_id') ], flags);
 }
 export function $controlOrPos(flags: CommandParameterFlag = CommandParameterFlag.None): CommandParameter {
-  return $([ keywordOption('ahk_id'), decimalOption('X', 'Y') ], flags);
+  return $regexp([ keywordOption('ahk_id'), decimalOption('X', 'Y') ], flags);
 }
 export function $controlMoveOptions(): CommandParameter {
   return $([ numberOption('X', 'Y', 'W', 'H') ]);

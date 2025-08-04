@@ -387,6 +387,17 @@ export function createRepositories(scopeName: ScopeName): Repositories {
       pcreUnicodePropertyCodes: constants_common.pcreUnicodePropertyCodes,
       pcreUnicodePropertyScripts: constants_common.pcreUnicodePropertyScripts,
     }),
+    [Repository.UnquotedRegExp]: rules_common.createStringAsRegExpContentRule(scopeName, {
+      commonContentRepository: Repository.UnquotedRegExpContent,
+      regexpOptions: constants_v1.regexpOptions,
+      contentRepository: Repository.DoubleStringAsRegExpContent,
+    }),
+    [Repository.UnquotedRegExpContent]: rules_common.createRegExpCommonContentRule(scopeName, {
+      regexpEscapeSequences: constants_common.regexpEscapeSequences,
+      stringEscapeSequences: constants_v1.unquoteEscapeSequences,
+      pcreUnicodePropertyCodes: constants_common.pcreUnicodePropertyCodes,
+      pcreUnicodePropertyScripts: constants_common.pcreUnicodePropertyScripts,
+    }),
     // #endregion regexp
 
     // #region misc

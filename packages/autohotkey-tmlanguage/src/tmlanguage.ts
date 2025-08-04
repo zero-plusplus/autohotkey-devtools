@@ -155,6 +155,8 @@ export const enum Repository {
   SingleStringAsRegexp = '$SingleStringAsRegexp',
   SingleStringAsRegExpContent = '$SingleStringAsRegExpContent',
   SingleStringAsRegExpCommonContent = '$SingleStringAsRegExpCommonContent',
+  UnquotedRegExp = '$UnquotedRegExp',
+  UnquotedRegExpContent = '$UnquotedRegExpContent',
   // #endregion regexp
   // #region misc
   Dereference = '$Dereference',

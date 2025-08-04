@@ -700,7 +700,7 @@ function itemPatternToRules(scopeName: ScopeName, itemPattern: ParameterItemMatc
       name: 'name' in itemPattern ? name(scopeName, ...Array.isArray(itemPattern.name) ? itemPattern.name : [ itemPattern.name ]) : undefined,
       match: itemPattern.match,
       captures: Object.fromEntries(Object.entries(itemPattern.captures).map(([ index, matchers ]) => {
-        const rules = matchers.flatMap((matcher): Rule[] => {
+        const rules = (Array.isArray(matchers) ? matchers : [ matchers ]).flatMap((matcher): Rule[] => {
           return itemPatternsToRules(scopeName, Array.isArray(matcher) ? matcher : [ matcher ]);
         });
 
