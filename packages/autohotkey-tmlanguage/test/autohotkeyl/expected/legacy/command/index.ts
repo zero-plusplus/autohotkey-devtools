@@ -38,6 +38,7 @@ import { createClickExpectedDataList } from './Click';
 import { createClipWaitExpectedDataList } from './ClipWait';
 import { createControlExpectedDataList } from './Control';
 import { createControlClickExpectedDataList } from './ControlClick';
+import { createControlFocusExpectedDataList } from './ControlFocus';
 
 export function createCommandStatementExpectedData(scopeName: ScopeName): ExpectedTestData[] {
   return [
@@ -91,6 +92,7 @@ export function createCommandStatementExpectedData(scopeName: ScopeName): Expect
     ...createClipWaitExpectedDataList(scopeName),
     ...createControlExpectedDataList(scopeName),
     ...createControlClickExpectedDataList(scopeName),
+    ...createControlFocusExpectedDataList(scopeName),
 
     // https://www.autohotkey.com/docs/v1/lib/SetTimer.htm
     ...((): ExpectedTestData[] => {
