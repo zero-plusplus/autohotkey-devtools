@@ -58,10 +58,6 @@ export const enum CommandParameterFlag {
   RestParams = 1 << 3,
   CompilerDirective = 1 << 4,
 
-  // Accept only one keyword
-  // [o] AutoTrim, On
-  // [x] AutoTrim, On Off
-  ExclusiveKeyword = 1 << 16,
   // Gui, GuiName:
   //      ^^^^^^^^
   GuiLabeled = 1 << 17,
@@ -512,7 +508,7 @@ export function $shouldEscapeComma(flags: CommandParameterFlag = CommandParamete
 }
 export function $shouldBoolean(flags: CommandParameterFlag = CommandParameterFlag.None): CommandParameter {
   return {
-    flags: mergeFlags(flags, CommandParameterFlag.ExclusiveKeyword),
+    flags,
     itemMatchers: [
       includeRule(Repository.DereferenceInCommandArgument),
 
@@ -570,24 +566,30 @@ export function $shouldKeyword(itemMatchers: ParameterItemMatcher[] = [], flags:
   // Accepts one arbitrary keyword, otherwise not accepted
   // e.g. `Gui, Flash, Off`
   //                   ^^^
-  return {
-    flags: mergeFlags(flags, CommandParameterFlag.ExclusiveKeyword),
-    itemMatchers: [
-      includeRule(Repository.DereferenceUnaryOperator),
-      includeRule(Repository.DereferenceInCommandArgument),
+  return $([
+    includeRule(Repository.DereferenceUnaryOperator),
+    includeRule(Repository.DereferenceInCommandArgument),
 
-      ...itemMatchers,
-      {
-        name: [ RuleName.UnquotedString, StyleName.Invalid ],
-        match: negChars0(inlineSpace()),
-      },
-    ],
-  };
+    ...itemMatchers,
+    {
+      name: [ RuleName.UnquotedString, StyleName.Invalid ],
+      match: anyChars1(),
+    },
+  ]);
 }
 export function $shouldSpacedKeywords(itemMatchers: ParameterItemMatcher[] = [], flags: CommandParameterFlag = CommandParameterFlag.None): CommandParameter {
   // e.g. `PixelGetColor, output, x, y, Fast RGB`
   //                                    ^^^^ ^^^
-  return $shouldKeyword(itemMatchers, flags);
+  return $([
+    includeRule(Repository.DereferenceUnaryOperator),
+    includeRule(Repository.DereferenceInCommandArgument),
+
+    ...itemMatchers,
+    {
+      name: [ RuleName.UnquotedString, StyleName.Invalid ],
+      match: negChars1('%', inlineSpace()),
+    },
+  ]);
 }
 export function $withNumber(itemMatchers: ParameterItemMatcher[] = [], flags: CommandParameterFlag = CommandParameterFlag.None): CommandParameter {
   return {

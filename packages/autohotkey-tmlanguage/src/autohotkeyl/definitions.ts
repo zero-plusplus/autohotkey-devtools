@@ -227,7 +227,7 @@ export const commandDefinitions: CommandDefinition[] = [
 
   // https://www.autohotkey.com/docs/v1/lib/ControlGet.htm
   command('ControlGet', [
-    signature([ $output(), $subcommand('List'), $([ keywordOption('Selected', 'Focused', 'Col', 'Count') ]), $control(), ...$winParams ]),
+    signature([ $output(), $subcommand('List'), $shouldSpacedKeywords([ keywordOption('Selected', 'Focused', 'Col', 'Count') ]), $control(), ...$winParams ]),
     signature([ $output(), $subcommand([ 'Checked', 'Enabled', 'Visible', 'Tab', 'Choice', 'LineCount', 'CurrentLine', 'CurrentCol', 'Selected', 'Style', 'ExStyle', 'Hwnd' ]), $blank(), $control(), ...$winParams ]),
     signature([ $output(), $subcommand([ 'FindString', 'Line' ]), $(), $control(), ...$winParams ]),
     signature([ $output(), $invalid() ]),

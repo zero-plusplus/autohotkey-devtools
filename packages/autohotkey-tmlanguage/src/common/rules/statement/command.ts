@@ -616,7 +616,7 @@ function parameterToPatternsRule(scopeName: ScopeName, definition: CommandDefini
       if (isLastParameter && hasFlag(parameter.flags, CommandParameterFlag.Blank)) {
         return [ { name: name(scopeName, RuleName.UnquotedString, StyleName.Invalid), match: textalt('`,', ',') } ];
       }
-      if (isLastParameter && !hasFlag(parameter.flags, CommandParameterFlag.ExclusiveKeyword)) {
+      if (isLastParameter) {
         return [
           { name: name(scopeName, RuleName.UnquotedString, StyleName.Escape), match: text('`,') },
           { name: name(scopeName, RuleName.UnquotedString), match: seq(char(',')) },
