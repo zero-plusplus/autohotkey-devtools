@@ -70,6 +70,7 @@ export function createControlGetExpectedDataList(scopeName: ScopeName, commandNa
     // Parameter 2: SubCommand
     ...((): ExpectedTestData[] => {
       return [
+        // Parameter 3: Options
         ...((subcommand = 'List'): ExpectedTestData[] => {
           return [
             [
@@ -85,7 +86,6 @@ export function createControlGetExpectedDataList(scopeName: ScopeName, commandNa
               ],
             ],
 
-            // Parameter 3: Options
             ...((options = [ 'Selected', 'Focused', 'Col', 'Count' ]): ExpectedTestData[] => {
               return [
                 [
@@ -155,6 +155,48 @@ export function createControlGetExpectedDataList(scopeName: ScopeName, commandNa
                     { text: '%', scopes: name(scopeName, RuleName.PercentEnd) },
                     { text: 'var', scopes: name(scopeName, RuleName.Variable) },
                     { text: '%', scopes: name(scopeName, RuleName.PercentEnd) },
+                    { text: '; comment', scopes: name(scopeName, RuleName.InlineComment) },
+                  ],
+                ],
+              ];
+            })(),
+          ];
+        })(),
+
+        // Parameter 3: Blank
+        ...((subcommands = [ 'Checked', 'Enabled', 'Visible', 'Tab', 'Choice', 'LineCount', 'CurrentLine', 'CurrentCol', 'Selected', 'Style', 'ExStyle', 'Hwnd' ]): ExpectedTestData[] => {
+          return [
+            ...subcommands.flatMap((subcommand): ExpectedTestData[] => {
+              return [
+                [
+                  dedent`
+                    ${commandName},, ${subcommand}          ; comment
+                  `,
+                  [
+                    { text: commandName, scopes: name(scopeName, RuleName.CommandName) },
+                    { text: ',', scopes: name(scopeName, RuleName.Comma) },
+                    { text: ',', scopes: name(scopeName, RuleName.Comma) },
+                    { text: subcommand, scopes: name(scopeName, RuleName.SubCommandName) },
+                    { text: '; comment', scopes: name(scopeName, RuleName.InlineComment) },
+                  ],
+                ],
+              ];
+            }),
+
+            ...((subcommand = 'Checked'): ExpectedTestData[] => {
+              return [
+                [
+                  dedent`
+                    ${commandName},, ${subcommand}, invalid,          ; comment
+                  `,
+                  [
+                    { text: commandName, scopes: name(scopeName, RuleName.CommandName) },
+                    { text: ',', scopes: name(scopeName, RuleName.Comma) },
+                    { text: ',', scopes: name(scopeName, RuleName.Comma) },
+                    { text: subcommand, scopes: name(scopeName, RuleName.SubCommandName) },
+                    { text: ',', scopes: name(scopeName, RuleName.Comma) },
+                    { text: 'invalid', scopes: name(scopeName, RuleName.UnquotedString, StyleName.Invalid) },
+                    { text: ',', scopes: name(scopeName, RuleName.Comma) },
                     { text: '; comment', scopes: name(scopeName, RuleName.InlineComment) },
                   ],
                 ],
