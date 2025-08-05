@@ -5,7 +5,7 @@ import type { ExpectedTestData } from '../../../../types';
 // https://www.autohotkey.com/docs/v1/lib/ControlGet.htm
 export function createControlGetExpectedDataList(scopeName: ScopeName, commandName = 'ControlGet'): ExpectedTestData[] {
   return [
-    // Parameter 1: Control
+    // Parameter 1: Output
     ...((): ExpectedTestData[] => {
       return [
         [
