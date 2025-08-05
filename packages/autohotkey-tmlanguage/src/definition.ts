@@ -497,7 +497,7 @@ export function $shouldIdentifier(flags: CommandParameterFlag = CommandParameter
       includeRule(Repository.DereferenceInCommandArgument),
       includeRule(Repository.Variable),
       {
-        name: [ RuleName.Variable, StyleName.Invalid ],
+        name: [ RuleName.UnquotedString, StyleName.Invalid ],
         match: negChars1('%', inlineSpace()),
       },
     ],

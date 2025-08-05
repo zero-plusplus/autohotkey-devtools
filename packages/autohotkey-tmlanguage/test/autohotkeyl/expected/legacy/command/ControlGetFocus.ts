@@ -25,7 +25,7 @@ export function createControlGetFocusExpectedDataList(scopeName: ScopeName, comm
           [
             { text: commandName, scopes: name(scopeName, RuleName.CommandName) },
             { text: 'f', scopes: name(scopeName, RuleName.Variable) },
-            { text: '()', scopes: name(scopeName, RuleName.Variable, StyleName.Invalid) },
+            { text: '()', scopes: name(scopeName, RuleName.UnquotedString, StyleName.Invalid) },
             { text: '; comment', scopes: name(scopeName, RuleName.InlineComment) },
           ],
         ],
