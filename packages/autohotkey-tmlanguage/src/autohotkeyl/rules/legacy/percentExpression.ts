@@ -1,15 +1,19 @@
 import {
   capture,
   char,
+  inlineSpace,
   inlineSpaces1,
+  negChars0,
   seq,
 } from '../../../oniguruma';
 import {
   includeRule,
+  name,
   nameRule,
   patternsRule,
   Repository,
   RuleName,
+  StyleName,
   type MatchRule,
   type ScopeName,
 } from '../../../tmlanguage';
@@ -31,5 +35,16 @@ export function createPercentExpressionRule(scopeName: ScopeName, placholder: Pl
         includeRule(Repository.Expression),
       ),
     },
+  };
+}
+
+export function createInvalidPercentExpressionRule(scopeName: ScopeName): MatchRule {
+  return {
+    name: name(scopeName, RuleName.PercentExpressionBegin, StyleName.Invalid),
+    match: capture(seq(
+      char('%'),
+      inlineSpaces1(),
+      negChars0(',', inlineSpace()),
+    )),
   };
 }

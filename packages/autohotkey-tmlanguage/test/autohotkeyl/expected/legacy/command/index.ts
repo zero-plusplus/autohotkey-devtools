@@ -39,6 +39,7 @@ import { createClipWaitExpectedDataList } from './ClipWait';
 import { createControlExpectedDataList } from './Control';
 import { createControlClickExpectedDataList } from './ControlClick';
 import { createControlFocusExpectedDataList } from './ControlFocus';
+import { createControlGetExpectedDataList } from './ControlGet';
 
 export function createCommandStatementExpectedData(scopeName: ScopeName): ExpectedTestData[] {
   return [
@@ -93,6 +94,7 @@ export function createCommandStatementExpectedData(scopeName: ScopeName): Expect
     ...createControlExpectedDataList(scopeName),
     ...createControlClickExpectedDataList(scopeName),
     ...createControlFocusExpectedDataList(scopeName),
+    ...createControlGetExpectedDataList(scopeName),
 
     // https://www.autohotkey.com/docs/v1/lib/SetTimer.htm
     ...((): ExpectedTestData[] => {
@@ -1678,7 +1680,9 @@ export function createCommandStatementExpectedData(scopeName: ScopeName): Expect
           [
             { text: 'EnvAdd', scopes: name(scopeName, RuleName.CommandName) },
             { text: ',', scopes: name(scopeName, RuleName.Comma) },
-            { text: '%input%', scopes: name(scopeName, RuleName.Variable, StyleName.Invalid) },
+            { text: '%', scopes: name(scopeName, RuleName.PercentBegin) },
+            { text: 'input', scopes: name(scopeName, RuleName.Variable) },
+            { text: '%', scopes: name(scopeName, RuleName.PercentEnd) },
             { text: '; comment', scopes: name(scopeName, RuleName.InlineComment) },
           ],
         ],
@@ -1704,7 +1708,9 @@ export function createCommandStatementExpectedData(scopeName: ScopeName): Expect
           [
             { text: 'ControlGet', scopes: name(scopeName, RuleName.CommandName) },
             { text: ',', scopes: name(scopeName, RuleName.Comma) },
-            { text: '%output%', scopes: name(scopeName, RuleName.Variable, StyleName.Invalid) },
+            { text: '%', scopes: name(scopeName, RuleName.PercentBegin) },
+            { text: 'output', scopes: name(scopeName, RuleName.Variable) },
+            { text: '%', scopes: name(scopeName, RuleName.PercentEnd) },
             { text: '; comment', scopes: name(scopeName, RuleName.InlineComment) },
           ],
         ],

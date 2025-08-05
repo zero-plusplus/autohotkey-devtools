@@ -466,6 +466,7 @@ export function createRepositories(scopeName: ScopeName): Repositories {
     [Repository.PercentExpression]: rule_v1.createPercentExpressionRule(scopeName, {
       expressionPattern: patterns_common.unquotedExpressionArgumentPattern,
     }),
+    [Repository.InvalidPercentExpression]: rule_v1.createInvalidPercentExpressionRule(scopeName),
     [Repository.PercentExpressionInLastArgument]: rule_v1.createPercentExpressionRule(scopeName, {
       expressionPattern: patterns_common.unquotedExpressionLastArgumentPattern,
     }),

@@ -590,7 +590,9 @@ function parameterToPatternsRule(scopeName: ScopeName, definition: CommandDefini
     if (!placeholder.legacyMode) {
       return [];
     }
-
+    if (hasFlag(parameter.flags, CommandParameterFlag.NoPercentExpression)) {
+      return [ includeRule(Repository.InvalidPercentExpression) ];
+    }
     if (hasFlag(parameter.flags, CommandParameterFlag.RestParams)) {
       return [ includeRule(Repository.PercentExpression) ];
     }

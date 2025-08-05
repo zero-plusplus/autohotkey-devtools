@@ -65,6 +65,9 @@ export const enum CommandParameterFlag {
   // Gui, GuiName:
   //      ^^^^^^^^
   GuiLabeled = 1 << 17,
+  // [x] ControlGet, % output
+  //                 ^^^^^^^^
+  NoPercentExpression = 1 << 18,
 }
 // #endregion enum
 
@@ -493,12 +496,13 @@ export function $quotable(itemMatchers: ParameterItemMatcher[] = [], flags: Comm
 }
 export function $shouldIdentifier(flags: CommandParameterFlag = CommandParameterFlag.None): CommandParameter {
   return {
-    flags: mergeFlags(flags, CommandParameterFlag.ExclusiveKeyword),
+    flags,
     itemMatchers: [
+      includeRule(Repository.DereferenceInCommandArgument),
       includeRule(Repository.Variable),
       {
         name: [ RuleName.Variable, StyleName.Invalid ],
-        match: anyChars1(),
+        match: negChars1('%', inlineSpace()),
       },
     ],
   };
@@ -642,7 +646,7 @@ export function $input(flags: CommandParameterFlag = CommandParameterFlag.None):
   return $shouldIdentifier(flags);
 }
 export function $output(flags: CommandParameterFlag = CommandParameterFlag.None): CommandParameter {
-  return $shouldIdentifier(flags);
+  return $shouldIdentifier(mergeFlags(flags, CommandParameterFlag.NoPercentExpression));
 }
 export function $menuItemName(flags: CommandParameterFlag = CommandParameterFlag.None): CommandParameter {
   // https://www.autohotkey.com/docs/v1/lib/Menu.htm#MenuItemName

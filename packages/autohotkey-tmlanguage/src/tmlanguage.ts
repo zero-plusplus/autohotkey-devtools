@@ -199,6 +199,7 @@ export const enum Repository {
   LegacyIfStatement = '$LegacyIfStatement',
   PercentExpression = '$PercentExpression',
   PercentExpressionInLastArgument = '$PercentExpressionInLastArgument',
+  InvalidPercentExpression = '$InvalidPercentExpression',
   ContinuationSection = '$ContinuationSection',
   ContinuationSectionText = '$ContinuationSectionText',
 }
