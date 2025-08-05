@@ -233,6 +233,27 @@ export function createControlGetExpectedDataList(scopeName: ScopeName, commandNa
             ],
           ];
         })(),
+
+        // Parameter 3: Invalid
+        ...((): ExpectedTestData[] => {
+          return [
+            [
+              dedent`
+                ${commandName},, invalid, 123,          ; comment
+              `,
+              [
+                { text: commandName, scopes: name(scopeName, RuleName.CommandName) },
+                { text: ',', scopes: name(scopeName, RuleName.Comma) },
+                { text: ',', scopes: name(scopeName, RuleName.Comma) },
+                { text: 'invalid', scopes: name(scopeName, RuleName.UnquotedString, StyleName.Invalid) },
+                { text: ',', scopes: name(scopeName, RuleName.UnquotedString, StyleName.Invalid) },
+                { text: '123', scopes: name(scopeName, RuleName.UnquotedString, StyleName.Invalid) },
+                { text: ',', scopes: name(scopeName, RuleName.UnquotedString, StyleName.Invalid) },
+                { text: '; comment', scopes: name(scopeName, RuleName.InlineComment) },
+              ],
+            ],
+          ];
+        })(),
       ];
     })(),
 
