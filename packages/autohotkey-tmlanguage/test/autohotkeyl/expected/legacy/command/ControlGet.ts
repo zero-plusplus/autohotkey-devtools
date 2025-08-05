@@ -119,7 +119,7 @@ export function createControlGetExpectedDataList(scopeName: ScopeName, commandNa
                 [
                   dedent`
                     ${commandName},, ${subcommand}, % var                 ; comment
-                    ${commandName},, ${subcommand}, %var%                 ; comment
+                    ${commandName},, ${subcommand}, %var% Selected        ; comment
                     ${commandName},, ${subcommand}, %var%var%var%         ; comment
                   `,
                   [
@@ -140,6 +140,7 @@ export function createControlGetExpectedDataList(scopeName: ScopeName, commandNa
                     { text: '%', scopes: name(scopeName, RuleName.PercentBegin) },
                     { text: 'var', scopes: name(scopeName, RuleName.Variable) },
                     { text: '%', scopes: name(scopeName, RuleName.PercentEnd) },
+                    { text: 'Selected', scopes: name(scopeName, RuleName.UnquotedString, StyleName.Strong) },
                     { text: '; comment', scopes: name(scopeName, RuleName.InlineComment) },
 
                     { text: commandName, scopes: name(scopeName, RuleName.CommandName) },
