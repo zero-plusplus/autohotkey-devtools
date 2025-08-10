@@ -64,6 +64,7 @@ export const enum CommandParameterFlag {
   // [x] ControlGet, % output
   //                 ^^^^^^^^
   NoPercentExpression = 1 << 18,
+  NoLastComma = 1 << 19,
 }
 // #endregion enum
 
@@ -566,16 +567,19 @@ export function $shouldKeyword(itemMatchers: ParameterItemMatcher[] = [], flags:
   // Accepts one arbitrary keyword, otherwise not accepted
   // e.g. `Gui, Flash, Off`
   //                   ^^^
-  return $([
-    includeRule(Repository.DereferenceUnaryOperator),
-    includeRule(Repository.DereferenceInCommandArgument),
+  return {
+    flags: mergeFlags(flags, CommandParameterFlag.NoLastComma),
+    itemMatchers: [
+      includeRule(Repository.DereferenceUnaryOperator),
+      includeRule(Repository.DereferenceInCommandArgument),
 
-    ...itemMatchers,
-    {
-      name: [ RuleName.UnquotedString, StyleName.Invalid ],
-      match: anyChars1(),
-    },
-  ]);
+      ...itemMatchers,
+      {
+        name: [ RuleName.UnquotedString, StyleName.Invalid ],
+        match: anyChars1(),
+      },
+    ],
+  };
 }
 export function $shouldSpacedKeywords(itemMatchers: ParameterItemMatcher[] = [], flags: CommandParameterFlag = CommandParameterFlag.None): CommandParameter {
   // e.g. `PixelGetColor, output, x, y, Fast RGB`
