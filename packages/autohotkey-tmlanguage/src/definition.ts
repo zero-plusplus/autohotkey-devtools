@@ -593,7 +593,7 @@ export function $shouldSpacedKeywords(itemMatchers: ParameterItemMatcher[] = [],
       name: [ RuleName.UnquotedString, StyleName.Invalid ],
       match: negChars1('%', inlineSpace()),
     },
-  ]);
+  ], mergeFlags(flags, CommandParameterFlag.NoLastComma));
 }
 export function $withNumber(itemMatchers: ParameterItemMatcher[] = [], flags: CommandParameterFlag = CommandParameterFlag.None): CommandParameter {
   return {
@@ -632,7 +632,7 @@ export function $rest(itemMatchers: ParameterItemMatcher[] = [], flags: CommandP
   };
 }
 export function $click(flags: CommandParameterFlag = CommandParameterFlag.None): CommandParameter {
-  return $([ includeRule(Repository.CommandArgumentClick) ], flags);
+  return $shouldSpacedKeywords([ includeRule(Repository.CommandArgumentClick) ], flags);
 }
 export function $fileAttributes(flags: CommandParameterFlag = CommandParameterFlag.None): CommandParameter {
   return $shouldKeyword([ flagedLetterOption('R', 'A', 'S', 'H', 'N', 'O', 'T') ], flags);
