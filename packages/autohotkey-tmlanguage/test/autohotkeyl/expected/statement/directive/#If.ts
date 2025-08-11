@@ -1,5 +1,5 @@
 import { dedent } from '@zero-plusplus/utilities/src';
-import { name, RuleDescriptor, RuleName, type ScopeName } from '../../../../../src/tmlanguage';
+import { name, RuleDescriptor, RuleName, StyleName, type ScopeName } from '../../../../../src/tmlanguage';
 import type { ExpectedTestData } from '../../../../types';
 
 // https://www.autohotkey.com/docs/v1/lib/_If.htm
@@ -31,8 +31,7 @@ export function createIfExpectedDataList(scopeName: ScopeName): ExpectedTestData
       [
         { text: directiveName, scopes: name(scopeName, RuleName.DirectiveName) },
         { text: ',', scopes: name(scopeName, RuleName.Comma) },
-        { text: '%', scopes: name(scopeName, RuleName.PercentExpressionBegin) },
-        { text: 'var', scopes: name(scopeName, RuleName.Variable) },
+        { text: '% var', scopes: name(scopeName, RuleName.PercentExpressionBegin, StyleName.Invalid) },
         { text: '; comment', scopes: name(scopeName, RuleName.InlineComment) },
 
         { text: directiveName, scopes: name(scopeName, RuleName.DirectiveName) },

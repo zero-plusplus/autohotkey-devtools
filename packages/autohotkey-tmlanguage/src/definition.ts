@@ -615,7 +615,7 @@ export function $withNumber(itemMatchers: ParameterItemMatcher[] = [], flags: Co
 }
 export function $expression(flags: CommandParameterFlag = CommandParameterFlag.None): CommandParameter {
   return {
-    flags: mergeFlags(flags, CommandParameterFlag.Expression),
+    flags: mergeFlags(flags, CommandParameterFlag.Expression, CommandParameterFlag.NoPercentExpression),
     itemMatchers: [
       includeRule(Repository.DereferenceInCommandArgument),
       includeRule(Repository.Expression),
