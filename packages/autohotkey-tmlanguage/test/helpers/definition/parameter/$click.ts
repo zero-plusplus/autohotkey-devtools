@@ -1,11 +1,14 @@
-import type { ScopeName } from '../../../../src/tmlanguage';
-import type { ExpectedTestData } from '../../../types';
-import type { Placeholder } from '../helpers';
-import { $shouldSpacedKeyword } from './$shouldSpacedKeyword';
+import { isIntegerLike } from '@zero-plusplus/utilities/src';
+import { name, RuleName, StyleName, type ScopeName } from '../../../../src/tmlanguage';
+import type { ExpectedTestData, ParsedResult } from '../../../types';
+import { createDereferenceInKeywordParameterExpectedDataList } from '../common/dereference';
+import { createKeywordInvalidExpectedDataList } from '../common/invalid';
+import { createPercentExpressionParameterExpectedDataList } from '../common/percentExpression';
+import { createExpectedData, type Placeholder } from '../helpers';
 
 export function $click(scopeName: ScopeName, placeholder: Placeholder): ExpectedTestData[] {
   return [
-    ...$shouldSpacedKeyword(scopeName, [
+    ...[
       [ '2' ],
       [ '100', '200', 'Left' ],
       [ '100', '200', 'L' ],
@@ -21,6 +24,24 @@ export function $click(scopeName: ScopeName, placeholder: Placeholder): Expected
       [ '100', '200', 'D' ],
       [ '100', '200', '0' ],
       [ '100', '200', 'Relative' ],
-    ], placeholder),
+    ].flatMap((options): ExpectedTestData[] => {
+      return [
+        createExpectedData(
+          scopeName,
+          options.join(' '),
+          [
+            ...options.map((option): ParsedResult => {
+              return isIntegerLike(option)
+                ? { text: option, scopes: name(scopeName, RuleName.Integer) }
+                : { text: option, scopes: name(scopeName, RuleName.UnquotedString, StyleName.Strong) };
+            }),
+          ],
+          placeholder,
+        ),
+      ];
+    }),
+    ...createPercentExpressionParameterExpectedDataList(scopeName, placeholder),
+    ...createDereferenceInKeywordParameterExpectedDataList(scopeName, placeholder),
+    ...createKeywordInvalidExpectedDataList(scopeName, placeholder),
   ];
 }

@@ -1,14 +1,24 @@
-import type { ScopeName } from '../../../../src/tmlanguage';
+import { name, RuleName, StyleName, type ScopeName } from '../../../../src/tmlanguage';
 import type { ExpectedTestData } from '../../../types';
-import type { Placeholder } from '../helpers';
-import { $shouldKeyword } from './$shouldKeyword';
+import { createDereferenceInKeywordParameterExpectedDataList } from '../common/dereference';
+import { createKeywordInvalidExpectedDataList } from '../common/invalid';
+import { createPercentExpressionParameterExpectedDataList } from '../common/percentExpression';
+import { createExpectedData, type Placeholder } from '../helpers';
 
 export function $onOff(scopeName: ScopeName, placeholder: Placeholder, additionalKeywords: string[] = []): ExpectedTestData[] {
   return [
-    ...$shouldKeyword(
-      scopeName,
-      [ 'On', 'Off', '0', '1', ...additionalKeywords ],
-      placeholder,
-    ),
+    ...[ 'On', 'Off', '0', '1', ...additionalKeywords ].flatMap((value): ExpectedTestData[] => {
+      return [
+        createExpectedData(
+          scopeName,
+          value,
+          [ { text: value, scopes: name(scopeName, RuleName.UnquotedString, StyleName.Strong) } ],
+          placeholder,
+        ),
+      ];
+    }),
+    ...createPercentExpressionParameterExpectedDataList(scopeName, placeholder),
+    ...createDereferenceInKeywordParameterExpectedDataList(scopeName, placeholder),
+    ...createKeywordInvalidExpectedDataList(scopeName, placeholder),
   ];
 }
