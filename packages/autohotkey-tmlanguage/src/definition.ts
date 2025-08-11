@@ -836,7 +836,7 @@ export function $soundControlType(): CommandParameter {
 export function $winTitle(flags: CommandParameterFlag = CommandParameterFlag.None): CommandParameter {
   // e.g. `WinGet, output,ID, abc ahk_exe abc.exe ahk_class abc
   //                          ^^^ ^^^^^^^^^^^^^^^ ^^^^^^^^^^^^^
-  return $([ keywordOption('ahk_class', 'ahk_id', 'ahk_pid', 'ahk_exe', 'ahk_group') ], flags);
+  return $regexp([ keywordOption('ahk_class', 'ahk_id', 'ahk_pid', 'ahk_exe', 'ahk_group') ], flags);
 
   // Make each definition group easily distinguishable by underlining. However, if the underline is applied in TMLanguage, its color cannot be controlled. This should be implemented with semantic highlighting
   // For example, three groups are underlined in the following cases
