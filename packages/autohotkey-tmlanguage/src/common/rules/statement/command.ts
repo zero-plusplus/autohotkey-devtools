@@ -465,17 +465,28 @@ export function createClickCommandArgumentRule(scopeName: ScopeName): PatternsRu
 }
 export function createControlStyleCommandArgumentRule(scopeName: ScopeName): PatternsRule {
   return patternsRule(...itemPatternToRules(scopeName, [
+    includeRule(Repository.DereferenceUnaryOperator),
+    includeRule(Repository.DereferenceInCommandArgument),
     {
-      name: RuleName.Operator,
-      match: char('+', '-', '^'),
-    },
-    includeRule(Repository.Number),
-    {
-      name: RuleName.UnquotedString,
       match: seq(
-        negChar('`', '0-9', '+', '-', '^', inlineSpace(), ','),
-        negChars0('`', inlineSpace(), ','),
+        optional(capture(char('+', '-', '^'))),
+        optional(capture(ignoreCase('LV'))),
+        capture(ignoreCase('0x')),
+        capture(chars1('0-9', 'a-z', 'A-Z')),
       ),
+      captures: {
+        1: [ includeRule(Repository.Operator) ],
+        2: {
+          name: [ RuleName.UnquotedString, StyleName.Strong ],
+          match: ignoreCase('LV'),
+        },
+        3: { name: [ RuleName.Hex, RuleName.HexPrefix ] },
+        4: { name: [ RuleName.Hex, RuleName.HexValue ] },
+      },
+    },
+    {
+      name: [ RuleName.UnquotedString, StyleName.Invalid ],
+      match: negChars1('%', inlineSpace()),
     },
   ]));
 }

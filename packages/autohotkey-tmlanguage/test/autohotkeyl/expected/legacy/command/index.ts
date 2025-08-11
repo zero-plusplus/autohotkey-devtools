@@ -1235,8 +1235,8 @@ export function createCommandStatementExpectedData(scopeName: ScopeName): Expect
             WinSet, AlwaysOnTop, on, ahk_id, unquoted, unquoted, unquoted           ; comment
             WinSet, Transparent, unquoted, ahk_id, unquoted, unquoted, unquoted     ; comment
             WinSet, TransColor, unquoted, ahk_id, unquoted, unquoted, unquoted      ; comment
-            WinSet, Style, unquoted, ahk_id, unquoted, unquoted, unquoted           ; comment
-            WinSet, ExStyle, unquoted, ahk_id, unquoted, unquoted, unquoted         ; comment
+            WinSet, Style, invalid, ahk_id, unquoted, unquoted, unquoted           ; comment
+            WinSet, ExStyle, invalid, ahk_id, unquoted, unquoted, unquoted         ; comment
             WinSet, Bottom, blank, ahk_id, unquoted, unquoted, unquoted             ; comment
             WinSet, Top, blank, ahk_id, unquoted, unquoted, unquoted                ; comment
             WinSet, Disable, blank, ahk_id, unquoted, unquoted, unquoted            ; comment
@@ -1285,7 +1285,7 @@ export function createCommandStatementExpectedData(scopeName: ScopeName): Expect
                 { text: ',', scopes: name(scopeName, RuleName.Comma) },
                 { text: subcommand, scopes: name(scopeName, RuleName.SubCommandName) },
                 { text: ',', scopes: name(scopeName, RuleName.Comma) },
-                { text: 'unquoted', scopes: name(scopeName, RuleName.UnquotedString) },
+                { text: 'invalid', scopes: name(scopeName, RuleName.UnquotedString, StyleName.Invalid) },
                 { text: ',', scopes: name(scopeName, RuleName.Comma) },
                 { text: 'ahk_id', scopes: name(scopeName, RuleName.UnquotedString, StyleName.Strong) },
                 { text: ',', scopes: name(scopeName, RuleName.Comma) },

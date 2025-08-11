@@ -1,5 +1,10 @@
 import { dedent } from '@zero-plusplus/utilities/src';
 import { name, RuleDescriptor, RuleName, StyleName, type ScopeName } from '../../../../../src/tmlanguage';
+import { $ } from '../../../../helpers/definition/parameter/$';
+import { $blank } from '../../../../helpers/definition/parameter/$blank';
+import { $shouldInteger } from '../../../../helpers/definition/parameter/$shouldInteger';
+import { $style } from '../../../../helpers/definition/parameter/$style';
+import { $subcommand } from '../../../../helpers/definition/parameter/$subcommand';
 import type { ExpectedTestData } from '../../../../types';
 
 // https://www.autohotkey.com/docs/v1/lib/Control.htm
@@ -7,272 +12,21 @@ export function createControlExpectedDataList(scopeName: ScopeName): ExpectedTes
   const commandName = 'Control';
 
   return [
-    // Parameter 1: SubCommand
-    ...((): ExpectedTestData[] => {
-      return [
-        // Parameter 2: Blank
-        ...[ 'Check', 'UnCheck', 'Enable', 'Disable', 'Show', 'Hide', 'ShowDropDown', 'HideDropDown' ].flatMap((subcommand): ExpectedTestData[] => {
-          return [
-            [
-              dedent`
-                ${commandName} ${subcommand},,          ; comment
-              `,
-              [
-                { text: commandName, scopes: name(scopeName, RuleName.CommandName) },
-                { text: subcommand, scopes: name(scopeName, RuleName.SubCommandName) },
-                { text: ',', scopes: name(scopeName, RuleName.Comma) },
-                { text: ',', scopes: name(scopeName, RuleName.Comma) },
-                { text: '; comment', scopes: name(scopeName, RuleName.InlineComment) },
-              ],
-            ],
-            [
-              dedent`
-                ${commandName} %var%,,          ; comment
-              `,
-              [
-                { text: commandName, scopes: name(scopeName, RuleName.CommandName) },
-                { text: '%var%', scopes: name(scopeName, RuleName.UnquotedString, StyleName.Invalid) },
-                { text: ',', scopes: name(scopeName, RuleName.UnquotedString, StyleName.Invalid) },
-                { text: ',', scopes: name(scopeName, RuleName.UnquotedString, StyleName.Invalid) },
-                { text: '; comment', scopes: name(scopeName, RuleName.InlineComment) },
-              ],
-            ],
-          ];
-        }),
-        // Parameter 2: N
-        ...[ 'Style', 'ExStyle' ].flatMap((subcommand): ExpectedTestData[] => {
-          return [
-            ...[ '+', '-', '^' ].flatMap((operator): ExpectedTestData[] => {
-              return [
-                [
-                  dedent`
-                    ${commandName} ${subcommand}, ${operator}0x123          ; comment
-                  `,
-                  [
-                    { text: commandName, scopes: name(scopeName, RuleName.CommandName) },
-                    { text: subcommand, scopes: name(scopeName, RuleName.SubCommandName) },
-                    { text: ',', scopes: name(scopeName, RuleName.Comma) },
-                    { text: operator, scopes: name(scopeName, RuleName.Operator) },
-                    { text: '0x', scopes: name(scopeName, RuleName.Hex, RuleName.HexPrefix) },
-                    { text: '123', scopes: name(scopeName, RuleName.Hex, RuleName.HexValue) },
-                    { text: '; comment', scopes: name(scopeName, RuleName.InlineComment) },
-                  ],
-                ],
-              ];
-            }),
-            [
-              dedent`
-                ${commandName} ${subcommand}, % var                 ; comment
-                ${commandName} ${subcommand}, %var%                 ; comment
-                ${commandName} ${subcommand}, %var%var%var%         ; comment
-              `,
-              [
-                { text: commandName, scopes: name(scopeName, RuleName.CommandName) },
-                { text: subcommand, scopes: name(scopeName, RuleName.SubCommandName) },
-                { text: ',', scopes: name(scopeName, RuleName.Comma) },
-                { text: '%', scopes: name(scopeName, RuleName.PercentExpressionBegin) },
-                { text: 'var', scopes: name(scopeName, RuleName.Variable) },
-                { text: '; comment', scopes: name(scopeName, RuleName.InlineComment) },
+    // Parameter 1: SubCommand, Parameter 2: Blank
+    ...$subcommand(scopeName, [ 'Check', 'UnCheck', 'Enable', 'Disable', 'Show', 'Hide', 'ShowDropDown', 'HideDropDown' ], { name: commandName, index: 0 }),
+    ...$blank(scopeName, { name: commandName, index: 1, subcommand: { index: 0, name: 'Check' } }),
 
-                { text: commandName, scopes: name(scopeName, RuleName.CommandName) },
-                { text: subcommand, scopes: name(scopeName, RuleName.SubCommandName) },
-                { text: ',', scopes: name(scopeName, RuleName.Comma) },
-                { text: '%', scopes: name(scopeName, RuleName.PercentBegin) },
-                { text: 'var', scopes: name(scopeName, RuleName.Variable) },
-                { text: '%', scopes: name(scopeName, RuleName.PercentEnd) },
-                { text: '; comment', scopes: name(scopeName, RuleName.InlineComment) },
+    // Parameter 1: SubCommand, Parameter 2: N
+    ...$subcommand(scopeName, [ 'Style', 'ExStyle' ], { name: commandName, index: 0 }),
+    ...$style(scopeName, { name: commandName, index: 1, subcommand: { index: 0, name: 'Style' } }),
 
-                { text: commandName, scopes: name(scopeName, RuleName.CommandName) },
-                { text: subcommand, scopes: name(scopeName, RuleName.SubCommandName) },
-                { text: ',', scopes: name(scopeName, RuleName.Comma) },
-                { text: '%', scopes: name(scopeName, RuleName.PercentBegin) },
-                { text: 'var', scopes: name(scopeName, RuleName.Variable) },
-                { text: '%', scopes: name(scopeName, RuleName.PercentBegin) },
-                { text: 'var', scopes: name(scopeName, RuleName.Variable) },
-                { text: '%', scopes: name(scopeName, RuleName.PercentEnd) },
-                { text: 'var', scopes: name(scopeName, RuleName.Variable) },
-                { text: '%', scopes: name(scopeName, RuleName.PercentEnd) },
-                { text: '; comment', scopes: name(scopeName, RuleName.InlineComment) },
-              ],
-            ],
-          ];
-        }),
-        // Parameter 2: Count/N
-        ...[ 'TabLeft', 'TabRight', 'Delete', 'Choose' ].flatMap((subcommand): ExpectedTestData[] => {
-          return [
-            ...[ '+', '-' ].flatMap((operator): ExpectedTestData[] => {
-              return [
-                [
-                  dedent`
-                    ${commandName} ${subcommand}, ${operator}123          ; comment
-                  `,
-                  [
-                    { text: commandName, scopes: name(scopeName, RuleName.CommandName) },
-                    { text: subcommand, scopes: name(scopeName, RuleName.SubCommandName) },
-                    { text: ',', scopes: name(scopeName, RuleName.Comma) },
-                    { text: operator, scopes: name(scopeName, RuleName.Operator) },
-                    { text: '123', scopes: name(scopeName, RuleName.Integer) },
-                    { text: '; comment', scopes: name(scopeName, RuleName.InlineComment) },
-                  ],
-                ],
-              ];
-            }),
-            ...[ 'invalid' ].flatMap((param): ExpectedTestData[] => {
-              return [
-                [
-                  dedent`
-                    ${commandName} ${subcommand}, ${param}        ; comment
-                  `,
-                  [
-                    { text: commandName, scopes: name(scopeName, RuleName.CommandName) },
-                    { text: subcommand, scopes: name(scopeName, RuleName.SubCommandName) },
-                    { text: ',', scopes: name(scopeName, RuleName.Comma) },
-                    { text: param, scopes: name(scopeName, RuleName.UnquotedString, StyleName.Invalid) },
-                    { text: '; comment', scopes: name(scopeName, RuleName.InlineComment) },
-                  ],
-                ],
-              ];
-            }),
-            [
-              dedent`
-                ${commandName} ${subcommand}, % var                 ; comment
-                ${commandName} ${subcommand}, %var%                 ; comment
-                ${commandName} ${subcommand}, +%var%                 ; comment
-                ${commandName} ${subcommand}, -%var%                 ; comment
-                ${commandName} ${subcommand}, %var%var%var%         ; comment
-              `,
-              [
-                { text: commandName, scopes: name(scopeName, RuleName.CommandName) },
-                { text: subcommand, scopes: name(scopeName, RuleName.SubCommandName) },
-                { text: ',', scopes: name(scopeName, RuleName.Comma) },
-                { text: '%', scopes: name(scopeName, RuleName.PercentExpressionBegin) },
-                { text: 'var', scopes: name(scopeName, RuleName.Variable) },
-                { text: '; comment', scopes: name(scopeName, RuleName.InlineComment) },
+    // Parameter 1: SubCommand, Parameter 2: Count/N
+    ...$subcommand(scopeName, [ 'TabLeft', 'TabRight', 'Delete', 'Choose' ], { name: commandName, index: 0 }),
+    ...$shouldInteger(scopeName, { name: commandName, index: 1, subcommand: { index: 0, name: 'TabLeft' } }),
 
-                { text: commandName, scopes: name(scopeName, RuleName.CommandName) },
-                { text: subcommand, scopes: name(scopeName, RuleName.SubCommandName) },
-                { text: ',', scopes: name(scopeName, RuleName.Comma) },
-                { text: '%', scopes: name(scopeName, RuleName.PercentBegin) },
-                { text: 'var', scopes: name(scopeName, RuleName.Variable) },
-                { text: '%', scopes: name(scopeName, RuleName.PercentEnd) },
-                { text: '; comment', scopes: name(scopeName, RuleName.InlineComment) },
-                { text: commandName, scopes: name(scopeName, RuleName.CommandName) },
-
-                { text: subcommand, scopes: name(scopeName, RuleName.SubCommandName) },
-                { text: ',', scopes: name(scopeName, RuleName.Comma) },
-                { text: '+', scopes: name(scopeName, RuleName.Operator) },
-                { text: '%', scopes: name(scopeName, RuleName.PercentBegin) },
-                { text: 'var', scopes: name(scopeName, RuleName.Variable) },
-                { text: '%', scopes: name(scopeName, RuleName.PercentEnd) },
-                { text: '; comment', scopes: name(scopeName, RuleName.InlineComment) },
-
-                { text: commandName, scopes: name(scopeName, RuleName.CommandName) },
-                { text: subcommand, scopes: name(scopeName, RuleName.SubCommandName) },
-                { text: ',', scopes: name(scopeName, RuleName.Comma) },
-                { text: '-', scopes: name(scopeName, RuleName.Operator) },
-                { text: '%', scopes: name(scopeName, RuleName.PercentBegin) },
-                { text: 'var', scopes: name(scopeName, RuleName.Variable) },
-                { text: '%', scopes: name(scopeName, RuleName.PercentEnd) },
-                { text: '; comment', scopes: name(scopeName, RuleName.InlineComment) },
-
-                { text: commandName, scopes: name(scopeName, RuleName.CommandName) },
-                { text: subcommand, scopes: name(scopeName, RuleName.SubCommandName) },
-                { text: ',', scopes: name(scopeName, RuleName.Comma) },
-                { text: '%', scopes: name(scopeName, RuleName.PercentBegin) },
-                { text: 'var', scopes: name(scopeName, RuleName.Variable) },
-                { text: '%', scopes: name(scopeName, RuleName.PercentBegin) },
-                { text: 'var', scopes: name(scopeName, RuleName.Variable) },
-                { text: '%', scopes: name(scopeName, RuleName.PercentEnd) },
-                { text: 'var', scopes: name(scopeName, RuleName.Variable) },
-                { text: '%', scopes: name(scopeName, RuleName.PercentEnd) },
-                { text: '; comment', scopes: name(scopeName, RuleName.InlineComment) },
-              ],
-            ],
-          ];
-        }),
-        // Parameter 2: String
-        ...[ 'Add', 'ChooseString', 'EditPaste' ].flatMap((subcommand): ExpectedTestData[] => {
-          return [
-            [
-              dedent`
-                ${commandName} ${subcommand}, unquoted              ; comment
-                ${commandName} ${subcommand}, abc\`t,               ; comment
-              `,
-              [
-                { text: commandName, scopes: name(scopeName, RuleName.CommandName) },
-                { text: subcommand, scopes: name(scopeName, RuleName.SubCommandName) },
-                { text: ',', scopes: name(scopeName, RuleName.Comma) },
-                { text: 'unquoted', scopes: name(scopeName, RuleName.UnquotedString) },
-                { text: '; comment', scopes: name(scopeName, RuleName.InlineComment) },
-
-                { text: commandName, scopes: name(scopeName, RuleName.CommandName) },
-                { text: subcommand, scopes: name(scopeName, RuleName.SubCommandName) },
-                { text: ',', scopes: name(scopeName, RuleName.Comma) },
-                { text: 'abc', scopes: name(scopeName, RuleName.UnquotedString) },
-                { text: '`t', scopes: name(scopeName, RuleName.UnquotedString, StyleName.Escape) },
-                { text: ',', scopes: name(scopeName, RuleName.Comma) },
-                { text: '; comment', scopes: name(scopeName, RuleName.InlineComment) },
-              ],
-            ],
-            [
-              dedent`
-                ${commandName} ${subcommand}, % var                 ; comment
-                ${commandName} ${subcommand}, %var%                 ; comment
-                ${commandName} ${subcommand}, +%var%                ; comment
-                ${commandName} ${subcommand}, -%var%                ; comment
-                ${commandName} ${subcommand}, %var%var%var%         ; comment
-              `,
-              [
-                { text: commandName, scopes: name(scopeName, RuleName.CommandName) },
-                { text: subcommand, scopes: name(scopeName, RuleName.SubCommandName) },
-                { text: ',', scopes: name(scopeName, RuleName.Comma) },
-                { text: '%', scopes: name(scopeName, RuleName.PercentExpressionBegin) },
-                { text: 'var', scopes: name(scopeName, RuleName.Variable) },
-                { text: '; comment', scopes: name(scopeName, RuleName.InlineComment) },
-
-                { text: commandName, scopes: name(scopeName, RuleName.CommandName) },
-                { text: subcommand, scopes: name(scopeName, RuleName.SubCommandName) },
-                { text: ',', scopes: name(scopeName, RuleName.Comma) },
-                { text: '%', scopes: name(scopeName, RuleName.PercentBegin) },
-                { text: 'var', scopes: name(scopeName, RuleName.Variable) },
-                { text: '%', scopes: name(scopeName, RuleName.PercentEnd) },
-                { text: '; comment', scopes: name(scopeName, RuleName.InlineComment) },
-                { text: commandName, scopes: name(scopeName, RuleName.CommandName) },
-
-                { text: subcommand, scopes: name(scopeName, RuleName.SubCommandName) },
-                { text: ',', scopes: name(scopeName, RuleName.Comma) },
-                { text: '+', scopes: name(scopeName, RuleName.Operator) },
-                { text: '%', scopes: name(scopeName, RuleName.PercentBegin) },
-                { text: 'var', scopes: name(scopeName, RuleName.Variable) },
-                { text: '%', scopes: name(scopeName, RuleName.PercentEnd) },
-                { text: '; comment', scopes: name(scopeName, RuleName.InlineComment) },
-
-                { text: commandName, scopes: name(scopeName, RuleName.CommandName) },
-                { text: subcommand, scopes: name(scopeName, RuleName.SubCommandName) },
-                { text: ',', scopes: name(scopeName, RuleName.Comma) },
-                { text: '-', scopes: name(scopeName, RuleName.Operator) },
-                { text: '%', scopes: name(scopeName, RuleName.PercentBegin) },
-                { text: 'var', scopes: name(scopeName, RuleName.Variable) },
-                { text: '%', scopes: name(scopeName, RuleName.PercentEnd) },
-                { text: '; comment', scopes: name(scopeName, RuleName.InlineComment) },
-
-                { text: commandName, scopes: name(scopeName, RuleName.CommandName) },
-                { text: subcommand, scopes: name(scopeName, RuleName.SubCommandName) },
-                { text: ',', scopes: name(scopeName, RuleName.Comma) },
-                { text: '%', scopes: name(scopeName, RuleName.PercentBegin) },
-                { text: 'var', scopes: name(scopeName, RuleName.Variable) },
-                { text: '%', scopes: name(scopeName, RuleName.PercentBegin) },
-                { text: 'var', scopes: name(scopeName, RuleName.Variable) },
-                { text: '%', scopes: name(scopeName, RuleName.PercentEnd) },
-                { text: 'var', scopes: name(scopeName, RuleName.Variable) },
-                { text: '%', scopes: name(scopeName, RuleName.PercentEnd) },
-                { text: '; comment', scopes: name(scopeName, RuleName.InlineComment) },
-              ],
-            ],
-          ];
-        }),
-      ];
-    })(),
+    // Parameter 1: SubCommand, Parameter 2: Count/N
+    ...$subcommand(scopeName, [ 'Add', 'ChooseString', 'EditPaste' ], { name: commandName, index: 0 }),
+    ...$(scopeName, { name: commandName, index: 1, subcommand: { index: 0, name: 'Add' } }),
 
     // Parameter 3: Control
     ...((subcommand = 'Check'): ExpectedTestData[] => {

@@ -469,7 +469,10 @@ export function $invalid(flags: CommandParameterFlag = CommandParameterFlag.None
 export function $style(flags: CommandParameterFlag = CommandParameterFlag.None): CommandParameter {
   // e.g. `Control, Style, ^0x800000`, `WinSet, Style, -0xC00000`
   //                       ^^^^^^^^^                   ^^^^^^^^^
-  return $([ includeRule(Repository.CommandArgumentControlStyle) ], flags);
+  return {
+    flags,
+    itemMatchers: [ includeRule(Repository.CommandArgumentControlStyle) ],
+  };
 }
 export function $quotable(itemMatchers: ParameterItemMatcher[] = [], flags: CommandParameterFlag = CommandParameterFlag.None): CommandParameter {
   return {
