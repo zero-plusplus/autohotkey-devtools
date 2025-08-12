@@ -1,5 +1,8 @@
 import { dedent } from '@zero-plusplus/utilities/src';
 import { name, RuleDescriptor, RuleName, StyleName, type ScopeName } from '../../../../../src/tmlanguage';
+import { decimalOption } from '../../../../helpers/definition/option/decimalOption';
+import { $ } from '../../../../helpers/definition/parameter/$';
+import { $control } from '../../../../helpers/definition/parameter/$control';
 import type { ExpectedTestData } from '../../../../types';
 
 // https://www.autohotkey.com/docs/v1/lib/ControlClick.htm
@@ -8,6 +11,15 @@ export function createControlClickExpectedDataList(scopeName: ScopeName): Expect
 
   return [
     // Parameter 1: Control/Pos
+    ...((): ExpectedTestData[] => {
+      const placeholder = { name: commandName, index: 0 };
+      return [
+        ...$control(scopeName, placeholder),
+        ...$(scopeName, placeholder),
+        ...decimalOption(scopeName, [ [ 'X', '16' ], [ 'Y', '20' ] ], placeholder),
+      ];
+    })(),
+
     ...((): ExpectedTestData[] => {
       return [
         // Parameter 1: Control
