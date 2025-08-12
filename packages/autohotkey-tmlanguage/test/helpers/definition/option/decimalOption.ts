@@ -1,8 +1,9 @@
 import { name, RuleName, StyleName, type ScopeName } from '../../../../src/tmlanguage';
-import type { ExpectedTestData } from '../../../types';
+import type { ExpectedTestData, ParsedResult } from '../../../types';
 import { createExpectedData, type Placeholder } from '../helpers';
 
-export function decimalOption(scopeName: ScopeName, optionEntries: Array<[ string, string ]>, placeholder: Placeholder): ExpectedTestData[] {
+type OptionNameAndValue = [ string, string ];
+export function decimalOption(scopeName: ScopeName, optionEntries: OptionNameAndValue[], placeholder: Placeholder): ExpectedTestData[] {
   return [
     ...optionEntries.flatMap(([ optionName, value ]): ExpectedTestData[] => {
       return [
@@ -40,5 +41,14 @@ export function decimalOption(scopeName: ScopeName, optionEntries: Array<[ strin
         ),
       ];
     }),
+
+    createExpectedData(
+      scopeName,
+      optionEntries.map(([ optionName, value ]) => `${optionName}${value}`).join(' '),
+      optionEntries.flatMap(([ optionName, value ]): ParsedResult[] => {
+        return [ { text: `${optionName}${value}`, scopes: name(scopeName, RuleName.UnquotedString, StyleName.Strong) } ];
+      }),
+      placeholder,
+    ),
   ];
 }
