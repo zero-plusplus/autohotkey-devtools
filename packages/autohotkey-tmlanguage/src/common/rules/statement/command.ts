@@ -162,12 +162,8 @@ export function createSingleLineCommandLikeStatementRule(scopeName: ScopeName, d
     )),
     end: seq(
       // command name
-      seq(
-        lookbehind(placeholder.startPattern),
-        inlineSpaces0(),
-        capture(ignoreCase(definition.name)),
-        negativeLookahead(char('(')),
-      ),
+      capture(ignoreCase(definition.name)),
+      negativeLookahead(char('(')),
 
       // arguments
       ...(0 < signature.parameters.length
