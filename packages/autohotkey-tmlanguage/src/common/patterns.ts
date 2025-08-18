@@ -72,7 +72,6 @@ export const unquotedExpressionLastArgumentPattern: string = groupMany1(alt(
 export const percentExpressionArgumentPattern: string = seq(
   char('%'),
   inlineSpaces1(),
-  negativeLookahead(char(';')),
   unquotedExpressionArgumentPattern,
 );
 export const percentExpressionLastArgumentPattern: string = group(seq(

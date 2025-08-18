@@ -41,10 +41,10 @@ export function createPercentExpressionRule(scopeName: ScopeName, placholder: Pl
 export function createInvalidPercentExpressionRule(scopeName: ScopeName): MatchRule {
   return {
     name: name(scopeName, RuleName.PercentExpressionBegin, StyleName.Invalid),
-    match: capture(seq(
+    match: seq(
       char('%'),
       inlineSpaces1(),
       negChars0(',', inlineSpace()),
-    )),
+    ),
   };
 }
