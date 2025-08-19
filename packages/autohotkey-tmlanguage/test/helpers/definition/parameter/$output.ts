@@ -22,6 +22,12 @@ export function $output(scopeName: ScopeName, placeholder: Placeholder): Expecte
     ),
     createExpectedData(
       scopeName,
+      `% output`,
+      [ { text: '% output', scopes: name(scopeName, RuleName.PercentExpressionBegin, StyleName.Invalid) } ],
+      placeholder,
+    ),
+    createExpectedData(
+      scopeName,
       `%output%`,
       [
         { text: '%', scopes: name(scopeName, RuleName.PercentBegin) },
