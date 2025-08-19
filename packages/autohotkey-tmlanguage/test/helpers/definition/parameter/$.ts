@@ -1,6 +1,6 @@
 import { name, RuleName, type ScopeName } from '../../../../src/tmlanguage';
 import type { ExpectedTestData } from '../../../types';
-import { createDereferenceInKeywordParameterExpectedDataList } from '../common/dereference';
+import { createDereferenceInUnquotedParameterExpectedDataList } from '../common/dereference';
 import { createPercentExpressionParameterExpectedDataList } from '../common/percentExpression';
 import { createExpectedData, type Placeholder } from '../helpers';
 
@@ -13,6 +13,6 @@ export function $(scopeName: ScopeName, placeholder: Placeholder): ExpectedTestD
       placeholder,
     ),
     ...createPercentExpressionParameterExpectedDataList(scopeName, placeholder),
-    ...createDereferenceInKeywordParameterExpectedDataList(scopeName, placeholder),
+    ...createDereferenceInUnquotedParameterExpectedDataList(scopeName, placeholder),
   ];
 }
