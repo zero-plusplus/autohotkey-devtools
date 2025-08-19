@@ -2,6 +2,22 @@ import { timesAsync } from '../../src';
 
 describe('timesAsync', () => {
   test('timesAsync', async() => {
-    await expect(timesAsync(2, async() => Promise.resolve(1))).resolves.toStrictEqual([ 1, 1 ]);
+    const result: number[] = [];
+    await timesAsync(2, async(i) => {
+      result.push(i);
+      return Promise.resolve();
+    });
+
+    expect(result).toStrictEqual([ 0, 1 ]);
+  });
+
+  test('stop repeating', async() => {
+    const result: number[] = [];
+    await timesAsync(2, async(i, { stop }) => {
+      result.push(i);
+      return Promise.resolve(stop());
+    });
+
+    expect(result).toStrictEqual([ 0 ]);
   });
 });

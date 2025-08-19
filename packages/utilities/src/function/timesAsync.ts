@@ -1,15 +1,21 @@
+import { TimesControllerState, type TimesController } from './times';
+
 /**
- * Repeats the specified async function a specified number of times.
+ * Repeats the given async function a specified number of times, in sequence.
  * @param count
  * @param callback
  * @returns An array consisting of the result of the `callback`
  */
-export async function timesAsync<R>(count: number, callback: (index: number) => Promise<R>): Promise<R[]> {
-  const range = Array.from({ length: count }, (value, i) => i);
+export async function timesAsync(count: number, callback: (index: number, controller: TimesController) => Promise<TimesControllerState | void>): Promise<void> {
+  const controller: TimesController = {
+    stop: () => TimesControllerState.Stop,
+  };
 
-  const results: R[] = [];
-  for await (const i of range) {
-    results.push(await callback(i));
+  for (let i = 0; i < count; i++) {
+    const state = await callback(i, controller);
+    if (state === TimesControllerState.Stop) {
+      break;
+    }
+    continue;
   }
-  return results;
 }

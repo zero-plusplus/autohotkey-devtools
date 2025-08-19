@@ -2,6 +2,21 @@ import { times } from '../../src/';
 
 describe('times', () => {
   test('times', () => {
-    expect(times(2, () => 1)).toStrictEqual([ 1, 1 ]);
+    const result: number[] = [];
+    times(2, (index) => {
+      result.push(index);
+    });
+
+    expect(result).toStrictEqual([ 0, 1 ]);
+  });
+
+  test('stop repeating', () => {
+    const result: number[] = [];
+    times(2, (i, { stop }) => {
+      result.push(i);
+      return stop();
+    });
+
+    expect(result).toStrictEqual([ 0 ]);
   });
 });
