@@ -32,7 +32,6 @@ export function createPreParamsText(placeholder: Placeholder): string {
     const subcommand = subcommands.find((subcommand) => {
       return i === subcommand?.index;
     });
-
     preParamsText += ', ';
 
     if (subcommand) {
@@ -42,28 +41,34 @@ export function createPreParamsText(placeholder: Placeholder): string {
   return preParamsText;
 }
 export function createPreParamsParsedResults(scopeName: ScopeName, placeholder: Placeholder): ParsedResult[] {
+  const subcommands = Array.isArray(placeholder.subcommand) ? placeholder.subcommand : [ placeholder.subcommand ];
+
   const preParamsParsedResults: ParsedResult[] = [];
   times(placeholder.index + 1, (i) => {
-    const subcommands = Array.isArray(placeholder.subcommand) ? placeholder.subcommand : [ placeholder.subcommand ];
     const subcommand = subcommands.find((subcommand) => {
       return i === subcommand?.index;
     });
 
-
     if (subcommand) {
       if (subcommand.invalid) {
-        preParamsParsedResults.push({ text: ',', scopes: name(scopeName, RuleName.UnquotedString, StyleName.Invalid) });
+        preParamsParsedResults.push({ text: ',', scopes: name(scopeName, RuleName.Comma) });
         preParamsParsedResults.push({ text: subcommand.name, scopes: name(scopeName, RuleName.UnquotedString, StyleName.Invalid) });
         return;
       }
 
       preParamsParsedResults.push({ text: ',', scopes: name(scopeName, RuleName.Comma) });
       preParamsParsedResults.push({ text: subcommand.name, scopes: name(scopeName, subcommand.elementName ?? RuleName.SubCommandName) });
-      return;
     }
-
-    preParamsParsedResults.push({ text: ',', scopes: name(scopeName, RuleName.Comma) });
+    else {
+      preParamsParsedResults.push({ text: ',', scopes: name(scopeName, RuleName.Comma) });
+    }
   });
+
+  const isInvalidSubCommand = Boolean(subcommands.findLast((subcommand) => subcommand?.invalid));
+  if (isInvalidSubCommand) {
+    preParamsParsedResults.pop();
+    preParamsParsedResults.push({ text: ',', scopes: name(scopeName, RuleName.UnquotedString, StyleName.Invalid) });
+  }
   return preParamsParsedResults;
 }
 export function createExpectedData(scopeName: ScopeName, paramText: string, paramParsedResults: ParsedResult[], placeholder: Placeholder): ExpectedTestData {

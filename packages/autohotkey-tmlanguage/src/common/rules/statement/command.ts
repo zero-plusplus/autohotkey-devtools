@@ -572,26 +572,26 @@ function lookaheadOnigurumaByParameters(parameters: CommandParameter[]): string 
 }
 function parameterToOniguruma(parameter: CommandParameter, isLastParameter: boolean): string {
   if (hasFlag(parameter.flags, CommandParameterFlag.CompilerDirective)) {
-    return patterns_common.unquotedArgumentPattern;
+    return optional(patterns_common.unquotedArgumentPattern);
   }
   else if (hasFlag(parameter.flags, CommandParameterFlag.Expression)) {
     return isLastParameter ? patterns_common.unquotedExpressionLastArgumentPattern : patterns_common.unquotedExpressionArgumentPattern;
   }
   else if (hasFlag(parameter.flags, CommandParameterFlag.RestParams)) {
     return seq(groupMany1(seq(
-      patterns_common.unquotedArgumentPattern,
+      optional(patterns_common.unquotedArgumentPattern),
       optseq(
         inlineSpaces0(),
         char(','),
         optseq(
           negativeLookahead(seq(inlineSpaces1(), char(';'))),
           inlineSpaces0(),
-          patterns_common.unquotedArgumentPattern,
+          optional(patterns_common.unquotedArgumentPattern),
         ),
       ),
     )));
   }
-  return isLastParameter ? patterns_common.unquotedLastArgumentPattern : patterns_common.unquotedArgumentPattern;
+  return optional(isLastParameter ? patterns_common.unquotedLastArgumentPattern : patterns_common.unquotedArgumentPattern);
 }
 function parameterToPatternsRule(scopeName: ScopeName, definition: CommandDefinition, parameter: CommandParameter, isLastParameter: boolean, placeholder: { startPattern: string; legacyMode: boolean }): PatternsRule {
   const legacyRules = ((): Rule[] => {

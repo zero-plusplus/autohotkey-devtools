@@ -60,19 +60,19 @@ export const lastUnquotedCharPattern: string = seq(
   negativeLookahead(seq(inlineSpaces1(), char(';'))),
   anyChar(),
 );
-export const unquotedExpressionArgumentPattern: string = groupMany0(alt(
+export const unquotedExpressionArgumentPattern: string = groupMany1(alt(
   unquotedPairStringPattern,
-  seq(inlineSpaces1(), negativeLookahead(char(';'))),
+  seq(inlineSpace(), negativeLookahead(char(';'))),
   negChar(',', '\\s'),
 ));
 export const unquotedExpressionLastArgumentPattern: string = groupMany1(alt(
   negChar('\\s'),
-  seq(inlineSpaces1(), negativeLookahead(char(';'))),
+  seq(inlineSpace(), negativeLookahead(char(';'))),
 ));
 export const percentExpressionArgumentPattern: string = seq(
   char('%'),
   inlineSpaces1(),
-  unquotedExpressionArgumentPattern,
+  optional(unquotedExpressionArgumentPattern),
 );
 export const percentExpressionLastArgumentPattern: string = group(seq(
   char('%'),
@@ -81,7 +81,7 @@ export const percentExpressionLastArgumentPattern: string = group(seq(
 ));
 export const unquotedArgumentPattern: string = group(alt(
   percentExpressionArgumentPattern,
-  groupMany0(alt(
+  groupMany1(alt(
     unquotedPairStringPattern,
     unquotedCharPattern,
   )),
