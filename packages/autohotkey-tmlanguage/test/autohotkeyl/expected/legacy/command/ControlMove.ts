@@ -1,29 +1,29 @@
 import type { ScopeName } from '../../../../../src/tmlanguage';
 import { $ } from '../../../../helpers/definition/parameter/$';
 import { $control } from '../../../../helpers/definition/parameter/$control';
-import { $output } from '../../../../helpers/definition/parameter/$output';
+import { $expression } from '../../../../helpers/definition/parameter/$expression';
 import { $winTitle } from '../../../../helpers/definition/parameter/$winTitle';
 import type { ExpectedTestData } from '../../../../types';
 
-// https://www.autohotkey.com/docs/v1/lib/ControlGetPos.htm
-export function createControlGetPosExpectedDataList(scopeName: ScopeName): ExpectedTestData[] {
-  const commandName = 'ControlGetPos';
+// https://www.autohotkey.com/docs/v1/lib/ControlMove.htm
+export function createControlMoveExpectedDataList(scopeName: ScopeName): ExpectedTestData[] {
+  const commandName = 'ControlMove';
 
   return [
-    // Parameter 1: OutX
-    ...$output(scopeName, { name: commandName, index: 0 }),
+    // Parameter 1: Control
+    ...$control(scopeName, { name: commandName, index: 0 }),
 
-    // Parameter 2: OutY
-    ...$output(scopeName, { name: commandName, index: 1 }),
+    // Parameter 2: X
+    ...$expression(scopeName, { name: commandName, index: 1 }),
 
-    // Parameter 3: OutWidth
-    ...$output(scopeName, { name: commandName, index: 2 }),
+    // Parameter 3: Y
+    ...$expression(scopeName, { name: commandName, index: 2 }),
 
-    // Parameter 4: OutHeight
-    ...$output(scopeName, { name: commandName, index: 3 }),
+    // Parameter 4: Width
+    ...$expression(scopeName, { name: commandName, index: 3 }),
 
-    // Parameter 5: Control
-    ...$control(scopeName, { name: commandName, index: 4 }),
+    // Parameter 5: Height
+    ...$expression(scopeName, { name: commandName, index: 4 }),
 
     // Parameter 6: WinTitle
     ...$winTitle(scopeName, { name: commandName, index: 5 }),

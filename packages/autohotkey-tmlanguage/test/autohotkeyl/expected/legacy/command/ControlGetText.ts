@@ -6,7 +6,9 @@ import { $winTitle } from '../../../../helpers/definition/parameter/$winTitle';
 import type { ExpectedTestData } from '../../../../types';
 
 // https://www.autohotkey.com/docs/v1/lib/ControlGetText.htm
-export function createControlGetTextPosExpectedDataList(scopeName: ScopeName, commandName = 'ControlGetText'): ExpectedTestData[] {
+export function createControlGetTextPosExpectedDataList(scopeName: ScopeName): ExpectedTestData[] {
+  const commandName = 'ControlGetText';
+
   return [
     // Parameter 1: Output
     ...$output(scopeName, { name: commandName, index: 0 }),
