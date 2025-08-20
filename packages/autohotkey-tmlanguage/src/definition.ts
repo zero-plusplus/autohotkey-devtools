@@ -524,22 +524,23 @@ export function $shouldBoolean(flags: CommandParameterFlag = CommandParameterFla
       },
       {
         name: [ RuleName.UnquotedString, StyleName.Invalid ],
-        match: anyChars1(),
+        match: negChars1('%', inlineSpace()),
       },
     ],
   };
 }
-export function $shouldInteger(): CommandParameter {
+export function $shouldInteger(itemMatchers: ParameterItemMatcher[] = [], flags: CommandParameterFlag = CommandParameterFlag.None): CommandParameter {
   return {
-    flags: CommandParameterFlag.None,
+    flags,
     itemMatchers: [
       includeRule(Repository.DereferenceUnaryOperator),
       includeRule(Repository.DereferenceInCommandArgument),
       includeRule(Repository.Operator),
       includeRule(Repository.Integer),
+      ...itemMatchers,
       {
         name: [ RuleName.UnquotedString, StyleName.Invalid ],
-        match: anyChars1(),
+        match: negChars1('%', inlineSpace()),
       },
     ],
   };

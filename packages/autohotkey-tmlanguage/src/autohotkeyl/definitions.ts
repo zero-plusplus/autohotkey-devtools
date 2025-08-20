@@ -52,6 +52,7 @@ import {
   colorOption,
   command,
   CommandFlag,
+  CommandParameterFlag,
   decimalOption,
   endKeyOption,
   identifierOption,
@@ -259,7 +260,7 @@ export const commandDefinitions: CommandDefinition[] = [
   command('CoordMode', signature([ $shouldKeyword([ keywordOption('ToolTip', 'Pixel', 'Mouse', 'Caret', 'Menu') ]), $shouldKeyword([ keywordOption('Screen', 'Relative', 'Window', 'Client') ]) ])),
 
   // https://www.autohotkey.com/docs/v1/lib/Critical.htm
-  command('Critical', signature([ $([ keywordOption('On', 'Off') ]) ])),
+  command('Critical', signature([ $shouldInteger([ keywordOption('On', 'Off') ], CommandParameterFlag.NoLastComma) ])),
 
   // https://www.autohotkey.com/docs/v1/lib/DetectHiddenText.htm
   command('DetectHiddenText', signature([ $onOff() ])),
