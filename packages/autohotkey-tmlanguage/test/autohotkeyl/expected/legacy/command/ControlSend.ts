@@ -6,9 +6,7 @@ import { $winTitle } from '../../../../helpers/definition/parameter/$winTitle';
 import type { ExpectedTestData } from '../../../../types';
 
 // https://www.autohotkey.com/docs/v1/lib/ControlSend.htm
-export function createControlSendExpectedDataList(scopeName: ScopeName): ExpectedTestData[] {
-  const commandName = 'ControlSend';
-
+export function createControlSendExpectedDataList(scopeName: ScopeName, commandName = 'ControlSend'): ExpectedTestData[] {
   return [
     // Parameter 1: Control
     ...$control(scopeName, { name: commandName, index: 0 }),

@@ -250,7 +250,7 @@ export const commandDefinitions: CommandDefinition[] = [
   command('ControlSend', signature([ $control(), $sendKeyName(), ...$winParams ])),
 
   // https://www.autohotkey.com/docs/v1/lib/ControlSendRaw.htm
-  command('ControlSendRaw', signature([ $control(), $(), ...$winParams ])),
+  command('ControlSendRaw', signature([ $control(), $sendKeyName(), ...$winParams ])),
 
   // https://www.autohotkey.com/docs/v1/lib/ControlSetText.htm
   command('ControlSetText', signature([ $control(), $(), ...$winParams ])),
