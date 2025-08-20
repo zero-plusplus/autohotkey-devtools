@@ -46,6 +46,7 @@ import { createControlGetTextPosExpectedDataList } from './ControlGetText';
 import { createControlMoveExpectedDataList } from './ControlMove';
 import { createControlSendExpectedDataList } from './ControlSend';
 import { createControlSendRawExpectedDataList } from './ControlSendRaw';
+import { createControlSetTextExpectedDataList } from './ControlSetText';
 
 export function createCommandStatementExpectedData(scopeName: ScopeName): ExpectedTestData[] {
   return [
@@ -107,6 +108,7 @@ export function createCommandStatementExpectedData(scopeName: ScopeName): Expect
     ...createControlMoveExpectedDataList(scopeName),
     ...createControlSendExpectedDataList(scopeName),
     ...createControlSendRawExpectedDataList(scopeName),
+    ...createControlSetTextExpectedDataList(scopeName),
 
     // https://www.autohotkey.com/docs/v1/lib/SetTimer.htm
     ...((): ExpectedTestData[] => {
