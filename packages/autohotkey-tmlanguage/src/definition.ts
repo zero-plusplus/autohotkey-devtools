@@ -579,7 +579,7 @@ export function $shouldKeyword(itemMatchers: ParameterItemMatcher[] = [], flags:
       ...itemMatchers,
       {
         name: [ RuleName.UnquotedString, StyleName.Invalid ],
-        match: anyChars1(),
+        match: negChars1('%', inlineSpace()),
       },
     ],
   };
