@@ -42,6 +42,7 @@ import { createDetectHiddenTextExpectedDataList } from './DetectHiddenText';
 import { createDetectHiddenWindowsExpectedDataList } from './DetectHiddenWindows';
 import { createDriveExpectedDataList } from './Drive';
 import { createDriveGetExpectedDataList } from './DriveGet';
+import { createDriveSpaceFreeExpectedDataList } from './DriveSpaceFree';
 
 export function createCommandStatementExpectedData(scopeName: ScopeName): ExpectedTestData[] {
   return [
@@ -110,6 +111,7 @@ export function createCommandStatementExpectedData(scopeName: ScopeName): Expect
     ...createDetectHiddenWindowsExpectedDataList(scopeName),
     ...createDriveExpectedDataList(scopeName),
     ...createDriveGetExpectedDataList(scopeName),
+    ...createDriveSpaceFreeExpectedDataList(scopeName),
 
     // https://www.autohotkey.com/docs/v1/lib/SetTimer.htm
     ...((): ExpectedTestData[] => {
