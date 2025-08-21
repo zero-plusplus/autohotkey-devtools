@@ -40,6 +40,7 @@ import { createCoordModeExpectedDataList } from './CoordMode';
 import { createCriticalExpectedDataList } from './Critical';
 import { createDetectHiddenTextExpectedDataList } from './DetectHiddenText';
 import { createDetectHiddenWindowsExpectedDataList } from './DetectHiddenWindows';
+import { createDriveExpectedDataList } from './Drive';
 
 export function createCommandStatementExpectedData(scopeName: ScopeName): ExpectedTestData[] {
   return [
@@ -106,6 +107,7 @@ export function createCommandStatementExpectedData(scopeName: ScopeName): Expect
     ...createCriticalExpectedDataList(scopeName),
     ...createDetectHiddenTextExpectedDataList(scopeName),
     ...createDetectHiddenWindowsExpectedDataList(scopeName),
+    ...createDriveExpectedDataList(scopeName),
 
     // https://www.autohotkey.com/docs/v1/lib/SetTimer.htm
     ...((): ExpectedTestData[] => {
