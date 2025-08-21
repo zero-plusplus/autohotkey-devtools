@@ -38,6 +38,8 @@ import { createControlSendRawExpectedDataList } from './ControlSendRaw';
 import { createControlSetTextExpectedDataList } from './ControlSetText';
 import { createCoordModeExpectedDataList } from './CoordMode';
 import { createCriticalExpectedDataList } from './Critical';
+import { createDetectHiddenTextExpectedDataList } from './DetectHiddenText';
+import { createDetectHiddenWindowsExpectedDataList } from './DetectHiddenWindows';
 
 export function createCommandStatementExpectedData(scopeName: ScopeName): ExpectedTestData[] {
   return [
@@ -102,6 +104,8 @@ export function createCommandStatementExpectedData(scopeName: ScopeName): Expect
     ...createControlSetTextExpectedDataList(scopeName),
     ...createCoordModeExpectedDataList(scopeName),
     ...createCriticalExpectedDataList(scopeName),
+    ...createDetectHiddenTextExpectedDataList(scopeName),
+    ...createDetectHiddenWindowsExpectedDataList(scopeName),
 
     // https://www.autohotkey.com/docs/v1/lib/SetTimer.htm
     ...((): ExpectedTestData[] => {
