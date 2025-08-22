@@ -296,7 +296,7 @@ export const commandDefinitions: CommandDefinition[] = [
   command('EnvDiv', signature([ $input(), $expression() ]), CommandFlag.Deprecated),
 
   // https://www.autohotkey.com/docs/v1/lib/EnvGet.htm
-  command('EnvGet', signature([ $input(), $() ])),
+  command('EnvGet', signature([ $output(), $() ])),
 
   // https://www.autohotkey.com/docs/v1/lib/EnvMult.htm
   command('EnvMult', signature([ $input(), $expression() ]), CommandFlag.Deprecated),
