@@ -12,6 +12,6 @@ export function createDriveSpaceFreeExpectedDataList(scopeName: ScopeName): Expe
     ...$output(scopeName, { name: commandName, index: 0 }),
 
     // Parameter 2: Path
-    ...$(scopeName, { name: commandName, index: 1 }),
+    ...$(scopeName, { name: commandName, index: 1, isLastParameter: true }),
   ];
 }

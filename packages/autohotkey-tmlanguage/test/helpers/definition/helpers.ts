@@ -10,13 +10,14 @@ export interface SubCommand {
 }
 export interface Placeholder {
   name: string;
+  deprecated?: boolean;
   index: number;
   isLastParameter?: boolean;
   subcommand?: SubCommand | SubCommand[];
 }
 
 export function createCommentText(placeholder: Placeholder): string {
-  const text = `; name: ${placeholder.name}, index: ${placeholder.index}, isLastParameter: ${placeholder.isLastParameter ? 'true' : 'false'}`;
+  const text = `; name: ${placeholder.name}, index: ${placeholder.index}, isLastParameter: ${placeholder.isLastParameter ? 'true' : 'false'}, deprecated: ${placeholder.deprecated ? 'true' : 'false'}`;
   if (placeholder.subcommand) {
     if (Array.isArray(placeholder.subcommand)) {
       return `${text}, subcommand: [ ${placeholder.subcommand.map((subcommand) => `{ name: ${subcommand.name}, index: ${subcommand.index} }`).join(', ')} ]`;
@@ -85,7 +86,7 @@ export function createExpectedData(scopeName: ScopeName, paramText: string, para
   return [
     `${testText}${commentIndent}${commentText}`,
     [
-      { text: placeholder.name, scopes: name(scopeName, RuleName.CommandName) },
+      { text: placeholder.name, scopes: placeholder.deprecated ? name(scopeName, RuleName.CommandName, StyleName.Strikethrough) : name(scopeName, RuleName.CommandName) },
       ...preParamsParsedResults,
       ...paramParsedResults,
       { text: commentText, scopes: name(scopeName, RuleName.InlineComment) },

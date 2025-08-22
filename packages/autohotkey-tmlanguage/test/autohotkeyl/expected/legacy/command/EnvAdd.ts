@@ -16,6 +16,6 @@ export function createEnvAddExpectedDataList(scopeName: ScopeName): ExpectedTest
     ...$expression(scopeName, { name: commandName, index: 1 }),
 
     // Parameter 3: TimeUnits
-    ...$timeunit(scopeName, { name: commandName, index: 2 }),
+    ...$timeunit(scopeName, { name: commandName, index: 2, isLastParameter: true }),
   ];
 }

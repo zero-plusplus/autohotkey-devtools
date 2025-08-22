@@ -23,7 +23,7 @@ export function createDriveGetExpectedDataList(scopeName: ScopeName): ExpectedTe
       'NETWORK',
       'RAMDISK',
       'UNKNOWN',
-    ], { name: commandName, index: 2, subcommand: { index: 1, name: 'List' } }),
+    ], { name: commandName, index: 2, subcommand: { index: 1, name: 'List' }, isLastParameter: true }),
 
     // Parameter 2: SubCommand, Parameter 3: Path
     ...$subcommand(scopeName, [
@@ -33,7 +33,7 @@ export function createDriveGetExpectedDataList(scopeName: ScopeName): ExpectedTe
       'Status',
       'StatusCD',
     ], { name: commandName, index: 1 }),
-    ...$(scopeName, { name: commandName, index: 2, subcommand: { index: 1, name: 'Capacity' } }),
+    ...$(scopeName, { name: commandName, index: 2, subcommand: { index: 1, name: 'Capacity' }, isLastParameter: true }),
 
     // Parameter 2: SubCommand, Parameter 3: Drive
     ...$subcommand(scopeName, [
@@ -42,8 +42,8 @@ export function createDriveGetExpectedDataList(scopeName: ScopeName): ExpectedTe
       'Label',
       'Serial',
     ], { name: commandName, index: 1 }),
-    ...$(scopeName, { name: commandName, index: 2, subcommand: { index: 1, name: 'FileSystem' } }),
+    ...$(scopeName, { name: commandName, index: 2, subcommand: { index: 1, name: 'FileSystem' }, isLastParameter: true }),
 
-    ...$invalidSubcommand(scopeName, { name: commandName, index: 1 }),
+    ...$invalidSubcommand(scopeName, { name: commandName, index: 1, isLastParameter: true }),
   ];
 }

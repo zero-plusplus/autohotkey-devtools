@@ -45,6 +45,7 @@ import { createDriveGetExpectedDataList } from './DriveGet';
 import { createDriveSpaceFreeExpectedDataList } from './DriveSpaceFree';
 import { createEditExpectedDataList } from './Edit';
 import { createEnvAddExpectedDataList } from './EnvAdd';
+import { createEnvDivExpectedDataList } from './EnvDiv';
 
 export function createCommandStatementExpectedData(scopeName: ScopeName): ExpectedTestData[] {
   return [
@@ -116,6 +117,7 @@ export function createCommandStatementExpectedData(scopeName: ScopeName): Expect
     ...createDriveSpaceFreeExpectedDataList(scopeName),
     ...createEditExpectedDataList(scopeName),
     ...createEnvAddExpectedDataList(scopeName),
+    ...createEnvDivExpectedDataList(scopeName),
 
     // https://www.autohotkey.com/docs/v1/lib/SetTimer.htm
     ...((): ExpectedTestData[] => {
