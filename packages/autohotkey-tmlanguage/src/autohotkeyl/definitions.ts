@@ -8,6 +8,7 @@ import {
   $controlOrPos,
   $driveletter,
   $encoding,
+  $endKeys,
   $expression,
   $expressionWithPercentExpression,
   $fileAttributes,
@@ -26,6 +27,7 @@ import {
   $input,
   $invalid,
   $keyName,
+  $matchKeys,
   $menuItemName,
   $menuOptions,
   $onOff,
@@ -57,12 +59,10 @@ import {
   CommandFlag,
   CommandParameterFlag,
   decimalOption,
-  endKeyOption,
   floatOption,
   identifierOption,
   keywordOption,
   letterOption,
-  matchKeyOption,
   rangeOption,
   signature,
   signedFloatOption,
@@ -456,7 +456,7 @@ export const commandDefinitions: CommandDefinition[] = [
   command('IniWrite', signature([ $(), $path(), $(), $() ])),
 
   // https://www.autohotkey.com/docs/v1/lib/Input.htm
-  command('Input', signature([ $output(), $([ keywordOption('B', 'C', 'V', 'E', 'M'), keywordOption('*'), floatOption('I', 'L', 'T') ]), $([ endKeyOption() ]), $([ matchKeyOption() ]) ])),
+  command('Input', signature([ $output(), $([ keywordOption('B', 'C', 'V', 'E', 'M', '*'), floatOption('I', 'L', 'T') ]), $endKeys(), $matchKeys() ])),
 
   // https://www.autohotkey.com/docs/v1/lib/InputBox.htm
   command('InputBox', signature([ $output(), $(), $(), $(), $expression(), $expression(), $expression(), $expression(), $(), $expression(), $() ])),

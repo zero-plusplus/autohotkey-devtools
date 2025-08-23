@@ -83,6 +83,7 @@ import { createImageSearchExpectedDataList } from './ImageSearch';
 import { createIniDeleteExpectedDataList } from './IniDelete';
 import { createIniReadExpectedDataList } from './IniRead';
 import { createIniWriteExpectedDataList } from './IniWrite';
+import { createInputExpectedDataList } from './Input';
 
 export function createCommandStatementExpectedData(scopeName: ScopeName): ExpectedTestData[] {
   return [
@@ -198,6 +199,7 @@ export function createCommandStatementExpectedData(scopeName: ScopeName): Expect
     ...createIniDeleteExpectedDataList(scopeName),
     ...createIniReadExpectedDataList(scopeName),
     ...createIniWriteExpectedDataList(scopeName),
+    ...createInputExpectedDataList(scopeName),
 
     // https://www.autohotkey.com/docs/v1/lib/SetTimer.htm
     ...((): ExpectedTestData[] => {

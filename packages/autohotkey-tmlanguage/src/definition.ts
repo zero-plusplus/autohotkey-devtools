@@ -154,18 +154,6 @@ export function flagedKeywordOption(...options: string[]): ParameterItemMatcher 
     ignoreCase(textalt(...options)),
   ));
 }
-export function endKeyOption(): ParameterItemMatcher {
-  return createOption(seq(
-    char('{'),
-    inlineSpaces0(),
-    negChars1(inlineSpace()),
-    inlineSpaces0(),
-    char('}'),
-  ));
-}
-export function matchKeyOption(): ParameterItemMatcher {
-  return createOption(negChars1(','));
-}
 export function caseSensitiveLetterOption(...options: string[]): string {
   return groupMany1(textalt(...options));
 }
@@ -812,6 +800,21 @@ export function $sendKeyName(flags: CommandParameterFlag = CommandParameterFlag.
   //             ^^^^^^^^^^^
   return $([ includeRule(Repository.CommandArgumentSendKeyName) ], flags);
 }
+export function $endKeys(): CommandParameter {
+  return $([
+    createOption(seq(
+      char('{'),
+      inlineSpaces0(),
+      negChars1(inlineSpace()),
+      inlineSpaces0(),
+      char('}'),
+    )),
+  ]);
+}
+export function $matchKeys(): CommandParameter {
+  return $([ createOption(negChars1(',')) ]);
+}
+
 export function $fontName(flags: CommandParameterFlag = CommandParameterFlag.None): CommandParameter {
   return $([], flags);
 }
