@@ -323,7 +323,7 @@ export const commandDefinitions: CommandDefinition[] = [
   command('FileCreateDir', signature([ $path() ])),
 
   // https://www.autohotkey.com/docs/v1/lib/FileCreateShortcut.htm
-  command('FileCreateShortcut', signature([ $path(), $path(), $path(), $(), $(), $path(), $(), $expression(), $() ])),
+  command('FileCreateShortcut', signature([ $path(), $path(), $path(), $(), $(), $path(), $(), $expression(), $([ keywordOption('1', '3', '7') ]) ])),
 
   // https://www.autohotkey.com/docs/v1/lib/FileDelete.htm
   command('FileDelete', signature([ $glob() ])),
