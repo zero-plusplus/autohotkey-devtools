@@ -78,6 +78,7 @@ import { createGetKeyStateExpectedDataList } from './GetKeyState';
 import { createGroupActivateExpectedDataList } from './GroupActivate';
 import { createGroupAddExpectedDataList } from './GroupAdd';
 import { createGroupCloseExpectedDataList } from './GroupClose';
+import { createGroupDeactivateExpectedDataList } from './GroupDeactivate';
 
 export function createCommandStatementExpectedData(scopeName: ScopeName): ExpectedTestData[] {
   return [
@@ -184,6 +185,7 @@ export function createCommandStatementExpectedData(scopeName: ScopeName): Expect
     ...createGroupActivateExpectedDataList(scopeName),
     ...createGroupAddExpectedDataList(scopeName),
     ...createGroupCloseExpectedDataList(scopeName),
+    ...createGroupDeactivateExpectedDataList(scopeName),
 
     // https://www.autohotkey.com/docs/v1/lib/SetTimer.htm
     ...((): ExpectedTestData[] => {
