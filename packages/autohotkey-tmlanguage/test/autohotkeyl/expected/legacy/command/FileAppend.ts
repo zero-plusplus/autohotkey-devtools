@@ -16,6 +16,6 @@ export function createFileAppendExpectedDataList(scopeName: ScopeName): Expected
     ...$path(scopeName, { name: commandName, index: 1 }),
 
     // Parameter 3: Encoding
-    ...$encoding(scopeName, { name: commandName, index: 2 }),
+    ...$encoding(scopeName, { name: commandName, index: 2, isLastParameter: true }),
   ];
 }
