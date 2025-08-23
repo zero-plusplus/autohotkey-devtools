@@ -77,6 +77,7 @@ import { createGroupCloseExpectedDataList } from './GroupClose';
 import { createGroupDeactivateExpectedDataList } from './GroupDeactivate';
 import { createGuiExpectedDataList } from './Gui';
 import { createGuiControlExpectedDataList } from './GuiControl';
+import { createGuiControlGetExpectedDataList } from './GuiControlGet';
 
 export function createCommandStatementExpectedData(scopeName: ScopeName): ExpectedTestData[] {
   return [
@@ -186,6 +187,7 @@ export function createCommandStatementExpectedData(scopeName: ScopeName): Expect
     ...createGroupDeactivateExpectedDataList(scopeName),
     ...createGuiExpectedDataList(scopeName),
     ...createGuiControlExpectedDataList(scopeName),
+    ...createGuiControlGetExpectedDataList(scopeName),
 
     // https://www.autohotkey.com/docs/v1/lib/SetTimer.htm
     ...((): ExpectedTestData[] => {
