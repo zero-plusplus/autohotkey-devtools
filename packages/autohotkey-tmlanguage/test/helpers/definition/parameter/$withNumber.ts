@@ -1,12 +1,11 @@
 import { name, RuleName, type ScopeName } from '../../../../src/tmlanguage';
 import type { ExpectedTestData } from '../../../types';
-import { createDereferenceInKeywordParameterExpectedDataList } from '../common/dereference';
-import { createKeywordInvalidExpectedDataList } from '../common/invalid';
-import { createPercentExpressionParameterExpectedDataList } from '../common/percentExpression';
 import { createExpectedData, type Placeholder } from '../helpers';
+import { $ } from './$';
 
-export function $shouldInteger(scopeName: ScopeName, placeholder: Placeholder): ExpectedTestData[] {
+export function $withNumber(scopeName: ScopeName, placeholder: Placeholder): ExpectedTestData[] {
   return [
+    ...$(scopeName, placeholder),
     createExpectedData(
       scopeName,
       `123`,
@@ -26,8 +25,5 @@ export function $shouldInteger(scopeName: ScopeName, placeholder: Placeholder): 
         ),
       ];
     }),
-    ...createPercentExpressionParameterExpectedDataList(scopeName, placeholder),
-    ...createDereferenceInKeywordParameterExpectedDataList(scopeName, placeholder),
-    ...createKeywordInvalidExpectedDataList(scopeName, placeholder),
   ];
 }

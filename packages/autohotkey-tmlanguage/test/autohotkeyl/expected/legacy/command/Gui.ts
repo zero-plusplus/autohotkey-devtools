@@ -9,6 +9,7 @@ import { $guiControlType } from '../../../../helpers/definition/parameter/$guiCo
 import { $guiOptions } from '../../../../helpers/definition/parameter/$guiOptions';
 import { $guisubcommand } from '../../../../helpers/definition/parameter/$guisubcommand';
 import { $shouldKeyword } from '../../../../helpers/definition/parameter/$shouldKeyword';
+import { $withNumber } from '../../../../helpers/definition/parameter/$withNumber';
 import type { ExpectedTestData } from '../../../../types';
 
 // https://www.autohotkey.com/docs/v1/lib/Gui.htm
@@ -84,6 +85,15 @@ export function createGuiExpectedDataList(scopeName: ScopeName): ExpectedTestDat
         ...$guisubcommand(scopeName, 'Color', { name: commandName, index: 0 }),
         ...$color(scopeName, { name: commandName, index: 1, subcommand: { index: 0, name: 'Color' } }),
         ...$color(scopeName, { name: commandName, index: 2, subcommand: { index: 0, name: 'Color' }, isLastParameter: true }),
+      ];
+    })(),
+
+    // Parameter 1: SubCommand, Parameter 2: WindowColor, Parameter 3: ControlColor
+    ...((): ExpectedTestData[] => {
+      return [
+        ...$guisubcommand(scopeName, 'Margin', { name: commandName, index: 0 }),
+        ...$withNumber(scopeName, { name: commandName, index: 1, subcommand: { index: 0, name: 'Margin' } }),
+        ...$withNumber(scopeName, { name: commandName, index: 2, subcommand: { index: 0, name: 'Margin' }, isLastParameter: true }),
       ];
     })(),
 
