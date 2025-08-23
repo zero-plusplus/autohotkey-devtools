@@ -56,11 +56,11 @@ import {
   CommandParameterFlag,
   decimalOption,
   endKeyOption,
+  floatOption,
   identifierOption,
   keywordOption,
   letterOption,
   matchKeyOption,
-  numberOption,
   rangeOption,
   signature,
   signedNumberOption,
@@ -386,7 +386,7 @@ export const commandDefinitions: CommandDefinition[] = [
 
   // https://www.autohotkey.com/docs/v1/lib/FormatTime.htm
   command('FormatTime', [
-    signature([ $output(), $(), $subcommandlike([ 'Time', 'ShortDate', 'LongDate', 'YearMonth', 'YDay', 'YDay0', 'WDay', 'YWeek' ]), $rest() ]),
+    signature([ $output(), $(), $subcommandlike([ 'Time', 'ShortDate', 'LongDate', 'YearMonth', 'YDay', 'YDay0', 'WDay', 'YWeek' ]) ]),
     signature([ $output(), $(), $formatTime() ]),
   ]),
 
@@ -409,10 +409,10 @@ export const commandDefinitions: CommandDefinition[] = [
   command('Gui', [
     signature([ $guisubcommand('New'), $guiOptions(), $() ]),
     signature([ $guisubcommand('Add'), $guiControlType(), $guiControlOptions(), $() ]),
-    signature([ $guisubcommand('Show'), $([ keywordOption('xCenter', 'yCenter', 'AutoSize', 'Minimize', 'Maximize', 'Restore', 'NoActivate', 'NA', 'Hide', 'Center'), numberOption('W', 'H', 'X', 'Y') ]), $() ]),
+    signature([ $guisubcommand('Show'), $([ keywordOption('xCenter', 'yCenter', 'AutoSize', 'Minimize', 'Maximize', 'Restore', 'NoActivate', 'NA', 'Hide', 'Center'), floatOption('W', 'H', 'X', 'Y') ]), $() ]),
     signature([ $guisubcommand('Submit'), $shouldKeyword([ keywordOption('NoHide') ]) ]),
     signature([ $guisubcommand([ 'Cancel', 'Hide', 'Destroy', 'Minimize', 'Maximize', 'Restore', 'Default' ]), $rest() ]),
-    signature([ $guisubcommand('Font'), $([ colorOption('C'), numberOption('S', 'W', 'Q') ]), $() ]),
+    signature([ $guisubcommand('Font'), $([ colorOption('C'), floatOption('S', 'W', 'Q') ]), $() ]),
     signature([ $guisubcommand('Color'), $color(), $color() ]),
     signature([ $guisubcommand('Margin'), $withNumber(), $withNumber() ]),
     signature([ $guisubcommand('Menu'), $() ]),
@@ -438,11 +438,11 @@ export const commandDefinitions: CommandDefinition[] = [
   command('Hotkey', [
     signature([ $subcommand([ 'IfWinActive', 'IfWinExist' ]), $winTitle(), $() ]),
     signature([ $subcommand('If'), $expression(), $rest() ]),
-    signature([ $hotkeyName(), $([ keywordOption('On', 'Off', 'Toggle', 'AltTab') ]), $([ keywordOption('UseErrorLevel', 'On', 'Off', 'B', 'B0'), numberOption('P', 'T', 'I') ]) ]),
+    signature([ $hotkeyName(), $([ keywordOption('On', 'Off', 'Toggle', 'AltTab') ]), $([ keywordOption('UseErrorLevel', 'On', 'Off', 'B', 'B0'), floatOption('P', 'T', 'I') ]) ]),
   ]),
 
   // https://www.autohotkey.com/docs/v1/lib/ImageSearch.htm
-  command('ImageSearch', signature([ $output(), $output(), $expression(), $expression(), $expression(), $expression(), $([ stringOption('HBITMAP:'), numberOption('*Icon', '*', '*Trans', '*w', '*h') ]) ])),
+  command('ImageSearch', signature([ $output(), $output(), $expression(), $expression(), $expression(), $expression(), $([ stringOption('HBITMAP:'), floatOption('*Icon', '*', '*Trans', '*w', '*h') ]) ])),
 
   // https://www.autohotkey.com/docs/v1/lib/IniDelete.htm
   command('IniDelete', signature([ $path(), $(), $() ])),
@@ -454,7 +454,7 @@ export const commandDefinitions: CommandDefinition[] = [
   command('IniWrite', signature([ $(), $(), $path(), $(), $() ])),
 
   // https://www.autohotkey.com/docs/v1/lib/Input.htm
-  command('Input', signature([ $output(), $([ keywordOption('B', 'C', 'V', 'E', 'M'), keywordOption('*'), numberOption('I', 'L', 'T') ]), $([ endKeyOption() ]), $([ matchKeyOption() ]) ])),
+  command('Input', signature([ $output(), $([ keywordOption('B', 'C', 'V', 'E', 'M'), keywordOption('*'), floatOption('I', 'L', 'T') ]), $([ endKeyOption() ]), $([ matchKeyOption() ]) ])),
 
   // https://www.autohotkey.com/docs/v1/lib/InputBox.htm
   command('InputBox', signature([ $output(), $(), $(), $(), $expression(), $expression(), $expression(), $expression(), $(), $expression(), $() ])),
@@ -634,7 +634,7 @@ export const commandDefinitions: CommandDefinition[] = [
   command('Sleep', signature([ $expression() ])),
 
   // https://www.autohotkey.com/docs/v1/lib/Sort.htm
-  command('Sort', signature([ $input(), $([ keywordOption('C', 'CL', 'N', 'R', 'Random', 'U', 'Z', '\\'), numberOption('D', 'P'), identifierOption('F') ]) ])),
+  command('Sort', signature([ $input(), $([ keywordOption('C', 'CL', 'N', 'R', 'Random', 'U', 'Z', '\\'), floatOption('D', 'P'), identifierOption('F') ]) ])),
 
   // https://www.autohotkey.com/docs/v1/lib/SoundBeep.htm
   command('SoundBeep', signature([ $expression(), $expression() ])),
@@ -660,7 +660,7 @@ export const commandDefinitions: CommandDefinition[] = [
     signature([
       $imagePath(), $([
         keywordOption('A', 'T', 'Hide'),
-        numberOption('B', 'M', 'P', 'H', 'W', 'X', 'Y', 'C', 'ZH', 'ZW', 'ZX', 'ZY', 'FM', 'FS', 'WM', 'WS'),
+        floatOption('B', 'M', 'P', 'H', 'W', 'X', 'Y', 'C', 'ZH', 'ZW', 'ZX', 'ZY', 'FM', 'FS', 'WM', 'WS'),
         colorOption('CB', 'CT', 'CW'),
         sizeOption('R'),
       ]), $(), $(), $winTitle(), $(),
@@ -686,7 +686,7 @@ export const commandDefinitions: CommandDefinition[] = [
   command('StringCaseSense', signature([ $onOff([ keywordOption('Locale') ]) ])),
 
   // https://www.autohotkey.com/docs/v1/lib/StringGetPos.htm
-  command('StringGetPos', signature([ $output(), $input(), $(), $shouldKeyword([ numberOption('L', 'R') ]), $expression() ]), CommandFlag.Deprecated),
+  command('StringGetPos', signature([ $output(), $input(), $(), $shouldKeyword([ floatOption('L', 'R') ]), $expression() ]), CommandFlag.Deprecated),
 
   // https://www.autohotkey.com/docs/v1/lib/StringLeft.htm
   command('StringLeft', signature([ $output(), $input(), $expression() ]), CommandFlag.Deprecated),
@@ -814,7 +814,7 @@ export const commandDefinitions: CommandDefinition[] = [
     signature([ $subcommand([ 'Transparent', 'TransColor' ]), $(), ...$winParams ]),
     signature([ $subcommand([ 'Style', 'ExStyle' ]), $style(), ...$winParams ]),
     signature([ $subcommand([ 'Bottom', 'Top', 'Disable', 'Enable', 'Redraw' ]), $blank(), ...$winParams ]),
-    signature([ $subcommand('Region'), $([ keywordOption('E'), numberOption('W', 'H'), rangeOption('R', '') ]), ...$winParams ]),
+    signature([ $subcommand('Region'), $([ keywordOption('E'), floatOption('W', 'H'), rangeOption('R', '') ]), ...$winParams ]),
     signature($parameterless),
   ]),
 

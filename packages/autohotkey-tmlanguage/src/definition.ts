@@ -98,7 +98,7 @@ export interface CommandDefinition {
 export function decimalPattern(): string {
   return numbers1();
 }
-export function numberPattern(): string {
+export function floatPattern(): string {
   return seq(
     decimalPattern(),
     optseq(
@@ -112,6 +112,9 @@ export function hexPattern(): string {
     optional(ignoreCase('0x')),
     groupMany1('[0-9a-fA-F]'),
   );
+}
+export function numberPattern(): string {
+  return alt(floatPattern(), hexPattern());
 }
 export function createOptionPattern(pattern: string, extraPrefixSeparators: string[] = [], extraSuffixSeparators: string[] = []): string {
   return seq(
@@ -194,10 +197,10 @@ export function rangeOption(...options: string[]): ParameterItemMatcher {
   return createOption(seq(
     ignoreCase(textalt(...options)),
     optseq(
-      numberPattern(),
+      floatPattern(),
       optseq(
         ignoreCase(char('-')),
-        optional(numberPattern()),
+        optional(floatPattern()),
       ),
     ),
   ));
@@ -206,10 +209,10 @@ export function sizeOption(...options: string[]): ParameterItemMatcher {
   return createOption(seq(
     ignoreCase(textalt(...options)),
     optseq(
-      numberPattern(),
+      floatPattern(),
       optseq(
         char('x'),
-        optional(numberPattern()),
+        optional(floatPattern()),
       ),
     ),
   ));
@@ -219,10 +222,10 @@ export function flagedSizeOption(...options: string[]): ParameterItemMatcher {
     optional(char('+', '-')),
     ignoreCase(textalt(...options)),
     optseq(
-      numberPattern(),
+      floatPattern(),
       optseq(
         char('-'),
-        optional(numberPattern()),
+        optional(floatPattern()),
       ),
     ),
   ));
@@ -280,6 +283,12 @@ export function decimalOption(...options: string[]): ParameterItemMatcher {
     optional(decimalPattern()),
   ));
 }
+export function floatOption(...options: string[]): ParameterItemMatcher {
+  return createOption(seq(
+    ignoreCase(textalt(...options)),
+    optional(floatPattern()),
+  ));
+}
 export function numberOption(...options: string[]): ParameterItemMatcher {
   return createOption(seq(
     ignoreCase(textalt(...options)),
@@ -294,7 +303,7 @@ export function quotableNumberOption(...options: string[]): ParameterItemMatcher
     },
     createOption(seq(
       ignoreCase(textalt(...options)),
-      optional(numberPattern()),
+      optional(floatPattern()),
     ), [ '"', `'` ], [ '"', `'` ]),
   ];
 }
@@ -303,7 +312,7 @@ export function signedNumberOption(...options: string[]): ParameterItemMatcher {
     ignoreCase(textalt(...options)),
     optseq(
       optional(char('+', '-')),
-      optional(numberPattern()),
+      optional(floatPattern()),
     ),
   ));
 }
@@ -313,7 +322,7 @@ export function flagedSignedNumberOption(...options: string[]): ParameterItemMat
     ignoreCase(textalt(...options)),
     optseq(
       optional(char('+', '-')),
-      optional(numberPattern()),
+      optional(floatPattern()),
     ),
   ));
 }
@@ -394,6 +403,10 @@ export function $subcommandlike(values: string | string[] = [], flags: CommandPa
       {
         name: [ RuleName.UnquotedString, StyleName.Strong ],
         match: ignoreCase(ordalt(...(Array.isArray(values) ? values : [ values ]))),
+      },
+      {
+        name: [ RuleName.UnquotedString, StyleName.Invalid ],
+        match: negChars1(inlineSpace()),
       },
     ],
   };
@@ -743,7 +756,7 @@ export function $requiresVersion(flags: CommandParameterFlag = CommandParameterF
     createOptionPattern(seq(
       optional(ignoreCase('v')),
       optional(textalt('2.', '1.')),
-      numberPattern(),
+      floatPattern(),
     )),
   ], flags);
   // return { type: HighlightType.RequiresVersion, flags };
@@ -755,7 +768,7 @@ export function $controlOrPos(flags: CommandParameterFlag = CommandParameterFlag
   return $regexp([ keywordOption('ahk_id'), decimalOption('X', 'Y') ], flags);
 }
 export function $controlMoveOptions(): CommandParameter {
-  return $([ numberOption('X', 'Y', 'W', 'H') ]);
+  return $([ floatOption('X', 'Y', 'W', 'H') ]);
 }
 export function $guiControlType(): CommandParameter {
   return $shouldKeyword([ keywordOption('ActiveX', 'Button', 'CheckBox', 'ComboBox', 'Custom', 'DateTime', 'DropDownList', 'DDL', 'Edit', 'GroupBox', 'Hotkey', 'Link', 'ListBox', 'ListView', 'MonthCal', 'Picture', 'Pic', 'Progress', 'Radio', 'Slider', 'StatusBar', 'Tab', 'Tab2', 'Tab3', 'Text', 'TreeView', 'UpDown') ]);
@@ -808,7 +821,7 @@ export function $driveletter(flags: CommandParameterFlag = CommandParameterFlag.
   ], flags);
 }
 export function $encoding(flags: CommandParameterFlag = CommandParameterFlag.None): CommandParameter {
-  return $([ keywordOption('CP0', 'UTF-8', 'UTF-8-RAW', 'UTF-16', 'UTF-16-RAW'), numberOption('CP') ], flags);
+  return $([ keywordOption('CP0', 'UTF-8', 'UTF-8-RAW', 'UTF-16', 'UTF-16-RAW'), floatOption('CP') ], flags);
 }
 export function $quotableEncoding(flags: CommandParameterFlag = CommandParameterFlag.None): CommandParameter {
   return $([ quotableKeywordOption('CP0', 'UTF-8', 'UTF-8-RAW', 'UTF-16', 'UTF-16-RAW'), quotableNumberOption('CP') ], flags);
@@ -828,10 +841,25 @@ export function $timeunit(flags: CommandParameterFlag = CommandParameterFlag.Non
   return $shouldKeyword([ keywordOption('Seconds', 'S', 'Minutes', 'M', 'Hours', 'H', 'Days', 'D') ], flags);
 }
 export function $formatTime(flags: CommandParameterFlag = CommandParameterFlag.None): CommandParameter {
-  return $(
-    [ caseSensitiveLetterOption('d', 'dd', 'ddd', 'dddd', 'M', 'MM', 'MMM', 'MMMM', 'y', 'yy', 'yyyy', 'gg', 'h', 'hh', 'H', 'HH', 'm', 'mm', 's', 'ss', 't', 'tt') ],
+  return {
     flags,
-  );
+    itemMatchers: [
+      includeRule(Repository.DereferenceUnaryOperator),
+      includeRule(Repository.DereferenceInCommandArgument),
+      {
+        name: [ RuleName.UnquotedString, StyleName.Strong ],
+        match: ordalt('d', 'dd', 'ddd', 'dddd', 'M', 'MM', 'MMM', 'MMMM', 'y', 'yy', 'yyyy', 'gg', 'h', 'hh', 'H', 'HH', 'm', 'mm', 's', 'ss', 't', 'tt'),
+      },
+      keywordOption('R'),
+      numberOption('L', 'D', 'T'),
+
+      includeRule(Repository.UnquotedStringEscapeSequence),
+      {
+        name: [ RuleName.UnquotedString ],
+        match: negChars1('`', '%', 'd', 'M', 'y', 'h', 'H', 'm', 's', 't', inlineSpace()),
+      },
+    ],
+  };
 }
 export function $color(flags: CommandParameterFlag = CommandParameterFlag.None): CommandParameter {
   return $([ keywordOption('Default', 'Black', 'Silver', 'Gray', 'White', 'Maroon', 'Red', 'Purple', 'Fuchsia', 'Green', 'Lime', 'Olive', 'Yellow', 'Navy', 'Blue', 'Teal', 'Aqua') ], flags);
