@@ -444,7 +444,7 @@ export const commandDefinitions: CommandDefinition[] = [
   ]),
 
   // https://www.autohotkey.com/docs/v1/lib/ImageSearch.htm
-  command('ImageSearch', signature([ $output(), $output(), $expression(), $expression(), $expression(), $expression(), $([ stringOption('HBITMAP:'), floatOption('*Icon', '*', '*Trans', '*w', '*h') ]) ])),
+  command('ImageSearch', signature([ $output(), $output(), $expression(), $expression(), $expression(), $expression(), $([ stringOption('HICON:', 'HBITMAP:'), floatOption('*Icon', '*', '*Trans', '*w', '*h') ]) ])),
 
   // https://www.autohotkey.com/docs/v1/lib/IniDelete.htm
   command('IniDelete', signature([ $path(), $(), $() ])),

@@ -232,28 +232,12 @@ export function flagedSizeOption(...options: string[]): ParameterItemMatcher {
 }
 export function stringOption(...optionNames: string[]): ParameterItemMatcher {
   return {
-    match: seq(
-      lookbehind(alt(
-        inlineSpace(),
-        char(','),
-      )),
-      capture(ignoreCase(textalt(...optionNames))),
-      capture(negChars0(inlineSpace())),
-      lookahead(alt(
-        inlineSpace(),
-        char(','),
-        endAnchor(),
-      )),
-    ),
+    match: createOptionPattern(capture(seq(
+      ignoreCase(textalt(...optionNames)),
+      negChars0('%', inlineSpace()),
+    ))),
     captures: {
-      1: [ { name: [ RuleName.UnquotedString, StyleName.Strong ] } ],
-      2: [
-        includeRule(Repository.DereferenceInCommandArgument),
-        {
-          name: [ RuleName.UnquotedString, StyleName.Strong ],
-          match: negChars0('%', inlineSpace()),
-        },
-      ],
+      1: { name: [ RuleName.UnquotedString, StyleName.Strong ] },
     },
   };
 }
