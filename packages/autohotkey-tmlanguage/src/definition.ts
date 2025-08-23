@@ -498,7 +498,7 @@ export function $shouldBoolean(flags: CommandParameterFlag = CommandParameterFla
 }
 export function $shouldInteger(itemMatchers: ParameterItemMatcher[] = [], flags: CommandParameterFlag = CommandParameterFlag.None): CommandParameter {
   return {
-    flags,
+    flags: mergeFlags(flags, CommandParameterFlag.NoLastComma),
     itemMatchers: [
       includeRule(Repository.DereferenceUnaryOperator),
       includeRule(Repository.DereferenceInCommandArgument),
