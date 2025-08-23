@@ -88,12 +88,28 @@ export function createGuiExpectedDataList(scopeName: ScopeName): ExpectedTestDat
       ];
     })(),
 
-    // Parameter 1: SubCommand, Parameter 2: WindowColor, Parameter 3: ControlColor
+    // Parameter 1: SubCommand, Parameter 2: X, Parameter 3: Y
     ...((): ExpectedTestData[] => {
       return [
         ...$guisubcommand(scopeName, 'Margin', { name: commandName, index: 0 }),
         ...$withNumber(scopeName, { name: commandName, index: 1, subcommand: { index: 0, name: 'Margin' } }),
         ...$withNumber(scopeName, { name: commandName, index: 2, subcommand: { index: 0, name: 'Margin' }, isLastParameter: true }),
+      ];
+    })(),
+
+    // Parameter 1: SubCommand, Parameter 2: MenuName
+    ...((): ExpectedTestData[] => {
+      return [
+        ...$guisubcommand(scopeName, 'Menu', { name: commandName, index: 0 }),
+        ...$(scopeName, { name: commandName, index: 1, subcommand: { index: 0, name: 'Menu' }, isLastParameter: true }),
+      ];
+    })(),
+
+    // Parameter 1: SubCommand, Parameter 2: Off
+    ...((): ExpectedTestData[] => {
+      return [
+        ...$guisubcommand(scopeName, 'Flash', { name: commandName, index: 0 }),
+        ...$shouldKeyword(scopeName, [ 'Off' ], { name: commandName, index: 1, subcommand: { index: 0, name: 'Flash' }, isLastParameter: true }),
       ];
     })(),
 
