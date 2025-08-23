@@ -478,7 +478,7 @@ export const commandDefinitions: CommandDefinition[] = [
 
   // https://www.autohotkey.com/docs/v1/lib/Menu.htm
   command('Menu', [
-    signature([ $subcommand('Tray'), $subcommand('Icon'), $imagePath(), $(), $() ]),
+    signature([ $subcommand('Tray'), $subcommand('Icon'), $imagePath(), $shouldInteger(), $shouldKeyword([ keywordOption('0', '1') ]) ]),
     signature([ $subcommand('Tray'), $subcommand([ 'Tip', 'Click' ]), $() ]),
     signature([ $subcommand('Tray'), $subcommand([ 'MainWindow', 'NoMainWindow', 'NoIcon' ]), $rest() ]),
     signature([ $subcommand('Tray'), $(), $path(), $(), $() ]),
