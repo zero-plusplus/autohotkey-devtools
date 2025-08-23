@@ -55,6 +55,9 @@ export function createGuiExpectedDataList(scopeName: ScopeName): ExpectedTestDat
       ];
     })(),
 
+    // Parameter 1: SubCommand
+    ...$guisubcommand(scopeName, [ 'Cancel', 'Hide', 'Destroy', 'Minimize', 'Maximize', 'Restore', 'Default' ], { name: commandName, index: 0 }),
+
     // Parameter 1: +/-Option1 +/-Option2
     ...$guiOptions(scopeName, { name: commandName, index: 0 }),
   ];
