@@ -3,6 +3,7 @@ import { colorOption } from '../../../../helpers/definition/option/colorOption';
 import { floatOption } from '../../../../helpers/definition/option/floatOption';
 import { keywordOption } from '../../../../helpers/definition/option/keywordOption';
 import { $ } from '../../../../helpers/definition/parameter/$';
+import { $color } from '../../../../helpers/definition/parameter/$color';
 import { $fontName } from '../../../../helpers/definition/parameter/$fontName';
 import { $guiControlType } from '../../../../helpers/definition/parameter/$guiControlType';
 import { $guiOptions } from '../../../../helpers/definition/parameter/$guiOptions';
@@ -74,6 +75,15 @@ export function createGuiExpectedDataList(scopeName: ScopeName): ExpectedTestDat
           ];
         })(),
         ...$fontName(scopeName, { name: commandName, index: 2, subcommand: { index: 0, name: 'Font' }, isLastParameter: true }),
+      ];
+    })(),
+
+    // Parameter 1: SubCommand, Parameter 2: WindowColor, Parameter 3: ControlColor
+    ...((): ExpectedTestData[] => {
+      return [
+        ...$guisubcommand(scopeName, 'Color', { name: commandName, index: 0 }),
+        ...$color(scopeName, { name: commandName, index: 1, subcommand: { index: 0, name: 'Color' } }),
+        ...$color(scopeName, { name: commandName, index: 2, subcommand: { index: 0, name: 'Color' }, isLastParameter: true }),
       ];
     })(),
 
