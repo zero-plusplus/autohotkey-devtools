@@ -62,6 +62,7 @@ import { createFileGetAttribExpectedDataList } from './FileGetAttrib';
 import { createFileGetShortcutExpectedDataList } from './FileGetShortcut';
 import { createFileGetSizeExpectedDataList } from './FileGetSize';
 import { createFileGetTimeExpectedDataList } from './FileGetTime';
+import { createFileGetVersionExpectedDataList } from './FileGetVersion';
 import { createFileInstallExpectedDataList } from './FileInstall';
 
 export function createCommandStatementExpectedData(scopeName: ScopeName): ExpectedTestData[] {
@@ -152,6 +153,7 @@ export function createCommandStatementExpectedData(scopeName: ScopeName): Expect
     ...createFileGetShortcutExpectedDataList(scopeName),
     ...createFileGetSizeExpectedDataList(scopeName),
     ...createFileGetTimeExpectedDataList(scopeName),
+    ...createFileGetVersionExpectedDataList(scopeName),
 
     // https://www.autohotkey.com/docs/v1/lib/SetTimer.htm
     ...((): ExpectedTestData[] => {
