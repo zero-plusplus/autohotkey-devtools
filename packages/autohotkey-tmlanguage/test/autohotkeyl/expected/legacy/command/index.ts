@@ -80,6 +80,7 @@ import { createGuiControlExpectedDataList } from './GuiControl';
 import { createGuiControlGetExpectedDataList } from './GuiControlGet';
 import { createHotkeyExpectedDataList } from './Hotkey';
 import { createImageSearchExpectedDataList } from './ImageSearch';
+import { createIniDeleteExpectedDataList } from './IniDelete';
 
 export function createCommandStatementExpectedData(scopeName: ScopeName): ExpectedTestData[] {
   return [
@@ -192,6 +193,7 @@ export function createCommandStatementExpectedData(scopeName: ScopeName): Expect
     ...createGuiControlGetExpectedDataList(scopeName),
     ...createHotkeyExpectedDataList(scopeName),
     ...createImageSearchExpectedDataList(scopeName),
+    ...createIniDeleteExpectedDataList(scopeName),
 
     // https://www.autohotkey.com/docs/v1/lib/SetTimer.htm
     ...((): ExpectedTestData[] => {
