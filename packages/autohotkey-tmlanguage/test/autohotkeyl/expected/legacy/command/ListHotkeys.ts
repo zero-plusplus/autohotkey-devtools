@@ -8,6 +8,6 @@ export function createListHotkeysExpectedDataList(scopeName: ScopeName): Expecte
 
   return [
     // ParameterLess
-    ...$blank(scopeName, { name: commandName, index: 0 }),
+    ...$blank(scopeName, { name: commandName, index: 0, isLastParameter: true }),
   ];
 }
