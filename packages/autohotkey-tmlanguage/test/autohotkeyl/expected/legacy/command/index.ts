@@ -89,6 +89,7 @@ import { createKeyHistoryExpectedDataList } from './KeyHistory';
 import { createKeyWaitExpectedDataList } from './KeyWait';
 import { createListHotkeysExpectedDataList } from './ListHotkeys';
 import { createListLinesExpectedDataList } from './ListLines';
+import { createListVarsExpectedDataList } from './ListVars';
 
 export function createCommandStatementExpectedData(scopeName: ScopeName): ExpectedTestData[] {
   return [
@@ -210,6 +211,7 @@ export function createCommandStatementExpectedData(scopeName: ScopeName): Expect
     ...createKeyWaitExpectedDataList(scopeName),
     ...createListHotkeysExpectedDataList(scopeName),
     ...createListLinesExpectedDataList(scopeName),
+    ...createListVarsExpectedDataList(scopeName),
 
     // https://www.autohotkey.com/docs/v1/lib/SetTimer.htm
     ...((): ExpectedTestData[] => {
