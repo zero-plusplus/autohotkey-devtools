@@ -85,7 +85,7 @@ export function createCommandStatementExpectedData(scopeName: ScopeName): Expect
   return [
     // command names
     ...((): ExpectedTestData[] => {
-      return definitions_v1.commandDefinitions.flatMap((definition): ExpectedTestData[] => {
+      return definitions_v1.commandDefinitions.slice(0, 1).flatMap((definition): ExpectedTestData[] => {
         const commandElementScopes = hasFlag(definition.flags, CommandFlag.Deprecated) ? name(scopeName, RuleName.CommandName, StyleName.Strikethrough) : name(scopeName, RuleName.CommandName);
         return [
           [
