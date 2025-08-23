@@ -391,7 +391,7 @@ export const commandDefinitions: CommandDefinition[] = [
   ]),
 
   // https://www.autohotkey.com/docs/v1/lib/GetKeyState.htm#command
-  command('GetKeyState', signature([ $output(), $shouldKeyword([ keywordOption('P', 'T') ]) ]), CommandFlag.Deprecated),
+  command('GetKeyState', signature([ $output(), $keyName(), $shouldKeyword([ keywordOption('P', 'T') ]) ]), CommandFlag.Deprecated),
 
   // https://www.autohotkey.com/docs/v1/lib/GroupActivate.htm
   command('GroupActivate', signature([ $(), $shouldKeyword([ keywordOption('R') ]) ])),

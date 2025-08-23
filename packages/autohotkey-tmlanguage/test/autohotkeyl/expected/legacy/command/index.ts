@@ -74,6 +74,7 @@ import { createFileSelectFolderExpectedDataList } from './FileSelectFolder';
 import { createFileSetAttribExpectedDataList } from './FileSetAttrib';
 import { createFileSetTimeExpectedDataList } from './FileSetTime';
 import { createFormatTimeExpectedDataList } from './FormatTime';
+import { createGetKeyStateExpectedDataList } from './GetKeyState';
 
 export function createCommandStatementExpectedData(scopeName: ScopeName): ExpectedTestData[] {
   return [
@@ -176,6 +177,7 @@ export function createCommandStatementExpectedData(scopeName: ScopeName): Expect
     ...createFileSetAttribExpectedDataList(scopeName),
     ...createFileSetTimeExpectedDataList(scopeName),
     ...createFormatTimeExpectedDataList(scopeName),
+    ...createGetKeyStateExpectedDataList(scopeName),
 
     // https://www.autohotkey.com/docs/v1/lib/SetTimer.htm
     ...((): ExpectedTestData[] => {
