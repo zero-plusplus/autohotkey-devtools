@@ -459,7 +459,7 @@ export const commandDefinitions: CommandDefinition[] = [
   command('Input', signature([ $output(), $([ keywordOption('B', 'C', 'V', 'E', 'M', '*'), floatOption('I', 'L', 'T') ]), $endKeys(), $matchKeys() ])),
 
   // https://www.autohotkey.com/docs/v1/lib/InputBox.htm
-  command('InputBox', signature([ $output(), $(), $(), $(), $expression(), $expression(), $expression(), $expression(), $(), $expression(), $() ])),
+  command('InputBox', signature([ $output(), $(), $(), $shouldKeyword([ keywordOption('Hide') ]), $expression(), $expression(), $expression(), $expression(), $(), $expression(), $() ])),
 
   // https://www.autohotkey.com/docs/v1/lib/KeyHistory.htm
   command('KeyHistory', signature($parameterless)),
