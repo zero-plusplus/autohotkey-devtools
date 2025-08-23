@@ -373,7 +373,7 @@ export const commandDefinitions: CommandDefinition[] = [
   command('FileRemoveDir', signature([ $path(), $expression() ])),
 
   // https://www.autohotkey.com/docs/v1/lib/FileSelectFile.htm
-  command('FileSelectFile', signature([ $output(), $([ keywordOption('M', 'S') ]), $path(), $(), $() ])),
+  command('FileSelectFile', signature([ $output(), $shouldInteger([ decimalOption('M', 'S') ]), $path(), $(), $() ])),
 
   // https://www.autohotkey.com/docs/v1/lib/FileSelectFolder.htm
   command('FileSelectFolder', signature([ $output(), $(), $expression(), $() ])),
