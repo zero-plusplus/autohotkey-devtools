@@ -4,7 +4,6 @@ import {
   groupMany0,
   groupMany1,
   inlineSpace,
-  inlineSpaces0,
   keyword,
   lookbehind,
   negChars1,
@@ -46,11 +45,7 @@ export function createHotkeyNameRule(scopeName: ScopeName, placeholder: Placehol
   return patternsRule(
     {
       name: name(scopeName, RuleName.HotkeyFlag),
-      match: seq(
-        lookbehind(placeholder.startPattern),
-        inlineSpaces0(),
-        groupMany1(textalt(...constants_common.hotkeyFlags)),
-      ),
+      match: groupMany1(textalt(...constants_common.hotkeyFlags)),
     },
     {
       match: seq(

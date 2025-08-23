@@ -9,6 +9,7 @@ import {
   $driveletter,
   $encoding,
   $expression,
+  $expressionWithPercentExpression,
   $fileAttributes,
   $flagedGuiControlOptions,
   $flowsubcommand,
@@ -438,7 +439,7 @@ export const commandDefinitions: CommandDefinition[] = [
   // https://www.autohotkey.com/docs/v1/lib/Hotkey.htm
   command('Hotkey', [
     signature([ $subcommand([ 'IfWinActive', 'IfWinExist' ]), $winTitle(), $() ]),
-    signature([ $subcommand('If'), $expression(), $rest() ]),
+    signature([ $subcommand('If'), $expressionWithPercentExpression() ]),
     signature([ $hotkeyName(), $([ keywordOption('On', 'Off', 'Toggle', 'AltTab') ]), $([ keywordOption('UseErrorLevel', 'On', 'Off', 'B', 'B0'), floatOption('P', 'T', 'I') ]) ]),
   ]),
 
