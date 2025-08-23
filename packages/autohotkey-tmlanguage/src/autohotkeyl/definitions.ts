@@ -376,7 +376,7 @@ export const commandDefinitions: CommandDefinition[] = [
   command('FileSelectFile', signature([ $output(), $shouldInteger([ decimalOption('M', 'S') ]), $path(), $(), $() ])),
 
   // https://www.autohotkey.com/docs/v1/lib/FileSelectFolder.htm
-  command('FileSelectFolder', signature([ $output(), $(), $expression(), $() ])),
+  command('FileSelectFolder', signature([ $output(), $path(), $expression(), $() ])),
 
   // https://www.autohotkey.com/docs/v1/lib/FileSetAttrib.htm
   command('FileSetAttrib', signature([ $fileAttributes(), $glob(), $expression(), $expression() ])),
