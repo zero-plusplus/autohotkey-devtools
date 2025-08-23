@@ -34,7 +34,7 @@ export function createFileCreateShortcutExpectedDataList(scopeName: ScopeName): 
     // Parameter 8: IconNumber
     ...$expression(scopeName, { name: commandName, index: 7 }),
 
-    // Parameter 7: RunState
+    // Parameter 9: RunState
     ...((placeholder = { name: commandName, index: 8, isLastParameter: true }): ExpectedTestData[] => {
       return [
         ...$(scopeName, placeholder),
