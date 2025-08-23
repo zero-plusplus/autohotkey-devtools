@@ -411,7 +411,7 @@ export const commandDefinitions: CommandDefinition[] = [
     signature([ $guisubcommand('Add'), $guiControlType(), $guiControlOptions(), $() ]),
     signature([ $guisubcommand('Show'), $([ keywordOption('xCenter', 'yCenter', 'AutoSize', 'Minimize', 'Maximize', 'Restore', 'NoActivate', 'NA', 'Hide', 'Center'), floatOption('W', 'H', 'X', 'Y') ]), $() ]),
     signature([ $guisubcommand('Submit'), $shouldKeyword([ keywordOption('NoHide') ]) ]),
-    signature([ $guisubcommand([ 'Cancel', 'Hide', 'Destroy', 'Minimize', 'Maximize', 'Restore', 'Default' ]), $rest() ]),
+    signature([ $guisubcommand([ 'Cancel', 'Hide', 'Destroy', 'Minimize', 'Maximize', 'Restore', 'Default' ]) ]),
     signature([ $guisubcommand('Font'), $([ colorOption('C'), floatOption('S', 'W', 'Q') ]), $() ]),
     signature([ $guisubcommand('Color'), $color(), $color() ]),
     signature([ $guisubcommand('Margin'), $withNumber(), $withNumber() ]),

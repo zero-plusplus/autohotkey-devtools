@@ -5,6 +5,7 @@ import { $ } from '../../../../helpers/definition/parameter/$';
 import { $guiControlType } from '../../../../helpers/definition/parameter/$guiControlType';
 import { $guiOptions } from '../../../../helpers/definition/parameter/$guiOptions';
 import { $guisubcommand } from '../../../../helpers/definition/parameter/$guisubcommand';
+import { $shouldKeyword } from '../../../../helpers/definition/parameter/$shouldKeyword';
 import type { ExpectedTestData } from '../../../../types';
 
 // https://www.autohotkey.com/docs/v1/lib/Gui.htm
@@ -43,6 +44,14 @@ export function createGuiExpectedDataList(scopeName: ScopeName): ExpectedTestDat
           ];
         })(),
         ...$(scopeName, { name: commandName, index: 2, subcommand: { index: 0, name: 'Show' }, isLastParameter: true }),
+      ];
+    })(),
+
+    // Parameter 1: SubCommand, Parameter 2: NoHide
+    ...((): ExpectedTestData[] => {
+      return [
+        ...$guisubcommand(scopeName, 'Submit', { name: commandName, index: 0 }),
+        ...$shouldKeyword(scopeName, [ 'NoHide' ], { name: commandName, index: 1, subcommand: { index: 0, name: 'Submit' }, isLastParameter: true }),
       ];
     })(),
 

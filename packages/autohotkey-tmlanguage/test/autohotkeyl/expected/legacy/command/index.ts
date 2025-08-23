@@ -4,10 +4,6 @@ import {
 } from '@zero-plusplus/utilities/src';
 import * as definitions_v1 from '../../../../../src/autohotkeyl/definitions';
 import {
-  $flagedGuiControlOptions,
-  $guiControlOptions,
-  $guiOptions,
-  $rest,
   CommandFlag,
 } from '../../../../../src/definition';
 import {
@@ -269,107 +265,6 @@ export function createCommandStatementExpectedData(scopeName: ScopeName): Expect
       ];
     })(),
     // #endregion commands
-
-    // signatures
-    ...((_ = $rest): ExpectedTestData[] => {
-      return [
-        [
-          dedent`
-            Gui, Cancel, a, b, c      ; comment
-            Gui, Cancel, % a, b, c    ; comment
-          `,
-          [
-            { text: 'Gui', scopes: name(scopeName, RuleName.CommandName) },
-            { text: ',', scopes: name(scopeName, RuleName.Comma) },
-            { text: 'Cancel', scopes: name(scopeName, RuleName.SubCommandName) },
-            { text: ',', scopes: name(scopeName, RuleName.Comma) },
-            { text: 'a', scopes: name(scopeName, RuleName.UnquotedString) },
-            { text: ',', scopes: name(scopeName, RuleName.Comma) },
-            { text: 'b', scopes: name(scopeName, RuleName.UnquotedString) },
-            { text: ',', scopes: name(scopeName, RuleName.Comma) },
-            { text: 'c', scopes: name(scopeName, RuleName.UnquotedString) },
-            { text: '; comment', scopes: name(scopeName, RuleName.InlineComment) },
-
-            { text: 'Gui', scopes: name(scopeName, RuleName.CommandName) },
-            { text: ',', scopes: name(scopeName, RuleName.Comma) },
-            { text: 'Cancel', scopes: name(scopeName, RuleName.SubCommandName) },
-            { text: ',', scopes: name(scopeName, RuleName.Comma) },
-            { text: '%', scopes: name(scopeName, RuleName.PercentExpressionBegin) },
-            { text: 'a', scopes: name(scopeName, RuleName.Variable) },
-            { text: ',', scopes: name(scopeName, RuleName.Comma) },
-            { text: 'b', scopes: name(scopeName, RuleName.UnquotedString) },
-            { text: ',', scopes: name(scopeName, RuleName.Comma) },
-            { text: 'c', scopes: name(scopeName, RuleName.UnquotedString) },
-            { text: '; comment', scopes: name(scopeName, RuleName.InlineComment) },
-          ],
-        ],
-      ];
-    })(),
-
-    ...((_ = $guiOptions): ExpectedTestData[] => {
-      return [
-        [
-          dedent`
-            Gui, GuiName:New, +AlwaysOnTop Delimiter\`,   ; comment
-            Gui, GuiName: +AlwaysOnTop Delimiter,         ; comment
-          `,
-          [
-            { text: 'Gui', scopes: name(scopeName, RuleName.CommandName) },
-            { text: ',', scopes: name(scopeName, RuleName.Comma) },
-            { text: 'GuiName', scopes: name(scopeName, RuleName.LabelName) },
-            { text: ':', scopes: name(scopeName, RuleName.Colon) },
-            { text: 'New', scopes: name(scopeName, RuleName.SubCommandName) },
-            { text: ',', scopes: name(scopeName, RuleName.Comma) },
-            { text: '+AlwaysOnTop', scopes: name(scopeName, RuleName.UnquotedString, StyleName.Strong) },
-            { text: 'Delimiter`,', scopes: name(scopeName, RuleName.UnquotedString, StyleName.Strong) },
-            { text: '; comment', scopes: name(scopeName, RuleName.InlineComment) },
-
-            { text: 'Gui', scopes: name(scopeName, RuleName.CommandName) },
-            { text: ',', scopes: name(scopeName, RuleName.Comma) },
-            { text: 'GuiName', scopes: name(scopeName, RuleName.LabelName) },
-            { text: ':', scopes: name(scopeName, RuleName.Colon) },
-            { text: '+AlwaysOnTop', scopes: name(scopeName, RuleName.UnquotedString, StyleName.Strong) },
-            { text: 'Delimiter,', scopes: name(scopeName, RuleName.UnquotedString, StyleName.Strong) },
-            { text: '; comment', scopes: name(scopeName, RuleName.InlineComment) },
-          ],
-        ],
-      ];
-    })(),
-
-    ...((_ = $guiControlOptions, __ = $flagedGuiControlOptions): ExpectedTestData[] => {
-      return [
-        [
-          dedent`
-            Gui, Add, ActiveX, X+M            ; comment
-            GuiControl, +X+M                  ; comment
-            GuiControl, GuiName:+X+M          ; comment
-          `,
-          [
-            { text: 'Gui', scopes: name(scopeName, RuleName.CommandName) },
-            { text: ',', scopes: name(scopeName, RuleName.Comma) },
-            { text: 'Add', scopes: name(scopeName, RuleName.SubCommandName) },
-            { text: ',', scopes: name(scopeName, RuleName.Comma) },
-            { text: 'ActiveX', scopes: name(scopeName, RuleName.UnquotedString, StyleName.Strong) },
-            { text: ',', scopes: name(scopeName, RuleName.Comma) },
-            { text: 'X+M', scopes: name(scopeName, RuleName.UnquotedString, StyleName.Strong) },
-            { text: '; comment', scopes: name(scopeName, RuleName.InlineComment) },
-
-            { text: 'GuiControl', scopes: name(scopeName, RuleName.CommandName) },
-            { text: ',', scopes: name(scopeName, RuleName.Comma) },
-            { text: '+X+M', scopes: name(scopeName, RuleName.UnquotedString, StyleName.Strong) },
-            { text: '; comment', scopes: name(scopeName, RuleName.InlineComment) },
-
-            { text: 'GuiControl', scopes: name(scopeName, RuleName.CommandName) },
-            { text: ',', scopes: name(scopeName, RuleName.Comma) },
-            { text: 'GuiName', scopes: name(scopeName, RuleName.LabelName) },
-            { text: ':', scopes: name(scopeName, RuleName.Colon) },
-            { text: '+X+M', scopes: name(scopeName, RuleName.UnquotedString, StyleName.Strong) },
-            { text: '; comment', scopes: name(scopeName, RuleName.InlineComment) },
-          ],
-        ],
-      ];
-    })(),
-    // #endregion highlight types
 
     // #region continuation
     ...((): ExpectedTestData[] => {
