@@ -68,6 +68,7 @@ import { createFileMoveExpectedDataList } from './FileMove';
 import { createFileMoveDirExpectedDataList } from './FileMoveDir';
 import { createFileReadExpectedDataList } from './FileRead';
 import { createFileReadLineExpectedDataList } from './FileReadLine';
+import { createFileRecycleExpectedDataList } from './FileRecycle';
 
 export function createCommandStatementExpectedData(scopeName: ScopeName): ExpectedTestData[] {
   return [
@@ -162,6 +163,7 @@ export function createCommandStatementExpectedData(scopeName: ScopeName): Expect
     ...createFileMoveDirExpectedDataList(scopeName),
     ...createFileReadExpectedDataList(scopeName),
     ...createFileReadLineExpectedDataList(scopeName),
+    ...createFileRecycleExpectedDataList(scopeName),
 
     // https://www.autohotkey.com/docs/v1/lib/SetTimer.htm
     ...((): ExpectedTestData[] => {
