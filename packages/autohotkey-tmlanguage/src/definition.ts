@@ -799,6 +799,14 @@ export function $imagePath(flags: CommandParameterFlag = CommandParameterFlag.No
 export function $glob(flags: CommandParameterFlag = CommandParameterFlag.None): CommandParameter {
   return $([], flags);
 }
+export function $driveletter(flags: CommandParameterFlag = CommandParameterFlag.None): CommandParameter {
+  return $shouldKeyword([
+    {
+      name: [ RuleName.UnquotedString, StyleName.Strong ],
+      match: seq(char('a-z', 'A-Z'), char(':', '\\')),
+    },
+  ], flags);
+}
 export function $encoding(flags: CommandParameterFlag = CommandParameterFlag.None): CommandParameter {
   return $([ keywordOption('CP0', 'UTF-8', 'UTF-8-RAW', 'UTF-16', 'UTF-16-RAW'), numberOption('CP') ], flags);
 }

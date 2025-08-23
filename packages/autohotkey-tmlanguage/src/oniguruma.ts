@@ -216,7 +216,7 @@ export function negativeLookbehind(onigurumaText: string): string {
 // #region helpers
 export function escapeCharClass(text: string): string {
   if (text.length === 1) {
-    return text.replaceAll(/(?<!:)([\-\[\]\^\$])/gu, '\\$1');
+    return text.replaceAll(/(?<!:)([\-\[\]\^\$\\])/gu, '\\$1');
   }
   return text;
 }

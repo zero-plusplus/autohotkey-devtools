@@ -6,6 +6,7 @@ import {
   $control,
   $controlMoveOptions,
   $controlOrPos,
+  $driveletter,
   $encoding,
   $expression,
   $fileAttributes,
@@ -272,14 +273,15 @@ export const commandDefinitions: CommandDefinition[] = [
   command('Drive', [
     signature([ $subcommand('Eject'), $(), $shouldKeyword([ keywordOption('1') ]) ]),
     signature([ $subcommand('Label'), $(), $() ]),
-    signature([ $subcommand([ 'Lock', 'Unlock' ]), $() ]),
+    signature([ $subcommand([ 'Lock', 'Unlock' ]), $driveletter() ]),
     signature([ $invalid() ]),
   ]),
 
   // https://www.autohotkey.com/docs/v1/lib/DriveGet.htm
   command('DriveGet', [
     signature([ $output(), $subcommand('List'), $shouldKeyword([ keywordOption('CDROM', 'REMOVABLE', 'FIXED', 'NETWORK', 'RAMDISK', 'UNKNOWN') ]) ]),
-    signature([ $output(), $subcommand([ 'Capacity', 'Cap', 'FileSystem', 'FS', 'Label', 'Serial', 'Type', 'Status', 'StatusCD' ]), $() ]),
+    signature([ $output(), $subcommand([ 'FileSystem', 'FS', 'Label', 'Serial', 'StatusCD' ]), $driveletter() ]),
+    signature([ $output(), $subcommand([ 'Capacity', 'Cap', 'Type', 'Status' ]), $path() ]),
     signature([ $output(), $invalid() ]),
   ]),
 
@@ -365,7 +367,7 @@ export const commandDefinitions: CommandDefinition[] = [
   command('FileRecycle', signature([ $glob() ])),
 
   // https://www.autohotkey.com/docs/v1/lib/FileRecycleEmpty.htm
-  command('FileRecycleEmpty', signature([ $() ])),
+  command('FileRecycleEmpty', signature([ $driveletter() ])),
 
   // https://www.autohotkey.com/docs/v1/lib/FileRemoveDir.htm
   command('FileRemoveDir', signature([ $path(), $expression() ])),

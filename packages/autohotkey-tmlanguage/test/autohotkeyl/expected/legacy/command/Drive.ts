@@ -1,5 +1,6 @@
 import type { ScopeName } from '../../../../../src/tmlanguage';
 import { $ } from '../../../../helpers/definition/parameter/$';
+import { $driveletter } from '../../../../helpers/definition/parameter/$driveletter';
 import { $invalidSubcommand } from '../../../../helpers/definition/parameter/$invalidSubcommand';
 import { $shouldKeyword } from '../../../../helpers/definition/parameter/$shouldKeyword';
 import { $subcommand } from '../../../../helpers/definition/parameter/$subcommand';
@@ -22,7 +23,7 @@ export function createDriveExpectedDataList(scopeName: ScopeName): ExpectedTestD
 
     // Parameter 1: SubCommand, Parameter 2: Drive
     ...$subcommand(scopeName, [ 'Lock', 'Unlock' ], { name: commandName, index: 0 }),
-    ...$(scopeName, { name: commandName, index: 1, subcommand: { index: 0, name: 'Lock' } }),
+    ...$driveletter(scopeName, { name: commandName, index: 1, subcommand: { index: 0, name: 'Lock' } }),
 
     ...$invalidSubcommand(scopeName, { name: commandName, index: 0 }),
   ];

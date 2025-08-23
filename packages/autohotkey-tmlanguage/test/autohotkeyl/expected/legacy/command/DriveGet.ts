@@ -1,7 +1,8 @@
 import type { ScopeName } from '../../../../../src/tmlanguage';
-import { $ } from '../../../../helpers/definition/parameter/$';
+import { $driveletter } from '../../../../helpers/definition/parameter/$driveletter';
 import { $invalidSubcommand } from '../../../../helpers/definition/parameter/$invalidSubcommand';
 import { $output } from '../../../../helpers/definition/parameter/$output';
+import { $path } from '../../../../helpers/definition/parameter/$path';
 import { $shouldKeyword } from '../../../../helpers/definition/parameter/$shouldKeyword';
 import { $subcommand } from '../../../../helpers/definition/parameter/$subcommand';
 import type { ExpectedTestData } from '../../../../types';
@@ -31,9 +32,8 @@ export function createDriveGetExpectedDataList(scopeName: ScopeName): ExpectedTe
       'Cap',
       'Type',
       'Status',
-      'StatusCD',
     ], { name: commandName, index: 1 }),
-    ...$(scopeName, { name: commandName, index: 2, subcommand: { index: 1, name: 'Capacity' }, isLastParameter: true }),
+    ...$path(scopeName, { name: commandName, index: 2, subcommand: { index: 1, name: 'Capacity' }, isLastParameter: true }),
 
     // Parameter 2: SubCommand, Parameter 3: Drive
     ...$subcommand(scopeName, [
@@ -41,8 +41,9 @@ export function createDriveGetExpectedDataList(scopeName: ScopeName): ExpectedTe
       'FS',
       'Label',
       'Serial',
+      'StatusCD',
     ], { name: commandName, index: 1 }),
-    ...$(scopeName, { name: commandName, index: 2, subcommand: { index: 1, name: 'FileSystem' }, isLastParameter: true }),
+    ...$driveletter(scopeName, { name: commandName, index: 2, subcommand: { index: 1, name: 'FileSystem' }, isLastParameter: true }),
 
     ...$invalidSubcommand(scopeName, { name: commandName, index: 1, isLastParameter: true }),
   ];
