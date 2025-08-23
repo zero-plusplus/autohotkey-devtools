@@ -1,7 +1,9 @@
 import type { ScopeName } from '../../../../../src/tmlanguage';
+import { colorOption } from '../../../../helpers/definition/option/colorOption';
 import { floatOption } from '../../../../helpers/definition/option/floatOption';
 import { keywordOption } from '../../../../helpers/definition/option/keywordOption';
 import { $ } from '../../../../helpers/definition/parameter/$';
+import { $fontName } from '../../../../helpers/definition/parameter/$fontName';
 import { $guiControlType } from '../../../../helpers/definition/parameter/$guiControlType';
 import { $guiOptions } from '../../../../helpers/definition/parameter/$guiOptions';
 import { $guisubcommand } from '../../../../helpers/definition/parameter/$guisubcommand';
@@ -56,7 +58,24 @@ export function createGuiExpectedDataList(scopeName: ScopeName): ExpectedTestDat
     })(),
 
     // Parameter 1: SubCommand
-    ...$guisubcommand(scopeName, [ 'Cancel', 'Hide', 'Destroy', 'Minimize', 'Maximize', 'Restore', 'Default' ], { name: commandName, index: 0 }),
+    ...((): ExpectedTestData[] => {
+      return $guisubcommand(scopeName, [ 'Cancel', 'Hide', 'Destroy', 'Minimize', 'Maximize', 'Restore', 'Default' ], { name: commandName, index: 0 });
+    })(),
+
+    // Parameter 1: SubCommand, Parameter 2: Options, Parameter 3: FontName
+    ...((): ExpectedTestData[] => {
+      return [
+        ...$guisubcommand(scopeName, 'Font', { name: commandName, index: 0 }),
+        ...((placeholder = { name: commandName, index: 1, subcommand: { index: 0, name: 'Font' } }): ExpectedTestData[] => {
+          return [
+            ...$(scopeName, placeholder),
+            ...colorOption(scopeName, [ 'C' ], placeholder),
+            ...floatOption(scopeName, [ 'S', 'W', 'Q' ], placeholder),
+          ];
+        })(),
+        ...$fontName(scopeName, { name: commandName, index: 2, subcommand: { index: 0, name: 'Font' }, isLastParameter: true }),
+      ];
+    })(),
 
     // Parameter 1: +/-Option1 +/-Option2
     ...$guiOptions(scopeName, { name: commandName, index: 0 }),

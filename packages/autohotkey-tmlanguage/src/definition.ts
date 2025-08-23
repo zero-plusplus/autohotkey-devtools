@@ -342,8 +342,8 @@ export function flagedHexOption(...options: string[]): ParameterItemMatcher {
 export function colorOption(...options: string[]): ParameterItemMatcher {
   return createOption(seq(
     ignoreCase(textalt(...options)),
-    group(alt(
-      group(textalt(...constants_common.colorNames, 'Default')),
+    optional(alt(
+      ignoreCase(textalt(...constants_common.colorNames, 'Default')),
       group(hexPattern()),
     )),
   ));
@@ -818,6 +818,9 @@ export function $sendKeyName(flags: CommandParameterFlag = CommandParameterFlag.
   // e.g. `Send, {LButton 5}`
   //             ^^^^^^^^^^^
   return $([ includeRule(Repository.CommandArgumentSendKeyName) ], flags);
+}
+export function $fontName(flags: CommandParameterFlag = CommandParameterFlag.None): CommandParameter {
+  return $([], flags);
 }
 export function $timeunit(flags: CommandParameterFlag = CommandParameterFlag.None): CommandParameter {
   return $shouldKeyword([ keywordOption('Seconds', 'S', 'Minutes', 'M', 'Hours', 'H', 'Days', 'D') ], flags);
