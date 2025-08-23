@@ -63,7 +63,7 @@ import {
   matchKeyOption,
   rangeOption,
   signature,
-  signedNumberOption,
+  signedFloatOption,
   sizeOption,
   stringOption,
   toggleOption,
@@ -100,7 +100,7 @@ export const directiveDefinitions: CommandDefinition[] = [
   command('#HotkeyModifierTimeout', signature([ $shouldInteger() ])),
 
   // https://www.autohotkey.com/docs/v1/lib/_Hotstring.htm
-  command('#Hotstring', signature([ $([ keywordOption('NoMouse', 'EndChars', 'SI', 'SP', 'SE', 'X'), toggleOption('*', '?', 'B', 'C', 'O', 'R', 'T', 'Z'), decimalOption('P'), signedNumberOption('K') ]) ])),
+  command('#Hotstring', signature([ $([ keywordOption('NoMouse', 'EndChars', 'SI', 'SP', 'SE', 'X'), toggleOption('*', '?', 'B', 'C', 'O', 'R', 'T', 'Z'), decimalOption('P'), signedFloatOption('K') ]) ])),
 
   // https://www.autohotkey.com/docs/v1/lib/_If.htm
   command('#If', signature([ $expression() ])),

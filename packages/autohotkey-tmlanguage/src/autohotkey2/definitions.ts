@@ -14,7 +14,7 @@ import {
   keywordOption,
   quotableKeywordOption,
   signature,
-  signedNumberOption,
+  signedFloatOption,
   toggleOption,
   type CommandDefinition,
 } from '../definition';
@@ -37,7 +37,7 @@ export const directiveDefinitions: CommandDefinition[] = [
   command('#HotIfTimeout', signature([ $shouldInteger() ])),
 
   // https://www.autohotkey.com/docs/v2/lib/_Hotstring.htm
-  command('#Hotstring', signature([ $([ keywordOption('NoMouse', 'EndChars', 'SI', 'SP', 'SE', 'X'), toggleOption('*', '?', 'B', 'C', 'O', 'R', 'T', 'Z'), decimalOption('P'), signedNumberOption('K') ]) ])),
+  command('#Hotstring', signature([ $([ keywordOption('NoMouse', 'EndChars', 'SI', 'SP', 'SE', 'X'), toggleOption('*', '?', 'B', 'C', 'O', 'R', 'T', 'Z'), decimalOption('P'), signedFloatOption('K') ]) ])),
 
   // https://www.autohotkey.com/docs/v2/lib/_Include.htm
   command('#Include', signature([ $quotableIncludeLib() ])),

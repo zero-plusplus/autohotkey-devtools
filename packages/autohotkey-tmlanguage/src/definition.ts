@@ -148,7 +148,7 @@ export function quotableKeywordOption(...keywords: string[]): ParameterItemMatch
     createOption(ignoreCase(textalt(...keywords)), [ '"', `'` ], [ '"', `'` ]),
   ];
 }
-export function flagedOption(...options: string[]): ParameterItemMatcher {
+export function flagedKeywordOption(...options: string[]): ParameterItemMatcher {
   return createOption(seq(
     optional(char('+', '-', '^')),
     ignoreCase(textalt(...options)),
@@ -307,7 +307,7 @@ export function quotableNumberOption(...options: string[]): ParameterItemMatcher
     ), [ '"', `'` ], [ '"', `'` ]),
   ];
 }
-export function signedNumberOption(...options: string[]): ParameterItemMatcher {
+export function signedFloatOption(...options: string[]): ParameterItemMatcher {
   return createOption(seq(
     ignoreCase(textalt(...options)),
     optseq(
@@ -316,7 +316,7 @@ export function signedNumberOption(...options: string[]): ParameterItemMatcher {
     ),
   ));
 }
-export function flagedSignedNumberOption(...options: string[]): ParameterItemMatcher {
+export function flagedSignedFloatOption(...options: string[]): ParameterItemMatcher {
   return createOption(seq(
     optional(char('+', '-')),
     ignoreCase(textalt(...options)),
@@ -376,16 +376,26 @@ export function $(itemMatchers: ParameterItemMatcher[] = [], flags: CommandParam
     ],
   };
 }
-export function $subcommand(values: string | string[] = [], flags: CommandParameterFlag = CommandParameterFlag.None): CommandParameter {
+export function $subcommand(values: string | string[] = [], elementName: ElementName | ElementName[] = RuleName.SubCommandName, flags: CommandParameterFlag = CommandParameterFlag.None): CommandParameter {
   // Keywords to distinguish between signatures
   // e.g. `Control, Check`, `Control, UnCheck`
   //                ^^^^^             ^^^^^^^
   return {
-    flags: mergeFlags(flags, CommandParameterFlag.SubCommand),
+    flags: mergeFlags(flags, CommandParameterFlag.SubCommand, CommandParameterFlag.NoLastComma),
     itemMatchers: [
       {
-        name: RuleName.SubCommandName,
-        match: ignoreCase(ordalt(...(Array.isArray(values) ? values : [ values ]))),
+        name: elementName,
+        match: seq(
+          ignoreCase(ordalt(...(Array.isArray(values) ? values : [ values ]))),
+          lookahead(alt(
+            char(inlineSpace(), ','),
+            endAnchor(),
+          )),
+        ),
+      },
+      {
+        name: [ RuleName.UnquotedString, StyleName.Invalid ],
+        match: negChars1(inlineSpace()),
       },
     ],
   };
@@ -397,47 +407,19 @@ export function $subcommandlike(values: string | string[] = [], flags: CommandPa
   // https://www.autohotkey.com/docs/v1/lib/SplashImage.htm
   // e.g. `Progress, Off`, `SplashImage, Off`
   //                 ^^^                 ^^^
-  return {
-    flags: mergeFlags(flags, CommandParameterFlag.SubCommand, CommandParameterFlag.NoLastComma),
-    itemMatchers: [
-      {
-        name: [ RuleName.UnquotedString, StyleName.Strong ],
-        match: ignoreCase(ordalt(...(Array.isArray(values) ? values : [ values ]))),
-      },
-      {
-        name: [ RuleName.UnquotedString, StyleName.Invalid ],
-        match: negChars1(inlineSpace()),
-      },
-    ],
-  };
+  return $subcommand(values, [ RuleName.UnquotedString, StyleName.Strong ], flags);
 }
 export function $flowsubcommand(values: string | string[] = [], flags: CommandParameterFlag = CommandParameterFlag.None): CommandParameter {
   // Basically the same as SubCommand, but the highlighted color is the same as the control flow keyword
   // e.g. `Loop Files`, `Loop Parse`
   //            ^^^^^         ^^^^^
-  return {
-    flags: mergeFlags(flags, CommandParameterFlag.SubCommand),
-    itemMatchers: [
-      {
-        name: RuleName.FlowSubCommandName,
-        match: ignoreCase(ordalt(...(Array.isArray(values) ? values : [ values ]))),
-      },
-    ],
-  };
+  return $subcommand(values, RuleName.FlowSubCommandName, flags);
 }
 export function $guisubcommand(values: string | string[] = [], flags: CommandParameterFlag = CommandParameterFlag.None): CommandParameter {
   // In addition to SubCommand, a label-like syntax is added. Mainly used in commands that deal with Gui
   // e.g. `Gui, Add`, `Gui, GuiName:Add`
   //            ^^^         ^^^^^^^^^^^
-  return {
-    flags: mergeFlags(flags, CommandParameterFlag.SubCommand, CommandParameterFlag.GuiLabeled),
-    itemMatchers: [
-      {
-        name: RuleName.SubCommandName,
-        match: ignoreCase(ordalt(...(Array.isArray(values) ? values : [ values ]))),
-      },
-    ],
-  };
+  return $subcommand(values, RuleName.SubCommandName, mergeFlags(flags, CommandParameterFlag.GuiLabeled));
 }
 export function $regexp(itemMatchers: ParameterItemMatcher[] = [], flags: CommandParameterFlag = CommandParameterFlag.None): CommandParameter {
   return {
@@ -657,7 +639,7 @@ export function $fileAttributes(flags: CommandParameterFlag = CommandParameterFl
 export function $guiOptions(flags: CommandParameterFlag = CommandParameterFlag.None): CommandParameter {
   return $(
     [
-      flagedOption('AlwaysOnTop', 'Border', 'Caption', 'DelimiterSpace', 'DelimiterTab', 'Disabled', 'DPIScale', 'LastFoundExist', 'MaximizeBox', 'MinimizeBox', 'OwnDialogs', 'Owner', 'Parent', 'Resize', 'SysMenu', 'Theme', 'ToolWindow'),
+      flagedKeywordOption('AlwaysOnTop', 'Border', 'Caption', 'DelimiterSpace', 'DelimiterTab', 'Disabled', 'DPIScale', 'LastFoundExist', 'MaximizeBox', 'MinimizeBox', 'OwnDialogs', 'Owner', 'Parent', 'Resize', 'SysMenu', 'Theme', 'ToolWindow'),
       flagedStringOption('Delimiter'),
       flagedIdentifierOption('Hwnd', 'Label', 'LastFound'),
       flagedSizeOption('MinSize', 'MaxSize'),
@@ -683,7 +665,7 @@ export function $menuItemName(flags: CommandParameterFlag = CommandParameterFlag
 export function $menuOptions(values: string[] = [], flags: CommandParameterFlag = CommandParameterFlag.None): CommandParameter {
   return $([
     decimalOption('P'),
-    flagedOption('Radio', 'Right', 'Break', 'BarBreak'),
+    flagedKeywordOption('Radio', 'Right', 'Break', 'BarBreak'),
     ...values,
   ], flags);
 }
@@ -783,7 +765,7 @@ export function $guiControlOptions(flaged = false): CommandParameter {
         ...(flaged ? [ optional(char('+', '-', '^')) ] : []),
         ignoreCase(textalt('X+M', 'X-M', 'Y+M', 'Y-M', 'Left', 'Right', 'Center', 'Section', 'Tabstop', 'Wrap', 'AltSubmit', 'CDefault', 'BackgroundTrans', 'Background', 'Border', 'Theme')),
       ), [ ':' ]),
-      (flaged ? flagedSignedNumberOption : signedNumberOption)('R', 'W', 'H', 'WP', 'HP', 'X', 'Y', 'XP', 'YP', 'XM', 'YM', 'XS', 'YS', 'Choose', 'VScroll', 'HScroll'),
+      (flaged ? flagedSignedFloatOption : signedFloatOption)('R', 'W', 'H', 'WP', 'HP', 'X', 'Y', 'XP', 'YP', 'XM', 'YM', 'XS', 'YS', 'Choose', 'VScroll', 'HScroll'),
       (flaged ? flagedIdentifierOption : identifierOption)('V', 'G', 'Hwnd'),
       (flaged ? flagedHexOption : hexOption)('C'),
       (flaged ? flagedToggleOption : toggleOption)('Disabled', 'Hidden'),
