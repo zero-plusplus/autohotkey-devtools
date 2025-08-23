@@ -656,7 +656,7 @@ export function $input(flags: CommandParameterFlag = CommandParameterFlag.None):
   return $shouldIdentifier(flags);
 }
 export function $output(flags: CommandParameterFlag = CommandParameterFlag.None): CommandParameter {
-  return $shouldIdentifier(mergeFlags(flags, CommandParameterFlag.NoPercentExpression));
+  return $shouldIdentifier(mergeFlags(flags, CommandParameterFlag.NoPercentExpression, CommandParameterFlag.NoLastComma));
 }
 export function $menuItemName(flags: CommandParameterFlag = CommandParameterFlag.None): CommandParameter {
   // https://www.autohotkey.com/docs/v1/lib/Menu.htm#MenuItemName
