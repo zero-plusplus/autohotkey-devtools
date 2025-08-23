@@ -60,6 +60,7 @@ import { createFileDeleteExpectedDataList } from './FileDelete';
 import { createFileEncodingExpectedDataList } from './FileEncoding';
 import { createFileGetAttribExpectedDataList } from './FileGetAttrib';
 import { createFileGetShortcutExpectedDataList } from './FileGetShortcut';
+import { createFileGetSizeExpectedDataList } from './FileGetSize';
 import { createFileInstallExpectedDataList } from './FileInstall';
 
 export function createCommandStatementExpectedData(scopeName: ScopeName): ExpectedTestData[] {
@@ -148,6 +149,7 @@ export function createCommandStatementExpectedData(scopeName: ScopeName): Expect
     ...createFileInstallExpectedDataList(scopeName),
     ...createFileGetAttribExpectedDataList(scopeName),
     ...createFileGetShortcutExpectedDataList(scopeName),
+    ...createFileGetSizeExpectedDataList(scopeName),
 
     // https://www.autohotkey.com/docs/v1/lib/SetTimer.htm
     ...((): ExpectedTestData[] => {
