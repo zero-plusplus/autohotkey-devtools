@@ -65,6 +65,7 @@ import { createFileGetTimeExpectedDataList } from './FileGetTime';
 import { createFileGetVersionExpectedDataList } from './FileGetVersion';
 import { createFileInstallExpectedDataList } from './FileInstall';
 import { createFileMoveExpectedDataList } from './FileMove';
+import { createFileMoveDirExpectedDataList } from './FileMoveDir';
 
 export function createCommandStatementExpectedData(scopeName: ScopeName): ExpectedTestData[] {
   return [
@@ -156,6 +157,7 @@ export function createCommandStatementExpectedData(scopeName: ScopeName): Expect
     ...createFileGetTimeExpectedDataList(scopeName),
     ...createFileGetVersionExpectedDataList(scopeName),
     ...createFileMoveExpectedDataList(scopeName),
+    ...createFileMoveDirExpectedDataList(scopeName),
 
     // https://www.autohotkey.com/docs/v1/lib/SetTimer.htm
     ...((): ExpectedTestData[] => {
