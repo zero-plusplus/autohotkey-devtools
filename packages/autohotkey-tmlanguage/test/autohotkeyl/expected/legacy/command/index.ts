@@ -53,6 +53,7 @@ import { createEnvSubExpectedDataList } from './EnvSub';
 import { createEnvUpdateExpectedDataList } from './EnvUpdate';
 import { createFileAppendExpectedDataList } from './FileAppend';
 import { createFileCopyExpectedDataList } from './FileCopy';
+import { createFileCopyDirExpectedDataList } from './FileCopyDir';
 
 export function createCommandStatementExpectedData(scopeName: ScopeName): ExpectedTestData[] {
   return [
@@ -132,6 +133,7 @@ export function createCommandStatementExpectedData(scopeName: ScopeName): Expect
     ...createEnvUpdateExpectedDataList(scopeName),
     ...createFileAppendExpectedDataList(scopeName),
     ...createFileCopyExpectedDataList(scopeName),
+    ...createFileCopyDirExpectedDataList(scopeName),
 
     // https://www.autohotkey.com/docs/v1/lib/SetTimer.htm
     ...((): ExpectedTestData[] => {
