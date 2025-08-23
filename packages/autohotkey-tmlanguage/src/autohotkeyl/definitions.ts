@@ -453,7 +453,7 @@ export const commandDefinitions: CommandDefinition[] = [
   command('IniRead', signature([ $output(), $path(), $(), $(), $() ])),
 
   // https://www.autohotkey.com/docs/v1/lib/IniWrite.htm
-  command('IniWrite', signature([ $(), $(), $path(), $(), $() ])),
+  command('IniWrite', signature([ $(), $path(), $(), $() ])),
 
   // https://www.autohotkey.com/docs/v1/lib/Input.htm
   command('Input', signature([ $output(), $([ keywordOption('B', 'C', 'V', 'E', 'M'), keywordOption('*'), floatOption('I', 'L', 'T') ]), $([ endKeyOption() ]), $([ matchKeyOption() ]) ])),
