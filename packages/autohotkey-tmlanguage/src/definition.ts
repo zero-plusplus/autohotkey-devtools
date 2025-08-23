@@ -398,7 +398,7 @@ export function $subcommandlike(values: string | string[] = [], flags: CommandPa
   // e.g. `Progress, Off`, `SplashImage, Off`
   //                 ^^^                 ^^^
   return {
-    flags: mergeFlags(flags, CommandParameterFlag.SubCommand),
+    flags: mergeFlags(flags, CommandParameterFlag.SubCommand, CommandParameterFlag.NoLastComma),
     itemMatchers: [
       {
         name: [ RuleName.UnquotedString, StyleName.Strong ],
