@@ -39,5 +39,13 @@ export function createMenuExpectedDataList(scopeName: ScopeName): ExpectedTestDa
         ...$shouldInteger(scopeName, { name: commandName, index: 2, subcommand: [ { name: 'Tray', index: 0 }, { name: 'Click', index: 1 } ], isLastParameter: true }),
       ];
     })(),
+
+    // Parameter 1: SubCommand, Parameter 2: SubCommand
+    ...((): ExpectedTestData[] => {
+      return [
+        ...$subcommand(scopeName, [ 'Tray' ], { name: commandName, index: 0 }),
+        ...$subcommand(scopeName, [ 'MainWindow', 'NoMainWindow', 'NoIcon' ], { name: commandName, index: 1, subcommand: { name: 'Tray', index: 0 } }),
+      ];
+    })(),
   ];
 }
