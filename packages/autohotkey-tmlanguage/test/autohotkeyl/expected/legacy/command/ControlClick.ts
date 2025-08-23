@@ -18,7 +18,7 @@ export function createControlClickExpectedDataList(scopeName: ScopeName): Expect
       return [
         ...$control(scopeName, placeholder),
         ...$(scopeName, placeholder),
-        ...decimalOption(scopeName, [ [ 'X', '16' ], [ 'Y', '20' ] ], placeholder),
+        ...decimalOption(scopeName, [ 'X', 'Y' ], placeholder),
       ];
     })(),
 
@@ -39,7 +39,7 @@ export function createControlClickExpectedDataList(scopeName: ScopeName): Expect
       return [
         ...$(scopeName, placeholder),
         ...keywordOption(scopeName, [ 'NA', 'D', 'U', 'Pos' ], placeholder),
-        ...decimalOption(scopeName, [ [ 'X', '16' ], [ 'Y', '20' ] ], placeholder),
+        ...decimalOption(scopeName, [ 'X', 'Y' ], placeholder),
       ];
     })(),
 
