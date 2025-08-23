@@ -85,6 +85,7 @@ import { createIniReadExpectedDataList } from './IniRead';
 import { createIniWriteExpectedDataList } from './IniWrite';
 import { createInputExpectedDataList } from './Input';
 import { createInputBoxExpectedDataList } from './InputBox';
+import { createKeyHistoryExpectedDataList } from './KeyHistory';
 
 export function createCommandStatementExpectedData(scopeName: ScopeName): ExpectedTestData[] {
   return [
@@ -202,6 +203,7 @@ export function createCommandStatementExpectedData(scopeName: ScopeName): Expect
     ...createIniWriteExpectedDataList(scopeName),
     ...createInputExpectedDataList(scopeName),
     ...createInputBoxExpectedDataList(scopeName),
+    ...createKeyHistoryExpectedDataList(scopeName),
 
     // https://www.autohotkey.com/docs/v1/lib/SetTimer.htm
     ...((): ExpectedTestData[] => {
