@@ -142,5 +142,19 @@ export function createMenuExpectedDataList(scopeName: ScopeName): ExpectedTestDa
         ...$imagePath(scopeName, { name: commandName, index: 5, subcommand: { name: 'Icon', index: 1 }, isLastParameter: true }),
       ];
     })(),
+
+    // Parameter 1: MenuName, Parameter 2: SubCommand, Parameter 3: Off
+    ...((): ExpectedTestData[] => {
+      return [
+        ...((placeholder = { name: commandName, index: 0 }): ExpectedTestData[] => {
+          return [
+            ...$(scopeName, placeholder),
+            ...$subcommand(scopeName, 'Tray', placeholder),
+          ];
+        })(),
+        ...$subcommand(scopeName, [ 'UseErrorLevel' ], { name: commandName, index: 1 }),
+        ...$shouldKeyword(scopeName, [ 'Off' ], { name: commandName, index: 2, subcommand: { name: 'UseErrorLevel', index: 1 }, isLastParameter: true }),
+      ];
+    })(),
   ];
 }
