@@ -3,6 +3,7 @@ import { $ } from '../../../../helpers/definition/parameter/$';
 import { $imagePath } from '../../../../helpers/definition/parameter/$imagePath';
 import { $menuItemName } from '../../../../helpers/definition/parameter/$menuItemName';
 import { $menuOptions } from '../../../../helpers/definition/parameter/$menuOptions';
+import { $path } from '../../../../helpers/definition/parameter/$path';
 import { $shouldInteger } from '../../../../helpers/definition/parameter/$shouldInteger';
 import { $shouldKeyword } from '../../../../helpers/definition/parameter/$shouldKeyword';
 import { $subcommand } from '../../../../helpers/definition/parameter/$subcommand';
@@ -53,7 +54,12 @@ export function createMenuExpectedDataList(scopeName: ScopeName): ExpectedTestDa
     // Parameter 1: MenuName, Parameter 2: SubCommand, Parameter 3: MenuItemName, Parameter 4: LabelOrSubmenu, Parameter 5: Options
     ...((): ExpectedTestData[] => {
       return [
-        ...$(scopeName, { name: commandName, index: 0 }),
+        ...((placeholder = { name: commandName, index: 0 }): ExpectedTestData[] => {
+          return [
+            ...$(scopeName, placeholder),
+            ...$subcommand(scopeName, 'Tray', placeholder),
+          ];
+        })(),
         ...$subcommand(scopeName, [ 'Add' ], { name: commandName, index: 1 }),
         ...$menuItemName(scopeName, { name: commandName, index: 2, subcommand: { name: 'Add', index: 1 } }),
         ...$(scopeName, { name: commandName, index: 3, subcommand: { name: 'Add', index: 1 } }),
@@ -64,7 +70,12 @@ export function createMenuExpectedDataList(scopeName: ScopeName): ExpectedTestDa
     // Parameter 1: MenuName, Parameter 2: SubCommand, Parameter 3: MenuItemName, Parameter 4: ItemToInsert, Parameter 5: LabelOrSubmenu, Parameter 6: Options
     ...((): ExpectedTestData[] => {
       return [
-        ...$(scopeName, { name: commandName, index: 0 }),
+        ...((placeholder = { name: commandName, index: 0 }): ExpectedTestData[] => {
+          return [
+            ...$(scopeName, placeholder),
+            ...$subcommand(scopeName, 'Tray', placeholder),
+          ];
+        })(),
         ...$subcommand(scopeName, [ 'Insert' ], { name: commandName, index: 1 }),
         ...$menuItemName(scopeName, { name: commandName, index: 2, subcommand: { name: 'Insert', index: 1 } }),
         ...$(scopeName, { name: commandName, index: 3, subcommand: { name: 'Insert', index: 1 } }),
@@ -76,8 +87,12 @@ export function createMenuExpectedDataList(scopeName: ScopeName): ExpectedTestDa
     // Parameter 1: MenuName, Parameter 2: SubCommand
     ...((): ExpectedTestData[] => {
       return [
-
-        ...$(scopeName, { name: commandName, index: 0 }),
+        ...((placeholder = { name: commandName, index: 0 }): ExpectedTestData[] => {
+          return [
+            ...$(scopeName, placeholder),
+            ...$subcommand(scopeName, 'Tray', placeholder),
+          ];
+        })(),
         ...$subcommand(scopeName, [ 'DeleteAll', 'NoDefault', 'Standard', 'NoStandard' ], { name: commandName, index: 1, isLastParameter: true }),
       ];
     })(),
@@ -85,7 +100,12 @@ export function createMenuExpectedDataList(scopeName: ScopeName): ExpectedTestDa
     // Parameter 1: MenuName, Parameter 2: SubCommand, Parameter 3: MenuItemName
     ...((): ExpectedTestData[] => {
       return [
-        ...$(scopeName, { name: commandName, index: 0 }),
+        ...((placeholder = { name: commandName, index: 0 }): ExpectedTestData[] => {
+          return [
+            ...$(scopeName, placeholder),
+            ...$subcommand(scopeName, 'Tray', placeholder),
+          ];
+        })(),
         ...$subcommand(scopeName, [ 'Delete', 'Check', 'Uncheck', 'ToggleCheck', 'Enable', 'Disable', 'ToggleEnable', 'Default', 'NoIcon' ], { name: commandName, index: 1 }),
         ...$menuItemName(scopeName, { name: commandName, index: 2, subcommand: { name: 'Delete', index: 1 }, isLastParameter: true }),
       ];
@@ -94,10 +114,32 @@ export function createMenuExpectedDataList(scopeName: ScopeName): ExpectedTestDa
     // Parameter 1: MenuName, Parameter 2: SubCommand, Parameter 3: MenuItemName, Parameter 4: NewName
     ...((): ExpectedTestData[] => {
       return [
-        ...$(scopeName, { name: commandName, index: 0 }),
+        ...((placeholder = { name: commandName, index: 0 }): ExpectedTestData[] => {
+          return [
+            ...$(scopeName, placeholder),
+            ...$subcommand(scopeName, 'Tray', placeholder),
+          ];
+        })(),
         ...$subcommand(scopeName, [ 'Rename' ], { name: commandName, index: 1 }),
         ...$menuItemName(scopeName, { name: commandName, index: 2, subcommand: { name: 'Rename', index: 1 } }),
         ...$menuItemName(scopeName, { name: commandName, index: 3, subcommand: { name: 'Rename', index: 1 }, isLastParameter: true }),
+      ];
+    })(),
+
+    // Parameter 1: MenuName, Parameter 2: SubCommand, Parameter 3: MenuItemName, Parameter 4: FileName, Parameter 5: IconNumber, Parameter 6: IconWidth
+    ...((): ExpectedTestData[] => {
+      return [
+        ...((placeholder = { name: commandName, index: 0 }): ExpectedTestData[] => {
+          return [
+            ...$(scopeName, placeholder),
+            ...$subcommand(scopeName, 'Tray', placeholder),
+          ];
+        })(),
+        ...$subcommand(scopeName, [ 'Icon' ], { name: commandName, index: 1 }),
+        ...$(scopeName, { name: commandName, index: 2, subcommand: { name: 'Icon', index: 1 } }),
+        ...$path(scopeName, { name: commandName, index: 3, subcommand: { name: 'Icon', index: 1 } }),
+        ...$(scopeName, { name: commandName, index: 4, subcommand: { name: 'Icon', index: 1 } }),
+        ...$imagePath(scopeName, { name: commandName, index: 5, subcommand: { name: 'Icon', index: 1 }, isLastParameter: true }),
       ];
     })(),
   ];
