@@ -50,7 +50,7 @@ export function createMenuExpectedDataList(scopeName: ScopeName): ExpectedTestDa
       ];
     })(),
 
-    // Parameter 1: MenuName, Parameter 2: SubCommand
+    // Parameter 1: MenuName, Parameter 2: SubCommand, Parameter 3: MenuItemName, Parameter 4: LabelOrSubmenu, Parameter 5: Options
     ...((): ExpectedTestData[] => {
       return [
         ...$(scopeName, { name: commandName, index: 0 }),
@@ -58,6 +58,18 @@ export function createMenuExpectedDataList(scopeName: ScopeName): ExpectedTestDa
         ...$menuItemName(scopeName, { name: commandName, index: 2, subcommand: { name: 'Add', index: 1 } }),
         ...$(scopeName, { name: commandName, index: 3, subcommand: { name: 'Add', index: 1 } }),
         ...$menuOptions(scopeName, { name: commandName, index: 4, subcommand: { name: 'Add', index: 1 }, isLastParameter: true }),
+      ];
+    })(),
+
+    // Parameter 1: MenuName, Parameter 2: SubCommand, Parameter 3: MenuItemName, Parameter 4: ItemToInsert, Parameter 5: LabelOrSubmenu, Parameter 6: Options
+    ...((): ExpectedTestData[] => {
+      return [
+        ...$(scopeName, { name: commandName, index: 0 }),
+        ...$subcommand(scopeName, [ 'Insert' ], { name: commandName, index: 1 }),
+        ...$menuItemName(scopeName, { name: commandName, index: 2, subcommand: { name: 'Insert', index: 1 } }),
+        ...$(scopeName, { name: commandName, index: 3, subcommand: { name: 'Insert', index: 1 } }),
+        ...$(scopeName, { name: commandName, index: 4, subcommand: { name: 'Insert', index: 1 } }),
+        ...$menuOptions(scopeName, { name: commandName, index: 5, subcommand: { name: 'Insert', index: 1 }, isLastParameter: true }),
       ];
     })(),
   ];
