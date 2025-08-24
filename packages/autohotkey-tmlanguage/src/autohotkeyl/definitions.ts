@@ -490,8 +490,9 @@ export const commandDefinitions: CommandDefinition[] = [
     signature([ $([ subcommandOption('Tray') ]), $subcommand('Rename'), $menuItemName(), $menuItemName() ]),
     signature([ $([ subcommandOption('Tray') ]), $subcommand('Icon'), $(), $path(), $(), $imagePath() ]),
     signature([ $([ subcommandOption('Tray') ]), $subcommand('UseErrorLevel'), $shouldKeyword([ keywordOption('Off') ]) ]),
-    signature([ $([ subcommandOption('Tray') ]), $subcommand([ 'Show', 'Color' ]), $(), $() ]),
-    signature([ $([ subcommandOption('Tray') ]), $rest() ]),
+    signature([ $([ subcommandOption('Tray') ]), $subcommand([ 'Show' ]), $shouldInteger(), $shouldInteger() ]),
+    signature([ $([ subcommandOption('Tray') ]), $subcommand([ 'Color' ]), $color(), $shouldKeyword([ keywordOption('Single') ]) ]),
+    signature([ $([ subcommandOption('Tray') ]) ]),
   ]),
 
   // https://www.autohotkey.com/docs/v1/lib/MouseClick.htm

@@ -1,5 +1,6 @@
 import type { ScopeName } from '../../../../../src/tmlanguage';
 import { $ } from '../../../../helpers/definition/parameter/$';
+import { $color } from '../../../../helpers/definition/parameter/$color';
 import { $imagePath } from '../../../../helpers/definition/parameter/$imagePath';
 import { $menuItemName } from '../../../../helpers/definition/parameter/$menuItemName';
 import { $menuOptions } from '../../../../helpers/definition/parameter/$menuOptions';
@@ -154,6 +155,44 @@ export function createMenuExpectedDataList(scopeName: ScopeName): ExpectedTestDa
         })(),
         ...$subcommand(scopeName, [ 'UseErrorLevel' ], { name: commandName, index: 1 }),
         ...$shouldKeyword(scopeName, [ 'Off' ], { name: commandName, index: 2, subcommand: { name: 'UseErrorLevel', index: 1 }, isLastParameter: true }),
+      ];
+    })(),
+
+    // Parameter 1: MenuName, Parameter 2: SubCommand, Parameter 3: X, Parameter 4: Y
+    ...((): ExpectedTestData[] => {
+      return [
+        ...((placeholder = { name: commandName, index: 0 }): ExpectedTestData[] => {
+          return [
+            ...$(scopeName, placeholder),
+            ...$subcommand(scopeName, 'Tray', placeholder),
+          ];
+        })(),
+        ...$subcommand(scopeName, [ 'Show' ], { name: commandName, index: 1 }),
+        ...$shouldInteger(scopeName, { name: commandName, index: 2, subcommand: { name: 'Show', index: 1 } }),
+        ...$shouldInteger(scopeName, { name: commandName, index: 3, subcommand: { name: 'Show', index: 1 }, isLastParameter: true }),
+      ];
+    })(),
+
+    // Parameter 1: MenuName, Parameter 2: SubCommand, Parameter 3: ColorValue , Parameter 4: Single
+    ...((): ExpectedTestData[] => {
+      return [
+        ...((placeholder = { name: commandName, index: 0 }): ExpectedTestData[] => {
+          return [
+            ...$(scopeName, placeholder),
+            ...$subcommand(scopeName, 'Tray', placeholder),
+          ];
+        })(),
+        ...$subcommand(scopeName, [ 'Color' ], { name: commandName, index: 1 }),
+        ...$color(scopeName, { name: commandName, index: 2, subcommand: { name: 'Color', index: 1 } }),
+        ...$shouldKeyword(scopeName, [ 'Single' ], { name: commandName, index: 3, subcommand: { name: 'Color', index: 1 }, isLastParameter: true }),
+      ];
+    })(),
+
+    // Parameter 1: MenuName
+    ...((placeholder = { name: commandName, index: 0 }): ExpectedTestData[] => {
+      return [
+        ...$(scopeName, placeholder),
+        ...$subcommand(scopeName, 'Tray', placeholder),
       ];
     })(),
   ];
