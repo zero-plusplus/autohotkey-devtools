@@ -81,5 +81,14 @@ export function createMenuExpectedDataList(scopeName: ScopeName): ExpectedTestDa
         ...$subcommand(scopeName, [ 'DeleteAll', 'NoDefault', 'Standard', 'NoStandard' ], { name: commandName, index: 1, isLastParameter: true }),
       ];
     })(),
+
+    // Parameter 1: MenuName, Parameter 2: SubCommand, Parameter 3: MenuItemName
+    ...((): ExpectedTestData[] => {
+      return [
+        ...$(scopeName, { name: commandName, index: 0 }),
+        ...$subcommand(scopeName, [ 'Delete', 'Check', 'Uncheck', 'ToggleCheck', 'Enable', 'Disable', 'ToggleEnable', 'Default', 'NoIcon' ], { name: commandName, index: 1 }),
+        ...$menuItemName(scopeName, { name: commandName, index: 2, subcommand: { name: 'Delete', index: 1 }, isLastParameter: true }),
+      ];
+    })(),
   ];
 }
