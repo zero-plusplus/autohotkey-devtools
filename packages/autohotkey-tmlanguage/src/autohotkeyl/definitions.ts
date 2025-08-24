@@ -485,7 +485,7 @@ export const commandDefinitions: CommandDefinition[] = [
     signature([ $subcommand('Tray'), $subcommand([ 'MainWindow', 'NoMainWindow', 'NoIcon' ]) ]),
     signature([ $([ subcommandOption('Tray') ]), $subcommand('Add'), $menuItemName(), $(), $menuOptions() ]),
     signature([ $([ subcommandOption('Tray') ]), $subcommand('Insert'), $menuItemName(), $(), $(), $menuOptions() ]),
-    signature([ $([ subcommandOption('Tray') ]), $subcommand([ 'DeleteAll', 'NoDefault', 'Standard', 'NoStandard' ]), $rest() ]),
+    signature([ $([ subcommandOption('Tray') ]), $subcommand([ 'DeleteAll', 'NoDefault', 'Standard', 'NoStandard' ]) ]),
     signature([ $([ subcommandOption('Tray') ]), $subcommand([ 'Delete', 'Check', 'Uncheck', 'ToggleCheck', 'Enable', 'Disable', 'ToggleEnable', 'Default', 'NoIcon' ]), $menuItemName() ]),
     signature([ $([ subcommandOption('Tray') ]), $subcommand('Rename'), $menuItemName(), $menuItemName() ]),
     signature([ $([ subcommandOption('Tray') ]), $subcommand('Icon'), $(), $path(), $(), $imagePath() ]),
