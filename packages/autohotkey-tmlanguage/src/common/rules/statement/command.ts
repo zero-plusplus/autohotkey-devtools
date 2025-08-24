@@ -1,5 +1,6 @@
 import { hasFlag } from '@zero-plusplus/utilities/src';
 import {
+  $,
   CommandFlag,
   CommandParameterFlag,
   keywordOption,
@@ -488,28 +489,23 @@ export function createControlStyleCommandArgumentRule(scopeName: ScopeName): Pat
   ]));
 }
 export function createMenuNameCommandArgumentRule(scopeName: ScopeName): PatternsRule {
-  return patternsRule(
+  return patternsRule(...itemPatternsToRules(scopeName, $([
     includeRule(Repository.DereferenceInCommandArgument),
     // e.g. `Menu, MenuName, Add, &test`
     //                            ^^
     {
-      name: name(scopeName, RuleName.UnquotedString, StyleName.Underline),
+      name: [ RuleName.UnquotedString, StyleName.Underline ],
       match: seq(char('&'), alt(negChar('&', '\\s'))),
     },
     {
-      name: name(scopeName, RuleName.UnquotedString, StyleName.Escape),
+      name: [ RuleName.UnquotedString, StyleName.Escape ],
       match: text('&&'),
     },
     {
-      name: name(scopeName, RuleName.UnquotedString),
+      name: [ RuleName.UnquotedString ],
       match: seq(char('&'), negativeLookahead(char('&'))),
     },
-    includeRule(Repository.UnquotedStringEscapeSequence),
-    {
-      name: name(scopeName, RuleName.UnquotedString),
-      match: negChars1('`', '&', '\\s'),
-    },
-  );
+  ]).itemMatchers!));
 }
 
 export function createInvalidArgumentRule(scopeName: ScopeName): MatchRule {

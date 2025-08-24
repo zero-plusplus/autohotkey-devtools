@@ -1,7 +1,8 @@
 import type { ScopeName } from '../../../../../src/tmlanguage';
 import { $ } from '../../../../helpers/definition/parameter/$';
 import { $imagePath } from '../../../../helpers/definition/parameter/$imagePath';
-import { $path } from '../../../../helpers/definition/parameter/$path';
+import { $menuItemName } from '../../../../helpers/definition/parameter/$menuItemName';
+import { $menuOptions } from '../../../../helpers/definition/parameter/$menuOptions';
 import { $shouldInteger } from '../../../../helpers/definition/parameter/$shouldInteger';
 import { $shouldKeyword } from '../../../../helpers/definition/parameter/$shouldKeyword';
 import { $subcommand } from '../../../../helpers/definition/parameter/$subcommand';
@@ -54,9 +55,9 @@ export function createMenuExpectedDataList(scopeName: ScopeName): ExpectedTestDa
       return [
         ...$(scopeName, { name: commandName, index: 0 }),
         ...$subcommand(scopeName, [ 'Add' ], { name: commandName, index: 1 }),
-        ...$path(scopeName, { name: commandName, index: 2, subcommand: { name: 'Add', index: 1 } }),
+        ...$menuItemName(scopeName, { name: commandName, index: 2, subcommand: { name: 'Add', index: 1 } }),
         ...$(scopeName, { name: commandName, index: 3, subcommand: { name: 'Add', index: 1 } }),
-        ...$(scopeName, { name: commandName, index: 4, subcommand: { name: 'Add', index: 1 }, isLastParameter: true }),
+        ...$menuOptions(scopeName, { name: commandName, index: 4, subcommand: { name: 'Add', index: 1 }, isLastParameter: true }),
       ];
     })(),
   ];

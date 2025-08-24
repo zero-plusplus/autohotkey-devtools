@@ -647,11 +647,10 @@ export function $menuItemName(flags: CommandParameterFlag = CommandParameterFlag
     itemMatchers: [ includeRule(Repository.MenuItemNameCommandArgument) ],
   };
 }
-export function $menuOptions(values: string[] = [], flags: CommandParameterFlag = CommandParameterFlag.None): CommandParameter {
+export function $menuOptions(flags: CommandParameterFlag = CommandParameterFlag.None): CommandParameter {
   return $([
     decimalOption('P'),
     flagedKeywordOption('Radio', 'Right', 'Break', 'BarBreak'),
-    ...values,
   ], flags);
 }
 export function $includeLib(flags: CommandParameterFlag = CommandParameterFlag.None, quotable = false): CommandParameter {
