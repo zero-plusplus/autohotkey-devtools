@@ -489,6 +489,7 @@ export function createControlStyleCommandArgumentRule(scopeName: ScopeName): Pat
 }
 export function createMenuNameCommandArgumentRule(scopeName: ScopeName): PatternsRule {
   return patternsRule(
+    includeRule(Repository.DereferenceInCommandArgument),
     // e.g. `Menu, MenuName, Add, &test`
     //                            ^^
     {

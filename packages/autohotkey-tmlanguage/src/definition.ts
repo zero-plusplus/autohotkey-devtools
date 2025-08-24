@@ -320,6 +320,19 @@ export function colorOption(...options: string[]): ParameterItemMatcher {
     )),
   ));
 }
+export function subcommandOption(names: string | string[], elementName: ElementName | ElementName[] = RuleName.SubCommandName): ParameterItemMatcher {
+  return {
+    name: elementName,
+    match: seq(
+      ignoreCase(textalt(...(Array.isArray(names) ? names : [ names ]))),
+      lookahead(alt(
+        char(inlineSpace(), ','),
+        endAnchor(),
+      )),
+    ),
+  };
+}
+
 // #endregion parameter item defenition
 
 // #region command definitions
@@ -355,16 +368,7 @@ export function $subcommand(values: string | string[] = [], elementName: Element
   return {
     flags: mergeFlags(flags, CommandParameterFlag.SubCommand, CommandParameterFlag.NoLastComma),
     itemMatchers: [
-      {
-        name: elementName,
-        match: seq(
-          ignoreCase(ordalt(...(Array.isArray(values) ? values : [ values ]))),
-          lookahead(alt(
-            char(inlineSpace(), ','),
-            endAnchor(),
-          )),
-        ),
-      },
+      subcommandOption(values, elementName),
       {
         name: [ RuleName.UnquotedString, StyleName.Invalid ],
         match: negChars1(inlineSpace()),

@@ -1,6 +1,7 @@
 import type { ScopeName } from '../../../../../src/tmlanguage';
 import { $ } from '../../../../helpers/definition/parameter/$';
 import { $imagePath } from '../../../../helpers/definition/parameter/$imagePath';
+import { $path } from '../../../../helpers/definition/parameter/$path';
 import { $shouldInteger } from '../../../../helpers/definition/parameter/$shouldInteger';
 import { $shouldKeyword } from '../../../../helpers/definition/parameter/$shouldKeyword';
 import { $subcommand } from '../../../../helpers/definition/parameter/$subcommand';
@@ -45,6 +46,17 @@ export function createMenuExpectedDataList(scopeName: ScopeName): ExpectedTestDa
       return [
         ...$subcommand(scopeName, [ 'Tray' ], { name: commandName, index: 0 }),
         ...$subcommand(scopeName, [ 'MainWindow', 'NoMainWindow', 'NoIcon' ], { name: commandName, index: 1, subcommand: { name: 'Tray', index: 0 } }),
+      ];
+    })(),
+
+    // Parameter 1: MenuName, Parameter 2: SubCommand
+    ...((): ExpectedTestData[] => {
+      return [
+        ...$(scopeName, { name: commandName, index: 0 }),
+        ...$subcommand(scopeName, [ 'Add' ], { name: commandName, index: 1 }),
+        ...$path(scopeName, { name: commandName, index: 2, subcommand: { name: 'Add', index: 1 } }),
+        ...$(scopeName, { name: commandName, index: 3, subcommand: { name: 'Add', index: 1 } }),
+        ...$(scopeName, { name: commandName, index: 4, subcommand: { name: 'Add', index: 1 }, isLastParameter: true }),
       ];
     })(),
   ];
