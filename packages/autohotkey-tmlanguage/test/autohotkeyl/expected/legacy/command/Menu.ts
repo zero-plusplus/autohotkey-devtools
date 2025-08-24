@@ -90,5 +90,15 @@ export function createMenuExpectedDataList(scopeName: ScopeName): ExpectedTestDa
         ...$menuItemName(scopeName, { name: commandName, index: 2, subcommand: { name: 'Delete', index: 1 }, isLastParameter: true }),
       ];
     })(),
+
+    // Parameter 1: MenuName, Parameter 2: SubCommand, Parameter 3: MenuItemName, Parameter 4: NewName
+    ...((): ExpectedTestData[] => {
+      return [
+        ...$(scopeName, { name: commandName, index: 0 }),
+        ...$subcommand(scopeName, [ 'Rename' ], { name: commandName, index: 1 }),
+        ...$menuItemName(scopeName, { name: commandName, index: 2, subcommand: { name: 'Rename', index: 1 } }),
+        ...$menuItemName(scopeName, { name: commandName, index: 3, subcommand: { name: 'Rename', index: 1 }, isLastParameter: true }),
+      ];
+    })(),
   ];
 }
