@@ -517,6 +517,22 @@ export function $shouldInteger(itemMatchers: ParameterItemMatcher[] = [], flags:
     ],
   };
 }
+export function $shouldFloat(itemMatchers: ParameterItemMatcher[] = [], flags: CommandParameterFlag = CommandParameterFlag.None): CommandParameter {
+  return {
+    flags: mergeFlags(flags, CommandParameterFlag.NoLastComma),
+    itemMatchers: [
+      includeRule(Repository.DereferenceUnaryOperator),
+      includeRule(Repository.DereferenceInCommandArgument),
+      includeRule(Repository.Operator),
+      includeRule(Repository.Float),
+      ...itemMatchers,
+      {
+        name: [ RuleName.UnquotedString, StyleName.Invalid ],
+        match: negChars1('%', inlineSpace()),
+      },
+    ],
+  };
+}
 export function $shouldNumber(...itemMatchers: ParameterItemMatcher[]): CommandParameter {
   return {
     flags: CommandParameterFlag.None,

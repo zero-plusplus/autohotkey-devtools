@@ -39,6 +39,7 @@ import {
   $rest,
   $sendKeyName,
   $shouldEscapeComma,
+  $shouldFloat,
   $shouldInteger,
   $shouldKeyword,
   $shouldLabel,
@@ -508,7 +509,7 @@ export const commandDefinitions: CommandDefinition[] = [
   command('MouseMove', signature([ $expression(), $expression(), $expression(), $shouldKeyword([ keywordOption('R') ]) ])),
 
   // https://www.autohotkey.com/docs/v1/lib/MsgBox.htm
-  command('MsgBox', signature([ $(), $(), $(), $() ])),
+  command('MsgBox', signature([ $withNumber(), $(), $(), $shouldFloat() ])),
 
   // https://www.autohotkey.com/docs/v1/lib/OnExit.htm#command
   command('OnExit', signature([ $() ]), CommandFlag.Deprecated),

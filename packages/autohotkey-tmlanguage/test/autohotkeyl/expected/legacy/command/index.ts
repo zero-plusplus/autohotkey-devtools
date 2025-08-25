@@ -95,6 +95,7 @@ import { createMouseClickExpectedDataList } from './MouseClick';
 import { createMouseClickDragExpectedDataList } from './MouseClickDrag';
 import { createMouseGetPosExpectedDataList } from './MouseGetPos';
 import { createMouseMoveExpectedDataList } from './MouseMove';
+import { createMsgBoxExpectedDataList } from './MsgBox';
 
 export function createCommandStatementExpectedData(scopeName: ScopeName): ExpectedTestData[] {
   return [
@@ -222,6 +223,7 @@ export function createCommandStatementExpectedData(scopeName: ScopeName): Expect
     ...createMouseClickDragExpectedDataList(scopeName),
     ...createMouseGetPosExpectedDataList(scopeName),
     ...createMouseMoveExpectedDataList(scopeName),
+    ...createMsgBoxExpectedDataList(scopeName),
 
     // https://www.autohotkey.com/docs/v1/lib/SetTimer.htm
     ...((): ExpectedTestData[] => {
