@@ -121,6 +121,7 @@ import { createSendPlayExpectedDataList } from './SendPlay';
 import { createSendRawExpectedDataList } from './SendRaw';
 import { createSetBatchLinesExpectedDataList } from './SetBatchLines';
 import { createSetCapsLockStateExpectedDataList } from './SetCapsLockState';
+import { createSetControlDelayExpectedDataList } from './SetControlDelay';
 import { createSetNumLockStateExpectedDataList } from './SetNumLockState';
 import { createSetScrollLockStateExpectedDataList } from './SetScrollLockState';
 
@@ -278,6 +279,7 @@ export function createCommandStatementExpectedData(scopeName: ScopeName): Expect
     ...createSetCapsLockStateExpectedDataList(scopeName),
     ...createSetNumLockStateExpectedDataList(scopeName),
     ...createSetScrollLockStateExpectedDataList(scopeName),
+    ...createSetControlDelayExpectedDataList(scopeName),
 
     // https://www.autohotkey.com/docs/v1/lib/SetTimer.htm
     ...((): ExpectedTestData[] => {
