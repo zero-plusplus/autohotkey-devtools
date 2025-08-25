@@ -541,8 +541,8 @@ export const commandDefinitions: CommandDefinition[] = [
 
   // https://www.autohotkey.com/docs/v1/lib/Progress.htm
   command('Progress', [
-    signature([ $subcommandlike('Off'), $rest() ]),
-    signature([ $(), $(), $(), $winTitle(), $() ]),
+    signature([ $subcommandlike('Off') ]),
+    signature([ $([ subcommandOption('Show') ]), $(), $(), $winTitle(), $() ]),
   ], CommandFlag.Deprecated),
 
   // https://www.autohotkey.com/docs/v1/lib/Random.htm
