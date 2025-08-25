@@ -119,6 +119,7 @@ import { createSendMessageExpectedDataList } from './SendMessage';
 import { createSendModeExpectedDataList } from './SendMode';
 import { createSendPlayExpectedDataList } from './SendPlay';
 import { createSendRawExpectedDataList } from './SendRaw';
+import { createSetBatchLinesExpectedDataList } from './SetBatchLines';
 
 export function createCommandStatementExpectedData(scopeName: ScopeName): ExpectedTestData[] {
   return [
@@ -270,6 +271,7 @@ export function createCommandStatementExpectedData(scopeName: ScopeName): Expect
     ...createSendEventExpectedDataList(scopeName),
     ...createSendLevelExpectedDataList(scopeName),
     ...createSendModeExpectedDataList(scopeName),
+    ...createSetBatchLinesExpectedDataList(scopeName),
 
     // https://www.autohotkey.com/docs/v1/lib/SetTimer.htm
     ...((): ExpectedTestData[] => {

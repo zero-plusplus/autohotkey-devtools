@@ -589,7 +589,7 @@ export const commandDefinitions: CommandDefinition[] = [
   command('SendMode', signature([ $shouldKeyword([ keywordOption('Event', 'Input', 'InputThenPlay', 'Play') ]) ])),
 
   // https://www.autohotkey.com/docs/v1/lib/SetBatchLines.htm
-  command('SetBatchLines', signature([ $() ])),
+  command('SetBatchLines', signature([ $shouldInteger() ])),
 
   // https://www.autohotkey.com/docs/v1/lib/SetNumScrollCapsLockState.htm
   command('SetCapsLockState', signature([ $onOff([ keywordOption('AlwaysOn', 'AlwaysOff') ]) ])),
