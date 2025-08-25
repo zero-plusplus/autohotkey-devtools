@@ -625,7 +625,7 @@ export const commandDefinitions: CommandDefinition[] = [
   command('SetStoreCapsLockMode', signature([ $onOff() ])),
 
   // https://www.autohotkey.com/docs/v1/lib/SetTimer.htm
-  command('SetTimer', signature([ $(), $shouldNumber(keywordOption('On', 'Off', 'Delete')), $expression() ])),
+  command('SetTimer', signature([ $shouldLabel(), $shouldInteger([ keywordOption('On', 'Off', 'Delete') ]), $expression() ])),
 
   // https://www.autohotkey.com/docs/v1/lib/SetTitleMatchMode.htm
   command('SetTitleMatchMode', signature([ $shouldKeyword([ keywordOption('1', '2', '3', 'RegEx', 'Fast', 'Slow') ]) ])),

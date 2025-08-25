@@ -131,6 +131,7 @@ import { createSetNumLockStateExpectedDataList } from './SetNumLockState';
 import { createSetRegViewExpectedDataList } from './SetRegView';
 import { createSetScrollLockStateExpectedDataList } from './SetScrollLockState';
 import { createSetStoreCapsLockModeExpectedDataList } from './SetStoreCapsLockMode';
+import { createSetTimerExpectedDataList } from './SetTimer';
 
 export function createCommandStatementExpectedData(scopeName: ScopeName): ExpectedTestData[] {
   return [
@@ -294,86 +295,7 @@ export function createCommandStatementExpectedData(scopeName: ScopeName): Expect
     ...createSetNumLockStateExpectedDataList(scopeName),
     ...createSetRegViewExpectedDataList(scopeName),
     ...createSetStoreCapsLockModeExpectedDataList(scopeName),
-
-    // https://www.autohotkey.com/docs/v1/lib/SetTimer.htm
-    ...((): ExpectedTestData[] => {
-      return [
-        [
-          dedent`
-            SetTimer, , 100         ; comment
-            SetTimer, , -100        ; comment
-            SetTimer, , on          ; comment
-            SetTimer, , off         ; comment
-            SetTimer, , delete      ; comment
-            SetTimer, , %var%       ; comment
-            SetTimer, , -%var%      ; comment
-          `,
-          [
-            ...[
-              { text: 'SetTimer', scopes: name(scopeName, RuleName.CommandName) },
-              { text: ',', scopes: name(scopeName, RuleName.Comma) },
-              { text: ',', scopes: name(scopeName, RuleName.Comma) },
-              { text: '100', scopes: name(scopeName, RuleName.Integer) },
-              { text: '; comment', scopes: name(scopeName, RuleName.InlineComment) },
-            ],
-
-            ...[
-              { text: 'SetTimer', scopes: name(scopeName, RuleName.CommandName) },
-              { text: ',', scopes: name(scopeName, RuleName.Comma) },
-              { text: ',', scopes: name(scopeName, RuleName.Comma) },
-              { text: '-', scopes: name(scopeName, RuleName.Operator) },
-              { text: '100', scopes: name(scopeName, RuleName.Integer) },
-              { text: '; comment', scopes: name(scopeName, RuleName.InlineComment) },
-            ],
-
-            ...[
-              { text: 'SetTimer', scopes: name(scopeName, RuleName.CommandName) },
-              { text: ',', scopes: name(scopeName, RuleName.Comma) },
-              { text: ',', scopes: name(scopeName, RuleName.Comma) },
-              { text: 'on', scopes: name(scopeName, RuleName.UnquotedString, StyleName.Strong) },
-              { text: '; comment', scopes: name(scopeName, RuleName.InlineComment) },
-            ],
-
-            ...[
-              { text: 'SetTimer', scopes: name(scopeName, RuleName.CommandName) },
-              { text: ',', scopes: name(scopeName, RuleName.Comma) },
-              { text: ',', scopes: name(scopeName, RuleName.Comma) },
-              { text: 'off', scopes: name(scopeName, RuleName.UnquotedString, StyleName.Strong) },
-              { text: '; comment', scopes: name(scopeName, RuleName.InlineComment) },
-            ],
-
-            ...[
-              { text: 'SetTimer', scopes: name(scopeName, RuleName.CommandName) },
-              { text: ',', scopes: name(scopeName, RuleName.Comma) },
-              { text: ',', scopes: name(scopeName, RuleName.Comma) },
-              { text: 'delete', scopes: name(scopeName, RuleName.UnquotedString, StyleName.Strong) },
-              { text: '; comment', scopes: name(scopeName, RuleName.InlineComment) },
-            ],
-
-            ...[
-              { text: 'SetTimer', scopes: name(scopeName, RuleName.CommandName) },
-              { text: ',', scopes: name(scopeName, RuleName.Comma) },
-              { text: ',', scopes: name(scopeName, RuleName.Comma) },
-              { text: '%', scopes: name(scopeName, RuleName.PercentBegin) },
-              { text: 'var', scopes: name(scopeName, RuleName.Variable) },
-              { text: '%', scopes: name(scopeName, RuleName.PercentEnd) },
-              { text: '; comment', scopes: name(scopeName, RuleName.InlineComment) },
-            ],
-
-            ...[
-              { text: 'SetTimer', scopes: name(scopeName, RuleName.CommandName) },
-              { text: ',', scopes: name(scopeName, RuleName.Comma) },
-              { text: ',', scopes: name(scopeName, RuleName.Comma) },
-              { text: '-', scopes: name(scopeName, RuleName.Operator) },
-              { text: '%', scopes: name(scopeName, RuleName.PercentBegin) },
-              { text: 'var', scopes: name(scopeName, RuleName.Variable) },
-              { text: '%', scopes: name(scopeName, RuleName.PercentEnd) },
-              { text: '; comment', scopes: name(scopeName, RuleName.InlineComment) },
-            ],
-          ],
-        ],
-      ];
-    })(),
+    ...createSetTimerExpectedDataList(scopeName),
     // #endregion commands
 
     // #region continuation
