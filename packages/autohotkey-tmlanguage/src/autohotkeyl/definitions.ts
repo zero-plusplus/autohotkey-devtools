@@ -607,7 +607,7 @@ export const commandDefinitions: CommandDefinition[] = [
   command('SetFormat', signature([ $shouldKeyword([ keywordOption('IntegerFast', 'FloatFast', 'Integer', 'Float') ]), $withNumber([ keywordOption('H', 'Hex', 'D') ]) ]), CommandFlag.Deprecated),
 
   // https://www.autohotkey.com/docs/v1/lib/SetKeyDelay.htm
-  command('SetKeyDelay', signature([ $expression(), $expression(), $shouldKeyword([ keywordOption('Play', '-1') ]) ])),
+  command('SetKeyDelay', signature([ $expression(), $expression(), $shouldKeyword([ keywordOption('Play') ]) ])),
 
   // https://www.autohotkey.com/docs/v1/lib/SetMouseDelay.htm
   command('SetMouseDelay', signature([ $expression(), $shouldKeyword([ keywordOption('Play', '-1') ]) ])),
