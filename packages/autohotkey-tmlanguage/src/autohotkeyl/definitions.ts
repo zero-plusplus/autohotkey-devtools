@@ -553,7 +553,7 @@ export const commandDefinitions: CommandDefinition[] = [
   command('RegDelete', signature([ $regkey(), $(), $([ keywordOption('AHK_DEFAULT') ]) ])),
 
   // https://www.autohotkey.com/docs/v1/lib/RegRead.htm
-  command('RegRead', signature([ $output(), $(), $(), $() ])),
+  command('RegRead', signature([ $output(), $regkey(), $(), $() ])),
 
   // https://www.autohotkey.com/docs/v1/lib/RegWrite.htm
   command('RegWrite', signature([ $shouldKeyword([ keywordOption('REG_SZ', 'REG_EXPAND_SZ', 'REG_MULTI_SZ', 'REG_DWORD', 'REG_BINARY') ]), $(), $(), $() ])),
