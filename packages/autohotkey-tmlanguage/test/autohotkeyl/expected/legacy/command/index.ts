@@ -116,6 +116,7 @@ import { createSendEventExpectedDataList } from './SendEvent';
 import { createSendInputExpectedDataList } from './SendInput';
 import { createSendLevelExpectedDataList } from './SendLevel';
 import { createSendMessageExpectedDataList } from './SendMessage';
+import { createSendModeExpectedDataList } from './SendMode';
 import { createSendPlayExpectedDataList } from './SendPlay';
 import { createSendRawExpectedDataList } from './SendRaw';
 
@@ -268,6 +269,7 @@ export function createCommandStatementExpectedData(scopeName: ScopeName): Expect
     ...createSendPlayExpectedDataList(scopeName),
     ...createSendEventExpectedDataList(scopeName),
     ...createSendLevelExpectedDataList(scopeName),
+    ...createSendModeExpectedDataList(scopeName),
 
     // https://www.autohotkey.com/docs/v1/lib/SetTimer.htm
     ...((): ExpectedTestData[] => {

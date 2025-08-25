@@ -8,6 +8,6 @@ export function createSendLevelExpectedDataList(scopeName: ScopeName): ExpectedT
 
   return [
     // Parameter 1: Level
-    ...$expression(scopeName, { name: commandName, index: 0 }),
+    ...$expression(scopeName, { name: commandName, index: 0, isLastParameter: true }),
   ];
 }
