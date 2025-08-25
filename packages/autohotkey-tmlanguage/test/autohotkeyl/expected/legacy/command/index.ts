@@ -102,6 +102,7 @@ import { createPauseExpectedDataList } from './Pause';
 import { createPixelGetColorExpectedDataList } from './PixelGetColor';
 import { createPixelSearchExpectedDataList } from './PixelSearch';
 import { createPostMessageExpectedDataList } from './PostMessage';
+import { createSendMessageExpectedDataList } from './SendMessage';
 
 export function createCommandStatementExpectedData(scopeName: ScopeName): ExpectedTestData[] {
   return [
@@ -236,6 +237,7 @@ export function createCommandStatementExpectedData(scopeName: ScopeName): Expect
     ...createPixelGetColorExpectedDataList(scopeName),
     ...createPixelSearchExpectedDataList(scopeName),
     ...createPostMessageExpectedDataList(scopeName),
+    ...createSendMessageExpectedDataList(scopeName),
 
     // https://www.autohotkey.com/docs/v1/lib/SetTimer.htm
     ...((): ExpectedTestData[] => {
