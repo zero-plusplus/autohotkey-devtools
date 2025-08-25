@@ -124,6 +124,7 @@ import { createSetCapsLockStateExpectedDataList } from './SetCapsLockState';
 import { createSetControlDelayExpectedDataList } from './SetControlDelay';
 import { createSetDefaultMouseSpeedExpectedDataList } from './SetDefaultMouseSpeed';
 import { createSetEnvExpectedDataList } from './SetEnv';
+import { createSetFormatExpectedDataList } from './SetFormat';
 import { createSetNumLockStateExpectedDataList } from './SetNumLockState';
 import { createSetScrollLockStateExpectedDataList } from './SetScrollLockState';
 
@@ -284,6 +285,7 @@ export function createCommandStatementExpectedData(scopeName: ScopeName): Expect
     ...createSetControlDelayExpectedDataList(scopeName),
     ...createSetDefaultMouseSpeedExpectedDataList(scopeName),
     ...createSetEnvExpectedDataList(scopeName),
+    ...createSetFormatExpectedDataList(scopeName),
 
     // https://www.autohotkey.com/docs/v1/lib/SetTimer.htm
     ...((): ExpectedTestData[] => {

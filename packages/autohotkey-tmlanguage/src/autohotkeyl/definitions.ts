@@ -604,7 +604,7 @@ export const commandDefinitions: CommandDefinition[] = [
   command('SetEnv', signature([ $input(), $() ]), CommandFlag.Deprecated),
 
   // https://www.autohotkey.com/docs/v1/lib/SetFormat.htm
-  command('SetFormat', signature([ $(), $() ]), CommandFlag.Deprecated),
+  command('SetFormat', signature([ $shouldKeyword([ keywordOption('IntegerFast', 'FloatFast', 'Integer', 'Float') ]), $withNumber([ keywordOption('H', 'Hex', 'D') ]) ]), CommandFlag.Deprecated),
 
   // https://www.autohotkey.com/docs/v1/lib/SetKeyDelay.htm
   command('SetKeyDelay', signature([ $expression(), $expression(), $shouldKeyword([ keywordOption('Play', '-1') ]) ])),
