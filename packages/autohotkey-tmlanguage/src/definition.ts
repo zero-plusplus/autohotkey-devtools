@@ -631,13 +631,15 @@ export function $expressionWithPercentExpression(flags: CommandParameterFlag = C
   };
 }
 export function $rest(itemMatchers: ParameterItemMatcher[] = [], flags: CommandParameterFlag = CommandParameterFlag.None): CommandParameter {
-  return {
-    flags: mergeFlags(flags, CommandParameterFlag.RestParams),
-    itemMatchers: [
-      ...itemMatchers,
-      includeRule(Repository.CommandArgument),
-    ],
-  };
+  return $([], CommandParameterFlag.RestParams);
+  // return {
+  //   flags: mergeFlags(flags, CommandParameterFlag.RestParams),
+  //   itemMatchers: [
+  //     includeRule(Repository.DereferenceInCommandArgument),
+  //     ...itemMatchers,
+  //     includeRule(Repository.CommandArgument),
+  //   ],
+  // };
 }
 export function $click(flags: CommandParameterFlag = CommandParameterFlag.None): CommandParameter {
   return $shouldSpacedKeywords([ includeRule(Repository.CommandArgumentClick) ], flags);

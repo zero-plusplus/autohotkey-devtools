@@ -532,10 +532,10 @@ export const commandDefinitions: CommandDefinition[] = [
 
   // https://www.autohotkey.com/docs/v1/lib/Process.htm
   command('Process', [
-    signature([ $subcommand([ 'Exist', 'Close' ]), $() ]),
-    signature([ $subcommand([ 'Wait', 'WaitClose' ]), $(), $() ]),
-    signature([ $subcommand([ 'Priority' ]), $(), $shouldKeyword([ keywordOption('Low', 'L', 'BelowNormal', 'B', 'Normal', 'N', 'AboveNormal', 'A', 'High', 'H', 'Realtime', 'R') ]) ]),
-    signature([ $subcommand([ 'List' ]), $rest() ]),
+    signature([ $subcommand([ 'Exist', 'Close' ]), $withNumber() ]),
+    signature([ $subcommand([ 'Wait', 'WaitClose' ]), $withNumber(), $shouldInteger() ]),
+    signature([ $subcommand([ 'Priority' ]), $withNumber(), $shouldKeyword([ keywordOption('Low', 'L', 'BelowNormal', 'B', 'Normal', 'N', 'AboveNormal', 'A', 'High', 'H', 'Realtime', 'R') ]) ]),
+    signature([ $subcommandlike([ 'List' ]), $rest() ]), // This subcommand has not been implemented
     signature($parameterless),
   ]),
 

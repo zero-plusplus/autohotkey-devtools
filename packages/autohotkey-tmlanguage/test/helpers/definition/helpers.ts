@@ -5,7 +5,7 @@ import type { ExpectedTestData, ParsedResult } from '../../types';
 export interface SubCommand {
   index: number;
   name: string;
-  elementName?: ElementName;
+  elementName?: ElementName | ElementName[];
   invalid?: boolean;
 }
 export interface Placeholder {
@@ -58,7 +58,12 @@ export function createPreParamsParsedResults(scopeName: ScopeName, placeholder: 
       }
 
       preParamsParsedResults.push({ text: ',', scopes: name(scopeName, RuleName.Comma) });
-      preParamsParsedResults.push({ text: subcommand.name, scopes: name(scopeName, subcommand.elementName ?? RuleName.SubCommandName) });
+      if (subcommand.elementName === undefined) {
+        preParamsParsedResults.push({ text: subcommand.name, scopes: name(scopeName, RuleName.SubCommandName) });
+      }
+      else {
+        preParamsParsedResults.push({ text: subcommand.name, scopes: name(scopeName, ...Array.isArray(subcommand.elementName) ? subcommand.elementName : [ subcommand.elementName ]) });
+      }
     }
     else {
       preParamsParsedResults.push({ text: ',', scopes: name(scopeName, RuleName.Comma) });
