@@ -518,7 +518,7 @@ export const commandDefinitions: CommandDefinition[] = [
   command('OutputDebug', signature([ $() ])),
 
   // https://www.autohotkey.com/docs/v1/lib/Pause.htm
-  command('Pause', signature([ $onOffToggle(), $() ])),
+  command('Pause', signature([ $onOffToggle(), $shouldKeyword([ keywordOption('0', '1') ]) ])),
 
   // https://www.autohotkey.com/docs/v1/lib/PixelGetColor.htm
   command('PixelGetColor', signature([ $output(), $expression(), $expression(), $shouldSpacedKeywords([ keywordOption('Alt', 'Slow', 'RGB') ]) ])),

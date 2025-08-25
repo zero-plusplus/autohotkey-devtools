@@ -98,6 +98,7 @@ import { createMouseMoveExpectedDataList } from './MouseMove';
 import { createMsgBoxExpectedDataList } from './MsgBox';
 import { createOnExitExpectedDataList } from './OnExit';
 import { createOutputDebugExpectedDataList } from './OutputDebug';
+import { createPauseExpectedDataList } from './Pause';
 
 export function createCommandStatementExpectedData(scopeName: ScopeName): ExpectedTestData[] {
   return [
@@ -228,6 +229,7 @@ export function createCommandStatementExpectedData(scopeName: ScopeName): Expect
     ...createMsgBoxExpectedDataList(scopeName),
     ...createOnExitExpectedDataList(scopeName),
     ...createOutputDebugExpectedDataList(scopeName),
+    ...createPauseExpectedDataList(scopeName),
 
     // https://www.autohotkey.com/docs/v1/lib/SetTimer.htm
     ...((): ExpectedTestData[] => {
