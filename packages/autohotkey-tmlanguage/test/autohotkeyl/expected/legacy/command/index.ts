@@ -128,6 +128,7 @@ import { createSetFormatExpectedDataList } from './SetFormat';
 import { createSetKeyDelayExpectedDataList } from './SetKeyDelay';
 import { createSetMouseDelayExpectedDataList } from './SetMouseDelay';
 import { createSetNumLockStateExpectedDataList } from './SetNumLockState';
+import { createSetRegViewExpectedDataList } from './SetRegView';
 import { createSetScrollLockStateExpectedDataList } from './SetScrollLockState';
 
 export function createCommandStatementExpectedData(scopeName: ScopeName): ExpectedTestData[] {
@@ -281,8 +282,6 @@ export function createCommandStatementExpectedData(scopeName: ScopeName): Expect
     ...createSendLevelExpectedDataList(scopeName),
     ...createSendModeExpectedDataList(scopeName),
     ...createSetBatchLinesExpectedDataList(scopeName),
-    ...createSetCapsLockStateExpectedDataList(scopeName),
-    ...createSetNumLockStateExpectedDataList(scopeName),
     ...createSetScrollLockStateExpectedDataList(scopeName),
     ...createSetControlDelayExpectedDataList(scopeName),
     ...createSetDefaultMouseSpeedExpectedDataList(scopeName),
@@ -290,6 +289,9 @@ export function createCommandStatementExpectedData(scopeName: ScopeName): Expect
     ...createSetFormatExpectedDataList(scopeName),
     ...createSetKeyDelayExpectedDataList(scopeName),
     ...createSetMouseDelayExpectedDataList(scopeName),
+    ...createSetCapsLockStateExpectedDataList(scopeName),
+    ...createSetNumLockStateExpectedDataList(scopeName),
+    ...createSetRegViewExpectedDataList(scopeName),
 
     // https://www.autohotkey.com/docs/v1/lib/SetTimer.htm
     ...((): ExpectedTestData[] => {
