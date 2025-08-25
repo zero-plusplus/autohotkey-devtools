@@ -35,6 +35,7 @@ import {
   $output,
   $parameterless,
   $path,
+  $regkey,
   $requiresVersion,
   $rest,
   $sendKeyName,
@@ -549,7 +550,7 @@ export const commandDefinitions: CommandDefinition[] = [
   command('Random', signature([ $output(), $expression(), $expression() ])),
 
   // https://www.autohotkey.com/docs/v1/lib/RegDelete.htm
-  command('RegDelete', signature([ $(), $(), $() ])),
+  command('RegDelete', signature([ $regkey(), $(), $([ keywordOption('AHK_DEFAULT') ]) ])),
 
   // https://www.autohotkey.com/docs/v1/lib/RegRead.htm
   command('RegRead', signature([ $output(), $(), $(), $() ])),

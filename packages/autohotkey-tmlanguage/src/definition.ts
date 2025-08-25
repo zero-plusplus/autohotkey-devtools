@@ -333,7 +333,6 @@ export function subcommandOption(names: string | string[], elementName: ElementN
     ),
   };
 }
-
 // #endregion parameter item defenition
 
 // #region command definitions
@@ -677,6 +676,22 @@ export function $menuOptions(flags: CommandParameterFlag = CommandParameterFlag.
   return $([
     decimalOption('P'),
     flagedKeywordOption('Radio', 'Right', 'Break', 'BarBreak'),
+  ], flags);
+}
+export function $regkey(flags: CommandParameterFlag = CommandParameterFlag.None): CommandParameter {
+  return $([
+    keywordOption(
+      'HKEY_LOCAL_MACHINE',
+      'HKLM',
+      'HKEY_USERS',
+      'HKU',
+      'HKEY_CURRENT_USER',
+      'HKCU',
+      'HKEY_CLASSES_ROOT',
+      'HKCR',
+      'HKEY_CURRENT_CONFIG',
+      'HKCC',
+    ),
   ], flags);
 }
 export function $includeLib(flags: CommandParameterFlag = CommandParameterFlag.None, quotable = false): CommandParameter {
