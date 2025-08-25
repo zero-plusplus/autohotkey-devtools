@@ -130,6 +130,7 @@ import { createSetMouseDelayExpectedDataList } from './SetMouseDelay';
 import { createSetNumLockStateExpectedDataList } from './SetNumLockState';
 import { createSetRegViewExpectedDataList } from './SetRegView';
 import { createSetScrollLockStateExpectedDataList } from './SetScrollLockState';
+import { createSetStoreCapsLockModeExpectedDataList } from './SetStoreCapsLockMode';
 
 export function createCommandStatementExpectedData(scopeName: ScopeName): ExpectedTestData[] {
   return [
@@ -292,6 +293,7 @@ export function createCommandStatementExpectedData(scopeName: ScopeName): Expect
     ...createSetCapsLockStateExpectedDataList(scopeName),
     ...createSetNumLockStateExpectedDataList(scopeName),
     ...createSetRegViewExpectedDataList(scopeName),
+    ...createSetStoreCapsLockModeExpectedDataList(scopeName),
 
     // https://www.autohotkey.com/docs/v1/lib/SetTimer.htm
     ...((): ExpectedTestData[] => {
