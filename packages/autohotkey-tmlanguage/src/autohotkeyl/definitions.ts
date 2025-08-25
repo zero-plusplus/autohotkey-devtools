@@ -610,7 +610,7 @@ export const commandDefinitions: CommandDefinition[] = [
   command('SetKeyDelay', signature([ $expression(), $expression(), $shouldKeyword([ keywordOption('Play') ]) ])),
 
   // https://www.autohotkey.com/docs/v1/lib/SetMouseDelay.htm
-  command('SetMouseDelay', signature([ $expression(), $shouldKeyword([ keywordOption('Play', '-1') ]) ])),
+  command('SetMouseDelay', signature([ $expression(), $shouldKeyword([ keywordOption('Play') ]) ])),
 
   // https://www.autohotkey.com/docs/v1/lib/SetNumLockState.htm
   command('SetNumLockState', signature([ $onOff([ keywordOption('AlwaysOn', 'AlwaysOff') ]) ])),
