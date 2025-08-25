@@ -556,7 +556,7 @@ export const commandDefinitions: CommandDefinition[] = [
   command('RegRead', signature([ $output(), $regkey(), $(), $() ])),
 
   // https://www.autohotkey.com/docs/v1/lib/RegWrite.htm
-  command('RegWrite', signature([ $shouldKeyword([ keywordOption('REG_SZ', 'REG_EXPAND_SZ', 'REG_MULTI_SZ', 'REG_DWORD', 'REG_BINARY') ]), $(), $(), $() ])),
+  command('RegWrite', signature([ $shouldKeyword([ keywordOption('REG_SZ', 'REG_EXPAND_SZ', 'REG_MULTI_SZ', 'REG_DWORD', 'REG_BINARY') ]), $regkey(), $(), $withNumber(), $withNumber() ])),
 
   // https://www.autohotkey.com/docs/v1/lib/Reload.htm
   command('Reload', signature($parameterless)),

@@ -107,6 +107,7 @@ import { createProgressExpectedDataList } from './Progress';
 import { createRandomExpectedDataList } from './Random';
 import { createRegDeleteExpectedDataList } from './RegDelete';
 import { createRegReadExpectedDataList } from './RegRead';
+import { createRegWriteExpectedDataList } from './RegWrite';
 import { createSendMessageExpectedDataList } from './SendMessage';
 
 export function createCommandStatementExpectedData(scopeName: ScopeName): ExpectedTestData[] {
@@ -248,6 +249,7 @@ export function createCommandStatementExpectedData(scopeName: ScopeName): Expect
     ...createRandomExpectedDataList(scopeName),
     ...createRegDeleteExpectedDataList(scopeName),
     ...createRegReadExpectedDataList(scopeName),
+    ...createRegWriteExpectedDataList(scopeName),
 
     // https://www.autohotkey.com/docs/v1/lib/SetTimer.htm
     ...((): ExpectedTestData[] => {
