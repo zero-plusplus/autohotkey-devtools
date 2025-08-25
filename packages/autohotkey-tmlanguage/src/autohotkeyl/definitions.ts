@@ -512,7 +512,7 @@ export const commandDefinitions: CommandDefinition[] = [
   command('MsgBox', signature([ $withNumber(), $(), $(), $shouldFloat() ])),
 
   // https://www.autohotkey.com/docs/v1/lib/OnExit.htm#command
-  command('OnExit', signature([ $() ]), CommandFlag.Deprecated),
+  command('OnExit', signature([ $shouldLabel() ]), CommandFlag.Deprecated),
 
   // https://www.autohotkey.com/docs/v1/lib/OutputDebug.htm
   command('OutputDebug', signature([ $() ])),

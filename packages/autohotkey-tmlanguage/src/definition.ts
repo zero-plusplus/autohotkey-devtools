@@ -551,8 +551,15 @@ export function $shouldNumber(...itemMatchers: ParameterItemMatcher[]): CommandP
 }
 export function $shouldLabel(flags: CommandParameterFlag = CommandParameterFlag.None): CommandParameter {
   return {
-    flags,
-    itemMatchers: [ includeRule(Repository.LabelName) ],
+    flags: mergeFlags(flags, CommandParameterFlag.NoLastComma),
+    itemMatchers: [
+      includeRule(Repository.DereferenceInCommandArgument),
+      includeRule(Repository.LabelName),
+      {
+        name: [ RuleName.UnquotedString, StyleName.Invalid ],
+        match: negChars1('%', inlineSpace()),
+      },
+    ],
   };
 }
 export function $shouldKeyword(itemMatchers: ParameterItemMatcher[] = [], flags: CommandParameterFlag = CommandParameterFlag.None): CommandParameter {
