@@ -680,7 +680,7 @@ export function $menuOptions(flags: CommandParameterFlag = CommandParameterFlag.
 }
 export function $regkey(flags: CommandParameterFlag = CommandParameterFlag.None): CommandParameter {
   return $([
-    keywordOption(
+    createOption(ignoreCase(textalt(
       'HKEY_LOCAL_MACHINE',
       'HKLM',
       'HKEY_USERS',
@@ -691,7 +691,7 @@ export function $regkey(flags: CommandParameterFlag = CommandParameterFlag.None)
       'HKCR',
       'HKEY_CURRENT_CONFIG',
       'HKCC',
-    ),
+    )), [], [ '\\' ]),
   ], flags);
 }
 export function $includeLib(flags: CommandParameterFlag = CommandParameterFlag.None, quotable = false): CommandParameter {

@@ -1,6 +1,6 @@
-import type { ScopeName } from '../../../../src/tmlanguage';
+import { name, RuleName, StyleName, type ScopeName } from '../../../../src/tmlanguage';
 import type { ExpectedTestData } from '../../../types';
-import type { Placeholder } from '../helpers';
+import { createExpectedData, type Placeholder } from '../helpers';
 import { keywordOption } from '../option/keywordOption';
 import { $ } from './$';
 
@@ -19,5 +19,14 @@ export function $regkey(scopeName: ScopeName, placeholder: Placeholder): Expecte
       'HKEY_CURRENT_CONFIG',
       'HKCC',
     ], placeholder),
+    createExpectedData(
+      scopeName,
+      `HKEY_LOCAL_MACHINE\\xxx`,
+      [
+        { text: 'HKEY_LOCAL_MACHINE', scopes: name(scopeName, RuleName.UnquotedString, StyleName.Strong) },
+        { text: '\\xxx', scopes: name(scopeName, RuleName.UnquotedString) },
+      ],
+      placeholder,
+    ),
   ];
 }
