@@ -649,7 +649,7 @@ export const commandDefinitions: CommandDefinition[] = [
   command('SoundGet', signature([ $output(), $soundComponent(), $soundControlType(), $expression() ])),
 
   // https://www.autohotkey.com/docs/v1/lib/SoundGetWaveVolume.htm
-  command('SoundGetWaveVolume', signature([ $output(), $() ])),
+  command('SoundGetWaveVolume', signature([ $output(), $shouldInteger() ])),
 
   // https://www.autohotkey.com/docs/v1/lib/SoundPlay.htm
   command('SoundPlay', signature([ $path(), $shouldKeyword([ keywordOption('Wait', '1') ]) ])),
