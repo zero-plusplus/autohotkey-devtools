@@ -44,6 +44,7 @@ import {
   $shouldInteger,
   $shouldKeyword,
   $shouldLabel,
+  $shouldNumber,
   $shouldSpacedKeywords,
   $soundComponent,
   $soundControlType,
@@ -742,8 +743,10 @@ export const commandDefinitions: CommandDefinition[] = [
 
   // https://www.autohotkey.com/docs/v1/lib/Transform.htm
   command('Transform', [
-    signature([ $output(), $subcommand([ 'Unicode', 'Deref', 'Asc', 'Chr', 'Exp', 'Sqrt', 'Log', 'Ln', 'Ceil', 'Floor', 'Abs', 'Sin', 'Cos', 'Tan', 'ASin', 'ACos', 'ATan', 'BitNot' ]), $() ]),
-    signature([ $output(), $subcommand([ 'HTML', 'Mod', 'Round', 'Pow', 'BitAnd', 'BitOr', 'BitXOr', 'BitShiftLeft', 'BitShiftRight' ]), $(), $() ]),
+    signature([ $output(), $subcommand([ 'Unicode', 'Deref', 'Asc' ]), $() ]),
+    signature([ $output(), $subcommand([ 'HTML' ]), $(), $shouldInteger() ]),
+    signature([ $output(), $subcommand([ 'Chr', 'Sqrt', 'Log', 'Ln', 'Ceil', 'Floor', 'Abs', 'Sin', 'Cos', 'Tan', 'ASin', 'ACos', 'ATan', 'BitNot', 'Exp' ]), $shouldNumber() ]),
+    signature([ $output(), $subcommand([ 'Mod', 'Round', 'Round', 'BitShiftLeft', 'BitShiftRight', 'Pow', 'BitAnd', 'BitOr', 'BitXOr' ]), $shouldNumber(), $shouldNumber() ]),
     signature([ $output(), $invalid() ]),
   ], CommandFlag.Deprecated),
 

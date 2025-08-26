@@ -534,7 +534,7 @@ export function $shouldFloat(itemMatchers: ParameterItemMatcher[] = [], flags: C
 }
 export function $shouldNumber(...itemMatchers: ParameterItemMatcher[]): CommandParameter {
   return {
-    flags: CommandParameterFlag.None,
+    flags: CommandParameterFlag.NoLastComma,
     itemMatchers: [
       includeRule(Repository.DereferenceUnaryOperator),
       includeRule(Repository.DereferenceInCommandArgument),
