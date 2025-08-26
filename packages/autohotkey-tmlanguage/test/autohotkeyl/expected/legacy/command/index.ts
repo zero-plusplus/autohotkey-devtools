@@ -134,6 +134,7 @@ import { createSetStoreCapsLockModeExpectedDataList } from './SetStoreCapsLockMo
 import { createSetTimerExpectedDataList } from './SetTimer';
 import { createSetTitleMatchModeExpectedDataList } from './SetTitleMatchMode';
 import { createSetWinDelayExpectedDataList } from './SetWinDelay';
+import { createSetWorkingDirExpectedDataList } from './SetWorkingDir';
 
 export function createCommandStatementExpectedData(scopeName: ScopeName): ExpectedTestData[] {
   return [
@@ -300,6 +301,7 @@ export function createCommandStatementExpectedData(scopeName: ScopeName): Expect
     ...createSetTimerExpectedDataList(scopeName),
     ...createSetTitleMatchModeExpectedDataList(scopeName),
     ...createSetWinDelayExpectedDataList(scopeName),
+    ...createSetWorkingDirExpectedDataList(scopeName),
     // #endregion commands
 
     // #region continuation
