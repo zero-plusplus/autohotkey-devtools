@@ -137,6 +137,7 @@ import { createSetWinDelayExpectedDataList } from './SetWinDelay';
 import { createSetWorkingDirExpectedDataList } from './SetWorkingDir';
 import { createSleepExpectedDataList } from './Sleep';
 import { createSortExpectedDataList } from './Sort';
+import { createSoundBeepExpectedDataList } from './SoundBeep';
 
 export function createCommandStatementExpectedData(scopeName: ScopeName): ExpectedTestData[] {
   return [
@@ -306,6 +307,7 @@ export function createCommandStatementExpectedData(scopeName: ScopeName): Expect
     ...createSetWorkingDirExpectedDataList(scopeName),
     ...createSleepExpectedDataList(scopeName),
     ...createSortExpectedDataList(scopeName),
+    ...createSoundBeepExpectedDataList(scopeName),
     // #endregion commands
 
     // #region continuation
