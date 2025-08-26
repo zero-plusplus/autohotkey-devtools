@@ -4,7 +4,7 @@ import { createDereferenceInUnquotedParameterExpectedDataList } from '../common/
 import { createPercentExpressionParameterExpectedDataList } from '../common/percentExpression';
 import { createExpectedData, type Placeholder } from '../helpers';
 
-export function $(scopeName: ScopeName, placeholder: Placeholder): ExpectedTestData[] {
+export function $(scopeName: ScopeName, placeholder: Placeholder, additionalExpectedTestDataBuilder = (placeholder: Placeholder): ExpectedTestData[] => ([])): ExpectedTestData[] {
   return [
     createExpectedData(
       scopeName,
@@ -12,6 +12,7 @@ export function $(scopeName: ScopeName, placeholder: Placeholder): ExpectedTestD
       [ { text: 'unquoted', scopes: name(scopeName, RuleName.UnquotedString) } ],
       placeholder,
     ),
+    ...additionalExpectedTestDataBuilder(placeholder),
     ...createPercentExpressionParameterExpectedDataList(scopeName, placeholder),
     ...createDereferenceInUnquotedParameterExpectedDataList(scopeName, placeholder),
   ];

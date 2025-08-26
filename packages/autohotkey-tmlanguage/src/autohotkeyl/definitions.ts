@@ -662,14 +662,14 @@ export const commandDefinitions: CommandDefinition[] = [
 
   // https://www.autohotkey.com/docs/v1/lib/SplashImage.htm
   command('SplashImage', [
-    signature([ $subcommandlike('Off'), $rest() ]),
+    signature([ $subcommandlike('Off') ]),
     signature([
       $imagePath(), $([
         keywordOption('A', 'T', 'Hide'),
         floatOption('B', 'M', 'P', 'H', 'W', 'X', 'Y', 'C', 'ZH', 'ZW', 'ZX', 'ZY', 'FM', 'FS', 'WM', 'WS'),
         colorOption('CB', 'CT', 'CW'),
         sizeOption('R'),
-      ]), $(), $(), $winTitle(), $(),
+      ]), $(), $(), $winTitle(), $fontName(),
     ]),
   ], CommandFlag.Deprecated),
 

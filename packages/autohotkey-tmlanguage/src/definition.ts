@@ -200,7 +200,7 @@ export function sizeOption(...options: string[]): ParameterItemMatcher {
     optseq(
       floatPattern(),
       optseq(
-        char('x'),
+        char('-'),
         optional(floatPattern()),
       ),
     ),
