@@ -707,7 +707,7 @@ export const commandDefinitions: CommandDefinition[] = [
   command('StringMid', signature([ $output(), $input(), $expression(), $expression(), $shouldKeyword([ keywordOption('L') ]) ]), CommandFlag.Deprecated),
 
   // https://www.autohotkey.com/docs/v1/lib/StringReplace.htm
-  command('StringReplace', signature([ $output(), $input(), $(), $(), $shouldKeyword([ keywordOption('All', 'A', '1') ]) ]), CommandFlag.Deprecated),
+  command('StringReplace', signature([ $output(), $input(), $(), $(), $shouldKeyword([ keywordOption('1', 'A', 'All') ]) ]), CommandFlag.Deprecated),
 
   // https://www.autohotkey.com/docs/v1/lib/StringRight.htm
   command('StringRight', signature([ $output(), $input(), $expression() ]), CommandFlag.Deprecated),
