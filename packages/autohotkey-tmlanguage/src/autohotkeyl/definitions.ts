@@ -658,7 +658,7 @@ export const commandDefinitions: CommandDefinition[] = [
   command('SoundSet', signature([ $expression(), $soundComponent(), $soundControlType(), $expression() ])),
 
   // https://www.autohotkey.com/docs/v1/lib/SoundSetWaveVolume.htm
-  command('SoundSetWaveVolume', signature([ $expression(), $() ])),
+  command('SoundSetWaveVolume', signature([ $expression(), $shouldInteger() ])),
 
   // https://www.autohotkey.com/docs/v1/lib/SplashImage.htm
   command('SplashImage', [
