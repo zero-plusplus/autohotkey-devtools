@@ -136,6 +136,7 @@ import { createSetTitleMatchModeExpectedDataList } from './SetTitleMatchMode';
 import { createSetWinDelayExpectedDataList } from './SetWinDelay';
 import { createSetWorkingDirExpectedDataList } from './SetWorkingDir';
 import { createSleepExpectedDataList } from './Sleep';
+import { createSortExpectedDataList } from './Sort';
 
 export function createCommandStatementExpectedData(scopeName: ScopeName): ExpectedTestData[] {
   return [
@@ -304,6 +305,7 @@ export function createCommandStatementExpectedData(scopeName: ScopeName): Expect
     ...createSetWinDelayExpectedDataList(scopeName),
     ...createSetWorkingDirExpectedDataList(scopeName),
     ...createSleepExpectedDataList(scopeName),
+    ...createSortExpectedDataList(scopeName),
     // #endregion commands
 
     // #region continuation
