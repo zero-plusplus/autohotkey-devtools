@@ -467,7 +467,7 @@ export function $quotable(itemMatchers: ParameterItemMatcher[] = [], flags: Comm
 }
 export function $shouldIdentifier(flags: CommandParameterFlag = CommandParameterFlag.None): CommandParameter {
   return {
-    flags,
+    flags: mergeFlags(flags, CommandParameterFlag.NoLastComma),
     itemMatchers: [
       includeRule(Repository.DereferenceInCommandArgument),
       includeRule(Repository.Variable),
