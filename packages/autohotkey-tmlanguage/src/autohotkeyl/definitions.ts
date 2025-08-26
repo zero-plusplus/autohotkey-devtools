@@ -44,7 +44,6 @@ import {
   $shouldInteger,
   $shouldKeyword,
   $shouldLabel,
-  $shouldNumber,
   $shouldSpacedKeywords,
   $soundComponent,
   $soundControlType,
@@ -734,7 +733,7 @@ export const commandDefinitions: CommandDefinition[] = [
   // https://www.autohotkey.com/docs/v1/lib/Thread.htm
   command('Thread', [
     signature([ $subcommand([ 'NoTimers', 'Priority' ]), $expression() ]),
-    signature([ $subcommand('Interrupt'), $shouldNumber(), $shouldNumber() ]),
+    signature([ $subcommand('Interrupt'), $shouldInteger(), $shouldInteger() ]),
     signature($parameterless),
   ]),
 
