@@ -140,6 +140,7 @@ import { createSortExpectedDataList } from './Sort';
 import { createSoundBeepExpectedDataList } from './SoundBeep';
 import { createSoundGetExpectedDataList } from './SoundGet';
 import { createSoundGetWaveVolumeExpectedDataList } from './SoundGetWaveVolume';
+import { createSoundPlayExpectedDataList } from './SoundPlay';
 
 export function createCommandStatementExpectedData(scopeName: ScopeName): ExpectedTestData[] {
   return [
@@ -312,6 +313,7 @@ export function createCommandStatementExpectedData(scopeName: ScopeName): Expect
     ...createSoundBeepExpectedDataList(scopeName),
     ...createSoundGetExpectedDataList(scopeName),
     ...createSoundGetWaveVolumeExpectedDataList(scopeName),
+    ...createSoundPlayExpectedDataList(scopeName),
     // #endregion commands
 
     // #region continuation
