@@ -150,6 +150,7 @@ import { createSplitPathExpectedDataList } from './SplitPath';
 import { createStatusBarGetTextExpectedDataList } from './StatusBarGetText';
 import { createStatusBarWaitExpectedDataList } from './StatusBarWait';
 import { createStringCaseSenseExpectedDataList } from './StringCaseSense';
+import { createStringGetPosExpectedDataList } from './StringGetPos';
 
 export function createCommandStatementExpectedData(scopeName: ScopeName): ExpectedTestData[] {
   return [
@@ -332,6 +333,7 @@ export function createCommandStatementExpectedData(scopeName: ScopeName): Expect
     ...createStatusBarGetTextExpectedDataList(scopeName),
     ...createStatusBarWaitExpectedDataList(scopeName),
     ...createStringCaseSenseExpectedDataList(scopeName),
+    ...createStringGetPosExpectedDataList(scopeName),
     // #endregion commands
 
     // #region continuation

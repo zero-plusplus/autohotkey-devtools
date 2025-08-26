@@ -5,7 +5,7 @@ import { createKeywordInvalidExpectedDataList } from '../common/invalid';
 import { createPercentExpressionParameterExpectedDataList } from '../common/percentExpression';
 import { createExpectedData, type Placeholder } from '../helpers';
 
-export function $shouldKeyword(scopeName: ScopeName, keywords: string[], placeholder: Placeholder): ExpectedTestData[] {
+export function $shouldKeyword(scopeName: ScopeName, keywords: string[], placeholder: Placeholder, additionalExpectedTestDataBuilder = (placeholder: Placeholder): ExpectedTestData[] => ([])): ExpectedTestData[] {
   return [
     ...keywords.flatMap((keyword): ExpectedTestData[] => {
       return [
@@ -26,6 +26,7 @@ export function $shouldKeyword(scopeName: ScopeName, keywords: string[], placeho
         ),
       ];
     }),
+    ...additionalExpectedTestDataBuilder(placeholder),
     ...createPercentExpressionParameterExpectedDataList(scopeName, placeholder),
     ...createDereferenceInKeywordParameterExpectedDataList(scopeName, placeholder),
     ...createKeywordInvalidExpectedDataList(scopeName, placeholder),
