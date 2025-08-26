@@ -163,6 +163,7 @@ import { createStringTrimRightExpectedDataList } from './StringTrimRight';
 import { createStringUpperExpectedDataList } from './StringUpper';
 import { createSysGetExpectedDataList } from './SysGet';
 import { createThreadExpectedDataList } from './Thread';
+import { createToolTipExpectedDataList } from './ToolTip';
 
 export function createCommandStatementExpectedData(scopeName: ScopeName): ExpectedTestData[] {
   return [
@@ -358,6 +359,7 @@ export function createCommandStatementExpectedData(scopeName: ScopeName): Expect
     ...createStringUpperExpectedDataList(scopeName),
     ...createSysGetExpectedDataList(scopeName),
     ...createThreadExpectedDataList(scopeName),
+    ...createToolTipExpectedDataList(scopeName),
     // #endregion commands
 
     // #region continuation
