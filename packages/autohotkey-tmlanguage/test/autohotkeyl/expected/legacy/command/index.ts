@@ -148,6 +148,7 @@ import { createSplashTextOffExpectedDataList } from './SplashTextOff';
 import { createSplashTextOnExpectedDataList } from './SplashTextOn';
 import { createSplitPathExpectedDataList } from './SplitPath';
 import { createStatusBarGetTextExpectedDataList } from './StatusBarGetText';
+import { createStatusBarWaitExpectedDataList } from './StatusBarWait';
 
 export function createCommandStatementExpectedData(scopeName: ScopeName): ExpectedTestData[] {
   return [
@@ -328,6 +329,7 @@ export function createCommandStatementExpectedData(scopeName: ScopeName): Expect
     ...createSplashTextOffExpectedDataList(scopeName),
     ...createSplitPathExpectedDataList(scopeName),
     ...createStatusBarGetTextExpectedDataList(scopeName),
+    ...createStatusBarWaitExpectedDataList(scopeName),
     // #endregion commands
 
     // #region continuation
