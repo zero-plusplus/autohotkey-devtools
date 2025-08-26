@@ -727,8 +727,8 @@ export const commandDefinitions: CommandDefinition[] = [
   // https://www.autohotkey.com/docs/v1/lib/SysGet.htm
   command('SysGet', [
     signature([ $output(), $subcommand([ 'MonitorCount', 'MonitorPrimary' ]) ]),
-    signature([ $output(), $subcommand([ 'Monitor', 'MonitorWorkArea', 'MonitorName' ]), $withNumber() ]),
-    signature([ $output(), $shouldNumber() ]),
+    signature([ $output(), $subcommand([ 'Monitor', 'MonitorWorkArea', 'MonitorName' ]), $shouldInteger() ]),
+    signature([ $output(), $shouldInteger() ]),
   ]),
 
   // https://www.autohotkey.com/docs/v1/lib/Thread.htm

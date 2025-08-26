@@ -161,6 +161,7 @@ import { createStringSplitExpectedDataList } from './StringSplit';
 import { createStringTrimLeftExpectedDataList } from './StringTrimLeft';
 import { createStringTrimRightExpectedDataList } from './StringTrimRight';
 import { createStringUpperExpectedDataList } from './StringUpper';
+import { createSysGetExpectedDataList } from './SysGet';
 
 export function createCommandStatementExpectedData(scopeName: ScopeName): ExpectedTestData[] {
   return [
@@ -351,9 +352,10 @@ export function createCommandStatementExpectedData(scopeName: ScopeName): Expect
     ...createStringReplaceExpectedDataList(scopeName),
     ...createStringRightExpectedDataList(scopeName),
     ...createStringSplitExpectedDataList(scopeName),
-    ...createStringUpperExpectedDataList(scopeName),
     ...createStringTrimLeftExpectedDataList(scopeName),
     ...createStringTrimRightExpectedDataList(scopeName),
+    ...createStringUpperExpectedDataList(scopeName),
+    ...createSysGetExpectedDataList(scopeName),
     // #endregion commands
 
     // #region continuation
