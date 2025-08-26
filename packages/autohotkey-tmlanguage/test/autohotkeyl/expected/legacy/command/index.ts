@@ -154,6 +154,7 @@ import { createStringGetPosExpectedDataList } from './StringGetPos';
 import { createStringLeftExpectedDataList } from './StringLeft';
 import { createStringLenExpectedDataList } from './StringLen';
 import { createStringLowerExpectedDataList } from './StringLower';
+import { createStringMidExpectedDataList } from './StringMid';
 import { createStringRightExpectedDataList } from './StringRight';
 import { createStringUpperExpectedDataList } from './StringUpper';
 
@@ -343,6 +344,7 @@ export function createCommandStatementExpectedData(scopeName: ScopeName): Expect
     ...createStringLenExpectedDataList(scopeName),
     ...createStringRightExpectedDataList(scopeName),
     ...createStringLowerExpectedDataList(scopeName),
+    ...createStringMidExpectedDataList(scopeName),
     ...createStringUpperExpectedDataList(scopeName),
     // #endregion commands
 
