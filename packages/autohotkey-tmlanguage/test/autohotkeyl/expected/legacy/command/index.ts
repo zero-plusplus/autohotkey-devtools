@@ -157,6 +157,7 @@ import { createStringLowerExpectedDataList } from './StringLower';
 import { createStringMidExpectedDataList } from './StringMid';
 import { createStringReplaceExpectedDataList } from './StringReplace';
 import { createStringRightExpectedDataList } from './StringRight';
+import { createStringSplitExpectedDataList } from './StringSplit';
 import { createStringUpperExpectedDataList } from './StringUpper';
 
 export function createCommandStatementExpectedData(scopeName: ScopeName): ExpectedTestData[] {
@@ -347,6 +348,7 @@ export function createCommandStatementExpectedData(scopeName: ScopeName): Expect
     ...createStringMidExpectedDataList(scopeName),
     ...createStringReplaceExpectedDataList(scopeName),
     ...createStringRightExpectedDataList(scopeName),
+    ...createStringSplitExpectedDataList(scopeName),
     ...createStringUpperExpectedDataList(scopeName),
     // #endregion commands
 

@@ -479,7 +479,7 @@ export function $shouldIdentifier(flags: CommandParameterFlag = CommandParameter
   };
 }
 export function $shouldEscapeComma(flags: CommandParameterFlag = CommandParameterFlag.None): CommandParameter {
-  return $rest([], flags);
+  return $rest(flags);
 }
 export function $shouldBoolean(flags: CommandParameterFlag = CommandParameterFlag.None): CommandParameter {
   return {
@@ -629,16 +629,8 @@ export function $expressionWithPercentExpression(flags: CommandParameterFlag = C
     ],
   };
 }
-export function $rest(itemMatchers: ParameterItemMatcher[] = [], flags: CommandParameterFlag = CommandParameterFlag.None): CommandParameter {
-  return $([], CommandParameterFlag.RestParams);
-  // return {
-  //   flags: mergeFlags(flags, CommandParameterFlag.RestParams),
-  //   itemMatchers: [
-  //     includeRule(Repository.DereferenceInCommandArgument),
-  //     ...itemMatchers,
-  //     includeRule(Repository.CommandArgument),
-  //   ],
-  // };
+export function $rest(flags: CommandParameterFlag = CommandParameterFlag.None): CommandParameter {
+  return $([], mergeFlags(flags, CommandParameterFlag.RestParams));
 }
 export function $click(flags: CommandParameterFlag = CommandParameterFlag.None): CommandParameter {
   return $shouldSpacedKeywords([ includeRule(Repository.CommandArgumentClick) ], flags);

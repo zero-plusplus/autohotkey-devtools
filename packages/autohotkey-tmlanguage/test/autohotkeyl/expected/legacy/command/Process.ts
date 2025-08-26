@@ -1,5 +1,5 @@
 import { RuleName, StyleName, type ScopeName } from '../../../../../src/tmlanguage';
-import { $ } from '../../../../helpers/definition/parameter/$';
+import { $rest } from '../../../../helpers/definition/parameter/$rest';
 import { $shouldInteger } from '../../../../helpers/definition/parameter/$shouldInteger';
 import { $shouldKeyword } from '../../../../helpers/definition/parameter/$shouldKeyword';
 import { $subcommand } from '../../../../helpers/definition/parameter/$subcommand';
@@ -56,10 +56,7 @@ export function createProcessExpectedDataList(scopeName: ScopeName): ExpectedTes
     ...((): ExpectedTestData[] => {
       return [
         ...$subcommandlike(scopeName, [ 'List' ], { name: commandName, index: 0 }),
-        ...$(scopeName, { name: commandName, index: 1, subcommand: { name: 'List', index: 0, elementName: [ RuleName.UnquotedString, StyleName.Strong ] } }),
-        ...$(scopeName, { name: commandName, index: 2, subcommand: { name: 'List', index: 0, elementName: [ RuleName.UnquotedString, StyleName.Strong ] } }),
-        ...$(scopeName, { name: commandName, index: 3, subcommand: { name: 'List', index: 0, elementName: [ RuleName.UnquotedString, StyleName.Strong ] } }),
-        ...$(scopeName, { name: commandName, index: 4, subcommand: { name: 'List', index: 0, elementName: [ RuleName.UnquotedString, StyleName.Strong ] } }),
+        ...$rest(scopeName, { name: commandName, index: 1, subcommand: { name: 'List', index: 0, elementName: [ RuleName.UnquotedString, StyleName.Strong ] } }),
       ];
     })(),
   ];
