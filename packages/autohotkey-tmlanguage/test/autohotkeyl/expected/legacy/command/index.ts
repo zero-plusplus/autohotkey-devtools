@@ -144,6 +144,7 @@ import { createSoundPlayExpectedDataList } from './SoundPlay';
 import { createSoundSetExpectedDataList } from './SoundSet';
 import { createSoundSetWaveVolumeExpectedDataList } from './SoundSetWaveVolume';
 import { createSplashImageExpectedDataList } from './SplashImage';
+import { createSplashTextOnExpectedDataList } from './SplashTextOn';
 
 export function createCommandStatementExpectedData(scopeName: ScopeName): ExpectedTestData[] {
   return [
@@ -320,6 +321,7 @@ export function createCommandStatementExpectedData(scopeName: ScopeName): Expect
     ...createSoundSetExpectedDataList(scopeName),
     ...createSoundSetWaveVolumeExpectedDataList(scopeName),
     ...createSplashImageExpectedDataList(scopeName),
+    ...createSplashTextOnExpectedDataList(scopeName),
     // #endregion commands
 
     // #region continuation
