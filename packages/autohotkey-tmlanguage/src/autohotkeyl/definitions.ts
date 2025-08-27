@@ -799,7 +799,7 @@ export const commandDefinitions: CommandDefinition[] = [
   command('WinMaximize', signature($winParams)),
 
   // https://www.autohotkey.com/docs/v1/lib/WinMenuSelectItem.htm
-  command('WinMenuSelectItem', signature([ $winTitle(), $(), $(), $(), $(), $(), $(), $(), $winTitle(), $() ])),
+  command('WinMenuSelectItem', signature([ $winTitle(), $(), $menuItemName(), $(), $(), $(), $(), $(), $(), $winTitle(), $() ])),
 
   // https://www.autohotkey.com/docs/v1/lib/WinMinimize.htm
   command('WinMinimize', signature($winParams)),
