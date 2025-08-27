@@ -1,5 +1,5 @@
-import { dedent } from '@zero-plusplus/utilities/src';
-import { name, RuleName, StyleName, type ScopeName } from '../../../../../src/tmlanguage';
+import { RuleName, type ScopeName } from '../../../../../src/tmlanguage';
+import { $shouldKeyword } from '../../../../helpers/definition/parameter/$shouldKeyword';
 import type { ExpectedTestData } from '../../../../types';
 
 // https://www.autohotkey.com/docs/v1/lib/_Warn.htm
@@ -8,118 +8,7 @@ export function createWarnExpectedDataList(scopeName: ScopeName): ExpectedTestDa
 
   return [
     // Parameter 1: WarningType
-    ...((): ExpectedTestData[] => {
-      return [
-        ...[ 'UseUnsetLocal', 'UseUnsetGlobal', 'UseEnv', 'LocalSameAsGlobal', 'ClassOverwrite', 'Unreachable', 'All' ].flatMap((param): ExpectedTestData[] => {
-          return [
-            [
-              dedent`
-                ${directiveName} ${param}        ; comment
-                ${directiveName}, ${param}       ; comment
-              `,
-              [
-                { text: directiveName, scopes: name(scopeName, RuleName.DirectiveName) },
-                { text: param, scopes: name(scopeName, RuleName.UnquotedString, StyleName.Strong) },
-                { text: '; comment', scopes: name(scopeName, RuleName.InlineComment) },
-
-                { text: directiveName, scopes: name(scopeName, RuleName.DirectiveName) },
-                { text: ',', scopes: name(scopeName, RuleName.Comma) },
-                { text: param, scopes: name(scopeName, RuleName.UnquotedString, StyleName.Strong) },
-                { text: '; comment', scopes: name(scopeName, RuleName.InlineComment) },
-              ],
-            ],
-          ];
-        }),
-        [
-          dedent`
-            ${directiveName}, % var                 ; comment
-            ${directiveName}, %var%                 ; comment
-            ${directiveName}, %var%var%var%         ; comment
-          `,
-          [
-            { text: directiveName, scopes: name(scopeName, RuleName.DirectiveName) },
-            { text: ',', scopes: name(scopeName, RuleName.Comma) },
-            { text: '%', scopes: name(scopeName, RuleName.PercentExpressionBegin) },
-            { text: 'var', scopes: name(scopeName, RuleName.Variable) },
-            { text: '; comment', scopes: name(scopeName, RuleName.InlineComment) },
-
-            { text: directiveName, scopes: name(scopeName, RuleName.DirectiveName) },
-            { text: ',', scopes: name(scopeName, RuleName.Comma) },
-            { text: '%', scopes: name(scopeName, RuleName.PercentBegin) },
-            { text: 'var', scopes: name(scopeName, RuleName.Variable) },
-            { text: '%', scopes: name(scopeName, RuleName.PercentEnd) },
-            { text: '; comment', scopes: name(scopeName, RuleName.InlineComment) },
-
-            { text: directiveName, scopes: name(scopeName, RuleName.DirectiveName) },
-            { text: ',', scopes: name(scopeName, RuleName.Comma) },
-            { text: '%', scopes: name(scopeName, RuleName.PercentBegin) },
-            { text: 'var', scopes: name(scopeName, RuleName.Variable) },
-            { text: '%', scopes: name(scopeName, RuleName.PercentBegin) },
-            { text: 'var', scopes: name(scopeName, RuleName.Variable) },
-            { text: '%', scopes: name(scopeName, RuleName.PercentEnd) },
-            { text: 'var', scopes: name(scopeName, RuleName.Variable) },
-            { text: '%', scopes: name(scopeName, RuleName.PercentEnd) },
-            { text: '; comment', scopes: name(scopeName, RuleName.InlineComment) },
-          ],
-        ],
-      ];
-    })(),
-
-    // Parameter 2: WarningMode
-    ...((): ExpectedTestData[] => {
-      return [
-        ...[ 'MsgBox', 'StdOut', 'OutputDebug', 'Off' ].flatMap((param): ExpectedTestData[] => {
-          return [
-            [
-              dedent`
-                ${directiveName},, ${param}        ; comment
-              `,
-              [
-                { text: directiveName, scopes: name(scopeName, RuleName.DirectiveName) },
-                { text: ',', scopes: name(scopeName, RuleName.Comma) },
-                { text: ',', scopes: name(scopeName, RuleName.Comma) },
-                { text: param, scopes: name(scopeName, RuleName.UnquotedString, StyleName.Strong) },
-                { text: '; comment', scopes: name(scopeName, RuleName.InlineComment) },
-              ],
-            ],
-          ];
-        }),
-        [
-          dedent`
-            ${directiveName},, % var                 ; comment
-            ${directiveName},, %var%                 ; comment
-            ${directiveName},, %var%var%var%         ; comment
-          `,
-          [
-            { text: directiveName, scopes: name(scopeName, RuleName.DirectiveName) },
-            { text: ',', scopes: name(scopeName, RuleName.Comma) },
-            { text: ',', scopes: name(scopeName, RuleName.Comma) },
-            { text: '%', scopes: name(scopeName, RuleName.PercentExpressionBegin) },
-            { text: 'var', scopes: name(scopeName, RuleName.Variable) },
-            { text: '; comment', scopes: name(scopeName, RuleName.InlineComment) },
-
-            { text: directiveName, scopes: name(scopeName, RuleName.DirectiveName) },
-            { text: ',', scopes: name(scopeName, RuleName.Comma) },
-            { text: ',', scopes: name(scopeName, RuleName.Comma) },
-            { text: '%', scopes: name(scopeName, RuleName.PercentBegin) },
-            { text: 'var', scopes: name(scopeName, RuleName.Variable) },
-            { text: '%', scopes: name(scopeName, RuleName.PercentEnd) },
-            { text: '; comment', scopes: name(scopeName, RuleName.InlineComment) },
-
-            { text: directiveName, scopes: name(scopeName, RuleName.DirectiveName) },
-            { text: ',', scopes: name(scopeName, RuleName.Comma) },
-            { text: ',', scopes: name(scopeName, RuleName.Comma) },
-            { text: '%', scopes: name(scopeName, RuleName.PercentBegin) },
-            { text: 'var', scopes: name(scopeName, RuleName.Variable) },
-            { text: '%', scopes: name(scopeName, RuleName.PercentBegin) },
-            { text: 'var', scopes: name(scopeName, RuleName.Variable) },
-            { text: '%', scopes: name(scopeName, RuleName.PercentEnd) },
-            { text: 'var', scopes: name(scopeName, RuleName.Variable) },
-            { text: '%', scopes: name(scopeName, RuleName.PercentEnd) },
-            { text: '; comment', scopes: name(scopeName, RuleName.InlineComment) },
-          ],
-        ],
-      ];
-    })(),
+    ...$shouldKeyword(scopeName, [ 'UseUnsetLocal', 'UseUnsetGlobal', 'UseEnv', 'LocalSameAsGlobal', 'ClassOverwrite', 'Unreachable', 'All' ], { name: directiveName, elementName: RuleName.DirectiveName, index: 0 }),
+    ...$shouldKeyword(scopeName, [ 'MsgBox', 'StdOut', 'OutputDebug', 'Off' ], { name: directiveName, elementName: RuleName.DirectiveName, index: 1, isLastParameter: true }),
   ];
 }
