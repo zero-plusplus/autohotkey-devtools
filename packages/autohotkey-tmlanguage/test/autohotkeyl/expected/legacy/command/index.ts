@@ -175,6 +175,7 @@ import { createWinGetActiveStatsExpectedDataList } from './WinGetActiveStats';
 import { createWinGetActiveTitleExpectedDataList } from './WinGetActiveTitle';
 import { createWinGetClassExpectedDataList } from './WinGetClass';
 import { createWinGetPosExpectedDataList } from './WinGetPos';
+import { createWinGetTextExpectedDataList } from './WinGetText';
 
 export function createCommandStatementExpectedData(scopeName: ScopeName): ExpectedTestData[] {
   return [
@@ -382,6 +383,7 @@ export function createCommandStatementExpectedData(scopeName: ScopeName): Expect
     ...createWinGetClassExpectedDataList(scopeName),
     ...createWinGetExpectedDataList(scopeName),
     ...createWinGetPosExpectedDataList(scopeName),
+    ...createWinGetTextExpectedDataList(scopeName),
     // #endregion commands
 
     // #region continuation
