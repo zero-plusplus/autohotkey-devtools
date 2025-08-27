@@ -65,7 +65,6 @@ import {
   identifierOption,
   keywordOption,
   letterOption,
-  rangeOption,
   signature,
   signedFloatOption,
   sizeOption,
@@ -819,10 +818,11 @@ export const commandDefinitions: CommandDefinition[] = [
   // https://www.autohotkey.com/docs/v1/lib/WinSet.htm
   command('WinSet', [
     signature([ $subcommand('AlwaysOnTop'), $onOffToggle(), ...$winParams ]),
-    signature([ $subcommand([ 'Transparent', 'TransColor' ]), $(), ...$winParams ]),
+    signature([ $subcommand([ 'Transparent' ]), $shouldInteger(), ...$winParams ]),
+    signature([ $subcommand([ 'TransColor' ]), $color(), ...$winParams ]),
     signature([ $subcommand([ 'Style', 'ExStyle' ]), $style(), ...$winParams ]),
     signature([ $subcommand([ 'Bottom', 'Top', 'Disable', 'Enable', 'Redraw' ]), $blank(), ...$winParams ]),
-    signature([ $subcommand('Region'), $([ keywordOption('E'), floatOption('W', 'H'), rangeOption('R', '') ]), ...$winParams ]),
+    signature([ $subcommand('Region'), $([ keywordOption('E'), floatOption('W', 'H'), sizeOption('R', '') ]), ...$winParams ]),
     signature($parameterless),
   ]),
 
