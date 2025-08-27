@@ -187,6 +187,7 @@ import { createWinMinimizeAllUndoExpectedDataList } from './WinMinimizeAllUndo';
 import { createWinRestoreExpectedDataList } from './WinRestore';
 import { createWinSetExpectedDataList } from './WinSet';
 import { createWinSetTitleExpectedDataList } from './WinSetTitle';
+import { createWinShowExpectedDataList } from './WinShow';
 
 export function createCommandStatementExpectedData(scopeName: ScopeName): ExpectedTestData[] {
   return [
@@ -406,6 +407,7 @@ export function createCommandStatementExpectedData(scopeName: ScopeName): Expect
     ...createWinRestoreExpectedDataList(scopeName),
     ...createWinSetExpectedDataList(scopeName),
     ...createWinSetTitleExpectedDataList(scopeName),
+    ...createWinShowExpectedDataList(scopeName),
     // #endregion commands
 
     // #region continuation
