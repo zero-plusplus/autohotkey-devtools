@@ -170,6 +170,7 @@ import { createUrlDownloadToFileExpectedDataList } from './UrlDownloadToFile';
 import { createWinActivateExpectedDataList } from './WinActivate';
 import { createWinActivateBottomExpectedDataList } from './WinActivateBottom';
 import { createWinCloseExpectedDataList } from './WinClose';
+import { createWinGetExpectedDataList } from './WinGet';
 import { createWinGetActiveStatsExpectedDataList } from './WinGetActiveStats';
 import { createWinGetActiveTitleExpectedDataList } from './WinGetActiveTitle';
 import { createWinGetClassExpectedDataList } from './WinGetClass';
@@ -378,6 +379,7 @@ export function createCommandStatementExpectedData(scopeName: ScopeName): Expect
     ...createWinGetActiveStatsExpectedDataList(scopeName),
     ...createWinGetActiveTitleExpectedDataList(scopeName),
     ...createWinGetClassExpectedDataList(scopeName),
+    ...createWinGetExpectedDataList(scopeName),
     // #endregion commands
 
     // #region continuation
