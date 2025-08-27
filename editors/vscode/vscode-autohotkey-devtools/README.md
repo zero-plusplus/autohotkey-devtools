@@ -39,14 +39,25 @@ This is to enable development at my own pace, free from external influence as mu
 
 ## Syntax Highlight
 
-Supported versions: ([Language ID](https://code.visualstudio.com/docs/languages/identifiers) in parentheses).
+The following versions are supported. The text in parentheses for each version indicates the [Language ID](https://code.visualstudio.com/docs/languages/identifiers), which by default corresponds directly to the file extension.
 
 * v1.1.37.02 (ahkl)
 * v2.0.19 (ahk2)
 * v2.1-alpha.18 (ahknext)
+* [Automatic switching](#automatic-switching) (ahk)
 
 Noteworthy point, it accurately highlights the command syntax of v1. (However, this applies only when line breaks are not included due to specification limitations.)
 
 This is achieved by creating dedicated definitions for each command and subcommand, at the cost of definition files becoming more than ten times larger than standard ones.
 
 This will be replaced with [semantic highlighting](https://code.visualstudio.com/api/language-extensions/semantic-highlight-guide) using a parser in the future.
+
+### Automatic switching
+
+Setting the language ID to `ahk` allows you to switch the highlighting version using [#Requires](https://www.autohotkey.com/docs/v2/lib/_Requires.htm).
+
+Currently, only simple version notation starting with the following is supported.
+
+* `#Requires AutoHotkey v1`
+* `#Requires AutoHotkey v2.0`
+* `#Requires AutoHotkey v2.1`
