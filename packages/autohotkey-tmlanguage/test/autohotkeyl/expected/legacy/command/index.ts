@@ -170,6 +170,7 @@ import { createUrlDownloadToFileExpectedDataList } from './UrlDownloadToFile';
 import { createWinActivateExpectedDataList } from './WinActivate';
 import { createWinActivateBottomExpectedDataList } from './WinActivateBottom';
 import { createWinCloseExpectedDataList } from './WinClose';
+import { createWinGetActiveStatsExpectedDataList } from './WinGetActiveStats';
 
 export function createCommandStatementExpectedData(scopeName: ScopeName): ExpectedTestData[] {
   return [
@@ -372,6 +373,7 @@ export function createCommandStatementExpectedData(scopeName: ScopeName): Expect
     ...createWinActivateExpectedDataList(scopeName),
     ...createWinActivateBottomExpectedDataList(scopeName),
     ...createWinCloseExpectedDataList(scopeName),
+    ...createWinGetActiveStatsExpectedDataList(scopeName),
     // #endregion commands
 
     // #region continuation

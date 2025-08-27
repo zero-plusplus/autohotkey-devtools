@@ -766,7 +766,7 @@ export const commandDefinitions: CommandDefinition[] = [
   command('WinClose', signature([ $winTitle(), $(), $expression(), $winTitle(), $() ])),
 
   // https://www.autohotkey.com/docs/v1/lib/WinGetActiveStats.htm
-  command('WinGetActiveStats', signature([ $output(), $output(), $output(), $output(), $output(), $output() ])),
+  command('WinGetActiveStats', signature([ $output(), $output(), $output(), $output(), $output() ])),
 
   // https://www.autohotkey.com/docs/v1/lib/WinGetActiveTitle.htm
   command('WinGetActiveTitle', signature([ $output() ])),
