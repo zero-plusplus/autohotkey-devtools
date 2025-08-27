@@ -188,6 +188,7 @@ import { createWinRestoreExpectedDataList } from './WinRestore';
 import { createWinSetExpectedDataList } from './WinSet';
 import { createWinSetTitleExpectedDataList } from './WinSetTitle';
 import { createWinShowExpectedDataList } from './WinShow';
+import { createWinWaitExpectedDataList } from './WinWait';
 
 export function createCommandStatementExpectedData(scopeName: ScopeName): ExpectedTestData[] {
   return [
@@ -408,6 +409,7 @@ export function createCommandStatementExpectedData(scopeName: ScopeName): Expect
     ...createWinSetExpectedDataList(scopeName),
     ...createWinSetTitleExpectedDataList(scopeName),
     ...createWinShowExpectedDataList(scopeName),
+    ...createWinWaitExpectedDataList(scopeName),
     // #endregion commands
 
     // #region continuation
