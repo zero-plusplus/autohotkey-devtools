@@ -6,5 +6,5 @@ import type { ExpectedTestData } from '../../../../types';
 export function createErrorStdOutExpectedDataList(scopeName: ScopeName): ExpectedTestData[] {
   const directiveName = '#ErrorStdOut';
 
-  return [ ...$encoding(scopeName, { name: directiveName, elementName: RuleName.DirectiveName, index: 0 }) ];
+  return [ ...$encoding(scopeName, { name: directiveName, elementName: RuleName.DirectiveName, index: 0, isLastParameter: true }) ];
 }

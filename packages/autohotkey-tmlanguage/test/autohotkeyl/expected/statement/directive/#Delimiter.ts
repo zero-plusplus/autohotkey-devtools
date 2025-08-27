@@ -6,5 +6,5 @@ import type { ExpectedTestData } from '../../../../types';
 export function createDelimiterExpectedDataList(scopeName: ScopeName): ExpectedTestData[] {
   const directiveName = '#Delimiter';
 
-  return [ ...$(scopeName, { name: directiveName, elementName: RuleName.DirectiveName, index: 0, deprecated: true }) ];
+  return [ ...$(scopeName, { name: directiveName, elementName: RuleName.DirectiveName, index: 0, isLastParameter: true, deprecated: true }) ];
 }

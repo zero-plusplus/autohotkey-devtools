@@ -6,5 +6,5 @@ import type { ExpectedTestData } from '../../../../types';
 export function createAllowSameLineCommentsExpectedDataList(scopeName: ScopeName): ExpectedTestData[] {
   const directiveName = '#AllowSameLineComments';
 
-  return [ ...$blank(scopeName, { name: directiveName, elementName: RuleName.DirectiveName, index: 0, removed: true }) ];
+  return [ ...$blank(scopeName, { name: directiveName, elementName: RuleName.DirectiveName, index: 0, isLastParameter: true, removed: true }) ];
 }

@@ -6,5 +6,5 @@ import type { ExpectedTestData } from '../../../../types';
 export function createClipboardTimeoutExpectedDataList(scopeName: ScopeName): ExpectedTestData[] {
   const directiveName = '#ClipboardTimeout';
 
-  return [ ...$shouldInteger(scopeName, { name: directiveName, elementName: RuleName.DirectiveName, index: 0 }) ];
+  return [ ...$shouldInteger(scopeName, { name: directiveName, elementName: RuleName.DirectiveName, index: 0, isLastParameter: true }) ];
 }
