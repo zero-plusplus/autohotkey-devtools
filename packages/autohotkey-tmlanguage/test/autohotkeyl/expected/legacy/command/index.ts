@@ -182,6 +182,7 @@ import { createWinKillExpectedDataList } from './WinKill';
 import { createWinMaximizeExpectedDataList } from './WinMaximize';
 import { createWinMenuSelectItemExpectedDataList } from './WinMenuSelectItem';
 import { createWinMinimizeExpectedDataList } from './WinMinimize';
+import { createWinMinimizeAllExpectedDataList } from './WinMinimizeAll';
 
 export function createCommandStatementExpectedData(scopeName: ScopeName): ExpectedTestData[] {
   return [
@@ -396,6 +397,7 @@ export function createCommandStatementExpectedData(scopeName: ScopeName): Expect
     ...createWinMaximizeExpectedDataList(scopeName),
     ...createWinMenuSelectItemExpectedDataList(scopeName),
     ...createWinMinimizeExpectedDataList(scopeName),
+    ...createWinMinimizeAllExpectedDataList(scopeName),
     // #endregion commands
 
     // #region continuation
