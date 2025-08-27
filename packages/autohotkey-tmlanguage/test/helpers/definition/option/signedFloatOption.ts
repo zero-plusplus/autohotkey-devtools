@@ -10,15 +10,15 @@ export function signedFloatOption(scopeName: ScopeName, options: string[], place
           return [
             createExpectedData(
               scopeName,
-              `${sign}${option}${value}`,
-              [ { text: `${sign}${option}${value}`, scopes: name(scopeName, RuleName.UnquotedString, StyleName.Strong) } ],
+              `${option}${sign}${value}`,
+              [ { text: `${option}${sign}${value}`, scopes: name(scopeName, RuleName.UnquotedString, StyleName.Strong) } ],
               placeholder,
             ),
             createExpectedData(
               scopeName,
-              `${sign}${option}%var%`,
+              `${option}${sign}%var%`,
               [
-                { text: `${sign}${option}`, scopes: name(scopeName, RuleName.UnquotedString, StyleName.Strong) },
+                { text: `${option}${sign}`, scopes: name(scopeName, RuleName.UnquotedString, StyleName.Strong) },
                 { text: '%', scopes: name(scopeName, RuleName.PercentBegin) },
                 { text: 'var', scopes: name(scopeName, RuleName.Variable) },
                 { text: '%', scopes: name(scopeName, RuleName.PercentEnd) },
@@ -27,9 +27,9 @@ export function signedFloatOption(scopeName: ScopeName, options: string[], place
             ),
             createExpectedData(
               scopeName,
-              `${sign}${option}%a%b%c%`,
+              `${option}${sign}%a%b%c%`,
               [
-                { text: `${sign}${option}`, scopes: name(scopeName, RuleName.UnquotedString, StyleName.Strong) },
+                { text: `${option}${sign}`, scopes: name(scopeName, RuleName.UnquotedString, StyleName.Strong) },
                 { text: '%', scopes: name(scopeName, RuleName.PercentBegin) },
                 { text: 'a', scopes: name(scopeName, RuleName.Variable) },
                 { text: '%', scopes: name(scopeName, RuleName.PercentBegin) },
