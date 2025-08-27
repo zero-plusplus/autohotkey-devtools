@@ -12,6 +12,7 @@ import { createAllowSameLineCommentsExpectedDataList } from './#AllowSameLineCom
 import { createClipboardTimeoutExpectedDataList } from './#ClipboardTimeout';
 import { createCommentFlagExpectedDataList } from './#CommentFlag';
 import { createDelimiterExpectedDataList } from './#Delimiter';
+import { createDerefCharExpectedDataList } from './#DerefChar';
 import { createErrorStdOutExpectedDataList } from './#ErrorStdOut';
 import { createEscapeCharExpectedDataList } from './#EscapeChar';
 import { createHotkeyIntervalExpectedDataList } from './#HotkeyInterval';
@@ -90,6 +91,7 @@ export function createDirectiveStatementExpectedData(scopeName: ScopeName): Expe
     ...createClipboardTimeoutExpectedDataList(scopeName),
     ...createCommentFlagExpectedDataList(scopeName),
     ...createDelimiterExpectedDataList(scopeName),
+    ...createDerefCharExpectedDataList(scopeName),
     ...createErrorStdOutExpectedDataList(scopeName),
     ...createEscapeCharExpectedDataList(scopeName),
     ...createHotkeyIntervalExpectedDataList(scopeName),
