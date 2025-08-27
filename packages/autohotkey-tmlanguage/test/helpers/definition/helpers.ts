@@ -10,7 +10,9 @@ export interface SubCommand {
 }
 export interface Placeholder {
   name: string;
+  elementName?: ElementName | ElementName[];
   deprecated?: boolean;
+  removed?: boolean;
   index: number;
   isLastParameter?: boolean;
   subcommand?: SubCommand | SubCommand[];
@@ -91,7 +93,22 @@ export function createExpectedData(scopeName: ScopeName, paramText: string, para
   return [
     `${testText}${commentIndent}${commentText}`,
     [
-      { text: placeholder.name, scopes: placeholder.deprecated ? name(scopeName, RuleName.CommandName, StyleName.Strikethrough) : name(scopeName, RuleName.CommandName) },
+      {
+        text: placeholder.name,
+        scopes: ((): ElementName => {
+          const elementNames: ElementName[] = placeholder.elementName
+            ? [ ...(Array.isArray(placeholder.elementName) ? placeholder.elementName : [ placeholder.elementName ]) ]
+            : [ RuleName.CommandName ];
+
+          if (placeholder.removed) {
+            elementNames.push(StyleName.Invalid, StyleName.Strikethrough);
+          }
+          else if (placeholder.deprecated) {
+            elementNames.push(StyleName.Strikethrough);
+          }
+          return name(scopeName, ...elementNames);
+        })(),
+      },
       ...preParamsParsedResults,
       ...paramParsedResults,
       { text: commentText, scopes: name(scopeName, RuleName.InlineComment) },
