@@ -167,6 +167,7 @@ import { createToolTipExpectedDataList } from './ToolTip';
 import { createTransformExpectedDataList } from './Transform';
 import { createTrayTipExpectedDataList } from './TrayTip';
 import { createUrlDownloadToFileExpectedDataList } from './UrlDownloadToFile';
+import { createWinActivateExpectedDataList } from './WinActivate';
 
 export function createCommandStatementExpectedData(scopeName: ScopeName): ExpectedTestData[] {
   return [
@@ -366,6 +367,7 @@ export function createCommandStatementExpectedData(scopeName: ScopeName): Expect
     ...createTransformExpectedDataList(scopeName),
     ...createTrayTipExpectedDataList(scopeName),
     ...createUrlDownloadToFileExpectedDataList(scopeName),
+    ...createWinActivateExpectedDataList(scopeName),
     // #endregion commands
 
     // #region continuation
