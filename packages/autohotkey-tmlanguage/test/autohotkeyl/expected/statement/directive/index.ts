@@ -19,6 +19,7 @@ import { createHotkeyIntervalExpectedDataList } from './#HotkeyInterval';
 import { createHotkeyModifierTimeoutExpectedDataList } from './#HotkeyModifierTimeout';
 import { createHotstringExpectedDataList } from './#Hotstring';
 import { createIfExpectedDataList } from './#If';
+import { createIfTimeoutExpectedDataList } from './#IfTimeout';
 import { createIfWinActiveExpectedDataList } from './#IfWinActive';
 import { createIncludeExpectedDataList } from './#Include';
 import { createInputLevelExpectedDataList } from './#InputLevel';
@@ -98,6 +99,7 @@ export function createDirectiveStatementExpectedData(scopeName: ScopeName): Expe
     ...createHotkeyModifierTimeoutExpectedDataList(scopeName),
     ...createHotstringExpectedDataList(scopeName),
     ...createIfExpectedDataList(scopeName),
+    ...createIfTimeoutExpectedDataList(scopeName),
     ...createIfWinActiveExpectedDataList(scopeName),
     ...createIncludeExpectedDataList(scopeName),
     ...createInputLevelExpectedDataList(scopeName),

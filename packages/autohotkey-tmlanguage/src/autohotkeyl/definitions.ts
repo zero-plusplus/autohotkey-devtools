@@ -110,7 +110,7 @@ export const directiveDefinitions: CommandDefinition[] = [
   command('#If', signature([ $expression() ])),
 
   // https://www.autohotkey.com/docs/v1/lib/_IfTimeout.htm
-  command('#IfTimeout', signature([ $() ])),
+  command('#IfTimeout', signature([ $shouldInteger() ])),
 
   // https://www.autohotkey.com/docs/v1/lib/_Include.htm
   command('#Include', signature([ $includeLib() ])),
