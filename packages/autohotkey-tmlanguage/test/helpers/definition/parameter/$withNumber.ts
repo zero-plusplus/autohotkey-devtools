@@ -1,12 +1,12 @@
 import { name, RuleName, type ScopeName } from '../../../../src/tmlanguage';
 import type { ExpectedTestData } from '../../../types';
-import { createExpectedData, type Placeholder } from '../helpers';
+import { createCommandExpectedData, type CommandPlaceholder } from '../helpers';
 import { $ } from './$';
 
-export function $withNumber(scopeName: ScopeName, placeholder: Placeholder): ExpectedTestData[] {
+export function $withNumber(scopeName: ScopeName, placeholder: CommandPlaceholder): ExpectedTestData[] {
   return [
     ...$(scopeName, placeholder),
-    createExpectedData(
+    createCommandExpectedData(
       scopeName,
       `123`,
       [ { text: '123', scopes: name(scopeName, RuleName.Integer) } ],
@@ -14,7 +14,7 @@ export function $withNumber(scopeName: ScopeName, placeholder: Placeholder): Exp
     ),
     ...[ '+', '-' ].flatMap((operator): ExpectedTestData[] => {
       return [
-        createExpectedData(
+        createCommandExpectedData(
           scopeName,
           `${operator}123`,
           [

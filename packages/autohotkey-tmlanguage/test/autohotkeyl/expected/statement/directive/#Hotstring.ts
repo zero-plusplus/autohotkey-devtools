@@ -1,5 +1,5 @@
 import { name, RuleName, StyleName, type ScopeName } from '../../../../../src/tmlanguage';
-import { createExpectedData } from '../../../../helpers/definition/helpers';
+import { createCommandExpectedData } from '../../../../helpers/definition/helpers';
 import { decimalOption } from '../../../../helpers/definition/option/decimalOption';
 import { keywordOption } from '../../../../helpers/definition/option/keywordOption';
 import { signedFloatOption } from '../../../../helpers/definition/option/signedFloatOption';
@@ -19,7 +19,7 @@ export function createHotstringExpectedDataList(scopeName: ScopeName): ExpectedT
         ...toggleOption(scopeName, [ '*', '?', 'B', 'C', 'O', 'R', 'T', 'Z' ], placeholder),
         ...decimalOption(scopeName, [ 'P' ], placeholder),
         ...signedFloatOption(scopeName, [ 'K' ], placeholder),
-        createExpectedData(
+        createCommandExpectedData(
           scopeName,
           `EndChars ,\`t`,
           [

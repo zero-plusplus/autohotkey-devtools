@@ -3,32 +3,32 @@ import type { ExpectedTestData } from '../../../types';
 import { createDereferenceInKeywordParameterExpectedDataList } from '../common/dereference';
 import { createKeywordInvalidExpectedDataList } from '../common/invalid';
 import { createPercentExpressionParameterExpectedDataList } from '../common/percentExpression';
-import { createExpectedData, type Placeholder } from '../helpers';
+import { createCommandExpectedData, type CommandPlaceholder } from '../helpers';
 
-export function $fileAttributes(scopeName: ScopeName, placeholder: Placeholder): ExpectedTestData[] {
+export function $fileAttributes(scopeName: ScopeName, placeholder: CommandPlaceholder): ExpectedTestData[] {
   const attributes = [ 'R', 'A', 'S', 'H', 'N', 'O', 'T' ];
   return [
     ...attributes.flatMap((attribute): ExpectedTestData[] => {
       return [
-        createExpectedData(
+        createCommandExpectedData(
           scopeName,
           attribute,
           [ { text: attribute, scopes: name(scopeName, RuleName.UnquotedString, StyleName.Strong) } ],
           placeholder,
         ),
-        createExpectedData(
+        createCommandExpectedData(
           scopeName,
           `+${attribute}`,
           [ { text: `+${attribute}`, scopes: name(scopeName, RuleName.UnquotedString, StyleName.Strong) } ],
           placeholder,
         ),
-        createExpectedData(
+        createCommandExpectedData(
           scopeName,
           `-${attribute}`,
           [ { text: `-${attribute}`, scopes: name(scopeName, RuleName.UnquotedString, StyleName.Strong) } ],
           placeholder,
         ),
-        createExpectedData(
+        createCommandExpectedData(
           scopeName,
           `${attribute} XXX`,
           [
@@ -39,7 +39,7 @@ export function $fileAttributes(scopeName: ScopeName, placeholder: Placeholder):
         ),
       ];
     }),
-    createExpectedData(
+    createCommandExpectedData(
       scopeName,
       `+${attributes.join('')}`,
       [ { text: `+${attributes.join('')}`, scopes: name(scopeName, RuleName.UnquotedString, StyleName.Strong) } ],

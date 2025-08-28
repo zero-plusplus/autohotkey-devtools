@@ -1,12 +1,12 @@
 import { name, RuleName, StyleName, type ScopeName } from '../../../../src/tmlanguage';
 import type { ExpectedTestData } from '../../../types';
 import { createKeywordInvalidExpectedDataList } from '../common/invalid';
-import { createExpectedData, type Placeholder } from '../helpers';
+import { createCommandExpectedData, type CommandPlaceholder } from '../helpers';
 
-export function $blank(scopeName: ScopeName, placeholder: Placeholder): ExpectedTestData[] {
+export function $blank(scopeName: ScopeName, placeholder: CommandPlaceholder): ExpectedTestData[] {
   return [
     ...createKeywordInvalidExpectedDataList(scopeName, placeholder),
-    createExpectedData(
+    createCommandExpectedData(
       scopeName,
       '% var',
       [
@@ -20,7 +20,7 @@ export function $blank(scopeName: ScopeName, placeholder: Placeholder): Expected
       '%a%b%c%',
     ].flatMap((value) => {
       return [
-        createExpectedData(
+        createCommandExpectedData(
           scopeName,
           value,
           [ { text: value, scopes: name(scopeName, RuleName.UnquotedString, StyleName.Invalid) } ],

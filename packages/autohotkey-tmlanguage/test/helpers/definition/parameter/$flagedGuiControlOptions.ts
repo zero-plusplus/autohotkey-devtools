@@ -1,13 +1,13 @@
 import type { ScopeName } from '../../../../src/tmlanguage';
 import type { ExpectedTestData } from '../../../types';
-import type { Placeholder } from '../helpers';
+import type { CommandPlaceholder } from '../helpers';
 import { flagedHexOption } from '../option/flagedHexOption';
 import { flagedIdentifierOption } from '../option/flagedIdentifierOption';
 import { flagedKeywordOption } from '../option/flagedKeywordOption';
 import { flagedSignedFloatOption } from '../option/flagedSignedFloatOption';
 import { flagedToggleOption } from '../option/flagedToggleOption';
 
-export function $flagedGuiControlOptions(scopeName: ScopeName, placeholder: Placeholder): ExpectedTestData[] {
+export function $flagedGuiControlOptions(scopeName: ScopeName, placeholder: CommandPlaceholder): ExpectedTestData[] {
   return [
     ...flagedKeywordOption(scopeName, [
       'X+M',

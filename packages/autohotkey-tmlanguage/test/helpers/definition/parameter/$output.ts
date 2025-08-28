@@ -1,17 +1,17 @@
 import { name, RuleName, StyleName, type ScopeName } from '../../../../src/tmlanguage';
 import type { ExpectedTestData } from '../../../types';
 import { createDereferenceInKeywordParameterExpectedDataList } from '../common/dereference';
-import { createExpectedData, type Placeholder } from '../helpers';
+import { createCommandExpectedData, type CommandPlaceholder } from '../helpers';
 
-export function $output(scopeName: ScopeName, placeholder: Placeholder): ExpectedTestData[] {
+export function $output(scopeName: ScopeName, placeholder: CommandPlaceholder): ExpectedTestData[] {
   return [
-    createExpectedData(
+    createCommandExpectedData(
       scopeName,
       `output`,
       [ { text: 'output', scopes: name(scopeName, RuleName.Variable) } ],
       placeholder,
     ),
-    createExpectedData(
+    createCommandExpectedData(
       scopeName,
       `f()`,
       [
@@ -20,13 +20,13 @@ export function $output(scopeName: ScopeName, placeholder: Placeholder): Expecte
       ],
       placeholder,
     ),
-    createExpectedData(
+    createCommandExpectedData(
       scopeName,
       `% output`,
       [ { text: '% output', scopes: name(scopeName, RuleName.PercentExpressionBegin, StyleName.Invalid) } ],
       placeholder,
     ),
-    createExpectedData(
+    createCommandExpectedData(
       scopeName,
       `%output%`,
       [
@@ -36,7 +36,7 @@ export function $output(scopeName: ScopeName, placeholder: Placeholder): Expecte
       ],
       placeholder,
     ),
-    createExpectedData(
+    createCommandExpectedData(
       scopeName,
       `%ou%t%put%`,
       [

@@ -1,10 +1,10 @@
 import { name, RuleName, StyleName, type ScopeName } from '../../../../src/tmlanguage';
 import type { ExpectedTestData } from '../../../types';
-import { createExpectedData, type Placeholder } from '../helpers';
+import { createCommandExpectedData, type CommandPlaceholder } from '../helpers';
 import { keywordOption } from '../option/keywordOption';
 import { $ } from './$';
 
-export function $regkey(scopeName: ScopeName, placeholder: Placeholder): ExpectedTestData[] {
+export function $regkey(scopeName: ScopeName, placeholder: CommandPlaceholder): ExpectedTestData[] {
   return [
     ...$(scopeName, placeholder),
     ...keywordOption(scopeName, [
@@ -19,7 +19,7 @@ export function $regkey(scopeName: ScopeName, placeholder: Placeholder): Expecte
       'HKEY_CURRENT_CONFIG',
       'HKCC',
     ], placeholder),
-    createExpectedData(
+    createCommandExpectedData(
       scopeName,
       `HKEY_LOCAL_MACHINE\\xxx`,
       [

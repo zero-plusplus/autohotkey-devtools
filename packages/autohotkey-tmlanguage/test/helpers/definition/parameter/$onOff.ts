@@ -3,13 +3,13 @@ import type { ExpectedTestData } from '../../../types';
 import { createDereferenceInKeywordParameterExpectedDataList } from '../common/dereference';
 import { createKeywordInvalidExpectedDataList } from '../common/invalid';
 import { createPercentExpressionParameterExpectedDataList } from '../common/percentExpression';
-import { createExpectedData, type Placeholder } from '../helpers';
+import { createCommandExpectedData, type CommandPlaceholder } from '../helpers';
 
-export function $onOff(scopeName: ScopeName, placeholder: Placeholder, additionalKeywords: string[] = []): ExpectedTestData[] {
+export function $onOff(scopeName: ScopeName, placeholder: CommandPlaceholder, additionalKeywords: string[] = []): ExpectedTestData[] {
   return [
     ...[ 'On', 'Off', '0', '1', ...additionalKeywords ].flatMap((value): ExpectedTestData[] => {
       return [
-        createExpectedData(
+        createCommandExpectedData(
           scopeName,
           value,
           [ { text: value, scopes: name(scopeName, RuleName.UnquotedString, StyleName.Strong) } ],

@@ -3,29 +3,29 @@ import type { ExpectedTestData } from '../../../types';
 import { createDereferenceInKeywordParameterExpectedDataList } from '../common/dereference';
 import { createKeywordInvalidExpectedDataList } from '../common/invalid';
 import { createPercentExpressionParameterExpectedDataList } from '../common/percentExpression';
-import { createExpectedData, type Placeholder } from '../helpers';
+import { createCommandExpectedData, type CommandPlaceholder } from '../helpers';
 
-export function $keyName(scopeName: ScopeName, placeholder: Placeholder): ExpectedTestData[] {
+export function $keyName(scopeName: ScopeName, placeholder: CommandPlaceholder): ExpectedTestData[] {
   return [
-    createExpectedData(
+    createCommandExpectedData(
       scopeName,
       `Shift`,
       [ { text: 'Shift', scopes: name(scopeName, RuleName.UnquotedString, StyleName.Strong) } ],
       placeholder,
     ),
-    createExpectedData(
+    createCommandExpectedData(
       scopeName,
       `vkAB`,
       [ { text: 'vkAB', scopes: name(scopeName, RuleName.UnquotedString, StyleName.Strong) } ],
       placeholder,
     ),
-    createExpectedData(
+    createCommandExpectedData(
       scopeName,
       `SC123`,
       [ { text: 'SC123', scopes: name(scopeName, RuleName.UnquotedString, StyleName.Strong) } ],
       placeholder,
     ),
-    createExpectedData(
+    createCommandExpectedData(
       scopeName,
       `VKABSC123`,
       [ { text: 'VKABSC123', scopes: name(scopeName, RuleName.UnquotedString, StyleName.Invalid) } ],

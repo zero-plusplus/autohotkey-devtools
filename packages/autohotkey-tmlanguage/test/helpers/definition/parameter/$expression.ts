@@ -1,10 +1,10 @@
 import { name, RuleName, StyleName, type ScopeName } from '../../../../src/tmlanguage';
 import type { ExpectedTestData } from '../../../types';
-import { createExpectedData, type Placeholder } from '../helpers';
+import { createCommandExpectedData, type CommandPlaceholder } from '../helpers';
 
-export function $expression(scopeName: ScopeName, placeholder: Placeholder): ExpectedTestData[] {
+export function $expression(scopeName: ScopeName, placeholder: CommandPlaceholder): ExpectedTestData[] {
   return [
-    createExpectedData(
+    createCommandExpectedData(
       scopeName,
       `var + 123`,
       [
@@ -14,7 +14,7 @@ export function $expression(scopeName: ScopeName, placeholder: Placeholder): Exp
       ],
       placeholder,
     ),
-    createExpectedData(
+    createCommandExpectedData(
       scopeName,
       `f()`,
       [
@@ -24,13 +24,13 @@ export function $expression(scopeName: ScopeName, placeholder: Placeholder): Exp
       ],
       placeholder,
     ),
-    createExpectedData(
+    createCommandExpectedData(
       scopeName,
       `% var`,
       [ { text: '% var', scopes: name(scopeName, RuleName.PercentExpressionBegin, StyleName.Invalid) } ],
       placeholder,
     ),
-    createExpectedData(
+    createCommandExpectedData(
       scopeName,
       `%var% + %a%b%c%`,
       [
@@ -54,7 +54,7 @@ export function $expression(scopeName: ScopeName, placeholder: Placeholder): Exp
     ...(
       placeholder.isLastParameter
         ? [
-          createExpectedData(
+          createCommandExpectedData(
             scopeName,
             `f(),`,
             [
@@ -65,7 +65,7 @@ export function $expression(scopeName: ScopeName, placeholder: Placeholder): Exp
             ],
             placeholder,
           ),
-          createExpectedData(
+          createCommandExpectedData(
             scopeName,
             `% var,`,
             [
@@ -74,7 +74,7 @@ export function $expression(scopeName: ScopeName, placeholder: Placeholder): Exp
             ],
             placeholder,
           ),
-          createExpectedData(
+          createCommandExpectedData(
             scopeName,
             `%var% + %a%b%c%,`,
             [

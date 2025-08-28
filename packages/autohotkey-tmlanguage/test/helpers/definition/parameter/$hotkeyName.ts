@@ -1,10 +1,10 @@
 import { name, RuleName, type ScopeName } from '../../../../src/tmlanguage';
 import type { ExpectedTestData } from '../../../types';
-import { createExpectedData, type Placeholder } from '../helpers';
+import { createCommandExpectedData, type CommandPlaceholder } from '../helpers';
 
-export function $hotkeyName(scopeName: ScopeName, placeholder: Placeholder): ExpectedTestData[] {
+export function $hotkeyName(scopeName: ScopeName, placeholder: CommandPlaceholder): ExpectedTestData[] {
   return [
-    createExpectedData(
+    createCommandExpectedData(
       scopeName,
       `*Ctrl & v`,
       [
@@ -15,7 +15,7 @@ export function $hotkeyName(scopeName: ScopeName, placeholder: Placeholder): Exp
       ],
       placeholder,
     ),
-    createExpectedData(
+    createCommandExpectedData(
       scopeName,
       `^v`,
       [

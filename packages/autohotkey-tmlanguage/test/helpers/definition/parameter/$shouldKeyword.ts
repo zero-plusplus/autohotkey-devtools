@@ -3,19 +3,19 @@ import type { ExpectedTestData } from '../../../types';
 import { createDereferenceInKeywordParameterExpectedDataList } from '../common/dereference';
 import { createKeywordInvalidExpectedDataList } from '../common/invalid';
 import { createPercentExpressionParameterExpectedDataList } from '../common/percentExpression';
-import { createExpectedData, type Placeholder } from '../helpers';
+import { createCommandExpectedData, type CommandPlaceholder } from '../helpers';
 
-export function $shouldKeyword(scopeName: ScopeName, keywords: string[], placeholder: Placeholder, additionalExpectedTestDataBuilder = (placeholder: Placeholder): ExpectedTestData[] => ([])): ExpectedTestData[] {
+export function $shouldKeyword(scopeName: ScopeName, keywords: string[], placeholder: CommandPlaceholder, additionalExpectedTestDataBuilder = (placeholder: CommandPlaceholder): ExpectedTestData[] => ([])): ExpectedTestData[] {
   return [
     ...keywords.flatMap((keyword): ExpectedTestData[] => {
       return [
-        createExpectedData(
+        createCommandExpectedData(
           scopeName,
           keyword,
           [ { text: keyword, scopes: name(scopeName, RuleName.UnquotedString, StyleName.Strong) } ],
           placeholder,
         ),
-        createExpectedData(
+        createCommandExpectedData(
           scopeName,
           `${keyword} XXX`,
           [

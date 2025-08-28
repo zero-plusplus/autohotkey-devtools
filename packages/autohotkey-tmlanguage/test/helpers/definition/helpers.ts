@@ -2,23 +2,23 @@ import { times } from '@zero-plusplus/utilities/src';
 import { name, RuleName, StyleName, type ElementName, type ScopeName } from '../../../src/tmlanguage';
 import type { ExpectedTestData, ParsedResult } from '../../types';
 
-export interface SubCommand {
+export interface SubCommandInfo {
   index: number;
   name: string;
   elementName?: ElementName | ElementName[];
   invalid?: boolean;
 }
-export interface Placeholder {
+export interface CommandPlaceholder {
   name: string;
   elementName?: ElementName | ElementName[];
   deprecated?: boolean;
   removed?: boolean;
   index: number;
   isLastParameter?: boolean;
-  subcommand?: SubCommand | SubCommand[];
+  subcommand?: SubCommandInfo | SubCommandInfo[];
 }
 
-export function createCommentText(placeholder: Placeholder): string {
+export function createCommentTextByCommandPlaceholder(placeholder: CommandPlaceholder): string {
   const text = `; name: ${placeholder.name}, index: ${placeholder.index}, isLastParameter: ${placeholder.isLastParameter ? 'true' : 'false'}, deprecated: ${placeholder.deprecated ? 'true' : 'false'}`;
   if (placeholder.subcommand) {
     if (Array.isArray(placeholder.subcommand)) {
@@ -28,7 +28,7 @@ export function createCommentText(placeholder: Placeholder): string {
   }
   return text;
 }
-export function createPreParamsText(placeholder: Placeholder): string {
+export function createCommandPreParamsText(placeholder: CommandPlaceholder): string {
   let preParamsText: string = '';
   times(placeholder.index + 1, (i) => {
     const subcommands = Array.isArray(placeholder.subcommand) ? placeholder.subcommand : [ placeholder.subcommand ];
@@ -43,7 +43,7 @@ export function createPreParamsText(placeholder: Placeholder): string {
   });
   return preParamsText;
 }
-export function createPreParamsParsedResults(scopeName: ScopeName, placeholder: Placeholder): ParsedResult[] {
+export function createCommandPreParamsParsedResults(scopeName: ScopeName, placeholder: CommandPlaceholder): ParsedResult[] {
   const subcommands = Array.isArray(placeholder.subcommand) ? placeholder.subcommand : [ placeholder.subcommand ];
 
   const preParamsParsedResults: ParsedResult[] = [];
@@ -79,11 +79,11 @@ export function createPreParamsParsedResults(scopeName: ScopeName, placeholder: 
   }
   return preParamsParsedResults;
 }
-export function createExpectedData(scopeName: ScopeName, paramText: string, paramParsedResults: ParsedResult[], placeholder: Placeholder): ExpectedTestData {
-  const commentText = createCommentText(placeholder);
+export function createCommandExpectedData(scopeName: ScopeName, paramText: string, paramParsedResults: ParsedResult[], placeholder: CommandPlaceholder): ExpectedTestData {
+  const commentText = createCommentTextByCommandPlaceholder(placeholder);
 
-  const preParamsText: string = createPreParamsText(placeholder);
-  const preParamsParsedResults = createPreParamsParsedResults(scopeName, placeholder);
+  const preParamsText: string = createCommandPreParamsText(placeholder);
+  const preParamsParsedResults = createCommandPreParamsParsedResults(scopeName, placeholder);
 
   const testText = `${placeholder.name}${preParamsText}${paramText}`;
   const commentColumn = 150;

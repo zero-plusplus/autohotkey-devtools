@@ -1,10 +1,10 @@
 import { name, RuleName, type ScopeName } from '../../../../src/tmlanguage';
 import type { ExpectedTestData } from '../../../types';
-import { createExpectedData, type Placeholder } from '../helpers';
+import { createCommandExpectedData, type CommandPlaceholder } from '../helpers';
 
-export function $includeLib(scopeName: ScopeName, placeholder: Placeholder, additionalExpectedTestDataBuilder = (placeholder: Placeholder): ExpectedTestData[] => ([])): ExpectedTestData[] {
+export function $includeLib(scopeName: ScopeName, placeholder: CommandPlaceholder, additionalExpectedTestDataBuilder = (placeholder: CommandPlaceholder): ExpectedTestData[] => ([])): ExpectedTestData[] {
   return [
-    createExpectedData(
+    createCommandExpectedData(
       scopeName,
       `<LIBRARY>`,
       [
@@ -14,7 +14,7 @@ export function $includeLib(scopeName: ScopeName, placeholder: Placeholder, addi
       ],
       placeholder,
     ),
-    createExpectedData(
+    createCommandExpectedData(
       scopeName,
       `path\\to\\, file .ahk`,
       [
@@ -24,7 +24,7 @@ export function $includeLib(scopeName: ScopeName, placeholder: Placeholder, addi
       ],
       placeholder,
     ),
-    createExpectedData(
+    createCommandExpectedData(
       scopeName,
       `.\\path\\to\\, file .ahk`,
       [
@@ -34,7 +34,7 @@ export function $includeLib(scopeName: ScopeName, placeholder: Placeholder, addi
       ],
       placeholder,
     ),
-    createExpectedData(
+    createCommandExpectedData(
       scopeName,
       `%A_LineFile%\\..\\file.ahk`,
       [

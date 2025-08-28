@@ -1,14 +1,14 @@
 import { name, RuleDescriptor, RuleName, StyleName, type ScopeName } from '../../../../src/tmlanguage';
 import type { ExpectedTestData } from '../../../types';
-import { createExpectedData, type Placeholder } from '../helpers';
+import { createCommandExpectedData, type CommandPlaceholder } from '../helpers';
 import { $ } from './$';
 
-export function $winTitle(scopeName: ScopeName, placeholder: Placeholder): ExpectedTestData[] {
+export function $winTitle(scopeName: ScopeName, placeholder: CommandPlaceholder): ExpectedTestData[] {
   return [
     ...$(scopeName, placeholder),
     ...[ 'ahk_class', 'ahk_id', 'ahk_pid', 'ahk_exe', 'ahk_group' ].flatMap((keyword): ExpectedTestData[] => {
       return [
-        createExpectedData(
+        createCommandExpectedData(
           scopeName,
           `${keyword} %hwnd%`,
           [
@@ -21,7 +21,7 @@ export function $winTitle(scopeName: ScopeName, placeholder: Placeholder): Expec
         ),
       ];
     }),
-    createExpectedData(
+    createCommandExpectedData(
       scopeName,
       'i)^[^a](?C123:abc)regexp*',
       [

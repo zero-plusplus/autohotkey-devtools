@@ -1,9 +1,9 @@
 import type { ScopeName } from '../../../../src/tmlanguage';
 import type { ExpectedTestData } from '../../../types';
-import type { Placeholder } from '../helpers';
+import type { CommandPlaceholder } from '../helpers';
 import { $ } from './$';
 
-export function $rest(scopeName: ScopeName, placeholder: Placeholder, additionalExpectedTestDataBuilder = (placeholder: Placeholder): ExpectedTestData[] => ([])): ExpectedTestData[] {
+export function $rest(scopeName: ScopeName, placeholder: CommandPlaceholder, additionalExpectedTestDataBuilder = (placeholder: CommandPlaceholder): ExpectedTestData[] => ([])): ExpectedTestData[] {
   return [
     ...$(scopeName, placeholder),
     ...$(scopeName, { ...placeholder, index: placeholder.index + 1 }),

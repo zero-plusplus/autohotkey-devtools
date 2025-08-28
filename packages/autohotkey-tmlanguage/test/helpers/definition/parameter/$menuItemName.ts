@@ -1,12 +1,12 @@
 import { name, RuleName, StyleName, type ScopeName } from '../../../../src/tmlanguage';
 import type { ExpectedTestData } from '../../../types';
-import { createExpectedData, type Placeholder } from '../helpers';
+import { createCommandExpectedData, type CommandPlaceholder } from '../helpers';
 import { $ } from './$';
 
-export function $menuItemName(scopeName: ScopeName, placeholder: Placeholder): ExpectedTestData[] {
+export function $menuItemName(scopeName: ScopeName, placeholder: CommandPlaceholder): ExpectedTestData[] {
   return [
     ...$(scopeName, placeholder),
-    createExpectedData(
+    createCommandExpectedData(
       scopeName,
       `&menuName`,
       [
@@ -15,13 +15,13 @@ export function $menuItemName(scopeName: ScopeName, placeholder: Placeholder): E
       ],
       placeholder,
     ),
-    createExpectedData(
+    createCommandExpectedData(
       scopeName,
       `&&`,
       [ { text: `&&`, scopes: name(scopeName, RuleName.UnquotedString, StyleName.Escape) } ],
       placeholder,
     ),
-    createExpectedData(
+    createCommandExpectedData(
       scopeName,
       `&`,
       [ { text: `&`, scopes: name(scopeName, RuleName.UnquotedString) } ],

@@ -3,11 +3,11 @@ import type { ExpectedTestData } from '../../../types';
 import { createDereferenceInKeywordParameterExpectedDataList } from '../common/dereference';
 import { createKeywordInvalidExpectedDataList } from '../common/invalid';
 import { createPercentExpressionParameterExpectedDataList } from '../common/percentExpression';
-import { createExpectedData, type Placeholder } from '../helpers';
+import { createCommandExpectedData, type CommandPlaceholder } from '../helpers';
 
-export function $shouldFloat(scopeName: ScopeName, placeholder: Placeholder): ExpectedTestData[] {
+export function $shouldFloat(scopeName: ScopeName, placeholder: CommandPlaceholder): ExpectedTestData[] {
   return [
-    createExpectedData(
+    createCommandExpectedData(
       scopeName,
       `123.123`,
       [
@@ -19,7 +19,7 @@ export function $shouldFloat(scopeName: ScopeName, placeholder: Placeholder): Ex
     ),
     ...[ '+', '-' ].flatMap((operator): ExpectedTestData[] => {
       return [
-        createExpectedData(
+        createCommandExpectedData(
           scopeName,
           `${operator}123.123`,
           [

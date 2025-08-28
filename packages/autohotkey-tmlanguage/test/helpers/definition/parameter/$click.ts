@@ -4,9 +4,9 @@ import type { ExpectedTestData, ParsedResult } from '../../../types';
 import { createDereferenceInKeywordParameterExpectedDataList } from '../common/dereference';
 import { createKeywordInvalidExpectedDataList } from '../common/invalid';
 import { createPercentExpressionParameterExpectedDataList } from '../common/percentExpression';
-import { createExpectedData, type Placeholder } from '../helpers';
+import { createCommandExpectedData, type CommandPlaceholder } from '../helpers';
 
-export function $click(scopeName: ScopeName, placeholder: Placeholder): ExpectedTestData[] {
+export function $click(scopeName: ScopeName, placeholder: CommandPlaceholder): ExpectedTestData[] {
   return [
     ...[
       [ '2' ],
@@ -26,7 +26,7 @@ export function $click(scopeName: ScopeName, placeholder: Placeholder): Expected
       [ '100', '200', 'Relative' ],
     ].flatMap((options): ExpectedTestData[] => {
       return [
-        createExpectedData(
+        createCommandExpectedData(
           scopeName,
           options.join(' '),
           [

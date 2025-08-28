@@ -1,17 +1,17 @@
 import { name, RuleName, StyleName, type ScopeName } from '../../../../src/tmlanguage';
 import type { ExpectedTestData } from '../../../types';
 import { createDereferenceInKeywordParameterExpectedDataList } from '../common/dereference';
-import { createExpectedData, type Placeholder } from '../helpers';
+import { createCommandExpectedData, type CommandPlaceholder } from '../helpers';
 
-export function $input(scopeName: ScopeName, placeholder: Placeholder): ExpectedTestData[] {
+export function $input(scopeName: ScopeName, placeholder: CommandPlaceholder): ExpectedTestData[] {
   return [
-    createExpectedData(
+    createCommandExpectedData(
       scopeName,
       `input`,
       [ { text: 'input', scopes: name(scopeName, RuleName.Variable) } ],
       placeholder,
     ),
-    createExpectedData(
+    createCommandExpectedData(
       scopeName,
       `f()`,
       [
@@ -20,7 +20,7 @@ export function $input(scopeName: ScopeName, placeholder: Placeholder): Expected
       ],
       placeholder,
     ),
-    createExpectedData(
+    createCommandExpectedData(
       scopeName,
       `% input`,
       [
@@ -29,7 +29,7 @@ export function $input(scopeName: ScopeName, placeholder: Placeholder): Expected
       ],
       placeholder,
     ),
-    createExpectedData(
+    createCommandExpectedData(
       scopeName,
       `%input%`,
       [
@@ -39,7 +39,7 @@ export function $input(scopeName: ScopeName, placeholder: Placeholder): Expected
       ],
       placeholder,
     ),
-    createExpectedData(
+    createCommandExpectedData(
       scopeName,
       `%in%p%ut%`,
       [

@@ -3,11 +3,11 @@ import type { ExpectedTestData } from '../../../types';
 import { createDereferenceInKeywordParameterExpectedDataList } from '../common/dereference';
 import { createKeywordInvalidExpectedDataList } from '../common/invalid';
 import { createPercentExpressionParameterExpectedDataList } from '../common/percentExpression';
-import { createExpectedData, type Placeholder } from '../helpers';
+import { createCommandExpectedData, type CommandPlaceholder } from '../helpers';
 
-export function $shouldInteger(scopeName: ScopeName, placeholder: Placeholder): ExpectedTestData[] {
+export function $shouldInteger(scopeName: ScopeName, placeholder: CommandPlaceholder): ExpectedTestData[] {
   return [
-    createExpectedData(
+    createCommandExpectedData(
       scopeName,
       `123`,
       [ { text: '123', scopes: name(scopeName, RuleName.Integer) } ],
@@ -15,7 +15,7 @@ export function $shouldInteger(scopeName: ScopeName, placeholder: Placeholder): 
     ),
     ...[ '+', '-' ].flatMap((operator): ExpectedTestData[] => {
       return [
-        createExpectedData(
+        createCommandExpectedData(
           scopeName,
           `${operator}123`,
           [

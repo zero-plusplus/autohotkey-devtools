@@ -1,5 +1,5 @@
 import { name, RuleName, type ScopeName } from '../../../../../src/tmlanguage';
-import { createExpectedData } from '../../../../helpers/definition/helpers';
+import { createCommandExpectedData } from '../../../../helpers/definition/helpers';
 import { $ } from '../../../../helpers/definition/parameter/$';
 import type { ExpectedTestData } from '../../../../types';
 
@@ -11,7 +11,7 @@ export function createEscapeCharExpectedDataList(scopeName: ScopeName): Expected
     ...((placeholder = { name: directiveName, elementName: RuleName.DirectiveName, index: 0, isLastParameter: true, deprecated: true }): ExpectedTestData[] => {
       return [
         ...$(scopeName, placeholder),
-        createExpectedData(
+        createCommandExpectedData(
           scopeName,
           `\\`,
           [ { text: '\\', scopes: name(scopeName, RuleName.UnquotedString) } ],

@@ -2,11 +2,11 @@ import { name, RuleName, StyleName, type ScopeName } from '../../../../src/tmlan
 import type { ExpectedTestData } from '../../../types';
 import { createDereferenceInUnquotedParameterExpectedDataList } from '../common/dereference';
 import { createPercentExpressionParameterExpectedDataList } from '../common/percentExpression';
-import { createExpectedData, type Placeholder } from '../helpers';
+import { createCommandExpectedData, type CommandPlaceholder } from '../helpers';
 
-export function $sendKeyName(scopeName: ScopeName, placeholder: Placeholder): ExpectedTestData[] {
+export function $sendKeyName(scopeName: ScopeName, placeholder: CommandPlaceholder): ExpectedTestData[] {
   return [
-    createExpectedData(
+    createCommandExpectedData(
       scopeName,
       `^+!#a ^+!#{a}`,
       [
@@ -19,7 +19,7 @@ export function $sendKeyName(scopeName: ScopeName, placeholder: Placeholder): Ex
       ],
       placeholder,
     ),
-    createExpectedData(
+    createCommandExpectedData(
       scopeName,
       `{Shift Down}{a}{Shift Up}`,
       [
@@ -37,7 +37,7 @@ export function $sendKeyName(scopeName: ScopeName, placeholder: Placeholder): Ex
       ],
       placeholder,
     ),
-    createExpectedData(
+    createCommandExpectedData(
       scopeName,
       `\`,`,
       [ { text: '`,', scopes: name(scopeName, RuleName.UnquotedString, StyleName.Escape) } ],

@@ -1,10 +1,10 @@
 import { name, RuleName, StyleName, type ScopeName } from '../../../../src/tmlanguage';
 import type { ExpectedTestData } from '../../../types';
-import { createExpectedData, type Placeholder } from '../helpers';
+import { createCommandExpectedData, type CommandPlaceholder } from '../helpers';
 
-export function createDereferenceInUnquotedParameterExpectedDataList(scopeName: ScopeName, placeholder: Placeholder): ExpectedTestData[] {
+export function createDereferenceInUnquotedParameterExpectedDataList(scopeName: ScopeName, placeholder: CommandPlaceholder): ExpectedTestData[] {
   return [
-    createExpectedData(
+    createCommandExpectedData(
       scopeName,
       `%var%`,
       [
@@ -14,7 +14,7 @@ export function createDereferenceInUnquotedParameterExpectedDataList(scopeName: 
       ],
       placeholder,
     ),
-    createExpectedData(
+    createCommandExpectedData(
       scopeName,
       `%a%b%c%`,
       [
@@ -31,7 +31,7 @@ export function createDereferenceInUnquotedParameterExpectedDataList(scopeName: 
 
     ...(placeholder.isLastParameter
       ? [
-        createExpectedData(
+        createCommandExpectedData(
           scopeName,
           `%var%,`,
           [
@@ -42,7 +42,7 @@ export function createDereferenceInUnquotedParameterExpectedDataList(scopeName: 
           ],
           placeholder,
         ),
-        createExpectedData(
+        createCommandExpectedData(
           scopeName,
           `%a%b%c%,`,
           [
@@ -62,9 +62,9 @@ export function createDereferenceInUnquotedParameterExpectedDataList(scopeName: 
   ];
 }
 
-export function createDereferenceInKeywordParameterExpectedDataList(scopeName: ScopeName, placeholder: Placeholder): ExpectedTestData[] {
+export function createDereferenceInKeywordParameterExpectedDataList(scopeName: ScopeName, placeholder: CommandPlaceholder): ExpectedTestData[] {
   return [
-    createExpectedData(
+    createCommandExpectedData(
       scopeName,
       `%var%`,
       [
@@ -74,7 +74,7 @@ export function createDereferenceInKeywordParameterExpectedDataList(scopeName: S
       ],
       placeholder,
     ),
-    createExpectedData(
+    createCommandExpectedData(
       scopeName,
       `%a%b%c%`,
       [
@@ -91,7 +91,7 @@ export function createDereferenceInKeywordParameterExpectedDataList(scopeName: S
 
     ...(placeholder.isLastParameter
       ? [
-        createExpectedData(
+        createCommandExpectedData(
           scopeName,
           `%var%,`,
           [
@@ -102,7 +102,7 @@ export function createDereferenceInKeywordParameterExpectedDataList(scopeName: S
           ],
           placeholder,
         ),
-        createExpectedData(
+        createCommandExpectedData(
           scopeName,
           `%a%b%c%,`,
           [

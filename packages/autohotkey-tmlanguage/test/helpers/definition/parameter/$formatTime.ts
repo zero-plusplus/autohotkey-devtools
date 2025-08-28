@@ -2,13 +2,13 @@ import { name, RuleName, StyleName, type ScopeName } from '../../../../src/tmlan
 import type { ExpectedTestData } from '../../../types';
 import { createDereferenceInUnquotedParameterExpectedDataList } from '../common/dereference';
 import { createPercentExpressionParameterExpectedDataList } from '../common/percentExpression';
-import { createExpectedData, type Placeholder } from '../helpers';
+import { createCommandExpectedData, type CommandPlaceholder } from '../helpers';
 import { keywordOption } from '../option/keywordOption';
 import { numberOption } from '../option/numberOption';
 
-export function $formatTime(scopeName: ScopeName, placeholder: Placeholder): ExpectedTestData[] {
+export function $formatTime(scopeName: ScopeName, placeholder: CommandPlaceholder): ExpectedTestData[] {
   return [
-    createExpectedData(
+    createCommandExpectedData(
       scopeName,
       'yyyy/MM/dd',
       [

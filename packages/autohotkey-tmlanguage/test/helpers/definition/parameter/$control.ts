@@ -1,12 +1,12 @@
 import { name, RuleDescriptor, RuleName, StyleName, type ScopeName } from '../../../../src/tmlanguage';
 import type { ExpectedTestData } from '../../../types';
-import { createExpectedData, type Placeholder } from '../helpers';
+import { createCommandExpectedData, type CommandPlaceholder } from '../helpers';
 import { $ } from './$';
 
-export function $control(scopeName: ScopeName, placeholder: Placeholder): ExpectedTestData[] {
+export function $control(scopeName: ScopeName, placeholder: CommandPlaceholder): ExpectedTestData[] {
   return [
     ...$(scopeName, placeholder),
-    createExpectedData(
+    createCommandExpectedData(
       scopeName,
       'ahk_id %hwnd%',
       [
@@ -17,7 +17,7 @@ export function $control(scopeName: ScopeName, placeholder: Placeholder): Expect
       ],
       placeholder,
     ),
-    createExpectedData(
+    createCommandExpectedData(
       scopeName,
       'i)^[^a](?C123:abc)regexp*',
       [

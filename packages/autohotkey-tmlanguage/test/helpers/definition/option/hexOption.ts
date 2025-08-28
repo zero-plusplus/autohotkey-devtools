@@ -1,19 +1,19 @@
 import { name, RuleName, StyleName, type ScopeName } from '../../../../src/tmlanguage';
 import type { ExpectedTestData } from '../../../types';
-import { createExpectedData, type Placeholder } from '../helpers';
+import { createCommandExpectedData, type CommandPlaceholder } from '../helpers';
 
-export function hexOption(scopeName: ScopeName, options: string[], placeholder: Placeholder): ExpectedTestData[] {
+export function hexOption(scopeName: ScopeName, options: string[], placeholder: CommandPlaceholder): ExpectedTestData[] {
   return [
     ...[ '0x123' ].flatMap((value): ExpectedTestData[] => {
       return options.flatMap((option): ExpectedTestData[] => {
         return [
-          createExpectedData(
+          createCommandExpectedData(
             scopeName,
             `${option}${value}`,
             [ { text: `${option}${value}`, scopes: name(scopeName, RuleName.UnquotedString, StyleName.Strong) } ],
             placeholder,
           ),
-          createExpectedData(
+          createCommandExpectedData(
             scopeName,
             `${option}%var%`,
             [
@@ -24,7 +24,7 @@ export function hexOption(scopeName: ScopeName, options: string[], placeholder: 
             ],
             placeholder,
           ),
-          createExpectedData(
+          createCommandExpectedData(
             scopeName,
             `${option}%a%b%c%`,
             [

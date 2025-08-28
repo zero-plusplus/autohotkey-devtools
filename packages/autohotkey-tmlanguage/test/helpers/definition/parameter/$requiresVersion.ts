@@ -2,17 +2,17 @@ import { name, RuleName, StyleName, type ScopeName } from '../../../../src/tmlan
 import type { ExpectedTestData } from '../../../types';
 import { createDereferenceInUnquotedParameterExpectedDataList } from '../common/dereference';
 import { createPercentExpressionParameterExpectedDataList } from '../common/percentExpression';
-import { createExpectedData, type Placeholder } from '../helpers';
+import { createCommandExpectedData, type CommandPlaceholder } from '../helpers';
 
-export function $requiresVersion(scopeName: ScopeName, placeholder: Placeholder, additionalExpectedTestDataBuilder = (placeholder: Placeholder): ExpectedTestData[] => ([])): ExpectedTestData[] {
+export function $requiresVersion(scopeName: ScopeName, placeholder: CommandPlaceholder, additionalExpectedTestDataBuilder = (placeholder: CommandPlaceholder): ExpectedTestData[] => ([])): ExpectedTestData[] {
   return [
-    createExpectedData(
+    createCommandExpectedData(
       scopeName,
       `version`,
       [ { text: 'version', scopes: name(scopeName, RuleName.UnquotedString) } ],
       placeholder,
     ),
-    createExpectedData(
+    createCommandExpectedData(
       scopeName,
       `AutoHotkey v2.1`,
       [
@@ -21,7 +21,7 @@ export function $requiresVersion(scopeName: ScopeName, placeholder: Placeholder,
       ],
       placeholder,
     ),
-    createExpectedData(
+    createCommandExpectedData(
       scopeName,
       `AutoHotkey v2.1 64-bit`,
       [
