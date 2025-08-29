@@ -2,6 +2,10 @@ import { times } from '@zero-plusplus/utilities/src';
 import { name, RuleName, StyleName, type ElementName, type ScopeName } from '../../../src/tmlanguage';
 import type { ExpectedTestData, ParsedResult } from '../../types';
 
+const indent = '    ';
+const commentColumn = 150;
+
+// #region command
 export interface SubCommandInfo {
   index: number;
   name: string;
@@ -86,7 +90,6 @@ export function createCommandExpectedData(scopeName: ScopeName, paramText: strin
   const preParamsParsedResults = createCommandPreParamsParsedResults(scopeName, placeholder);
 
   const testText = `${placeholder.name}${preParamsText}${paramText}`;
-  const commentColumn = 150;
   const commentIndentSize = commentColumn - testText.length;
   const commentIndent = ' '.repeat(commentIndentSize);
 
@@ -114,4 +117,19 @@ export function createCommandExpectedData(scopeName: ScopeName, paramText: strin
       { text: commentText, scopes: name(scopeName, RuleName.InlineComment) },
     ],
   ];
+}
+// #endregion command
+
+export function createSingleLineExpectedData(scopeName: ScopeName, text: string, results: ParsedResult[], indentCount = 0): ExpectedTestData {
+  const commentIndentSize = commentColumn - text.length;
+  return [
+    `${indent.repeat(indentCount)}${text}${' '.repeat(commentIndentSize)}; ${text}`,
+    [
+      ...results,
+      { text: `; ${text}`, scopes: name(scopeName, RuleName.InlineComment) },
+    ],
+  ];
+}
+export function createMultiLineExpectedData(scopeName: ScopeName, expectedList: ExpectedTestData[]): ExpectedTestData[] {
+  return expectedList.map((expected) => createSingleLineExpectedData(scopeName, ...expected));
 }
