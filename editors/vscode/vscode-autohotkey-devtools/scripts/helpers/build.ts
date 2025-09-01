@@ -1,4 +1,19 @@
 import * as tmLanguages from '@zero-plusplus/autohotkey-tmlanguage/src';
+import * as patterns_v2 from '@zero-plusplus/autohotkey-tmlanguage/src/autohotkey2/patterns';
+import * as patterns_v1 from '@zero-plusplus/autohotkey-tmlanguage/src/autohotkeyl/patterns';
+import {
+  char,
+  endAnchor,
+  ignoreCase,
+  inlineSpace,
+  inlineSpaces0,
+  manyX,
+  negativeLookahead,
+  seq,
+  startAnchor,
+  text,
+  wordBound,
+} from '@zero-plusplus/autohotkey-tmlanguage/src/oniguruma';
 import type { ScopeName } from '@zero-plusplus/autohotkey-tmlanguage/src/tmlanguage';
 import * as autohotkey from '@zero-plusplus/autohotkey-tmlanguage/test/autohotkey/expected';
 import * as autohotkey2 from '@zero-plusplus/autohotkey-tmlanguage/test/autohotkey2/expected';
@@ -59,7 +74,10 @@ export function createLanguageConfiguration(scopeName: ScopeName): Record<string
         '/*',
         '*/',
       ],
-      lineComment: ';',
+      lineComment: {
+        comment: ';',
+        noIndent: false,
+      },
     },
     brackets: [
       [ '(', ')' ],
@@ -87,32 +105,71 @@ export function createLanguageConfiguration(scopeName: ScopeName): Record<string
     ],
     folding: {
       markers: {
-        start: '^\\s*;\\s*(?i:#region)\\b',
-        end: '^\\s*;\\s*(?i:#endregion)\\b',
+        start: seq(
+          startAnchor(),
+          inlineSpaces0(),
+          char(';'),
+          inlineSpaces0(),
+          ignoreCase('#region'),
+          wordBound(),
+        ),
+        end: seq(
+          startAnchor(),
+          inlineSpaces0(),
+          char(';'),
+          inlineSpaces0(),
+          ignoreCase('#endregion'),
+          wordBound(),
+        ),
       },
     },
-    wordPattern: scopeName === 'autohotkeyl'
-      ? '[a-Z$@#_\\w][a-Z$@#_0-9\\w]{0,252}'
-      : '[a-Z_\\w][a-Z0-9\\w]{0,252}',
+    wordPattern: ((): string => {
+      switch (scopeName) {
+        case 'autohotkeyl': return patterns_v1.identifierPattern;
+        case 'autohotkey2':
+        case 'autohotkeynext':
+        default: return patterns_v2.identifierPattern;
+      }
+    })(),
     indentationRules: {
-      increaseIndentPattern: '[([{]\\s*$',
-      decreaseIndentPattern: `^\\s*[)\\]}]\\s*$`,
+      increaseIndentPattern: seq(
+        char('(', '[', '{', ':'),
+        endAnchor(),
+      ),
+      decreaseIndentPattern: seq(
+        startAnchor(),
+        inlineSpaces0(),
+        char(')', ']', '}'),
+        endAnchor(),
+      ),
     },
     onEnterRules: [
       {
-        beforeText: '^\\s*/\\*\\s*$',
+        beforeText: seq(
+          startAnchor(),
+          inlineSpaces0(),
+          text('/*'),
+          inlineSpaces0(),
+          endAnchor(),
+        ),
         action: {
           indent: 'indentOutdent',
         },
       },
       {
-        beforeText: '^\\s*/\\*\\*\\s*$',
+        beforeText: seq(
+          startAnchor(),
+          inlineSpaces0(),
+          text('/**'),
+          inlineSpaces0(),
+          endAnchor(),
+        ),
         action: {
           appendText: ' * ',
           indent: 'indentOutdent',
         },
       },
-      // 4 indentations in the document
+      // [4, 2] indentations in the document
       // /**
       //  * @typedef {
       //  *     xxx: yyy
@@ -120,30 +177,31 @@ export function createLanguageConfiguration(scopeName: ScopeName): Record<string
       //    ^^^^
       //  * }
       //  */
+      ...[ 4, 2 ].map((indentCount) => {
+        const fixedIndentCount = indentCount + 1;
+
+        return {
+          beforeText: seq(
+            startAnchor(),
+            inlineSpaces0(),
+            char('*'),
+            negativeLookahead(char('/')),
+            manyX(fixedIndentCount)(inlineSpace()),
+          ),
+          action: {
+            appendText: '*' + ' '.repeat(fixedIndentCount),
+            indent: 'none',
+          },
+        };
+      }),
       {
-        beforeText: '^\\s*\\*(?!/)\\s{5}',
-        action: {
-          appendText: '*     ',
-          indent: 'none',
-        },
-      },
-      // 2 indentations in the document
-      // /**
-      //  * @typedef {
-      //  *   xxx: yyy
-      //  *   XXX: YYY
-      //    ^^
-      //  * }
-      //  */
-      {
-        beforeText: '^\\s*\\*(?!/)\\s{3}',
-        action: {
-          appendText: '*   ',
-          indent: 'none',
-        },
-      },
-      {
-        beforeText: '^\\s*\\*(?!/)\\s*',
+        beforeText: seq(
+          startAnchor(),
+          inlineSpaces0(),
+          char('*'),
+          negativeLookahead(char('/')),
+          inlineSpaces0(),
+        ),
         action: {
           appendText: '* ',
           indent: 'none',
