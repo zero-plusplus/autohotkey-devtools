@@ -155,8 +155,6 @@ export interface Placeholder_SingleLineCommandLikeStatementRule {
 export function createSingleLineCommandLikeStatementRule(scopeName: ScopeName, definition: CommandDefinition, signature: CommandSignature, placeholder: Placeholder_SingleLineCommandLikeStatementRule): Rule {
   return {
     begin: lookahead(seq(
-      lookbehind(placeholder.startPattern),
-      inlineSpaces0(),
       ignoreCase(definition.name),
       negativeLookahead(char('(')),
       lookaheadOnigurumaByParameters(signature.parameters),
