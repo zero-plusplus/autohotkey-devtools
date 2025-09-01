@@ -75,3 +75,11 @@ Currently, only simple version notation starting with the following is supported
 * `#Requires AutoHotkey v1`
 * `#Requires AutoHotkey v2.0`
 * `#Requires AutoHotkey v2.1`
+
+### Other
+
+The following highlights are supported.
+
+* [Script Compiler Directives](https://www.autohotkey.com/docs/v2/misc/Ahk2ExeDirectives.htm)
+* [jsdoc tags](https://jsdoc.app/)
+
