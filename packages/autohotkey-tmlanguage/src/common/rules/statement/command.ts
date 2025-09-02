@@ -163,33 +163,27 @@ export function createSingleLineCommandLikeStatementRule(scopeName: ScopeName, d
       // command name
       capture(ignoreCase(definition.name)),
 
-      // arguments
-      ...(0 < signature.parameters.length
-        ? [
-          reluctant(optional(signature.parameters.reduceRight<string>((prev, parameter, i, parameters) => {
-            const isLastParameter = parameters.length - 1 === i;
+      // parameters
+      ...((): string => {
+        const capturedCommaSeparator = placeholder.legacyMode ? seq(inlineSpaces0(), capture(char(','))) : capture(char(','));
+        const capturedFirstSeparator = group(alt(capturedCommaSeparator, inlineSpaces1()));
 
-            const capturedSeparator = ((): string => {
-              const capturedCommaSeparator = placeholder.legacyMode
-                ? seq(inlineSpaces0(), capture(char(',')))
-                : capture(char(','));
-              const capturedFirstSeparator = group(alt(
-                capturedCommaSeparator,
-                inlineSpaces1(),
-              ));
-              return i === 0 ? capturedFirstSeparator : capturedCommaSeparator;
-            })();
+        if (signature.parameters.length === 0) {
+          return capturedFirstSeparator;
+        }
+        return reluctant(optional(signature.parameters.reduceRight<string>((prev, parameter, i, parameters) => {
+          const isLastParameter = parameters.length - 1 === i;
+          const capturedSeparator = i === 0 ? capturedFirstSeparator : capturedCommaSeparator;
 
-            return seq(
-              capturedSeparator,
-              negativeLookahead(seq(inlineSpaces1(), char(';'))),
-              inlineSpaces0(),
-              capture(parameterToOniguruma(parameter, isLastParameter)),
-              prev !== '' ? optional(prev) : '',
-            );
-          }, ''))),
-        ]
-        : []),
+          return seq(
+            capturedSeparator,
+            negativeLookahead(seq(inlineSpaces1(), char(';'))),
+            inlineSpaces0(),
+            capture(parameterToOniguruma(parameter, isLastParameter)),
+            prev !== '' ? optional(prev) : '',
+          );
+        }, '')));
+      })(),
 
       optional(group(alt(
         seq(inlineSpaces1(), capture(optional(char(',')))),
@@ -210,19 +204,26 @@ export function createSingleLineCommandLikeStatementRule(scopeName: ScopeName, d
       })(),
 
       // parameters
-      ...signature.parameters.flatMap((parameter, i, parameters) => {
-        const isLastParameter = parameters.length - 1 === i;
+      ...((): Rule[] => {
+        const firstCommaRule = placeholder.legacyMode
+          ? patternsRule(includeRule(Repository.Comma))
+          : nameRule(scopeName, RuleName.Comma, StyleName.Invalid);
 
-        return [
-          (!placeholder.legacyMode && i === 0)
-            ? nameRule(scopeName, RuleName.Comma, StyleName.Invalid)
-            : patternsRule(includeRule(Repository.Comma)),
-          parameterToPatternsRule(scopeName, definition, parameter, isLastParameter, {
-            startPattern: placeholder.startPattern,
-            legacyMode: placeholder.legacyMode,
-          }),
-        ];
-      }),
+        if (signature.parameters.length === 0) {
+          return [ firstCommaRule ];
+        }
+        return signature.parameters.flatMap((parameter, i, parameters) => {
+          const isLastParameter = parameters.length - 1 === i;
+
+          return [
+            i === 0 ? firstCommaRule : patternsRule(includeRule(Repository.Comma)),
+            parameterToPatternsRule(scopeName, definition, parameter, isLastParameter, {
+              startPattern: placeholder.startPattern,
+              legacyMode: placeholder.legacyMode,
+            }),
+          ];
+        });
+      })(),
 
       patternsRule(includeRule(Repository.Comma)),
       placeholder.legacyMode
