@@ -92,14 +92,12 @@ interface Placeholder_MultiLineCommandLikeStatementRule {
   allowContinuation: boolean;
 }
 export function createMultiLineCommandLikeStatementRule(scopeName: ScopeName, definitions: CommandDefinition[], placeholder: Placeholder_MultiLineCommandLikeStatementRule): BeginWhileRule {
-  const sortedDefinitions = definitions.sort((a, b) => b.name.length - a.name.length);
-
   return {
     begin: capture(seq(
       negativeLookbehind(seq(char('('), inlineSpaces0())),   // Disable within parentheses expression
       lookbehind(placeholder.startPattern),
       inlineSpaces0(),
-      ignoreCase(alt(...sortedDefinitions.map((definition) => definition.name))),
+      ignoreCase(ordalt(...definitions.map((definition) => definition.name))),
       negativeLookahead(alt(char('(', '['), wordChar())),
       lookahead(placeholder.argumentStartPattern),
       optional(anyChars0()),
