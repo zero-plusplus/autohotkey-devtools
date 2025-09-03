@@ -34,6 +34,7 @@ import {
   numbers1,
   optional,
   optseq,
+  ordalt,
   reluctant,
   seq,
   text,
@@ -107,9 +108,7 @@ export function createMultiLineCommandLikeStatementRule(scopeName: ScopeName, de
     beginCaptures: {
       1: patternsRule(
         includeRule(Repository.Trivias),
-        ...sortedDefinitions.flatMap((definition) => {
-          return definition.signatures.map((signature) => createSingleLineCommandLikeStatementRule(scopeName, definition, signature, placeholder));
-        }),
+        ...definitionsToRules(scopeName, definitions, placeholder),
       ),
     },
     while: seq(
@@ -152,16 +151,16 @@ export interface Placeholder_SingleLineCommandLikeStatementRule {
   commandElementName: ElementName;
   legacyMode: boolean;
 }
-export function createSingleLineCommandLikeStatementRule(scopeName: ScopeName, definition: CommandDefinition, signature: CommandSignature, placeholder: Placeholder_SingleLineCommandLikeStatementRule): Rule {
+export function createSingleLineCommandLikeStatementRule(scopeName: ScopeName, definition: CommandDefinition, signature: CommandSignature, placeholder: Placeholder_SingleLineCommandLikeStatementRule, aliases: string[] = []): Rule {
   return {
     begin: lookahead(seq(
-      ignoreCase(definition.name),
+      ignoreCase(ordalt(definition.name, ...aliases)),
       negativeLookahead(char('(')),
       lookaheadOnigurumaByParameters(signature.parameters),
     )),
     end: seq(
       // command name
-      capture(ignoreCase(definition.name)),
+      capture(ignoreCase(ordalt(definition.name, ...aliases))),
 
       // parameters
       ...((): string => {
@@ -731,5 +730,53 @@ function parameterToSubCommandPattern(parameter: CommandParameter): string {
     throw Error('');
   }
   return matcher.match;
+}
+
+function definitionsToRules(scopeName: ScopeName, definitions: CommandDefinition[], placeholder: Placeholder_MultiLineCommandLikeStatementRule): Rule[] {
+  const sorted = ((): CommandDefinition[][] => {
+    const otherKey = 'other';
+    const groupedDefinitions = Object.groupBy(definitions, (commandDefinition) => {
+      if (commandDefinition.signatures.length === 1) {
+        return JSON.stringify([ commandDefinition.flags, commandDefinition.signatures[0]!.parameters ]);
+      }
+      return otherKey;
+    });
+    const otherDefinitionsList = (groupedDefinitions[otherKey] ?? []).map((definition) => [ definition ]);
+    const groupedDefinitionsList = Object.entries(groupedDefinitions)
+      .filter((value): value is [ string, CommandDefinition[] ] => value[0] !== otherKey && value[1] !== undefined)
+      .map(([ _, definitions ]) => definitions);
+
+    return [ ...otherDefinitionsList, ...groupedDefinitionsList ].sort((a, b) => {
+      const names_a = a.map((definition) => definition.name.length);
+      const names_b = b.map((definition) => definition.name.length);
+      const matchSubPatternIndex = names_b.findIndex((name) => names_a.includes(name));
+      if (0 < matchSubPatternIndex) {
+        const a_max = Math.max(...names_a);
+        const b_max = Math.max(...names_b);
+        return b_max - a_max;
+      }
+      return 0;
+    });
+  })();
+
+  return sorted.flatMap((definitions): Rule[] => {
+    if (1 < definitions.length) {
+      const definition = definitions.at(0);
+      const signature = definition?.signatures.at(0);
+
+      if (definition === undefined || signature === undefined) {
+        throw Error('');
+      }
+
+      const aliases = definitions.slice(1).map((definition) => definition.name);
+      return [ createSingleLineCommandLikeStatementRule(scopeName, definition, signature, placeholder, aliases) ];
+    }
+
+    return definitions.flatMap((definition) => {
+      return definition.signatures.map((signature) => {
+        return createSingleLineCommandLikeStatementRule(scopeName, definition, signature, placeholder);
+      });
+    });
+  });
 }
 // #endregion helpers
