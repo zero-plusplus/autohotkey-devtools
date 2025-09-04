@@ -105,7 +105,7 @@ export function createRepositories(scopeName: ScopeName): Repositories {
       includeRule(Repository.ExpressionStatement),
     ),
     [Repository.LegacyStatement]: patternsRule(includeRule(Repository.Legacy)),
-    [Repository.CommandStatement]: rules_common.createCommandStatementRule(scopeName, definitions_v1.commandDefinitions, {
+    ...rule_v1.createCommandRepositories(scopeName, definitions_v1.commandDefinitions, {
       startPattern: patterns_v1.statementStartPattern,
       endPattern: patterns_common.lineEndPattern,
       commandElementName: RuleName.CommandName,

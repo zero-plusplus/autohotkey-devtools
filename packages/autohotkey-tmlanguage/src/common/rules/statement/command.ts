@@ -62,27 +62,6 @@ import {
 import * as constants_common from '../../constants';
 import * as patterns_common from '../../patterns';
 
-interface Placeholder_CommandStatementRule {
-  startPattern: string;
-  endPattern: string;
-  commandElementName: ElementName;
-  expressionOperators: readonly string[];
-}
-export function createCommandStatementRule(scopeName: ScopeName, definitions: CommandDefinition[], placeholder: Placeholder_CommandStatementRule): BeginWhileRule {
-  return createMultiLineCommandLikeStatementRule(scopeName, definitions, {
-    startPattern: placeholder.startPattern,
-    endPattern: placeholder.endPattern,
-    commandElementName: placeholder.commandElementName,
-    legacyMode: true,
-    allowContinuation: true,
-    argumentStartPattern: alt(
-      seq(inlineSpaces0(), negativeLookahead(textalt(...placeholder.expressionOperators))),
-      inlineSpaces1(),
-      seq(inlineSpaces0(), char(',')),
-    ),
-  });
-}
-
 interface Placeholder_MultiLineCommandLikeStatementRule {
   startPattern: string;
   endPattern: string;
@@ -730,7 +709,7 @@ function parameterToSubCommandPattern(parameter: CommandParameter): string {
   return matcher.match;
 }
 
-function definitionsToRules(scopeName: ScopeName, definitions: CommandDefinition[], placeholder: Placeholder_MultiLineCommandLikeStatementRule): Rule[] {
+export function definitionsToRules(scopeName: ScopeName, definitions: CommandDefinition[], placeholder: Placeholder_MultiLineCommandLikeStatementRule): Rule[] {
   const sorted = ((): CommandDefinition[][] => {
     const otherKey = 'other';
     const groupedDefinitions = Object.groupBy(definitions, (commandDefinition) => {

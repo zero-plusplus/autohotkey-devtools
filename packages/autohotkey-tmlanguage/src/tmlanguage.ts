@@ -67,6 +67,7 @@ export const enum Repository {
   JumpStatement = '$JumpStatement',
   JumpToLabelStatement = '$JumpToLabelStatement',
   CommandStatement = '$CommandStatement',
+  CommandDefinitions = '$CommandDefinitions',
   LegacyStatement = '$LegacyStatement',
   IfStatement = '$IfStatement',
   SwitchStatement = '$SwitchStatement',
