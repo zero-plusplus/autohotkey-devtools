@@ -1,6 +1,4 @@
-import { dedent, hasFlag } from '@zero-plusplus/utilities/src';
-import * as definitions_v2 from '../../../../../src/autohotkeyl/definitions';
-import { CommandFlag } from '../../../../../src/definition';
+import { dedent } from '@zero-plusplus/utilities/src';
 import {
   name,
   RuleName,
@@ -44,49 +42,6 @@ import { createWinActivateForceExpectedDataList } from './#WinActivateForce';
 
 export function createDirectiveStatementExpectedData(scopeName: ScopeName): ExpectedTestData[] {
   return [
-    ...definitions_v2.directiveDefinitions.flatMap((definition): ExpectedTestData[] => {
-      const directiveScopes = ((): string => {
-        if (hasFlag(definition.flags, CommandFlag.Removed)) {
-          return name(scopeName, RuleName.DirectiveName, StyleName.Invalid, StyleName.Strikethrough);
-        }
-        if (hasFlag(definition.flags, CommandFlag.Deprecated)) {
-          return name(scopeName, RuleName.DirectiveName, StyleName.Strikethrough);
-        }
-        return name(scopeName, RuleName.DirectiveName);
-      })();
-      return [
-        [
-          dedent`
-            ${definition.name}      ; comment
-            ${definition.name},     ; comment
-          `,
-          [
-            { text: definition.name, scopes: directiveScopes },
-            { text: '; comment', scopes: name(scopeName, RuleName.InlineComment) },
-
-            { text: definition.name, scopes: directiveScopes },
-            { text: ',', scopes: name(scopeName, RuleName.Comma) },
-            { text: '; comment', scopes: name(scopeName, RuleName.InlineComment) },
-          ],
-        ],
-
-        // continuation
-        [
-          dedent`
-            ${definition.name}      ; comment
-              , invalid             ; comment
-          `,
-          [
-            { text: definition.name, scopes: directiveScopes },
-            { text: '; comment', scopes: name(scopeName, RuleName.InlineComment) },
-
-            { text: ', invalid', scopes: name(scopeName, RuleName.UnquotedString, StyleName.Invalid) },
-            { text: '; comment', scopes: name(scopeName, RuleName.InlineComment) },
-          ],
-        ],
-      ];
-    }),
-
     // #region commands
     ...createAllowSameLineCommentsExpectedDataList(scopeName),
     ...createClipboardTimeoutExpectedDataList(scopeName),

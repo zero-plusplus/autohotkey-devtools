@@ -1,33 +1,54 @@
 import type { CommandDefinition } from '../../../definition';
 import {
   alt,
+  anyChars0,
+  capture,
   char,
+  ignoreCase,
   inlineSpaces0,
-  inlineSpaces1,
+  lookahead,
+  lookbehind,
+  negativeLookahead,
+  negativeLookbehind,
+  optional,
+  ordalt,
   seq,
+  wordChar,
 } from '../../../oniguruma';
 import {
-  RuleName,
+  includeRule,
+  patternsRule,
+  Repository,
   type BeginWhileRule,
-  type ScopeName,
 } from '../../../tmlanguage';
-import { createMultiLineCommandLikeStatementRule } from './command';
 
-interface Placholder_DirectiveStatementRule {
+interface Placeholder_DirectiveStatementRule {
   startPattern: string;
   endPattern: string;
-  legacyMode: boolean;
 }
-export function createDirectiveStatementRule(scopeName: ScopeName, definitions: CommandDefinition[], placeholder: Placholder_DirectiveStatementRule): BeginWhileRule {
-  return createMultiLineCommandLikeStatementRule(scopeName, definitions, {
-    startPattern: placeholder.startPattern,
-    endPattern: placeholder.endPattern,
-    legacyMode: placeholder.legacyMode,
-    commandElementName: RuleName.DirectiveName,
-    allowContinuation: false,
-    argumentStartPattern: alt(
-      inlineSpaces1(),
-      seq(inlineSpaces0(), char(',')),
-    ),
-  });
+export function createDirectiveStatementRule(definitions: CommandDefinition[], placeholder: Placeholder_DirectiveStatementRule): BeginWhileRule {
+  const capturedDirectiveStatementPattern = capture(seq(
+    negativeLookbehind(seq(char('('), inlineSpaces0())),   // Disable within parentheses expression
+    lookbehind(placeholder.startPattern),
+    inlineSpaces0(),
+    ignoreCase(ordalt(...definitions.map((definition) => definition.name))),
+    negativeLookahead(alt(char('(', '['), wordChar())),
+    // alt(
+    //   inlineSpaces1(),
+    //   seq(inlineSpaces0(), char(',')),
+    // ),
+    optional(anyChars0()),
+    lookahead(placeholder.endPattern),
+  ));
+  return {
+    begin: capturedDirectiveStatementPattern,
+    beginCaptures: {
+      1: patternsRule(includeRule(Repository.DirectiveDefinitions)),
+    },
+    while: capturedDirectiveStatementPattern,
+    whileCaptures: {
+      1: patternsRule(includeRule(Repository.DirectiveDefinitions)),
+    },
+    patterns: [ includeRule(Repository.Trivias) ],
+  };
 }

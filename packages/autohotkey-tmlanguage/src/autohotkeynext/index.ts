@@ -1,8 +1,8 @@
 import * as v2 from '../autohotkey2';
+import * as constants_v2 from '../autohotkey2/constants';
 import * as patterns_v2 from '../autohotkey2/patterns';
-import * as patterns_v1 from '../autohotkeyl/patterns';
+import * as rules_v2 from '../autohotkey2/rules';
 import * as constants_common from '../common/constants';
-import * as definitions_common from '../common/definitions';
 import * as patterns_common from '../common/patterns';
 import * as rules_common from '../common/rules';
 import {
@@ -74,18 +74,12 @@ export function createTmLanguage(): TmLanguage {
       // #endregion declaration
 
       // #region statement
-      [Repository.DirectiveStatement]: patternsRule(
-        rules_common.createDirectiveStatementRule(scopeName, definitions_vnext.directiveDefinitions, {
-          startPattern: patterns_v1.statementStartPattern,
-          endPattern: patterns_common.lineEndPattern,
-          legacyMode: false,
-        }),
-        rules_common.createDirectiveStatementRule(scopeName, [ definitions_common.undefinedDirective ], {
-          startPattern: patterns_v2.statementStartPattern,
-          endPattern: patterns_common.lineEndPattern,
-          legacyMode: false,
-        }),
-      ),
+      ...rules_v2.createDirectiveRepositories(scopeName, definitions_vnext.directiveDefinitions, {
+        startPattern: patterns_v2.statementStartPattern,
+        endPattern: patterns_common.lineEndPattern,
+        expressionOperators: constants_v2.expressionOperators,
+        unquotedArgumentPattern: patterns_common.unquotedArgumentPattern,
+      }),
       // #endregion statement
 
       // #region expression

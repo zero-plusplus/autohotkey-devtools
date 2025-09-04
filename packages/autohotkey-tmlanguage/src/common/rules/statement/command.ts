@@ -17,7 +17,6 @@ import {
   chars1,
   endAnchor,
   group,
-  groupMany0,
   groupMany1,
   ignoreCase,
   inlineSpace,
@@ -27,7 +26,6 @@ import {
   lookahead,
   lookbehind,
   negativeLookahead,
-  negativeLookbehind,
   negChar,
   negChars0,
   negChars1,
@@ -40,7 +38,6 @@ import {
   text,
   textalt,
   wordBound,
-  wordChar,
   wordChars1,
 } from '../../../oniguruma';
 import {
@@ -51,7 +48,6 @@ import {
   Repository,
   RuleName,
   StyleName,
-  type BeginWhileRule,
   type Captures,
   type ElementName,
   type MatchRule,
@@ -62,65 +58,6 @@ import {
 import * as constants_common from '../../constants';
 import * as patterns_common from '../../patterns';
 
-interface Placeholder_MultiLineCommandLikeStatementRule {
-  startPattern: string;
-  endPattern: string;
-  commandElementName: ElementName;
-  argumentStartPattern: string;
-  legacyMode: boolean;
-  allowContinuation: boolean;
-}
-export function createMultiLineCommandLikeStatementRule(scopeName: ScopeName, definitions: CommandDefinition[], placeholder: Placeholder_MultiLineCommandLikeStatementRule): BeginWhileRule {
-  return {
-    begin: capture(seq(
-      negativeLookbehind(seq(char('('), inlineSpaces0())),   // Disable within parentheses expression
-      lookbehind(placeholder.startPattern),
-      inlineSpaces0(),
-      ignoreCase(ordalt(...definitions.map((definition) => definition.name))),
-      negativeLookahead(alt(char('(', '['), wordChar())),
-      lookahead(placeholder.argumentStartPattern),
-      optional(anyChars0()),
-      lookahead(placeholder.endPattern),
-    )),
-    beginCaptures: {
-      1: patternsRule(
-        includeRule(Repository.Trivias),
-        ...definitionsToRules(scopeName, definitions, placeholder),
-      ),
-    },
-    while: seq(
-      lookbehind(placeholder.startPattern),
-      lookahead(seq(
-        inlineSpaces0(),
-        char(','),
-      )),
-      inlineSpaces0(),
-      capture(reluctant(groupMany0(seq(
-        inlineSpaces0(),
-        char(','),
-        inlineSpaces0(),
-        optional(patterns_common.unquotedArgumentPattern),
-      )))),
-      inlineSpaces0(),
-      capture(optional(char(','))),
-      inlineSpaces0(),
-      lookahead(placeholder.endPattern),
-    ),
-    whileCaptures: placeholder.allowContinuation
-      ? {
-        1: patternsRule(
-          includeRule(Repository.Comma),
-          includeRule(Repository.CommandArgument),
-        ),
-        2: patternsRule(includeRule(Repository.Comma)),
-      }
-      : {
-        1: nameRule(scopeName, RuleName.UnquotedString, StyleName.Invalid),
-        2: nameRule(scopeName, RuleName.UnquotedString, StyleName.Invalid),
-      },
-    patterns: [ includeRule(Repository.Trivias) ],
-  };
-}
 
 export interface Placeholder_SingleLineCommandLikeStatementRule {
   startPattern: string;
@@ -709,7 +646,7 @@ function parameterToSubCommandPattern(parameter: CommandParameter): string {
   return matcher.match;
 }
 
-export function definitionsToRules(scopeName: ScopeName, definitions: CommandDefinition[], placeholder: Placeholder_MultiLineCommandLikeStatementRule): Rule[] {
+export function definitionsToRules(scopeName: ScopeName, definitions: CommandDefinition[], placeholder: Placeholder_SingleLineCommandLikeStatementRule): Rule[] {
   const sorted = ((): CommandDefinition[][] => {
     const otherKey = 'other';
     const groupedDefinitions = Object.groupBy(definitions, (commandDefinition) => {

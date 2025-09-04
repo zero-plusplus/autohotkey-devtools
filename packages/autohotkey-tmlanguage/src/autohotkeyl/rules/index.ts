@@ -6,5 +6,6 @@ export * from './legacy/command';
 export * from './legacy/continuationSection';
 export * from './legacy/if';
 export * from './legacy/percentExpression';
+export * from './statement/directive';
 export * from './statement/loop';
 export * from './statement/requires';

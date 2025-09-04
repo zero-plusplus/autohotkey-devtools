@@ -1,0 +1,75 @@
+import * as rules_common from '../../../common/rules';
+import type { CommandDefinition } from '../../../definition';
+import {
+  anyChars0,
+  capture,
+  char,
+  chars0,
+  inlineSpaces0,
+  inlineSpaces1,
+  lookahead,
+  lookbehind,
+  negativeLookahead,
+  optseq,
+  reluctant,
+  seq,
+  textalt,
+} from '../../../oniguruma';
+import {
+  includeRule,
+  nameRule,
+  patternsRule,
+  Repository,
+  RuleName,
+  StyleName,
+  type Repositories,
+  type ScopeName,
+} from '../../../tmlanguage';
+
+interface Placeholder_DirectiveRepositories {
+  startPattern: string;
+  endPattern: string;
+  unquotedArgumentPattern: string;
+  expressionOperators: readonly string[];
+}
+export function createDirectiveRepositories(scopeName: ScopeName, definitions: CommandDefinition[], placeholder: Placeholder_DirectiveRepositories): Repositories {
+  return {
+    [Repository.DirectiveStatement]: patternsRule(
+      rules_common.createDirectiveStatementRule(definitions, {
+        startPattern: placeholder.startPattern,
+        endPattern: placeholder.endPattern,
+      }),
+      {
+        match: seq(
+          lookbehind(placeholder.startPattern),
+          inlineSpaces0(),
+          capture(seq(
+            char('#'),
+            chars0('a-z', 'A-Z'),
+          )),
+          negativeLookahead(seq(
+            inlineSpaces0(),
+            textalt(...placeholder.expressionOperators),
+          )),
+          optseq(
+            inlineSpaces1(),
+            capture(reluctant(anyChars0())),
+          ),
+          lookahead(placeholder.endPattern),
+        ),
+        captures: {
+          1: nameRule(scopeName, RuleName.DirectiveName),
+          2: nameRule(scopeName, RuleName.UnquotedString, StyleName.Invalid),
+        },
+      },
+    ),
+    [Repository.DirectiveDefinitions]: patternsRule(
+      includeRule(Repository.Trivias),
+      ...rules_common.definitionsToRules(scopeName, definitions, {
+        ...placeholder,
+        commandElementName: RuleName.DirectiveName,
+        legacyMode: false,
+      }),
+    ),
+  };
+}

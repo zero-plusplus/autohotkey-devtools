@@ -111,10 +111,10 @@ export function createRepositories(scopeName: ScopeName): Repositories {
       commandElementName: RuleName.CommandName,
       expressionOperators: constants_v1.expressionOperators,
     }),
-    [Repository.DirectiveStatement]: rules_common.createDirectiveStatementRule(scopeName, definitions_v1.directiveDefinitions, {
+    ...rule_v1.createDirectiveRepositories(scopeName, definitions_v1.directiveDefinitions, {
       startPattern: patterns_common.lineStartPattern,
       endPattern: patterns_common.lineEndPattern,
-      legacyMode: true,
+      unquotedArgumentPattern: patterns_common.unquotedArgumentPattern,
     }),
     [Repository.JumpStatement]: rules_common.createJumpStatement(scopeName, {
       startPattern: patterns_v1.statementStartPattern,

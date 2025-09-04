@@ -1,6 +1,5 @@
 import {
   $encoding,
-  $invalid,
   $output,
   $shouldKeyword,
   $shouldNumber,
@@ -20,7 +19,6 @@ import {
   negChars0,
   negChars1,
   seq,
-  wordChars0,
 } from '../oniguruma';
 import {
   includeRule,
@@ -28,7 +26,6 @@ import {
   RuleName,
 } from '../tmlanguage';
 
-export const undefinedDirective: CommandDefinition = command(seq('#', wordChars0()), signature([ $invalid() ]));
 export const compilerDirectives: CommandDefinition[] = [
   command('@Ahk2Exe', signature([])),
   command(seq('@Ahk2Exe-', char('%'), negChars0('%', inlineSpace()), char('%')), signature([])),

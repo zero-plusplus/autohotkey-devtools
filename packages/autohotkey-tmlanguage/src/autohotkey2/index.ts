@@ -1,6 +1,5 @@
 import * as markdown from '../__injection__/markdown';
 import * as constants_common from '../common/constants';
-import * as definitions_common from '../common/definitions';
 import * as patterns_common from '../common/patterns';
 import * as rules_common from '../common/rules';
 import { ordalt } from '../oniguruma';
@@ -107,18 +106,12 @@ export function createRepositories(scopeName: ScopeName, placeholder?: Placehold
       includeRule(Repository.TryStatement),
       includeRule(Repository.ThrowStatement),
     ),
-    [Repository.DirectiveStatement]: patternsRule(
-      rules_common.createDirectiveStatementRule(scopeName, definitions_v2.directiveDefinitions, {
-        startPattern: patterns_v2.statementStartPattern,
-        endPattern: patterns_common.lineEndPattern,
-        legacyMode: false,
-      }),
-      rules_common.createDirectiveStatementRule(scopeName, [ definitions_common.undefinedDirective ], {
-        startPattern: patterns_v2.statementStartPattern,
-        endPattern: patterns_common.lineEndPattern,
-        legacyMode: false,
-      }),
-    ),
+    ...rule_v2.createDirectiveRepositories(scopeName, definitions_v2.directiveDefinitions, {
+      startPattern: patterns_v2.statementStartPattern,
+      endPattern: patterns_common.lineEndPattern,
+      expressionOperators: constants_v2.expressionOperators,
+      unquotedArgumentPattern: patterns_common.unquotedArgumentPattern,
+    }),
     [Repository.JumpStatement]: rules_common.createJumpStatement(scopeName, {
       startPattern: patterns_v2.statementStartPattern,
       assignmentOperators: constants_common.assignmentOperators,

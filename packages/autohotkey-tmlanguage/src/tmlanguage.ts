@@ -64,6 +64,7 @@ export const enum Repository {
   ExpressionStatement = '$ExpressionStatement',
   IncludeStatement = '$IncludeStatement',
   DirectiveStatement = '$DirectiveStatement',
+  DirectiveDefinitions = '$DirectiveDefinitions',
   JumpStatement = '$JumpStatement',
   JumpToLabelStatement = '$JumpToLabelStatement',
   CommandStatement = '$CommandStatement',
