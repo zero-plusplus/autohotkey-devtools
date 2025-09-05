@@ -1,4 +1,5 @@
 import {
+  anyChars0,
   capture,
   char,
   inlineSpace,
@@ -11,27 +12,26 @@ import {
   patternsRule,
   Repository,
   RuleName,
-  type BeginEndRule,
   type MatchRule,
+  type Rule,
   type ScopeName,
 } from '../../../tmlanguage';
 
-export function createDereferenceRule(scopeName: ScopeName): BeginEndRule {
+export function createDereferenceRule(scopeName: ScopeName): Rule {
   return {
-    begin: capture(char('%')),
-    beginCaptures: {
+    match: seq(
+      capture(char('%')),
+      capture(anyChars0()),
+      capture(char('%')),
+    ),
+    captures: {
       1: nameRule(scopeName, RuleName.PercentBegin),
+      2: patternsRule(
+        includeRule(Repository.Comma),
+        includeRule(Repository.ExpressionInBrackets),
+      ),
+      3: nameRule(scopeName, RuleName.PercentEnd),
     },
-    end: capture(char('%')),
-    endCaptures: {
-      1: nameRule(scopeName, RuleName.PercentEnd),
-    },
-    patterns: [
-      includeRule(Repository.Meta),
-
-      includeRule(Repository.Comma),
-      includeRule(Repository.Expression),
-    ],
   };
 }
 export function createDereferenceInCommandArgumentRule(scopeName: ScopeName): MatchRule {
