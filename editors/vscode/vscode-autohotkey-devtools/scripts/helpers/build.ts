@@ -7,7 +7,7 @@ import {
   ignoreCase,
   inlineSpace,
   inlineSpaces0,
-  manyX,
+  manyRange,
   negativeLookahead,
   seq,
   startAnchor,
@@ -186,7 +186,7 @@ export function createLanguageConfiguration(scopeName: ScopeName): Record<string
             inlineSpaces0(),
             char('*'),
             negativeLookahead(char('/')),
-            manyX(fixedIndentCount)(inlineSpace()),
+            manyRange(inlineSpace(), fixedIndentCount),
           ),
           action: {
             appendText: '*' + ' '.repeat(fixedIndentCount),
