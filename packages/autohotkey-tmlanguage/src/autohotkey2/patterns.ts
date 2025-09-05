@@ -10,7 +10,7 @@ import {
   inlineSpace,
   inlineSpaces0,
   manyLimit,
-  manyXtoY,
+  manyRange,
   negChar,
   optional,
   reluctant,
@@ -20,7 +20,6 @@ import {
   wordChar,
 } from '../oniguruma';
 import * as constants_v2 from './constants';
-
 
 // #region [Names](https://www.autohotkey.com/docs/v2/Concepts.htm#names)
 const nameLimitLength = 253;
@@ -39,16 +38,12 @@ export const keyName: string = group(alt(
   group(seq(char('%'), anyChars1(), char('%'))),
   identifierPattern,
 ));
-export const directiveNamePattern: string = seq(
-  char('#'),
-  optional(identifierPattern),
-);
 // #endregion Names
 
-export const looseLeftHandPattern: string = manyXtoY(1, nameLimitLength)(group(alt(
+export const looseLeftHandPattern: string = manyRange(group(alt(
   nameBody,
   char('%', '[', ']', '.'),
-)));
+)), 1, nameLimitLength);
 export const expressionContinuationStartPattern: string = group(textalt(...constants_v2.continuationOperators, '('));
 export const statementStartPattern: string = seq(
   patterns_common.lineStartPattern,
