@@ -5,13 +5,11 @@ import {
   anyChars1,
   char,
   group,
-  groupMany1,
   ignoreCase,
   inlineSpace,
   inlineSpaces0,
   manyLimit,
   manyRange,
-  negChar,
   optional,
   reluctant,
   seq,
@@ -45,16 +43,17 @@ export const looseLeftHandPattern: string = manyRange(group(alt(
   char('%', '[', ']', '.'),
 )), 1, nameLimitLength);
 export const expressionContinuationStartPattern: string = group(textalt(...constants_v2.continuationOperators, '('));
-export const statementStartPattern: string = seq(
-  patterns_common.lineStartPattern,
-  inlineSpaces0(),
-  optional(alt(
-    seq(groupMany1(alt(negChar(':', seq(char('`'), char(':'))))), text('::')),
-    seq(ignoreCase('case'), inlineSpace(), reluctant(anyChars0()), char(':')),
-    seq(identifierPattern, char(':')),
-    seq(char('}')),
+export const statementStartPattern: string = alt(
+  seq(text('::'), inlineSpaces0()),
+  group(seq(
+    patterns_common.lineStartPattern,
+    optional(alt(
+      seq(char('}')),
+      seq(identifierPattern, char(':')),
+      seq(ignoreCase('case'), inlineSpace(), reluctant(anyChars0()), char(':')),
+    )),
+    inlineSpaces0(),
   )),
-  inlineSpaces0(),
 );
 
 export const escapedDoubleQuotePattern: string = text('`"');
