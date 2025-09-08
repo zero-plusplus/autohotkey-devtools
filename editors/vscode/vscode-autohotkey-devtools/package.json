@@ -170,9 +170,8 @@
     "build": "npx tsx scripts/bin/build.ts",
     "watch": "npx tsx watch scripts/bin/watch.ts",
     "clean": "npx tsx scripts/bin/clean.ts",
-    "prepackage": "npx tsx scripts/bin/prepackage.ts",
     "package": "npx @vscode/vsce package",
-    "vscode:prepublish": "npm run prepackage"
+    "vscode:prepublish": "npx tsx scripts/bin/prepackage.ts"
   },
   "icon": "icon.png",
   "pricing": "Free"
