@@ -7,7 +7,6 @@ import {
   endAnchor,
   group,
   groupMany0,
-  groupMany1,
   ignoreCase,
   inlineSpace,
   inlineSpaces0,
@@ -63,16 +62,18 @@ export const looseCallableNamePattern: string = seq(
 );
 // #endregion Names
 
-export const statementStartPattern: string = seq(
-  patterns_common.lineStartPattern,
-  inlineSpaces0(),
-  optional(alt(
-    seq(groupMany1(alt(negChar(':', seq(char('`'), char(':'))))), text('::')),
-    seq(ignoreCase('case'), inlineSpace(), reluctant(anyChars0()), char(':')),
-    seq(identifierPattern, char(':')),
-    seq(char('}')),
-  )),
-  inlineSpaces0(),
+export const statementStartPattern: string = alt(
+  seq(text('::'), inlineSpaces0()),
+  seq(
+    group(patterns_common.lineStartPattern),
+    inlineSpaces0(),
+    optional(alt(
+      seq(char('}')),
+      seq(identifierPattern, char(':')),
+      seq(ignoreCase('case'), inlineSpace(), reluctant(anyChars0()), char(':')),
+    )),
+    inlineSpaces0(),
+  ),
 );
 export const expressionContinuationStartPattern: string = group(textalt(...constants_v1.continuationOperators));
 export const expressionEndPattern: string = alt(

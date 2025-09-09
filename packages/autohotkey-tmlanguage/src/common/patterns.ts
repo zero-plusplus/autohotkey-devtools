@@ -3,6 +3,7 @@ import {
   anyChar,
   char,
   endAnchor,
+  escapeOnigurumaTexts,
   group,
   groupMany0,
   groupMany1,
@@ -14,34 +15,30 @@ import {
   negChar,
   negChars0,
   optional,
+  ordalt,
   seq,
   startAnchor,
-  textalt,
 } from '../oniguruma';
 import * as constants_common from './constants';
 
-export const lineStartPattern: string = seq(
-  group(alt(startAnchor(), '\\G')),
-  inlineSpaces0(),
-);
+export const lineStartPattern: string = alt(startAnchor(), '\\G');
 export const lineEndPattern: string = alt(
-  seq(inlineSpaces1(), negativeLookahead(char('`')), char(';')),
+  seq(inlineSpaces1(), char(';')),
   seq(inlineSpaces0(), endAnchor()),
 );
 
 // https://www.autohotkey.com/docs/v2/misc/RegEx-QuickRef.htm#Options
 export const regexpOptionsPattern: string = seq(
-  groupMany0(alt(
-    textalt(...constants_common.regexpOptions),
+  groupMany0(ordalt(
+    ...escapeOnigurumaTexts(constants_common.regexpOptions),
     inlineSpace(),
   )),
-  negativeLookahead(char('`')),
   char(')'),
 );
 
 // #region command / directive
 export const unquotedPairStringPattern: string = group(alt(
-  seq(char('"'), group(alt(negChars0('\\r', '\\n', '"'), group(seq(char('`'), char('"'))))), char('"')),
+  seq(char('"'), groupMany0(alt(negChar('\\r', '\\n', '"'), seq(char('`'), char('"')))), char('"')),
   seq(char('('), negChars0('\\r', '\\n', ')'), char(')')),
   seq(char('['), negChars0('\\r', '\\n', ']'), char(']')),
   seq(char('{'), negChars0('\\r', '\\n', '}'), char('}')),

@@ -4,6 +4,7 @@ import {
   anyChars0,
   anyChars1,
   char,
+  group,
   ignoreCase,
   inlineSpace,
   inlineSpaces0,
@@ -44,7 +45,8 @@ export const expressionContinuationStartPattern: string = textalt(...constants_v
 export const statementStartPattern: string = alt(
   seq(text('::'), inlineSpaces0()),
   seq(
-    patterns_common.lineStartPattern,
+    group(patterns_common.lineStartPattern),
+    inlineSpaces0(),
     optional(alt(
       seq(char('}')),
       seq(identifierPattern, char(':')),
