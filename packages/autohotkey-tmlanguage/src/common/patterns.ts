@@ -36,12 +36,12 @@ export const regexpOptionsPattern: string = seq(
 );
 
 // #region command / directive
-export const unquotedPairStringPattern: string = group(alt(
+export const unquotedPairStringPattern: string = alt(
   seq(char('"'), groupMany0(alt(negChar('\\r', '\\n', '"'), seq(char('`'), char('"')))), char('"')),
   seq(char('('), negChars0('\\r', '\\n', ')'), char(')')),
   seq(char('['), negChars0('\\r', '\\n', ']'), char(']')),
   seq(char('{'), negChars0('\\r', '\\n', '}'), char('}')),
-));
+);
 export const unquotedCharPattern: string = seq(
   negativeLookahead(alt(
     seq(inlineSpaces1(), char(';')),
