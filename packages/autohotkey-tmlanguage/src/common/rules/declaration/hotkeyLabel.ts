@@ -41,7 +41,7 @@ export function createHotkeyLabelRule(scopeName: ScopeName, placeholder: Placeho
     },
   };
 }
-export function createHotkeyNameRule(scopeName: ScopeName, placeholder: Placeholder): PatternsRule {
+export function createHotkeyNameRule(scopeName: ScopeName): PatternsRule {
   return patternsRule(
     {
       name: name(scopeName, RuleName.HotkeyFlag),

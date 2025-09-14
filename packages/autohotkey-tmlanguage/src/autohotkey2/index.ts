@@ -310,9 +310,7 @@ export function createRepositories(scopeName: ScopeName, placeholder?: Placehold
       ruleName: RuleName.LabelName,
       identifierPattern: patterns_v2.identifierPattern,
     }),
-    [Repository.HotkeyName]: rules_common.createHotkeyNameRule(scopeName, {
-      startPattern: patterns_v2.statementStartPattern,
-    }),
+    [Repository.HotkeyName]: rules_common.createHotkeyNameRule(scopeName),
     [Repository.KeywordInExpression]: rules_common.createReservedIdentifierRule(scopeName, {
       ruleName: RuleName.KeywordInExpression,
       identifiers: [
