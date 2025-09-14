@@ -1,4 +1,4 @@
-import * as patterns_v1 from '../autohotkeyl/patterns';
+import * as patterns_v2 from '../autohotkey2/patterns';
 import {
   ignoreCase,
   inlineSpaces1,
@@ -7,7 +7,7 @@ import {
 } from '../oniguruma';
 
 export const classStartPattern: string = seq(
-  patterns_v1.statementStartPattern,
+  patterns_v2.statementStartPattern,
   optseq(
     ignoreCase('export'),
     inlineSpaces1(),
