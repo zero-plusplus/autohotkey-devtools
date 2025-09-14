@@ -190,6 +190,9 @@ export function charRange(startCharacter: string, endCharacter: string): string 
 export function capture(onigurumaText: string): string {
   return `(${onigurumaText})`;
 }
+export function optcapture(onigurumaText: string): string {
+  return optional(capture(onigurumaText));
+}
 export function group(onigurumaText: string): string {
   return `(?:${onigurumaText})`;
 }

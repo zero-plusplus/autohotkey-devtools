@@ -10,7 +10,7 @@ import {
   inlineSpaces0,
   negativeLookahead,
   negChars0,
-  optional,
+  optcapture,
   ordalt,
   seq,
   startAnchor,
@@ -69,14 +69,14 @@ export function createCodeFenceRule(scopeName: ScopeName, aliases: readonly stri
       inlineSpaces0(),
       group(seq(
         capture(ignoreCase(ordalt(scopeName, ...aliases))),
-        optional(capture(seq(
+        optcapture(seq(
           capture(alt(
             inlineSpace(),
             char(':', ',', '{', '?'),
           )),
           inlineSpaces0(),
           negChars0('`'),
-        ))),
+        )),
       )),
       endAnchor(),
     ),

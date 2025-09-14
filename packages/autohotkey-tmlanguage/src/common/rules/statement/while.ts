@@ -7,7 +7,7 @@ import {
   inlineSpaces0,
   lookahead,
   lookbehind,
-  optional,
+  optcapture,
   seq,
 } from '../../../oniguruma';
 import {
@@ -27,7 +27,7 @@ export function createWhileStatementRule(scopeName: ScopeName, placeholder: Plac
       inlineSpaces0(),
       capture(ignoreCase('while')),
       inlineSpaces0(),
-      capture(optional(char(','))),      // Only v1 allows comma
+      optcapture(char(',')),      // Only v1 allows comma
       lookahead(alt(
         char('('),
         char('{'),

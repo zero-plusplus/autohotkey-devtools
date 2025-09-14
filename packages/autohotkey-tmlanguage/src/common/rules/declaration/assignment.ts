@@ -3,7 +3,7 @@ import {
   inlineSpaces0,
   keyword,
   lookbehind,
-  optional,
+  optcapture,
   seq,
   textalt,
 } from '../../../oniguruma';
@@ -27,7 +27,7 @@ export function createAssignmentDeclarationRule(scopeName: ScopeName, placeholde
     match: seq(
       lookbehind(placeholder.startPattern),
       inlineSpaces0(),
-      optional(capture(keyword('global', 'local', 'static'))),
+      optcapture(keyword('global', 'local', 'static')),
       inlineSpaces0(),
       capture(seq(placeholder.namePattern)),
       inlineSpaces0(),

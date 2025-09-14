@@ -20,7 +20,7 @@ import {
   negChar,
   negChars0,
   negChars1,
-  optional,
+  optcapture,
   optseq,
   ordalt,
   seq,
@@ -506,7 +506,7 @@ function createDeclarationTagRule(scopeName: ScopeName, placeholder: Placeholder
           )),
           capture(seq(
             placeholder.leftHandPattern,
-            optional(capture(char('*', '?'))),
+            optcapture(char('*', '?')),
           )),
           lookahead(alt(inlineSpace(), endAnchor())),
           inlineSpaces0(),
@@ -614,7 +614,7 @@ function createDeclarationTagRule(scopeName: ScopeName, placeholder: Placeholder
           inlineSpaces0(),
           capture(seq(
             placeholder.leftHandPattern,
-            optional(capture(char('*', '?'))),
+            optcapture(char('*', '?')),
           )),
           inlineSpaces0(),
         ),
@@ -723,10 +723,10 @@ function createInlineLinkTagRule(scopeName: ScopeName): MatchRule {
       optseq(
         inlineSpaces1(),
         capture(negChars0('}', '|')),
-        optional(capture(seq(
+        optcapture(seq(
           char('|'),
           negChars0('}'),
-        ))),
+        )),
       ),
       capture(seq('}')),
     ),

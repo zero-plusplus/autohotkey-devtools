@@ -5,7 +5,7 @@ import {
   lookahead,
   lookbehind,
   negativeLookbehind,
-  optional,
+  optcapture,
   seq,
   textalt,
   wordBound,
@@ -27,7 +27,7 @@ export function createIdentifierRule(scopeName: ScopeName, placeholder: Placehol
   return {
     match: seq(
       capture(placeholder.identifierPattern),
-      optional(capture(placeholder.identifierPattern)),
+      optcapture(placeholder.identifierPattern),
       lookahead(placeholder.endPattern ?? wordBound()),
     ),
     captures: {

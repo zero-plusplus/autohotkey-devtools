@@ -7,7 +7,7 @@ import {
   inlineSpaces1,
   keyword,
   lookbehind,
-  optional,
+  optcapture,
   optseq,
   seq,
 } from '../../../oniguruma';
@@ -33,12 +33,12 @@ export function createLoopStatementRule(scopeName: ScopeName, placeholder: Place
           inlineSpaces1(),
         )),
         inlineSpaces0(),
-        optional(capture(keyword(
+        optcapture(keyword(
           'Files',
           'Parse',
           'Read',
           'Reg',
-        ))),
+        )),
       ),
     ),
     captures: {

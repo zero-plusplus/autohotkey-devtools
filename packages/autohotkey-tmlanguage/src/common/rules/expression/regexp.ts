@@ -17,6 +17,7 @@ import {
   negChar,
   negChars1,
   numbers1,
+  optcapture,
   optional,
   optseq,
   reluctant,
@@ -56,7 +57,7 @@ export function createShorthandRegExpMatchRule(scopeName: ScopeName, placeholder
       inlineSpaces0(),
       capture(char(placeholder.quoteChar)),
       inlineSpaces0(),
-      optional(capture(alt(
+      optcapture(alt(
         group(seq(
           placeholder.regexpOptionsPattern,
           optseq(
@@ -65,7 +66,7 @@ export function createShorthandRegExpMatchRule(scopeName: ScopeName, placeholder
           ),
         )),
         ignoreCase(text('(*UCP)')),
-      ))),
+      )),
       capture(reluctant(many0(alt(
         placeholder.escapedQuotePattern,
         seq(inlineSpaces1(), negativeLookahead(char(';'))),
@@ -141,7 +142,7 @@ export function createStringAsRegExpContentRule(scopeName: ScopeName, placeholde
         capture(alt(
           group(seq(
             text('(?'),
-            optional(capture(negChars1(':'))),
+            optcapture(negChars1(':')),
             char(':'),
           )),
           text('(?<='),

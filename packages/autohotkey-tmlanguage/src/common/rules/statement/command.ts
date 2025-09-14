@@ -30,6 +30,7 @@ import {
   negChars0,
   negChars1,
   numbers1,
+  optcapture,
   optional,
   optseq,
   ordalt,
@@ -99,8 +100,8 @@ export function createSingleLineCommandLikeStatementRule(scopeName: ScopeName, d
       })(),
 
       optional(group(alt(
-        seq(inlineSpaces1(), capture(optional(char(',')))),
-        seq(inlineSpaces0(), capture(optional(char(',')))),
+        seq(inlineSpaces1(), optcapture(char(','))),
+        seq(inlineSpaces0(), optcapture(char(','))),
       ))),
       lookahead(placeholder.endPattern),
     ),
@@ -379,8 +380,8 @@ export function createControlStyleCommandArgumentRule(scopeName: ScopeName): Pat
     includeRule(Repository.DereferenceInCommandArgument),
     {
       match: seq(
-        optional(capture(char('+', '-', '^'))),
-        optional(capture(ignoreCase('LV'))),
+        optcapture(char('+', '-', '^')),
+        optcapture(ignoreCase('LV')),
         capture(ignoreCase('0x')),
         capture(chars1('0-9', 'a-z', 'A-Z')),
       ),

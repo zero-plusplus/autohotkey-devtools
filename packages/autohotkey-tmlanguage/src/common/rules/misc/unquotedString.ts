@@ -12,6 +12,7 @@ import {
   negChars0,
   negChars1,
   numbers1,
+  optcapture,
   optional,
   optseq,
   seq,
@@ -104,7 +105,7 @@ export function createNumberRule(scopeName: ScopeName, placeholder: Placeholder_
         inlineSpace(),
         char(','),
       )),
-      optional(capture(char(...placeholder.unaryOperator ?? [ '+', '-' ]))),
+      optcapture(char(...placeholder.unaryOperator ?? [ '+', '-' ])),
       capture(alt(
         seq(ignoreCase('0x'), chars0('0-9', 'a-f', 'A-F')),
         seq(
