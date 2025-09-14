@@ -33,6 +33,7 @@ export function createInLineCommentRule(scopeName: ScopeName): MatchRule {
   return {
     match: seq(
       lookbehind(inlineSpace()),
+      inlineSpaces0(),
       capture(seq(char(';'), anyChars0())),
       endAnchor(),
     ),
