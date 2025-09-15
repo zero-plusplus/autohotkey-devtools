@@ -70,10 +70,7 @@ export function createCodeFenceRule(scopeName: ScopeName, aliases: readonly stri
       group(seq(
         capture(ignoreCase(ordalt(scopeName, ...aliases))),
         optcapture(seq(
-          capture(alt(
-            inlineSpace(),
-            char(':', ',', '{', '?'),
-          )),
+          capture(char(':', ',', '{', '?', inlineSpace())),
           inlineSpaces0(),
           negChars0('`'),
         )),

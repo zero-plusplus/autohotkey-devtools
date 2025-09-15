@@ -1,5 +1,4 @@
 import {
-  alt,
   capture,
   char,
   ignoreCase,
@@ -28,11 +27,7 @@ export function createWhileStatementRule(scopeName: ScopeName, placeholder: Plac
       capture(ignoreCase('while')),
       inlineSpaces0(),
       optcapture(char(',')),      // Only v1 allows comma
-      lookahead(alt(
-        char('('),
-        char('{'),
-        inlineSpace(),
-      )),
+      lookahead(char('(', '{', inlineSpace())),
     ),
     captures: {
       1: nameRule(scopeName, RuleName.ControlFlowKeyword),
