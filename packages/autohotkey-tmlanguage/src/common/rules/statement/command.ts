@@ -147,6 +147,24 @@ export function createSingleLineCommandLikeStatementRule(scopeName: ScopeName, d
   };
 }
 
+interface Placeholder_DirectiveDefinitionsRule {
+  startPattern: string;
+  endPattern: string;
+  commandElementName: RuleName;
+  legacyMode?: boolean;
+}
+export function createCommandLikeDefinitionsRule(scopeName: ScopeName, definitions: CommandDefinition[], placeholder: Placeholder_DirectiveDefinitionsRule): Rule {
+  return patternsRule(
+    includeRule(Repository.Trivias),
+    ...definitionsToRules(scopeName, definitions, {
+      commandElementName: placeholder.commandElementName,
+      startPattern: placeholder.startPattern,
+      endPattern: placeholder.endPattern,
+      legacyMode: placeholder.legacyMode ?? false,
+    }),
+  );
+}
+
 interface Placeholder_DirectiveCommentRule {
   startPattern: string;
   endPattern: string;

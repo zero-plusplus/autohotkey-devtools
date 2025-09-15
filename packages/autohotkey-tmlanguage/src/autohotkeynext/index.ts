@@ -9,6 +9,7 @@ import {
   includeRule,
   patternsRule,
   Repository,
+  RuleName,
   type ScopeName,
   type TmLanguage,
 } from '../tmlanguage';
@@ -74,11 +75,15 @@ export function createTmLanguage(): TmLanguage {
       // #endregion declaration
 
       // #region statement
-      ...rules_v2.createDirectiveRepositories(scopeName, definitions_vnext.directiveDefinitions, {
+      [Repository.DirectiveStatement]: rules_v2.createDirectiveStatementRule(scopeName, definitions_vnext.directiveDefinitions, {
         startPattern: patterns_v2.statementStartPattern,
         endPattern: patterns_common.lineEndPattern,
         expressionOperators: constants_v2.expressionOperators,
-        unquotedArgumentPattern: patterns_common.unquotedArgumentPattern,
+      }),
+      [Repository.DirectiveDefinitions]: rules_common.createCommandLikeDefinitionsRule(scopeName, definitions_vnext.directiveDefinitions, {
+        commandElementName: RuleName.DirectiveName,
+        startPattern: patterns_v2.statementStartPattern,
+        endPattern: patterns_common.lineEndPattern,
       }),
       // #endregion statement
 

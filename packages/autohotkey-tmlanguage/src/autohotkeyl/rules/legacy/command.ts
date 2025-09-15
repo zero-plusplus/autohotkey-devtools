@@ -1,5 +1,4 @@
 import * as patterns_common from '../../../common/patterns';
-import * as rules_common from '../../../common/rules';
 import type { CommandDefinition } from '../../../definition';
 import {
   alt,
@@ -10,7 +9,6 @@ import {
   groupMany0,
   ignoreCase,
   inlineSpaces0,
-  inlineSpaces1,
   lookahead,
   lookbehind,
   negativeLookahead,
@@ -20,54 +18,21 @@ import {
   ordalt,
   reluctant,
   seq,
-  textalt,
   wordChar,
 } from '../../../oniguruma';
 import {
   includeRule,
   patternsRule,
   Repository,
-  type ElementName,
-  type Repositories,
   type Rule,
-  type ScopeName,
 } from '../../../tmlanguage';
-
-interface Placeholder_CommandRepositories {
-  startPattern: string;
-  endPattern: string;
-  commandElementName: ElementName;
-  expressionOperators: readonly string[];
-}
-export function createCommandRepositories(scopeName: ScopeName, definitions: CommandDefinition[], placeholder: Placeholder_CommandRepositories): Repositories {
-  const convertedPlaceholder = {
-    startPattern: placeholder.startPattern,
-    endPattern: placeholder.endPattern,
-    commandElementName: placeholder.commandElementName,
-    legacyMode: true,
-    allowContinuation: true,
-    argumentStartPattern: alt(
-      seq(inlineSpaces0(), negativeLookahead(textalt(...placeholder.expressionOperators))),
-      inlineSpaces1(),
-      seq(inlineSpaces0(), char(',')),
-    ),
-  };
-
-  return {
-    [Repository.CommandStatement]: createCommandStatementRule(definitions, convertedPlaceholder),
-    [Repository.CommandDefinitions]: patternsRule(
-      includeRule(Repository.Trivias),
-      ...rules_common.definitionsToRules(scopeName, definitions, convertedPlaceholder),
-    ),
-  };
-}
 
 interface Placeholder_CommandStatementRule {
   startPattern: string;
   endPattern: string;
   argumentStartPattern: string;
 }
-function createCommandStatementRule(definitions: CommandDefinition[], placeholder: Placeholder_CommandStatementRule): Rule {
+export function createCommandStatementRule(definitions: CommandDefinition[], placeholder: Placeholder_CommandStatementRule): Rule {
   const capturedCommandStatement = capture(seq(
     negativeLookbehind(seq(char('('), inlineSpaces0())),   // Disable within parentheses expression
     lookbehind(placeholder.startPattern),

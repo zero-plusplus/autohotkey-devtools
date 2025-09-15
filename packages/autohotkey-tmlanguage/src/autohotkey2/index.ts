@@ -114,11 +114,15 @@ export function createRepositories(scopeName: ScopeName, placeholder?: Placehold
       includeRule(Repository.TryStatement),
       includeRule(Repository.ThrowStatement),
     ),
-    ...rule_v2.createDirectiveRepositories(scopeName, definitions_v2.directiveDefinitions, {
+    [Repository.DirectiveStatement]: rule_v2.createDirectiveStatementRule(scopeName, definitions_v2.directiveDefinitions, {
       startPattern: patterns_v2.statementStartPattern,
       endPattern: patterns_common.lineEndPattern,
       expressionOperators: constants_v2.expressionOperators,
-      unquotedArgumentPattern: patterns_common.unquotedArgumentPattern,
+    }),
+    [Repository.DirectiveDefinitions]: rules_common.createCommandLikeDefinitionsRule(scopeName, definitions_v2.directiveDefinitions, {
+      commandElementName: RuleName.DirectiveName,
+      startPattern: patterns_v2.statementStartPattern,
+      endPattern: patterns_common.lineEndPattern,
     }),
     [Repository.JumpStatement]: rules_common.createJumpStatement(scopeName, {
       startPattern: patterns_v2.statementStartPattern,

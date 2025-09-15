@@ -113,11 +113,16 @@ export function createRepositories(scopeName: ScopeName): Repositories {
       includeRule(Repository.ExpressionStatement),
     ),
     [Repository.LegacyStatement]: patternsRule(includeRule(Repository.Legacy)),
-    ...rule_v1.createCommandRepositories(scopeName, definitions_v1.commandDefinitions, {
+    [Repository.CommandStatement]: rule_v1.createCommandStatementRule(definitions_v1.commandDefinitions, {
       startPattern: patterns_v1.statementStartPattern,
       endPattern: patterns_common.lineEndPattern,
+      argumentStartPattern: patterns_v1.commandArgumentStartPattern,
+    }),
+    [Repository.CommandDefinitions]: rules_common.createCommandLikeDefinitionsRule(scopeName, definitions_v1.commandDefinitions, {
       commandElementName: RuleName.CommandName,
-      expressionOperators: constants_v1.expressionOperators,
+      startPattern: patterns_common.lineStartPattern,
+      endPattern: patterns_common.lineEndPattern,
+      legacyMode: true,
     }),
     ...rule_v1.createDirectiveRepositories(scopeName, definitions_v1.directiveDefinitions, {
       startPattern: patterns_common.lineStartPattern,

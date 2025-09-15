@@ -16,60 +16,49 @@ import {
   textalt,
 } from '../../../oniguruma';
 import {
-  includeRule,
   nameRule,
   patternsRule,
-  Repository,
   RuleName,
   StyleName,
-  type Repositories,
+  type Rule,
   type ScopeName,
 } from '../../../tmlanguage';
 
-interface Placeholder_DirectiveRepositories {
+interface Placeholder_DirectiveStatementRule {
   startPattern: string;
   endPattern: string;
-  unquotedArgumentPattern: string;
   expressionOperators: readonly string[];
 }
-export function createDirectiveRepositories(scopeName: ScopeName, definitions: CommandDefinition[], placeholder: Placeholder_DirectiveRepositories): Repositories {
-  return {
-    [Repository.DirectiveStatement]: patternsRule(
-      rules_common.createDirectiveStatementRule(definitions, {
-        startPattern: placeholder.startPattern,
-        endPattern: placeholder.endPattern,
-      }),
-      {
-        match: seq(
-          lookbehind(placeholder.startPattern),
+export function createDirectiveStatementRule(scopeName: ScopeName, definitions: CommandDefinition[], placeholder: Placeholder_DirectiveStatementRule): Rule {
+  return patternsRule(
+    rules_common.createDirectiveStatementRule(definitions, {
+      startPattern: placeholder.startPattern,
+      endPattern: placeholder.endPattern,
+    }),
+
+    // Undefined directives
+    {
+      match: seq(
+        lookbehind(placeholder.startPattern),
+        inlineSpaces0(),
+        capture(seq(
+          char('#'),
+          chars0('a-z', 'A-Z'),
+        )),
+        negativeLookahead(seq(
           inlineSpaces0(),
-          capture(seq(
-            char('#'),
-            chars0('a-z', 'A-Z'),
-          )),
-          negativeLookahead(seq(
-            inlineSpaces0(),
-            textalt(...placeholder.expressionOperators),
-          )),
-          optseq(
-            inlineSpaces1(),
-            capture(reluctant(anyChars0())),
-          ),
-          lookahead(placeholder.endPattern),
+          textalt(...placeholder.expressionOperators),
+        )),
+        optseq(
+          inlineSpaces1(),
+          capture(reluctant(anyChars0())),
         ),
-        captures: {
-          1: nameRule(scopeName, RuleName.DirectiveName),
-          2: nameRule(scopeName, RuleName.UnquotedString, StyleName.Invalid),
-        },
+        lookahead(placeholder.endPattern),
+      ),
+      captures: {
+        1: nameRule(scopeName, RuleName.DirectiveName),
+        2: nameRule(scopeName, RuleName.UnquotedString, StyleName.Invalid),
       },
-    ),
-    [Repository.DirectiveDefinitions]: patternsRule(
-      includeRule(Repository.Trivias),
-      ...rules_common.definitionsToRules(scopeName, definitions, {
-        ...placeholder,
-        commandElementName: RuleName.DirectiveName,
-        legacyMode: false,
-      }),
-    ),
-  };
+    },
+  );
 }
