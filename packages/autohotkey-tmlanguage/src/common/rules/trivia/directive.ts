@@ -109,7 +109,7 @@ export function createDoubleStringInCompilerDirectiveRule(scopeName: ScopeName):
     ),
     captures: {
       1: nameRule(scopeName, RuleName.DoubleString, RuleDescriptor.Begin),
-      2: createDoubleStringContentInCompilerDirectiveRule(scopeName),
+      2: patternsRule(includeRule(Repository.DoubleStringContentInCompilerDirective)),
       3: nameRule(scopeName, RuleName.DoubleString, RuleDescriptor.End),
     },
   };
