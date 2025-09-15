@@ -41,22 +41,12 @@ import {
   type ElementName,
   type MatchRule,
   type PatternsRule,
-  type Repositories,
   type Rule,
   type ScopeName,
 } from '../../../tmlanguage';
 
 interface Placeholder {
   leftHandPattern: string;
-}
-export function createDocumentCommentRepositories(scopeName: ScopeName, placeholder: Placeholder): Repositories {
-  return {
-    [Repository.SingleLineDocumentComment]: createSinglelineDocumentCommentRule(scopeName, placeholder),
-    [Repository.InlineDocumentComment]: createInlineDocumentCommentRule(scopeName, placeholder),
-    [Repository.InlineTextInDocument]: createInlineTextInDocumentRule(scopeName),
-    [Repository.MultiLineDocumentComment]: createDocumentCommentRule(scopeName, placeholder),
-    [Repository.TypeInDocument]: createDocumentTypeRule(scopeName),
-  };
 }
 export function createDocumentCommentRule(scopeName: ScopeName, placeholder: Placeholder): BeginEndRule {
   const contentStartPattern = seq(startAnchor(), inlineSpaces0(), char('*'));
