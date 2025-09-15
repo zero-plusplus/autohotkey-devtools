@@ -4,8 +4,8 @@ import {
   ignoreCase,
   lookahead,
   lookbehind,
+  many0,
   negativeLookbehind,
-  optcapture,
   seq,
   textalt,
   wordBound,
@@ -21,13 +21,14 @@ import {
 interface Placeholder_IdentifierRule {
   ruleName: RuleName;
   identifierPattern: string;
+  invalidIdentifierCharPattern?: string;
   endPattern?: string;
 }
 export function createIdentifierRule(scopeName: ScopeName, placeholder: Placeholder_IdentifierRule): MatchRule {
   return {
     match: seq(
       capture(placeholder.identifierPattern),
-      optcapture(placeholder.identifierPattern),
+      ...(placeholder.invalidIdentifierCharPattern ? [ capture(many0(placeholder.invalidIdentifierCharPattern)) ] : []),
       lookahead(placeholder.endPattern ?? wordBound()),
     ),
     captures: {

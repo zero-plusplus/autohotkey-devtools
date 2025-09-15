@@ -277,10 +277,12 @@ export function createRepositories(scopeName: ScopeName, placeholder?: Placehold
     [Repository.ConstantLikeVariable]: rules_common.createIdentifierRule(scopeName, {
       ruleName: RuleName.ConstantLikeVariable,
       identifierPattern: patterns_v2.upperIdentifierPattern,
+      invalidIdentifierCharPattern: patterns_v2.nameBody_upper,
     }),
     [Repository.UserDefinedVariable]: rules_common.createIdentifierRule(scopeName, {
       ruleName: RuleName.Variable,
       identifierPattern: patterns_v2.identifierPattern,
+      invalidIdentifierCharPattern: patterns_v2.nameBody,
     }),
     [Repository.KeywordLikeBuiltInVariable]: rules_common.createReservedIdentifierRule(scopeName, {
       ruleName: RuleName.KeywordLikeBuiltInVariable,
@@ -309,6 +311,7 @@ export function createRepositories(scopeName: ScopeName, placeholder?: Placehold
     [Repository.LabelName]: rules_common.createIdentifierRule(scopeName, {
       ruleName: RuleName.LabelName,
       identifierPattern: patterns_v2.identifierPattern,
+      invalidIdentifierCharPattern: patterns_v2.nameBody,
     }),
     [Repository.HotkeyName]: rules_common.createHotkeyNameRule(scopeName),
     [Repository.KeywordInExpression]: rules_common.createReservedIdentifierRule(scopeName, {
