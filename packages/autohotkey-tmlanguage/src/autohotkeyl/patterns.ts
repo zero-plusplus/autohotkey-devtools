@@ -30,32 +30,32 @@ import * as constants_v1 from './constants';
 const nameLimitLength = 253;
 const sign = char('_', '#', '@', '$');
 
-export const nameStart: string = group(alt(wordChar(), sign));
-export const nameBody: string = group(alt(wordChar(), sign, number()));
-export const identifierPattern: string = group(seq(nameStart, manyLimit(nameBody, nameLimitLength - 1)));
+export const identifierStart: string = group(alt(wordChar(), sign));
+export const identifierPart: string = group(alt(wordChar(), sign, number()));
+export const identifierPattern: string = group(seq(identifierStart, manyLimit(identifierPart, nameLimitLength - 1)));
 
-export const nameStart_upper: string = group('[A-Z_]');
-export const nameBody_upper: string = group('[A-Z_]');
-export const upperIdentifierPattern: string = group(seq(nameStart_upper, manyLimit(nameBody_upper, nameLimitLength - 1)));
+export const identifierStart_upper: string = group('[A-Z_]');
+export const identifierPart_upper: string = group('[A-Z_]');
+export const identifierPattern_upper: string = group(seq(identifierStart_upper, manyLimit(identifierPart_upper, nameLimitLength - 1)));
 export const identifierEndPattern: string = group(alt(
   negChar(wordChar(), number(), '_', '#', '@', '$'),
   inlineSpace(),
   endAnchor(),
 ));
 
-export const keyName: string = group(alt(
+export const objectKeyNamePattern: string = group(alt(
   group(seq(char('%'), anyChars1(), char('%'))),
   identifierPattern,
 ));
 
 // Note: Analyze roughly, as accurate analysis slows down the speed of analysis to a great extent
 export const looseLeftHandPattern: string = group(manyRange(group(alt(
-  nameBody,
+  identifierPart,
   char('%', '[', ']', '.'),
 )), 1, nameLimitLength));
 export const looseCallableNamePattern: string = seq(
   manyLimit(group(alt(
-    nameBody,
+    identifierPart,
     char('%'),
   )), nameLimitLength),
   lookahead(char('(')),
@@ -75,7 +75,7 @@ export const statementStartPattern: string = alt(
     inlineSpaces0(),
   ),
 );
-export const expressionContinuationStartPattern: string = group(textalt(...constants_v1.continuationOperators));
+export const continuationExpressionStartPattern: string = group(textalt(...constants_v1.continuationOperators));
 export const expressionEndPattern: string = alt(
   seq(inlineSpaces1(), char(';')),
   seq(inlineSpaces0(), endAnchor()),

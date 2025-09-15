@@ -27,7 +27,7 @@ export function createObjectRepositories(scopeName: ScopeName, placeholder: Plac
       startPattern: placeholder.startPattern,
     }),
     [Repository.ObjectKey]: createObjectKeyRule(scopeName, {
-      keyName: placeholder.keyName,
+      objectKeyNamePattern: placeholder.objectKeyNamePattern,
     }),
     [Repository.ObjectContent]: patternsRule(...placeholder.contents),
   };
@@ -54,12 +54,12 @@ export function createObjectRule(scopeName: ScopeName, placeholder: Placeholder_
 }
 
 interface Placeholder_ObjectKeyRule {
-  keyName: string;
+  objectKeyNamePattern: string;
 }
 export function createObjectKeyRule(scopeName: ScopeName, placeholder: Placeholder_ObjectKeyRule): MatchRule {
   return {
     match: seq(
-      capture(placeholder.keyName),
+      capture(placeholder.objectKeyNamePattern),
       inlineSpaces0(),
       capture(char(':')),
     ),

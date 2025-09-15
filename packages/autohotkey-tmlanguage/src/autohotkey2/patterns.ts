@@ -20,28 +20,28 @@ import * as constants_v2 from './constants';
 
 // #region [Names](https://www.autohotkey.com/docs/v2/Concepts.htm#names)
 const nameLimitLength = 253;
-const nameBodyChars = [ '\\w', '_', '\\d' ];
+const identifierPartChars = [ '\\w', '_', '\\d' ];
 
-export const nameStart: string = char('\\w', '_');
-export const nameBody: string = char(...nameBodyChars);
-export const identifierPattern: string = seq(nameStart, manyLimit(nameBody, nameLimitLength - 1));
+export const identifierStart: string = char('\\w', '_');
+export const identifierPart: string = char(...identifierPartChars);
+export const identifierPattern: string = seq(identifierStart, manyLimit(identifierPart, nameLimitLength - 1));
 
-export const nameStart_upper: string = char('A-Z', '_');
-export const nameBody_upper: string = nameStart_upper;
-export const upperIdentifierPattern: string = seq(nameStart_upper, manyLimit(nameBody_upper, nameLimitLength - 1));
+export const identifierStart_upper: string = char('A-Z', '_');
+export const identifierPart_upper: string = identifierStart_upper;
+export const identifierPattern_upper: string = seq(identifierStart_upper, manyLimit(identifierPart_upper, nameLimitLength - 1));
 
-export const keyName: string = alt(
+export const objectKeyNamePattern: string = alt(
   seq(char('%'), anyChars1(), char('%')),
   identifierPattern,
 );
 // #endregion Names
 
 export const looseLeftHandPattern: string = manyRange(
-  char(...nameBodyChars, '%', '[', ']', '.'),
+  char(...identifierPartChars, '%', '[', ']', '.'),
   1,
   nameLimitLength,
 );
-export const expressionContinuationStartPattern: string = textalt(...constants_v2.continuationOperators, '(');
+export const continuationExpressionStartPattern: string = textalt(...constants_v2.continuationOperators, '(');
 export const statementStartPattern: string = alt(
   seq(text('::'), inlineSpaces0()),
   seq(

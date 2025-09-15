@@ -276,13 +276,13 @@ export function createRepositories(scopeName: ScopeName, placeholder?: Placehold
     ),
     [Repository.ConstantLikeVariable]: rules_common.createIdentifierRule(scopeName, {
       ruleName: RuleName.ConstantLikeVariable,
-      identifierPattern: patterns_v2.upperIdentifierPattern,
-      invalidIdentifierCharPattern: patterns_v2.nameBody_upper,
+      identifierPattern: patterns_v2.identifierPattern_upper,
+      invalidIdentifierCharPattern: patterns_v2.identifierPart_upper,
     }),
     [Repository.UserDefinedVariable]: rules_common.createIdentifierRule(scopeName, {
       ruleName: RuleName.Variable,
       identifierPattern: patterns_v2.identifierPattern,
-      invalidIdentifierCharPattern: patterns_v2.nameBody,
+      invalidIdentifierCharPattern: patterns_v2.identifierPart,
     }),
     [Repository.KeywordLikeBuiltInVariable]: rules_common.createReservedIdentifierRule(scopeName, {
       ruleName: RuleName.KeywordLikeBuiltInVariable,
@@ -311,7 +311,7 @@ export function createRepositories(scopeName: ScopeName, placeholder?: Placehold
     [Repository.LabelName]: rules_common.createIdentifierRule(scopeName, {
       ruleName: RuleName.LabelName,
       identifierPattern: patterns_v2.identifierPattern,
-      invalidIdentifierCharPattern: patterns_v2.nameBody,
+      invalidIdentifierCharPattern: patterns_v2.identifierPart,
     }),
     [Repository.HotkeyName]: rules_common.createHotkeyNameRule(scopeName),
     [Repository.KeywordInExpression]: rules_common.createReservedIdentifierRule(scopeName, {
@@ -350,8 +350,8 @@ export function createRepositories(scopeName: ScopeName, placeholder?: Placehold
       startPattern: patterns_common.lineStartPattern,
     }),
     ...rules_common.createObjectRepositories(scopeName, {
-      startPattern: patterns_v2.expressionContinuationStartPattern,
-      keyName: patterns_v2.keyName,
+      startPattern: patterns_v2.continuationExpressionStartPattern,
+      objectKeyNamePattern: patterns_v2.objectKeyNamePattern,
       contents: [
         includeRule(Repository.Meta),
 

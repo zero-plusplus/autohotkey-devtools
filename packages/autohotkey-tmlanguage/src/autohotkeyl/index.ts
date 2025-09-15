@@ -258,14 +258,14 @@ export function createRepositories(scopeName: ScopeName): Repositories {
     ),
     [Repository.ConstantLikeVariable]: rules_common.createIdentifierRule(scopeName, {
       ruleName: RuleName.ConstantLikeVariable,
-      identifierPattern: patterns_v1.upperIdentifierPattern,
-      invalidIdentifierCharPattern: patterns_v1.nameBody_upper,
+      identifierPattern: patterns_v1.identifierPattern_upper,
+      invalidIdentifierCharPattern: patterns_v1.identifierPart_upper,
       endPattern: patterns_v1.identifierEndPattern,
     }),
     [Repository.UserDefinedVariable]: rules_common.createIdentifierRule(scopeName, {
       ruleName: RuleName.Variable,
       identifierPattern: patterns_v1.identifierPattern,
-      invalidIdentifierCharPattern: patterns_v1.nameBody,
+      invalidIdentifierCharPattern: patterns_v1.identifierPart,
       endPattern: patterns_v1.identifierEndPattern,
     }),
     [Repository.KeywordLikeBuiltInVariable]: rules_common.createReservedIdentifierRule(scopeName, {
@@ -287,7 +287,7 @@ export function createRepositories(scopeName: ScopeName): Repositories {
     [Repository.LabelName]: rules_common.createIdentifierRule(scopeName, {
       ruleName: RuleName.LabelName,
       identifierPattern: patterns_v1.identifierPattern,
-      invalidIdentifierCharPattern: patterns_v1.nameBody,
+      invalidIdentifierCharPattern: patterns_v1.identifierPart,
     }),
     [Repository.HotkeyName]: rules_common.createHotkeyNameRule(scopeName),
     [Repository.KeywordInExpression]: rules_common.createReservedIdentifierRule(scopeName, {
@@ -325,8 +325,8 @@ export function createRepositories(scopeName: ScopeName): Repositories {
       startPattern: patterns_common.lineStartPattern,
     }),
     ...rules_common.createObjectRepositories(scopeName, {
-      startPattern: patterns_v1.expressionContinuationStartPattern,
-      keyName: patterns_v1.keyName,
+      startPattern: patterns_v1.continuationExpressionStartPattern,
+      objectKeyNamePattern: patterns_v1.objectKeyNamePattern,
       contents: [
         includeRule(Repository.Meta),
 
