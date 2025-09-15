@@ -396,14 +396,14 @@ export function createRepositories(scopeName: ScopeName, placeholder?: Placehold
     // #region regexp
     [Repository.ShorthandRegexpMatch]: patternsRule(
       rules_common.createShorthandRegExpMatchRule(scopeName, {
-        quoteChar: '"',
+        quoteChar: patterns_v2.doubleQuoteCharPattern,
         escapedQuotePattern: patterns_v2.escapedDoubleQuotePattern,
         regexpOptionsPattern: patterns_common.regexpOptionsPattern,
         contentRuleName: RuleName.RegExpString,
         contentRepository: Repository.DoubleStringAsRegExpContent,
       }),
       rules_common.createShorthandRegExpMatchRule(scopeName, {
-        quoteChar: `'`,
+        quoteChar: patterns_v2.singleQuoteCharPattern,
         escapedQuotePattern: patterns_v2.escapedSingleQuotePattern,
         regexpOptionsPattern: patterns_common.regexpOptionsPattern,
         contentRuleName: RuleName.RegExpString,
@@ -415,7 +415,7 @@ export function createRepositories(scopeName: ScopeName, placeholder?: Placehold
       includeRule(Repository.SingleStringAsRegexp),
     ),
     [Repository.DoubleStringAsRegexp]: rules_common.createStringAsRegExpRule(scopeName, {
-      quoteChar: '"',
+      quoteChar: patterns_v2.doubleQuoteCharPattern,
       escapedQuotePattern: patterns_v2.escapedDoubleQuotePattern,
       regexpOptionsPattern: patterns_common.regexpOptionsPattern,
       contentRuleName: RuleName.RegExpString,
@@ -433,7 +433,7 @@ export function createRepositories(scopeName: ScopeName, placeholder?: Placehold
       pcreUnicodePropertyScripts: constants_common.pcreUnicodePropertyScripts,
     }),
     [Repository.SingleStringAsRegexp]: rules_common.createStringAsRegExpRule(scopeName, {
-      quoteChar: `'`,
+      quoteChar: patterns_v2.singleQuoteCharPattern,
       escapedQuotePattern: patterns_v2.escapedSingleQuotePattern,
       regexpOptionsPattern: patterns_common.regexpOptionsPattern,
       contentRuleName: RuleName.RegExpString,

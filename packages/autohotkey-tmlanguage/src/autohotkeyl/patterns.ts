@@ -85,6 +85,7 @@ export const controlFlowEndPattern: string = alt(
   seq(inlineSpaces0(), char('{')),
   seq(inlineSpaces0(), endAnchor()),
 );
+export const doubleQuoteCharPattern: string = `"`;
 export const escapedDoubleQuotePattern: string = text('""');
 
 // https://www.autohotkey.com/docs/v1/misc/RegEx-QuickRef.htm#Options

@@ -56,5 +56,7 @@ export const statementStartPattern: string = alt(
   ),
 );
 
+export const doubleQuoteCharPattern: string = `"`;
+export const singleQuoteCharPattern: string = `'`;
 export const escapedDoubleQuotePattern: string = text('`"');
 export const escapedSingleQuotePattern: string = text('`\'');

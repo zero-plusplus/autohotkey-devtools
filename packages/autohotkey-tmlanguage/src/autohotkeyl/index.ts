@@ -363,7 +363,7 @@ export function createRepositories(scopeName: ScopeName): Repositories {
 
     // #region regexp
     [Repository.ShorthandRegexpMatch]: rules_common.createShorthandRegExpMatchRule(scopeName, {
-      quoteChar: '"',
+      quoteChar: patterns_v1.doubleQuoteCharPattern,
       escapedQuotePattern: patterns_v1.escapedDoubleQuotePattern,
       regexpOptionsPattern: patterns_v1.regexpOptionsPattern,
       contentRuleName: RuleName.RegExpString,
@@ -371,7 +371,7 @@ export function createRepositories(scopeName: ScopeName): Repositories {
     }),
     [Repository.StringAsRegExp]: patternsRule(includeRule(Repository.DoubleStringAsRegexp)),
     [Repository.DoubleStringAsRegexp]: rules_common.createStringAsRegExpRule(scopeName, {
-      quoteChar: '"',
+      quoteChar: patterns_v1.doubleQuoteCharPattern,
       escapedQuotePattern: patterns_v1.escapedDoubleQuotePattern,
       regexpOptionsPattern: patterns_v1.regexpOptionsPattern,
       contentRuleName: RuleName.RegExpString,
