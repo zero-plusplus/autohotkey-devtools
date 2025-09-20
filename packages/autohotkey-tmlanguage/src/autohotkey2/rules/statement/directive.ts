@@ -27,13 +27,14 @@ import {
 interface Placeholder_DirectiveStatementRule {
   startPattern: string;
   endPattern: string;
-  expressionOperators: readonly string[];
+  assignmentOperators: readonly string[];
 }
 export function createDirectiveStatementRule(scopeName: ScopeName, definitions: CommandDefinition[], placeholder: Placeholder_DirectiveStatementRule): Rule {
   return patternsRule(
     rules_common.createDirectiveStatementRule(definitions, {
       startPattern: placeholder.startPattern,
       endPattern: placeholder.endPattern,
+      assignmentOperators: placeholder.assignmentOperators,
     }),
 
     // Undefined directives
@@ -47,7 +48,7 @@ export function createDirectiveStatementRule(scopeName: ScopeName, definitions: 
         )),
         negativeLookahead(seq(
           inlineSpaces0(),
-          textalt(...placeholder.expressionOperators),
+          textalt(...placeholder.assignmentOperators),
         )),
         optseq(
           inlineSpaces1(),

@@ -13,6 +13,7 @@ import {
   optional,
   ordalt,
   seq,
+  textalt,
   wordChar,
 } from '../../../oniguruma';
 import {
@@ -25,6 +26,7 @@ import {
 interface Placeholder_DirectiveStatementRule {
   startPattern: string;
   endPattern: string;
+  assignmentOperators: readonly string[];
 }
 export function createDirectiveStatementRule(definitions: CommandDefinition[], placeholder: Placeholder_DirectiveStatementRule): BeginWhileRule {
   const capturedDirectiveStatementPattern = capture(seq(
@@ -32,11 +34,10 @@ export function createDirectiveStatementRule(definitions: CommandDefinition[], p
     lookbehind(placeholder.startPattern),
     inlineSpaces0(),
     ignoreCase(ordalt(...definitions.map((definition) => definition.name))),
-    negativeLookahead(alt(char('(', '['), wordChar())),
-    // alt(
-    //   inlineSpaces1(),
-    //   seq(inlineSpaces0(), char(',')),
-    // ),
+    negativeLookahead(alt(
+      char('(', '[', wordChar()),
+      seq(inlineSpaces0(), textalt(...placeholder.assignmentOperators)),
+    )),
     optional(anyChars0()),
     lookahead(placeholder.endPattern),
   ));

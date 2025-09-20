@@ -117,7 +117,7 @@ export function createRepositories(scopeName: ScopeName, placeholder?: Placehold
     [Repository.DirectiveStatement]: rule_v2.createDirectiveStatementRule(scopeName, definitions_v2.directiveDefinitions, {
       startPattern: patterns_v2.statementStartPattern,
       endPattern: patterns_common.lineEndPattern,
-      expressionOperators: constants_v2.expressionOperators,
+      assignmentOperators: constants_common.assignmentOperators,
     }),
     [Repository.DirectiveDefinitions]: rules_common.createCommandLikeDefinitionsRule(scopeName, definitions_v2.directiveDefinitions, {
       commandElementName: RuleName.DirectiveName,
@@ -214,7 +214,6 @@ export function createRepositories(scopeName: ScopeName, placeholder?: Placehold
     // #region declaration
     [Repository.Declaration]: patternsRule(
       includeRule(Repository.Modifier),
-      includeRule(Repository.AssignmentDeclaration),
       includeRule(Repository.CallExpression_FunctionDeclarationHead),
       includeRule(Repository.ClassDeclaration),
       includeRule(Repository.Block),
@@ -222,11 +221,6 @@ export function createRepositories(scopeName: ScopeName, placeholder?: Placehold
     [Repository.Modifier]: rules_common.createModifierRule(scopeName, {
       startPattern: patterns_v2.statementStartPattern,
       modifiers: constants_common.accessModifiers,
-    }),
-    [Repository.AssignmentDeclaration]: rules_common.createAssignmentDeclarationRule(scopeName, {
-      startPattern: patterns_v2.statementStartPattern,
-      namePattern: patterns_v2.looseLeftHandPattern,
-      operators: constants_common.assignmentOperators,
     }),
     [Repository.Block]: rules_common.createBlockRule(scopeName, {
       statementsInBlock: [ includeRule(Repository.Self) ],
@@ -400,9 +394,19 @@ export function createRepositories(scopeName: ScopeName, placeholder?: Placehold
     // #endregion literal
 
     // #region operator
-    ...rules_common.createOperatorRepositories(scopeName, {
-      expressionOperators: constants_v2.expressionOperators,
+    [Repository.Comma]: rules_common.createOperatorRule(scopeName, {
+      operatorRuleName: RuleName.Comma,
+      operators: [ ',' ],
     }),
+    [Repository.Dot]: rules_common.createDotOperatorRule(scopeName),
+    [Repository.Operator]: rules_common.createOperatorRule(scopeName, {
+      operatorRuleName: RuleName.Operator,
+      operators: constants_v2.expressionOperators,
+    }),
+    [Repository.DereferenceUnaryOperator]: {
+      name: name(scopeName, RuleName.Operator),
+      match: patterns_common.dereferenceUnaryOperatorPattern,
+    },
     // #endregion operator
 
     // #region regexp

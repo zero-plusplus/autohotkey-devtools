@@ -6,17 +6,20 @@ interface Placeholder_DirectiveRepositories {
   startPattern: string;
   endPattern: string;
   unquotedArgumentPattern: string;
+  assignmentOperators: readonly string[];
 }
 export function createDirectiveRepositories(scopeName: ScopeName, definitions: CommandDefinition[], placeholder: Placeholder_DirectiveRepositories): Repositories {
   return {
     [Repository.DirectiveStatement]: rules_common.createDirectiveStatementRule(definitions, {
       startPattern: placeholder.startPattern,
       endPattern: placeholder.endPattern,
+      assignmentOperators: placeholder.assignmentOperators,
     }),
     [Repository.DirectiveDefinitions]: patternsRule(
       includeRule(Repository.Trivias),
       ...rules_common.definitionsToRules(scopeName, definitions, {
-        ...placeholder,
+        startPattern: placeholder.startPattern,
+        endPattern: placeholder.endPattern,
         commandElementName: RuleName.DirectiveName,
         legacyMode: true,
       }),

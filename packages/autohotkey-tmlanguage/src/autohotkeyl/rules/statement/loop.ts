@@ -15,7 +15,7 @@ import {
   nameRule,
   patternsRule,
   RuleName,
-  type PatternsRule,
+  type Rule,
   type ScopeName,
 } from '../../../tmlanguage';
 
@@ -23,9 +23,8 @@ interface Placeholder {
   startPattern: string;
   endPattern: string;
   definitions: CommandDefinition[];
-  expressionOperators: readonly string[];
 }
-export function createLoopStatementRule(scopeName: ScopeName, placeholder: Placeholder): PatternsRule {
+export function createLoopStatementRule(scopeName: ScopeName, placeholder: Placeholder): Rule {
   return patternsRule(
     ...placeholder.definitions.flatMap((definition) => {
       return definition.signatures.map((signature) => {

@@ -117,6 +117,7 @@ export function createRepositories(scopeName: ScopeName): Repositories {
       startPattern: patterns_v1.statementStartPattern,
       endPattern: patterns_common.lineEndPattern,
       argumentStartPattern: patterns_v1.commandArgumentStartPattern,
+      assignmentOperators: constants_common.assignmentOperators,
     }),
     [Repository.CommandDefinitions]: rules_common.createCommandLikeDefinitionsRule(scopeName, definitions_v1.commandDefinitions, {
       commandElementName: RuleName.CommandName,
@@ -128,6 +129,7 @@ export function createRepositories(scopeName: ScopeName): Repositories {
       startPattern: patterns_common.lineStartPattern,
       endPattern: patterns_common.lineEndPattern,
       unquotedArgumentPattern: patterns_common.unquotedArgumentPattern,
+      assignmentOperators: constants_common.assignmentOperators,
     }),
     [Repository.JumpStatement]: rules_common.createJumpStatement(scopeName, {
       startPattern: patterns_v1.statementStartPattern,
@@ -173,7 +175,6 @@ export function createRepositories(scopeName: ScopeName): Repositories {
       startPattern: patterns_v1.statementStartPattern,
       endPattern: patterns_v1.controlFlowEndPattern,
       definitions: definitions_v1.loopCommandDefenitions,
-      expressionOperators: constants_v1.expressionOperators,
     }),
     [Repository.UntilStatement]: rules_common.createUntilStatementRule(scopeName, {
       startPattern: patterns_v1.statementStartPattern,
@@ -199,7 +200,6 @@ export function createRepositories(scopeName: ScopeName): Repositories {
     [Repository.Declaration]: patternsRule(
       includeRule(Repository.Modifier),
       includeRule(Repository.LegacyAssignmentDeclaration),
-      includeRule(Repository.AssignmentDeclaration),
       includeRule(Repository.CallExpression_FunctionDeclarationHead),
       includeRule(Repository.ClassDeclaration),
       includeRule(Repository.Block),
@@ -207,11 +207,6 @@ export function createRepositories(scopeName: ScopeName): Repositories {
     [Repository.Modifier]: rules_common.createModifierRule(scopeName, {
       startPattern: patterns_v1.statementStartPattern,
       modifiers: constants_common.accessModifiers,
-    }),
-    [Repository.AssignmentDeclaration]: rules_common.createAssignmentDeclarationRule(scopeName, {
-      startPattern: patterns_v1.statementStartPattern,
-      namePattern: patterns_v1.looseLeftHandPattern,
-      operators: constants_common.assignmentOperators,
     }),
     [Repository.Block]: rules_common.createBlockRule(scopeName, {
       statementsInBlock: [ includeRule(Repository.Self) ],
@@ -369,9 +364,19 @@ export function createRepositories(scopeName: ScopeName): Repositories {
     // #endregion literal
 
     // #region operator
-    ...rules_common.createOperatorRepositories(scopeName, {
-      expressionOperators: constants_v1.expressionOperators,
+    [Repository.Comma]: rules_common.createOperatorRule(scopeName, {
+      operatorRuleName: RuleName.Comma,
+      operators: [ ',' ],
     }),
+    [Repository.Dot]: rules_common.createDotOperatorRule(scopeName),
+    [Repository.Operator]: rules_common.createOperatorRule(scopeName, {
+      operatorRuleName: RuleName.Operator,
+      operators: constants_v1.expressionOperators,
+    }),
+    [Repository.DereferenceUnaryOperator]: {
+      name: name(scopeName, RuleName.Operator),
+      match: patterns_common.dereferenceUnaryOperatorPattern,
+    },
     // #endregion operator
 
     // #region regexp

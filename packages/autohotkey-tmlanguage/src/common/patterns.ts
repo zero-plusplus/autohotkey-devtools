@@ -10,6 +10,7 @@ import {
   inlineSpace,
   inlineSpaces0,
   inlineSpaces1,
+  lookahead,
   negativeLookahead,
   negativeLookbehind,
   negChar,
@@ -92,4 +93,8 @@ export const unquotedLastArgumentPattern: string = group(alt(
     lastUnquotedCharPattern,
   )),
 ));
+export const dereferenceUnaryOperatorPattern: string = seq(
+  char('+', '-', '^'),
+  lookahead('%'),
+);
 // #endregion command / directive

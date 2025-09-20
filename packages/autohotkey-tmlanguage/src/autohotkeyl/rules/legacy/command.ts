@@ -9,6 +9,7 @@ import {
   groupMany0,
   ignoreCase,
   inlineSpaces0,
+  inlineSpaces1,
   lookahead,
   lookbehind,
   negativeLookahead,
@@ -18,7 +19,7 @@ import {
   ordalt,
   reluctant,
   seq,
-  wordChar,
+  textalt,
 } from '../../../oniguruma';
 import {
   includeRule,
@@ -31,6 +32,7 @@ interface Placeholder_CommandStatementRule {
   startPattern: string;
   endPattern: string;
   argumentStartPattern: string;
+  assignmentOperators: readonly string[];
 }
 export function createCommandStatementRule(definitions: CommandDefinition[], placeholder: Placeholder_CommandStatementRule): Rule {
   const capturedCommandStatement = capture(seq(
@@ -38,8 +40,16 @@ export function createCommandStatementRule(definitions: CommandDefinition[], pla
     lookbehind(placeholder.startPattern),
     inlineSpaces0(),
     ignoreCase(ordalt(...definitions.map((definition) => definition.name))),
-    negativeLookahead(alt(char('(', '['), wordChar())),
-    lookahead(placeholder.argumentStartPattern),
+    group(alt(
+      seq(
+        inlineSpaces1(),
+        negativeLookahead(seq(
+          inlineSpaces0(),
+          textalt(...placeholder.assignmentOperators),
+        )),
+      ),
+      seq(inlineSpaces0(), char(',')),
+    )),
     optional(anyChars0()),
     lookahead(placeholder.endPattern),
   ));

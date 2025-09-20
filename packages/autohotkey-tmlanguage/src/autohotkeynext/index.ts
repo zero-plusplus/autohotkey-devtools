@@ -1,5 +1,4 @@
 import * as v2 from '../autohotkey2';
-import * as constants_v2 from '../autohotkey2/constants';
 import * as patterns_v2 from '../autohotkey2/patterns';
 import * as rules_v2 from '../autohotkey2/rules';
 import * as constants_common from '../common/constants';
@@ -78,7 +77,7 @@ export function createTmLanguage(): TmLanguage {
       [Repository.DirectiveStatement]: rules_v2.createDirectiveStatementRule(scopeName, definitions_vnext.directiveDefinitions, {
         startPattern: patterns_v2.statementStartPattern,
         endPattern: patterns_common.lineEndPattern,
-        expressionOperators: constants_v2.expressionOperators,
+        assignmentOperators: constants_common.assignmentOperators,
       }),
       [Repository.DirectiveDefinitions]: rules_common.createCommandLikeDefinitionsRule(scopeName, definitions_vnext.directiveDefinitions, {
         commandElementName: RuleName.DirectiveName,

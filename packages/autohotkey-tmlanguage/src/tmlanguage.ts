@@ -89,7 +89,6 @@ export const enum Repository {
   Block = '$Block',
   Modifier = '$Modifier',
   Declaration = '$Declaration',
-  AssignmentDeclaration = '$AssignmentDeclaration',
   TypedAssignmentDeclaration = '$TypedAssignmentDeclaration',
   ClassDeclaration = '$ClassDeclaration',
   BlockInClassBody = '$BlockInClassBody',

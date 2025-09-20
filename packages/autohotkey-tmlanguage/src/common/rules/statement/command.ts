@@ -64,7 +64,7 @@ export interface Placeholder_SingleLineCommandLikeStatementRule {
   startPattern: string;
   endPattern: string;
   commandElementName: ElementName;
-  legacyMode: boolean;
+  legacyMode?: boolean;
 }
 export function createSingleLineCommandLikeStatementRule(scopeName: ScopeName, definition: CommandDefinition, signature: CommandSignature, placeholder: Placeholder_SingleLineCommandLikeStatementRule, aliases: string[] = []): Rule {
   return {
@@ -521,7 +521,7 @@ function parameterToOniguruma(parameter: CommandParameter, isLastParameter: bool
   }
   return optional(isLastParameter ? patterns_common.unquotedLastArgumentPattern : patterns_common.unquotedArgumentPattern);
 }
-function parameterToPatternsRule(scopeName: ScopeName, definition: CommandDefinition, parameter: CommandParameter, isLastParameter: boolean, placeholder: { startPattern: string; legacyMode: boolean }): PatternsRule {
+function parameterToPatternsRule(scopeName: ScopeName, definition: CommandDefinition, parameter: CommandParameter, isLastParameter: boolean, placeholder: { startPattern: string; legacyMode?: boolean | undefined }): PatternsRule {
   const legacyRules = ((): Rule[] => {
     if (!placeholder.legacyMode) {
       return [];
