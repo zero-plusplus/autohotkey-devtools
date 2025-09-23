@@ -36,58 +36,9 @@ import {
   type BeginEndRule,
   type ElementName,
   type MatchRule,
-  type Repositories,
   type Rule,
   type ScopeName,
 } from '../../../tmlanguage';
-
-interface Placeholder {
-  endPattern: string;
-  escapedQuotePattern: string;
-  escapeSequences: readonly string[];
-}
-export function createDoubleStringRepositories(scopeName: ScopeName, placeholder: Placeholder): Repositories {
-  const quoteChar = '"';
-  const stringElementName = RuleName.DoubleString;
-
-  return {
-    [Repository.DoubleString]: createStringRule(scopeName, {
-      quoteChar,
-      stringElementName,
-      escapedQuotePattern: placeholder.escapedQuotePattern,
-      escapeSequences: placeholder.escapeSequences,
-    }),
-    [Repository.ContinuationStringOptions]: createContinuationStringOptionsRule(scopeName),
-    [Repository.ContinuationDoubleString]: createContinuationString(scopeName, {
-      quoteChar,
-      stringElementName,
-      endPattern: placeholder.endPattern,
-      escapedQuotePattern: placeholder.escapedQuotePattern,
-      escapeSequences: placeholder.escapeSequences,
-    }),
-  };
-}
-export function createSingleStringRepositories(scopeName: ScopeName, placeholder: Placeholder): Repositories {
-  const quoteChar = `'`;
-  const stringElementName = RuleName.SingleString;
-
-  return {
-    [Repository.SingleString]: createStringRule(scopeName, {
-      quoteChar,
-      stringElementName,
-      escapedQuotePattern: placeholder.escapedQuotePattern,
-      escapeSequences: placeholder.escapeSequences,
-    }),
-    [Repository.ContinuationStringOptions]: createContinuationStringOptionsRule(scopeName),
-    [Repository.ContinuationSingleString]: createContinuationString(scopeName, {
-      quoteChar,
-      stringElementName,
-      endPattern: placeholder.endPattern,
-      escapedQuotePattern: placeholder.escapedQuotePattern,
-      escapeSequences: placeholder.escapeSequences,
-    }),
-  };
-}
 
 interface Placeholder_StringRule {
   quoteChar: string;
@@ -131,7 +82,6 @@ export function createStringRule(scopeName: ScopeName, placeholder: Placeholder_
 }
 
 interface Placeholder_ContinuationString {
-  endPattern: string;
   quoteChar: string;
   escapedQuotePattern: string;
   stringElementName: ElementName;
@@ -162,7 +112,8 @@ export function createContinuationString(scopeName: ScopeName, placeholder: Plac
         char(';'),
         anyChars0(),
       )),
-      lookahead(placeholder.endPattern),
+      inlineSpaces0(),
+      endAnchor(),
     ),
     beginCaptures: {
       1: nameRule(scopeName, placeholder.stringElementName, RuleDescriptor.Begin),

@@ -376,13 +376,28 @@ export function createRepositories(scopeName: ScopeName, placeholder?: Placehold
       includeRule(Repository.ContinuationDoubleString),
       includeRule(Repository.ContinuationSingleString),
     ),
-    ...rules_common.createDoubleStringRepositories(scopeName, {
-      endPattern: patterns_common.lineEndPattern,
+    [Repository.DoubleString]: rules_common.createStringRule(scopeName, {
+      stringElementName: RuleName.DoubleString,
+      quoteChar: patterns_v2.doubleQuoteCharPattern,
       escapedQuotePattern: patterns_v2.escapedDoubleQuotePattern,
       escapeSequences: constants_v2.doubleQuoteEscapeSequences,
     }),
-    ...rules_common.createSingleStringRepositories(scopeName, {
-      endPattern: patterns_common.lineEndPattern,
+    [Repository.SingleString]: rules_common.createStringRule(scopeName, {
+      stringElementName: RuleName.SingleString,
+      quoteChar: patterns_v2.singleQuoteCharPattern,
+      escapedQuotePattern: patterns_v2.escapedSingleQuotePattern,
+      escapeSequences: constants_v2.singleQuoteEscapeSequences,
+    }),
+    [Repository.ContinuationStringOptions]: rules_common.createContinuationStringOptionsRule(scopeName),
+    [Repository.ContinuationDoubleString]: rules_common.createContinuationString(scopeName, {
+      stringElementName: RuleName.DoubleString,
+      quoteChar: patterns_v2.doubleQuoteCharPattern,
+      escapedQuotePattern: patterns_v2.escapedDoubleQuotePattern,
+      escapeSequences: constants_v2.doubleQuoteEscapeSequences,
+    }),
+    [Repository.ContinuationSingleString]: rules_common.createContinuationString(scopeName, {
+      stringElementName: RuleName.SingleString,
+      quoteChar: patterns_v2.singleQuoteCharPattern,
       escapedQuotePattern: patterns_v2.escapedSingleQuotePattern,
       escapeSequences: constants_v2.singleQuoteEscapeSequences,
     }),

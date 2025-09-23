@@ -351,8 +351,16 @@ export function createRepositories(scopeName: ScopeName): Repositories {
       includeRule(Repository.DoubleString),
       includeRule(Repository.ContinuationDoubleString),
     ),
-    ...rules_common.createDoubleStringRepositories(scopeName, {
-      endPattern: patterns_common.lineEndPattern,
+    [Repository.DoubleString]: rules_common.createStringRule(scopeName, {
+      stringElementName: RuleName.DoubleString,
+      quoteChar: patterns_v1.doubleQuoteCharPattern,
+      escapedQuotePattern: patterns_v1.escapedDoubleQuotePattern,
+      escapeSequences: constants_v1.doubleQuoteEscapeSequences,
+    }),
+    [Repository.ContinuationStringOptions]: rules_common.createContinuationStringOptionsRule(scopeName),
+    [Repository.ContinuationDoubleString]: rules_common.createContinuationString(scopeName, {
+      stringElementName: RuleName.DoubleString,
+      quoteChar: patterns_v1.doubleQuoteCharPattern,
       escapedQuotePattern: patterns_v1.escapedDoubleQuotePattern,
       escapeSequences: constants_v1.doubleQuoteEscapeSequences,
     }),
