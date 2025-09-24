@@ -221,7 +221,7 @@ export function createRepositories(scopeName: ScopeName): Repositories {
     [Repository.BlockInClassBody]: rules_common.createBlockInClassBodyRule(scopeName),
     [Repository.PropertyDeclaration]: rules_common.createPropertyDeclarationRule(scopeName, {
       modifiers: constants_common.accessModifiers,
-      identifierPattern: patterns_v1.looseLeftHandPattern,
+      identifierPattern: patterns_v1.identifierPattern,
       identifierNameRule: patternsRule(includeRule(Repository.Variable)),
       keywordsInArgument: [ 'byref' ],
     }),
@@ -487,7 +487,7 @@ export function createRepositories(scopeName: ScopeName): Repositories {
     }),
     [Repository.LegacyAssignmentDeclaration]: rule_v1.createLegacyAssignmentRule(scopeName, {
       startPattern: patterns_v1.statementStartPattern,
-      leftHandPattern: patterns_v1.looseLeftHandPattern,
+      leftHandPattern: patterns_v1.identifierPattern,
     }),
     [Repository.PercentExpression]: rule_v1.createPercentExpressionRule(scopeName, {
       expressionPattern: patterns_common.unquotedExpressionArgumentPattern,

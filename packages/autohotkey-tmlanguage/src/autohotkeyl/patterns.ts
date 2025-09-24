@@ -13,7 +13,6 @@ import {
   inlineSpaces1,
   lookahead,
   manyLimit,
-  manyRange,
   negativeLookahead,
   negChar,
   number,
@@ -49,10 +48,6 @@ export const objectKeyNamePattern: string = group(alt(
 ));
 
 // Note: Analyze roughly, as accurate analysis slows down the speed of analysis to a great extent
-export const looseLeftHandPattern: string = group(manyRange(group(alt(
-  identifierPart,
-  char('%', '[', ']', '.'),
-)), 1, nameLimitLength));
 export const looseCallableNamePattern: string = seq(
   manyLimit(group(alt(
     identifierPart,
