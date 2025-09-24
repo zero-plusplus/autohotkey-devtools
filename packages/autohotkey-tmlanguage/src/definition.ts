@@ -660,20 +660,7 @@ export function $menuOptions(flags: CommandParameterFlag = CommandParameterFlag.
   return $([ includeRule(Repository.CommandArgumentMenuOptions) ], flags);
 }
 export function $regkey(flags: CommandParameterFlag = CommandParameterFlag.None): CommandParameter {
-  return $([
-    createOption(ignoreCase(textalt(
-      'HKEY_LOCAL_MACHINE',
-      'HKLM',
-      'HKEY_USERS',
-      'HKU',
-      'HKEY_CURRENT_USER',
-      'HKCU',
-      'HKEY_CLASSES_ROOT',
-      'HKCR',
-      'HKEY_CURRENT_CONFIG',
-      'HKCC',
-    )), [], [ '\\' ]),
-  ], flags);
+  return $([ includeRule(Repository.CommandArgumentRegKey) ], flags);
 }
 export function $includeLib(flags: CommandParameterFlag = CommandParameterFlag.None, quotable = false): CommandParameter {
   // e.g. `#Include path\to`, `#Include <lib>`

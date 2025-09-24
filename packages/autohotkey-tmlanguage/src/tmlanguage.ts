@@ -194,6 +194,7 @@ export const enum Repository {
   CommandArgumentControlStyle = '$CommandArgumentControlStyle',
   CommandArgumentGuiOptions = '$CommandArgumentGuiOptions',
   CommandArgumentMenuOptions = '$CommandArgumentMenuOptions',
+  CommandArgumentRegKey = '$CommandArgumentRegKey',
   // #endregion v1 syntax
   // #region legacy
   Legacy = '$Legacy',

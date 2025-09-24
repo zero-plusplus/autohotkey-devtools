@@ -3,6 +3,7 @@ import {
   $,
   CommandFlag,
   CommandParameterFlag,
+  createOption,
   decimalOption,
   flagedIdentifierOption,
   flagedKeywordOption,
@@ -455,6 +456,22 @@ export function createMenuOptionsCommandArgumentRule(scopeName: ScopeName): Patt
   return patternsRule(...itemPatternToRules(scopeName, [
     decimalOption('P'),
     flagedKeywordOption('Radio', 'Right', 'Break', 'BarBreak'),
+  ]));
+}
+export function createRegKeyCommandArgumentRule(scopeName: ScopeName): PatternsRule {
+  return patternsRule(...itemPatternToRules(scopeName, [
+    createOption(ignoreCase(textalt(
+      'HKEY_LOCAL_MACHINE',
+      'HKLM',
+      'HKEY_USERS',
+      'HKU',
+      'HKEY_CURRENT_USER',
+      'HKCU',
+      'HKEY_CLASSES_ROOT',
+      'HKCR',
+      'HKEY_CURRENT_CONFIG',
+      'HKCC',
+    )), [], [ '\\' ]),
   ]));
 }
 export function createInvalidArgumentRule(scopeName: ScopeName): MatchRule {
