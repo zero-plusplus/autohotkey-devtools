@@ -658,7 +658,7 @@ export function $menuItemName(flags: CommandParameterFlag = CommandParameterFlag
   // e.g. `Menu, MenuName, Add, &Open`, `Menu, MenuName, Add, Save && Exit`
   return {
     flags,
-    itemMatchers: [ includeRule(Repository.MenuItemNameCommandArgument) ],
+    itemMatchers: [ includeRule(Repository.CommandArgumentMenuItemName) ],
   };
 }
 export function $menuOptions(flags: CommandParameterFlag = CommandParameterFlag.None): CommandParameter {

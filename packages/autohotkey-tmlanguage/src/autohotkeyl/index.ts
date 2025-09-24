@@ -457,7 +457,6 @@ export function createRepositories(scopeName: ScopeName): Repositories {
       includeRule(Repository.CommandLastArgumentText),
       includeRule(Repository.InlineTrivias),
     ),
-    [Repository.MenuItemNameCommandArgument]: rules_common.createMenuNameCommandArgumentRule(scopeName),
     [Repository.UnquotedStringEscapeSequence]: rules_common.createUnquotedEscapeSequencesRule(scopeName, constants_v1.unquoteEscapeSequences),
     [Repository.CommandArgumentText]: rules_common.createUnquotedStringRule(scopeName, {
       stringRuleName: RuleName.UnquotedString,
@@ -467,15 +466,16 @@ export function createRepositories(scopeName: ScopeName): Repositories {
       stringRuleName: RuleName.UnquotedString,
       stringPattern: patterns_common.unquotedLastArgumentPattern,
     }),
-    [Repository.CommandArgumentSendKeyName]: rules_common.createSendKeyCommandArgumentRule(scopeName),
     [Repository.CommandArgumentClick]: rules_common.createClickCommandArgumentRule(scopeName),
+    [Repository.CommandArgumentColor]: rules_common.createColorCommandArgumentRule(scopeName),
     [Repository.CommandArgumentControlStyle]: rules_common.createControlStyleCommandArgumentRule(scopeName),
     [Repository.CommandArgumentGuiOptions]: rules_common.createGuiOptionsCommandArgumentRule(scopeName),
+    [Repository.CommandArgumentHotstringOptions]: rules_common.createHotstringOptionsCommandArgumentRule(scopeName),
+    [Repository.CommandArgumentMenuItemName]: rules_common.createMenuNameCommandArgumentRule(scopeName),
     [Repository.CommandArgumentMenuOptions]: rules_common.createMenuOptionsCommandArgumentRule(scopeName),
     [Repository.CommandArgumentRegKey]: rules_common.createRegKeyCommandArgumentRule(scopeName),
+    [Repository.CommandArgumentSendKeyName]: rules_common.createSendKeyCommandArgumentRule(scopeName),
     [Repository.CommandArgumentWhichButton]: rules_common.createWhichButtonCommandArgumentRule(scopeName),
-    [Repository.CommandArgumentHotstringOptions]: rules_common.createHotstringOptionsCommandArgumentRule(scopeName),
-    [Repository.CommandArgumentColor]: rules_common.createColorCommandArgumentRule(scopeName),
     // #endregion command
 
     // #region legacy
