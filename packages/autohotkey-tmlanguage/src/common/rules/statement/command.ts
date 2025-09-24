@@ -3,6 +3,7 @@ import {
   $,
   CommandFlag,
   CommandParameterFlag,
+  decimalOption,
   flagedIdentifierOption,
   flagedKeywordOption,
   flagedSizeOption,
@@ -448,6 +449,12 @@ export function createGuiOptionsCommandArgumentRule(scopeName: ScopeName): Patte
     flagedStringOption('Delimiter'),
     flagedIdentifierOption('Hwnd', 'Label', 'LastFound'),
     flagedSizeOption('MinSize', 'MaxSize'),
+  ]));
+}
+export function createMenuOptionsCommandArgumentRule(scopeName: ScopeName): PatternsRule {
+  return patternsRule(...itemPatternToRules(scopeName, [
+    decimalOption('P'),
+    flagedKeywordOption('Radio', 'Right', 'Break', 'BarBreak'),
   ]));
 }
 export function createInvalidArgumentRule(scopeName: ScopeName): MatchRule {

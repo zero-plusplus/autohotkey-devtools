@@ -657,10 +657,7 @@ export function $menuItemName(flags: CommandParameterFlag = CommandParameterFlag
   };
 }
 export function $menuOptions(flags: CommandParameterFlag = CommandParameterFlag.None): CommandParameter {
-  return $([
-    decimalOption('P'),
-    flagedKeywordOption('Radio', 'Right', 'Break', 'BarBreak'),
-  ], flags);
+  return $([ includeRule(Repository.CommandArgumentMenuOptions) ], flags);
 }
 export function $regkey(flags: CommandParameterFlag = CommandParameterFlag.None): CommandParameter {
   return $([
