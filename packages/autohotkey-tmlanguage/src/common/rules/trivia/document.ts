@@ -5,6 +5,7 @@ import {
   anyChars1,
   capture,
   char,
+  chars1,
   endAnchor,
   group,
   groupMany0,
@@ -45,10 +46,7 @@ import {
   type ScopeName,
 } from '../../../tmlanguage';
 
-interface Placeholder {
-  leftHandPattern: string;
-}
-export function createDocumentCommentRule(scopeName: ScopeName, placeholder: Placeholder): BeginEndRule {
+export function createDocumentCommentRule(scopeName: ScopeName): BeginEndRule {
   const contentStartPattern = seq(startAnchor(), inlineSpaces0(), char('*'));
 
   return {
@@ -73,7 +71,6 @@ export function createDocumentCommentRule(scopeName: ScopeName, placeholder: Pla
         patterns: [
           createTagAnnotationRule(scopeName, {
             startPattern: contentStartPattern,
-            leftHandPattern: placeholder.leftHandPattern,
           }),
 
           includeRule(Repository.FencedCodeBlockInDocument),
@@ -84,7 +81,7 @@ export function createDocumentCommentRule(scopeName: ScopeName, placeholder: Pla
     ],
   };
 }
-export function createInlineDocumentCommentRule(scopeName: ScopeName, placeholder: Placeholder): MatchRule {
+export function createInlineDocumentCommentRule(scopeName: ScopeName): MatchRule {
   const contentStartPattern = seq(
     inlineSpaces1(),
     text(';;'),
@@ -99,7 +96,6 @@ export function createInlineDocumentCommentRule(scopeName: ScopeName, placeholde
       1: patternsRule(
         createTagAnnotationRule(scopeName, {
           startPattern: contentStartPattern,
-          leftHandPattern: placeholder.leftHandPattern,
         }),
         includeRule(Repository.FencedCodeBlockInDocument),
         includeRule(Repository.InlineTextInDocument),
@@ -108,7 +104,7 @@ export function createInlineDocumentCommentRule(scopeName: ScopeName, placeholde
     },
   };
 }
-export function createSinglelineDocumentCommentRule(scopeName: ScopeName, placeholder: Placeholder): BeginWhileRule {
+export function createSinglelineDocumentCommentRule(scopeName: ScopeName): BeginWhileRule {
   const capturedContentStartPattern = seq(startAnchor(), inlineSpaces0(), capture(text(';;')));
   const contentStartPattern = seq(startAnchor(), inlineSpaces0(), text(';;'));
 
@@ -123,7 +119,6 @@ export function createSinglelineDocumentCommentRule(scopeName: ScopeName, placeh
         patterns: [
           createTagAnnotationRule(scopeName, {
             startPattern: contentStartPattern,
-            leftHandPattern: placeholder.leftHandPattern,
           }),
           includeRule(Repository.FencedCodeBlockInDocument),
           includeRule(Repository.InlineTextInDocument),
@@ -156,12 +151,11 @@ export function createDocumentTypeRule(scopeName: ScopeName): BeginEndRule {
 // #region tag
 interface Placeholder_TagAnnotation {
   startPattern: string;
-  leftHandPattern: string;
 }
 function createTagAnnotationRule(scopeName: ScopeName, placeholder: Placeholder_TagAnnotation): PatternsRule {
   return patternsRule(
     createFlagAnnotationOrDescriptorTagRule(scopeName, {
-      ...placeholder,
+      startPattern: placeholder.startPattern,
       tagNames: [
         // https://jsdoc.app/tags-abstract
         '@abstract',
@@ -223,7 +217,7 @@ function createTagAnnotationRule(scopeName: ScopeName, placeholder: Placeholder_
       ],
     }),
     createAttributeAnnotationTagRule(scopeName, {
-      ...placeholder,
+      startPattern: placeholder.startPattern,
       tagNames: [
         // https://jsdoc.app/tags-access
         '@access',
@@ -236,7 +230,7 @@ function createTagAnnotationRule(scopeName: ScopeName, placeholder: Placeholder_
       ],
     }),
     createAttributeAnnotationTagRule(scopeName, {
-      ...placeholder,
+      startPattern: placeholder.startPattern,
       tagNames: [
         // https://jsdoc.app/tags-alias
         '@alias',
@@ -259,7 +253,7 @@ function createTagAnnotationRule(scopeName: ScopeName, placeholder: Placeholder_
       ],
     }),
     createAttributeAnnotationTagRule(scopeName, {
-      ...placeholder,
+      startPattern: placeholder.startPattern,
       tagNames: [
         // https://jsdoc.app/tags-author
         '@author',
@@ -275,7 +269,7 @@ function createTagAnnotationRule(scopeName: ScopeName, placeholder: Placeholder_
       ],
     }),
     createAttributeAnnotationTagRule(scopeName, {
-      ...placeholder,
+      startPattern: placeholder.startPattern,
       tagNames: [
         // https://jsdoc.app/tags-borrows
         '@borrows',
@@ -292,7 +286,7 @@ function createTagAnnotationRule(scopeName: ScopeName, placeholder: Placeholder_
       ],
     }),
     createAttributeAnnotationTagRule(scopeName, {
-      ...placeholder,
+      startPattern: placeholder.startPattern,
       contentName: name(scopeName, RuleName.EmbeddedLanguage),
       tagNames: [
         // https://jsdoc.app/tags-default
@@ -305,7 +299,7 @@ function createTagAnnotationRule(scopeName: ScopeName, placeholder: Placeholder_
       ],
     }),
     createAttributeAnnotationTagRule(scopeName, {
-      ...placeholder,
+      startPattern: placeholder.startPattern,
       tagNames: [
         // https://jsdoc.app/tags-see
         '@see',
@@ -321,7 +315,7 @@ function createTagAnnotationRule(scopeName: ScopeName, placeholder: Placeholder_
       ],
     }),
     createDeclarationTagRule(scopeName, {
-      ...placeholder,
+      startPattern: placeholder.startPattern,
       tagNames: [
         // https://jsdoc.app/tags-class
         '@class',
@@ -360,7 +354,7 @@ function createTagAnnotationRule(scopeName: ScopeName, placeholder: Placeholder_
       rules: [],
     }),
     createTypeDeclarationTagRule(scopeName, {
-      ...placeholder,
+      startPattern: placeholder.startPattern,
       tagNames: [
         // https://jsdoc.app/tags-returns
         '@returns',
@@ -450,7 +444,6 @@ function createAttributeAnnotationTagRule(scopeName: ScopeName, placeholder: Pla
 
 interface Placeholder_BlockTag {
   startPattern: string;
-  leftHandPattern: string;
   tagNames: readonly string[];
   rules: Rule[];
 }
@@ -495,7 +488,7 @@ function createDeclarationTagRule(scopeName: ScopeName, placeholder: Placeholder
             inlineSpaces0(),
           )),
           capture(seq(
-            placeholder.leftHandPattern,
+            chars1('a-z', 'A-Z', '0-9', '@', '#', '$', '.'),
             optcapture(char('*', '?')),
           )),
           lookahead(alt(inlineSpace(), endAnchor())),
@@ -603,7 +596,7 @@ function createDeclarationTagRule(scopeName: ScopeName, placeholder: Placeholder
           )),
           inlineSpaces0(),
           capture(seq(
-            placeholder.leftHandPattern,
+            chars1('a-z', 'A-Z', '0-9', '@', '#', '$', '.'),
             optcapture(char('*', '?')),
           )),
           inlineSpaces0(),
@@ -672,13 +665,12 @@ function createTypeDeclarationTagRule(scopeName: ScopeName, placeholder: Placeho
 
 interface Placeholder_ExampleTag {
   startPattern: string;
-  leftHandPattern: string;
 }
 function createExampleTagRule(scopeName: ScopeName, placeholder: Placeholder_ExampleTag): BeginEndRule {
   return {
     contentName: name(scopeName, RuleName.EmbeddedLanguage),
     ...createBlockTagRule(scopeName, {
-      ...placeholder,
+      startPattern: placeholder.startPattern,
       tagNames: [
         // https://jsdoc.app/tags-example
         '@example',
