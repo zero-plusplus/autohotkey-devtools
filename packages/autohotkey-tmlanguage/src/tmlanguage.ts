@@ -189,7 +189,6 @@ export const enum Repository {
   MenuItemNameCommandArgument = '$MenuItemNameCommandArgument',
   CommandArgumentText = '$CommandArgumentText',
   CommandLastArgumentText = '$CommandLastArgumentText',
-  CommandArgumentNumber = '$CommandArgumentNumber',
   CommandArgumentSendKeyName = '$CommandArgumentSendKeyName',
   CommandArgumentClick = '$CommandArgumentClick',
   CommandArgumentControlStyle = '$CommandArgumentControlStyle',
