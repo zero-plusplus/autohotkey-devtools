@@ -13,25 +13,9 @@ import {
   RuleName,
   type BeginEndRule,
   type MatchRule,
-  type Repositories,
-  type Rule,
   type ScopeName,
 } from '../../../tmlanguage';
 
-interface Placeholder extends Placeholder_ObjectRule, Placeholder_ObjectKeyRule {
-  contents: Rule[];
-}
-export function createObjectRepositories(scopeName: ScopeName, placeholder: Placeholder): Repositories {
-  return {
-    [Repository.Object]: createObjectRule(scopeName, {
-      startPattern: placeholder.startPattern,
-    }),
-    [Repository.ObjectKey]: createObjectKeyRule(scopeName, {
-      objectKeyNamePattern: placeholder.objectKeyNamePattern,
-    }),
-    [Repository.ObjectContent]: patternsRule(...placeholder.contents),
-  };
-}
 interface Placeholder_ObjectRule {
   startPattern: string;
 }
