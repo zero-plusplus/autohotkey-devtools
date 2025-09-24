@@ -197,6 +197,7 @@ export const enum Repository {
   CommandArgumentRegKey = '$CommandArgumentRegKey',
   CommandArgumentWhichButton = '$CommandArgumentWhichButton',
   CommandArgumentHotstringOptions = '$CommandArgumentHotstringOptions',
+  CommandArgumentColor = '$CommandArgumentColor',
   // #endregion v1 syntax
   // #region legacy
   Legacy = '$Legacy',

@@ -10,7 +10,6 @@ import {
   endAnchor,
   group,
   groupMany1,
-  hexValue,
   ignoreCase,
   inlineSpace,
   inlineSpaces0,
@@ -861,13 +860,7 @@ export function $formatTime(flags: CommandParameterFlag = CommandParameterFlag.N
   };
 }
 export function $color(flags: CommandParameterFlag = CommandParameterFlag.None): CommandParameter {
-  return $([
-    keywordOption('Default', 'Black', 'Silver', 'Gray', 'White', 'Maroon', 'Red', 'Purple', 'Fuchsia', 'Green', 'Lime', 'Olive', 'Yellow', 'Navy', 'Blue', 'Teal', 'Aqua'),
-    {
-      name: [ RuleName.Hex, RuleName.HexValue ],
-      match: hexValue(),
-    },
-  ], flags);
+  return $([ includeRule(Repository.CommandArgumentColor) ], flags);
 }
 export function $soundComponent(): CommandParameter {
   return $([ keywordOption('MASTER', 'SPEAKERS', 'DIGITAL', 'LINE', 'MICROPHONE', 'SYNTH', 'CD', 'TELEPHONE', 'PCSPEAKER', 'WAVE', 'AUX', 'ANALOG', 'HEADPHONES', 'N/A') ]);

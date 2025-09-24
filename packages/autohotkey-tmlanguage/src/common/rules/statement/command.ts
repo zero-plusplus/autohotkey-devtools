@@ -24,6 +24,7 @@ import {
   endAnchor,
   group,
   groupMany1,
+  hexValue,
   ignoreCase,
   inlineSpace,
   inlineSpaces0,
@@ -529,6 +530,15 @@ export function createHotstringOptionsCommandArgumentRule(scopeName: ScopeName):
       )),
     },
   );
+}
+export function createColorCommandArgumentRule(scopeName: ScopeName): PatternsRule {
+  return patternsRule(...itemPatternToRules(scopeName, [
+    keywordOption('Default', ...constants_common.colorNames),
+    {
+      name: [ RuleName.Hex, RuleName.HexValue ],
+      match: hexValue(),
+    },
+  ]));
 }
 export function createInvalidArgumentRule(scopeName: ScopeName): MatchRule {
   return {
