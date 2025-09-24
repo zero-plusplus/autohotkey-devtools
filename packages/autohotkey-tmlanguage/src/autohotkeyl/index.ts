@@ -477,6 +477,7 @@ export function createRepositories(scopeName: ScopeName): Repositories {
     [Repository.CommandArgumentSendKeyName]: rules_common.createSendKeyCommandArgumentRule(scopeName),
     [Repository.CommandArgumentClick]: rules_common.createClickCommandArgumentRule(scopeName),
     [Repository.CommandArgumentControlStyle]: rules_common.createControlStyleCommandArgumentRule(scopeName),
+    [Repository.CommandArgumentGuiOptions]: rules_common.createGuiOptionsCommandArgumentRule(scopeName),
     // #endregion command
 
     // #region legacy

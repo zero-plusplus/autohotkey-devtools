@@ -638,16 +638,8 @@ export function $click(flags: CommandParameterFlag = CommandParameterFlag.None):
 export function $fileAttributes(flags: CommandParameterFlag = CommandParameterFlag.None): CommandParameter {
   return $shouldKeyword([ flagedLetterOption('R', 'A', 'S', 'H', 'N', 'O', 'T') ], flags);
 }
-export function $guiOptions(flags: CommandParameterFlag = CommandParameterFlag.None): CommandParameter {
-  return $(
-    [
-      flagedKeywordOption('AlwaysOnTop', 'Border', 'Caption', 'DelimiterSpace', 'DelimiterTab', 'Disabled', 'DPIScale', 'LastFoundExist', 'MaximizeBox', 'MinimizeBox', 'OwnDialogs', 'Owner', 'Parent', 'Resize', 'SysMenu', 'Theme', 'ToolWindow'),
-      flagedStringOption('Delimiter'),
-      flagedIdentifierOption('Hwnd', 'Label', 'LastFound'),
-      flagedSizeOption('MinSize', 'MaxSize'),
-    ],
-    mergeFlags(flags, CommandParameterFlag.GuiLabeled),
-  );
+export function $guiOptions(): CommandParameter {
+  return $([ includeRule(Repository.CommandArgumentGuiOptions) ]);
 }
 export function $input(flags: CommandParameterFlag = CommandParameterFlag.None): CommandParameter {
   return $shouldIdentifier(flags);

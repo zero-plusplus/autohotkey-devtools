@@ -3,6 +3,10 @@ import {
   $,
   CommandFlag,
   CommandParameterFlag,
+  flagedIdentifierOption,
+  flagedKeywordOption,
+  flagedSizeOption,
+  flagedStringOption,
   keywordOption,
   type CommandDefinition,
   type CommandParameter,
@@ -438,7 +442,14 @@ export function createMenuNameCommandArgumentRule(scopeName: ScopeName): Pattern
     },
   ]).itemMatchers!));
 }
-
+export function createGuiOptionsCommandArgumentRule(scopeName: ScopeName): PatternsRule {
+  return patternsRule(...itemPatternToRules(scopeName, [
+    flagedKeywordOption('AlwaysOnTop', 'Border', 'Caption', 'DelimiterSpace', 'DelimiterTab', 'Disabled', 'DPIScale', 'LastFoundExist', 'MaximizeBox', 'MinimizeBox', 'OwnDialogs', 'Owner', 'Parent', 'Resize', 'SysMenu', 'Theme', 'ToolWindow'),
+    flagedStringOption('Delimiter'),
+    flagedIdentifierOption('Hwnd', 'Label', 'LastFound'),
+    flagedSizeOption('MinSize', 'MaxSize'),
+  ]));
+}
 export function createInvalidArgumentRule(scopeName: ScopeName): MatchRule {
   return {
     name: name(scopeName, RuleName.UnquotedString, StyleName.Invalid),
