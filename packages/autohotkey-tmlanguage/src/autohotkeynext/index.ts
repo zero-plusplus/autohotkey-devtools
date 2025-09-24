@@ -67,7 +67,7 @@ export function createTmLanguage(): TmLanguage {
       [Repository.TypedAssignmentDeclaration]: rules_vnext.createTypedAssignmentDeclarationRule(scopeName, {
         startPattern: patterns_common.lineStartPattern,
         modifiers: constants_common.accessModifiers,
-        namePattern: patterns_v2.looseLeftHandPattern,
+        namePattern: patterns_v2.identifierPattern,
         nameRule: patternsRule(includeRule(Repository.Variable)),
         operators: constants_common.assignmentOperators,
       }),

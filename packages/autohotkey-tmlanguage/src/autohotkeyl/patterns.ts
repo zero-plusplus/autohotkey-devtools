@@ -48,13 +48,10 @@ export const objectKeyNamePattern: string = group(alt(
 ));
 
 // Note: Analyze roughly, as accurate analysis slows down the speed of analysis to a great extent
-export const looseCallableNamePattern: string = seq(
-  manyLimit(group(alt(
-    identifierPart,
-    char('%'),
-  )), nameLimitLength),
-  lookahead(char('(')),
-);
+export const looseCallableNamePattern: string = manyLimit(group(alt(
+  identifierPart,
+  char('%'),
+)), nameLimitLength);
 // #endregion Names
 
 export const statementStartPattern: string = alt(

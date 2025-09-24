@@ -9,7 +9,6 @@ import {
   inlineSpace,
   inlineSpaces0,
   manyLimit,
-  manyRange,
   optional,
   reluctant,
   seq,
@@ -36,11 +35,11 @@ export const objectKeyNamePattern: string = alt(
 );
 // #endregion Names
 
-export const looseLeftHandPattern: string = manyRange(
-  char(...identifierPartChars, '%', '[', ']', '.'),
-  1,
-  nameLimitLength,
-);
+// Note: Analyze roughly, as accurate analysis slows down the speed of analysis to a great extent
+export const looseCallableNamePattern: string = manyLimit(group(alt(
+  identifierPart,
+  char('%'),
+)), nameLimitLength);
 export const continuationExpressionStartPattern: string = textalt(...constants_v2.continuationOperators, '(');
 export const statementStartPattern: string = alt(
   seq(text('::'), inlineSpaces0()),

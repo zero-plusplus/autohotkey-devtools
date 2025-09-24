@@ -479,7 +479,7 @@ export function createRepositories(scopeName: ScopeName, placeholder?: Placehold
 
     // #region misc
     [Repository.CallExpression_FunctionDeclarationHead]: rules_common.createCallExpressionRule(scopeName, {
-      callableNamePattern: patterns_v2.identifierPattern,
+      callableNamePattern: patterns_v2.looseCallableNamePattern,
       callableNameRule: namedPatternsRule(
         name(scopeName, RuleName.FunctionName),
         [ includeRule(Repository.BuiltInClass) ],

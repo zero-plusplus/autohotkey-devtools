@@ -16,17 +16,12 @@ export function createCallExpressionExpectedData(scopeName: ScopeName): Expected
         %abc%()               ; comment
         %abc%edf()            ; comment
       `, [
-        { text: '%', scopes: name(scopeName, RuleName.PercentBegin) },
-        { text: 'abc', scopes: name(scopeName, RuleName.Variable) },
-        { text: '%', scopes: name(scopeName, RuleName.PercentEnd) },
+        { text: '%abc%', scopes: name(scopeName, RuleName.FunctionName) },
         { text: '(', scopes: name(scopeName, RuleName.OpenParen) },
         { text: ')', scopes: name(scopeName, RuleName.CloseParen) },
         { text: '; comment', scopes: name(scopeName, RuleName.InlineComment) },
 
-        { text: '%', scopes: name(scopeName, RuleName.PercentBegin) },
-        { text: 'abc', scopes: name(scopeName, RuleName.Variable) },
-        { text: '%', scopes: name(scopeName, RuleName.PercentEnd) },
-        { text: 'edf', scopes: name(scopeName, RuleName.FunctionName) },
+        { text: '%abc%edf', scopes: name(scopeName, RuleName.FunctionName) },
         { text: '(', scopes: name(scopeName, RuleName.OpenParen) },
         { text: ')', scopes: name(scopeName, RuleName.CloseParen) },
         { text: '; comment', scopes: name(scopeName, RuleName.InlineComment) },
