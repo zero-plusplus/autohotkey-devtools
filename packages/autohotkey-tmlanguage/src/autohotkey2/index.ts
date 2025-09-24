@@ -400,7 +400,22 @@ export function createRepositories(scopeName: ScopeName, placeholder?: Placehold
     // #endregion string
 
     // #region number
-    ...rules_common.createNumberRepositories(scopeName),
+    [Repository.Number]: patternsRule(
+      includeRule(Repository.Integer),
+      includeRule(Repository.InvalidFloat),
+      includeRule(Repository.Float),
+      includeRule(Repository.InvalidHex),
+      includeRule(Repository.Hex),
+      includeRule(Repository.InvalidScientificNotation),
+      includeRule(Repository.ScientificNotation),
+    ),
+    [Repository.Integer]: rules_common.createIntegerRule(scopeName),
+    [Repository.Float]: rules_common.createFloatRule(scopeName),
+    [Repository.InvalidFloat]: rules_common.createInvalidFloatRule(scopeName),
+    [Repository.Hex]: rules_common.createHexRule(scopeName),
+    [Repository.InvalidHex]: rules_common.createInvalidHexRule(scopeName),
+    [Repository.ScientificNotation]: rules_common.createScientificNotationRule(scopeName),
+    [Repository.InvalidScientificNotation]: rules_common.createInvalidScientificNotationRule(scopeName),
     // #endregion number
     // #endregion literal
 

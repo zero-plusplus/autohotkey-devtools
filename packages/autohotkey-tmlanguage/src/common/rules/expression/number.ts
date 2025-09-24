@@ -18,39 +18,16 @@ import {
   wordBound,
 } from '../../../oniguruma';
 import {
-  includeRule,
   name,
   nameRule,
   patternsRule,
-  Repository,
   RuleName,
   StyleName,
   type MatchRule,
   type PatternsRule,
-  type Repositories,
   type ScopeName,
 } from '../../../tmlanguage';
 
-export function createNumberRepositories(scopeName: ScopeName): Repositories {
-  return {
-    [Repository.Number]: patternsRule(
-      includeRule(Repository.Integer),
-      includeRule(Repository.InvalidFloat),
-      includeRule(Repository.Float),
-      includeRule(Repository.InvalidHex),
-      includeRule(Repository.Hex),
-      includeRule(Repository.InvalidScientificNotation),
-      includeRule(Repository.ScientificNotation),
-    ),
-    [Repository.Integer]: createIntegerRule(scopeName),
-    [Repository.Float]: createFloatRule(scopeName),
-    [Repository.InvalidFloat]: createInvalidFloatRule(scopeName),
-    [Repository.Hex]: createHexRule(scopeName),
-    [Repository.InvalidHex]: createInvalidHexRule(scopeName),
-    [Repository.ScientificNotation]: createScientificNotationRule(scopeName),
-    [Repository.InvalidScientificNotation]: createInvalidScientificNotationRule(scopeName),
-  };
-}
 export function createIntegerRule(scopeName: ScopeName): MatchRule {
   return {
     match: seq(
