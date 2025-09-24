@@ -35,6 +35,7 @@ import {
   negChar,
   negChars0,
   negChars1,
+  numbers0,
   numbers1,
   optcapture,
   optional,
@@ -476,6 +477,58 @@ export function createRegKeyCommandArgumentRule(scopeName: ScopeName): PatternsR
 }
 export function createWhichButtonCommandArgumentRule(scopeName: ScopeName): PatternsRule {
   return patternsRule(...itemPatternToRules(scopeName, [ keywordOption('Left', 'L', 'Right', 'R', 'Middle', 'M', 'WheelUp', 'WU', 'WheelDown', 'WD', 'WheelLeft', 'WL', 'WheelRight', 'WR') ]));
+}
+export function createHotstringOptionsCommandArgumentRule(scopeName: ScopeName): PatternsRule {
+  return patternsRule(
+    {
+      // e.g. `K-1` `P1`
+      name: name(scopeName, RuleName.UnquotedString, StyleName.Strong),
+      match: ignoreCase(seq(
+        char(
+          'K',                                  // https://www.autohotkey.com/docs/v1/Hotstrings.htm#Kn
+          'P',                                  // https://www.autohotkey.com/docs/v1/Hotstrings.htm#Pn
+        ),
+        optseq(
+          optional(char('+', '-')),
+          numbers0(),
+        ),
+      )),
+    },
+    {
+      // e.g. `C` `C0` `C1`
+      name: name(scopeName, RuleName.UnquotedString, StyleName.Strong),
+      match: ignoreCase(seq(
+        char('C'),                              // https://www.autohotkey.com/docs/v1/Hotstrings.htm#C
+        optional(char('0', '1')),
+      )),
+    },
+    {
+      // e.g. `B` `B0`
+      name: name(scopeName, RuleName.UnquotedString, StyleName.Strong),
+      match: ignoreCase(seq(
+        char(
+          '*',                                  // https://www.autohotkey.com/docs/v1/Hotstrings.htm#Asterisk
+          '?',                                  // https://www.autohotkey.com/docs/v1/Hotstrings.htm#Question
+          'B',                                  // https://www.autohotkey.com/docs/v1/Hotstrings.htm#b0
+          'O',                                  // https://www.autohotkey.com/docs/v1/Hotstrings.htm#O
+          'R',                                  // https://www.autohotkey.com/docs/v1/Hotstrings.htm#raw
+          'T',                                  // https://www.autohotkey.com/docs/v1/Hotstrings.htm#T
+          'Z',                                  // https://www.autohotkey.com/docs/v1/Hotstrings.htm#z
+        ),
+        optional(char('0', '1')),
+      )),
+    },
+    {
+      // e.g. `SI`
+      name: name(scopeName, RuleName.UnquotedString, StyleName.Strong),
+      match: ignoreCase(ordalt(
+        'SI',                                   // <
+        'SP',                                   // https://www.autohotkey.com/docs/v1/Hotstrings.htm#SendMode
+        'SE',                                   // >
+        'X',                                    // https://www.autohotkey.com/docs/v1/Hotstrings.htm#X
+      )),
+    },
+  );
 }
 export function createInvalidArgumentRule(scopeName: ScopeName): MatchRule {
   return {

@@ -523,6 +523,7 @@ export function createRepositories(scopeName: ScopeName, placeholder?: Placehold
       stringRuleName: RuleName.UnquotedString,
       stringPattern: patterns_common.unquotedLastArgumentPattern,
     }),
+    [Repository.CommandArgumentHotstringOptions]: rules_common.createHotstringOptionsCommandArgumentRule(scopeName),
     // #endregion misc
   };
 }

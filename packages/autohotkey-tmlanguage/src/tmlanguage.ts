@@ -196,6 +196,7 @@ export const enum Repository {
   CommandArgumentMenuOptions = '$CommandArgumentMenuOptions',
   CommandArgumentRegKey = '$CommandArgumentRegKey',
   CommandArgumentWhichButton = '$CommandArgumentWhichButton',
+  CommandArgumentHotstringOptions = '$CommandArgumentHotstringOptions',
   // #endregion v1 syntax
   // #region legacy
   Legacy = '$Legacy',
@@ -244,7 +245,6 @@ export const enum RuleName {
   HotkeyModifier = 'string.label.hotkey.modifier',
   HotkeyLabelName = 'string.label.hotkey.name',
   HotkeyCombinator = 'string.label.hotkey.combinator',
-  HotstringOption = 'string.label.hotkey.option',
   HotstringLabelName = 'string.label.hotstring',
   Namespace = 'support.class.namespace',
   // #endregion statement

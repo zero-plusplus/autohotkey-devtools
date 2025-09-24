@@ -22,6 +22,7 @@ import {
   $guiOptions,
   $guisubcommand,
   $hotkeyName,
+  $hotstringOptions,
   $imagePath,
   $includeLib,
   $input,
@@ -66,11 +67,9 @@ import {
   keywordOption,
   letterOption,
   signature,
-  signedFloatOption,
   sizeOption,
   stringOption,
   subcommandOption,
-  toggleOption,
   type CommandDefinition,
 } from '../definition';
 
@@ -104,7 +103,7 @@ export const directiveDefinitions: CommandDefinition[] = [
   command('#HotkeyModifierTimeout', signature([ $shouldInteger() ])),
 
   // https://www.autohotkey.com/docs/v1/lib/_Hotstring.htm
-  command('#Hotstring', signature([ $([ keywordOption('NoMouse', 'EndChars', 'SI', 'SP', 'SE', 'X'), toggleOption('*', '?', 'B', 'C', 'O', 'R', 'T', 'Z'), decimalOption('P'), signedFloatOption('K') ]) ])),
+  command('#Hotstring', signature([ $hotstringOptions() ])),
 
   // https://www.autohotkey.com/docs/v1/lib/_If.htm
   command('#If', signature([ $expression() ])),

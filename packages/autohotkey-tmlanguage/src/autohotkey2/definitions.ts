@@ -1,6 +1,6 @@
 import {
-  $,
   $expression,
+  $hotstringOptions,
   $parameterless,
   $quotable,
   $quotableEncoding,
@@ -10,12 +10,9 @@ import {
   $shouldInteger,
   $shouldKeyword,
   command,
-  decimalOption,
   keywordOption,
   quotableKeywordOption,
   signature,
-  signedFloatOption,
-  toggleOption,
   type CommandDefinition,
 } from '../definition';
 
@@ -37,7 +34,7 @@ export const directiveDefinitions: CommandDefinition[] = [
   command('#HotIfTimeout', signature([ $shouldInteger() ])),
 
   // https://www.autohotkey.com/docs/v2/lib/_Hotstring.htm
-  command('#Hotstring', signature([ $([ keywordOption('NoMouse', 'EndChars', 'SI', 'SP', 'SE', 'X'), toggleOption('*', '?', 'B', 'C', 'O', 'R', 'T', 'Z'), decimalOption('P'), signedFloatOption('K') ]) ])),
+  command('#Hotstring', signature([ $hotstringOptions() ])),
 
   // https://www.autohotkey.com/docs/v2/lib/_Include.htm
   command('#Include', signature([ $quotableIncludeLib() ])),

@@ -1,13 +1,11 @@
 import { name, RuleName, StyleName, type ScopeName } from '../../../../src/tmlanguage';
 import type { ExpectedTestData } from '../../../types';
 import { createCommandExpectedData, type CommandPlaceholder } from '../helpers';
-import { signedDecimalOption } from './signedDecimalOption';
 
-export function signedFloatOption(scopeName: ScopeName, options: string[], placeholder: CommandPlaceholder): ExpectedTestData[] {
+export function signedDecimalOption(scopeName: ScopeName, options: string[], placeholder: CommandPlaceholder): ExpectedTestData[] {
   return [
-    ...signedDecimalOption(scopeName, options, placeholder),
     ...[ '+', '-' ].flatMap((sign) => {
-      return [ '123.123' ].flatMap((value): ExpectedTestData[] => {
+      return [ '123' ].flatMap((value): ExpectedTestData[] => {
         return options.flatMap((option): ExpectedTestData[] => {
           return [
             createCommandExpectedData(

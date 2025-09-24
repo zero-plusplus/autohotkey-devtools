@@ -2,7 +2,7 @@ import { name, RuleName, StyleName, type ScopeName } from '../../../../../src/tm
 import { createCommandExpectedData } from '../../../../helpers/definition/helpers';
 import { decimalOption } from '../../../../helpers/definition/option/decimalOption';
 import { keywordOption } from '../../../../helpers/definition/option/keywordOption';
-import { signedFloatOption } from '../../../../helpers/definition/option/signedFloatOption';
+import { signedDecimalOption } from '../../../../helpers/definition/option/signedDecimalOption';
 import { toggleOption } from '../../../../helpers/definition/option/toggleOption';
 import { $ } from '../../../../helpers/definition/parameter/$';
 import type { ExpectedTestData } from '../../../../types';
@@ -18,7 +18,7 @@ export function createHotstringExpectedDataList(scopeName: ScopeName): ExpectedT
         ...keywordOption(scopeName, [ 'NoMouse', 'EndChars', 'SI', 'SP', 'SE', 'X' ], placeholder),
         ...toggleOption(scopeName, [ '*', '?', 'B', 'C', 'O', 'R', 'T', 'Z' ], placeholder),
         ...decimalOption(scopeName, [ 'P' ], placeholder),
-        ...signedFloatOption(scopeName, [ 'K' ], placeholder),
+        ...signedDecimalOption(scopeName, [ 'K' ], placeholder),
         createCommandExpectedData(
           scopeName,
           `EndChars ,\`t`,
