@@ -776,7 +776,7 @@ export function $onOffToggle(itemMatchers: ParameterItemMatcher[] = [], flags: C
   return $onOff([ keywordOption('Toggle', '-1'), ...itemMatchers ], flags);
 }
 export function $whichButton(flags: CommandParameterFlag = CommandParameterFlag.None): CommandParameter {
-  return $([ keywordOption('Left', 'L', 'Right', 'R', 'Middle', 'M', 'WheelUp', 'WU', 'WheelDown', 'WD', 'WheelLeft', 'WL', 'WheelRight', 'WR') ], flags);
+  return $([ includeRule(Repository.CommandArgumentWhichButton) ], flags);
 }
 export function $path(itemMatchers: ParameterItemMatcher[] = [], flags: CommandParameterFlag = CommandParameterFlag.None): CommandParameter {
   return $(itemMatchers, flags);

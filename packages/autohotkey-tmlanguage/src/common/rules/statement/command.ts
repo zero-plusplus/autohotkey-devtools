@@ -474,6 +474,9 @@ export function createRegKeyCommandArgumentRule(scopeName: ScopeName): PatternsR
     )), [], [ '\\' ]),
   ]));
 }
+export function createWhichButtonCommandArgumentRule(scopeName: ScopeName): PatternsRule {
+  return patternsRule(...itemPatternToRules(scopeName, [ keywordOption('Left', 'L', 'Right', 'R', 'Middle', 'M', 'WheelUp', 'WU', 'WheelDown', 'WD', 'WheelLeft', 'WL', 'WheelRight', 'WR') ]));
+}
 export function createInvalidArgumentRule(scopeName: ScopeName): MatchRule {
   return {
     name: name(scopeName, RuleName.UnquotedString, StyleName.Invalid),
