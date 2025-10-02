@@ -2,7 +2,6 @@ import * as patterns_common from '../common/patterns';
 import {
   alt,
   anyChars0,
-  anyChars1,
   char,
   group,
   ignoreCase,
@@ -30,8 +29,11 @@ export const identifierPart_upper: string = identifierStart_upper;
 export const identifierPattern_upper: string = seq(identifierStart_upper, manyLimit(identifierPart_upper, nameLimitLength - 1));
 
 export const objectKeyNamePattern: string = alt(
-  seq(char('%'), anyChars1(), char('%')),
+  seq(char('['), reluctant(anyChars0()), char(']')),
+  seq(char('{'), reluctant(anyChars0()), char('}')),
+  seq(char('%'), reluctant(anyChars0()), char('%')),
   identifierPattern,
+  char('%'),
 );
 // #endregion Names
 

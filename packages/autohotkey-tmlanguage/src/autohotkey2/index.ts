@@ -352,8 +352,8 @@ export function createRepositories(scopeName: ScopeName, placeholder?: Placehold
     [Repository.Object]: rules_common.createObjectRule(scopeName, {
       startPattern: patterns_v2.continuationExpressionStartPattern,
     }),
-    [Repository.ObjectKey]: rules_common.createObjectKeyRule(scopeName, {
-      objectKeyNamePattern: patterns_v2.objectKeyNamePattern,
+    [Repository.ObjectKey]: rule_v2.createObjectKeyRule(scopeName, {
+      keyPattern: patterns_v2.objectKeyNamePattern,
     }),
     [Repository.ObjectContent]: patternsRule(
       includeRule(Repository.Meta),

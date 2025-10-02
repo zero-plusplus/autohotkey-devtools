@@ -2,7 +2,6 @@ import * as patterns_common from '../common/patterns';
 import {
   alt,
   anyChars0,
-  anyChars1,
   char,
   endAnchor,
   group,
@@ -42,10 +41,13 @@ export const identifierEndPattern: string = group(alt(
   endAnchor(),
 ));
 
-export const objectKeyNamePattern: string = group(alt(
-  group(seq(char('%'), anyChars1(), char('%'))),
+export const objectKeyNamePattern: string = alt(
+  seq(char('['), reluctant(anyChars0()), char(']')),
+  seq(char('{'), reluctant(anyChars0()), char('}')),
+  seq(char('%'), reluctant(anyChars0()), char('%')),
   identifierPattern,
-));
+  char('%'),
+);
 
 // Note: Analyze roughly, as accurate analysis slows down the speed of analysis to a great extent
 export const looseCallableNamePattern: string = manyLimit(group(alt(

@@ -1,5 +1,6 @@
 export * from './expression/dereference';
 export * from './expression/new';
+export * from './expression/object';
 export * from './expression/parenthesized';
 export * from './legacy/assignment';
 export * from './legacy/command';
