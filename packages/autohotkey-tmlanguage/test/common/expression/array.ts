@@ -7,53 +7,40 @@ import {
   RuleName,
   type ScopeName,
 } from '../../../src/tmlanguage';
-import { createMultiLineExpectedData, createSingleLineExpectedData } from '../../helpers/definition/helpers';
+import { createSingleLineExpectedData } from '../../helpers/definition/helpers';
 import type { ExpectedTestData } from '../../types';
 
 export function createArrayLiteralExpectedData(scopeName: ScopeName): ExpectedTestData[] {
   return [
-    ...createMultiLineExpectedData(
-      scopeName,
-      [
-        ...[ `abc := []`, `abc := [  ]` ].map((text): ExpectedTestData => {
-          return [
-            text,
-            [
-              { text: 'abc', scopes: name(scopeName, RuleName.Variable) },
-              { text: ':=', scopes: name(scopeName, RuleName.Operator) },
-              { text: '[', scopes: name(scopeName, RuleName.OpenBracket) },
-              { text: ']', scopes: name(scopeName, RuleName.CloseBracket) },
-            ],
-          ];
-        }),
-        ...[ `abc := [1]`, `abc := [ 1 ]` ].map((text): ExpectedTestData => {
-          return [
-            text,
-            [
-              { text: 'abc', scopes: name(scopeName, RuleName.Variable) },
-              { text: ':=', scopes: name(scopeName, RuleName.Operator) },
-              { text: '[', scopes: name(scopeName, RuleName.OpenBracket) },
-              { text: '1', scopes: name(scopeName, RuleName.Integer) },
-              { text: ']', scopes: name(scopeName, RuleName.CloseBracket) },
-            ],
-          ];
-        }),
-        ...[ `abc := [1,2]`, `abc := [ 1, 2 ]` ].map((text): ExpectedTestData => {
-          return [
-            text,
-            [
-              { text: 'abc', scopes: name(scopeName, RuleName.Variable) },
-              { text: ':=', scopes: name(scopeName, RuleName.Operator) },
-              { text: '[', scopes: name(scopeName, RuleName.OpenBracket) },
-              { text: '1', scopes: name(scopeName, RuleName.Integer) },
-              { text: ',', scopes: name(scopeName, RuleName.Comma) },
-              { text: '2', scopes: name(scopeName, RuleName.Integer) },
-              { text: ']', scopes: name(scopeName, RuleName.CloseBracket) },
-            ],
-          ];
-        }),
-      ],
-    ),
+    ...[ `abc := []`, `abc := [  ]` ].map((text): ExpectedTestData => {
+      return createSingleLineExpectedData(scopeName, text, [
+        { text: 'abc', scopes: name(scopeName, RuleName.Variable) },
+        { text: ':=', scopes: name(scopeName, RuleName.Operator) },
+        { text: '[', scopes: name(scopeName, RuleName.OpenBracket) },
+        { text: ']', scopes: name(scopeName, RuleName.CloseBracket) },
+      ]);
+    }),
+    ...[ `abc := [1]`, `abc := [ 1 ]` ].map((text): ExpectedTestData => {
+      return createSingleLineExpectedData(scopeName, text, [
+        { text: 'abc', scopes: name(scopeName, RuleName.Variable) },
+        { text: ':=', scopes: name(scopeName, RuleName.Operator) },
+        { text: '[', scopes: name(scopeName, RuleName.OpenBracket) },
+        { text: '1', scopes: name(scopeName, RuleName.Integer) },
+        { text: ']', scopes: name(scopeName, RuleName.CloseBracket) },
+      ]);
+    }),
+    ...[ `abc := [1,2]`, `abc := [ 1, 2 ]` ].map((text): ExpectedTestData => {
+      return createSingleLineExpectedData(scopeName, text, [
+        { text: 'abc', scopes: name(scopeName, RuleName.Variable) },
+        { text: ':=', scopes: name(scopeName, RuleName.Operator) },
+        { text: '[', scopes: name(scopeName, RuleName.OpenBracket) },
+        { text: '1', scopes: name(scopeName, RuleName.Integer) },
+        { text: ',', scopes: name(scopeName, RuleName.Comma) },
+        { text: '2', scopes: name(scopeName, RuleName.Integer) },
+        { text: ']', scopes: name(scopeName, RuleName.CloseBracket) },
+      ]);
+    }),
+
     createSingleLineExpectedData(
       scopeName,
       `abc := [ ,, 1, 2,, ]`,
