@@ -13,7 +13,7 @@ module.exports.config = (indent = indentSize) => {
       rules: {
         ...styles.rules,
 
-        '@stylistic/array-bracket-newline': [ 'error', { multiline: true } ],
+        '@stylistic/array-bracket-newline': [ 'error', 'consistent' ],
         '@stylistic/array-bracket-spacing': [ 'error', 'always' ],
         '@stylistic/array-element-newline': [ 'error', 'consistent' ],
         '@stylistic/brace-style': [ 'error', 'stroustrup' ],
