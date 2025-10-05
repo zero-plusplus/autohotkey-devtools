@@ -130,6 +130,20 @@ export function createSingleLineExpectedData(scopeName: ScopeName, text: string,
     ],
   ];
 }
-export function createMultiLineExpectedData(scopeName: ScopeName, expectedList: ExpectedTestData[]): ExpectedTestData[] {
-  return expectedList.map((expected) => createSingleLineExpectedData(scopeName, ...expected));
+export function createMultiLineExpectedData(scopeName: ScopeName, text: string, resultsList: ParsedResult[][], indentCount = 0): ExpectedTestData {
+  const lines = text.split(/\r\n|\n/);
+  return [
+    lines.map((line) => {
+      const commentIndentSize = commentColumn - line.length;
+      return `${indent.repeat(indentCount)}${line}${' '.repeat(commentIndentSize)}; ${line}`;
+    }).join('\n'),
+    [
+      ...resultsList.flatMap((results, i) => {
+        return [
+          ...results,
+          { text: `; ${lines.at(i)}`, scopes: name(scopeName, RuleName.InlineComment) },
+        ];
+      }),
+    ],
+  ];
 }
