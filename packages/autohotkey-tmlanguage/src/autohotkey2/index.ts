@@ -17,7 +17,7 @@ import {
 import * as constants_v2 from './constants';
 import * as definitions_v2 from './definitions';
 import * as patterns_v2 from './patterns';
-import * as rule_v2 from './rules';
+import * as rules_v2 from './rules';
 
 export function createTmLanguage(): TmLanguage {
   const scopeName: ScopeName = 'autohotkey2';
@@ -108,7 +108,7 @@ export function createRepositories(scopeName: ScopeName, placeholder?: Placehold
       includeRule(Repository.TryStatement),
       includeRule(Repository.ThrowStatement),
     ),
-    [Repository.DirectiveStatement]: rule_v2.createDirectiveStatementRule(scopeName, definitions_v2.directiveDefinitions, {
+    [Repository.DirectiveStatement]: rules_v2.createDirectiveStatementRule(scopeName, definitions_v2.directiveDefinitions, {
       startPattern: patterns_v2.statementStartPattern,
       endPattern: patterns_common.lineEndPattern,
       assignmentOperators: constants_common.assignmentOperators,
@@ -158,7 +158,7 @@ export function createRepositories(scopeName: ScopeName, placeholder?: Placehold
     [Repository.WhileStatement]: rules_common.createWhileStatementRule(scopeName, {
       startPattern: patterns_v2.statementStartPattern,
     }),
-    [Repository.LoopStatement]: rule_v2.createLoopStatementRule(scopeName, {
+    [Repository.LoopStatement]: rules_v2.createLoopStatementRule(scopeName, {
       startPattern: patterns_v2.statementStartPattern,
     }),
     [Repository.UntilStatement]: rules_common.createUntilStatementRule(scopeName, {
@@ -264,7 +264,7 @@ export function createRepositories(scopeName: ScopeName, placeholder?: Placehold
       includeRule(Repository.Dot),
       includeRule(Repository.Operator),
     ),
-    [Repository.ParenthesizedExpression]: rule_v2.createParenthesizedExpressionRule(scopeName),
+    [Repository.ParenthesizedExpression]: rules_v2.createParenthesizedExpressionRule(scopeName),
 
     // #region identifier
     [Repository.Variable]: patternsRule(
@@ -332,8 +332,8 @@ export function createRepositories(scopeName: ScopeName, placeholder?: Placehold
     // #endregion identifier
 
     // #region access
-    [Repository.Dereference]: rule_v2.createDereferenceRule(scopeName),
-    [Repository.DereferenceInCommandArgument]: rule_v2.createDereferenceInCommandArgumentRule(scopeName),
+    [Repository.Dereference]: rules_v2.createDereferenceRule(scopeName),
+    [Repository.DereferenceInCommandArgument]: rules_v2.createDereferenceInCommandArgumentRule(scopeName),
     // #endregion access
 
     // #region literal
@@ -352,7 +352,7 @@ export function createRepositories(scopeName: ScopeName, placeholder?: Placehold
     [Repository.Object]: rules_common.createObjectRule(scopeName, {
       startPattern: patterns_v2.continuationExpressionStartPattern,
     }),
-    [Repository.ObjectKey]: rule_v2.createObjectKeyRule(scopeName, {
+    [Repository.ObjectKey]: rules_v2.createObjectKeyRule(scopeName, {
       keyPattern: patterns_v2.objectKeyNamePattern,
     }),
     [Repository.ObjectContent]: patternsRule(

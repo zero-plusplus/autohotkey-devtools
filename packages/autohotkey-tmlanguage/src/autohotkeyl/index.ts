@@ -20,7 +20,7 @@ import {
 import * as constants_v1 from './constants';
 import * as definitions_v1 from './definitions';
 import * as patterns_v1 from './patterns';
-import * as rule_v1 from './rules';
+import * as rules_v1 from './rules';
 
 export function createTmLanguage(): TmLanguage {
   const scopeName: ScopeName = 'autohotkeyl';
@@ -107,7 +107,7 @@ export function createRepositories(scopeName: ScopeName): Repositories {
       includeRule(Repository.ExpressionStatement),
     ),
     [Repository.LegacyStatement]: patternsRule(includeRule(Repository.Legacy)),
-    [Repository.CommandStatement]: rule_v1.createCommandStatementRule(definitions_v1.commandDefinitions, {
+    [Repository.CommandStatement]: rules_v1.createCommandStatementRule(definitions_v1.commandDefinitions, {
       startPattern: patterns_v1.statementStartPattern,
       endPattern: patterns_common.lineEndPattern,
       argumentStartPattern: patterns_v1.commandArgumentStartPattern,
@@ -119,7 +119,7 @@ export function createRepositories(scopeName: ScopeName): Repositories {
       endPattern: patterns_common.lineEndPattern,
       legacyMode: true,
     }),
-    ...rule_v1.createDirectiveRepositories(scopeName, definitions_v1.directiveDefinitions, {
+    ...rules_v1.createDirectiveRepositories(scopeName, definitions_v1.directiveDefinitions, {
       startPattern: patterns_common.lineStartPattern,
       endPattern: patterns_common.lineEndPattern,
       unquotedArgumentPattern: patterns_common.unquotedArgumentPattern,
@@ -165,7 +165,7 @@ export function createRepositories(scopeName: ScopeName): Repositories {
     [Repository.WhileStatement]: rules_common.createWhileStatementRule(scopeName, {
       startPattern: patterns_v1.statementStartPattern,
     }),
-    [Repository.LoopStatement]: rule_v1.createLoopStatementRule(scopeName, {
+    [Repository.LoopStatement]: rules_v1.createLoopStatementRule(scopeName, {
       startPattern: patterns_v1.statementStartPattern,
       endPattern: patterns_v1.controlFlowEndPattern,
       definitions: definitions_v1.loopCommandDefenitions,
@@ -249,7 +249,7 @@ export function createRepositories(scopeName: ScopeName): Repositories {
       includeRule(Repository.Dot),
       includeRule(Repository.Operator),
     ),
-    [Repository.ParenthesizedExpression]: rule_v1.createParenthesizedExpressionRule(scopeName),
+    [Repository.ParenthesizedExpression]: rules_v1.createParenthesizedExpressionRule(scopeName),
 
     // #region identifier
     [Repository.Variable]: patternsRule(
@@ -308,9 +308,9 @@ export function createRepositories(scopeName: ScopeName): Repositories {
     // #endregion identifier
 
     // #region access
-    [Repository.Dereference]: rule_v1.createDereferenceRule(scopeName),
-    [Repository.InvalidDereference]: rule_v1.createInvalidDereferenceRule(scopeName),
-    [Repository.DereferenceInCommandArgument]: rule_v1.createDereferenceInCommandArgumentRule(scopeName),
+    [Repository.Dereference]: rules_v1.createDereferenceRule(scopeName),
+    [Repository.InvalidDereference]: rules_v1.createInvalidDereferenceRule(scopeName),
+    [Repository.DereferenceInCommandArgument]: rules_v1.createDereferenceInCommandArgumentRule(scopeName),
     // #endregion access
 
     // #region literal
@@ -329,7 +329,7 @@ export function createRepositories(scopeName: ScopeName): Repositories {
     [Repository.Object]: rules_common.createObjectRule(scopeName, {
       startPattern: patterns_v1.continuationExpressionStartPattern,
     }),
-    [Repository.ObjectKey]: rule_v1.createObjectKeyRule(scopeName, {
+    [Repository.ObjectKey]: rules_v1.createObjectKeyRule(scopeName, {
       keyPattern: patterns_v1.objectKeyNamePattern,
     }),
     [Repository.ObjectContent]: patternsRule(
@@ -455,7 +455,7 @@ export function createRepositories(scopeName: ScopeName): Repositories {
       ),
       keywordsInArgument: [ 'byref' ],
     }),
-    [Repository.NewCallExpression]: rule_v1.createNewCallExpressionRule(scopeName, {
+    [Repository.NewCallExpression]: rules_v1.createNewCallExpressionRule(scopeName, {
       callableNamePattern: patterns_v1.looseCallableNamePattern,
     }),
     // #endregion misc
@@ -497,23 +497,23 @@ export function createRepositories(scopeName: ScopeName): Repositories {
 
     // #region legacy
     [Repository.Legacy]: patternsRule(includeRule(Repository.LegacyAssignmentDeclaration)),
-    [Repository.LegacyIfStatement]: rule_v1.createLegacyIfStatementRule(scopeName, {
+    [Repository.LegacyIfStatement]: rules_v1.createLegacyIfStatementRule(scopeName, {
       startPattern: patterns_v1.statementStartPattern,
       endPattern: patterns_common.lineEndPattern,
       identifierPattern: patterns_v1.identifierPattern,
     }),
-    [Repository.LegacyAssignmentDeclaration]: rule_v1.createLegacyAssignmentRule(scopeName, {
+    [Repository.LegacyAssignmentDeclaration]: rules_v1.createLegacyAssignmentRule(scopeName, {
       startPattern: patterns_v1.statementStartPattern,
       leftHandPattern: patterns_v1.identifierPattern,
     }),
-    [Repository.PercentExpression]: rule_v1.createPercentExpressionRule(scopeName, {
+    [Repository.PercentExpression]: rules_v1.createPercentExpressionRule(scopeName, {
       expressionPattern: patterns_common.unquotedExpressionArgumentPattern,
     }),
-    [Repository.InvalidPercentExpression]: rule_v1.createInvalidPercentExpressionRule(scopeName),
-    [Repository.PercentExpressionInLastArgument]: rule_v1.createPercentExpressionRule(scopeName, {
+    [Repository.InvalidPercentExpression]: rules_v1.createInvalidPercentExpressionRule(scopeName),
+    [Repository.PercentExpressionInLastArgument]: rules_v1.createPercentExpressionRule(scopeName, {
       expressionPattern: patterns_common.unquotedExpressionLastArgumentPattern,
     }),
-    [Repository.ContinuationSection]: rule_v1.createContinuationSectionRule(scopeName, {
+    [Repository.ContinuationSection]: rules_v1.createContinuationSectionRule(scopeName, {
       endPattern: patterns_common.lineEndPattern,
     }),
     [Repository.ContinuationSectionText]: rules_common.createUnquotedStringRule(scopeName, {
