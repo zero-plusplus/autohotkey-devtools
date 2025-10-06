@@ -25,6 +25,7 @@ module.exports.config = (indent = indentSize) => {
         '@stylistic/eol-last': [ 'error', 'always' ],
         '@stylistic/func-call-spacing': [ 'error', 'never' ],
         '@stylistic/function-call-argument-newline': [ 'error', 'consistent' ],
+        '@stylistic/function-paren-newline': [ 'error', 'consistent' ],
         '@stylistic/generator-star-spacing': [ 'error', { before: false, after: true } ],
         '@stylistic/implicit-arrow-linebreak': [ 'error', 'beside' ],
         '@stylistic/indent': [ 'error', indent, { SwitchCase: 1 } ],
