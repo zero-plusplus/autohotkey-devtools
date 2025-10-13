@@ -68,7 +68,7 @@ This will be replaced with [semantic highlighting](https://code.visualstudio.com
 
 ### Version switching
 
-Setting the language ID to `ahk` allows you to switch the highlighting version using [#Requires](https://www.autohotkey.com/docs/v2/lib/_Requires.htm). By default, it is highlighted as `ahk2`.
+Setting the language ID to `autohotkey` allows you to switch the highlighting version using [#Requires](https://www.autohotkey.com/docs/v2/lib/_Requires.htm). By default, it is highlighted as `autohotkey2`.
 
 Currently, only simple version notation starting with the following is supported.
 
@@ -82,4 +82,3 @@ The following highlights are supported.
 
 * [Script Compiler Directives](https://www.autohotkey.com/docs/v2/misc/Ahk2ExeDirectives.htm)
 * [jsdoc tags](https://jsdoc.app/)
-
