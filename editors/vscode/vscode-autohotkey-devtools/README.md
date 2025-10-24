@@ -3,21 +3,18 @@
 **Goal**
 ------------------------------
 
-This extension aims to become a powerful integrated development environment for AutoHotkey ([vscode-autohotkey-debug](https://github.com/zero-plusplus/vscode-autohotkey-debug) was part of this plan).
+"AutoHotkey Dev Tools" aims to become a powerful integrated development environment for AutoHotkey. ([vscode-autohotkey-debug](https://github.com/zero-plusplus/vscode-autohotkey-debug) was part of this plan.)
 
-It is currently in preview and is expected to remain incomplete for several years.
+However, since this is a personal project, development is progressing very slowly, and it will take over a decade to complete.
+
+> Although this project is incomplete, you can enable debugging features by separately installing [vscode-autohotkey-debug v1.11.1](https://marketplace.visualstudio.com/items?itemName=zero-plusplus.vscode-autohotkey-debug).
+>
+> Together with the [syntax highlighting described later](#syntax-highlight), it provides the minimum features required for a development environment.
 
 **Implemented**
 ------------------------------
 
 * [Syntax Highlight](#syntax-highlight)
-
-**Next**
-------------------------------
-
-Create a modern parser for error-tolerant IDEs.
-
-However, since this is a very large undertaking, the initial goal is to make symbols such as variables and functions analyzable.
 
 **License**
 ------------------------------
@@ -34,6 +31,13 @@ The following are also prohibited:
 
 This is to enable development at my own pace, free from external influence as much as possible. Please understand.
 
+**Support**
+------------------------------
+
+In this project, contributions are not accepted due to licensing and management considerations.
+
+However, I will respond to bug reports and feature requests as much as possible.
+
 **Features**
 ------------------------------
 
@@ -41,12 +45,12 @@ This is to enable development at my own pace, free from external influence as mu
 
 The following versions are supported.
 
-> If you want to learn about [Language ID](https://code.visualstudio.com/docs/languages/identifiers), please see here.
+> If you want to learn about Language ID, please see [here](https://code.visualstudio.com/docs/languages/identifiers).
 
 - v1.1.37.02
   - Language ID: `autohotkeyl`
   - Default File Extension: `.ahkl`
-  > Note that the last character of `autohotkeyl` is `L`, not `1`. The name originates from the fact that v1.1 was [called AutoHotkeyL](https://www.autohotkey.com/docs/v2/v1-changes.htm).
+  > Note that the last character of `autohotkeyl` is `L`, not `1` (one). The name originates from the fact that v1.1 was [called AutoHotkeyL](https://www.autohotkey.com/docs/v2/v1-changes.htm).
 
 * v2.0.19
   - Language ID: `autohotkey2`
