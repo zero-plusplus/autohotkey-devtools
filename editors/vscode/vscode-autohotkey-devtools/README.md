@@ -38,6 +38,12 @@ In this project, contributions are not accepted due to licensing and management 
 
 However, I will respond to bug reports and feature requests as much as possible.
 
+**Installation**
+------------------------------
+
+1. Install [VSCode](https://code.visualstudio.com/) with version `1.90.2` or higher
+2. Install this extension. To learn how to install extensions, please see [here](https://code.visualstudio.com/docs/configure/extensions/extension-marketplace).
+
 **Features**
 ------------------------------
 
