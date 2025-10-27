@@ -38,13 +38,6 @@ The following are also prohibited:
 
 This is to enable development at my own pace, free from external influence as much as possible. Please understand.
 
-**Support**
-------------------------------
-
-In this project, contributions are not accepted due to licensing and management considerations.
-
-However, I will respond to bug reports and feature requests as much as possible.
-
 **Installation**
 ------------------------------
 
