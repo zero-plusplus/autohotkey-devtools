@@ -425,10 +425,16 @@ export function createRepositories(scopeName: ScopeName, placeholder?: Placehold
       operators: [ ',' ],
     }),
     [Repository.Dot]: rules_common.createDotOperatorRule(scopeName),
-    [Repository.Operator]: rules_common.createOperatorRule(scopeName, {
-      operatorRuleName: RuleName.Operator,
-      operators: constants_v2.expressionOperators,
-    }),
+    [Repository.Operator]: patternsRule(
+      rules_common.createInvalidOperatorRule(scopeName, {
+        operatorRuleName: RuleName.Operator,
+        operators: [ `<>` ],
+      }),
+      rules_common.createOperatorRule(scopeName, {
+        operatorRuleName: RuleName.Operator,
+        operators: constants_v2.expressionOperators,
+      }),
+    ),
     [Repository.DereferenceUnaryOperator]: {
       name: name(scopeName, RuleName.Operator),
       match: patterns_common.dereferenceUnaryOperatorPattern,

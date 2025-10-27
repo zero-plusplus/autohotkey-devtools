@@ -389,13 +389,13 @@ export function createRepositories(scopeName: ScopeName): Repositories {
     }),
     [Repository.Dot]: rules_common.createDotOperatorRule(scopeName),
     [Repository.Operator]: patternsRule(
-      rules_common.createOperatorRule(scopeName, {
-        operatorRuleName: RuleName.Operator,
-        operators: constants_v1.expressionOperators,
-      }),
       rules_common.createInvalidOperatorRule(scopeName, {
         operatorRuleName: RuleName.Operator,
         operators: [ `'` ],
+      }),
+      rules_common.createOperatorRule(scopeName, {
+        operatorRuleName: RuleName.Operator,
+        operators: constants_v1.expressionOperators,
       }),
     ),
     [Repository.DereferenceUnaryOperator]: {
