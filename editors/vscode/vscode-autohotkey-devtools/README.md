@@ -1,5 +1,12 @@
 **NOTE: This document has been translated by a translator.**
 
+**First of all**
+------------------------------
+
+**This extension is incomplete and highly experimental.**
+
+If you encounter any problems, please report [here](https://github.com/zero-plusplus/autohotkey-devtools/issues).
+
 **Goal**
 ------------------------------
 
