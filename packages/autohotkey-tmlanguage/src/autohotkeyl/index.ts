@@ -388,10 +388,16 @@ export function createRepositories(scopeName: ScopeName): Repositories {
       operators: [ ',' ],
     }),
     [Repository.Dot]: rules_common.createDotOperatorRule(scopeName),
-    [Repository.Operator]: rules_common.createOperatorRule(scopeName, {
-      operatorRuleName: RuleName.Operator,
-      operators: constants_v1.expressionOperators,
-    }),
+    [Repository.Operator]: patternsRule(
+      rules_common.createOperatorRule(scopeName, {
+        operatorRuleName: RuleName.Operator,
+        operators: constants_v1.expressionOperators,
+      }),
+      rules_common.createInvalidOperatorRule(scopeName, {
+        operatorRuleName: RuleName.Operator,
+        operators: [ `'` ],
+      }),
+    ),
     [Repository.DereferenceUnaryOperator]: {
       name: name(scopeName, RuleName.Operator),
       match: patterns_common.dereferenceUnaryOperatorPattern,
