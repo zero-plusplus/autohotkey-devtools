@@ -33,16 +33,14 @@ If you need to use the source code, etc. for any reason, please ensure it remain
 The following are also prohibited:
 
 * Including it in extension packs
-* Calling this extension's functions from external sources
-* Promoting integration with other extensions
-
-This is to enable development at my own pace, free from external influence as much as possible. Please understand.
+* Calling this extension's features from external sources
+* Promoting integration with other extensions (Excluding vscode-autohotkey-debug, which officially supports integration)
 
 **Installation**
 ------------------------------
 
 1. Install [VSCode](https://code.visualstudio.com/) with version `1.90.2` or higher
-2. Install this extension. To learn how to install extensions, please see [here](https://code.visualstudio.com/docs/configure/extensions/extension-marketplace).
+2. Install this extension. To learn how to install extensions, please see [here](https://code.visualstudio.com/docs/configure/extensions/extension-marketplace)
 
 **Features**
 ------------------------------
