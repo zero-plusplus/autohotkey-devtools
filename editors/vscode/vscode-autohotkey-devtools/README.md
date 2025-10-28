@@ -68,11 +68,11 @@ The following versions are supported.
   - Language ID: `autohotkey`
   - Default File Extension: `.ahk`
 
-Noteworthy point, it accurately highlights the command syntax of v1. (However, this applies only when line breaks are not included due to specification limitations.)
+Noteworthy point, it accurately highlight arguments the command syntax, including subcommands. (However, this applies only when line breaks are not included due to specification limitations.)
 
-This is achieved by creating dedicated definitions for each command and subcommand, at the cost of definition files becoming more than ten times larger than standard ones.
+For example, it covers all patterns, including arguments with special notation or keywords such as **[Send](https://www.autohotkey.com/docs/v1/lib/Send.htm)**, and arguments that accept expression with subcommands such as **[Hotkey, If](https://www.autohotkey.com/docs/v1/lib/Hotkey.htm)**.
 
-This will be replaced with [semantic highlighting](https://code.visualstudio.com/api/language-extensions/semantic-highlight-guide) using a parser in the future.
+In versions v2 and later, the command syntax has been removed, but similar highlighting is supported as arguments for directive syntax and [Script Compiler Directives](https://www.autohotkey.com/docs/v2/misc/Ahk2ExeDirectives.htm).
 
 ### Version switching
 
