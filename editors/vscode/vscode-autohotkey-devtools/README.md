@@ -45,7 +45,9 @@ The following are also prohibited:
 ------------------------------
 
 1. Install [VSCode](https://code.visualstudio.com/) with version `1.90.2` or higher
-2. Install this extension. To learn how to install extensions, please see [here](https://code.visualstudio.com/docs/configure/extensions/extension-marketplace)
+2. Install "AutoHotkey Dev Tools". To learn how to install extensions, please see [here](https://code.visualstudio.com/docs/configure/extensions/extension-marketplace)
+
+> If you wish to use additional debugging features, please install version 1.11.1 of [vscode-autohotkey-debug](https://marketplace.visualstudio.com/items?itemName=zero-plusplus.vscode-autohotkey-debug).
 
 **Features**
 ------------------------------
