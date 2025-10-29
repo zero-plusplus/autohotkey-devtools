@@ -51,7 +51,7 @@ The following versions are supported.
 
 > If you want to learn about Language ID, please see [here](https://code.visualstudio.com/docs/languages/identifiers).
 
-- v1.1.37.02
+* v1.1.37.02
   - Language ID: `autohotkeyl`
   - Default File Extension: `.ahkl`
   > Note that the last character of `autohotkeyl` is `L`, not `1` (one). The name originates from the fact that v1.1 was [called AutoHotkeyL](https://www.autohotkey.com/docs/v2/v1-changes.htm).
