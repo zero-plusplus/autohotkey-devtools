@@ -7,8 +7,7 @@
 
 If you encounter any problems, please report [here](https://github.com/zero-plusplus/autohotkey-devtools/issues).
 
-**Goal**
-------------------------------
+### Goal
 
 "AutoHotkey Dev Tools" aims to become a powerful integrated development environment for AutoHotkey. ([vscode-autohotkey-debug](https://github.com/zero-plusplus/vscode-autohotkey-debug) was part of this plan.)
 
@@ -18,13 +17,19 @@ However, since this is a personal project, development is progressing very slowl
 >
 > Together with the [syntax highlighting described later](#syntax-highlight), it provides the minimum features required for a development environment.
 
-**Implemented**
-------------------------------
+### News
+
+This release, version `0.0.1`, provides static syntax highlighting for the latest versions of each of the AutoHotkey versions: v1, v2, and v2.1-alpha.
+
+Details are documented [here](#syntax-highlight), providing an unique feature: arguments such as command syntax and directive syntax can be accurately represented.
+
+Additionally, you can [switch the highlighted version](#version-switching) using the [#Requires](https://www.autohotkey.com/docs/v2/lib/_Requires.htm) directive while utilizing the same language ID.
+
+### Implemented
 
 * [Syntax Highlight](#syntax-highlight)
 
-**License**
-------------------------------
+### License
 
 This extension is protected by [license](https://github.com/zero-plusplus/autohotkey-devtools?tab=readme-ov-file#about-license) and cannot be included in other projects. However, for transparency, the source code is publicly available.
 
