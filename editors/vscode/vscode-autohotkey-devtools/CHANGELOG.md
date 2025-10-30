@@ -11,7 +11,7 @@ If you want to see what the next version of the plan is, check out the [here](ht
 
 ---
 
-## [0.0.1] - 2025-xx-xx
+## [0.0.1] - 2025-10-31
 
 First released
 
