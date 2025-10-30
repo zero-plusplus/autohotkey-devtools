@@ -1,0 +1,111 @@
+<!doctype html>
+<html>
+  <head>
+    <meta charset="utf-8">
+    <script>
+      const rootContainerId = 'container';
+      const svgImageContainerId = 'svg';
+      const iconSelectId = 'icon';
+      const sizeSelectId = 'size';
+      const downloadButtonId = 'download';
+
+      //#region events
+      document.addEventListener('DOMContentLoaded', () => {
+        updateSvg();
+
+        document.getElementById(iconSelectId).addEventListener('change', (e) => {
+          updateSvg();
+        })
+        document.getElementById(sizeSelectId).addEventListener('change', (e) => {
+          updateSvg();
+        })
+        document.getElementById(downloadButtonId).addEventListener('click', () => {
+          downloadSvgAsPng();
+        });
+      });
+      //#endregion events
+
+      // #region main process
+      function updateSvg() {
+        const container = document.getElementById(rootContainerId);
+        [ ...container.childNodes ?? [] ].map((node) => container.removeChild(node));
+
+        const iconElement = document.getElementById(iconSelectId);
+        const iconName = iconElement.options[iconElement.selectedIndex].value;
+        const [ imgWidth, imgHeight ] = document.getElementById(sizeSelectId).value.split(',');
+
+        const img = document.createElement('img');
+        img.id = svgImageContainerId;
+        img.src = `./svg/${iconName}.svg`;
+        img.width = imgWidth;
+        img.height = imgHeight;
+        container.appendChild(img);
+        container.style = `
+          width: ${img.width}px;
+          height: ${img.height}px;
+          background-image: linear-gradient(45deg, gray 25%, transparent 25%, transparent 75%, gray 0%),
+                            linear-gradient(45deg, gray 25%, transparent 25%, transparent 75%, gray 0%),
+                            linear-gradient(45deg, black 75%, transparent 75%, transparent 25%, black 0%),
+                            linear-gradient(45deg, black 75%, transparent 75%, transparent 25%, black 0%);
+          background-position: 0px 0px, 4px 4px;
+          background-size: 8px 8px;
+        `;
+      }
+      function downloadSvgAsPng() {
+        const svgUrl = document.getElementById(svgImageContainerId).src;
+
+        fetch(svgUrl).then((response) => response.text()).then((svgText) => {
+          const svgBlob = new Blob([ svgText ], { type: 'image/svg+xml;charset=utf-8' });
+          const url = URL.createObjectURL(svgBlob);
+
+          const img = new Image();
+          img.onload = () => {
+            const [ imgWidth, imgHeight ] = document.getElementById(sizeSelectId).value.split(',');
+
+            const scale = Math.min(imgWidth / img.naturalWidth, imgHeight / img.naturalHeight);
+            const iconWidth = img.naturalWidth * scale;
+            const iconHeight = img.naturalHeight * scale;
+            const iconX = (imgWidth / 2) - (iconWidth / 2);
+            const iconY = (imgHeight / 2) - (iconHeight / 2);
+
+            const canvas = document.createElement('canvas');
+            canvas.width = imgWidth;
+            canvas.height = imgHeight;
+            canvas.getContext('2d').drawImage(img, iconX, iconY, iconWidth, iconHeight);
+
+            const anchor = document.createElement('a');
+            anchor.href = canvas.toDataURL('image/png');
+            anchor.download = 'icon.png';
+            anchor.click();
+            anchor.remove();
+            URL.revokeObjectURL(url);
+          };
+          img.src = url;
+        })
+      }
+      //#endregion main process
+    </script>
+  </head>
+  <body>
+    <!-- UI -->
+    <button id="download">Save as png</button>
+    <br />
+
+    <span>icon: </span>
+    <select id="icon" style="width: 100px;">
+      <option value="h" selected>main icon</option>
+      <option value="ahk">horizontal banner icon</option>
+    </select>
+    <br />
+
+    <span>size: </span>
+    <select id="size" style="width: 180px;">
+      <option value="128,128" selected>VSCode Icon 128px</option>
+      <option value="450,150">Full size icon 450x150px</option>
+    </select>
+    <br />
+    <br />
+
+    <div id="container"></div>
+  </body>
+</html>

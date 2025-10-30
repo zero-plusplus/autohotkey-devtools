@@ -1,0 +1,56 @@
+import { dedent } from '@zero-plusplus/utilities/src';
+import * as constants_v1 from '../../../../src/autohotkeyl/constants';
+import {
+  name,
+  RuleName,
+  StyleName,
+  type ScopeName,
+} from '../../../../src/tmlanguage';
+import * as common from '../../../common/expression/variable';
+import type { ExpectedTestData } from '../../../types';
+
+export function createVariableExpectedData(scopeName: ScopeName): ExpectedTestData[] {
+  return [
+    ...common.createVariableExpectedData(scopeName, {
+      ruleName: RuleName.KeywordLikeBuiltInVariable,
+      variables: constants_v1.keywordLikeBuiltinVariables,
+    }),
+    ...common.createVariableExpectedData(scopeName, {
+      ruleName: RuleName.BuiltInVariable,
+      variables: constants_v1.builtinVaribles,
+    }),
+    ...common.createVariableExpectedData(scopeName, {
+      ruleName: RuleName.Variable,
+      variables: [
+        '$',
+        '#',
+        '@',
+        'var',
+        '$#@_var123',
+        'v'.repeat(253),
+      ],
+    }),
+    ...common.createVariableExpectedData(scopeName, {
+      ruleName: RuleName.ConstantLikeVariable,
+      variables: [
+        'VAR',
+        'VAR_VAR',
+        'V'.repeat(253),
+      ],
+    }),
+
+    // invalid
+    [
+      dedent`
+        (${'v'.repeat(255)})        ; comment
+      `,
+      [
+        { text: '(', scopes: name(scopeName, RuleName.OpenParen) },
+        { text: 'v'.repeat(253), scopes: name(scopeName, RuleName.Variable) },
+        { text: 'v'.repeat(2), scopes: name(scopeName, RuleName.Variable, StyleName.Invalid) },
+        { text: ')', scopes: name(scopeName, RuleName.CloseParen) },
+        { text: '; comment', scopes: name(scopeName, RuleName.InlineComment) },
+      ],
+    ],
+  ];
+}

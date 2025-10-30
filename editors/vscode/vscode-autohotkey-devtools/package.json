@@ -1,0 +1,178 @@
+{
+  "name": "vscode-autohotkey-devtools",
+  "version": "0.0.0",
+  "author": "zero-plusplus (https://github.com/zero-plusplus)",
+  "publisher": "zero-plusplus",
+  "engines": {
+    "vscode": "^1.90.2"
+  },
+  "license": "SEE LICENSE IN README.md",
+  "displayName": "AutoHotkey Dev Tools",
+  "description": "[UNDER DEVELOPMENT] The goal is to provide an integrated AutoHotkey development environment in Visual Studio Code.",
+  "homepage": "https://github.com/zero-plusplus/autohotkey-devtools",
+  "repository": "github:zero-plusplus/autohotkey-devtools",
+  "bugs": {
+    "url": "https://github.com/zero-plusplus/autohotkey-devtools/issues"
+  },
+  "categories": [
+    "Programming Languages"
+  ],
+  "keywords": [
+    "AutoHotkey"
+  ],
+  "preview": true,
+  "main": "build/src/extension.js",
+  "browser": "build/src/browser/extension.js",
+  "contributes": {
+    "languages": [
+      {
+        "id": "autohotkey",
+        "aliases": [
+          "AutoHotkey"
+        ],
+        "extensions": [
+          ".ahk"
+        ],
+        "configuration": "./build/autohotkey.language-configuration.json"
+      },
+      {
+        "id": "autohotkeynext",
+        "aliases": [
+          "AutoHotkey Next"
+        ],
+        "extensions": [
+          ".ahknext"
+        ],
+        "configuration": "./build/autohotkeynext.language-configuration.json"
+      },
+      {
+        "id": "autohotkey2",
+        "aliases": [
+          "AutoHotkey v2"
+        ],
+        "extensions": [
+          ".ahk2"
+        ],
+        "configuration": "./build/autohotkey2.language-configuration.json"
+      },
+      {
+        "id": "autohotkeyl",
+        "aliases": [
+          "AutoHotkey v1.1"
+        ],
+        "extensions": [
+          ".ahkl"
+        ],
+        "configuration": "./build/autohotkeyl.language-configuration.json"
+      }
+    ],
+    "grammars": [
+      {
+        "language": "autohotkey",
+        "scopeName": "source.autohotkey",
+        "path": "build/autohotkey.tmLanguage.json",
+        "tokenTypes": {
+          "meta.link.inline.markdown": "other",
+          "token.comment.autohotkeynext": "comment",
+          "token.other.autohotkeynext": "other",
+          "token.string.autohotkeynext": "string",
+          "token.comment.autohotkey2": "comment",
+          "token.other.autohotkey2": "other",
+          "token.string.autohotkey2": "string",
+          "token.comment.autohotkeyl": "comment",
+          "token.other.autohotkeyl": "other",
+          "token.string.autohotkeyl": "string"
+        },
+        "unbalancedBracketScopes": [
+          "unknown",
+          "token.string",
+          "string.regexp keyword.other.regexp.option"
+        ]
+      },
+      {
+        "language": "autohotkeynext",
+        "scopeName": "source.autohotkeynext",
+        "path": "build/autohotkeynext.tmLanguage.json",
+        "tokenTypes": {
+          "meta.link.inline.markdown": "other",
+          "token.comment.autohotkeynext": "comment",
+          "token.other.autohotkeynext": "other",
+          "token.string.autohotkeynext": "string"
+        },
+        "unbalancedBracketScopes": [
+          "unknown",
+          "token.string",
+          "string.regexp keyword.other.regexp.option"
+        ]
+      },
+      {
+        "language": "autohotkey2",
+        "scopeName": "source.autohotkey2",
+        "path": "build/autohotkey2.tmLanguage.json",
+        "tokenTypes": {
+          "meta.link.inline.markdown": "other",
+          "token.comment.autohotkey2": "comment",
+          "token.other.autohotkey2": "other",
+          "token.string.autohotkey2": "string"
+        },
+        "unbalancedBracketScopes": [
+          "unknown",
+          "token.string",
+          "string.regexp keyword.other.regexp.option"
+        ]
+      },
+      {
+        "language": "autohotkeyl",
+        "scopeName": "source.autohotkeyl",
+        "path": "build/autohotkeyl.tmLanguage.json",
+        "tokenTypes": {
+          "meta.link.inline.markdown": "other",
+          "token.comment.autohotkeyl": "comment",
+          "token.other.autohotkeyl": "other",
+          "token.string.autohotkeyl": "string"
+        },
+        "unbalancedBracketScopes": [
+          "unknown",
+          "token.string",
+          "string.regexp keyword.other.regexp.option"
+        ]
+      },
+      {
+        "scopeName": "injection.to-markdown",
+        "path": "build/markdown.tmLanguage.json",
+        "injectTo": [
+          "text.html.markdown"
+        ],
+        "embeddedLanguages": {
+          "meta.link.inline.markdown": "other",
+          "meta.embedded.block.autohotkeynext": "autohotkeynext",
+          "meta.embedded.block.autohotkey2": "autohotkey2",
+          "meta.embedded.block.autohotkeyl": "autohotkeyl",
+          "meta.embedded.block.autohotkey": "autohotkey"
+        }
+      }
+    ]
+  },
+  "activationEvents": [
+    "onLanguage:autohotkey",
+    "onLanguage:autohotkeynext",
+    "onLanguage:autohotkey2",
+    "onLanguage:autohotkeyl"
+  ],
+  "markdown": "github",
+  "qna": false,
+  "devDependencies": {
+    "@types/vscode": "^1.90.2",
+    "@vscode/vsce": "^3.3.2",
+    "@zero-plusplus/autohotkey-tmlanguage": "^0.0.0"
+  },
+  "scripts": {
+    "build": "npx tsx scripts/bin/build.ts",
+    "watch": "npx tsx watch scripts/bin/watch.ts",
+    "clean": "npx tsx scripts/bin/clean.ts",
+    "package": "npx @vscode/vsce package",
+    "vscode:prepublish": "npx tsx scripts/bin/prepackage.ts"
+  },
+  "icon": "icon.png",
+  "pricing": "Free"
+}

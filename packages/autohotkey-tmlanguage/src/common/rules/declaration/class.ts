@@ -1,0 +1,111 @@
+import * as rules_common from '..';
+import {
+  alt,
+  capture,
+  char,
+  endAnchor,
+  group,
+  inlineSpaces0,
+  inlineSpaces1,
+  keyword,
+  lookahead,
+  lookbehind,
+  seq,
+  startAnchor,
+} from '../../../oniguruma';
+import {
+  includeRule,
+  name,
+  nameRule,
+  Repository,
+  RuleName,
+  type BeginEndRule,
+  type Rule,
+  type ScopeName,
+} from '../../../tmlanguage';
+
+interface Placeholder {
+  startPattern: string;
+  endPattern: string;
+  identifierPattern: string;
+  rulesInBody: Rule[];
+}
+export function createClassDeclarationRule(scopeName: ScopeName, placeholder: Placeholder): BeginEndRule {
+  return {
+    begin: lookahead(seq(
+      lookbehind(placeholder.startPattern),
+      inlineSpaces0(),
+      keyword('class'),
+    )),
+    end: lookbehind('}'),
+    patterns: [
+      includeRule(Repository.InlineTrivias),
+
+      // class head
+      {
+        begin: seq(
+          inlineSpaces0(),
+          capture(keyword('class')),
+        ),
+        beginCaptures: {
+          1: nameRule(scopeName, RuleName.ClassKeyword),
+        },
+        end: lookahead(alt(
+          seq(inlineSpaces0(), char('{')),
+          placeholder.endPattern,
+        )),
+        patterns: [
+          {
+            name: name(scopeName, RuleName.ExtendsKeyword),
+            match: keyword('extends'),
+          },
+          {
+            name: name(scopeName, RuleName.Dot),
+            match: char('.'),
+          },
+          {
+            name: name(scopeName, RuleName.ClassName),
+            match: placeholder.identifierPattern,
+          },
+        ],
+      },
+
+      // class body
+      {
+        begin: capture(char('{')),
+        beginCaptures: {
+          1: nameRule(scopeName, RuleName.ClassBlockBegin),
+        },
+        end: capture(char('}')),
+        endCaptures: {
+          1: nameRule(scopeName, RuleName.ClassBlockEnd),
+        },
+        patterns: placeholder.rulesInBody,
+      },
+
+      includeRule(Repository.Self),
+    ],
+  };
+}
+export function createBlockInClassBodyRule(scopeName: ScopeName): BeginEndRule {
+  return rules_common.createBlockRule(scopeName, {
+    statementsInBlock: [
+      // get-set
+      {
+        match: seq(
+          startAnchor(),
+          inlineSpaces0(),
+          capture(keyword('get', 'set')),
+          lookahead(alt(
+            seq(inlineSpaces1(), char(';')),
+            seq(inlineSpaces0(), group(alt(char('{'), endAnchor()))),
+          )),
+        ),
+        captures: {
+          1: nameRule(scopeName, RuleName.GetSetKeyword),
+        },
+      },
+      includeRule(Repository.Self),
+    ],
+  });
+}

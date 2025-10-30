@@ -1,0 +1,9 @@
+{
+  "name": "@zero-plusplus/autohotkey-modules",
+  "version": "0.0.0",
+  "description": "",
+  "scripts": {
+    "test": "npx jest"
+  },
+  "private": true
+}

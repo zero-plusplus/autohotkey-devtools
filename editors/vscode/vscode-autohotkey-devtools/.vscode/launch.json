@@ -1,0 +1,19 @@
+{
+  "version": "0.2.0",
+  "configurations": [
+    {
+      "name": "Debug Extension",
+      "type": "extensionHost",
+      "request": "launch",
+      "args": [
+        "--extensionDevelopmentPath=${workspaceFolder}",
+        "${workspaceFolder}/build/demo",
+        "${workspaceFolder}/../../../packages/autohotkey-modules",
+      ],
+      "outFiles": [
+        "${workspaceFolder}/build/**/*.js"
+      ],
+      "preLaunchTask": "npm: watch",
+    },
+  ]
+}
