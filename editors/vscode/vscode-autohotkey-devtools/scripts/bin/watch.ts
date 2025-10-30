@@ -10,7 +10,7 @@ import { watch } from '../helpers/watch';
     await Promise.all([
       buildDemoAll(),
       buildTmLanguageAll(true),
-      buildLanguageConfigurationAll(),
+      buildLanguageConfigurationAll(true),
     ]);
   });
 })();

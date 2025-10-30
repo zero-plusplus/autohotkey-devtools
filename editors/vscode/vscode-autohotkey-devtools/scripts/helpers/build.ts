@@ -49,16 +49,16 @@ export async function buildTmLanguage(scopeName: ScopeName | 'markdown', debugMo
   await writeFile(tmLanguagePath, tmLanguageText);
 }
 
-export async function buildLanguageConfigurationAll(): Promise<void> {
+export async function buildLanguageConfigurationAll(debugMode = false): Promise<void> {
   await Promise.all([
-    buildLanguageConfiguration('autohotkey'),
-    buildLanguageConfiguration('autohotkeynext'),
-    buildLanguageConfiguration('autohotkey2'),
-    buildLanguageConfiguration('autohotkeyl'),
+    buildLanguageConfiguration('autohotkey', debugMode),
+    buildLanguageConfiguration('autohotkeynext', debugMode),
+    buildLanguageConfiguration('autohotkey2', debugMode),
+    buildLanguageConfiguration('autohotkeyl', debugMode),
   ]);
 }
-export async function buildLanguageConfiguration(scopeName: ScopeName): Promise<void> {
-  const tmLanguageText = JSON.stringify(createLanguageConfiguration(scopeName), undefined, 2);
+export async function buildLanguageConfiguration(scopeName: ScopeName, debugMode = false): Promise<void> {
+  const tmLanguageText = JSON.stringify(createLanguageConfiguration(scopeName), undefined, debugMode ? 1 : 0);
   const tmLanguagePath = path.resolve(buildDir, `${scopeName}.language-configuration.json`);
 
   await fs.mkdir(buildDir, { recursive: true });
