@@ -1,0 +1,816 @@
+import { hasFlag } from '@zero-plusplus/utilities/src';
+import {
+  $,
+  CommandFlag,
+  CommandParameterFlag,
+  createOption,
+  decimalOption,
+  flagedIdentifierOption,
+  flagedKeywordOption,
+  flagedSizeOption,
+  flagedStringOption,
+  keywordOption,
+  type CommandDefinition,
+  type CommandParameter,
+  type CommandSignature,
+  type ParameterItemMatcher,
+} from '../../../definition';
+import {
+  alt,
+  anyChars0,
+  capture,
+  char,
+  chars1,
+  endAnchor,
+  group,
+  groupMany1,
+  hexValue,
+  ignoreCase,
+  inlineSpace,
+  inlineSpaces0,
+  inlineSpaces1,
+  keyword,
+  lookahead,
+  lookbehind,
+  negativeLookahead,
+  negChar,
+  negChars0,
+  negChars1,
+  numbers0,
+  numbers1,
+  optcapture,
+  optional,
+  optseq,
+  ordalt,
+  reluctant,
+  seq,
+  text,
+  textalt,
+  wordBound,
+  wordChars1,
+} from '../../../oniguruma';
+import {
+  includeRule,
+  name,
+  nameRule,
+  patternsRule,
+  Repository,
+  RuleName,
+  StyleName,
+  type Captures,
+  type ElementName,
+  type MatchRule,
+  type PatternsRule,
+  type Rule,
+  type ScopeName,
+} from '../../../tmlanguage';
+import * as constants_common from '../../constants';
+import * as patterns_common from '../../patterns';
+
+
+export interface Placeholder_SingleLineCommandLikeStatementRule {
+  startPattern: string;
+  endPattern: string;
+  commandElementName: ElementName;
+  legacyMode?: boolean;
+}
+export function createSingleLineCommandLikeStatementRule(scopeName: ScopeName, definition: CommandDefinition, signature: CommandSignature, placeholder: Placeholder_SingleLineCommandLikeStatementRule, aliases: string[] = []): Rule {
+  return {
+    begin: lookahead(seq(
+      ignoreCase(ordalt(definition.name, ...aliases)),
+      negativeLookahead(char('(')),
+      lookaheadOnigurumaByParameters(signature.parameters),
+    )),
+    end: seq(
+      // command name
+      capture(ignoreCase(ordalt(definition.name, ...aliases))),
+
+      // parameters
+      ...((): string => {
+        const capturedCommaSeparator = placeholder.legacyMode ? seq(inlineSpaces0(), capture(char(','))) : capture(char(','));
+        const capturedFirstSeparator = group(alt(capturedCommaSeparator, inlineSpaces1()));
+
+        if (signature.parameters.length === 0) {
+          return capturedFirstSeparator;
+        }
+        return reluctant(optional(signature.parameters.reduceRight<string>((prev, parameter, i, parameters) => {
+          const isLastParameter = parameters.length - 1 === i;
+          const capturedSeparator = i === 0 ? capturedFirstSeparator : capturedCommaSeparator;
+
+          return seq(
+            capturedSeparator,
+            negativeLookahead(seq(inlineSpaces1(), char(';'))),
+            inlineSpaces0(),
+            capture(parameterToOniguruma(parameter, isLastParameter)),
+            prev !== '' ? optional(prev) : '',
+          );
+        }, '')));
+      })(),
+
+      optional(group(alt(
+        seq(inlineSpaces1(), optcapture(char(','))),
+        seq(inlineSpaces0(), optcapture(char(','))),
+      ))),
+      lookahead(placeholder.endPattern),
+    ),
+    endCaptures: Object.fromEntries([
+      // command name
+      ((): Rule => {
+        if (hasFlag(definition.flags, CommandFlag.Removed)) {
+          return nameRule(scopeName, placeholder.commandElementName, StyleName.Invalid, StyleName.Strikethrough);
+        }
+        if (hasFlag(definition.flags, CommandFlag.Deprecated)) {
+          return nameRule(scopeName, placeholder.commandElementName, StyleName.Strikethrough);
+        }
+        return nameRule(scopeName, placeholder.commandElementName);
+      })(),
+
+      // parameters
+      ...((): Rule[] => {
+        const firstCommaRule = placeholder.legacyMode
+          ? patternsRule(includeRule(Repository.Comma))
+          : nameRule(scopeName, RuleName.Comma, StyleName.Invalid);
+
+        if (signature.parameters.length === 0) {
+          return [ firstCommaRule ];
+        }
+        return signature.parameters.flatMap((parameter, i, parameters) => {
+          const isLastParameter = parameters.length - 1 === i;
+
+          return [
+            i === 0 ? firstCommaRule : patternsRule(includeRule(Repository.Comma)),
+            parameterToPatternsRule(scopeName, definition, parameter, isLastParameter, {
+              startPattern: placeholder.startPattern,
+              legacyMode: placeholder.legacyMode,
+            }),
+          ];
+        });
+      })(),
+
+      patternsRule(includeRule(Repository.Comma)),
+      placeholder.legacyMode
+        ? patternsRule(includeRule(Repository.Comma))
+        : nameRule(scopeName, RuleName.Comma, StyleName.Invalid),
+    ].map((rule, i) => [ i + 1, rule ])),
+  };
+}
+
+interface Placeholder_DirectiveDefinitionsRule {
+  startPattern: string;
+  endPattern: string;
+  commandElementName: RuleName;
+  legacyMode?: boolean;
+}
+export function createCommandLikeDefinitionsRule(scopeName: ScopeName, definitions: CommandDefinition[], placeholder: Placeholder_DirectiveDefinitionsRule): Rule {
+  return patternsRule(
+    includeRule(Repository.Trivias),
+    ...definitionsToRules(scopeName, definitions, {
+      commandElementName: placeholder.commandElementName,
+      startPattern: placeholder.startPattern,
+      endPattern: placeholder.endPattern,
+      legacyMode: placeholder.legacyMode ?? false,
+    }),
+  );
+}
+
+interface Placeholder_DirectiveCommentRule {
+  startPattern: string;
+  endPattern: string;
+  commandElementName: ElementName;
+}
+export function createDirectiveCommentRule(scopeName: ScopeName, definition: CommandDefinition, signature: CommandSignature, placeholder: Placeholder_DirectiveCommentRule): Rule {
+  return {
+    match: seq(
+      // command name
+      seq(
+        lookbehind(placeholder.startPattern),
+        inlineSpaces0(),
+        capture(char(';')),
+        inlineSpaces0(),
+        capture(ignoreCase(definition.name)),
+        negativeLookahead(char('(')),
+      ),
+
+      // arguments
+      ...(0 < signature.parameters.length
+        ? [
+          reluctant(optional(signature.parameters.reduceRight<string>((prev, parameter, i, parameters) => {
+            const isLastParameter = parameters.length - 1 === i;
+
+            const capturedCommaSeparator = seq(inlineSpaces0(), capture(char(',')));
+            const capturedFirstSeparator = group(alt(
+              capturedCommaSeparator,
+              inlineSpaces1(),
+            ));
+            const separator = i === 0 ? capturedFirstSeparator : capturedCommaSeparator;
+
+            return seq(
+              separator,
+              negativeLookahead(seq(inlineSpaces1(), char(';'))),
+              inlineSpaces0(),
+              capture(parameterToOniguruma(parameter, isLastParameter)),
+              prev !== '' ? optional(prev) : '',
+            );
+          }, ''))),
+        ]
+        : [ seq(inlineSpaces0(), capture(anyChars0())) ]
+      ),
+      lookahead(placeholder.endPattern),
+    ),
+    captures: Object.fromEntries([
+      nameRule(scopeName, RuleName.DirectiveComment),
+
+      // command name
+      ((): Rule => {
+        if (hasFlag(definition.flags, CommandFlag.Removed)) {
+          return nameRule(scopeName, placeholder.commandElementName, StyleName.Invalid, StyleName.Strikethrough);
+        }
+        if (hasFlag(definition.flags, CommandFlag.Deprecated)) {
+          return nameRule(scopeName, placeholder.commandElementName, StyleName.Strikethrough);
+        }
+        return nameRule(scopeName, placeholder.commandElementName);
+      })(),
+
+      // parameters
+      ...signature.parameters.flatMap((parameter, i, parameters) => {
+        const isLastParameter = parameters.length - 1 === i;
+        return [
+          patternsRule(includeRule(Repository.Comma)),
+          parameterToPatternsRule(scopeName, definition, parameter, isLastParameter, {
+            startPattern: placeholder.startPattern,
+            legacyMode: true,
+          }),
+        ];
+      }),
+
+      // inline comment
+      nameRule(scopeName, RuleName.InlineComment),
+    ].map((rule, i) => [ i + 1, rule ])),
+  };
+}
+export function createSendKeyCommandArgumentRule(scopeName: ScopeName): PatternsRule {
+  return patternsRule(
+    includeRule(Repository.UnquotedStringEscapeSequence),
+    // https://www.autohotkey.com/docs/v1/lib/Send.htm#Blind
+    // e.g. `{Blind}`
+    //       ^^^^^^^
+    {
+      name: name(scopeName, RuleName.UnquotedString, StyleName.Strong),
+      match: ignoreCase(text('{Blind}')),
+    },
+    // https://www.autohotkey.com/docs/v1/lib/Send.htm#Raw
+    // https://www.autohotkey.com/docs/v1/lib/Send.htm#Text
+    // e.g. `{Text}raw text`
+    //       ^^^^^^^^^^^^^^
+    {
+      match: seq(
+        negativeLookahead(char(...constants_common.modifierSymbols)),
+        capture(seq(
+          char('{'),
+          inlineSpaces0(),
+          ignoreCase(textalt('Raw', 'Text')),
+          inlineSpaces0(),
+          char('}'),
+        )),
+        inlineSpaces0(),
+        capture(anyChars0()),
+      ),
+      captures: {
+        1: nameRule(scopeName, RuleName.UnquotedString, StyleName.Strong),
+        2: patternsRule(
+          includeRule(Repository.Dereference),
+          includeRule(Repository.UnquotedStringEscapeSequence),
+          {
+            name: name(scopeName, RuleName.UnquotedString),
+            match: negChars1('`', '%'),
+          },
+        ),
+      },
+    },
+    // e.g. `{!}`
+    //       ^^^
+    {
+      name: name(scopeName, RuleName.UnquotedString, StyleName.Strong),
+      match: seq(
+        char('{'),
+        inlineSpaces0(),
+        char('!', '#', '+', '^', '{', '}'),
+        inlineSpaces0(),
+        char('}'),
+      ),
+    },
+    // e.g. `{Up}`
+    //       ^^^^
+    {
+      name: name(scopeName, RuleName.UnquotedString, StyleName.Strong),
+      match: seq(
+        char('{'),
+        inlineSpaces0(),
+        keyword('Up', 'Down'),
+        inlineSpaces0(),
+        char('}'),
+      ),
+    },
+    // e.g. `{Click 100 200 Left}`
+    //       ^^^^^^ ^^^ ^^^ ^^^^^
+    {
+      match: seq(
+        capture(char('{')),
+        inlineSpaces0(),
+        capture(keyword('Click')),
+        optseq(
+          inlineSpaces1(),
+          capture(negChars0('}')),
+        ),
+        inlineSpaces0(),
+        capture(char('}')),
+      ),
+      captures: {
+        1: nameRule(scopeName, RuleName.UnquotedString, StyleName.Strong),
+        2: nameRule(scopeName, RuleName.UnquotedString, StyleName.Strong),
+        3: patternsRule(includeRule(Repository.CommandArgumentClick)),
+        4: nameRule(scopeName, RuleName.UnquotedString, StyleName.Strong),
+      },
+    },
+    // e.g. `{5 up}`
+    //       ^^
+    {
+      name: name(scopeName, RuleName.UnquotedString, StyleName.Strong),
+      match: seq(char('{'), inlineSpaces0(), numbers1(), wordBound()),
+    },
+    // e.g. `{Tab up}`
+    //       ^
+    {
+      name: name(scopeName, RuleName.UnquotedString, StyleName.Strong),
+      match: char('{'),
+    },
+    // e.g. `{5 up}`
+    //          ^^^
+    {
+      name: name(scopeName, RuleName.UnquotedString, StyleName.Strong),
+      match: seq(
+        group(alt(
+          ignoreCase(textalt('Up', 'Down', 'DownTemp', 'DownR')),
+          numbers1(),
+        )),
+        wordBound(),
+        inlineSpaces0(),
+        char('}'),
+      ),
+    },
+    // e.g. `{Up}`
+    //          ^
+    {
+      name: name(scopeName, RuleName.UnquotedString, StyleName.Strong),
+      match: char('}'),
+    },
+    // e.g. `!#Tab`
+    //         ^^^
+    {
+      name: name(scopeName, RuleName.UnquotedString, StyleName.Strong),
+      match: keyword(...constants_common.keyNameList),
+    },
+    // e.g. `+`, `!#a`
+    //       ^    ^^^
+    {
+      name: name(scopeName, RuleName.UnquotedString, StyleName.Strong),
+      match: seq(
+        chars1(...constants_common.modifierSymbols),
+        negChars0('{', '%', inlineSpace()),
+      ),
+    },
+    {
+      name: name(scopeName, RuleName.UnquotedString),
+      match: negChars1('`', '{', '}', '%', inlineSpace()),
+    },
+  );
+}
+export function createClickCommandArgumentRule(scopeName: ScopeName): PatternsRule {
+  return patternsRule(
+    includeRule(Repository.DereferenceUnaryOperator),
+    includeRule(Repository.Dereference),
+    ...itemPatternToRules(scopeName, keywordOption('Left', 'L', 'Right', 'R', 'Middle', 'M', 'X1', 'X2', 'Up', 'U', 'Down', 'D', 'Relative')),
+    {
+      name: name(scopeName, RuleName.Integer),
+      match: numbers1(),
+    },
+    {
+      name: name(scopeName, RuleName.UnquotedString, StyleName.Invalid),
+      match: negChars1('0-9', '%', inlineSpace()),
+    },
+  );
+}
+export function createControlStyleCommandArgumentRule(scopeName: ScopeName): PatternsRule {
+  return patternsRule(...itemPatternToRules(scopeName, [
+    includeRule(Repository.DereferenceUnaryOperator),
+    includeRule(Repository.DereferenceInCommandArgument),
+    {
+      match: seq(
+        optcapture(char('+', '-', '^')),
+        optcapture(ignoreCase('LV')),
+        capture(ignoreCase('0x')),
+        capture(chars1('0-9', 'a-z', 'A-Z')),
+      ),
+      captures: {
+        1: [ includeRule(Repository.Operator) ],
+        2: {
+          name: [ RuleName.UnquotedString, StyleName.Strong ],
+          match: ignoreCase('LV'),
+        },
+        3: { name: [ RuleName.Hex, RuleName.HexPrefix ] },
+        4: { name: [ RuleName.Hex, RuleName.HexValue ] },
+      },
+    },
+    {
+      name: [ RuleName.UnquotedString, StyleName.Invalid ],
+      match: negChars1('%', inlineSpace()),
+    },
+  ]));
+}
+export function createMenuNameCommandArgumentRule(scopeName: ScopeName): PatternsRule {
+  return patternsRule(...itemPatternsToRules(scopeName, $([
+    includeRule(Repository.DereferenceInCommandArgument),
+    // e.g. `Menu, MenuName, Add, &test`
+    //                            ^^
+    {
+      name: [ RuleName.UnquotedString, StyleName.Underline ],
+      match: seq(char('&'), alt(negChar('&', '\\s'))),
+    },
+    {
+      name: [ RuleName.UnquotedString, StyleName.Escape ],
+      match: text('&&'),
+    },
+    {
+      name: [ RuleName.UnquotedString ],
+      match: seq(char('&'), negativeLookahead(char('&'))),
+    },
+  ]).itemMatchers!));
+}
+export function createGuiOptionsCommandArgumentRule(scopeName: ScopeName): PatternsRule {
+  return patternsRule(...itemPatternToRules(scopeName, [
+    flagedKeywordOption('AlwaysOnTop', 'Border', 'Caption', 'DelimiterSpace', 'DelimiterTab', 'Disabled', 'DPIScale', 'LastFoundExist', 'MaximizeBox', 'MinimizeBox', 'OwnDialogs', 'Owner', 'Parent', 'Resize', 'SysMenu', 'Theme', 'ToolWindow'),
+    flagedStringOption('Delimiter'),
+    flagedIdentifierOption('Hwnd', 'Label', 'LastFound'),
+    flagedSizeOption('MinSize', 'MaxSize'),
+  ]));
+}
+export function createMenuOptionsCommandArgumentRule(scopeName: ScopeName): PatternsRule {
+  return patternsRule(...itemPatternToRules(scopeName, [
+    decimalOption('P'),
+    flagedKeywordOption('Radio', 'Right', 'Break', 'BarBreak'),
+  ]));
+}
+export function createRegKeyCommandArgumentRule(scopeName: ScopeName): PatternsRule {
+  return patternsRule(...itemPatternToRules(scopeName, [
+    createOption(ignoreCase(textalt(
+      'HKEY_LOCAL_MACHINE',
+      'HKLM',
+      'HKEY_USERS',
+      'HKU',
+      'HKEY_CURRENT_USER',
+      'HKCU',
+      'HKEY_CLASSES_ROOT',
+      'HKCR',
+      'HKEY_CURRENT_CONFIG',
+      'HKCC',
+    )), [], [ '\\' ]),
+  ]));
+}
+export function createWhichButtonCommandArgumentRule(scopeName: ScopeName): PatternsRule {
+  return patternsRule(...itemPatternToRules(scopeName, [ keywordOption('Left', 'L', 'Right', 'R', 'Middle', 'M', 'WheelUp', 'WU', 'WheelDown', 'WD', 'WheelLeft', 'WL', 'WheelRight', 'WR') ]));
+}
+export function createHotstringOptionsCommandArgumentRule(scopeName: ScopeName): PatternsRule {
+  return patternsRule(
+    {
+      // e.g. `K-1` `P1`
+      name: name(scopeName, RuleName.UnquotedString, StyleName.Strong),
+      match: ignoreCase(seq(
+        char(
+          'K',                                  // https://www.autohotkey.com/docs/v1/Hotstrings.htm#Kn
+          'P',                                  // https://www.autohotkey.com/docs/v1/Hotstrings.htm#Pn
+        ),
+        optseq(
+          optional(char('+', '-')),
+          numbers0(),
+        ),
+      )),
+    },
+    {
+      // e.g. `C` `C0` `C1`
+      name: name(scopeName, RuleName.UnquotedString, StyleName.Strong),
+      match: ignoreCase(seq(
+        char('C'),                              // https://www.autohotkey.com/docs/v1/Hotstrings.htm#C
+        optional(char('0', '1')),
+      )),
+    },
+    {
+      // e.g. `B` `B0`
+      name: name(scopeName, RuleName.UnquotedString, StyleName.Strong),
+      match: ignoreCase(seq(
+        char(
+          '*',                                  // https://www.autohotkey.com/docs/v1/Hotstrings.htm#Asterisk
+          '?',                                  // https://www.autohotkey.com/docs/v1/Hotstrings.htm#Question
+          'B',                                  // https://www.autohotkey.com/docs/v1/Hotstrings.htm#b0
+          'O',                                  // https://www.autohotkey.com/docs/v1/Hotstrings.htm#O
+          'R',                                  // https://www.autohotkey.com/docs/v1/Hotstrings.htm#raw
+          'T',                                  // https://www.autohotkey.com/docs/v1/Hotstrings.htm#T
+          'Z',                                  // https://www.autohotkey.com/docs/v1/Hotstrings.htm#z
+        ),
+        optional(char('0', '1')),
+      )),
+    },
+    {
+      // e.g. `SI`
+      name: name(scopeName, RuleName.UnquotedString, StyleName.Strong),
+      match: ignoreCase(ordalt(
+        'SI',                                   // <
+        'SP',                                   // https://www.autohotkey.com/docs/v1/Hotstrings.htm#SendMode
+        'SE',                                   // >
+        'X',                                    // https://www.autohotkey.com/docs/v1/Hotstrings.htm#X
+      )),
+    },
+  );
+}
+export function createColorCommandArgumentRule(scopeName: ScopeName): PatternsRule {
+  return patternsRule(...itemPatternToRules(scopeName, [
+    keywordOption('Default', ...constants_common.colorNames),
+    {
+      name: [ RuleName.Hex, RuleName.HexValue ],
+      match: hexValue(),
+    },
+  ]));
+}
+export function createInvalidArgumentRule(scopeName: ScopeName): MatchRule {
+  return {
+    name: name(scopeName, RuleName.UnquotedString, StyleName.Invalid),
+    match: negChars1(',', inlineSpace()),
+  };
+}
+
+
+// #region helpers
+function lookaheadOnigurumaByParameters(parameters: CommandParameter[]): string {
+  const subcommandArgumentIndex = parameters.findLastIndex((parameter) => hasFlag(parameter.flags, CommandParameterFlag.SubCommand));
+  if (subcommandArgumentIndex === -1) {
+    return group(alt(
+      inlineSpace(),
+      char(','),
+      endAnchor(),
+    ));
+  }
+
+  return parameters.slice(0, subcommandArgumentIndex + 1).reduceRight<string>((prev, parameter, i) => {
+    const commaSeparator = seq(inlineSpaces0(), char(','));
+    const firstSeparator = group(alt(
+      commaSeparator,
+      inlineSpaces1(),
+    ));
+    const separator = i === 0 ? firstSeparator : commaSeparator;
+
+    const parameterText = ((): string => {
+      const labelPattern = group(optseq(
+        inlineSpaces0(),
+        negChars0(':', inlineSpace()),
+        char(':'),
+      ));
+
+      if (hasFlag(parameter.flags, CommandParameterFlag.SubCommand)) {
+        const subcommandPattern = parameterToSubCommandPattern(parameter);
+        if (hasFlag(parameter.flags, CommandParameterFlag.GuiLabeled)) {
+          return seq(
+            labelPattern,
+            inlineSpaces0(),
+            subcommandPattern,
+          );
+        }
+        return subcommandPattern;
+      }
+      else if (hasFlag(parameter.flags, CommandParameterFlag.GuiLabeled)) {
+        return labelPattern;
+      }
+      return optional(parameterToOniguruma(parameter, false));
+    })();
+
+    return seq(
+      separator,
+      inlineSpaces0(),
+      parameterText,
+      prev !== '' ? prev : '',
+    );
+  }, '');
+}
+function parameterToOniguruma(parameter: CommandParameter, isLastParameter: boolean): string {
+  if (hasFlag(parameter.flags, CommandParameterFlag.CompilerDirective)) {
+    return optional(patterns_common.unquotedArgumentPattern);
+  }
+  else if (hasFlag(parameter.flags, CommandParameterFlag.Expression)) {
+    return isLastParameter ? patterns_common.unquotedExpressionLastArgumentPattern : patterns_common.unquotedExpressionArgumentPattern;
+  }
+  else if (hasFlag(parameter.flags, CommandParameterFlag.RestParams)) {
+    return seq(groupMany1(seq(
+      optional(patterns_common.unquotedArgumentPattern),
+      optseq(
+        inlineSpaces0(),
+        char(','),
+        optseq(
+          negativeLookahead(seq(inlineSpaces1(), char(';'))),
+          inlineSpaces0(),
+          optional(patterns_common.unquotedArgumentPattern),
+        ),
+      ),
+    )));
+  }
+  return optional(isLastParameter ? patterns_common.unquotedLastArgumentPattern : patterns_common.unquotedArgumentPattern);
+}
+function parameterToPatternsRule(scopeName: ScopeName, definition: CommandDefinition, parameter: CommandParameter, isLastParameter: boolean, placeholder: { startPattern: string; legacyMode?: boolean | undefined }): PatternsRule {
+  const legacyRules = ((): Rule[] => {
+    if (!placeholder.legacyMode) {
+      return [];
+    }
+    if (hasFlag(parameter.flags, CommandParameterFlag.NoPercentExpression)) {
+      return [ includeRule(Repository.InvalidPercentExpression) ];
+    }
+    if (hasFlag(parameter.flags, CommandParameterFlag.RestParams)) {
+      return [ includeRule(Repository.PercentExpression) ];
+    }
+    return [ includeRule(isLastParameter ? Repository.PercentExpressionInLastArgument : Repository.PercentExpression) ];
+  })();
+
+  return patternsRule(
+    // percent expression
+    ...((): Rule[] => {
+      if (!hasFlag(parameter.flags, CommandParameterFlag.Blank)) {
+        return [ ...legacyRules ];
+      }
+      return [];
+    })(),
+
+    // comma
+    ...((): Rule[] => {
+      if (hasFlag(parameter.flags, CommandParameterFlag.RestParams) || hasFlag(parameter.flags, CommandParameterFlag.Expression)) {
+        return [ includeRule(Repository.Comma) ];
+      }
+      if (isLastParameter && hasFlag(parameter.flags, CommandParameterFlag.Blank)) {
+        return [ { name: name(scopeName, RuleName.UnquotedString, StyleName.Invalid), match: textalt('`,', ',') } ];
+      }
+      if (isLastParameter) {
+        if (hasFlag(parameter.flags, CommandParameterFlag.NoLastComma)) {
+          return [];
+        }
+        return [
+          { name: name(scopeName, RuleName.UnquotedString, StyleName.Escape), match: text('`,') },
+          { name: name(scopeName, RuleName.UnquotedString), match: seq(char(',')) },
+        ];
+      }
+      return [];
+    })(),
+
+    // gui label
+    ...((): Rule[] => {
+      if (hasFlag(parameter.flags, CommandParameterFlag.GuiLabeled)) {
+        // e.g. `Gui, GuiName:+Resize`
+        //            ^^^^^^^^
+        return [
+          {
+            match: seq(
+              lookbehind(seq(
+                lookbehind(placeholder.startPattern),
+                inlineSpaces0(),
+                ignoreCase(definition.name),
+                alt(inlineSpace(), seq(inlineSpaces0(), char(','))),
+                inlineSpaces0(),
+              )),
+              inlineSpaces0(),
+              group(alt(
+                capture(seq(char('%'), anyChars0(), char('%'))),
+                seq(negativeLookahead(char('%')), capture(wordChars1())),
+              )),
+              capture(char(':')),
+            ),
+            captures: {
+              1: patternsRule(includeRule(Repository.Dereference)),
+              2: patternsRule(includeRule(Repository.LabelName)),
+              3: nameRule(scopeName, RuleName.Colon),
+            },
+          },
+        ];
+      }
+      return [];
+    })(),
+
+    // unique highlights
+    ...((): Rule[] => {
+      if (parameter.itemMatchers && 0 < parameter.itemMatchers.length) {
+        return itemPatternsToRules(scopeName, parameter.itemMatchers);
+      }
+      return [];
+    })(),
+  );
+}
+function itemPatternsToRules(scopeName: ScopeName, itemPatterns: ParameterItemMatcher[]): Rule[] {
+  return itemPatterns.flatMap((itemPattern) => itemPatternToRules(scopeName, itemPattern));
+}
+function itemPatternToRules(scopeName: ScopeName, itemPattern: ParameterItemMatcher): Rule[] {
+  if (Array.isArray(itemPattern)) {
+    return itemPatternsToRules(scopeName, itemPattern);
+  }
+
+  if (typeof itemPattern === 'string') {
+    return [
+      {
+        name: name(scopeName, RuleName.UnquotedString, StyleName.Strong),
+        match: ignoreCase(itemPattern),
+      },
+    ];
+  }
+  if ('include' in itemPattern) {
+    return [ itemPattern ];
+  }
+  if ('name' in itemPattern && !('captures' in itemPattern)) {
+    if (itemPattern.match === undefined) {
+      return [ { name: name(scopeName, ...Array.isArray(itemPattern.name) ? itemPattern.name : [ itemPattern.name ]) } ];
+    }
+    return [
+      {
+        name: name(scopeName, ...Array.isArray(itemPattern.name) ? itemPattern.name : [ itemPattern.name ]),
+        match: itemPattern.match,
+      },
+    ];
+  }
+  return [
+    {
+      name: 'name' in itemPattern ? name(scopeName, ...Array.isArray(itemPattern.name) ? itemPattern.name : [ itemPattern.name ]) : undefined,
+      match: itemPattern.match,
+      captures: Object.fromEntries(Object.entries(itemPattern.captures).map(([ index, matchers ]) => {
+        const rules = (Array.isArray(matchers) ? matchers : [ matchers ]).flatMap((matcher): Rule[] => {
+          return itemPatternsToRules(scopeName, Array.isArray(matcher) ? matcher : [ matcher ]);
+        });
+
+        const isNameRule = rules.length === 1 && typeof rules[0] === 'object' && 'name' in rules[0];
+        return [
+          Number(index),
+          isNameRule ? rules[0] : patternsRule(...rules),
+        ];
+      })) as unknown as Captures,
+    },
+  ];
+}
+function parameterToSubCommandPattern(parameter: CommandParameter): string {
+  if (parameter.itemMatchers?.length === undefined) {
+    throw Error('');
+  }
+  const matcher = parameter.itemMatchers[0];
+  if (typeof matcher !== 'object' || !('match' in matcher)) {
+    throw Error('');
+  }
+  return matcher.match;
+}
+
+export function definitionsToRules(scopeName: ScopeName, definitions: CommandDefinition[], placeholder: Placeholder_SingleLineCommandLikeStatementRule): Rule[] {
+  const sorted = ((): CommandDefinition[][] => {
+    const otherKey = 'other';
+    const groupedDefinitions = Object.groupBy(definitions, (commandDefinition) => {
+      if (commandDefinition.signatures.length === 1) {
+        return JSON.stringify([ commandDefinition.flags, commandDefinition.signatures[0]!.parameters ]);
+      }
+      return otherKey;
+    });
+    const otherDefinitionsList = (groupedDefinitions[otherKey] ?? []).map((definition) => [ definition ]);
+    const groupedDefinitionsList = Object.entries(groupedDefinitions)
+      .filter((value): value is [ string, CommandDefinition[] ] => value[0] !== otherKey && value[1] !== undefined)
+      .map(([ _, definitions ]) => definitions);
+
+    return [ ...otherDefinitionsList, ...groupedDefinitionsList ].sort((a, b) => {
+      const names_a = a.map((definition) => definition.name.length);
+      const names_b = b.map((definition) => definition.name.length);
+      const matchSubPatternIndex = names_b.findIndex((name) => names_a.includes(name));
+      if (0 < matchSubPatternIndex) {
+        const a_max = Math.max(...names_a);
+        const b_max = Math.max(...names_b);
+        return b_max - a_max;
+      }
+      return 0;
+    });
+  })();
+
+  return sorted.flatMap((definitions): Rule[] => {
+    if (1 < definitions.length) {
+      const definition = definitions.at(0);
+      const signature = definition?.signatures.at(0);
+
+      if (definition === undefined || signature === undefined) {
+        throw Error('');
+      }
+
+      const aliases = definitions.slice(1).map((definition) => definition.name);
+      return [ createSingleLineCommandLikeStatementRule(scopeName, definition, signature, placeholder, aliases) ];
+    }
+
+    return definitions.flatMap((definition) => {
+      return definition.signatures.map((signature) => {
+        return createSingleLineCommandLikeStatementRule(scopeName, definition, signature, placeholder);
+      });
+    });
+  });
+}
+// #endregion helpers

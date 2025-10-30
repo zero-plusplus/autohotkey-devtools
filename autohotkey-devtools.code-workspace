@@ -1,0 +1,37 @@
+{
+	"folders": [
+		{
+			"path": "editors/vscode/vscode-autohotkey-devtools",
+			"name": "🖊️ VSCode AutoHotkey DevTools",
+		},
+		{
+			"path": "packages/autohotkey-modules",
+			"name": "⚙️ AutoHotKey Modules"
+		},
+		{
+			"path": "packages/autohotkey-tmlanguage",
+			"name": "🧮 AutoHotKey tmLanguage"
+		},
+		{
+			"path": "packages/autohotkey-utilities",
+			"name": "🛠️ AutoHotKey Utilities"
+		},
+		{
+			"path": "packages/utilities",
+			"name": "🔧 Utilities"
+		},
+		{
+			"path": ".",
+			"name": "🏠"
+		},
+	],
+	"settings": {
+		"typescript.preferences.preferTypeOnlyAutoImports": true,
+		"[typescript]": {
+			"editor.codeActionsOnSave": {
+				"source.organizeImports": "always"
+			},
+			"editor.foldingImportsByDefault": true,
+		},
+	}
+}

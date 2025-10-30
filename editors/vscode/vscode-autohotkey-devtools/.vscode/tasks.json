@@ -1,0 +1,23 @@
+{
+	"version": "2.0.0",
+	"tasks": [
+		{
+			"label": "npm: watch",
+			"type": "shell",
+			"isBackground": true,
+			"command": "npm run watch",
+			"problemMatcher": [
+				{
+					"pattern": {
+						"regexp": "^.*$",
+					},
+					"background": {
+						"activeOnStart": true,
+						"beginsPattern": "^\\[esbuild\\] Build was started",
+						"endsPattern": "^\\[esbuild\\] Build was completed",
+					}
+				}
+			]
+		},
+	]
+}

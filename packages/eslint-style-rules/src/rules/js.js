@@ -1,0 +1,71 @@
+const eslint = require('./all/eslint.js');
+const common = require('./common.js');
+
+module.exports.rules = {
+  ...eslint.rules,
+
+  'arrow-body-style': 'off',
+  'camelcase': 'off',
+  'capitalized-comments': 'off',
+  'class-methods-use-this': 'off',
+  'complexity': 'off',
+  'consistent-this': [ 'error', 'self' ],
+  'curly': 'off',
+  'func-names': 'off',
+  'func-style': 'off',
+  'id-denylist': 'off',
+  'id-length': 'off',
+  'id-match': 'off',
+  'init-declarations': 'off',
+  'max-classes-per-file': 'off',
+  'max-depth': 'off',
+  'max-lines-per-function': 'off',
+  'max-lines': 'off',
+  'max-nested-callbacks': 'off',
+  'max-params': 'off',
+  'max-statements': 'off',
+  'new-cap': 'off',
+  'no-console': 'off',
+  'no-constant-condition': [ 'error', { checkLoops: false } ],
+  'no-continue': 'off',
+  'no-empty-function': 'off',
+  'no-empty': [ 'error', { allowEmptyCatch: true } ],
+  'no-inline-comments': 'off',
+  'no-invalid-this': 'off',
+  'no-magic-numbers': 'off',
+  'no-plusplus': 'off',
+  'no-restricted-exports': 'off',
+  'no-restricted-imports': 'off',
+  'no-restricted-properties': 'off',
+  'no-restricted-syntax': 'off',
+  'no-shadow': 'off',
+  'no-template-curly-in-string': 'off',
+  'no-ternary': 'off',
+  'no-undef': 'off',
+  'no-underscore-dangle': 'off',
+  'no-unused-vars': [ 'warn', { args: 'none' } ],
+  'no-use-before-define': [ 'error', { functions: false, classes: false } ],
+  'one-var': 'off',
+  'prefer-arrow-callback': 'off',
+  'prefer-destructuring': 'off',
+  'prefer-named-capture-group': 'off',
+  'sort-imports': [ 'error', { ignoreDeclarationSort: true } ],
+  'sort-keys': 'off',
+  'sort-vars': 'off',
+  'yoda': 'off',
+};
+module.exports.config = () => {
+  return [
+    ...common.config(),
+    {
+      files: [
+        '**/*.js',
+        '**/*.cjs',
+        '**/*.mjs',
+      ],
+      rules: {
+        ...module.exports.rules,
+      },
+    },
+  ];
+};

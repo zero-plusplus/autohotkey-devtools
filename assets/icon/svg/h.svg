@@ -1,0 +1,47 @@
+<svg
+  xmlns="http://www.w3.org/2000/svg"
+  width="150px"
+  height="150px"
+  viewBox="0 0 150 150"
+>
+  <defs>
+    <symbol>
+      <!-- Main Symbols -->
+      <svg id="greenBase" viewBox="0 0 100 100">
+        <defs>
+          <linearGradient id="greenBaseFill" x1="0%" y1="0%" x2="50%" y2="100%">
+            <stop offset="0%" style="stop-color: hsl(120 100 40%);" />
+            <stop offset="50%" style="stop-color: hsl(120 100 40%);" />
+            <stop offset="75%" style="stop-color: hsl(120 100 45%);" />
+            <stop offset="100%" style="stop-color: hsl(120 100 30%);" />
+          </linearGradient>
+          <linearGradient id="greenBaseFill2" x1="100%" y1="0%" x2="100%" y2="100%">
+            <stop offset="0%" style="stop-color: hsl(120 100 60%);" />
+            <stop offset="100%" style="stop-color: hsl(120 100 42%);" />
+          </linearGradient>
+          <linearGradient id="greenStroke" x1="100%" y1="0%" x2="100%" y2="100%">
+            <stop offset="0%" style="stop-color: hsl(120 100 65%);" />
+            <stop offset="100%" style="stop-color: hsl(120 100 45%);" />
+          </linearGradient>
+        </defs>
+
+        <rect x="0" y="0" width="100" height="100" rx="5" fill="url(#greenBaseFill)" />
+        <rect x="7" y="6" width="86" height="86" rx="10" stroke="url(#greenStroke)" stroke-width="1" fill="url(#greenBaseFill2)" />
+      </svg>
+      <svg id="char_H" viewBox="0 0 100 100">
+        <line x1="26" y1="21" x2="26" y2="79" stroke="hsl(120 100 40%)" stroke-width="9" />
+        <line x1="25" y1="20" x2="25" y2="78" stroke="white" stroke-width="8" />
+
+        <line x1="76" y1="21" x2="76" y2="79" stroke="hsl(120 100 40%)" stroke-width="9" />
+        <line x1="75" y1="20" x2="75" y2="78" stroke="white" stroke-width="8" />
+
+        <line x1="30" y1="51" x2="71" y2="51" stroke="hsl(120 100 40%)" stroke-width="8" />
+        <line x1="25" y1="50" x2="75" y2="50" stroke="white" stroke-width="8" />
+      </svg>
+    </symbol>
+  </defs>
+
+  <!-- Main -->
+  <use href="#greenBase" x="5" y="5" width="140" height="140" />
+  <use href="#char_H" x="5" y="5" width="140" height="140" />
+</svg>

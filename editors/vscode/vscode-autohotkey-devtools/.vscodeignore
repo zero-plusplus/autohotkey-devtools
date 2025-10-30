@@ -1,0 +1,11 @@
+../
+../../
+../../../
+.vscode/
+build/demo
+scripts/
+src/
+.gitignore
+*.config.js
+tsconfig.json
+*.vsix

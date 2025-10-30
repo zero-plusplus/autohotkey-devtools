@@ -1,0 +1,45 @@
+import {
+  capture,
+  inlineSpaces0,
+  keyword,
+  lookbehind,
+  optcapture,
+  seq,
+  textalt,
+} from '../../../oniguruma';
+import {
+  includeRule,
+  nameRule,
+  patternsRule,
+  Repository,
+  RuleName,
+  type MatchRule,
+  type ScopeName,
+} from '../../../tmlanguage';
+
+interface Placeholder {
+  startPattern: string;
+  namePattern: string;
+  operators: readonly string[];
+}
+export function createAssignmentDeclarationRule(scopeName: ScopeName, placeholder: Placeholder): MatchRule {
+  return {
+    match: seq(
+      lookbehind(placeholder.startPattern),
+      inlineSpaces0(),
+      optcapture(keyword('global', 'local', 'static')),
+      inlineSpaces0(),
+      capture(seq(placeholder.namePattern)),
+      inlineSpaces0(),
+      capture(textalt(...placeholder.operators)),
+    ),
+    captures: {
+      1: patternsRule(includeRule(Repository.Modifier)),
+      2: patternsRule(
+        includeRule(Repository.Comma),
+        includeRule(Repository.Expression),
+      ),
+      3: nameRule(scopeName, RuleName.Operator),
+    },
+  };
+}

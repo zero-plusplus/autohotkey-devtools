@@ -1,0 +1,546 @@
+import * as markdown from '../__injection__/markdown';
+import * as constants_common from '../common/constants';
+import * as patterns_common from '../common/patterns';
+import * as rules_common from '../common/rules';
+import { ordalt } from '../oniguruma';
+import {
+  includeRule,
+  name,
+  namedPatternsRule,
+  patternsRule,
+  Repository,
+  RuleName,
+  type Repositories,
+  type ScopeName,
+  type TmLanguage,
+} from '../tmlanguage';
+import * as constants_v2 from './constants';
+import * as definitions_v2 from './definitions';
+import * as patterns_v2 from './patterns';
+import * as rules_v2 from './rules';
+
+export function createTmLanguage(): TmLanguage {
+  const scopeName: ScopeName = 'autohotkey2';
+
+  return {
+    scopeName: `source.${scopeName}`,
+    patterns: [
+      includeRule(Repository.Meta),
+      includeRule(Repository.Statement),
+    ],
+    repository: createRepositories(scopeName),
+  };
+}
+
+interface Placeholder {
+  builtinVaribles: readonly string[];
+  builtInClassNames: readonly string[];
+  builtInFunctionNames: readonly string[];
+  deprecatedBuiltinFunctionNames: readonly string[];
+}
+export function createRepositories(scopeName: ScopeName, placeholder?: Placeholder): Repositories {
+  return {
+    [Repository.FencedCodeBlockInDocument]: markdown.createCodeFencePatternsRule(),
+    [Repository.Meta]: patternsRule(
+      includeRule(Repository.Trivias),
+      includeRule(Repository.DirectiveStatement),
+    ),
+
+    // #region trivia
+    [Repository.Trivias]: patternsRule(
+      includeRule(Repository.MultiLineTrivias),
+      includeRule(Repository.SingleLineTrivias),
+      includeRule(Repository.InlineTrivias),
+    ),
+    [Repository.SingleLineTrivias]: patternsRule(
+      includeRule(Repository.CompilerDirectiveComment),
+      includeRule(Repository.SingleLineDocumentComment),
+      includeRule(Repository.SingleLineComment),
+    ),
+    [Repository.InlineTrivias]: patternsRule(
+      includeRule(Repository.InlineComment),
+      includeRule(Repository.InlineDocumentComment),
+    ),
+    [Repository.MultiLineTrivias]: patternsRule(
+      includeRule(Repository.MultiLineDocumentComment),
+      includeRule(Repository.MultiLineComment),
+    ),
+
+    // #region comment
+    [Repository.SingleLineComment]: rules_common.createSingleLineCommentRule(scopeName),
+    [Repository.InlineComment]: rules_common.createInLineCommentRule(scopeName),
+    [Repository.MultiLineComment]: rules_common.createMultiLineCommentRule(scopeName),
+    // #endregion comment
+
+    // #region document
+    [Repository.SingleLineDocumentComment]: rules_common.createSinglelineDocumentCommentRule(scopeName),
+    [Repository.InlineDocumentComment]: rules_common.createInlineDocumentCommentRule(scopeName),
+    [Repository.InlineTextInDocument]: rules_common.createInlineTextInDocumentRule(scopeName),
+    [Repository.MultiLineDocumentComment]: rules_common.createDocumentCommentRule(scopeName),
+    [Repository.TypeInDocument]: rules_common.createDocumentTypeRule(scopeName),
+    // #endregion document
+
+    // #region compiler directive
+    ...rules_common.createDirectiveCommentRepositories(scopeName),
+    // #endregion compiler directive
+    // #endregion trivia
+
+    // #region statement
+    [Repository.Statement]: patternsRule(
+      includeRule(Repository.StatementInClassBlock),
+
+      includeRule(Repository.CallStatement),
+      includeRule(Repository.ExpressionStatement),
+    ),
+    [Repository.StatementInClassBlock]: patternsRule(
+      includeRule(Repository.Declaration),
+      includeRule(Repository.JumpStatement),
+      includeRule(Repository.JumpToLabelStatement),
+      includeRule(Repository.HotstringLabelStatement),
+      includeRule(Repository.HotkeyLabelStatement),
+      includeRule(Repository.LabelStatement),
+      includeRule(Repository.IfStatement),
+      includeRule(Repository.SwitchStatement),
+      includeRule(Repository.WhileStatement),
+      includeRule(Repository.LoopStatement),
+      includeRule(Repository.UntilStatement),
+      includeRule(Repository.ForStatement),
+      includeRule(Repository.TryStatement),
+      includeRule(Repository.ThrowStatement),
+    ),
+    [Repository.DirectiveStatement]: rules_v2.createDirectiveStatementRule(scopeName, definitions_v2.directiveDefinitions, {
+      startPattern: patterns_v2.statementStartPattern,
+      endPattern: patterns_common.lineEndPattern,
+      assignmentOperators: constants_common.assignmentOperators,
+    }),
+    [Repository.DirectiveDefinitions]: rules_common.createCommandLikeDefinitionsRule(scopeName, definitions_v2.directiveDefinitions, {
+      commandElementName: RuleName.DirectiveName,
+      startPattern: patterns_v2.statementStartPattern,
+      endPattern: patterns_common.lineEndPattern,
+    }),
+    [Repository.JumpStatement]: rules_common.createJumpStatement(scopeName, {
+      startPattern: patterns_v2.statementStartPattern,
+      assignmentOperators: constants_common.assignmentOperators,
+      endPattern: patterns_common.lineEndPattern,
+      identifierPattern: ordalt('Exit', 'ExitApp', 'Return'),
+    }),
+    [Repository.JumpToLabelStatement]: rules_common.createJumpToLabelStatement(scopeName, {
+      startPattern: patterns_v2.statementStartPattern,
+      endPattern: patterns_common.lineEndPattern,
+      names: [
+        'Break',
+        'Continue',
+        'Gosub',
+        'Goto',
+      ],
+      labelPattern: patterns_v2.identifierPattern,
+    }),
+    [Repository.HotstringLabelStatement]: rules_common.createHotstringLabelRule(scopeName, {
+      startPattern: patterns_v2.statementStartPattern,
+      endPattern: patterns_common.lineEndPattern,
+    }),
+    [Repository.HotkeyLabelStatement]: rules_common.createHotkeyLabelRule(scopeName, {
+      startPattern: patterns_v2.statementStartPattern,
+    }),
+    [Repository.LabelStatement]: rules_common.createLabelRule(scopeName, {
+      startPattern: patterns_common.lineStartPattern,
+      labelPattern: patterns_v2.identifierPattern,
+    }),
+
+    [Repository.IfStatement]: rules_common.createIfStatementRule(scopeName, {
+      startPattern: patterns_v2.statementStartPattern,
+    }),
+    [Repository.SwitchStatement]: rules_common.createSwitchStatementRule(scopeName, {
+      startPattern: patterns_v2.statementStartPattern,
+      endPattern: patterns_common.lineEndPattern,
+      identifierPattern: patterns_v2.identifierPattern,
+    }),
+    [Repository.WhileStatement]: rules_common.createWhileStatementRule(scopeName, {
+      startPattern: patterns_v2.statementStartPattern,
+    }),
+    [Repository.LoopStatement]: rules_v2.createLoopStatementRule(scopeName, {
+      startPattern: patterns_v2.statementStartPattern,
+    }),
+    [Repository.UntilStatement]: rules_common.createUntilStatementRule(scopeName, {
+      startPattern: patterns_v2.statementStartPattern,
+    }),
+    [Repository.ForStatement]: rules_common.createForStatementRule(scopeName, {
+      startPattern: patterns_v2.statementStartPattern,
+    }),
+    [Repository.TryStatement]: rules_common.createTryStatementRule(scopeName, {
+      startPattern: patterns_v2.statementStartPattern,
+    }),
+    [Repository.ThrowStatement]: rules_common.createThrowStatementRule(scopeName, {
+      startPattern: patterns_v2.statementStartPattern,
+      assignmentOperators: constants_common.assignmentOperators,
+    }),
+    [Repository.CallStatement]: patternsRule(
+      includeRule(Repository.BuiltInCallStatement),
+      includeRule(Repository.UserDefinedCallStatement),
+    ),
+    [Repository.BuiltInCallStatement]: patternsRule(
+      rules_common.createCallStatementRule(scopeName, {
+        commandRuleName: RuleName.FunctionName,
+        startPattern: patterns_v2.statementStartPattern,
+        identifierPattern: ordalt(...(placeholder?.builtInFunctionNames ?? constants_v2.builtInFunctionNames)),
+        assignmentOperators: constants_v2.expressionOperators,
+      }),
+      rules_common.createCallStatementRule(scopeName, {
+        commandRuleName: RuleName.FunctionName,
+        startPattern: patterns_v2.statementStartPattern,
+        identifierPattern: ordalt(...(placeholder?.deprecatedBuiltinFunctionNames ?? constants_v2.deprecatedBuiltinFunctionNames)),
+        assignmentOperators: constants_v2.expressionOperators,
+        isDeprecated: true,
+      }),
+    ),
+    [Repository.UserDefinedCallStatement]: rules_common.createCallStatementRule(scopeName, {
+      commandRuleName: RuleName.FunctionName,
+      startPattern: patterns_v2.statementStartPattern,
+      identifierPattern: patterns_v2.identifierPattern,
+      assignmentOperators: constants_v2.expressionOperators,
+    }),
+    [Repository.ExpressionStatement]: patternsRule(
+      includeRule(Repository.Comma),
+      includeRule(Repository.Expression),
+    ),
+    // #endregion statement
+
+    // #region declaration
+    [Repository.Declaration]: patternsRule(
+      includeRule(Repository.Modifier),
+      includeRule(Repository.CallExpression_FunctionDeclarationHead),
+      includeRule(Repository.ClassDeclaration),
+      includeRule(Repository.Block),
+    ),
+    [Repository.Modifier]: rules_common.createModifierRule(scopeName, {
+      startPattern: patterns_v2.statementStartPattern,
+      modifiers: constants_common.accessModifiers,
+    }),
+    [Repository.Block]: rules_common.createBlockRule(scopeName, {
+      statementsInBlock: [ includeRule(Repository.Self) ],
+    }),
+    [Repository.ClassDeclaration]: rules_common.createClassDeclarationRule(scopeName, {
+      startPattern: patterns_v2.statementStartPattern,
+      endPattern: patterns_common.lineEndPattern,
+      identifierPattern: patterns_v2.identifierPattern,
+      rulesInBody: [
+        includeRule(Repository.Meta),
+
+        includeRule(Repository.MetaPropertyName),
+        includeRule(Repository.MethodDeclarationHead),
+        includeRule(Repository.PropertyDeclaration),
+        includeRule(Repository.BlockInClassBody),
+        includeRule(Repository.StatementInClassBlock),
+        includeRule(Repository.ExpressionStatement),
+      ],
+    }),
+    [Repository.BlockInClassBody]: rules_common.createBlockInClassBodyRule(scopeName),
+    [Repository.PropertyDeclaration]: rules_common.createPropertyDeclarationRule(scopeName, {
+      modifiers: constants_common.accessModifiers,
+      identifierPattern: patterns_v2.identifierPattern,
+      identifierNameRule: patternsRule(
+        includeRule(Repository.MetaPropertyName),
+        includeRule(Repository.Variable),
+      ),
+      keywordsInArgument: [],
+    }),
+    // #endregion declaration
+
+    // #region expression
+    [Repository.Expression]: includeRule(Repository.ExpressionInControlFlow),
+    [Repository.ExpressionInBrackets]: patternsRule(
+      includeRule(Repository.ObjectInBrackets),
+      includeRule(Repository.Expression),
+    ),
+    [Repository.ExpressionInControlFlow]: patternsRule(
+      includeRule(Repository.ShorthandRegexpMatch),
+      includeRule(Repository.KeywordInExpression),
+      includeRule(Repository.Dereference),
+      includeRule(Repository.CallExpression_FunctionDeclarationHead),
+      includeRule(Repository.ParenthesizedExpression),
+      includeRule(Repository.Literal),
+      includeRule(Repository.Variable),
+
+      includeRule(Repository.Dot),
+      includeRule(Repository.Operator),
+    ),
+    [Repository.ParenthesizedExpression]: rules_v2.createParenthesizedExpressionRule(scopeName),
+
+    // #region identifier
+    [Repository.Variable]: patternsRule(
+      includeRule(Repository.KeywordLikeBuiltInVariable),
+      includeRule(Repository.BuiltInClass),
+      includeRule(Repository.BuiltInVariable),
+      includeRule(Repository.ConstantLikeVariable),
+      includeRule(Repository.UserDefinedVariable),
+    ),
+    [Repository.ConstantLikeVariable]: rules_common.createIdentifierRule(scopeName, {
+      ruleName: RuleName.ConstantLikeVariable,
+      identifierPattern: patterns_v2.identifierPattern_upper,
+      invalidIdentifierCharPattern: patterns_v2.identifierPart_upper,
+    }),
+    [Repository.UserDefinedVariable]: rules_common.createIdentifierRule(scopeName, {
+      ruleName: RuleName.Variable,
+      identifierPattern: patterns_v2.identifierPattern,
+      invalidIdentifierCharPattern: patterns_v2.identifierPart,
+    }),
+    [Repository.KeywordLikeBuiltInVariable]: rules_common.createReservedIdentifierRule(scopeName, {
+      ruleName: RuleName.KeywordLikeBuiltInVariable,
+      identifiers: constants_v2.keywordLikeBuiltinVariables,
+    }),
+    [Repository.BuiltInVariable]: rules_common.createReservedIdentifierRule(scopeName, {
+      ruleName: RuleName.BuiltInVariable,
+      identifiers: placeholder?.builtinVaribles ?? constants_v2.builtinVaribles,
+    }),
+    [Repository.BuiltInClass]: rules_common.createReservedIdentifierRule(scopeName, {
+      ruleName: RuleName.ClassName,
+      identifiers: placeholder?.builtInClassNames ?? constants_v2.builtInClassNames,
+    }),
+    [Repository.FunctionName]: rules_common.createIdentifierRule(scopeName, {
+      ruleName: RuleName.FunctionName,
+      identifierPattern: patterns_v2.identifierPattern,
+    }),
+    [Repository.MetaFunctionName]: rules_common.createReservedIdentifierRule(scopeName, {
+      ruleName: RuleName.MetaFunctionName,
+      identifiers: [ '__NEW', '__DELETE', '__ENUM', '__GET', '__SET', '__CALL' ],
+    }),
+    [Repository.MetaPropertyName]: rules_common.createReservedIdentifierRule(scopeName, {
+      ruleName: RuleName.MetaFunctionName,
+      identifiers: [ '__ITEM' ],
+    }),
+    [Repository.LabelName]: rules_common.createIdentifierRule(scopeName, {
+      ruleName: RuleName.LabelName,
+      identifierPattern: patterns_v2.identifierPattern,
+      invalidIdentifierCharPattern: patterns_v2.identifierPart,
+    }),
+    [Repository.HotkeyName]: rules_common.createHotkeyNameRule(scopeName),
+    [Repository.KeywordInExpression]: rules_common.createReservedIdentifierRule(scopeName, {
+      ruleName: RuleName.KeywordInExpression,
+      identifiers: [
+        ...constants_v2.expressionKeywords,
+
+        // #region The following are not exactly keywords in the expression, but are defined here as keywords because it is more convenient for the TMLanguage mechanism
+        // for key, value in obj
+        //                ^^
+        'in',
+        // catch Error as err
+        //             ^^
+        'as',
+        // #endregion
+      ],
+    }),
+    // #endregion identifier
+
+    // #region access
+    [Repository.Dereference]: rules_v2.createDereferenceRule(scopeName),
+    [Repository.DereferenceInCommandArgument]: rules_v2.createDereferenceInCommandArgumentRule(scopeName),
+    // #endregion access
+
+    // #region literal
+    [Repository.Literal]: patternsRule(
+      includeRule(Repository.StringAsRegExp),
+      includeRule(Repository.String),
+      includeRule(Repository.Number),
+      includeRule(Repository.Object),
+      includeRule(Repository.Array),
+    ),
+
+    // #region object
+    [Repository.ObjectInBrackets]: rules_common.createObjectRule(scopeName, {
+      startPattern: patterns_common.lineStartPattern,
+    }),
+    [Repository.Object]: rules_common.createObjectRule(scopeName, {
+      startPattern: patterns_v2.continuationExpressionStartPattern,
+    }),
+    [Repository.ObjectKey]: rules_v2.createObjectKeyRule(scopeName, {
+      keyPattern: patterns_v2.objectKeyNamePattern,
+    }),
+    [Repository.ObjectContent]: patternsRule(
+      includeRule(Repository.Meta),
+
+      includeRule(Repository.ObjectKey),
+      includeRule(Repository.Comma),
+      includeRule(Repository.ExpressionInBrackets),
+    ),
+    [Repository.Array]: rules_common.createArrayRule(scopeName),
+    // #endregion object
+
+    // #region string
+    [Repository.String]: patternsRule(
+      includeRule(Repository.DoubleString),
+      includeRule(Repository.SingleString),
+      includeRule(Repository.ContinuationDoubleString),
+      includeRule(Repository.ContinuationSingleString),
+    ),
+    [Repository.DoubleString]: rules_common.createStringRule(scopeName, {
+      stringElementName: RuleName.DoubleString,
+      quoteChar: patterns_v2.doubleQuoteCharPattern,
+      escapedQuotePattern: patterns_v2.escapedDoubleQuotePattern,
+      escapeSequences: constants_v2.doubleQuoteEscapeSequences,
+    }),
+    [Repository.SingleString]: rules_common.createStringRule(scopeName, {
+      stringElementName: RuleName.SingleString,
+      quoteChar: patterns_v2.singleQuoteCharPattern,
+      escapedQuotePattern: patterns_v2.escapedSingleQuotePattern,
+      escapeSequences: constants_v2.singleQuoteEscapeSequences,
+    }),
+    [Repository.ContinuationStringOptions]: rules_common.createContinuationStringOptionsRule(scopeName),
+    [Repository.ContinuationDoubleString]: rules_common.createContinuationString(scopeName, {
+      stringElementName: RuleName.DoubleString,
+      quoteChar: patterns_v2.doubleQuoteCharPattern,
+      escapedQuotePattern: patterns_v2.escapedDoubleQuotePattern,
+      escapeSequences: constants_v2.doubleQuoteEscapeSequences,
+    }),
+    [Repository.ContinuationSingleString]: rules_common.createContinuationString(scopeName, {
+      stringElementName: RuleName.SingleString,
+      quoteChar: patterns_v2.singleQuoteCharPattern,
+      escapedQuotePattern: patterns_v2.escapedSingleQuotePattern,
+      escapeSequences: constants_v2.singleQuoteEscapeSequences,
+    }),
+    // #endregion string
+
+    // #region number
+    [Repository.Number]: patternsRule(
+      includeRule(Repository.Integer),
+      includeRule(Repository.InvalidFloat),
+      includeRule(Repository.Float),
+      includeRule(Repository.InvalidHex),
+      includeRule(Repository.Hex),
+      includeRule(Repository.InvalidScientificNotation),
+      includeRule(Repository.ScientificNotation),
+    ),
+    [Repository.Integer]: rules_common.createIntegerRule(scopeName),
+    [Repository.Float]: rules_common.createFloatRule(scopeName),
+    [Repository.InvalidFloat]: rules_common.createInvalidFloatRule(scopeName),
+    [Repository.Hex]: rules_common.createHexRule(scopeName),
+    [Repository.InvalidHex]: rules_common.createInvalidHexRule(scopeName),
+    [Repository.ScientificNotation]: rules_common.createScientificNotationRule(scopeName),
+    [Repository.InvalidScientificNotation]: rules_common.createInvalidScientificNotationRule(scopeName),
+    // #endregion number
+    // #endregion literal
+
+    // #region operator
+    [Repository.Comma]: rules_common.createOperatorRule(scopeName, {
+      operatorRuleName: RuleName.Comma,
+      operators: [ ',' ],
+    }),
+    [Repository.Dot]: rules_common.createDotOperatorRule(scopeName),
+    [Repository.Operator]: patternsRule(
+      rules_common.createInvalidOperatorRule(scopeName, {
+        operatorRuleName: RuleName.Operator,
+        operators: [ `<>` ],
+      }),
+      rules_common.createOperatorRule(scopeName, {
+        operatorRuleName: RuleName.Operator,
+        operators: constants_v2.expressionOperators,
+      }),
+    ),
+    [Repository.DereferenceUnaryOperator]: {
+      name: name(scopeName, RuleName.Operator),
+      match: patterns_common.dereferenceUnaryOperatorPattern,
+    },
+    // #endregion operator
+
+    // #region regexp
+    [Repository.ShorthandRegexpMatch]: patternsRule(
+      rules_common.createShorthandRegExpMatchRule(scopeName, {
+        quoteChar: patterns_v2.doubleQuoteCharPattern,
+        escapedQuotePattern: patterns_v2.escapedDoubleQuotePattern,
+        regexpOptionsPattern: patterns_common.regexpOptionsPattern,
+        contentRuleName: RuleName.RegExpString,
+        contentRepository: Repository.DoubleStringAsRegExpContent,
+      }),
+      rules_common.createShorthandRegExpMatchRule(scopeName, {
+        quoteChar: patterns_v2.singleQuoteCharPattern,
+        escapedQuotePattern: patterns_v2.escapedSingleQuotePattern,
+        regexpOptionsPattern: patterns_common.regexpOptionsPattern,
+        contentRuleName: RuleName.RegExpString,
+        contentRepository: Repository.SingleStringAsRegExpContent,
+      }),
+    ),
+    [Repository.StringAsRegExp]: patternsRule(
+      includeRule(Repository.DoubleStringAsRegexp),
+      includeRule(Repository.SingleStringAsRegexp),
+    ),
+    [Repository.DoubleStringAsRegexp]: rules_common.createStringAsRegExpRule(scopeName, {
+      quoteChar: patterns_v2.doubleQuoteCharPattern,
+      escapedQuotePattern: patterns_v2.escapedDoubleQuotePattern,
+      regexpOptionsPattern: patterns_common.regexpOptionsPattern,
+      contentRuleName: RuleName.RegExpString,
+      contentRepository: Repository.DoubleStringAsRegExpContent,
+    }),
+    [Repository.DoubleStringAsRegExpContent]: rules_common.createStringAsRegExpContentRule(scopeName, {
+      regexpOptions: constants_common.regexpOptions,
+      contentRepository: Repository.DoubleStringAsRegExpContent,
+      commonContentRepository: Repository.DoubleStringAsRegExpCommonContent,
+    }),
+    [Repository.DoubleStringAsRegExpCommonContent]: rules_common.createRegExpCommonContentRule(scopeName, {
+      regexpEscapeSequences: constants_common.regexpEscapeSequences,
+      stringEscapeSequences: constants_v2.doubleQuoteEscapeSequences,
+      pcreUnicodePropertyCodes: constants_common.pcreUnicodePropertyCodes,
+      pcreUnicodePropertyScripts: constants_common.pcreUnicodePropertyScripts,
+    }),
+    [Repository.SingleStringAsRegexp]: rules_common.createStringAsRegExpRule(scopeName, {
+      quoteChar: patterns_v2.singleQuoteCharPattern,
+      escapedQuotePattern: patterns_v2.escapedSingleQuotePattern,
+      regexpOptionsPattern: patterns_common.regexpOptionsPattern,
+      contentRuleName: RuleName.RegExpString,
+      contentRepository: Repository.SingleStringAsRegExpContent,
+    }),
+    [Repository.SingleStringAsRegExpContent]: rules_common.createStringAsRegExpContentRule(scopeName, {
+      regexpOptions: constants_common.regexpOptions,
+      contentRepository: Repository.SingleStringAsRegExpContent,
+      commonContentRepository: Repository.SingleStringAsRegExpCommonContent,
+    }),
+    [Repository.SingleStringAsRegExpCommonContent]: rules_common.createRegExpCommonContentRule(scopeName, {
+      regexpEscapeSequences: constants_common.regexpEscapeSequences,
+      stringEscapeSequences: constants_v2.singleQuoteEscapeSequences,
+      pcreUnicodePropertyCodes: constants_common.pcreUnicodePropertyCodes,
+      pcreUnicodePropertyScripts: constants_common.pcreUnicodePropertyScripts,
+    }),
+    // #endregion regexp
+
+    // #region misc
+    [Repository.CallExpression_FunctionDeclarationHead]: rules_common.createCallExpressionRule(scopeName, {
+      callableNamePattern: patterns_v2.looseCallableNamePattern,
+      callableNameRule: namedPatternsRule(
+        name(scopeName, RuleName.FunctionName),
+        [ includeRule(Repository.BuiltInClass) ],
+      ),
+      keywordsInArgument: [],
+    }),
+    [Repository.MethodDeclarationHead]: rules_common.createCallExpressionRule(scopeName, {
+      callableNamePattern: patterns_v2.identifierPattern,
+      callableNameRule: patternsRule(
+        includeRule(Repository.MetaFunctionName),
+        includeRule(Repository.FunctionName),
+      ),
+      keywordsInArgument: [],
+    }),
+    // #endregion misc
+    // #endregion expression
+
+    // #region misc
+    [Repository.CommandArgument]: patternsRule(
+      includeRule(Repository.Dereference),
+      includeRule(Repository.CommandArgumentText),
+      includeRule(Repository.InlineTrivias),
+    ),
+    [Repository.CommandLastArgument]: patternsRule(
+      includeRule(Repository.Dereference),
+      includeRule(Repository.CommandLastArgumentText),
+      includeRule(Repository.InlineTrivias),
+    ),
+    [Repository.UnquotedStringEscapeSequence]: rules_common.createUnquotedEscapeSequencesRule(scopeName, constants_v2.unquoteEscapeSequences),
+    [Repository.CommandArgumentText]: rules_common.createUnquotedStringRule(scopeName, {
+      stringRuleName: RuleName.UnquotedString,
+      stringPattern: patterns_common.unquotedArgumentPattern,
+    }),
+    [Repository.CommandLastArgumentText]: rules_common.createUnquotedStringRule(scopeName, {
+      stringRuleName: RuleName.UnquotedString,
+      stringPattern: patterns_common.unquotedLastArgumentPattern,
+    }),
+    [Repository.CommandArgumentHotstringOptions]: rules_common.createHotstringOptionsCommandArgumentRule(scopeName),
+    // #endregion misc
+  };
+}
