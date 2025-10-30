@@ -8,7 +8,7 @@
   },
   "license": "SEE LICENSE IN README.md",
   "displayName": "AutoHotkey Dev Tools",
-  "description": "[UNDER DEVELOPMENT] The goal is to provide an integrated AutoHotkey development environment in Visual Studio Code.",
+  "description": "Note: Currently, only syntax highlighting is provided. the goal is to finally become an AutoHotkey integrated development environment within VSCode.",
   "homepage": "https://github.com/zero-plusplus/autohotkey-devtools",
   "repository": "github:zero-plusplus/autohotkey-devtools",
   "bugs": {
