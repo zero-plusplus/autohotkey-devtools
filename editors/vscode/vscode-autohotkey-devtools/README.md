@@ -83,6 +83,8 @@ In versions v2 and later, the command syntax has been removed, but similar highl
 
 ### Version switching
 
+> Note: The external extension vscode-autohotkey-debug does not support this feature.
+
 Setting the language ID to `autohotkey` allows you to switch the highlighting version using [#Requires](https://www.autohotkey.com/docs/v2/lib/_Requires.htm). By default, it is highlighted as `autohotkey2`.
 
 Currently, only simple version notation starting with the following is supported.
