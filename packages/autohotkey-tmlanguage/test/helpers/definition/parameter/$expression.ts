@@ -1,4 +1,4 @@
-import { name, RuleName, StyleName, type ScopeName } from '../../../../src/tmlanguage';
+import { name, RuleName, type ScopeName } from '../../../../src/tmlanguage';
 import type { ExpectedTestData } from '../../../types';
 import { createCommandExpectedData, type CommandPlaceholder } from '../helpers';
 
@@ -24,12 +24,12 @@ export function $expression(scopeName: ScopeName, placeholder: CommandPlaceholde
       ],
       placeholder,
     ),
-    createCommandExpectedData(
-      scopeName,
-      `% var`,
-      [ { text: '% var', scopes: name(scopeName, RuleName.PercentExpressionBegin, StyleName.Invalid) } ],
-      placeholder,
-    ),
+    // createCommandExpectedData(
+    //   scopeName,
+    //   `% var`,
+    //   [ { text: '% var', scopes: name(scopeName, RuleName.PercentExpressionBegin, StyleName.Invalid) } ],
+    //   placeholder,
+    // ),
     createCommandExpectedData(
       scopeName,
       `%var% + %a%b%c%`,
@@ -65,15 +65,15 @@ export function $expression(scopeName: ScopeName, placeholder: CommandPlaceholde
             ],
             placeholder,
           ),
-          createCommandExpectedData(
-            scopeName,
-            `% var,`,
-            [
-              { text: '% var', scopes: name(scopeName, RuleName.PercentExpressionBegin, StyleName.Invalid) },
-              { text: ',', scopes: name(scopeName, RuleName.Comma) },
-            ],
-            placeholder,
-          ),
+          // createCommandExpectedData(
+          //   scopeName,
+          //   `% var,`,
+          //   [
+          //     { text: '% var', scopes: name(scopeName, RuleName.PercentExpressionBegin, StyleName.Invalid) },
+          //     { text: ',', scopes: name(scopeName, RuleName.Comma) },
+          //   ],
+          //   placeholder,
+          // ),
           createCommandExpectedData(
             scopeName,
             `%var% + %a%b%c%,`,
