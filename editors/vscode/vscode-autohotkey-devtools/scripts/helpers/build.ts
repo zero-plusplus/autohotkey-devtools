@@ -74,10 +74,7 @@ export function createLanguageConfiguration(scopeName: ScopeName): Record<string
         '/*',
         '*/',
       ],
-      lineComment: {
-        comment: ';',
-        noIndent: false,
-      },
+      lineComment: ';',
     },
     brackets: [
       [ '(', ')' ],
