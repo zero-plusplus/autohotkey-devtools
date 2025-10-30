@@ -21,7 +21,7 @@ First released
   - v1.1.37.02 (`autohotkeyl`, `.ahkl`)
   - v2.0.19 (`autohotkey2`, `.ahk2`)
   - v2.1-alpha.18 (`autohotkeynext`, `.ahknext`)
-  - [Version switching](https://github.com/zero-plusplus/autohotkey-devtools/editors/vscode/vscode-autohotkey-devtools#version-switching) (`autohotkey`, `.ahk`)
+  - Version switching (`autohotkey`, `.ahk`)
 
 <!-- Links -->
 [Keep a Changelog]: https://keepachangelog.com/
