@@ -31,7 +31,7 @@ Additionally, you can [switch the highlighted version](#version-switching) using
 
 ## License
 
-This extension is protected by [license](https://github.com/zero-plusplus/autohotkey-devtools?tab=readme-ov-file#about-license) and cannot be included in other projects. However, for transparency, the source code is publicly available.
+This extension is protected by [license](https://github.com/zero-plusplus/autohotkey-devtools?tab=readme-ov-file#license) and cannot be included in other projects. However, for transparency, the source code is publicly available.
 
 If you need to use the source code, etc. for any reason, please ensure it remains confined to local and private environments and is not shared with others.
 
