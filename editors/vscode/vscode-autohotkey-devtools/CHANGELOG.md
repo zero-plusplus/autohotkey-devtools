@@ -32,5 +32,5 @@ First released
 [Semantic Versioning]: https://semver.org/
 
 <!-- Versions -->
-[0.0.2]: https://github.com/zero-plusplus/autohotkey-devtools/compare/v0.0.1..v0.0.2
-[0.0.1]: https://github.com/zero-plusplus/autohotkey-devtools/tree/v0.0.1
+[0.0.2]: https://github.com/zero-plusplus/autohotkey-devtools/compare/vscode-autohotkey-devtools@0.0.1v0.0.1..vscode-autohotkey-devtools@0.0.2
+[0.0.1]: https://github.com/zero-plusplus/autohotkey-devtools/tree/vscode-autohotkey-devtools@0.0.1
