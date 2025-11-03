@@ -19,6 +19,15 @@ However, since this is a personal project, development is progressing very slowl
 
 ## News
 
+### `0.0.2`
+
+The following changes have been made, but the features themselves remain unchanged.
+
+* Update keywords since searching for "ahk" on the marketplace did not yield matches
+* Add a clear statement within this document that use is at your own risk
+
+### `0.0.1`
+
 This release, version `0.0.1`, provides static syntax highlighting for the latest versions of each of the AutoHotkey versions: v1, v2, and v2.1-alpha.
 
 Details are documented [here](#syntax-highlight), providing an unique feature: arguments such as command syntax and directive syntax can be accurately represented.
