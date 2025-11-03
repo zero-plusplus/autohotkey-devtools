@@ -11,7 +11,7 @@ If you want to see what the next version of the plan is, check out the [here](ht
 
 ---
 
-## [0.0.2] - 2025-xx-xx
+## [0.0.2] - 2025-11-03
 
 Update document and extension manifest
 
