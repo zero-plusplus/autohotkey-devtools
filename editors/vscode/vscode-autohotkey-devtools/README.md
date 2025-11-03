@@ -3,7 +3,7 @@
 **First of all**
 ------------------------------
 
-**This extension is incomplete and highly experimental.**
+**This extension is incomplete and highly experimental.** As with most other software, use at your own risk.
 
 If you encounter any problems, please report [here](https://github.com/zero-plusplus/autohotkey-devtools/issues).
 
