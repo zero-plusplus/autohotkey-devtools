@@ -18,7 +18,11 @@
     "Programming Languages"
   ],
   "keywords": [
-    "AutoHotkey"
+    "AutoHotkey",
+    "autohotkey",
+    "ahk",
+    "ahk2",
+    "ah2"
   ],
   "preview": true,
   "main": "build/src/extension.js",
