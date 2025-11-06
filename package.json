@@ -42,6 +42,7 @@
   "workspaces": {
     "packages": [
       "editors/vscode/vscode-autohotkey-devtools",
+      "packages/autohotkey-language-toolkit",
       "packages/autohotkey-modules",
       "packages/autohotkey-tmlanguage",
       "packages/autohotkey-utilities",

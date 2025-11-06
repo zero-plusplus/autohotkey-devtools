@@ -5,6 +5,10 @@
 			"name": "🖊️ VSCode AutoHotkey DevTools",
 		},
 		{
+			"path": "packages/autohotkey-language-toolkit",
+			"name": "🧰 AutoHotKey Language Toolkit"
+		},
+		{
 			"path": "packages/autohotkey-modules",
 			"name": "⚙️ AutoHotKey Modules"
 		},

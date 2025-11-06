@@ -1,0 +1,10 @@
+{
+  "name": "@zero-plusplus/autohotkey-language-toolkit",
+  "version": "0.0.0",
+  "description": "",
+  "license": "SEE LICENSE IN README.md",
+  "author": "zero-plusplus",
+  "scripts": {
+    "test": "npx jest"
+  }
+}
