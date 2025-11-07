@@ -14,8 +14,10 @@ export type ScannerRuleMap = {
 
 export interface Cursor {
   peek: () => string | undefined;
+  peekCodePoint: () => number | undefined;
   advance: () => string | undefined;
   snapshot: () => number;
-  restore: (position: number) => void;
+  seek: (position: number) => void;
+  restore: () => number;
   commit: (kind: string) => Token;
 }

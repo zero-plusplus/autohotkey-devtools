@@ -13,10 +13,15 @@ export class Scanner {
     this.#position = 0;
   }
   public scan(rule: ScannerRule): Token | undefined {
-    let currentPosition = this.#position;
+    const firstPosition = this.#position;
+
+    let currentPosition = firstPosition;
     const cursor: Cursor = {
       peek: () => {
         return this.#text[currentPosition];
+      },
+      peekCodePoint: () => {
+        return this.#text[currentPosition]?.codePointAt(0);
       },
       advance: () => {
         return this.#text[currentPosition++];
@@ -24,11 +29,14 @@ export class Scanner {
       snapshot: () => {
         return currentPosition;
       },
-      restore: (position: number) => {
+      seek: (position: number) => {
         currentPosition = position;
       },
+      restore: () => {
+        return this.#position = firstPosition;
+      },
       commit: (kind: string): Token => {
-        const firstPosition = this.#position;
+        const firstPosition = cursor.restore();
         const lastPosition = currentPosition;
         const tokenText = this.#text.slice(firstPosition, lastPosition);
 
