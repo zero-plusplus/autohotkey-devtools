@@ -20,14 +20,6 @@ export class Scanner {
       eof: () => {
         return this.#text.length <= currentPosition;
       },
-      match: (...charsOrCodes) => {
-        return charsOrCodes.some((charOrCodes) => {
-          if (typeof charOrCodes === 'number') {
-            return cursor.peekCodePoint() === charOrCodes;
-          }
-          return cursor.peek() === charOrCodes;
-        });
-      },
       peek: (offset = 0) => {
         return this.#text[currentPosition + offset];
       },
@@ -37,25 +29,16 @@ export class Scanner {
       advance: () => {
         return this.#text[currentPosition++];
       },
-      consume: (...charsOrCodes): boolean => {
-        if (cursor.match(...charsOrCodes)) {
+      consume: (charOrCode): boolean => {
+        if (typeof charOrCode === 'string' && cursor.peek() === charOrCode) {
+          cursor.advance();
+          return true;
+        }
+        else if (cursor.peekCodePoint() === charOrCode) {
           cursor.advance();
           return true;
         }
         return false;
-      },
-      consumeWhile: (...charsOrCodes) => {
-        let count = 0;
-        while (!cursor.eof()) {
-          const isMatch = cursor.consume(...charsOrCodes);
-          if (isMatch) {
-            cursor.advance();
-            count++;
-            continue;
-          }
-          break;
-        }
-        return count;
       },
       snapshot: () => {
         return currentPosition;
