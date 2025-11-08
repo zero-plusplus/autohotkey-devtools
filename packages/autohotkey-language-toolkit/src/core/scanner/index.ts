@@ -17,14 +17,45 @@ export class Scanner {
 
     let currentPosition = firstPosition;
     const cursor: Cursor = {
-      peek: () => {
-        return this.#text[currentPosition];
+      eof: () => {
+        return this.#text.length <= currentPosition;
       },
-      peekCodePoint: () => {
-        return this.#text[currentPosition]?.codePointAt(0);
+      match: (...charsOrCodes) => {
+        return charsOrCodes.some((charOrCodes) => {
+          if (typeof charOrCodes === 'number') {
+            return cursor.peekCodePoint() === charOrCodes;
+          }
+          return cursor.peek() === charOrCodes;
+        });
+      },
+      peek: (offset = 0) => {
+        return this.#text[currentPosition + offset];
+      },
+      peekCodePoint: (offset = 0) => {
+        return this.#text[currentPosition + offset]?.codePointAt(0);
       },
       advance: () => {
         return this.#text[currentPosition++];
+      },
+      consume: (...charsOrCodes): boolean => {
+        if (cursor.match(...charsOrCodes)) {
+          cursor.advance();
+          return true;
+        }
+        return false;
+      },
+      consumeWhile: (...charsOrCodes) => {
+        let count = 0;
+        while (!cursor.eof()) {
+          const isMatch = cursor.consume(...charsOrCodes);
+          if (isMatch) {
+            cursor.advance();
+            count++;
+            continue;
+          }
+          break;
+        }
+        return count;
       },
       snapshot: () => {
         return currentPosition;

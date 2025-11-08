@@ -13,9 +13,13 @@ export type ScannerRuleMap = {
 };
 
 export interface Cursor {
-  peek: () => string | undefined;
-  peekCodePoint: () => number | undefined;
+  eof: () => boolean;
+  match: (...charsOrCodes: Array<string | number>) => boolean;
+  peek: (offset?: number) => string | undefined;
+  peekCodePoint: (offset?: number) => number | undefined;
   advance: () => string | undefined;
+  consume: (...charsOrCodes: Array<string | number>) => boolean;
+  consumeWhile: (...charsOrCodes: Array<string | number>) => number;
   snapshot: () => number;
   seek: (position: number) => void;
   restore: () => number;
