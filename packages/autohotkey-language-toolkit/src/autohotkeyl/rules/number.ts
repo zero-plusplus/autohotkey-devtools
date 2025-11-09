@@ -52,7 +52,7 @@ export const scanNumber: TokenDefinition = (cursor): Token | undefined => {
 
   return cursor.commit(tokenName);
 };
-export const numberRule: ScannerRule = {
+export const numberTokenRule: ScannerRule = {
   name: tokenName,
   scan: scanNumber,
 };

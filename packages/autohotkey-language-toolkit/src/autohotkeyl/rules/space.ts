@@ -10,7 +10,7 @@ export const scanSpace: TokenDefinition = ({ eof, consume, commit }): Token | un
   }
   return commit(tokenName);
 };
-export const spaceRule: ScannerRule = {
+export const spaceTokenRule: ScannerRule = {
   name: tokenName,
   scan: scanSpace,
 };

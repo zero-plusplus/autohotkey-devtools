@@ -1,4 +1,4 @@
-import { tabRule } from '../../../src/autohotkeyl/rules/tab';
+import { tabTokenRule } from '../../../src/autohotkeyl/rules/tab';
 import { Scanner } from '../../../src/core/scanner';
 
 describe('tab', () => {
@@ -7,7 +7,7 @@ describe('tab', () => {
     '\t\t\t',
   ])('pass', (text) => {
     const scanner = new Scanner(text);
-    const token = scanner.scan(tabRule);
+    const token = scanner.scan(tabTokenRule);
 
     expect(token!.text).toBe(text);
   });

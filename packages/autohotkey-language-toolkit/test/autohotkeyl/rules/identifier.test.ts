@@ -1,4 +1,4 @@
-import { identifierRule } from '../../../src/autohotkeyl/rules/identifier';
+import { identifierTokenRule } from '../../../src/autohotkeyl/rules/identifier';
 import { Scanner } from '../../../src/core/scanner';
 
 describe('identifier', () => {
@@ -8,7 +8,7 @@ describe('identifier', () => {
     'a0123',
   ])('pass', (text) => {
     const scanner = new Scanner(text);
-    const token = scanner.scan(identifierRule);
+    const token = scanner.scan(identifierTokenRule);
 
     expect(token!.text).toBe(text);
   });
@@ -18,7 +18,7 @@ describe('identifier', () => {
     '&0123abc',
   ])('fail', (text) => {
     const scanner = new Scanner(text);
-    const token = scanner.scan(identifierRule);
+    const token = scanner.scan(identifierTokenRule);
 
     expect(token).toBeUndefined();
   });
@@ -28,7 +28,7 @@ describe('identifier', () => {
     'a'.repeat(254),
   ])('fail', (text) => {
     const scanner = new Scanner(text);
-    const token = scanner.scan(identifierRule);
+    const token = scanner.scan(identifierTokenRule);
 
     expect(token!.text).not.toBe(text);
   });

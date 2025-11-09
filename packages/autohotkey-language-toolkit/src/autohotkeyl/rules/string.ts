@@ -9,7 +9,7 @@ const tokenName = 'string';
 export const scanString: TokenDefinition = (curosr): Token | undefined => {
   return scanDoubleString(curosr);
 };
-export const stringRule: ScannerRule = {
+export const stringTokenRule: ScannerRule = {
   name: tokenName,
   scan: scanString,
 };

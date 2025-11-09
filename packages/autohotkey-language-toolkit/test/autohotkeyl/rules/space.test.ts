@@ -1,4 +1,4 @@
-import { spaceRule } from '../../../src/autohotkeyl/rules/space';
+import { spaceTokenRule } from '../../../src/autohotkeyl/rules/space';
 import { Scanner } from '../../../src/core/scanner';
 
 describe('space', () => {
@@ -7,7 +7,7 @@ describe('space', () => {
     '   ',
   ])('pass', (text) => {
     const scanner = new Scanner(text);
-    const token = scanner.scan(spaceRule);
+    const token = scanner.scan(spaceTokenRule);
 
     expect(token!.text).toBe(text);
   });

@@ -26,7 +26,7 @@ export const scanIdentifier: TokenDefinition = ({ peekCodePoint, advance, commit
 
   return commit(tokenName);
 };
-export const identifierRule: ScannerRule = {
+export const identifierTokenRule: ScannerRule = {
   name: tokenName,
   scan: scanIdentifier,
 };

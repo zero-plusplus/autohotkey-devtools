@@ -1,4 +1,4 @@
-import { linefeedRule } from '../../../src/autohotkeyl/rules/linefeed';
+import { linefeedTokenRule } from '../../../src/autohotkeyl/rules/linefeed';
 import { Scanner } from '../../../src/core/scanner';
 
 describe('linefeed', () => {
@@ -7,7 +7,7 @@ describe('linefeed', () => {
     '\n\n\n',
   ])('pass', (text) => {
     const scanner = new Scanner(text);
-    const token = scanner.scan(linefeedRule);
+    const token = scanner.scan(linefeedTokenRule);
 
     expect(token!.text).toBe(text);
   });

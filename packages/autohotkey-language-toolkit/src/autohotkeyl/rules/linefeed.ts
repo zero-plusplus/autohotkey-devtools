@@ -10,7 +10,7 @@ export const scanLinefeed: TokenDefinition = ({ eof, consume, commit }): Token |
   }
   return commit(tokenName);
 };
-export const linefeedRule: ScannerRule = {
+export const linefeedTokenRule: ScannerRule = {
   name: tokenName,
   scan: scanLinefeed,
 };

@@ -1,4 +1,4 @@
-import { stringRule } from '../../../src/autohotkeyl/rules/string';
+import { stringTokenRule } from '../../../src/autohotkeyl/rules/string';
 import { Scanner } from '../../../src/core/scanner';
 
 describe('string', () => {
@@ -8,7 +8,7 @@ describe('string', () => {
     '"`"',
   ])('pass', (text) => {
     const scanner = new Scanner(text);
-    const token = scanner.scan(stringRule);
+    const token = scanner.scan(stringTokenRule);
 
     expect(token!.text).toBe(text);
   });

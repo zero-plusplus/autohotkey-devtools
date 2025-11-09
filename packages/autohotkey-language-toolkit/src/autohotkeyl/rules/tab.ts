@@ -10,7 +10,7 @@ export const scanTab: TokenDefinition = ({ eof, consume, commit }): Token | unde
   }
   return commit(tokenName);
 };
-export const tabRule: ScannerRule = {
+export const tabTokenRule: ScannerRule = {
   name: tokenName,
   scan: scanTab,
 };
