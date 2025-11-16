@@ -1,3 +1,4 @@
+import { TokenKind } from '../../core/scanner/constants';
 import type {
   Cursor,
   ScannerRule,
@@ -5,12 +6,11 @@ import type {
   TokenDefinition,
 } from '../../core/scanner/types';
 
-const tokenName = 'string';
 export const scanString: TokenDefinition = (curosr): Token | undefined => {
   return scanDoubleString(curosr);
 };
 export const stringTokenRule: ScannerRule = {
-  name: tokenName,
+  kind: TokenKind.String,
   scan: scanString,
 };
 
@@ -55,5 +55,5 @@ function scanDoubleString({ eof, peek, advance, consume, commit }: Cursor): Toke
     }
     advance();
   }
-  return commit(tokenName);
+  return commit(TokenKind.String);
 }

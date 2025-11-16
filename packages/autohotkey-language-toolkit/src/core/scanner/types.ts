@@ -1,11 +1,13 @@
+import type { TokenKind } from './constants';
+
 export interface Token {
-  kind: string;
+  kind: TokenKind;
   text: string;
 }
 export type TokenDefinition = (cursor: Cursor) => Token | undefined;
 
 export type ScannerRule = {
-  name: string;
+  kind: TokenKind;
   scan: TokenDefinition;
 };
 export type ScannerRuleMap = {
@@ -21,5 +23,5 @@ export interface Cursor {
   snapshot: () => number;
   seek: (position: number) => void;
   restore: () => number;
-  commit: (kind: string) => Token;
+  commit: (kind: TokenKind) => Token;
 }

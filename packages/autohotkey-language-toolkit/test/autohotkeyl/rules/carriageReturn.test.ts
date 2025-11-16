@@ -1,5 +1,6 @@
 import { carriageReturnTokenRule } from '../../../src/autohotkeyl/rules/carriageReturn';
 import { Scanner } from '../../../src/core/scanner';
+import { TokenKind } from '../../../src/core/scanner/constants';
 
 describe('carriageReturn', () => {
   test.each([
@@ -17,8 +18,8 @@ describe('carriageReturn', () => {
   ])('pass', (text) => {
     const scanner = new Scanner(text);
 
-    expect(scanner.scan(carriageReturnTokenRule)!.text).toBe('\r');
-    expect(scanner.scan(carriageReturnTokenRule)!.text).toBe('\r');
-    expect(scanner.scan(carriageReturnTokenRule)!.text).toBe('\r');
+    expect(scanner.scan(carriageReturnTokenRule)!.kind).toBe(TokenKind.CarriageReturn);
+    expect(scanner.scan(carriageReturnTokenRule)!.kind).toBe(TokenKind.CarriageReturn);
+    expect(scanner.scan(carriageReturnTokenRule)!.kind).toBe(TokenKind.CarriageReturn);
   });
 });

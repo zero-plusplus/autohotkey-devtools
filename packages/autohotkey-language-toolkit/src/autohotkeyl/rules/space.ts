@@ -1,6 +1,10 @@
-import type { ScannerRule, Token, TokenDefinition } from '../../core/scanner/types';
+import { TokenKind } from '../../core/scanner/constants';
+import type {
+  ScannerRule,
+  Token,
+  TokenDefinition,
+} from '../../core/scanner/types';
 
-const tokenName = 'space';
 export const scanSpace: TokenDefinition = ({ eof, consume, commit }): Token | undefined => {
   while (!eof()) {
     if (consume(' ')) {
@@ -8,9 +12,9 @@ export const scanSpace: TokenDefinition = ({ eof, consume, commit }): Token | un
     }
     break;
   }
-  return commit(tokenName);
+  return commit(TokenKind.Space);
 };
 export const spaceTokenRule: ScannerRule = {
-  name: tokenName,
+  kind: TokenKind.Space,
   scan: scanSpace,
 };

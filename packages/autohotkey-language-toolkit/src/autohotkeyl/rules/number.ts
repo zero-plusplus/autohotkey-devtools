@@ -1,3 +1,4 @@
+import { TokenKind } from '../../core/scanner/constants';
 import type {
   Cursor,
   ScannerRule,
@@ -13,7 +14,6 @@ import {
   isZeroDigitCharCode,
 } from '../../core/utils';
 
-const tokenName = 'number';
 export const scanNumber: TokenDefinition = (cursor): Token | undefined => {
   // e.g. `0`, `0x123`
   //       ^    ^^^^^
@@ -26,7 +26,7 @@ export const scanNumber: TokenDefinition = (cursor): Token | undefined => {
       cursor.advance();
       return scanHexValue(cursor);
     }
-    return cursor.commit(tokenName);
+    return cursor.commit(TokenKind.Number);
   }
 
   // e.g. `123`
@@ -50,10 +50,10 @@ export const scanNumber: TokenDefinition = (cursor): Token | undefined => {
     scanInteger(cursor);
   }
 
-  return cursor.commit(tokenName);
+  return cursor.commit(TokenKind.Number);
 };
 export const numberTokenRule: ScannerRule = {
-  name: tokenName,
+  kind: TokenKind.Number,
   scan: scanNumber,
 };
 
@@ -61,7 +61,7 @@ export function scanInteger(cursor: Cursor): Token | undefined {
   const firstCharCode = cursor.peekCodePoint();
   if (isZeroDigitCharCode(firstCharCode)) {
     cursor.advance();
-    return cursor.commit(tokenName);
+    return cursor.commit(TokenKind.Number);
   }
 
   const { peekCodePoint, advance, commit } = cursor;
@@ -77,10 +77,10 @@ export function scanInteger(cursor: Cursor): Token | undefined {
     }
     break;
   }
-  return commit(tokenName);
+  return commit(TokenKind.Number);
 }
 export const integerRule: ScannerRule = {
-  name: 'integer',
+  kind: TokenKind.Number,
   scan: scanInteger,
 };
 
@@ -93,5 +93,5 @@ export function scanHexValue(cursor: Cursor): Token | undefined {
     }
     break;
   }
-  return cursor.commit(tokenName);
+  return cursor.commit(TokenKind.Number);
 }

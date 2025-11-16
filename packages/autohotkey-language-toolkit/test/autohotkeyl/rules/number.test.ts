@@ -1,6 +1,7 @@
 import { identifierTokenRule } from '../../../src/autohotkeyl/rules/identifier';
 import { numberTokenRule } from '../../../src/autohotkeyl/rules/number';
 import { Scanner } from '../../../src/core/scanner';
+import { TokenKind } from '../../../src/core/scanner/constants';
 
 describe('number', () => {
   describe('integer', () => {
@@ -10,6 +11,7 @@ describe('number', () => {
       const scanner = new Scanner(text);
       const token = scanner.scan(numberTokenRule);
 
+      expect(token!.kind).toBe(TokenKind.Number);
       expect(token!.text).toBe(text);
     });
 
@@ -32,6 +34,7 @@ describe('number', () => {
       const scanner = new Scanner(text);
       const token = scanner.scan(numberTokenRule);
 
+      expect(token!.kind).toBe(TokenKind.Number);
       expect(token!.text).toBe(text);
     });
   });
@@ -45,6 +48,7 @@ describe('number', () => {
       const scanner = new Scanner(text);
       const token = scanner.scan(numberTokenRule);
 
+      expect(token!.kind).toBe(TokenKind.Number);
       expect(token!.text).toBe(text);
     });
 
@@ -78,6 +82,7 @@ describe('number', () => {
         const scanner = new Scanner(text);
         const token = scanner.scan(numberTokenRule);
 
+        expect(token!.kind).toBe(TokenKind.Number);
         expect(token!.text).toBe(text);
       });
 

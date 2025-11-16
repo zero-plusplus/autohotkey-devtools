@@ -1,11 +1,11 @@
+import { TokenKind } from '../../core/scanner/constants';
 import type { ScannerRule, Token, TokenDefinition } from '../../core/scanner/types';
 
-const tokenName = 'linefeed';
 export const scanLinefeed: TokenDefinition = ({ consume, commit }): Token | undefined => {
   consume('\n');
-  return commit(tokenName);
+  return commit(TokenKind.Linefeed);
 };
 export const linefeedTokenRule: ScannerRule = {
-  name: tokenName,
+  kind: TokenKind.Linefeed,
   scan: scanLinefeed,
 };

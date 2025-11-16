@@ -1,3 +1,4 @@
+import type { TokenKind } from './constants';
 import type {
   Cursor,
   ScannerRule,
@@ -49,7 +50,7 @@ export class Scanner {
       restore: () => {
         return this.#position = firstPosition;
       },
-      commit: (kind: string): Token => {
+      commit: (kind: TokenKind): Token => {
         const firstPosition = cursor.restore();
         const lastPosition = currentPosition;
         const tokenText = this.#text.slice(firstPosition, lastPosition);
