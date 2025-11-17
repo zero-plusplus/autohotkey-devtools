@@ -11,6 +11,7 @@ export const enum TokenKind {
 
   // #region operators
   Ampersand,
+  Asterisk,
   AsteriskAsterisk,
   Dot,
   Exclamation,
