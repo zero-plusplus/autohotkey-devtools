@@ -20,6 +20,7 @@ export const enum TokenKind {
   MinusMinus,
   Percent,
   PlusPlus,
+  Slash,
   Tilde,
   // #endregion operators
 }
