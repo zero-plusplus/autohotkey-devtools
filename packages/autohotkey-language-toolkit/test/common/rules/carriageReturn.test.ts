@@ -9,9 +9,9 @@ describe('carriageReturn', () => {
     const scanner = new Scanner(text);
     const token = scanner.scan(carriageReturnTokenRule);
 
+    expect(token!.kind).toBe(carriageReturnTokenRule.kind);
     expect(token!.text).toBe(text);
   });
-
 
   test.each([
     '\r\r\r',

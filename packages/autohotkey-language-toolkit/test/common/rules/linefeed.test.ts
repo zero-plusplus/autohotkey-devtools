@@ -1,6 +1,5 @@
 import { linefeedTokenRule } from '../../../src/common/rules/linefeed';
 import { Scanner } from '../../../src/core/scanner';
-import { TokenKind } from '../../../src/core/scanner/constants';
 
 describe('linefeed', () => {
   test.each([
@@ -9,7 +8,7 @@ describe('linefeed', () => {
     const scanner = new Scanner(text);
     const token = scanner.scan(linefeedTokenRule);
 
-    expect(token!.kind).toBe(TokenKind.Linefeed);
+    expect(token!.kind).toBe(linefeedTokenRule.kind);
     expect(token!.text).toBe(text);
   });
 

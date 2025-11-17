@@ -1,6 +1,5 @@
 import { stringTokenRule } from '../../../src/autohotkeyl/rules/string';
 import { Scanner } from '../../../src/core/scanner';
-import { TokenKind } from '../../../src/core/scanner/constants';
 
 describe('string', () => {
   test.each([
@@ -10,7 +9,7 @@ describe('string', () => {
     const scanner = new Scanner(text);
     const token = scanner.scan(stringTokenRule);
 
-    expect(token!.kind).toBe(TokenKind.String);
+    expect(token!.kind).toBe(stringTokenRule.kind);
     expect(token!.text).toBe(text);
   });
 });

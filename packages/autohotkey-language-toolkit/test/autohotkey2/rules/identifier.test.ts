@@ -1,6 +1,5 @@
 import { identifierTokenRule } from '../../../src/autohotkey2/rules/identifier';
 import { Scanner } from '../../../src/core/scanner';
-import { TokenKind } from '../../../src/core/scanner/constants';
 
 describe('identifier', () => {
   test.each([
@@ -10,7 +9,7 @@ describe('identifier', () => {
     const scanner = new Scanner(text);
     const token = scanner.scan(identifierTokenRule);
 
-    expect(token!.kind).toBe(TokenKind.Identifier);
+    expect(token!.kind).toBe(identifierTokenRule.kind);
     expect(token!.text).toBe(text);
   });
 
