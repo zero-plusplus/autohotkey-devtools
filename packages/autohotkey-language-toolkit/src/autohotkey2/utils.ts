@@ -12,6 +12,9 @@ export function isIdentifierHeadCharCode(charCode: number | undefined): charCode
   if (isAlphaCharCode(charCode)) {
     return true;
   }
+  if (isDigitCharCode(charCode)) {
+    return true;
+  }
 
   const _underscore = 0x005F;
   if (charCode === _underscore) {

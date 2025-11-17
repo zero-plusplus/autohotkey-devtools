@@ -14,7 +14,6 @@ describe('identifier', () => {
   });
 
   test.each([
-    '0123abc',
     '&0123abc',
   ])('fail', (text) => {
     const scanner = new Scanner(text);

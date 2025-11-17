@@ -3,13 +3,54 @@ import type {
   Cursor,
   ScannerRule,
   Token,
+  TokenDefinition,
 } from '../../core/scanner/types';
 import {
   isDigitCharCode,
+  isDotCharCode,
+  isExponentialCharCode,
   isHexAlphaCharCode,
+  isPlusOrMinusCode,
   isZeroDigitCharCode,
 } from '../../core/utils';
 
+export const scanNumberToken: TokenDefinition = (cursor): Token | undefined => {
+  // e.g. `0`, `0x123`
+  //       ^    ^^^^^
+  const firstCharCode = cursor.peekCodePoint();
+  if (isZeroDigitCharCode(firstCharCode)) {
+    cursor.advance();
+
+    const nextChar = cursor.peek();
+    if (nextChar === 'x' || nextChar === 'X') {
+      cursor.advance();
+      return scanHexValue(cursor);
+    }
+  }
+
+  // e.g. `123`
+  //       ^^^
+  scanIntegerToken(cursor);
+
+  // e.g. `123.123`
+  //          ^^^^
+  if (isDotCharCode(cursor.peekCodePoint())) {
+    cursor.advance();
+    scanIntegerToken(cursor);
+  }
+
+  // e.g. `123.123e+100`
+  //               ^^^^
+  if (isExponentialCharCode(cursor.peekCodePoint())) {
+    cursor.advance();
+    if (isPlusOrMinusCode(cursor.peekCodePoint())) {
+      cursor.advance();
+    }
+    scanIntegerToken(cursor);
+  }
+
+  return cursor.commit(TokenKind.Number);
+};
 export function scanIntegerToken(cursor: Cursor): Token | undefined {
   const firstCharCode = cursor.peekCodePoint();
   if (isZeroDigitCharCode(firstCharCode)) {

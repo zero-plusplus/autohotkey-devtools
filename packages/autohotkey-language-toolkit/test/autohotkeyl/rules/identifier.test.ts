@@ -6,6 +6,11 @@ describe('identifier', () => {
     'abc',
     '_@#$',
     'a0123',
+    '0',
+    '123',
+    '0123',
+    '0123abc',
+    '0xAZ',
   ])('pass', (text) => {
     const scanner = new Scanner(text);
     const token = scanner.scan(identifierTokenRule);
@@ -15,7 +20,6 @@ describe('identifier', () => {
   });
 
   test.each([
-    '0123abc',
     '&0123abc',
   ])('fail', (text) => {
     const scanner = new Scanner(text);

@@ -1,5 +1,4 @@
 import { numberTokenRule as numberTokenRule_v2 } from '../../../src/autohotkey2/rules/number';
-import { identifierTokenRule } from '../../../src/autohotkeyl/rules/identifier';
 import { numberTokenRule as numberTokenRule_v1 } from '../../../src/autohotkeyl/rules/number';
 import { Scanner } from '../../../src/core/scanner';
 
@@ -9,23 +8,15 @@ describe('number', () => {
     [ numberTokenRule_v1 ],
   ])('integer', (tokenRule) => {
     test.each([
+      '0',
       '123',
+      '0123',
     ])('pass', (text) => {
       const scanner = new Scanner(text);
       const token = scanner.scan(tokenRule);
 
       expect(token!.kind).toBe(tokenRule.kind);
       expect(token!.text).toBe(text);
-    });
-
-    test.each([
-      '0123abc',
-      '&0123abc',
-    ])('fail', (text) => {
-      const scanner = new Scanner(text);
-      const token = scanner.scan(identifierTokenRule);
-
-      expect(token).toBeUndefined();
     });
   });
 
