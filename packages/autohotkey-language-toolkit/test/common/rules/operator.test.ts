@@ -1,3 +1,4 @@
+import { asteriskAsteriskTokenRule } from '../../../src/common/rules/operator/asteriskasterisk';
 import { dotTokenRule } from '../../../src/common/rules/operator/dot';
 import { minusMinusTokenRule } from '../../../src/common/rules/operator/minusminus';
 import { percentTokenRule } from '../../../src/common/rules/operator/percent';
@@ -6,6 +7,7 @@ import { Scanner } from '../../../src/core/scanner';
 
 describe('operator', () => {
   test.each([
+    [ asteriskAsteriskTokenRule, '**' ],
     [ dotTokenRule, '.' ],
     [ minusMinusTokenRule, '--' ],
     [ percentTokenRule, '%' ],

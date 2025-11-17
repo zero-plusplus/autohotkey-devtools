@@ -9,8 +9,11 @@ export const enum TokenKind {
   String,
   Number,
 
+  // #region operators
+  AsteriskAsterisk,
   Dot,
   MinusMinus,
   Percent,
   PlusPlus,
+  // #endregion operators
 }
