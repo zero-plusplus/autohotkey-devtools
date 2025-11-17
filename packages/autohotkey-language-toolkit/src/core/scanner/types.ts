@@ -18,7 +18,7 @@ export interface Cursor {
   eof: () => boolean;
   peek: (offset?: number) => string | undefined;
   peekCodePoint: (offset?: number) => number | undefined;
-  advance: () => string | undefined;
+  advance: (offset?: number) => string | undefined;
   consume: (charOrCode: string | number) => boolean;
   snapshot: () => number;
   seek: (position: number) => void;

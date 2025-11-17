@@ -9,6 +9,7 @@ export const enum TokenKind {
   String,
   Number,
 
-  Percent,
   Dot,
+  Percent,
+  PlusPlus,
 }

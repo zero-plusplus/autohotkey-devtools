@@ -27,8 +27,9 @@ export class Scanner {
       peekCodePoint: (offset = 0) => {
         return this.#text[currentPosition + offset]?.codePointAt(0);
       },
-      advance: () => {
-        return this.#text[currentPosition++];
+      advance: (offset = 1) => {
+        currentPosition += offset;
+        return this.#text[currentPosition];
       },
       consume: (charOrCode): boolean => {
         if (typeof charOrCode === 'string' && cursor.peek() === charOrCode) {
