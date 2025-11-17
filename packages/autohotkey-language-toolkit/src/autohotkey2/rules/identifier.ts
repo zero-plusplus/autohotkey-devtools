@@ -4,10 +4,7 @@ import type {
   Token,
   TokenDefinition,
 } from '../../core/scanner/types';
-import {
-  isIdentifierHeadCharCode,
-  isIdentifierTailCharCode,
-} from '../utils';
+import { isIdentifierHeadCharCode, isIdentifierTailCharCode } from '../utils';
 
 export const scanIdentifier: TokenDefinition = ({ peekCodePoint, advance, commit }): Token | undefined => {
   const charCode = peekCodePoint();

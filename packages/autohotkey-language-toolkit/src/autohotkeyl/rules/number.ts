@@ -5,9 +5,7 @@ import type {
   Token,
   TokenDefinition,
 } from '../../core/scanner/types';
-import {
-  isIdentifierTailCharCode,
-} from '../../core/utils';
+import { isIdentifierTailCharCode } from '../utils';
 import { scanIdentifier } from './identifier';
 
 export const scanNumber: TokenDefinition = (cursor): Token | undefined => {
