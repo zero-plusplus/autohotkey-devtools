@@ -5,6 +5,7 @@ import { dotTokenRule } from '../../../src/common/rules/operator/dot';
 import { exclamationTokenRule } from '../../../src/common/rules/operator/exclamation';
 import { greaterthanTokenRule } from '../../../src/common/rules/operator/greaterthan';
 import { lessthanTokenRule } from '../../../src/common/rules/operator/lessthan';
+import { lessthanLessthanTokenRule } from '../../../src/common/rules/operator/lessthanlessthan';
 import { minusTokenRule } from '../../../src/common/rules/operator/minus';
 import { minusMinusTokenRule } from '../../../src/common/rules/operator/minusminus';
 import { percentTokenRule } from '../../../src/common/rules/operator/percent';
@@ -24,6 +25,7 @@ describe('operator', () => {
     [ exclamationTokenRule, '!' ],
     [ greaterthanTokenRule, '>' ],
     [ lessthanTokenRule, '<' ],
+    [ lessthanLessthanTokenRule, '<<' ],
     [ minusTokenRule, '-' ],
     [ minusMinusTokenRule, '--' ],
     [ percentTokenRule, '%' ],
@@ -47,6 +49,7 @@ describe('operator', () => {
     [ exclamationTokenRule, [ '!=', '!==' ] ],
     [ greaterthanTokenRule, [ '>>', '>=' ] ],
     [ lessthanTokenRule, [ '<<', '<=' ] ],
+    [ lessthanLessthanTokenRule, [ '>>', '>=' ] ],
     [ minusTokenRule, [ '--', '-=' ] ],
     [ plusTokenRule, [ '++', '+=' ] ],
     [ slashTokenRule, [ '//', '/=' ] ],
