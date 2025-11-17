@@ -5,7 +5,7 @@ import type {
   TokenDefinition,
 } from '../../core/scanner/types';
 
-export const scanTab: TokenDefinition = ({ eof, consume, commit }): Token | undefined => {
+export const scanTabToken: TokenDefinition = ({ eof, consume, commit }): Token | undefined => {
   while (!eof()) {
     if (consume('\t')) {
       continue;
@@ -16,5 +16,5 @@ export const scanTab: TokenDefinition = ({ eof, consume, commit }): Token | unde
 };
 export const tabTokenRule: ScannerRule = {
   kind: TokenKind.Tab,
-  scan: scanTab,
+  scan: scanTabToken,
 };

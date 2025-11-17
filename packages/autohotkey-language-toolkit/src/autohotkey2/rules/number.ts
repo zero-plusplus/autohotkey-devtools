@@ -1,4 +1,7 @@
-import { scanHexValue, scanInteger } from '../../common/rules/number';
+import {
+  scanHexValue,
+  scanIntegerToken,
+} from '../../common/rules/number';
 import { TokenKind } from '../../core/scanner/constants';
 import type {
   ScannerRule,
@@ -29,13 +32,13 @@ export const scanNumber: TokenDefinition = (cursor): Token | undefined => {
 
   // e.g. `123`
   //       ^^^
-  scanInteger(cursor);
+  scanIntegerToken(cursor);
 
   // e.g. `123.123`
   //          ^^^^
   if (isDotCharCode(cursor.peekCodePoint())) {
     cursor.advance();
-    scanInteger(cursor);
+    scanIntegerToken(cursor);
   }
 
   // e.g. `123.123e+100`
@@ -45,7 +48,7 @@ export const scanNumber: TokenDefinition = (cursor): Token | undefined => {
     if (isPlusOrMinusCode(cursor.peekCodePoint())) {
       cursor.advance();
     }
-    scanInteger(cursor);
+    scanIntegerToken(cursor);
   }
 
   return cursor.commit(TokenKind.Number);

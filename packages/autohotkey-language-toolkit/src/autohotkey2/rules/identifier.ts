@@ -6,7 +6,7 @@ import type {
 } from '../../core/scanner/types';
 import { isIdentifierHeadCharCode, isIdentifierTailCharCode } from '../utils';
 
-export const scanIdentifier: TokenDefinition = ({ peekCodePoint, advance, commit }): Token | undefined => {
+export const scanIdentifierToken: TokenDefinition = ({ peekCodePoint, advance, commit }): Token | undefined => {
   const charCode = peekCodePoint();
   if (!isIdentifierHeadCharCode(charCode)) {
     return undefined;
@@ -25,5 +25,5 @@ export const scanIdentifier: TokenDefinition = ({ peekCodePoint, advance, commit
 };
 export const identifierTokenRule: ScannerRule = {
   kind: TokenKind.Identifier,
-  scan: scanIdentifier,
+  scan: scanIdentifierToken,
 };

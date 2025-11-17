@@ -6,17 +6,17 @@ import type {
   TokenDefinition,
 } from '../../core/scanner/types';
 import { isIdentifierTailCharCode } from '../utils';
-import { scanIdentifier } from './identifier';
+import { scanIdentifierToken } from './identifier';
 
-export const scanNumber: TokenDefinition = (cursor): Token | undefined => {
+export const scanNumberToken: TokenDefinition = (cursor): Token | undefined => {
   scanNumber_v2(cursor);
   if (isIdentifierTailCharCode(cursor.peekCodePoint())) {
-    return scanIdentifier(cursor);
+    return scanIdentifierToken(cursor);
   }
 
   return cursor.commit(TokenKind.Number);
 };
 export const numberTokenRule: ScannerRule = {
   kind: TokenKind.Number,
-  scan: scanNumber,
+  scan: scanNumberToken,
 };

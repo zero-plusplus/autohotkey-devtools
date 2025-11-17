@@ -6,15 +6,15 @@ import type {
   TokenDefinition,
 } from '../../core/scanner/types';
 
-export const scanString: TokenDefinition = (curosr): Token | undefined => {
-  return scanDoubleString(curosr);
+export const scanStringToken: TokenDefinition = (curosr): Token | undefined => {
+  return scanDoubleStringToken(curosr);
 };
 export const stringTokenRule: ScannerRule = {
   kind: TokenKind.String,
-  scan: scanString,
+  scan: scanStringToken,
 };
 
-function scanDoubleString({ eof, peek, advance, consume, commit }: Cursor): Token | undefined {
+function scanDoubleStringToken({ eof, peek, advance, consume, commit }: Cursor): Token | undefined {
   if (!consume('"')) {
     return undefined;
   }

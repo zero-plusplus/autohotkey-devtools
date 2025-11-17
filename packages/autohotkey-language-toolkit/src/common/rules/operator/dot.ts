@@ -5,11 +5,11 @@ import type {
   TokenDefinition,
 } from '../../../core/scanner/types';
 
-export const scanDot: TokenDefinition = ({ consume, commit }): Token | undefined => {
+export const scanDotToken: TokenDefinition = ({ consume, commit }): Token | undefined => {
   consume('.');
   return commit(TokenKind.Dot);
 };
 export const dotTokenRule: ScannerRule = {
   kind: TokenKind.Dot,
-  scan: scanDot,
+  scan: scanDotToken,
 };

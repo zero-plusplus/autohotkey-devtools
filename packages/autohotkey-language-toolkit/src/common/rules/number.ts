@@ -10,7 +10,7 @@ import {
   isZeroDigitCharCode,
 } from '../../core/utils';
 
-export function scanInteger(cursor: Cursor): Token | undefined {
+export function scanIntegerToken(cursor: Cursor): Token | undefined {
   const firstCharCode = cursor.peekCodePoint();
   if (isZeroDigitCharCode(firstCharCode)) {
     cursor.advance();
@@ -34,7 +34,7 @@ export function scanInteger(cursor: Cursor): Token | undefined {
 }
 export const integerRule: ScannerRule = {
   kind: TokenKind.Number,
-  scan: scanInteger,
+  scan: scanIntegerToken,
 };
 
 export function scanHexValue(cursor: Cursor): Token | undefined {

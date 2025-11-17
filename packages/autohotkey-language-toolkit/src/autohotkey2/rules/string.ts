@@ -6,20 +6,20 @@ import type {
   TokenDefinition,
 } from '../../core/scanner/types';
 
-export const scanString: TokenDefinition = (cursor): Token | undefined => {
+export const scanStringToken: TokenDefinition = (cursor): Token | undefined => {
   switch (cursor.peek()) {
-    case '"': return scanStringByQuote('"', cursor);
-    case `'`: return scanStringByQuote(`'`, cursor);
+    case '"': return scanStringTokenByQuote('"', cursor);
+    case `'`: return scanStringTokenByQuote(`'`, cursor);
     default: break;
   }
   return undefined;
 };
 export const stringTokenRule: ScannerRule = {
   kind: TokenKind.String,
-  scan: scanString,
+  scan: scanStringToken,
 };
 
-function scanStringByQuote(quoteChar: string, cursor: Cursor): Token | undefined {
+function scanStringTokenByQuote(quoteChar: string, cursor: Cursor): Token | undefined {
   if (!cursor.consume(quoteChar)) {
     return undefined;
   }
