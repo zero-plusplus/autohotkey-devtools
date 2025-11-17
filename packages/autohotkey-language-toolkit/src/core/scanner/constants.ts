@@ -8,4 +8,6 @@ export const enum TokenKind {
 
   String,
   Number,
+
+  Percent,
 }
