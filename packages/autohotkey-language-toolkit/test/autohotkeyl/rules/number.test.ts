@@ -1,5 +1,5 @@
-import { identifierTokenRule } from '../../../src/autohotkeyl/rules/identifier';
-import { numberTokenRule } from '../../../src/autohotkeyl/rules/number';
+import { identifierTokenRule } from '../../../src/common/rules/identifier';
+import { numberTokenRule } from '../../../src/common/rules/number';
 import { Scanner } from '../../../src/core/scanner';
 import { TokenKind } from '../../../src/core/scanner/constants';
 

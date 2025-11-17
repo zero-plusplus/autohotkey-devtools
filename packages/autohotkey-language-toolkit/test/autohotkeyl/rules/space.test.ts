@@ -1,4 +1,4 @@
-import { spaceTokenRule } from '../../../src/autohotkeyl/rules/space';
+import { spaceTokenRule } from '../../../src/common/rules/space';
 import { Scanner } from '../../../src/core/scanner';
 import { TokenKind } from '../../../src/core/scanner/constants';
 

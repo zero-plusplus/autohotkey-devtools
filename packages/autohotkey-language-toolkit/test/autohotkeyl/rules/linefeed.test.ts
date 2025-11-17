@@ -1,4 +1,4 @@
-import { linefeedTokenRule } from '../../../src/autohotkeyl/rules/linefeed';
+import { linefeedTokenRule } from '../../../src/common/rules/linefeed';
 import { Scanner } from '../../../src/core/scanner';
 import { TokenKind } from '../../../src/core/scanner/constants';
 

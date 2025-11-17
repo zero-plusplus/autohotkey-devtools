@@ -1,4 +1,4 @@
-import { tabTokenRule } from '../../../src/autohotkeyl/rules/tab';
+import { tabTokenRule } from '../../../src/common/rules/tab';
 import { Scanner } from '../../../src/core/scanner';
 import { TokenKind } from '../../../src/core/scanner/constants';
 

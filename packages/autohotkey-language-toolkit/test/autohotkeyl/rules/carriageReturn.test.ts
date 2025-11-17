@@ -1,4 +1,4 @@
-import { carriageReturnTokenRule } from '../../../src/autohotkeyl/rules/carriageReturn';
+import { carriageReturnTokenRule } from '../../../src/common/rules/carriageReturn';
 import { Scanner } from '../../../src/core/scanner';
 import { TokenKind } from '../../../src/core/scanner/constants';
 
