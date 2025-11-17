@@ -1,6 +1,7 @@
 import { asteriskAsteriskTokenRule } from '../../../src/common/rules/operator/asteriskasterisk';
 import { dotTokenRule } from '../../../src/common/rules/operator/dot';
 import { exclamationTokenRule } from '../../../src/common/rules/operator/exclamation';
+import { greaterthanTokenRule } from '../../../src/common/rules/operator/greaterthan';
 import { minusTokenRule } from '../../../src/common/rules/operator/minus';
 import { minusMinusTokenRule } from '../../../src/common/rules/operator/minusminus';
 import { percentTokenRule } from '../../../src/common/rules/operator/percent';
@@ -13,6 +14,7 @@ describe('operator', () => {
     [ asteriskAsteriskTokenRule, '**' ],
     [ dotTokenRule, '.' ],
     [ exclamationTokenRule, '!' ],
+    [ greaterthanTokenRule, '>' ],
     [ minusTokenRule, '-' ],
     [ minusMinusTokenRule, '--' ],
     [ percentTokenRule, '%' ],
@@ -29,6 +31,7 @@ describe('operator', () => {
   test.each([
     [ dotTokenRule, [ '.=' ] ],
     [ exclamationTokenRule, [ '!=', '!==' ] ],
+    [ greaterthanTokenRule, [ '>=', '>>' ] ],
     [ minusTokenRule, [ '-=', '--' ] ],
     [ tildeTokenRule, [ '~=' ] ],
   ])('fail', (tokenRule, tokenTexts) => {
