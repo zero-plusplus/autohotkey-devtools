@@ -7,6 +7,7 @@ import { greaterthanTokenRule } from '../../../src/common/rules/operator/greater
 import { minusTokenRule } from '../../../src/common/rules/operator/minus';
 import { minusMinusTokenRule } from '../../../src/common/rules/operator/minusminus';
 import { percentTokenRule } from '../../../src/common/rules/operator/percent';
+import { plusTokenRule } from '../../../src/common/rules/operator/plus';
 import { plusPlusTokenRule } from '../../../src/common/rules/operator/plusplus';
 import { slashTokenRule } from '../../../src/common/rules/operator/slash';
 import { slashSlashTokenRule } from '../../../src/common/rules/operator/slashslash';
@@ -24,6 +25,7 @@ describe('operator', () => {
     [ minusTokenRule, '-' ],
     [ minusMinusTokenRule, '--' ],
     [ percentTokenRule, '%' ],
+    [ plusTokenRule, '+' ],
     [ plusPlusTokenRule, '++' ],
     [ slashTokenRule, '/' ],
     [ slashSlashTokenRule, '//' ],
@@ -37,12 +39,13 @@ describe('operator', () => {
   });
 
   test.each([
-    [ asteriskTokenRule, [ '**', '*=' ] ],
     [ ampersandTokenRule, [ '&&', '&=' ] ],
+    [ asteriskTokenRule, [ '**', '*=' ] ],
     [ dotTokenRule, [ '.=' ] ],
     [ exclamationTokenRule, [ '!=', '!==' ] ],
     [ greaterthanTokenRule, [ '>=', '>>' ] ],
-    [ minusTokenRule, [ '-=', '--' ] ],
+    [ minusTokenRule, [ '--', '-=' ] ],
+    [ plusTokenRule, [ '++', '+=' ] ],
     [ slashTokenRule, [ '//', '/=' ] ],
     [ slashSlashTokenRule, [ '//=' ] ],
     [ tildeTokenRule, [ '~=' ] ],
