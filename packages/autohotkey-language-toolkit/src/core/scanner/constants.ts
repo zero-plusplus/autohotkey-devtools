@@ -10,4 +10,5 @@ export const enum TokenKind {
   Number,
 
   Percent,
+  Dot,
 }
