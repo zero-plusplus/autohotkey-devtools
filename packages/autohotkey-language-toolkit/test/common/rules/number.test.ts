@@ -1,15 +1,19 @@
-import { identifierTokenRule } from '../../../src/common/rules/identifier';
-import { numberTokenRule } from '../../../src/common/rules/number';
+import { numberTokenRule as numberTokenRule_v2 } from '../../../src/autohotkey2/rules/number';
+import { identifierTokenRule } from '../../../src/autohotkeyl/rules/identifier';
+import { numberTokenRule as numberTokenRule_v1 } from '../../../src/autohotkeyl/rules/number';
 import { Scanner } from '../../../src/core/scanner';
 import { TokenKind } from '../../../src/core/scanner/constants';
 
 describe('number', () => {
-  describe('integer', () => {
+  describe.each([
+    [ numberTokenRule_v2 ],
+    [ numberTokenRule_v1 ],
+  ])('integer', (tokenRule) => {
     test.each([
       '123',
     ])('pass', (text) => {
       const scanner = new Scanner(text);
-      const token = scanner.scan(numberTokenRule);
+      const token = scanner.scan(tokenRule);
 
       expect(token!.kind).toBe(TokenKind.Number);
       expect(token!.text).toBe(text);
@@ -26,27 +30,33 @@ describe('number', () => {
     });
   });
 
-  describe('float', () => {
+  describe.each([
+    [ numberTokenRule_v2 ],
+    [ numberTokenRule_v1 ],
+  ])('float', (tokenRule) => {
     test.each([
       '123.',
       '123.456',
     ])('pass', (text) => {
       const scanner = new Scanner(text);
-      const token = scanner.scan(numberTokenRule);
+      const token = scanner.scan(tokenRule);
 
       expect(token!.kind).toBe(TokenKind.Number);
       expect(token!.text).toBe(text);
     });
   });
 
-  describe('hex', () => {
+  describe.each([
+    [ numberTokenRule_v2 ],
+    [ numberTokenRule_v1 ],
+  ])('hex', (tokenRule) => {
     test.each([
       '0x',
       '0x123',
       '0x1234567890ABCDEF',
     ])('pass', (text) => {
       const scanner = new Scanner(text);
-      const token = scanner.scan(numberTokenRule);
+      const token = scanner.scan(tokenRule);
 
       expect(token!.kind).toBe(TokenKind.Number);
       expect(token!.text).toBe(text);
@@ -58,12 +68,15 @@ describe('number', () => {
       '0x1234567890ABCDEF.ABC',
     ])('fail', (text) => {
       const scanner = new Scanner(text);
-      const token = scanner.scan(numberTokenRule);
+      const token = scanner.scan(tokenRule);
 
       expect(token!.text).not.toBe(text);
     });
 
-    describe('scientific notation', () => {
+    describe.each([
+      [ numberTokenRule_v2 ],
+      [ numberTokenRule_v1 ],
+    ])('scientific notation', () => {
       test.each([
         '123e10',
         '123E10',
@@ -80,7 +93,7 @@ describe('number', () => {
         '123.123E-10',
       ])('pass', (text) => {
         const scanner = new Scanner(text);
-        const token = scanner.scan(numberTokenRule);
+        const token = scanner.scan(tokenRule);
 
         expect(token!.kind).toBe(TokenKind.Number);
         expect(token!.text).toBe(text);
@@ -91,7 +104,7 @@ describe('number', () => {
         '0x123e+10',
       ])('fail', (text) => {
         const scanner = new Scanner(text);
-        const token = scanner.scan(numberTokenRule);
+        const token = scanner.scan(tokenRule);
 
         expect(token!.text).not.toBe(text);
       });

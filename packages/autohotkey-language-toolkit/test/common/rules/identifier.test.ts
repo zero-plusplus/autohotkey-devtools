@@ -1,4 +1,4 @@
-import { identifierTokenRule } from '../../../src/common/rules/identifier';
+import { identifierTokenRule } from '../../../src/autohotkeyl/rules/identifier';
 import { Scanner } from '../../../src/core/scanner';
 import { TokenKind } from '../../../src/core/scanner/constants';
 
