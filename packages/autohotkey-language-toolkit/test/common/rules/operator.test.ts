@@ -1,3 +1,4 @@
+import { greaterthanGreaterthanGreaterthanTokenRule } from '../../../src/autohotkey2/rules/operator';
 import { ampersandTokenRule } from '../../../src/common/rules/operator/ampersand';
 import { asteriskTokenRule } from '../../../src/common/rules/operator/asterisk';
 import { asteriskAsteriskTokenRule } from '../../../src/common/rules/operator/asteriskasterisk';
@@ -26,6 +27,7 @@ describe('operator', () => {
     [ exclamationTokenRule, '!' ],
     [ greaterthanTokenRule, '>' ],
     [ greaterthanGreaterthanTokenRule, '>>' ],
+    [ greaterthanGreaterthanGreaterthanTokenRule, '>>>' ],
     [ lessthanTokenRule, '<' ],
     [ lessthanLessthanTokenRule, '<<' ],
     [ minusTokenRule, '-' ],
@@ -51,6 +53,7 @@ describe('operator', () => {
     [ exclamationTokenRule, [ '!=', '!==' ] ],
     [ greaterthanTokenRule, [ '>>', '>=' ] ],
     [ greaterthanGreaterthanTokenRule, [ '>>>', '>>=' ] ],
+    [ greaterthanGreaterthanGreaterthanTokenRule, [ '>>>=' ] ],
     [ lessthanTokenRule, [ '<<', '<=' ] ],
     [ lessthanLessthanTokenRule, [ '>>', '>=' ] ],
     [ minusTokenRule, [ '--', '-=' ] ],
