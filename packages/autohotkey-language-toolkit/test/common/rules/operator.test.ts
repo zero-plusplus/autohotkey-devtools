@@ -9,6 +9,7 @@ import { minusMinusTokenRule } from '../../../src/common/rules/operator/minusmin
 import { percentTokenRule } from '../../../src/common/rules/operator/percent';
 import { plusPlusTokenRule } from '../../../src/common/rules/operator/plusplus';
 import { slashTokenRule } from '../../../src/common/rules/operator/slash';
+import { slashSlashTokenRule } from '../../../src/common/rules/operator/slashslash';
 import { tildeTokenRule } from '../../../src/common/rules/operator/tilde';
 import { Scanner } from '../../../src/core/scanner';
 
@@ -25,6 +26,7 @@ describe('operator', () => {
     [ percentTokenRule, '%' ],
     [ plusPlusTokenRule, '++' ],
     [ slashTokenRule, '/' ],
+    [ slashSlashTokenRule, '//' ],
     [ tildeTokenRule, '~' ],
   ])('pass', (tokenRule, tokenText) => {
     const scanner = new Scanner(tokenText);
@@ -42,6 +44,7 @@ describe('operator', () => {
     [ greaterthanTokenRule, [ '>=', '>>' ] ],
     [ minusTokenRule, [ '-=', '--' ] ],
     [ slashTokenRule, [ '//', '/=' ] ],
+    [ slashSlashTokenRule, [ '//=' ] ],
     [ tildeTokenRule, [ '~=' ] ],
   ])('fail', (tokenRule, tokenTexts) => {
     tokenTexts.forEach((tokenText) => {
