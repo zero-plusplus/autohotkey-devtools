@@ -5,6 +5,7 @@ import { minusTokenRule } from '../../../src/common/rules/operator/minus';
 import { minusMinusTokenRule } from '../../../src/common/rules/operator/minusminus';
 import { percentTokenRule } from '../../../src/common/rules/operator/percent';
 import { plusPlusTokenRule } from '../../../src/common/rules/operator/plusplus';
+import { tildeTokenRule } from '../../../src/common/rules/operator/tilde';
 import { Scanner } from '../../../src/core/scanner';
 
 describe('operator', () => {
@@ -16,6 +17,7 @@ describe('operator', () => {
     [ minusMinusTokenRule, '--' ],
     [ percentTokenRule, '%' ],
     [ plusPlusTokenRule, '++' ],
+    [ tildeTokenRule, '~' ],
   ])('pass', (tokenRule, tokenText) => {
     const scanner = new Scanner(tokenText);
     const token = scanner.scan(tokenRule);
@@ -28,6 +30,7 @@ describe('operator', () => {
     [ dotTokenRule, [ '.=' ] ],
     [ exclamationTokenRule, [ '!=', '!==' ] ],
     [ minusTokenRule, [ '-=', '--' ] ],
+    [ tildeTokenRule, [ '~=' ] ],
   ])('fail', (tokenRule, tokenTexts) => {
     tokenTexts.forEach((tokenText) => {
       const scanner = new Scanner(tokenText);
