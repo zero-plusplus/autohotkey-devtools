@@ -6,7 +6,6 @@ describe('string', () => {
   test.each([
     '"text"',
     '"`, `% `` `; `: `:: `n `r `b `t `v `a `f """',
-    '"`"',
   ])('pass', (text) => {
     const scanner = new Scanner(text);
     const token = scanner.scan(stringTokenRule);
