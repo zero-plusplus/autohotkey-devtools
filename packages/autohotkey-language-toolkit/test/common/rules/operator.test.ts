@@ -1,3 +1,4 @@
+import { ampersandTokenRule } from '../../../src/common/rules/operator/ampersand';
 import { asteriskAsteriskTokenRule } from '../../../src/common/rules/operator/asteriskasterisk';
 import { dotTokenRule } from '../../../src/common/rules/operator/dot';
 import { exclamationTokenRule } from '../../../src/common/rules/operator/exclamation';
@@ -11,6 +12,7 @@ import { Scanner } from '../../../src/core/scanner';
 
 describe('operator', () => {
   test.each([
+    [ ampersandTokenRule, '&' ],
     [ asteriskAsteriskTokenRule, '**' ],
     [ dotTokenRule, '.' ],
     [ exclamationTokenRule, '!' ],
@@ -29,6 +31,7 @@ describe('operator', () => {
   });
 
   test.each([
+    [ ampersandTokenRule, [ '&&', '&=' ] ],
     [ dotTokenRule, [ '.=' ] ],
     [ exclamationTokenRule, [ '!=', '!==' ] ],
     [ greaterthanTokenRule, [ '>=', '>>' ] ],
