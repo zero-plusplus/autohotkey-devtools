@@ -10,6 +10,7 @@ export const enum TokenKind {
   Number,
 
   Dot,
+  MinusMinus,
   Percent,
   PlusPlus,
 }
