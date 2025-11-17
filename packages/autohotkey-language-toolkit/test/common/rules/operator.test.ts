@@ -23,6 +23,7 @@ describe('operator', () => {
   });
 
   test.each([
+    [ dotTokenRule, [ '.=' ] ],
     [ minusTokenRule, [ '-=', '--' ] ],
   ])('fail', (tokenRule, tokenTexts) => {
     tokenTexts.forEach((tokenText) => {
