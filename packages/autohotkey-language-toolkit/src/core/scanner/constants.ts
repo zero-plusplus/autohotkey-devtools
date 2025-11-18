@@ -17,6 +17,7 @@ export const enum TokenKind {
   Dot,
   Exclamation,
   Greaterthan,
+  GreaterthanEquals,
   GreaterthanGreaterthan,
   GreaterthanGreaterthanGreaterthan,
   Lessthan,

@@ -5,6 +5,7 @@ export * from '../../../common/rules/operator/caret';
 export * from '../../../common/rules/operator/dot';
 export * from '../../../common/rules/operator/exclamation';
 export * from '../../../common/rules/operator/greaterthan';
+export * from '../../../common/rules/operator/greaterthanequals';
 export * from '../../../common/rules/operator/greaterthangreaterthan';
 export * from '../../../common/rules/operator/greaterthangreaterthangreaterthan';
 export * from '../../../common/rules/operator/lessthan';
