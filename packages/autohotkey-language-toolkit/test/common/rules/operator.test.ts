@@ -1,21 +1,24 @@
-import { greaterthanGreaterthanGreaterthanTokenRule } from '../../../src/autohotkey2/rules/operator';
-import { ampersandTokenRule } from '../../../src/common/rules/operator/ampersand';
-import { asteriskTokenRule } from '../../../src/common/rules/operator/asterisk';
-import { asteriskAsteriskTokenRule } from '../../../src/common/rules/operator/asteriskasterisk';
-import { dotTokenRule } from '../../../src/common/rules/operator/dot';
-import { exclamationTokenRule } from '../../../src/common/rules/operator/exclamation';
-import { greaterthanTokenRule } from '../../../src/common/rules/operator/greaterthan';
-import { greaterthanGreaterthanTokenRule } from '../../../src/common/rules/operator/greaterthangreaterthan';
-import { lessthanTokenRule } from '../../../src/common/rules/operator/lessthan';
-import { lessthanLessthanTokenRule } from '../../../src/common/rules/operator/lessthanlessthan';
-import { minusTokenRule } from '../../../src/common/rules/operator/minus';
-import { minusMinusTokenRule } from '../../../src/common/rules/operator/minusminus';
-import { percentTokenRule } from '../../../src/common/rules/operator/percent';
-import { plusTokenRule } from '../../../src/common/rules/operator/plus';
-import { plusPlusTokenRule } from '../../../src/common/rules/operator/plusplus';
-import { slashTokenRule } from '../../../src/common/rules/operator/slash';
-import { slashSlashTokenRule } from '../../../src/common/rules/operator/slashslash';
-import { tildeTokenRule } from '../../../src/common/rules/operator/tilde';
+import {
+  ampersandTokenRule,
+  asteriskAsteriskTokenRule,
+  asteriskTokenRule,
+  caretTokenRule,
+  dotTokenRule,
+  exclamationTokenRule,
+  greaterthanGreaterthanGreaterthanTokenRule,
+  greaterthanGreaterthanTokenRule,
+  greaterthanTokenRule,
+  lessthanLessthanTokenRule,
+  lessthanTokenRule,
+  minusMinusTokenRule,
+  minusTokenRule,
+  percentTokenRule,
+  plusPlusTokenRule,
+  plusTokenRule,
+  slashSlashTokenRule,
+  slashTokenRule,
+  tildeTokenRule,
+} from '../../../src/common/rules/operator';
 import { Scanner } from '../../../src/core/scanner';
 
 describe('operator', () => {
@@ -23,6 +26,7 @@ describe('operator', () => {
     [ ampersandTokenRule, '&' ],
     [ asteriskTokenRule, '*' ],
     [ asteriskAsteriskTokenRule, '**' ],
+    [ caretTokenRule, '^' ],
     [ dotTokenRule, '.' ],
     [ exclamationTokenRule, '!' ],
     [ greaterthanTokenRule, '>' ],
@@ -49,6 +53,7 @@ describe('operator', () => {
   test.each([
     [ ampersandTokenRule, [ '&&', '&=' ] ],
     [ asteriskTokenRule, [ '**', '*=' ] ],
+    [ caretTokenRule, [ '^=' ] ],
     [ dotTokenRule, [ '.=' ] ],
     [ exclamationTokenRule, [ '!=', '!==' ] ],
     [ greaterthanTokenRule, [ '>>', '>=' ] ],
