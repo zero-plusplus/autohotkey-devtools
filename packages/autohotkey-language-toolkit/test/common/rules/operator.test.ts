@@ -1,3 +1,4 @@
+import { pipeTokenRule } from '../../../src/autohotkey2/rules/operator';
 import {
   ampersandTokenRule,
   asteriskAsteriskTokenRule,
@@ -37,6 +38,7 @@ describe('operator', () => {
     [ minusTokenRule, '-' ],
     [ minusMinusTokenRule, '--' ],
     [ percentTokenRule, '%' ],
+    [ pipeTokenRule, '|' ],
     [ plusTokenRule, '+' ],
     [ plusPlusTokenRule, '++' ],
     [ slashTokenRule, '/' ],
@@ -62,6 +64,7 @@ describe('operator', () => {
     [ lessthanTokenRule, [ '<<', '<=' ] ],
     [ lessthanLessthanTokenRule, [ '>>', '>=' ] ],
     [ minusTokenRule, [ '--', '-=' ] ],
+    [ pipeTokenRule, [ '||', '|=' ] ],
     [ plusTokenRule, [ '++', '+=' ] ],
     [ slashTokenRule, [ '//', '/=' ] ],
     [ slashSlashTokenRule, [ '//=' ] ],

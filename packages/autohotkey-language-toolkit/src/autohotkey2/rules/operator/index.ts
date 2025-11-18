@@ -11,6 +11,7 @@ export * from '../../../common/rules/operator/lessthanlessthan';
 export * from '../../../common/rules/operator/minus';
 export * from '../../../common/rules/operator/minusminus';
 export * from '../../../common/rules/operator/percent';
+export * from '../../../common/rules/operator/pipe';
 export * from '../../../common/rules/operator/plus';
 
 export * from './lessthan';

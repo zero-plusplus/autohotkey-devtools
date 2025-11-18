@@ -24,6 +24,7 @@ export const enum TokenKind {
   Minus,
   MinusMinus,
   Percent,
+  Pipe,
   Plus,
   PlusPlus,
   Slash,
