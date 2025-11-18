@@ -18,3 +18,4 @@ export * from '../../../common/rules/operator/plusplus';
 export * from '../../../common/rules/operator/slash';
 export * from '../../../common/rules/operator/slashslash';
 export * from '../../../common/rules/operator/tilde';
+export * from '../../../common/rules/operator/tildeequals';

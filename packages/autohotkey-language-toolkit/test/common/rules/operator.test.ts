@@ -1,4 +1,3 @@
-import { pipeTokenRule } from '../../../src/autohotkey2/rules/operator';
 import {
   ampersandTokenRule,
   asteriskAsteriskTokenRule,
@@ -14,10 +13,12 @@ import {
   minusMinusTokenRule,
   minusTokenRule,
   percentTokenRule,
+  pipeTokenRule,
   plusPlusTokenRule,
   plusTokenRule,
   slashSlashTokenRule,
   slashTokenRule,
+  tildeEqualsTokenRule,
   tildeTokenRule,
 } from '../../../src/common/rules/operator';
 import { Scanner } from '../../../src/core/scanner';
@@ -44,6 +45,7 @@ describe('operator', () => {
     [ slashTokenRule, '/' ],
     [ slashSlashTokenRule, '//' ],
     [ tildeTokenRule, '~' ],
+    [ tildeEqualsTokenRule, '~=' ],
   ])('pass', (tokenRule, tokenText) => {
     const scanner = new Scanner(tokenText);
     const token = scanner.scan(tokenRule);

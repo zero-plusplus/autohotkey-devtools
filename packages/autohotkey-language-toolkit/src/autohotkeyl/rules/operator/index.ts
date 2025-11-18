@@ -13,5 +13,7 @@ export * from '../../../common/rules/operator/minusminus';
 export * from '../../../common/rules/operator/percent';
 export * from '../../../common/rules/operator/pipe';
 export * from '../../../common/rules/operator/plus';
+export * from '../../../common/rules/operator/tilde';
+export * from '../../../common/rules/operator/tildeequals';
 
 export * from './lessthan';

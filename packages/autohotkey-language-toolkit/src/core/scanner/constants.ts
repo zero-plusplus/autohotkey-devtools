@@ -30,5 +30,6 @@ export const enum TokenKind {
   Slash,
   SlashSlash,
   Tilde,
+  TildeEquals,
   // #endregion operators
 }
