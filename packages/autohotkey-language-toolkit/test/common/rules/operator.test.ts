@@ -23,6 +23,7 @@ import {
   tildeEqualsTokenRule,
   tildeTokenRule,
 } from '../../../src/common/rules/operator';
+import { equalsTokenRule } from '../../../src/common/rules/operator/equals';
 import { Scanner } from '../../../src/core/scanner';
 
 describe('operator', () => {
@@ -32,6 +33,7 @@ describe('operator', () => {
     [ asteriskAsteriskTokenRule, '**' ],
     [ caretTokenRule, '^' ],
     [ dotTokenRule, '.' ],
+    [ equalsTokenRule, '=' ],
     [ exclamationTokenRule, '!' ],
     [ greaterthanTokenRule, '>' ],
     [ greaterthanEqualsTokenRule, '>=' ],
@@ -63,6 +65,7 @@ describe('operator', () => {
     [ asteriskTokenRule, [ '**', '*=' ] ],
     [ caretTokenRule, [ '^=' ] ],
     [ dotTokenRule, [ '.=' ] ],
+    [ equalsTokenRule, [ '==' ] ],
     [ exclamationTokenRule, [ '!=', '!==' ] ],
     [ greaterthanTokenRule, [ '>>', '>=' ] ],
     [ greaterthanGreaterthanTokenRule, [ '>>>', '>>=' ] ],

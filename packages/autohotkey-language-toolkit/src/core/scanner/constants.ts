@@ -15,6 +15,7 @@ export const enum TokenKind {
   AsteriskAsterisk,
   Caret,
   Dot,
+  Equals,
   Exclamation,
   Greaterthan,
   GreaterthanEquals,
