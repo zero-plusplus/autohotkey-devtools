@@ -9,6 +9,7 @@ export * from '../../../common/rules/operator/greaterthanequals';
 export * from '../../../common/rules/operator/greaterthangreaterthan';
 export * from '../../../common/rules/operator/greaterthangreaterthangreaterthan';
 export * from '../../../common/rules/operator/lessthan';
+export * from '../../../common/rules/operator/lessthanequals';
 export * from '../../../common/rules/operator/lessthanlessthan';
 export * from '../../../common/rules/operator/minus';
 export * from '../../../common/rules/operator/minusminus';

@@ -21,6 +21,7 @@ export const enum TokenKind {
   GreaterthanGreaterthan,
   GreaterthanGreaterthanGreaterthan,
   Lessthan,
+  LessthanEquals,
   LessthanLessthan,
   Minus,
   MinusMinus,
