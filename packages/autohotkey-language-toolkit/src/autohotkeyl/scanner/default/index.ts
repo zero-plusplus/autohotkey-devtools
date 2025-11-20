@@ -9,6 +9,7 @@ import type {
   ScannerMode,
   TokenMap,
 } from '../../../core/scanner/types';
+import { scanLineCommentToken } from './comment';
 import { scanIdentifierToken } from './identifier';
 import { scanNumberToken } from './number';
 import { scanStringToken } from './string';
@@ -68,7 +69,7 @@ export const defaultTokenMapForAhkl: TokenMap = {
     [CharacterCodes.Equals]: TokenKind.ColonEquals,
     '': TokenKind.Colon,
   },
-  // [CharacterCodes.SemiColon]: scanLineCommentToken,
+  [CharacterCodes.SemiColon]: scanLineCommentToken,
   [CharacterCodes.LessThan]: {
     [CharacterCodes.LessThan]: {
       [CharacterCodes.Equals]: TokenKind.LessThanLessThanEquals,

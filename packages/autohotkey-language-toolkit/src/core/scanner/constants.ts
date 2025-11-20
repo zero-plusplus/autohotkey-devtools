@@ -3,6 +3,8 @@ export const enum TokenKind {
   Linefeed,
   Space,
   Tab,
+  LineComment,
+  BlockComment,
 
   Identifier,
 

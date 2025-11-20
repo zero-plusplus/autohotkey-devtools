@@ -1,4 +1,7 @@
-import type { TokenKind } from './scanner/constants';
+import {
+  CharacterCodes,
+  type TokenKind,
+} from './scanner/constants';
 
 export function isAlphaCharCode(charCode: number | undefined): charCode is number {
   if (charCode === undefined) {
@@ -94,6 +97,31 @@ export function isFullwidthCharCode(charCode: number | undefined): boolean {
     return true;
   }
   return false;
+}
+export function isHorizontalSpaceCharCode(charCode: number | undefined): boolean {
+  switch (charCode) {
+    case CharacterCodes.Space:
+    case CharacterCodes.Tab:
+    {
+      return true;
+    }
+    default: break;
+  }
+  return false;
+}
+export function isLineBreakCharCode(charCode: number | undefined): boolean {
+  switch (charCode) {
+    case CharacterCodes.CarriageReturn:
+    case CharacterCodes.LineFeed:
+    {
+      return true;
+    }
+    default: break;
+  }
+  return false;
+}
+export function isWhitespaceCharCode(charCode: number | undefined): boolean {
+  return isHorizontalSpaceCharCode(charCode) || isLineBreakCharCode(charCode);
 }
 export function isTokenKind(value: any): value is TokenKind {
   return typeof value === 'number';
