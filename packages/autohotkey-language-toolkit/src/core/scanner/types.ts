@@ -5,15 +5,16 @@ export interface Token {
   text: string;
 }
 export type TokenDefinition = (cursor: Cursor) => Token | undefined;
-
-export type ScannerRule = {
-  kind: TokenKind;
-  scan: TokenDefinition;
-};
-export type ScannerRuleMap = {
-  [key in string]: ScannerRule;
+export type TokenSpec = TokenKind | TokenDefinition | TokenMap | undefined;
+export type TokenMap = {
+  [key: string]: TokenSpec;
 };
 
+export type ScannerBehavior = (cursor: Cursor) => Token | undefined;
+export interface ScannerMode {
+  name: string;
+  behavior: ScannerBehavior;
+}
 export interface Cursor {
   eof: () => boolean;
   peek: (offset?: number) => string | undefined;

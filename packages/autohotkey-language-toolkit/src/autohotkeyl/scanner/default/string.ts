@@ -1,19 +1,15 @@
-import { TokenKind } from '../../core/scanner/constants';
+import { TokenKind } from '../../../core/scanner/constants';
 import type {
   Cursor,
-  ScannerRule,
   Token,
   TokenDefinition,
-} from '../../core/scanner/types';
+} from '../../../core/scanner/types';
 
 export const scanStringToken: TokenDefinition = (curosr): Token | undefined => {
   return scanDoubleStringToken(curosr);
 };
-export const stringTokenRule: ScannerRule = {
-  kind: TokenKind.String,
-  scan: scanStringToken,
-};
 
+// #region helpers
 function scanDoubleStringToken({ eof, peek, advance, consume, commit }: Cursor): Token | undefined {
   if (!consume('"')) {
     return undefined;
@@ -57,3 +53,4 @@ function scanDoubleStringToken({ eof, peek, advance, consume, commit }: Cursor):
   }
   return commit(TokenKind.String);
 }
+// #endregion helpers

@@ -1,10 +1,9 @@
-import { TokenKind } from '../../core/scanner/constants';
+import { TokenKind } from '../../../core/scanner/constants';
 import type {
   Cursor,
-  ScannerRule,
   Token,
   TokenDefinition,
-} from '../../core/scanner/types';
+} from '../../../core/scanner/types';
 
 export const scanStringToken: TokenDefinition = (cursor): Token | undefined => {
   switch (cursor.peek()) {
@@ -14,11 +13,8 @@ export const scanStringToken: TokenDefinition = (cursor): Token | undefined => {
   }
   return undefined;
 };
-export const stringTokenRule: ScannerRule = {
-  kind: TokenKind.String,
-  scan: scanStringToken,
-};
 
+// #region helpers
 function scanStringTokenByQuote(quoteChar: string, cursor: Cursor): Token | undefined {
   if (!cursor.consume(quoteChar)) {
     return undefined;
@@ -61,3 +57,4 @@ function scanStringTokenByQuote(quoteChar: string, cursor: Cursor): Token | unde
   }
   return cursor.commit(TokenKind.String);
 }
+// #endregion helpers

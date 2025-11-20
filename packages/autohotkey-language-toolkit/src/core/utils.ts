@@ -1,3 +1,5 @@
+import type { TokenKind } from './scanner/constants';
+
 export function isAlphaCharCode(charCode: number | undefined): charCode is number {
   if (charCode === undefined) {
     return false;
@@ -92,4 +94,7 @@ export function isFullwidthCharCode(charCode: number | undefined): boolean {
     return true;
   }
   return false;
+}
+export function isTokenKind(value: any): value is TokenKind {
+  return typeof value === 'number';
 }

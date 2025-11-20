@@ -1,10 +1,12 @@
-import { TokenKind } from '../../core/scanner/constants';
+import { TokenKind } from '../../../core/scanner/constants';
 import type {
-  ScannerRule,
   Token,
   TokenDefinition,
-} from '../../core/scanner/types';
-import { isIdentifierHeadCharCode, isIdentifierTailCharCode } from '../utils';
+} from '../../../core/scanner/types';
+import {
+  isIdentifierHeadCharCode,
+  isIdentifierTailCharCode,
+} from '../../utils';
 
 export const scanIdentifierToken: TokenDefinition = ({ peekCodePoint, advance, commit }): Token | undefined => {
   const charCode = peekCodePoint();
@@ -22,8 +24,4 @@ export const scanIdentifierToken: TokenDefinition = ({ peekCodePoint, advance, c
   }
 
   return commit(TokenKind.Identifier);
-};
-export const identifierTokenRule: ScannerRule = {
-  kind: TokenKind.Identifier,
-  scan: scanIdentifierToken,
 };

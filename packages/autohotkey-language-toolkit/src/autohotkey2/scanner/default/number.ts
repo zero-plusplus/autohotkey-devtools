@@ -1,10 +1,9 @@
-import { TokenKind } from '../../core/scanner/constants';
+import { TokenKind } from '../../../core/scanner/constants';
 import type {
   Cursor,
-  ScannerRule,
   Token,
   TokenDefinition,
-} from '../../core/scanner/types';
+} from '../../../core/scanner/types';
 import {
   isDigitCharCode,
   isDotCharCode,
@@ -12,7 +11,7 @@ import {
   isHexAlphaCharCode,
   isPlusOrMinusCode,
   isZeroDigitCharCode,
-} from '../../core/utils';
+} from '../../../core/utils';
 
 export const scanNumberToken: TokenDefinition = (cursor): Token | undefined => {
   // e.g. `0`, `0x123`
@@ -51,7 +50,9 @@ export const scanNumberToken: TokenDefinition = (cursor): Token | undefined => {
 
   return cursor.commit(TokenKind.Number);
 };
-export function scanIntegerToken(cursor: Cursor): Token | undefined {
+
+// #region helpers
+function scanIntegerToken(cursor: Cursor): Token | undefined {
   const firstCharCode = cursor.peekCodePoint();
   if (isZeroDigitCharCode(firstCharCode)) {
     cursor.advance();
@@ -73,12 +74,7 @@ export function scanIntegerToken(cursor: Cursor): Token | undefined {
   }
   return commit(TokenKind.Number);
 }
-export const integerRule: ScannerRule = {
-  kind: TokenKind.Number,
-  scan: scanIntegerToken,
-};
-
-export function scanHexValue(cursor: Cursor): Token | undefined {
+function scanHexValue(cursor: Cursor): Token | undefined {
   while (true) {
     const charCode = cursor.peekCodePoint();
     if (isDigitCharCode(charCode) || isHexAlphaCharCode(charCode)) {
@@ -89,3 +85,4 @@ export function scanHexValue(cursor: Cursor): Token | undefined {
   }
   return cursor.commit(TokenKind.Number);
 }
+// #endregion helpers
