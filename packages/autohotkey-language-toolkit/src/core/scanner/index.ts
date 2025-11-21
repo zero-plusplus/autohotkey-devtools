@@ -54,10 +54,9 @@ export class Scanner {
         currentPosition = position;
       },
       restore: () => {
-        return this.#position = firstPosition;
+        return currentPosition = firstPosition;
       },
       commit: (kind: TokenKind): Token => {
-        const firstPosition = cursor.restore();
         const lastPosition = currentPosition;
         const tokenText = this.#source.slice(firstPosition, lastPosition);
 

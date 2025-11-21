@@ -9,7 +9,10 @@ import type {
   ScannerMode,
   TokenMap,
 } from '../../../core/scanner/types';
-import { scanLineCommentToken } from './comment';
+import {
+  scanBlockCommentToken,
+  scanLineCommentToken,
+} from './comment';
 import { scanIdentifierToken } from './identifier';
 import { scanNumberToken } from './number';
 import { scanStringToken } from './string';
@@ -61,7 +64,7 @@ export const defaultTokenMapForAhkl: TokenMap = {
       [CharacterCodes.Equals]: TokenKind.SlashSlashEquals,
       '': TokenKind.SlashSlash,
     },
-    // [CharacterCodes.Asterisk]: scanBlockCommentToken,
+    [CharacterCodes.Asterisk]: scanBlockCommentToken,
     [CharacterCodes.Equals]: TokenKind.SlashEquals,
     '': TokenKind.Slash,
   },

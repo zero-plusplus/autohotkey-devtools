@@ -45,3 +45,22 @@ export const scanLineCommentToken: TokenDefinition = (cursor): Token | undefined
   }
   return cursor.commit(TokenKind.LineComment);
 };
+export const scanBlockCommentToken: TokenDefinition = (cursor): Token | undefined => {
+  if (!(cursor.peek() === '/' && cursor.peek(1) === '*')) {
+    return undefined;
+  }
+  cursor.advance(2);
+
+  while (!cursor.eof()) {
+    if (cursor.consume('*')) {
+      if (cursor.consume('/')) {
+        return cursor.commit(TokenKind.BlockComment);
+      }
+      continue;
+    }
+    cursor.advance();
+  }
+
+  // missing `*/`
+  return cursor.commit(TokenKind.BlockComment);
+};
