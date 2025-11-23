@@ -1,7 +1,17 @@
 import { scanStringToken } from '../../../autohotkey2/scanner/default/string';
 import { scanFromTokenMap } from '../../../core/scanner';
-import { CharacterCodes, TokenKind } from '../../../core/scanner/constants';
-import type { ScannerMode, TokenMap } from '../../../core/scanner/types';
+import {
+  CharacterCodes,
+  TokenKind,
+} from '../../../core/scanner/constants';
+import type {
+  ScannerMode,
+  TokenMap,
+} from '../../../core/scanner/types';
+import {
+  scanBlockCommentToken,
+  scanLineCommentToken,
+} from './comment';
 import { scanIdentifierToken } from './identifier';
 import { scanNumberToken } from './number';
 
@@ -52,7 +62,7 @@ export const defaultTokenMapForAhk2: TokenMap = {
       [CharacterCodes.Equals]: TokenKind.SlashSlashEquals,
       '': TokenKind.SlashSlash,
     },
-    // [CharacterCodes.Asterisk]: scanBlockCommentToken,
+    [CharacterCodes.Asterisk]: scanBlockCommentToken,
     [CharacterCodes.Equals]: TokenKind.SlashEquals,
     '': TokenKind.Slash,
   },
@@ -60,7 +70,7 @@ export const defaultTokenMapForAhk2: TokenMap = {
     [CharacterCodes.Equals]: TokenKind.ColonEquals,
     '': TokenKind.Colon,
   },
-  // [CharacterCodes.SemiColon]: scanLineCommentToken,
+  [CharacterCodes.SemiColon]: scanLineCommentToken,
   [CharacterCodes.LessThan]: {
     [CharacterCodes.LessThan]: {
       [CharacterCodes.Equals]: TokenKind.LessThanLessThanEquals,
