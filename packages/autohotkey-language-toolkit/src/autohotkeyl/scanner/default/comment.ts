@@ -3,21 +3,24 @@ import {
   TokenKind,
 } from '../../../core/scanner/constants';
 import type {
+  ScanController,
+  ScannerBehavior,
   Token,
-  TokenDefinition,
 } from '../../../core/scanner/types';
 import {
   isLineBreakCharCode,
   isWhitespaceCharCode,
 } from '../../../core/utils';
 
-export const scanLineCommentToken: TokenDefinition = (cursor): Token | undefined => {
+export const scanLineCommentToken: ScannerBehavior = (controller: ScanController): Token | undefined => {
+  const { advance, commit, consume, eof, peekCodePoint, snapshot } = controller;
+
   const isCommentStart = ((): boolean => {
-    if (cursor.snapshot() === 0) {
+    if (snapshot() === 0) {
       return true;
     }
 
-    const prevChar = cursor.peekCodePoint(-1);
+    const prevChar = peekCodePoint(-1);
     if (prevChar === CharacterCodes.Bom) {
       return true;
     }
@@ -31,36 +34,38 @@ export const scanLineCommentToken: TokenDefinition = (cursor): Token | undefined
     return undefined;
   }
 
-  if (!cursor.consume(';')) {
+  if (!consume(';')) {
     return undefined;
   }
 
-  while (!cursor.eof()) {
-    const currentChar = cursor.peekCodePoint();
+  while (!eof()) {
+    const currentChar = peekCodePoint();
     if (isLineBreakCharCode(currentChar)) {
       break;
     }
 
-    cursor.advance();
+    advance();
   }
-  return cursor.commit(TokenKind.LineComment);
+  return commit(TokenKind.LineComment);
 };
-export const scanBlockCommentToken: TokenDefinition = (cursor): Token | undefined => {
-  if (!(cursor.peek() === '/' && cursor.peek(1) === '*')) {
+export const scanBlockCommentToken: ScannerBehavior = (controller: ScanController): Token | undefined => {
+  const { advance, commit, consume, eof, peek } = controller;
+
+  if (!(peek() === '/' && peek(1) === '*')) {
     return undefined;
   }
-  cursor.advance(2);
+  advance(2);
 
-  while (!cursor.eof()) {
-    if (cursor.consume('*')) {
-      if (cursor.consume('/')) {
-        return cursor.commit(TokenKind.BlockComment);
+  while (!eof()) {
+    if (consume('*')) {
+      if (consume('/')) {
+        return commit(TokenKind.BlockComment);
       }
       continue;
     }
-    cursor.advance();
+    advance();
   }
 
   // missing `*/`
-  return cursor.commit(TokenKind.BlockComment);
+  return commit(TokenKind.BlockComment);
 };

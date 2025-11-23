@@ -4,22 +4,21 @@ export interface Token {
   kind: TokenKind;
   text: string;
 }
-export type TokenDefinition = (cursor: Cursor) => Token | undefined;
-export type TokenSpec = TokenKind | TokenDefinition | TokenMap | undefined;
+export type TokenSpec = TokenKind | ScannerBehavior | TokenMap | undefined;
 export type TokenMap = {
   [key: string]: TokenSpec;
 };
 
-export type ScannerBehavior = (cursor: Cursor) => Token | undefined;
+export type ScannerBehavior = (controller: ScanController) => Token | undefined;
 export interface ScannerMode {
   name: string;
   behavior: ScannerBehavior;
 }
-export interface Cursor {
+export interface ScanController {
   eof: () => boolean;
   peek: (offset?: number) => string | undefined;
   peekCodePoint: (offset?: number) => number | undefined;
-  advance: (offset?: number) => string | undefined;
+  advance: (offset?: number) => void;
   consume: (charOrCode: string | number) => boolean;
   snapshot: () => number;
   seek: (position: number) => void;

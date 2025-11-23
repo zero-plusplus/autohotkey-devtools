@@ -1,7 +1,7 @@
 import { isTokenKind } from '../utils';
 import type { TokenKind } from './constants';
 import type {
-  Cursor,
+  ScanController,
   ScannerMode,
   Token,
   TokenMap,
@@ -22,38 +22,37 @@ export class Scanner {
     const firstPosition = this.#position;
 
     let currentPosition = firstPosition;
-    const cursor: Cursor = {
+    const controller: ScanController = {
       eof: () => {
         return this.#source.length <= currentPosition;
       },
-      peek: (offset = 0) => {
+      peek: (offset = 0): string | undefined => {
         return this.#source[currentPosition + offset];
       },
-      peekCodePoint: (offset = 0) => {
+      peekCodePoint: (offset = 0): number | undefined => {
         return this.#source[currentPosition + offset]?.codePointAt(0);
       },
-      advance: (offset = 1) => {
+      advance: (offset = 1): void => {
         currentPosition += offset;
-        return this.#source[currentPosition];
       },
-      consume: (charOrCode): boolean => {
-        if (typeof charOrCode === 'string' && cursor.peek() === charOrCode) {
-          cursor.advance();
+      consume: (charOrCode: string | number): boolean => {
+        if (typeof charOrCode === 'string' && controller.peek() === charOrCode) {
+          controller.advance();
           return true;
         }
-        else if (cursor.peekCodePoint() === charOrCode) {
-          cursor.advance();
+        else if (controller.peekCodePoint() === charOrCode) {
+          controller.advance();
           return true;
         }
         return false;
       },
-      snapshot: () => {
+      snapshot: (): number => {
         return currentPosition;
       },
       seek: (position: number) => {
         currentPosition = position;
       },
-      restore: () => {
+      restore: (): number => {
         return currentPosition = firstPosition;
       },
       commit: (kind: TokenKind): Token => {
@@ -68,7 +67,7 @@ export class Scanner {
       },
     };
 
-    const token = this.#mode?.behavior(cursor);
+    const token = this.#mode?.behavior(controller);
     return token;
   }
   public initialize(sourceText: string, mode?: ScannerMode): this {
@@ -79,42 +78,46 @@ export class Scanner {
   }
 }
 
-export function scanFromTokenMap(tokenMap: TokenMap, cursor: Cursor): Token | undefined {
-  const currentChar = cursor.peekCodePoint();
+export function scanFromTokenMap(tokenMap: TokenMap, controller: ScanController): Token | undefined {
+  const { advance, peekCodePoint } = controller;
+
+  const currentChar = peekCodePoint();
   if (currentChar === undefined) {
     return undefined;
   }
 
   let tokenSpec = tokenMap[currentChar];
   if (typeof tokenSpec === 'object') {
-    const nextChar = cursor.peekCodePoint(1);
+    const nextChar = peekCodePoint(1);
     if (nextChar && nextChar in tokenSpec) {
-      cursor.advance();
-      return scanFromTokenMap(tokenSpec, cursor);
+      advance();
+      return scanFromTokenMap(tokenSpec, controller);
     }
 
     tokenSpec = tokenSpec[''];
   }
 
-  const token = scanFromTokenSpec(tokenSpec, cursor);
+  const token = scanFromTokenSpec(tokenSpec, controller);
   if (token) {
     return token;
   }
 
   if ('' in tokenMap && tokenMap['']) {
-    return scanFromTokenSpec(tokenMap[''], cursor);
+    return scanFromTokenSpec(tokenMap[''], controller);
   }
   return undefined;
 }
 
-export function scanFromTokenSpec(tokenSpec: TokenSpec, cursor: Cursor): Token | undefined {
+export function scanFromTokenSpec(tokenSpec: TokenSpec, controller: ScanController): Token | undefined {
+  const { advance, commit, restore } = controller;
+
   if (typeof tokenSpec === 'function') {
-    cursor.restore();
-    return tokenSpec(cursor);
+    restore();
+    return tokenSpec(controller);
   }
   if (isTokenKind(tokenSpec)) {
-    cursor.advance();
-    return cursor.commit(tokenSpec);
+    advance();
+    return commit(tokenSpec);
   }
   return undefined;
 }

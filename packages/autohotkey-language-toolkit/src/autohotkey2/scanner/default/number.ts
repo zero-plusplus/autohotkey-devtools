@@ -1,8 +1,8 @@
 import { TokenKind } from '../../../core/scanner/constants';
 import type {
-  Cursor,
+  ScanController,
+  ScannerBehavior,
   Token,
-  TokenDefinition,
 } from '../../../core/scanner/types';
 import {
   isDigitCharCode,
@@ -13,53 +13,56 @@ import {
   isZeroDigitCharCode,
 } from '../../../core/utils';
 
-export const scanNumberToken: TokenDefinition = (cursor): Token | undefined => {
+export const scanNumberToken: ScannerBehavior = (controller: ScanController): Token | undefined => {
+  const { advance, commit, peek, peekCodePoint } = controller;
+
   // e.g. `0`, `0x123`
   //       ^    ^^^^^
-  const firstCharCode = cursor.peekCodePoint();
+  const firstCharCode = peekCodePoint();
   if (isZeroDigitCharCode(firstCharCode)) {
-    cursor.advance();
+    advance();
 
-    const nextChar = cursor.peek();
+    const nextChar = peek();
     if (nextChar === 'x' || nextChar === 'X') {
-      cursor.advance();
-      return scanHexValue(cursor);
+      advance();
+      return scanHexValue(controller);
     }
   }
 
   // e.g. `123`
   //       ^^^
-  scanIntegerToken(cursor);
+  scanIntegerToken(controller);
 
   // e.g. `123.123`
   //          ^^^^
-  if (isDotCharCode(cursor.peekCodePoint())) {
-    cursor.advance();
-    scanIntegerToken(cursor);
+  if (isDotCharCode(peekCodePoint())) {
+    advance();
+    scanIntegerToken(controller);
   }
 
   // e.g. `123.123e+100`
   //               ^^^^
-  if (isExponentialCharCode(cursor.peekCodePoint())) {
-    cursor.advance();
-    if (isPlusOrMinusCode(cursor.peekCodePoint())) {
-      cursor.advance();
+  if (isExponentialCharCode(peekCodePoint())) {
+    advance();
+    if (isPlusOrMinusCode(peekCodePoint())) {
+      advance();
     }
-    scanIntegerToken(cursor);
+    scanIntegerToken(controller);
   }
 
-  return cursor.commit(TokenKind.Number);
+  return commit(TokenKind.Number);
 };
 
 // #region helpers
-function scanIntegerToken(cursor: Cursor): Token | undefined {
-  const firstCharCode = cursor.peekCodePoint();
+function scanIntegerToken(controller: ScanController): Token | undefined {
+  const { advance, commit, peekCodePoint } = controller;
+
+  const firstCharCode = peekCodePoint();
   if (isZeroDigitCharCode(firstCharCode)) {
-    cursor.advance();
-    return cursor.commit(TokenKind.Number);
+    controller.advance();
+    return controller.commit(TokenKind.Number);
   }
 
-  const { peekCodePoint, advance, commit } = cursor;
   while (true) {
     const charCode = peekCodePoint();
     if (charCode === undefined) {
@@ -74,15 +77,17 @@ function scanIntegerToken(cursor: Cursor): Token | undefined {
   }
   return commit(TokenKind.Number);
 }
-function scanHexValue(cursor: Cursor): Token | undefined {
+function scanHexValue(controller: ScanController): Token | undefined {
+  const { advance, commit, peekCodePoint } = controller;
+
   while (true) {
-    const charCode = cursor.peekCodePoint();
+    const charCode = peekCodePoint();
     if (isDigitCharCode(charCode) || isHexAlphaCharCode(charCode)) {
-      cursor.advance();
+      advance();
       continue;
     }
     break;
   }
-  return cursor.commit(TokenKind.Number);
+  return commit(TokenKind.Number);
 }
 // #endregion helpers

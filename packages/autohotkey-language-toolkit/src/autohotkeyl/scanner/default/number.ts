@@ -1,16 +1,18 @@
 import { scanNumberToken as scanNumber_ahk2 } from '../../../autohotkey2/scanner/default/number';
 import type {
+  ScanController,
+  ScannerBehavior,
   Token,
-  TokenDefinition,
 } from '../../../core/scanner/types';
 import { isIdentifierTailCharCode } from '../../utils';
 import { scanIdentifierToken } from './identifier';
 
-export const scanNumberToken: TokenDefinition = (cursor): Token | undefined => {
-  const numberToken = scanNumber_ahk2(cursor);
+export const scanNumberToken: ScannerBehavior = (controller: ScanController): Token | undefined => {
+  const { peekCodePoint } = controller;
 
-  if (isIdentifierTailCharCode(cursor.peekCodePoint())) {
-    return scanIdentifierToken(cursor);
+  const numberToken = scanNumber_ahk2(controller);
+  if (isIdentifierTailCharCode(peekCodePoint())) {
+    return scanIdentifierToken(controller);
   }
   return numberToken;
 };

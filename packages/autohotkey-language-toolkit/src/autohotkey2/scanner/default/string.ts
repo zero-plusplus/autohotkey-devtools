@@ -1,33 +1,37 @@
 import { TokenKind } from '../../../core/scanner/constants';
 import type {
-  Cursor,
+  ScanController,
+  ScannerBehavior,
   Token,
-  TokenDefinition,
 } from '../../../core/scanner/types';
 
-export const scanStringToken: TokenDefinition = (cursor): Token | undefined => {
-  switch (cursor.peek()) {
-    case '"': return scanStringTokenByQuote('"', cursor);
-    case `'`: return scanStringTokenByQuote(`'`, cursor);
+export const scanStringToken: ScannerBehavior = (controller: ScanController): Token | undefined => {
+  const { peek } = controller;
+
+  switch (peek()) {
+    case '"': return scanStringTokenByQuote('"', controller);
+    case `'`: return scanStringTokenByQuote(`'`, controller);
     default: break;
   }
   return undefined;
 };
 
 // #region helpers
-function scanStringTokenByQuote(quoteChar: string, cursor: Cursor): Token | undefined {
-  if (!cursor.consume(quoteChar)) {
+function scanStringTokenByQuote(quoteChar: string, controller: ScanController): Token | undefined {
+  const { advance, commit, consume, eof, peek } = controller;
+
+  if (!consume(quoteChar)) {
     return undefined;
   }
 
-  while (!cursor.eof()) {
-    if (cursor.consume(quoteChar)) {
+  while (!eof()) {
+    if (consume(quoteChar)) {
       break;
     }
 
     // https://www.autohotkey.com/docs/v2/misc/EscapeChar.htm
-    if (cursor.consume('`')) {
-      switch (cursor.peek()) {
+    if (consume('`')) {
+      switch (peek()) {
         case '`':
         case ';':
         case ':':
@@ -41,20 +45,20 @@ function scanStringTokenByQuote(quoteChar: string, cursor: Cursor): Token | unde
         case 'a':
         case 'f':
         case quoteChar:
-          cursor.advance();
+          advance();
           break;
         case ':':
-          cursor.advance();
-          if (cursor.peek() === ':') {
-            cursor.advance();
+          advance();
+          if (peek() === ':') {
+            advance();
           }
           break;
         default: break;
       }
       continue;
     }
-    cursor.advance();
+    advance();
   }
-  return cursor.commit(TokenKind.String);
+  return commit(TokenKind.String);
 }
 // #endregion helpers
