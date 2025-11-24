@@ -14,6 +14,10 @@ export interface ScannerMode {
   name: string;
   behavior: ScannerBehavior;
 }
+export type ScannerModeName = 'default';
+export type ScannerModeMap = {
+  [key in ScannerModeName]: ScannerMode;
+};
 export interface ScanController {
   eof: () => boolean;
   peek: (offset?: number) => string | undefined;

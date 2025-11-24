@@ -1,15 +1,15 @@
 import { dedent } from '@zero-plusplus/utilities/src';
-import { defaultScanModeForAhk2 } from '../../../../src/autohotkey2/scanner/default';
+import { scannerModeMapForAhk2 } from '../../../../src/autohotkey2';
 import { Scanner } from '../../../../src/core/scanner';
 
 describe('default', () => {
-  const scanner = new Scanner('', defaultScanModeForAhk2);
+  const scanner = new Scanner(scannerModeMapForAhk2);
 
   test.each([
     '; comment',
   ])('pass', (text) => {
     scanner.initialize(text);
-    const token = scanner.scan();
+    const token = scanner.scan('default');
 
     expect(token!.text).toBe(text);
   });
@@ -23,7 +23,7 @@ describe('default', () => {
     `,
   ])('pass', (text) => {
     scanner.initialize(text);
-    const token = scanner.scan();
+    const token = scanner.scan('default');
 
     expect(token!.text).toBe(text);
   });

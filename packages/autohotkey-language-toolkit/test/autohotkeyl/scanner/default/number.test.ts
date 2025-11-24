@@ -1,8 +1,8 @@
-import { defaultScanModeForAhkl } from '../../../../src/autohotkeyl/scanner/default';
+import { scannerModeMapForAhkl } from '../../../../src/autohotkeyl';
 import { Scanner } from '../../../../src/core/scanner';
 
 describe('number', () => {
-  const scanner = new Scanner('', defaultScanModeForAhkl);
+  const scanner = new Scanner(scannerModeMapForAhkl);
 
   describe('integer', () => {
     test.each([
@@ -11,7 +11,7 @@ describe('number', () => {
       '0123',
     ])('pass', (text) => {
       scanner.initialize(text);
-      const token = scanner.scan();
+      const token = scanner.scan('default');
 
       expect(token!.text).toBe(text);
     });
@@ -23,7 +23,7 @@ describe('number', () => {
       '123.456',
     ])('pass', (text) => {
       scanner.initialize(text);
-      const token = scanner.scan();
+      const token = scanner.scan('default');
 
       expect(token!.text).toBe(text);
     });
@@ -36,7 +36,7 @@ describe('number', () => {
       '0x1234567890ABCDEF',
     ])('pass', (text) => {
       scanner.initialize(text);
-      const token = scanner.scan();
+      const token = scanner.scan('default');
 
       expect(token!.text).toBe(text);
     });
@@ -47,7 +47,7 @@ describe('number', () => {
       '0x1234567890ABCDEF.ABC',
     ])('fail', (text) => {
       scanner.initialize(text);
-      const token = scanner.scan();
+      const token = scanner.scan('default');
 
       expect(token!.text).not.toBe(text);
     });
@@ -69,7 +69,7 @@ describe('number', () => {
         '123.123E-10',
       ])('pass', (text) => {
         scanner.initialize(text);
-        const token = scanner.scan();
+        const token = scanner.scan('default');
 
         expect(token!.text).toBe(text);
       });
@@ -79,7 +79,7 @@ describe('number', () => {
         '0x123e+10',
       ])('fail', (text) => {
         scanner.initialize(text);
-        const token = scanner.scan();
+        const token = scanner.scan('default');
 
         expect(token!.text).not.toBe(text);
       });
