@@ -5,6 +5,7 @@ import {
   TokenKind,
 } from '../../../core/scanner/constants';
 import type {
+  ScanController,
   ScannerMode,
   TokenMap,
 } from '../../../core/scanner/types';
@@ -138,7 +139,7 @@ export const defaultTokenMapForAhk2: TokenMap = {
 
 export const defaultScanModeForAhk2: ScannerMode = {
   name: 'default',
-  behavior: (cursor) => {
-    return scanFromTokenMap(defaultTokenMapForAhk2, cursor);
+  behavior: (controller: ScanController) => {
+    return scanFromTokenMap(defaultTokenMapForAhk2, controller);
   },
 };
