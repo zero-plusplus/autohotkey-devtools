@@ -1,6 +1,6 @@
 import type { TokenScanModeProfiles } from '../core/scanner/types';
-import { defaultScanModeProfile } from './scanner/default';
+import { defaultTokenScanProfile } from './scanner/default';
 
-export const scannerModeProfiles: TokenScanModeProfiles = {
-  default: defaultScanModeProfile,
+export const tokenScanModeProfiles: TokenScanModeProfiles = {
+  default: defaultTokenScanProfile,
 };

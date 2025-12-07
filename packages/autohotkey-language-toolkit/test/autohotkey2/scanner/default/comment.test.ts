@@ -1,9 +1,9 @@
 import { dedent } from '@zero-plusplus/utilities/src';
-import { scannerModeProfiles } from '../../../../src/autohotkey2';
+import { tokenScanModeProfiles } from '../../../../src/autohotkey2';
 import { createTokenScanner } from '../../../../src/core/scanner';
 
 describe('default', () => {
-  const scanner = createTokenScanner({ modeProfiles: scannerModeProfiles });
+  const scanner = createTokenScanner({ modeProfiles: tokenScanModeProfiles });
 
   test.each([
     '; comment',

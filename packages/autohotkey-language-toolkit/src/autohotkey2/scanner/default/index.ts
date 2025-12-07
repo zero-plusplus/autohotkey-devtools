@@ -136,7 +136,7 @@ export const defaultRawTokenSpecRegistry: RawTokenSpecRegistry = {
   [CharacterCodes._0]: scanNumberToken,
   '': scanIdentifierToken,
 };
-export const defaultScanModeProfile: TokenScanModeProfile = {
+export const defaultTokenScanProfile: TokenScanModeProfile = {
   name: 'default',
   behavior: (controller: RawTokenScanController) => {
     return scanFromTokenMap(defaultRawTokenSpecRegistry, controller);

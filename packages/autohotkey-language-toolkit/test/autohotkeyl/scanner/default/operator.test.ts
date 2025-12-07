@@ -1,9 +1,9 @@
 import { expressionOperators } from '@zero-plusplus/autohotkey-tmlanguage/src/autohotkeyl/constants';
-import { scannerModeProfiles } from '../../../../src/autohotkeyl';
+import { tokenScanModeProfiles } from '../../../../src/autohotkeyl';
 import { createTokenScanner } from '../../../../src/core/scanner';
 
 describe('default.operator', () => {
-  const scanner = createTokenScanner({ modeProfiles: scannerModeProfiles });
+  const scanner = createTokenScanner({ modeProfiles: tokenScanModeProfiles });
 
   test.each(expressionOperators)('pass', (source) => {
     scanner.initialize({ source });

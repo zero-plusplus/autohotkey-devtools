@@ -1,8 +1,8 @@
-import { scannerModeProfiles } from '../../../../src/autohotkeyl';
+import { tokenScanModeProfiles } from '../../../../src/autohotkeyl';
 import { createTokenScanner } from '../../../../src/core/scanner';
 
 describe('string', () => {
-  const scanner = createTokenScanner({ modeProfiles: scannerModeProfiles });
+  const scanner = createTokenScanner({ modeProfiles: tokenScanModeProfiles });
 
   test.each([
     '"text"',
