@@ -1,14 +1,14 @@
 import { expressionOperators } from '@zero-plusplus/autohotkey-tmlanguage/src/autohotkeyl/constants';
-import { scannerModeMapForAhkl } from '../../../../src/autohotkeyl';
-import { Scanner } from '../../../../src/core/scanner';
+import { scannerModeProfiles } from '../../../../src/autohotkeyl';
+import { createTokenScanner } from '../../../../src/core/scanner';
 
 describe('default.operator', () => {
-  const scanner = new Scanner(scannerModeMapForAhkl);
+  const scanner = createTokenScanner({ modeProfiles: scannerModeProfiles });
 
-  test.each(expressionOperators)('pass', (operatorText) => {
-    scanner.initialize(operatorText);
-    const token = scanner.scan('default');
+  test.each(expressionOperators)('pass', (source) => {
+    scanner.initialize({ source });
+    const token = scanner.scan();
 
-    expect(token?.text).toBe(operatorText);
+    expect(token?.text).toBe(source);
   });
 });

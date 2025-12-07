@@ -3,20 +3,20 @@ import {
   TokenKind,
 } from '../../../core/scanner/constants';
 import type {
-  ScanController,
-  ScannerBehavior,
-  Token,
+  RawToken,
+  RawTokenScanBehavior,
+  RawTokenScanController,
 } from '../../../core/scanner/types';
 import {
   isLineBreakCharCode,
   isWhitespaceCharCode,
 } from '../../../core/utils';
 
-export const scanLineCommentToken: ScannerBehavior = (controller: ScanController): Token | undefined => {
-  const { advance, commit, consume, eof, peekCodePoint, snapshot } = controller;
+export const scanLineCommentToken: RawTokenScanBehavior = (controller: RawTokenScanController): RawToken | undefined => {
+  const { advance, commit, consume, eof, peekCodePoint } = controller;
 
   const isCommentStart = ((): boolean => {
-    if (snapshot() === 0) {
+    if (controller.position === 0) {
       return true;
     }
 
@@ -48,7 +48,7 @@ export const scanLineCommentToken: ScannerBehavior = (controller: ScanController
   }
   return commit(TokenKind.LineComment);
 };
-export const scanBlockCommentToken: ScannerBehavior = (controller: ScanController): Token | undefined => {
+export const scanBlockCommentToken: RawTokenScanBehavior = (controller: RawTokenScanController): RawToken | undefined => {
   const { advance, commit, consume, eof, peek } = controller;
 
   if (!(peek() === '/' && peek(1) === '*')) {

@@ -1,17 +1,17 @@
 import { dedent } from '@zero-plusplus/utilities/src';
-import { scannerModeMapForAhkl } from '../../../../src/autohotkeyl';
-import { Scanner } from '../../../../src/core/scanner';
+import { scannerModeProfiles } from '../../../../src/autohotkeyl';
+import { createTokenScanner } from '../../../../src/core/scanner';
 
 describe('default', () => {
-  const scanner = new Scanner(scannerModeMapForAhkl);
+  const scanner = createTokenScanner({ modeProfiles: scannerModeProfiles });
 
   test.each([
     '; comment',
-  ])('pass', (text) => {
-    scanner.initialize(text);
-    const token = scanner.scan('default');
+  ])('pass', (source) => {
+    scanner.initialize({ source });
+    const token = scanner.scan();
 
-    expect(token!.text).toBe(text);
+    expect(token!.text).toBe(source);
   });
 
   test.each([
@@ -21,10 +21,10 @@ describe('default', () => {
       /*
       */
     `,
-  ])('pass', (text) => {
-    scanner.initialize(text);
-    const token = scanner.scan('default');
+  ])('pass', (source) => {
+    scanner.initialize({ source });
+    const token = scanner.scan();
 
-    expect(token!.text).toBe(text);
+    expect(token!.text).toBe(source);
   });
 });

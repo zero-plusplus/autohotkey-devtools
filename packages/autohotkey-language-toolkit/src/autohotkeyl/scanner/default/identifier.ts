@@ -1,15 +1,15 @@
 import { TokenKind } from '../../../core/scanner/constants';
 import type {
-  ScanController,
-  ScannerBehavior,
-  Token,
+  RawToken,
+  RawTokenScanBehavior,
+  RawTokenScanController,
 } from '../../../core/scanner/types';
 import {
   isIdentifierHeadCharCode,
   isIdentifierTailCharCode,
 } from '../../utils';
 
-export const scanIdentifierToken: ScannerBehavior = (controller: ScanController): Token | undefined => {
+export const scanIdentifierToken: RawTokenScanBehavior = (controller: RawTokenScanController): RawToken | undefined => {
   const { advance, commit, peekCodePoint } = controller;
 
   const charCode = peekCodePoint();

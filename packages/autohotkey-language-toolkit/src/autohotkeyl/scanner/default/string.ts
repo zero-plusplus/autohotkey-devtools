@@ -1,16 +1,16 @@
 import { TokenKind } from '../../../core/scanner/constants';
 import type {
-  ScanController,
-  ScannerBehavior,
-  Token,
+  RawToken,
+  RawTokenScanBehavior,
+  RawTokenScanController,
 } from '../../../core/scanner/types';
 
-export const scanStringToken: ScannerBehavior = (controller: ScanController): Token | undefined => {
+export const scanStringToken: RawTokenScanBehavior = (controller: RawTokenScanController): RawToken | undefined => {
   return scanDoubleStringToken(controller);
 };
 
 // #region helpers
-function scanDoubleStringToken(controller: ScanController): Token | undefined {
+function scanDoubleStringToken(controller: RawTokenScanController): RawToken | undefined {
   const { advance, commit, consume, eof, peek } = controller;
 
   if (!consume('"')) {

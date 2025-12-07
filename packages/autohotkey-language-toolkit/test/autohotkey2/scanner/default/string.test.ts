@@ -1,18 +1,18 @@
-import { scannerModeMapForAhk2 } from '../../../../src/autohotkey2';
-import { Scanner } from '../../../../src/core/scanner';
+import { scannerModeProfiles } from '../../../../src/autohotkey2';
+import { createTokenScanner } from '../../../../src/core/scanner';
 
 describe('string', () => {
-  const scanner = new Scanner(scannerModeMapForAhk2);
+  const scanner = createTokenScanner({ modeProfiles: scannerModeProfiles });
 
   describe('double', () => {
     test.each([
       '"text"',
       '"```;`:`{`n`r`b`t`s`v`a`f`""',
-    ])('pass', (text) => {
-      scanner.initialize(text);
-      const token = scanner.scan('default');
+    ])('pass', (source) => {
+      scanner.initialize({ source });
+      const token = scanner.scan();
 
-      expect(token!.text).toBe(text);
+      expect(token!.text).toBe(source);
     });
   });
 
@@ -20,11 +20,11 @@ describe('string', () => {
     test.each([
       '\'text\'',
       '\'```;`:`{`n`r`b`t`s`v`a`f}`\'\'',
-    ])('pass', (text) => {
-      scanner.initialize(text);
-      const token = scanner.scan('default');
+    ])('pass', (source) => {
+      scanner.initialize({ source });
+      const token = scanner.scan();
 
-      expect(token!.text).toBe(text);
+      expect(token!.text).toBe(source);
     });
   });
 });

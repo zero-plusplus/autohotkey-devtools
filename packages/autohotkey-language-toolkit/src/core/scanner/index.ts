@@ -1,95 +1,148 @@
 import { isTokenKind } from '../utils';
 import type { TokenKind } from './constants';
 import type {
-  ScanController,
-  ScannerModeMap,
-  ScannerModeName,
+  RawToken,
+  RawTokenScanController,
+  RawTokenSpec,
+  RawTokenSpecRegistry,
   Token,
-  TokenMap,
-  TokenSpec,
+  TokenScanModeProfileName,
+  TokenScanner,
+  TokenScannerConfig,
+  TokenScannerContext,
 } from './types';
 
-export class Scanner {
-  #source = '';
-  #modeMap: ScannerModeMap;
-  #position: number;
-  readonly #controller: ScanController;
+export function createTokenScanner(config: TokenScannerConfig): TokenScanner {
+  let context: TokenScannerContext = initialScannerContextByConfig(config);
+  const controller: RawTokenScanController = createRawTokenScanController();
 
-  constructor(modeMap: ScannerModeMap) {
-    this.#source = '';
-    this.#modeMap = modeMap;
-    this.#position = 0;
-    this.#controller = createScanController(this, this.#position);
-  }
-  public get source(): string {
-    return this.#source;
-  }
-  public get position(): number {
-    return this.#position;
-  }
-  public scan(modeName: ScannerModeName = 'default'): Token | undefined {
-    const token = this.#modeMap[modeName].behavior(this.#controller);
+  const scanner: TokenScanner = {
+    get source(): string {
+      return context.source;
+    },
+    get position(): number {
+      return context.position;
+    },
+    initialize: (newConfig: Partial<TokenScannerConfig>): TokenScanner => {
+      context = initialScannerContextByConfig(newConfig);
+      return scanner;
+    },
+    setMode: (modeName: TokenScanModeProfileName) => {
+      context.modeName = modeName;
+      return scanner;
+    },
+    scan: (modeName?: TokenScanModeProfileName): Token | undefined => {
+      const profile = context.modeProfiles[modeName ?? context.modeName];
+      try {
+        const rawToken = profile.behavior(controller);
+        if (rawToken === undefined) {
+          return undefined;
+        }
 
-    this.#position = this.#controller.snapshot();
-    return token;
-  }
-  public initialize(sourceText: string, modeMap?: ScannerModeMap): this {
-    this.#source = sourceText;
-    this.#modeMap = modeMap ?? this.#modeMap;
-    this.#position = 0;
-    this.#controller.seek(this.#position);
-    return this;
-  }
-}
-
-export function createScanController(scanner: Scanner, position: number): ScanController {
-  let currentPosition = position;
-  const controller: ScanController = {
-    eof: () => {
-      return scanner.source.length <= currentPosition;
-    },
-    peek: (offset = 0): string | undefined => {
-      return scanner.source[currentPosition + offset];
-    },
-    peekCodePoint: (offset = 0): number | undefined => {
-      return scanner.source[currentPosition + offset]?.codePointAt(0);
-    },
-    advance: (offset = 1): void => {
-      currentPosition += offset;
-    },
-    consume: (charOrCode: string | number): boolean => {
-      if (typeof charOrCode === 'string' && controller.peek() === charOrCode) {
-        controller.advance();
-        return true;
+        context.startPosition = controller.position!;
+        return {
+          ...rawToken,
+          leadingTrivias: [],
+          trailingTrivias: [],
+        };
       }
-      else if (controller.peekCodePoint() === charOrCode) {
-        controller.advance();
-        return true;
+      catch (e: unknown) {
+        if (e instanceof Error) {
+          throw Error(`<${profile.name}>\n${e.message}`);
+        }
+        throw Error(profile.name);
       }
-      return false;
     },
-    snapshot: (): number => {
-      return currentPosition;
-    },
-    seek: (position: number) => {
-      currentPosition = position;
-    },
-    restore: (): number => {
-      return currentPosition = scanner.position;
-    },
-    commit: (kind: TokenKind): Token => {
-      const tokenText = scanner.source.slice(scanner.position, currentPosition);
+    peek: (modeName?: TokenScanModeProfileName): Token | undefined => {
+      const snapshot = scanner.snapshot();
+      const token = scanner.scan(modeName);
 
+      scanner.restore(snapshot);
+      return token;
+    },
+    snapshot: (): TokenScannerContext => {
       return {
-        kind,
-        text: tokenText,
+        ...context,
+        cache: {
+          ...context.cache,
+        },
       };
     },
+    restore: (snapshot: TokenScannerContext) => {
+      context = snapshot;
+      return scanner;
+    },
   };
-  return controller;
-}
 
-export function scanFromTokenMap(tokenMap: TokenMap, controller: ScanController): Token | undefined {
+  return scanner;
+
+  // #region helpers
+  function initialScannerContextByConfig(newConfig: Partial<TokenScannerConfig>): TokenScannerContext {
+    return {
+      source: newConfig.source ?? '',
+      position: newConfig.position ?? 0,
+      startPosition: newConfig.position ?? 0,
+      modeName: newConfig.modeName ?? 'default',
+      modeProfiles: newConfig.modeProfiles ?? config.modeProfiles,
+      cache: {
+        nextRawToken: undefined,
+        nextTrivias: undefined,
+      },
+    };
+  }
+  function createRawTokenScanController(): RawTokenScanController {
+    const controller: RawTokenScanController = {
+      get source(): string {
+        return context.source;
+      },
+      get position(): number {
+        return context.position;
+      },
+      eof: () => {
+        return context.source.length <= context.position;
+      },
+      peek: (offset = 0): string | undefined => {
+        return context.source[context.position + offset];
+      },
+      peekCodePoint: (offset = 0): number | undefined => {
+        return context.source[context.position + offset]?.codePointAt(0);
+      },
+      advance: (offset = 1): void => {
+        context.position += offset;
+      },
+      consume: (charOrCode: string | number): boolean => {
+        if (typeof charOrCode === 'string' && controller.peek() === charOrCode) {
+          controller.advance();
+          return true;
+        }
+        else if (controller.peekCodePoint() === charOrCode) {
+          controller.advance();
+          return true;
+        }
+        return false;
+      },
+      seek: (position: number): RawTokenScanController => {
+        context.position = position;
+        return controller;
+      },
+      rollback: (): RawTokenScanController => {
+        context.position = context.startPosition;
+        return controller;
+      },
+      commit: (kind: TokenKind): RawToken => {
+        const tokenText = context.source.slice(context.startPosition, context.position);
+
+        return {
+          kind,
+          text: tokenText,
+        };
+      },
+    };
+    return controller;
+  }
+  // #endregion helpers
+}
+export function scanFromTokenMap(registry: RawTokenSpecRegistry, controller: RawTokenScanController): RawToken | undefined {
   const { advance, peekCodePoint } = controller;
 
   const currentChar = peekCodePoint();
@@ -97,7 +150,7 @@ export function scanFromTokenMap(tokenMap: TokenMap, controller: ScanController)
     return undefined;
   }
 
-  let tokenSpec = tokenMap[currentChar];
+  let tokenSpec = registry[currentChar];
   if (typeof tokenSpec === 'object') {
     const nextChar = peekCodePoint(1);
     if (nextChar && nextChar in tokenSpec) {
@@ -113,14 +166,14 @@ export function scanFromTokenMap(tokenMap: TokenMap, controller: ScanController)
     return token;
   }
 
-  if ('' in tokenMap && tokenMap['']) {
-    return scanFromTokenSpec(tokenMap[''], controller);
+  if ('' in registry && registry['']) {
+    return scanFromTokenSpec(registry[''], controller);
   }
   return undefined;
 }
 
-export function scanFromTokenSpec(tokenSpec: TokenSpec, controller: ScanController): Token | undefined {
-  const { advance, commit, restore } = controller;
+export function scanFromTokenSpec(tokenSpec: RawTokenSpec, controller: RawTokenScanController): RawToken | undefined {
+  const { advance, commit, rollback: restore } = controller;
 
   if (typeof tokenSpec === 'function') {
     restore();

@@ -6,9 +6,9 @@ import {
   TokenKind,
 } from '../../../core/scanner/constants';
 import type {
-  ScanController,
-  ScannerMode,
-  TokenMap,
+  RawTokenScanController,
+  RawTokenSpecRegistry,
+  TokenScanModeProfile,
 } from '../../../core/scanner/types';
 import {
   scanBlockCommentToken,
@@ -18,7 +18,7 @@ import { scanIdentifierToken } from './identifier';
 import { scanNumberToken } from './number';
 import { scanStringToken } from './string';
 
-export const defaultTokenMapForAhkl: TokenMap = {
+export const defaultTokenSpecRegistry: RawTokenSpecRegistry = {
   [CharacterCodes.Tab]: TokenKind.Tab,
   [CharacterCodes.LineFeed]: TokenKind.Linefeed,
   [CharacterCodes.CarriageReturn]: TokenKind.CarriageReturn,
@@ -140,9 +140,9 @@ export const defaultTokenMapForAhkl: TokenMap = {
   '': scanIdentifierToken,
 };
 
-export const defaultScanModeForAhkl: ScannerMode = {
+export const defaultScanProfile: TokenScanModeProfile = {
   name: 'default',
-  behavior: (controller: ScanController) => {
-    return scanFromTokenMap(defaultTokenMapForAhkl, controller);
+  behavior: (controller: RawTokenScanController) => {
+    return scanFromTokenMap(defaultTokenSpecRegistry, controller);
   },
 };

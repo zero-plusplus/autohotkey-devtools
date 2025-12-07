@@ -1,11 +1,11 @@
 import { TokenKind } from '../../../core/scanner/constants';
 import type {
-  ScanController,
-  ScannerBehavior,
-  Token,
+  RawToken,
+  RawTokenScanBehavior,
+  RawTokenScanController,
 } from '../../../core/scanner/types';
 
-export const scanStringToken: ScannerBehavior = (controller: ScanController): Token | undefined => {
+export const scanStringToken: RawTokenScanBehavior = (controller: RawTokenScanController): RawToken | undefined => {
   const { peek } = controller;
 
   switch (peek()) {
@@ -17,7 +17,7 @@ export const scanStringToken: ScannerBehavior = (controller: ScanController): To
 };
 
 // #region helpers
-function scanStringTokenByQuote(quoteChar: string, controller: ScanController): Token | undefined {
+function scanStringTokenByQuote(quoteChar: string, controller: RawTokenScanController): RawToken | undefined {
   const { advance, commit, consume, eof, peek } = controller;
 
   if (!consume(quoteChar)) {

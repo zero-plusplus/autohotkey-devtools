@@ -1,8 +1,8 @@
-import { scannerModeMapForAhkl } from '../../../../src/autohotkeyl';
-import { Scanner } from '../../../../src/core/scanner';
+import { scannerModeProfiles } from '../../../../src/autohotkeyl';
+import { createTokenScanner } from '../../../../src/core/scanner';
 
 describe('default', () => {
-  const scanner = new Scanner(scannerModeMapForAhkl);
+  const scanner = createTokenScanner({ modeProfiles: scannerModeProfiles });
 
   test.each([
     'abc',
@@ -13,29 +13,29 @@ describe('default', () => {
     '0123',
     '0123abc',
     '0xAZ',
-  ])('pass', (text) => {
-    scanner.initialize(text);
-    const token = scanner.scan('default');
+  ])('pass', (source) => {
+    scanner.initialize({ source });
+    const token = scanner.scan();
 
-    expect(token!.text).toBe(text);
+    expect(token!.text).toBe(source);
   });
 
   test.each([
     '&0123abc',
-  ])('fail', (text) => {
-    scanner.initialize(text);
-    const token = scanner.scan('default');
+  ])('fail', (source) => {
+    scanner.initialize({ source });
+    const token = scanner.scan();
 
-    expect(token?.text).not.toBe(text);
+    expect(token?.text).not.toBe(source);
   });
 
   test.each([
     'abc&',
     'a'.repeat(254),
-  ])('fail', (text) => {
-    scanner.initialize(text);
-    const token = scanner.scan('default');
+  ])('fail', (source) => {
+    scanner.initialize({ source });
+    const token = scanner.scan();
 
-    expect(token?.text).not.toBe(text);
+    expect(token?.text).not.toBe(source);
   });
 });

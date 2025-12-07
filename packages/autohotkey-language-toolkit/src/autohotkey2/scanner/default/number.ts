@@ -1,8 +1,8 @@
 import { TokenKind } from '../../../core/scanner/constants';
 import type {
-  ScanController,
-  ScannerBehavior,
-  Token,
+  RawToken,
+  RawTokenScanBehavior,
+  RawTokenScanController,
 } from '../../../core/scanner/types';
 import {
   isDigitCharCode,
@@ -13,7 +13,7 @@ import {
   isZeroDigitCharCode,
 } from '../../../core/utils';
 
-export const scanNumberToken: ScannerBehavior = (controller: ScanController): Token | undefined => {
+export const scanNumberToken: RawTokenScanBehavior = (controller: RawTokenScanController): RawToken | undefined => {
   const { advance, commit, peek, peekCodePoint } = controller;
 
   // e.g. `0`, `0x123`
@@ -54,7 +54,7 @@ export const scanNumberToken: ScannerBehavior = (controller: ScanController): To
 };
 
 // #region helpers
-function scanIntegerToken(controller: ScanController): Token | undefined {
+function scanIntegerToken(controller: RawTokenScanController): RawToken | undefined {
   const { advance, commit, peekCodePoint } = controller;
 
   const firstCharCode = peekCodePoint();
@@ -77,7 +77,7 @@ function scanIntegerToken(controller: ScanController): Token | undefined {
   }
   return commit(TokenKind.Number);
 }
-function scanHexValue(controller: ScanController): Token | undefined {
+function scanHexValue(controller: RawTokenScanController): RawToken | undefined {
   const { advance, commit, peekCodePoint } = controller;
 
   while (true) {

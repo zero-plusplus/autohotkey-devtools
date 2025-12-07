@@ -1,17 +1,17 @@
-import { scannerModeMapForAhkl } from '../../../../src/autohotkeyl';
-import { Scanner } from '../../../../src/core/scanner';
+import { scannerModeProfiles } from '../../../../src/autohotkeyl';
+import { createTokenScanner } from '../../../../src/core/scanner';
 
 describe('string', () => {
-  const scanner = new Scanner(scannerModeMapForAhkl);
+  const scanner = createTokenScanner({ modeProfiles: scannerModeProfiles });
 
   test.each([
     '"text"',
     '"`, `% `` `; `: `:: `n `r `b `t `v `a `f """',
-  ])('pass', (text) => {
-    scanner.initialize(text);
-    const token = scanner.scan('default');
+  ])('pass', (source) => {
+    scanner.initialize({ source });
+    const token = scanner.scan();
 
 
-    expect(token!.text).toBe(text);
+    expect(token!.text).toBe(source);
   });
 });

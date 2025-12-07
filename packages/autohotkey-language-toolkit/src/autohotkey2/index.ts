@@ -1,6 +1,6 @@
-import type { ScannerModeMap } from '../core/scanner/types';
-import { defaultScanModeForAhk2 } from './scanner/default';
+import type { TokenScanModeProfiles } from '../core/scanner/types';
+import { defaultScanModeProfile } from './scanner/default';
 
-export const scannerModeMapForAhk2: ScannerModeMap = {
-  default: defaultScanModeForAhk2,
+export const scannerModeProfiles: TokenScanModeProfiles = {
+  default: defaultScanModeProfile,
 };
