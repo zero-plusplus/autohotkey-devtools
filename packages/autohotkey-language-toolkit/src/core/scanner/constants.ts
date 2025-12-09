@@ -1,6 +1,8 @@
 export const enum TokenKind {
   CarriageReturn,
   Linefeed,
+  LF,
+  CRLF,
   Space,
   Tab,
   LineComment,
@@ -77,6 +79,8 @@ export const enum TokenKind {
   Tilde,
   TildeEquals,
   // #endregion operators
+
+  EndOfFile,
 }
 
 export const enum CharacterCodes {

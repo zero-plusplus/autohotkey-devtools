@@ -11,7 +11,7 @@ describe('default', () => {
     scanner.initialize({ source });
     const token = scanner.scan();
 
-    expect(token!.text).toBe(source);
+    expect(token!.leadingTrivias[0]!.text).toBe(source);
   });
 
   test.each([
@@ -25,6 +25,6 @@ describe('default', () => {
     scanner.initialize({ source });
     const token = scanner.scan();
 
-    expect(token!.text).toBe(source);
+    expect(token!.leadingTrivias[0]!.text).toBe(source);
   });
 });

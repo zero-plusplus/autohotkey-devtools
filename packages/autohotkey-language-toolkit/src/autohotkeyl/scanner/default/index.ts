@@ -17,12 +17,19 @@ import {
 import { scanIdentifierToken } from './identifier';
 import { scanNumberToken } from './number';
 import { scanStringToken } from './string';
+import {
+  scanCRLFToken,
+  scanLFToken,
+  scanSpaceToken,
+  scanTabToken,
+} from './whitespace';
 
 export const defaultTokenSpecRegistry: RawTokenSpecRegistry = {
-  [CharacterCodes.Tab]: TokenKind.Tab,
-  [CharacterCodes.LineFeed]: TokenKind.Linefeed,
-  [CharacterCodes.CarriageReturn]: TokenKind.CarriageReturn,
-  [CharacterCodes.Space]: TokenKind.Space,
+  [CharacterCodes.Bom]: TokenKind.Bom,
+  [CharacterCodes.LineFeed]: scanLFToken,
+  [CharacterCodes.CarriageReturn]: scanCRLFToken,
+  [CharacterCodes.Space]: scanSpaceToken,
+  [CharacterCodes.Tab]: scanTabToken,
   [CharacterCodes.Exclamation]: {
     [CharacterCodes.Equals]: {
       [CharacterCodes.Equals]: TokenKind.ExclamationEqualsEquals,
@@ -126,7 +133,6 @@ export const defaultTokenSpecRegistry: RawTokenSpecRegistry = {
     [CharacterCodes.Equals]: TokenKind.TildeEquals,
     '': TokenKind.Tilde,
   },
-  [CharacterCodes.Bom]: TokenKind.Bom,
   [CharacterCodes._1]: scanNumberToken,
   [CharacterCodes._2]: scanNumberToken,
   [CharacterCodes._3]: scanNumberToken,
@@ -144,5 +150,14 @@ export const defaultTokenScanProfile: TokenScanModeProfile = {
   name: 'default',
   behavior: (controller: RawTokenScanController) => {
     return scanFromTokenMap(defaultTokenSpecRegistry, controller);
+  },
+  trivias: {
+    [TokenKind.Bom]: true,
+    [TokenKind.LF]: true,
+    [TokenKind.CRLF]: true,
+    [TokenKind.Space]: true,
+    [TokenKind.Tab]: true,
+    [TokenKind.LineComment]: true,
+    [TokenKind.BlockComment]: true,
   },
 };

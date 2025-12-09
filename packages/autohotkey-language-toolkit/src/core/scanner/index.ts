@@ -1,5 +1,5 @@
 import { isTokenKind } from '../utils';
-import type { TokenKind } from './constants';
+import { TokenKind } from './constants';
 import type {
   RawToken,
   RawTokenScanController,
@@ -31,27 +31,31 @@ export function createTokenScanner(config: TokenScannerConfig): TokenScanner {
       context.modeName = modeName;
       return scanner;
     },
-    scan: (modeName?: TokenScanModeProfileName): Token | undefined => {
-      const profile = context.modeProfiles[modeName ?? context.modeName];
-      try {
-        const rawToken = profile.behavior(controller);
-        if (rawToken === undefined) {
+    scan: (tempModeName?: TokenScanModeProfileName): Token | undefined => {
+      const modeName = tempModeName ?? context.modeName;
+      const leadingTrivias = scanTrivias(modeName);
+
+      let rawToken = scanRawToken(modeName);
+      if (rawToken === undefined) {
+        if (!controller.eof()) {
           return undefined;
         }
 
-        context.startPosition = controller.position!;
-        return {
-          ...rawToken,
-          leadingTrivias: [],
-          trailingTrivias: [],
+        rawToken = {
+          kind: TokenKind.EndOfFile,
+          text: '',
         };
       }
-      catch (e: unknown) {
-        if (e instanceof Error) {
-          throw Error(`<${profile.name}>\n${e.message}`);
-        }
-        throw Error(profile.name);
-      }
+      const trailingTrivias = scanTrivias(modeName);
+
+      context.startPosition = controller.position!;
+      context.cache.nextRawToken = undefined;
+      context.cache.nextLeadingTrivias = undefined;
+      return {
+        ...rawToken,
+        leadingTrivias,
+        trailingTrivias,
+      };
     },
     peek: (modeName?: TokenScanModeProfileName): Token | undefined => {
       const snapshot = scanner.snapshot();
@@ -77,6 +81,75 @@ export function createTokenScanner(config: TokenScannerConfig): TokenScanner {
   return scanner;
 
   // #region helpers
+  function scanRawToken(modeName: TokenScanModeProfileName): RawToken | undefined {
+    if (context.cache.nextRawToken) {
+      return consumeCachedRawToken();
+    }
+
+    context.startPosition = context.position;
+    const profile = context.modeProfiles[modeName];
+    try {
+      return profile.behavior(controller);
+    }
+    catch (e: unknown) {
+      if (e instanceof Error) {
+        throw Error(`<${profile.name}>\n${e.message}`);
+      }
+      throw Error(profile.name);
+    }
+  }
+  function consumeCachedRawToken(): RawToken | undefined {
+    const rawToken = context.cache.nextRawToken;
+    if (rawToken === undefined) {
+      return undefined;
+    }
+
+    controller.seek(controller.position + rawToken.text.length);
+    context.cache.nextRawToken = undefined;
+    return rawToken;
+  }
+  function consumeCachedLeadingTrivias(): RawToken[] {
+    const trivias = context.cache.nextLeadingTrivias;
+    if (trivias === undefined) {
+      return [];
+    }
+
+    context.cache.nextLeadingTrivias = undefined;
+    return trivias;
+  }
+  function scanTrivias(modeName: TokenScanModeProfileName): RawToken[] {
+    if (context.cache.nextLeadingTrivias) {
+      return consumeCachedLeadingTrivias();
+    }
+
+    const trivias: RawToken[] = [];
+    while (true) {
+      const rawToken = peekRawToken(modeName);
+      if (rawToken === undefined) {
+        break;
+      }
+
+      if (!isTrivia(rawToken.kind, modeName)) {
+        break;
+      }
+      trivias.push(scanRawToken(modeName)!);
+    }
+
+    context.cache.nextLeadingTrivias = trivias;
+    return trivias;
+  }
+  function peekRawToken(modeName: TokenScanModeProfileName): RawToken | undefined {
+    if (context.cache.nextRawToken) {
+      return context.cache.nextRawToken;
+    }
+
+    context.cache.nextRawToken = scanRawToken(modeName);
+    controller.rollback();
+    return context.cache.nextRawToken;
+  }
+  function isTrivia(kind: TokenKind, modeName: TokenScanModeProfileName): boolean {
+    return config.modeProfiles[modeName].trivias[kind] ?? false;
+  }
   function initialScannerContextByConfig(newConfig: Partial<TokenScannerConfig>): TokenScannerContext {
     return {
       source: newConfig.source ?? '',
@@ -86,7 +159,7 @@ export function createTokenScanner(config: TokenScannerConfig): TokenScanner {
       modeProfiles: newConfig.modeProfiles ?? config.modeProfiles,
       cache: {
         nextRawToken: undefined,
-        nextTrivias: undefined,
+        nextLeadingTrivias: undefined,
       },
     };
   }
@@ -173,10 +246,10 @@ export function scanFromTokenMap(registry: RawTokenSpecRegistry, controller: Raw
 }
 
 export function scanFromTokenSpec(tokenSpec: RawTokenSpec, controller: RawTokenScanController): RawToken | undefined {
-  const { advance, commit, rollback: restore } = controller;
+  const { advance, commit, rollback } = controller;
 
   if (typeof tokenSpec === 'function') {
-    restore();
+    rollback();
     return tokenSpec(controller);
   }
   if (isTokenKind(tokenSpec)) {

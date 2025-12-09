@@ -10,8 +10,8 @@ export type RawTokenSpecRegistry = {
   [key: string]: RawTokenSpec;
 };
 export interface RawTokenScanController {
-  readonly source: TokenScannerConfig['source'];
-  readonly position: TokenScannerConfig['position'];
+  readonly source: string;
+  readonly position: number;
   eof: () => boolean;
   advance: (offset?: number) => void;
   consume: (charOrCode: string | number) => boolean;
@@ -23,13 +23,14 @@ export interface RawTokenScanController {
 }
 
 export interface Token extends RawToken {
-  leadingTrivias: Token[];
-  trailingTrivias: Token[];
+  leadingTrivias: RawToken[];
+  trailingTrivias: RawToken[];
 }
 export type TokenScanModeProfileName = 'default'; // | 'text';
 export interface TokenScanModeProfile {
   name: TokenScanModeProfileName;
   behavior: RawTokenScanBehavior;
+  trivias: { [ key in TokenKind ]?: boolean };
 }
 export type TokenScanModeProfiles = {
   [key in TokenScanModeProfileName]: TokenScanModeProfile;
@@ -48,7 +49,7 @@ export interface TokenScannerContext extends TokenScannerConfig {
   modeProfiles: TokenScanModeProfiles;
   readonly cache: {
     nextRawToken: RawToken | undefined;
-    nextTrivias: RawToken[] | undefined;
+    nextLeadingTrivias: RawToken[] | undefined;
   };
 }
 export interface TokenScanner {
