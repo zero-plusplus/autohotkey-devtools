@@ -33,7 +33,7 @@ export function createTokenScanner(config: TokenScannerConfig): TokenScanner {
     },
     scan: (tempModeName?: TokenScanModeProfileName): Token | undefined => {
       const modeName = tempModeName ?? context.modeName;
-      const leadingTrivias = scanTrivias(modeName);
+      const leadingTrivias = consumeCachedLeadingTrivias() ?? scanTrivias(modeName);
 
       let rawToken = scanRawToken(modeName);
       if (rawToken === undefined) {
@@ -49,8 +49,6 @@ export function createTokenScanner(config: TokenScannerConfig): TokenScanner {
       const trailingTrivias = scanTrivias(modeName);
 
       context.startPosition = controller.position!;
-      context.cache.nextRawToken = undefined;
-      context.cache.nextLeadingTrivias = undefined;
       return {
         ...rawToken,
         leadingTrivias,
@@ -98,30 +96,7 @@ export function createTokenScanner(config: TokenScannerConfig): TokenScanner {
       throw Error(profile.name);
     }
   }
-  function consumeCachedRawToken(): RawToken | undefined {
-    const rawToken = context.cache.nextRawToken;
-    if (rawToken === undefined) {
-      return undefined;
-    }
-
-    controller.seek(controller.position + rawToken.text.length);
-    context.cache.nextRawToken = undefined;
-    return rawToken;
-  }
-  function consumeCachedLeadingTrivias(): RawToken[] {
-    const trivias = context.cache.nextLeadingTrivias;
-    if (trivias === undefined) {
-      return [];
-    }
-
-    context.cache.nextLeadingTrivias = undefined;
-    return trivias;
-  }
   function scanTrivias(modeName: TokenScanModeProfileName): RawToken[] {
-    if (context.cache.nextLeadingTrivias) {
-      return consumeCachedLeadingTrivias();
-    }
-
     const trivias: RawToken[] = [];
     while (true) {
       const rawToken = peekRawToken(modeName);
@@ -146,6 +121,25 @@ export function createTokenScanner(config: TokenScannerConfig): TokenScanner {
     context.cache.nextRawToken = scanRawToken(modeName);
     controller.rollback();
     return context.cache.nextRawToken;
+  }
+  function consumeCachedRawToken(): RawToken | undefined {
+    if (context.cache.nextRawToken === undefined) {
+      return undefined;
+    }
+
+    const rawToken = context.cache.nextRawToken;
+    controller.seek(controller.position + rawToken.text.length);
+    context.cache.nextRawToken = undefined;
+    return rawToken;
+  }
+  function consumeCachedLeadingTrivias(): RawToken[] | undefined {
+    if (context.cache.nextLeadingTrivias === undefined) {
+      return undefined;
+    }
+
+    const trivias = context.cache.nextLeadingTrivias;
+    context.cache.nextLeadingTrivias = undefined;
+    return trivias;
   }
   function isTrivia(kind: TokenKind, modeName: TokenScanModeProfileName): boolean {
     return config.modeProfiles[modeName].trivias[kind] ?? false;
