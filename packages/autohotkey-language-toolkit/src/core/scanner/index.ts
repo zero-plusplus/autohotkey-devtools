@@ -41,10 +41,7 @@ export function createTokenScanner(config: TokenScannerConfig): TokenScanner {
           return undefined;
         }
 
-        rawToken = {
-          kind: TokenKind.EndOfFile,
-          text: '',
-        };
+        rawToken = controller.commit(TokenKind.EndOfFile);
       }
       const trailingTrivias = scanTrivias(modeName);
 
