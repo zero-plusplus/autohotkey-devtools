@@ -30,7 +30,8 @@ export type TokenScanModeProfileName = 'default'; // | 'text';
 export interface TokenScanModeProfile {
   name: TokenScanModeProfileName;
   behavior: RawTokenScanBehavior;
-  trivias: { [ key in TokenKind ]?: boolean };
+  triviaClassification: { [ key in TokenKind ]?: boolean };
+  identifierClassificationMap: Record<string, TokenKind>;
 }
 export type TokenScanModeProfiles = {
   [key in TokenScanModeProfileName]: TokenScanModeProfile;

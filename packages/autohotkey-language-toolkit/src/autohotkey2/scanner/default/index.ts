@@ -1,3 +1,4 @@
+import { directiveDefinitions } from '@zero-plusplus/autohotkey-tmlanguage/src/autohotkey2/definitions';
 import { scanStringToken } from '../../../autohotkey2/scanner/default/string';
 import { scanFromTokenMap } from '../../../core/scanner';
 import {
@@ -9,11 +10,12 @@ import type {
   RawTokenSpecRegistry,
   TokenScanModeProfile,
 } from '../../../core/scanner/types';
+import { commonIdentifierClassificationMap } from '../../../definition';
 import {
   scanBlockCommentToken,
   scanLineCommentToken,
 } from './comment';
-import { scanIdentifierToken } from './identifier';
+import { scanDirectiveNameToken, scanIdentifierToken } from './identifier';
 import { scanNumberToken } from './number';
 import {
   scanCRLFToken,
@@ -140,6 +142,7 @@ export const defaultRawTokenSpecRegistry: RawTokenSpecRegistry = {
   [CharacterCodes._8]: scanNumberToken,
   [CharacterCodes._9]: scanNumberToken,
   [CharacterCodes._0]: scanNumberToken,
+  [CharacterCodes.Hash]: scanDirectiveNameToken,
   '': scanIdentifierToken,
 };
 export const defaultTokenScanProfile: TokenScanModeProfile = {
@@ -147,7 +150,7 @@ export const defaultTokenScanProfile: TokenScanModeProfile = {
   behavior: (controller: RawTokenScanController) => {
     return scanFromTokenMap(defaultRawTokenSpecRegistry, controller);
   },
-  trivias: {
+  triviaClassification: {
     [TokenKind.Bom]: true,
     [TokenKind.LF]: true,
     [TokenKind.CRLF]: true,
@@ -155,5 +158,9 @@ export const defaultTokenScanProfile: TokenScanModeProfile = {
     [TokenKind.Tab]: true,
     [TokenKind.LineComment]: true,
     [TokenKind.BlockComment]: true,
+  },
+  identifierClassificationMap: {
+    ...Object.fromEntries(directiveDefinitions.map((definition): [ string, TokenKind ] => [ definition.name.toLowerCase(), TokenKind.DirectiveName ])),
+    ...commonIdentifierClassificationMap,
   },
 };

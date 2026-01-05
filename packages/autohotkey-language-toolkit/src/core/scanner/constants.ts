@@ -80,6 +80,9 @@ export const enum TokenKind {
   TildeEquals,
   // #endregion operators
 
+  CommandName,
+  DirectiveName,
+  IfKeyword,
   EndOfFile,
 }
 

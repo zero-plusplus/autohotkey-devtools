@@ -84,7 +84,17 @@ export function createTokenScanner(config: TokenScannerConfig): TokenScanner {
     context.startPosition = context.position;
     const profile = context.modeProfiles[modeName];
     try {
-      return profile.behavior(controller);
+      const rawToken = profile.behavior(controller);
+      if (rawToken?.kind === TokenKind.Identifier) {
+        const keywordKind = config.modeProfiles[modeName].identifierClassificationMap[rawToken.text.toLowerCase()];
+        if (keywordKind !== undefined) {
+          return {
+            ...rawToken,
+            kind: keywordKind,
+          };
+        }
+      }
+      return rawToken;
     }
     catch (e: unknown) {
       if (e instanceof Error) {
@@ -139,7 +149,7 @@ export function createTokenScanner(config: TokenScannerConfig): TokenScanner {
     return trivias;
   }
   function isTrivia(kind: TokenKind, modeName: TokenScanModeProfileName): boolean {
-    return config.modeProfiles[modeName].trivias[kind] ?? false;
+    return config.modeProfiles[modeName].triviaClassification[kind] ?? false;
   }
   function initialScannerContextByConfig(newConfig: Partial<TokenScannerConfig>): TokenScannerContext {
     return {

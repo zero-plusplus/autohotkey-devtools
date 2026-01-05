@@ -1,4 +1,8 @@
 import {
+  commandDefinitions,
+  directiveDefinitions,
+} from '@zero-plusplus/autohotkey-tmlanguage/src/autohotkeyl/definitions';
+import {
   scanFromTokenMap,
 } from '../../../core/scanner';
 import {
@@ -10,6 +14,7 @@ import type {
   RawTokenSpecRegistry,
   TokenScanModeProfile,
 } from '../../../core/scanner/types';
+import { commonIdentifierClassificationMap } from '../../../definition';
 import {
   scanBlockCommentToken,
   scanLineCommentToken,
@@ -151,7 +156,7 @@ export const defaultTokenScanProfile: TokenScanModeProfile = {
   behavior: (controller: RawTokenScanController) => {
     return scanFromTokenMap(defaultTokenSpecRegistry, controller);
   },
-  trivias: {
+  triviaClassification: {
     [TokenKind.Bom]: true,
     [TokenKind.LF]: true,
     [TokenKind.CRLF]: true,
@@ -159,5 +164,10 @@ export const defaultTokenScanProfile: TokenScanModeProfile = {
     [TokenKind.Tab]: true,
     [TokenKind.LineComment]: true,
     [TokenKind.BlockComment]: true,
+  },
+  identifierClassificationMap: {
+    ...Object.fromEntries(commandDefinitions.map((definition): [ string, TokenKind ] => [ definition.name.toLowerCase(), TokenKind.CommandName ])),
+    ...Object.fromEntries(directiveDefinitions.map((definition): [ string, TokenKind ] => [ definition.name.toLowerCase(), TokenKind.DirectiveName ])),
+    ...commonIdentifierClassificationMap,
   },
 };
