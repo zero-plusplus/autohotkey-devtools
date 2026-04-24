@@ -19,7 +19,6 @@
 		"useUnknownInCatchVariables": true,
 
 		"module": "CommonJS",
-		"moduleResolution": "Node10",
 		"resolveJsonModule": true,
 		"types": [
 			"node",
