@@ -1,23 +1,23 @@
 import { expressionOperators } from '@zero-plusplus/autohotkey-tmlanguage/src/autohotkey2/constants';
-import { tokenScanModeProfiles } from '../../../../src/autohotkey2';
-import { createTokenScanner } from '../../../../src/core/scanner';
+import { spec } from '../../../../src/autohotkey2/scanner';
+import { createScanner } from '../../../../src/core/scanner';
 
 describe('operator', () => {
-  const scanner = createTokenScanner({ modeProfiles: tokenScanModeProfiles });
+  const scanner = createScanner(spec);
 
   test.each(expressionOperators)('pass', (source) => {
-    scanner.initialize({ source });
+    scanner.initialize(source);
     const token = scanner.scan();
 
-    expect(token!.text).toBe(source);
+    expect(token.text).toBe(source);
   });
 
   test.each([
     '<>',
   ])('fail', (source) => {
-    scanner.initialize({ source });
+    scanner.initialize(source);
     const token = scanner.scan();
 
-    expect(token?.text).not.toBe(source);
+    expect(token.text).not.toBe(source);
   });
 });

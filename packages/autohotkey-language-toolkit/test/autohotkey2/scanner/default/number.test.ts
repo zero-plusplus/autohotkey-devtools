@@ -1,8 +1,8 @@
-import { tokenScanModeProfiles } from '../../../../src/autohotkey2';
-import { createTokenScanner } from '../../../../src/core/scanner';
+import { spec } from '../../../../src/autohotkey2/scanner';
+import { createScanner } from '../../../../src/core/scanner';
 
 describe('number', () => {
-  const scanner = createTokenScanner({ modeProfiles: tokenScanModeProfiles });
+  const scanner = createScanner(spec);
 
   describe('integer', () => {
     test.each([
@@ -10,10 +10,10 @@ describe('number', () => {
       '123',
       '0123',
     ])('pass', (source) => {
-      scanner.initialize({ source });
+      scanner.initialize(source);
       const token = scanner.scan();
 
-      expect(token!.text).toBe(source);
+      expect(token.text).toBe(source);
     });
   });
 
@@ -22,10 +22,10 @@ describe('number', () => {
       '123.',
       '123.456',
     ])('pass', (source) => {
-      scanner.initialize({ source });
+      scanner.initialize(source);
       const token = scanner.scan();
 
-      expect(token!.text).toBe(source);
+      expect(token.text).toBe(source);
     });
   });
 
@@ -35,10 +35,10 @@ describe('number', () => {
       '0x123',
       '0x1234567890ABCDEF',
     ])('pass', (source) => {
-      scanner.initialize({ source });
+      scanner.initialize(source);
       const token = scanner.scan();
 
-      expect(token!.text).toBe(source);
+      expect(token.text).toBe(source);
     });
 
     test.each([
@@ -46,10 +46,10 @@ describe('number', () => {
       '0x123.456',
       '0x1234567890ABCDEF.ABC',
     ])('fail', (source) => {
-      scanner.initialize({ source });
+      scanner.initialize(source);
       const token = scanner.scan();
 
-      expect(token!.text).not.toBe(source);
+      expect(token.text).not.toBe(source);
     });
 
     describe('scientific notation', () => {
@@ -68,20 +68,20 @@ describe('number', () => {
         '123.123e-10',
         '123.123E-10',
       ])('pass', (source) => {
-        scanner.initialize({ source });
+        scanner.initialize(source);
         const token = scanner.scan();
 
-        expect(token!.text).toBe(source);
+        expect(token.text).toBe(source);
       });
 
       test.each([
         '123e+10.e',
         '0x123e+10',
       ])('fail', (source) => {
-        scanner.initialize({ source });
+        scanner.initialize(source);
         const token = scanner.scan();
 
-        expect(token!.text).not.toBe(source);
+        expect(token.text).not.toBe(source);
       });
     });
   });

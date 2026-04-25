@@ -1,9 +1,9 @@
-import { tokenScanModeProfiles } from '../../../../src/autohotkeyl';
-import { createTokenScanner } from '../../../../src/core/scanner';
-import { TokenKind } from '../../../../src/core/scanner/constants';
+import { TokenKinds } from '../../../../src/autohotkeyl/constants';
+import { spec } from '../../../../src/autohotkeyl/scanner';
+import { createScanner } from '../../../../src/core/scanner';
 
 describe('default', () => {
-  const scanner = createTokenScanner({ modeProfiles: tokenScanModeProfiles });
+  const scanner = createScanner(spec);
 
   describe('identifier', () => {
     test.each([
@@ -16,59 +16,59 @@ describe('default', () => {
       '0123abc',
       '0xAZ',
     ])('pass', (source) => {
-      scanner.initialize({ source });
+      scanner.initialize(source);
       const token = scanner.scan();
 
-      expect(token!.text).toBe(source);
+      expect(token.text).toBe(source);
     });
 
     test.each([
       '&0123abc',
     ])('fail', (source) => {
-      scanner.initialize({ source });
+      scanner.initialize(source);
       const token = scanner.scan();
 
-      expect(token?.text).not.toBe(source);
+      expect(token.text).not.toBe(source);
     });
 
     test.each([
       'abc&',
       'a'.repeat(254),
     ])('fail', (source) => {
-      scanner.initialize({ source });
+      scanner.initialize(source);
       const token = scanner.scan();
 
-      expect(token?.text).not.toBe(source);
+      expect(token.text).not.toBe(source);
     });
   });
 
   test.each([
-    [ 'if', TokenKind.IfKeyword ],
+    [ 'if', TokenKinds.Identifier ],
   ])('keywords', (source, kind) => {
-    scanner.initialize({ source });
+    scanner.initialize(source);
     const token = scanner.scan();
 
-    expect(token!.kind).toBe(kind);
-    expect(token!.text).toBe(source);
+    expect(token.kind).toBe(kind);
+    expect(token.text).toBe(source);
   });
 
   test.each([
-    [ 'AutoTrim', TokenKind.CommandName ],
+    [ 'AutoTrim', TokenKinds.Identifier ],
   ])('directives', (source, kind) => {
-    scanner.initialize({ source });
+    scanner.initialize(source);
     const token = scanner.scan();
 
-    expect(token!.kind).toBe(kind);
-    expect(token!.text).toBe(source);
+    expect(token.kind).toBe(kind);
+    expect(token.text).toBe(source);
   });
 
   test.each([
-    [ '#ClipboardTimeout', TokenKind.DirectiveName ],
+    [ '#ClipboardTimeout', TokenKinds.Identifier ],
   ])('directives', (source, kind) => {
-    scanner.initialize({ source });
+    scanner.initialize(source);
     const token = scanner.scan();
 
-    expect(token!.kind).toBe(kind);
-    expect(token!.text).toBe(source);
+    expect(token.kind).toBe(kind);
+    expect(token.text).toBe(source);
   });
 });

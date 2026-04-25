@@ -1,18 +1,18 @@
-import { tokenScanModeProfiles } from '../../../../src/autohotkey2';
-import { createTokenScanner } from '../../../../src/core/scanner';
+import { spec } from '../../../../src/autohotkey2/scanner';
+import { createScanner } from '../../../../src/core/scanner';
 
 describe('string', () => {
-  const scanner = createTokenScanner({ modeProfiles: tokenScanModeProfiles });
+  const scanner = createScanner(spec);
 
   describe('double', () => {
     test.each([
       '"text"',
       '"```;`:`{`n`r`b`t`s`v`a`f`""',
     ])('pass', (source) => {
-      scanner.initialize({ source });
+      scanner.initialize(source);
       const token = scanner.scan();
 
-      expect(token!.text).toBe(source);
+      expect(token.text).toBe(source);
     });
   });
 
@@ -21,10 +21,10 @@ describe('string', () => {
       '\'text\'',
       '\'```;`:`{`n`r`b`t`s`v`a`f}`\'\'',
     ])('pass', (source) => {
-      scanner.initialize({ source });
+      scanner.initialize(source);
       const token = scanner.scan();
 
-      expect(token!.text).toBe(source);
+      expect(token.text).toBe(source);
     });
   });
 });

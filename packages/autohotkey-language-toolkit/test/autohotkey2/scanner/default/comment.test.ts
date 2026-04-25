@@ -1,17 +1,17 @@
 import { dedent } from '@zero-plusplus/utilities/src';
-import { tokenScanModeProfiles } from '../../../../src/autohotkey2';
-import { createTokenScanner } from '../../../../src/core/scanner';
+import { spec } from '../../../../src/autohotkeyl/scanner';
+import { createScanner } from '../../../../src/core/scanner';
 
 describe('default', () => {
-  const scanner = createTokenScanner({ modeProfiles: tokenScanModeProfiles });
+  const scanner = createScanner(spec);
 
   test.each([
     '; comment',
   ])('pass', (source) => {
-    scanner.initialize({ source });
+    scanner.initialize(source);
     const token = scanner.scan();
 
-    expect(token!.leadingTrivias[0]!.text).toBe(source);
+    expect(token.leadingTrivia[0]!.text).toBe(source);
   });
 
   test.each([
@@ -22,9 +22,9 @@ describe('default', () => {
       */
     `,
   ])('pass', (source) => {
-    scanner.initialize({ source });
+    scanner.initialize(source);
     const token = scanner.scan();
 
-    expect(token!.leadingTrivias[0]!.text).toBe(source);
+    expect(token.leadingTrivia[0]!.text).toBe(source);
   });
 });

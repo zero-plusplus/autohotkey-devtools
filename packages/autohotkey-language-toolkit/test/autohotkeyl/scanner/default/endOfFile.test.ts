@@ -1,10 +1,10 @@
 import { dedent } from '@zero-plusplus/utilities/src';
-import { tokenScanModeProfiles } from '../../../../src/autohotkeyl';
-import { createTokenScanner } from '../../../../src/core/scanner';
-import { TokenKind } from '../../../../src/core/scanner/constants';
+import { TokenKinds } from '../../../../src/autohotkeyl/constants';
+import { spec } from '../../../../src/autohotkeyl/scanner';
+import { createScanner } from '../../../../src/core/scanner';
 
 describe('default', () => {
-  const scanner = createTokenScanner({ modeProfiles: tokenScanModeProfiles });
+  const scanner = createScanner(spec);
 
   const space = '  ';
   const tab = '\t\t';
@@ -21,16 +21,16 @@ describe('default', () => {
   test.each([
     `${space}${tab}${lineComment}${crlf}${blockComment}${lf}${cr}`,
   ])('pass', (source) => {
-    scanner.initialize({ source });
+    scanner.initialize(source);
     const token = scanner.scan();
 
-    expect(token!.kind).toBe(TokenKind.EndOfFile);
-    expect(token!.leadingTrivias[0]!.text).toBe(space);
-    expect(token!.leadingTrivias[1]!.text).toBe(tab);
-    expect(token!.leadingTrivias[2]!.text).toBe(lineComment);
-    expect(token!.leadingTrivias[3]!.text).toBe(crlf);
-    expect(token!.leadingTrivias[4]!.text).toBe(blockComment);
-    expect(token!.leadingTrivias[5]!.text).toBe(lf);
-    expect(token!.leadingTrivias[6]!.text).toBe(cr);
+    expect(token.kind).toBe(TokenKinds.EndOfFile);
+    expect(token.leadingTrivia[0]!.text).toBe(space);
+    expect(token.leadingTrivia[1]!.text).toBe(tab);
+    expect(token.leadingTrivia[2]!.text).toBe(lineComment);
+    expect(token.leadingTrivia[3]!.text).toBe(crlf);
+    expect(token.leadingTrivia[4]!.text).toBe(blockComment);
+    expect(token.leadingTrivia[5]!.text).toBe(lf);
+    expect(token.leadingTrivia[6]!.text).toBe(cr);
   });
 });
