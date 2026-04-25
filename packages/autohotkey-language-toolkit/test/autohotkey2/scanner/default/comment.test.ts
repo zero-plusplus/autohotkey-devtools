@@ -1,5 +1,5 @@
 import { dedent } from '@zero-plusplus/utilities/src';
-import { spec } from '../../../../src/autohotkeyl/scanner';
+import { spec } from '../../../../src/autohotkey2/scanner';
 import { createScanner } from '../../../../src/core/scanner';
 
 describe('default', () => {
