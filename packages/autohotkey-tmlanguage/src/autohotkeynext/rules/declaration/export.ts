@@ -1,4 +1,5 @@
 import {
+  alt,
   capture,
   inlineSpaces0,
   inlineSpaces1,
@@ -27,13 +28,17 @@ export function createExportDeclarationRule(scopeName: ScopeName, placeholder: P
       capture(keyword('export')),
       optseq(
         inlineSpaces1(),
-        capture(keyword('default')),
+        alt(
+          capture(keyword('default')),
+          capture(keyword('global')),
+        ),
       ),
       lookahead(wordBound()),
     ),
     captures: {
       1: nameRule(scopeName, RuleName.MetaKeyword),
       2: nameRule(scopeName, RuleName.MetaKeyword),
+      3: nameRule(scopeName, RuleName.Modifier),
     },
   };
 }

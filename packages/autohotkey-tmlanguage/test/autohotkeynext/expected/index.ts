@@ -9,6 +9,7 @@ import { createTypedAssignmentDeclarationExpectedData } from './declaration/type
 import { createCallExpressionExpectedData } from './expression/call';
 import { createFunctionExpressionExpectedData } from './expression/function';
 import { createObjectLiteralExpectedData } from './expression/object';
+import { createOperatorInExpressionExpectedData } from './expression/operator';
 import { createDirectiveStatementExpectedData } from './statement/directive';
 
 export function createExpectedDataList(scopeName: ScopeName): ExpectedTestData[] {
@@ -25,6 +26,7 @@ export function createExpectedDataList(scopeName: ScopeName): ExpectedTestData[]
     ...createFunctionExpressionExpectedData(scopeName),
     ...createImportDeclarationExpectedData(scopeName),
     ...createObjectLiteralExpectedData(scopeName),
+    ...createOperatorInExpressionExpectedData(scopeName),
     ...createTypedAssignmentDeclarationExpectedData(scopeName),
   ];
 }

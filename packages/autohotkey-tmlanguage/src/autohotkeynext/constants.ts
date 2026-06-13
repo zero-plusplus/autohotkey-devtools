@@ -13,6 +13,14 @@ export const builtinVaribles: [ ...(typeof constants_v2.builtinVaribles), ...(ty
   ...additionalBuiltinVaribles,
 ];
 
+export const expressionOperators: readonly [
+  ...typeof constants_v2.expressionOperators,
+  '!~=',
+] = [
+  ...constants_v2.expressionOperators,
+  '!~=', // a ~!= "^abc$"
+] as const;
+
 const additionalBuiltInFunctionNames = [
   // [v2.1-alpha.1](https://www.autohotkey.com/docs/alpha/ChangeLog.htm#v2.1-alpha.1)
   'WinGetEnabled',
@@ -21,6 +29,9 @@ const additionalBuiltInFunctionNames = [
 
   // [v2.1-alpha.9](https://www.autohotkey.com/docs/alpha/ChangeLog.htm#v2.1-alpha.9)
   'StructFromPtr',
+
+  // [v2.1-alpha.22](https://www.autohotkey.com/docs/alpha/ChangeLog.htm#v2.1-alpha.22)
+  'DefineProp',
 ] as const;
 export const builtInFunctionNames: [ ...(typeof constants_v2.builtInFunctionNames), ...(typeof additionalBuiltInFunctionNames) ] = [
   ...constants_v2.builtInFunctionNames,
