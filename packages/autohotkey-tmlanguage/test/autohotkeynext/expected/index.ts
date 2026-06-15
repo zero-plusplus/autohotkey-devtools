@@ -11,6 +11,7 @@ import { createFunctionExpressionExpectedData } from './expression/function';
 import { createObjectLiteralExpectedData } from './expression/object';
 import { createOperatorInExpressionExpectedData } from './expression/operator';
 import { createDirectiveStatementExpectedData } from './statement/directive';
+import { createStructPackExpectedDataList } from './statement/struct';
 
 export function createExpectedDataList(scopeName: ScopeName): ExpectedTestData[] {
   return [
@@ -27,6 +28,7 @@ export function createExpectedDataList(scopeName: ScopeName): ExpectedTestData[]
     ...createImportDeclarationExpectedData(scopeName),
     ...createObjectLiteralExpectedData(scopeName),
     ...createOperatorInExpressionExpectedData(scopeName),
+    ...createStructPackExpectedDataList(scopeName),
     ...createTypedAssignmentDeclarationExpectedData(scopeName),
   ];
 }
