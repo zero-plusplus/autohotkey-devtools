@@ -11,19 +11,19 @@ export function createImportDeclarationExpectedData(scopeName: ScopeName): Expec
   return [
     [
       dedent`
-        import "path/to"                ; comment
-        import "path/to" as x           ; comment
-        Import x                        ; comment
-        Import x As xx                  ; comment
+        #import "path/to"                ; comment
+        #import "path/to" as x           ; comment
+        #Import x                        ; comment
+        #Import x As xx                  ; comment
       `,
       [
-        { text: 'import', scopes: name(scopeName, RuleName.MetaKeyword) },
+        { text: '#import', scopes: name(scopeName, RuleName.MetaKeyword) },
         { text: '"', scopes: name(scopeName, RuleName.DoubleString, RuleDescriptor.Begin) },
         { text: 'path/to', scopes: name(scopeName, RuleName.DoubleString) },
         { text: '"', scopes: name(scopeName, RuleName.DoubleString, RuleDescriptor.End) },
         { text: '; comment', scopes: name(scopeName, RuleName.InlineComment) },
 
-        { text: 'import', scopes: name(scopeName, RuleName.MetaKeyword) },
+        { text: '#import', scopes: name(scopeName, RuleName.MetaKeyword) },
         { text: '"', scopes: name(scopeName, RuleName.DoubleString, RuleDescriptor.Begin) },
         { text: 'path/to', scopes: name(scopeName, RuleName.DoubleString) },
         { text: '"', scopes: name(scopeName, RuleName.DoubleString, RuleDescriptor.End) },
@@ -31,11 +31,11 @@ export function createImportDeclarationExpectedData(scopeName: ScopeName): Expec
         { text: 'x', scopes: name(scopeName, RuleName.Variable) },
         { text: '; comment', scopes: name(scopeName, RuleName.InlineComment) },
 
-        { text: 'Import', scopes: name(scopeName, RuleName.MetaKeyword) },
+        { text: '#Import', scopes: name(scopeName, RuleName.MetaKeyword) },
         { text: 'x', scopes: name(scopeName, RuleName.Variable) },
         { text: '; comment', scopes: name(scopeName, RuleName.InlineComment) },
 
-        { text: 'Import', scopes: name(scopeName, RuleName.MetaKeyword) },
+        { text: '#Import', scopes: name(scopeName, RuleName.MetaKeyword) },
         { text: 'x', scopes: name(scopeName, RuleName.Variable) },
         { text: 'As', scopes: name(scopeName, RuleName.KeywordInExpression) },
         { text: 'xx', scopes: name(scopeName, RuleName.Variable) },
@@ -44,23 +44,23 @@ export function createImportDeclarationExpectedData(scopeName: ScopeName): Expec
     ],
     [
       dedent`
-        export import "path/to"                           ; comment
-        Export Import "path/to" as x                      ; comment
-        export import x                                   ; comment
-        export import x { *, y, z as zz }                 ; comment
-        export import x as xx                             ; comment
-        export import x as xx { *, y, z as zz }           ; comment
+        #import export "path/to"                           ; comment
+        #Import Export "path/to" as x                      ; comment
+        #import export x                                   ; comment
+        #import export x { *, y, z as zz }                 ; comment
+        #import export x as xx                             ; comment
+        #import export x as xx { *, y, z as zz }           ; comment
       `,
       [
+        { text: '#import', scopes: name(scopeName, RuleName.MetaKeyword) },
         { text: 'export', scopes: name(scopeName, RuleName.MetaKeyword) },
-        { text: 'import', scopes: name(scopeName, RuleName.MetaKeyword) },
         { text: '"', scopes: name(scopeName, RuleName.DoubleString, RuleDescriptor.Begin) },
         { text: 'path/to', scopes: name(scopeName, RuleName.DoubleString) },
         { text: '"', scopes: name(scopeName, RuleName.DoubleString, RuleDescriptor.End) },
         { text: '; comment', scopes: name(scopeName, RuleName.InlineComment) },
 
+        { text: '#Import', scopes: name(scopeName, RuleName.MetaKeyword) },
         { text: 'Export', scopes: name(scopeName, RuleName.MetaKeyword) },
-        { text: 'Import', scopes: name(scopeName, RuleName.MetaKeyword) },
         { text: '"', scopes: name(scopeName, RuleName.DoubleString, RuleDescriptor.Begin) },
         { text: 'path/to', scopes: name(scopeName, RuleName.DoubleString) },
         { text: '"', scopes: name(scopeName, RuleName.DoubleString, RuleDescriptor.End) },
@@ -68,13 +68,13 @@ export function createImportDeclarationExpectedData(scopeName: ScopeName): Expec
         { text: 'x', scopes: name(scopeName, RuleName.Variable) },
         { text: '; comment', scopes: name(scopeName, RuleName.InlineComment) },
 
+        { text: '#import', scopes: name(scopeName, RuleName.MetaKeyword) },
         { text: 'export', scopes: name(scopeName, RuleName.MetaKeyword) },
-        { text: 'import', scopes: name(scopeName, RuleName.MetaKeyword) },
         { text: 'x', scopes: name(scopeName, RuleName.Variable) },
         { text: '; comment', scopes: name(scopeName, RuleName.InlineComment) },
 
+        { text: '#import', scopes: name(scopeName, RuleName.MetaKeyword) },
         { text: 'export', scopes: name(scopeName, RuleName.MetaKeyword) },
-        { text: 'import', scopes: name(scopeName, RuleName.MetaKeyword) },
         { text: 'x', scopes: name(scopeName, RuleName.Variable) },
         { text: '{', scopes: name(scopeName, RuleName.OpenBrace) },
         { text: '*', scopes: name(scopeName, RuleName.ImportExportAll) },
@@ -87,15 +87,15 @@ export function createImportDeclarationExpectedData(scopeName: ScopeName): Expec
         { text: '}', scopes: name(scopeName, RuleName.CloseBrace) },
         { text: '; comment', scopes: name(scopeName, RuleName.InlineComment) },
 
+        { text: '#import', scopes: name(scopeName, RuleName.MetaKeyword) },
         { text: 'export', scopes: name(scopeName, RuleName.MetaKeyword) },
-        { text: 'import', scopes: name(scopeName, RuleName.MetaKeyword) },
         { text: 'x', scopes: name(scopeName, RuleName.Variable) },
         { text: 'as', scopes: name(scopeName, RuleName.KeywordInExpression) },
         { text: 'xx', scopes: name(scopeName, RuleName.Variable) },
         { text: '; comment', scopes: name(scopeName, RuleName.InlineComment) },
 
+        { text: '#import', scopes: name(scopeName, RuleName.MetaKeyword) },
         { text: 'export', scopes: name(scopeName, RuleName.MetaKeyword) },
-        { text: 'import', scopes: name(scopeName, RuleName.MetaKeyword) },
         { text: 'x', scopes: name(scopeName, RuleName.Variable) },
         { text: 'as', scopes: name(scopeName, RuleName.KeywordInExpression) },
         { text: 'xx', scopes: name(scopeName, RuleName.Variable) },
@@ -113,30 +113,32 @@ export function createImportDeclarationExpectedData(scopeName: ScopeName): Expec
     ],
     [
       dedent`
-        import { y as z } from "path/to"                ; comment
-        Import { y As z, a As b } From "path/to"        ; comment
-        import {                                        ; comment
-          y as z,                                       ; comment
-          a as b,                                       ; comment
-        } from "path/to"                                ; comment
+        #import "path/to" { y as z }                ; comment
+        #Import "path/to" { y As z, a As b }        ; comment
+        #import "path/to" {                         ; comment
+          y as z,                                   ; comment
+          a as b,                                   ; comment
+        }                                           ; comment
       `,
       [
         ...[
-          { text: 'import', scopes: name(scopeName, RuleName.MetaKeyword) },
+          { text: '#import', scopes: name(scopeName, RuleName.MetaKeyword) },
+          { text: '"', scopes: name(scopeName, RuleName.DoubleString, RuleDescriptor.Begin) },
+          { text: 'path/to', scopes: name(scopeName, RuleName.DoubleString) },
+          { text: '"', scopes: name(scopeName, RuleName.DoubleString, RuleDescriptor.End) },
           { text: '{', scopes: name(scopeName, RuleName.OpenBrace) },
           { text: 'y', scopes: name(scopeName, RuleName.Variable) },
           { text: 'as', scopes: name(scopeName, RuleName.KeywordInExpression) },
           { text: 'z', scopes: name(scopeName, RuleName.Variable) },
           { text: '}', scopes: name(scopeName, RuleName.CloseBrace) },
-          { text: 'from', scopes: name(scopeName, RuleName.MetaKeyword) },
-          { text: '"', scopes: name(scopeName, RuleName.DoubleString, RuleDescriptor.Begin) },
-          { text: 'path/to', scopes: name(scopeName, RuleName.DoubleString) },
-          { text: '"', scopes: name(scopeName, RuleName.DoubleString, RuleDescriptor.End) },
           { text: '; comment', scopes: name(scopeName, RuleName.InlineComment) },
         ],
 
         ...[
-          { text: 'Import', scopes: name(scopeName, RuleName.MetaKeyword) },
+          { text: '#Import', scopes: name(scopeName, RuleName.MetaKeyword) },
+          { text: '"', scopes: name(scopeName, RuleName.DoubleString, RuleDescriptor.Begin) },
+          { text: 'path/to', scopes: name(scopeName, RuleName.DoubleString) },
+          { text: '"', scopes: name(scopeName, RuleName.DoubleString, RuleDescriptor.End) },
           { text: '{', scopes: name(scopeName, RuleName.OpenBrace) },
           { text: 'y', scopes: name(scopeName, RuleName.Variable) },
           { text: 'As', scopes: name(scopeName, RuleName.KeywordInExpression) },
@@ -146,15 +148,15 @@ export function createImportDeclarationExpectedData(scopeName: ScopeName): Expec
           { text: 'As', scopes: name(scopeName, RuleName.KeywordInExpression) },
           { text: 'b', scopes: name(scopeName, RuleName.Variable) },
           { text: '}', scopes: name(scopeName, RuleName.CloseBrace) },
-          { text: 'From', scopes: name(scopeName, RuleName.MetaKeyword) },
-          { text: '"', scopes: name(scopeName, RuleName.DoubleString, RuleDescriptor.Begin) },
-          { text: 'path/to', scopes: name(scopeName, RuleName.DoubleString) },
-          { text: '"', scopes: name(scopeName, RuleName.DoubleString, RuleDescriptor.End) },
           { text: '; comment', scopes: name(scopeName, RuleName.InlineComment) },
         ],
 
         ...[
-          { text: 'import', scopes: name(scopeName, RuleName.MetaKeyword) },
+          { text: '#import', scopes: name(scopeName, RuleName.MetaKeyword) },
+          { text: '"', scopes: name(scopeName, RuleName.DoubleString, RuleDescriptor.Begin) },
+          { text: 'path/to', scopes: name(scopeName, RuleName.DoubleString) },
+          { text: '"', scopes: name(scopeName, RuleName.DoubleString, RuleDescriptor.End) },
+
           { text: '{', scopes: name(scopeName, RuleName.OpenBrace) },
           { text: '; comment', scopes: name(scopeName, RuleName.InlineComment) },
 
@@ -171,26 +173,8 @@ export function createImportDeclarationExpectedData(scopeName: ScopeName): Expec
           { text: '; comment', scopes: name(scopeName, RuleName.InlineComment) },
 
           { text: '}', scopes: name(scopeName, RuleName.CloseBrace) },
-          { text: 'from', scopes: name(scopeName, RuleName.MetaKeyword) },
-          { text: '"', scopes: name(scopeName, RuleName.DoubleString, RuleDescriptor.Begin) },
-          { text: 'path/to', scopes: name(scopeName, RuleName.DoubleString) },
-          { text: '"', scopes: name(scopeName, RuleName.DoubleString, RuleDescriptor.End) },
           { text: '; comment', scopes: name(scopeName, RuleName.InlineComment) },
         ],
-      ],
-    ],
-    [
-      dedent`
-        import * from "path/to"       ; comment
-      `,
-      [
-        { text: 'import', scopes: name(scopeName, RuleName.MetaKeyword) },
-        { text: '*', scopes: name(scopeName, RuleName.ImportExportAll) },
-        { text: 'from', scopes: name(scopeName, RuleName.MetaKeyword) },
-        { text: '"', scopes: name(scopeName, RuleName.DoubleString, RuleDescriptor.Begin) },
-        { text: 'path/to', scopes: name(scopeName, RuleName.DoubleString) },
-        { text: '"', scopes: name(scopeName, RuleName.DoubleString, RuleDescriptor.End) },
-        { text: '; comment', scopes: name(scopeName, RuleName.InlineComment) },
       ],
     ],
   ];

@@ -29,13 +29,16 @@ interface Placeholder {
   endPattern: string;
   identifierPattern: string;
   rulesInBody: Rule[];
+  keywords?: string[];
 }
 export function createClassDeclarationRule(scopeName: ScopeName, placeholder: Placeholder): BeginEndRule {
+  const declarationKeyword = keyword(...(placeholder.keywords ?? [ 'class' ]));
+
   return {
     begin: lookahead(seq(
       lookbehind(placeholder.startPattern),
       inlineSpaces0(),
-      keyword('class'),
+      declarationKeyword,
     )),
     end: lookbehind('}'),
     patterns: [
@@ -45,7 +48,7 @@ export function createClassDeclarationRule(scopeName: ScopeName, placeholder: Pl
       {
         begin: seq(
           inlineSpaces0(),
-          capture(keyword('class')),
+          capture(declarationKeyword),
         ),
         beginCaptures: {
           1: nameRule(scopeName, RuleName.ClassKeyword),

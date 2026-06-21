@@ -1,6 +1,7 @@
 import * as definitions_v2 from '../autohotkey2/definitions';
 import * as patterns_v2 from '../autohotkey2/patterns';
 import {
+  $shouldInteger,
   command,
   CommandParameterFlag,
   signature,
@@ -22,10 +23,14 @@ export const directiveDefinitions: CommandDefinition[] = [
 
   // [v2.1-alpha.11](https://www.autohotkey.com/docs/alpha/ChangeLog.htm#v2.1-alpha.11)
   // https://www.autohotkey.com/docs/alpha/lib/_Module.htm
-  command('#Module', signature([ namespace() ])),
+  command('#Module', signature([ $namespace() ])),
+
+  // [v2.1-alpha.19](https://www.autohotkey.com/docs/alpha/ChangeLog.htm#v2.1-alpha.19)
+  // https://www.autohotkey.com/docs/alpha/lib/_StructPack.htm
+  command('#StructPack', signature([ $shouldInteger() ])),
 ];
 
-export function namespace(): CommandParameter {
+export function $namespace(): CommandParameter {
   // e.g. `#Module ModuleName`
   //               ^^^^^^^^^^
   return {

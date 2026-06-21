@@ -1,5 +1,7 @@
 import * as patterns_v2 from '../autohotkey2/patterns';
+import * as patterns_common from '../common/patterns';
 import {
+  alt,
   ignoreCase,
   inlineSpaces1,
   optseq,
@@ -17,3 +19,4 @@ export const classStartPattern: string = seq(
     ),
   ),
 );
+export const typeAssignmentStartPattern: string = alt(patterns_common.lineStartPattern, ',');

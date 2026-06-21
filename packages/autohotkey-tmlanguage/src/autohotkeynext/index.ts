@@ -37,18 +37,18 @@ export function createTmLanguage(): TmLanguage {
 
       [Repository.Meta]: patternsRule(
         ...repositories_v2[Repository.Meta]!.patterns!,
-        includeRule(Repository.Import),
         includeRule(Repository.Export),
       ),
-
-      // #region declaration
       [Repository.Import]: rules_vnext.createImportDeclarationRule(scopeName, {
         startPattern: patterns_common.lineStartPattern,
       }),
       [Repository.Export]: rules_vnext.createExportDeclarationRule(scopeName, {
         startPattern: patterns_common.lineStartPattern,
       }),
+
+      // #region declaration
       [Repository.ClassDeclaration]: rules_common.createClassDeclarationRule(scopeName, {
+        keywords: [ 'class', 'struct' ],
         startPattern: patterns_vnext.classStartPattern,
         endPattern: patterns_common.lineEndPattern,
         identifierPattern: patterns_v2.identifierPattern,
@@ -65,7 +65,7 @@ export function createTmLanguage(): TmLanguage {
         ],
       }),
       [Repository.TypedAssignmentDeclaration]: rules_vnext.createTypedAssignmentDeclarationRule(scopeName, {
-        startPattern: patterns_common.lineStartPattern,
+        startPattern: patterns_vnext.typeAssignmentStartPattern,
         modifiers: constants_common.accessModifiers,
         namePattern: patterns_v2.identifierPattern,
         nameRule: patternsRule(includeRule(Repository.Variable)),
@@ -74,11 +74,15 @@ export function createTmLanguage(): TmLanguage {
       // #endregion declaration
 
       // #region statement
-      [Repository.DirectiveStatement]: rules_v2.createDirectiveStatementRule(scopeName, definitions_vnext.directiveDefinitions, {
-        startPattern: patterns_v2.statementStartPattern,
-        endPattern: patterns_common.lineEndPattern,
-        assignmentOperators: constants_common.assignmentOperators,
-      }),
+      [Repository.DirectiveStatement]: patternsRule(
+        includeRule(Repository.Import),
+
+        rules_v2.createDirectiveStatementRule(scopeName, definitions_vnext.directiveDefinitions, {
+          startPattern: patterns_v2.statementStartPattern,
+          endPattern: patterns_common.lineEndPattern,
+          assignmentOperators: constants_common.assignmentOperators,
+        }),
+      ),
       [Repository.DirectiveDefinitions]: rules_common.createCommandLikeDefinitionsRule(scopeName, definitions_vnext.directiveDefinitions, {
         commandElementName: RuleName.DirectiveName,
         startPattern: patterns_v2.statementStartPattern,
@@ -91,6 +95,16 @@ export function createTmLanguage(): TmLanguage {
         includeRule(Repository.ObjectInBrackets),
         includeRule(Repository.ExpressionInControlFlow),
         includeRule(Repository.FunctionExpressionBlock),
+      ),
+      [Repository.Operator]: patternsRule(
+        rules_common.createInvalidOperatorRule(scopeName, {
+          operatorRuleName: RuleName.Operator,
+          operators: [ `<>` ],
+        }),
+        rules_common.createOperatorRule(scopeName, {
+          operatorRuleName: RuleName.Operator,
+          operators: constants_vnext.expressionOperators,
+        }),
       ),
       [Repository.FunctionExpressionBlock]: rules_vnext.createFunctionExpressionBlockRule(scopeName),
       // #endregion expression

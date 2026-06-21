@@ -19,6 +19,11 @@ However, since this is a personal project, development is progressing very slowl
 
 ## News
 
+### `0.0.3`
+
+* Updated syntax highlighting to support `v2.1-alpha.30`
+* Supported version have been updated from `v2.0.19` to `v2.0.26`. Since no syntax has been added or changed during this period, this is strictly a documentation update
+
 ### `0.0.2`
 
 The following changes have been made, but the features themselves remain unchanged.
@@ -72,11 +77,11 @@ The following versions are supported.
   - Default File Extension: `.ahkl`
   > Note that the last character of `autohotkeyl` is `L`, not `1` (one). The name originates from the fact that v1.1 was [called AutoHotkeyL](https://www.autohotkey.com/docs/v2/v1-changes.htm).
 
-* v2.0.19
+* v2.0.26
   - Language ID: `autohotkey2`
   - Default File Extension: `.ahk2`
 
-* v2.1-alpha.18
+* v2.1-alpha.30
   - Language ID: `autohotkeynext`
   - Default File Extension: `.ahknext`
 
