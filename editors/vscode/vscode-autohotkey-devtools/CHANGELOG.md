@@ -11,7 +11,7 @@ If you want to see what the next version of the plan is, check out the [here](ht
 
 ---
 
-## [0.0.3] - 2026-xx-xx
+## [0.0.3] - 2026-06-22
 
 * Updated syntax highlighting to support `v2.1-alpha.30`
 * Supported version have been updated from `v2.0.19` to `v2.0.26`. Since no syntax has been added or changed during this period, this is strictly a documentation update
@@ -37,5 +37,6 @@ First released
 [Semantic Versioning]: https://semver.org/
 
 <!-- Versions -->
-[0.0.2]: https://github.com/zero-plusplus/autohotkey-devtools/compare/vscode-autohotkey-devtools@0.0.1v0.0.1..vscode-autohotkey-devtools@0.0.2
+[0.0.3]: https://github.com/zero-plusplus/autohotkey-devtools/compare/vscode-autohotkey-devtools@0.0.2..vscode-autohotkey-devtools@0.0.3
+[0.0.2]: https://github.com/zero-plusplus/autohotkey-devtools/compare/vscode-autohotkey-devtools@0.0.1..vscode-autohotkey-devtools@0.0.2
 [0.0.1]: https://github.com/zero-plusplus/autohotkey-devtools/tree/vscode-autohotkey-devtools@0.0.1
