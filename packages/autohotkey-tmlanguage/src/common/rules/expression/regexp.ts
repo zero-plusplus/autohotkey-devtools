@@ -26,7 +26,7 @@ import {
   textalt,
   wordBound,
   wordChars0,
-} from '../../../oniguruma';
+} from '../../../oniguruma.ts';
 import {
   includeRule,
   name,
@@ -40,7 +40,7 @@ import {
   type MatchRule,
   type PatternsRule,
   type ScopeName,
-} from '../../../tmlanguage';
+} from '../../../tmlanguage.ts';
 
 interface Placeholder {
   quoteChar: string;

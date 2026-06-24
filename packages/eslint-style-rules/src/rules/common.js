@@ -1,17 +1,17 @@
-const jestPlugin = require('eslint-plugin-jest');
-const stylisticPlugin = require('@stylistic/eslint-plugin');
-const styles = require('./all/stylistic');
-const jest = require('./all/jest');
+import stylistic from '@stylistic/eslint-plugin';
+import perfectionist from 'eslint-plugin-perfectionist';
+import * as myPerfectionist from './all/perfectionist.js';
+import * as myStylistic from './all/stylistic.js';
 
 const indentSize = 2;
-module.exports.config = (indent = indentSize) => {
+export const config = (indent = indentSize) => {
   return [
     {
       plugins: {
-        '@stylistic': stylisticPlugin,
+        '@stylistic': stylistic,
       },
       rules: {
-        ...styles.rules,
+        ...myStylistic.rules,
 
         '@stylistic/array-bracket-newline': [ 'error', 'consistent' ],
         '@stylistic/array-bracket-spacing': [ 'error', 'always' ],
@@ -23,7 +23,7 @@ module.exports.config = (indent = indentSize) => {
         '@stylistic/computed-property-spacing': [ 'error', 'never' ],
         '@stylistic/dot-location': [ 'error', 'property' ],
         '@stylistic/eol-last': [ 'error', 'always' ],
-        '@stylistic/func-call-spacing': [ 'error', 'never' ],
+        '@stylistic/function-call-spacing': [ 'error', 'never' ],
         '@stylistic/function-call-argument-newline': [ 'error', 'consistent' ],
         '@stylistic/function-paren-newline': [ 'error', 'consistent' ],
         '@stylistic/generator-star-spacing': [ 'error', { before: false, after: true } ],
@@ -31,7 +31,6 @@ module.exports.config = (indent = indentSize) => {
         '@stylistic/indent': [ 'error', indent, { SwitchCase: 1 } ],
         '@stylistic/indent-binary-ops': [ 'error', indent ],
         '@stylistic/jsx-indent-props': [ 'error', indent ],
-        '@stylistic/jsx-indent': [ 'error', indent ],
         '@stylistic/line-comment-position': 'off',
         '@stylistic/linebreak-style': [ 'error', 'windows' ],
         '@stylistic/lines-around-comment': 'off',
@@ -47,13 +46,13 @@ module.exports.config = (indent = indentSize) => {
         '@stylistic/no-trailing-spaces': 'off',
         '@stylistic/object-curly-newline': [ 'error', { multiline: true, consistent: true } ],
         '@stylistic/object-curly-spacing': [ 'error', 'always' ],
-        '@stylistic/object-property-newline': [ 'error', { allowMultiplePropertiesPerLine: true } ],
+        '@stylistic/object-property-newline': [ 'error', { allowAllPropertiesOnSameLine: true } ],
         '@stylistic/one-var-declaration-per-line': 'off',
         '@stylistic/operator-linebreak': [ 'error', 'before' ],
         '@stylistic/padded-blocks': [ 'error', 'never' ],
         '@stylistic/padding-line-between-statements': 'off',
         '@stylistic/quote-props': [ 'error', 'consistent' ],
-        '@stylistic/quotes': [ 'error', 'single', { allowTemplateLiterals: true } ],
+        '@stylistic/quotes': [ 'error', 'single', { allowTemplateLiterals: 'always' } ],
         '@stylistic/semi': [ 'error', 'always' ],
         '@stylistic/space-before-function-paren': [ 'error', 'never' ],
         '@stylistic/type-annotation-spacing': 'error',
@@ -61,15 +60,41 @@ module.exports.config = (indent = indentSize) => {
     },
     {
       plugins: {
-        'jest': jestPlugin,
+        perfectionist,
       },
       rules: {
-        ...jest.rules,
-
-        'jest/consistent-test-it': [ 'error', { fn: 'test', withinDescribe: 'test' } ],
-        'jest/max-expects': 'off',
-        'jest/prefer-expect-assertions': 'off',
-        'jest/prefer-importing-jest-globals': 'off',
+        ...myPerfectionist.rules,
+        'perfectionist/sort-named-exports': [
+          'error', {
+            groups: [
+              'value-export',
+              'type-export',
+            ],
+          },
+        ],
+        'perfectionist/sort-named-imports': [
+          'error', {
+            groups: [
+              'value-import',
+              'type-import',
+            ],
+          },
+        ],
+        'perfectionist/sort-imports': [
+          'error', {
+            newlinesBetween: 'ignore',
+            groups: [
+              [ 'value-builtin', 'type-builtin' ],
+              [ 'value-external', 'type-external' ],
+              [ 'value-internal', 'type-internal' ],
+              [ 'value-parent', 'type-parent' ],
+              [ 'value-sibling', 'type-sibling' ],
+              [ 'value-index', 'type-index' ],
+              [ 'value-import', 'type-import' ],
+              'unknown',
+            ],
+          },
+        ],
       },
     },
   ];

@@ -1,13 +1,13 @@
-import { dedent } from '@zero-plusplus/utilities/src';
+import { dedent } from '@zero-plusplus/utilities/src/index.ts';
 import {
   name,
   RuleDescriptor,
   RuleName,
   type ScopeName,
-} from '../../../../src/tmlanguage';
-import * as common from '../../../common/expression/object';
-import { createSingleLineExpectedData } from '../../../helpers/definition/helpers';
-import type { ExpectedTestData } from '../../../types';
+} from '../../../../src/tmlanguage.ts';
+import * as common from '../../../common/expression/object.ts';
+import { createSingleLineExpectedData } from '../../../helpers/definition/helpers.ts';
+import type { ExpectedTestData } from '../../../types.ts';
 
 export function createObjectLiteralExpectedData(scopeName: ScopeName): ExpectedTestData[] {
   return [

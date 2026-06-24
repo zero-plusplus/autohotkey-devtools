@@ -11,7 +11,7 @@ import {
   negChars0,
   seq,
   whitespace,
-} from '../../../oniguruma';
+} from '../../../oniguruma.ts';
 import {
   includeRule,
   nameRule,
@@ -23,8 +23,8 @@ import {
   type MatchRule,
   type PatternsRule,
   type ScopeName,
-} from '../../../tmlanguage';
-import * as patterns_v1 from '../../patterns';
+} from '../../../tmlanguage.ts';
+import * as patterns_v1 from '../../patterns.ts';
 
 export function createDereferenceRule(scopeName: ScopeName): BeginEndRule {
   const dereferenceContent = negChar('%', whitespace());

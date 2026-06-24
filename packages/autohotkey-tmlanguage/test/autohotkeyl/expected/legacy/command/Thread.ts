@@ -1,9 +1,9 @@
-import type { ScopeName } from '../../../../../src/tmlanguage';
-import { $blank } from '../../../../helpers/definition/parameter/$blank';
-import { $expression } from '../../../../helpers/definition/parameter/$expression';
-import { $shouldInteger } from '../../../../helpers/definition/parameter/$shouldInteger';
-import { $subcommand } from '../../../../helpers/definition/parameter/$subcommand';
-import type { ExpectedTestData } from '../../../../types';
+import type { ScopeName } from '../../../../../src/tmlanguage.ts';
+import { $blank } from '../../../../helpers/definition/parameter/$blank.ts';
+import { $expression } from '../../../../helpers/definition/parameter/$expression.ts';
+import { $shouldInteger } from '../../../../helpers/definition/parameter/$shouldInteger.ts';
+import { $subcommand } from '../../../../helpers/definition/parameter/$subcommand.ts';
+import type { ExpectedTestData } from '../../../../types.ts';
 
 // https://www.autohotkey.com/docs/v1/lib/Thread.htm
 export function createThreadExpectedDataList(scopeName: ScopeName): ExpectedTestData[] {

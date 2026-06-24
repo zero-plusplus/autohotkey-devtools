@@ -1,14 +1,14 @@
-import type { ScopeName } from '../../../../../src/tmlanguage';
-import { $ } from '../../../../helpers/definition/parameter/$';
-import { $color } from '../../../../helpers/definition/parameter/$color';
-import { $imagePath } from '../../../../helpers/definition/parameter/$imagePath';
-import { $menuItemName } from '../../../../helpers/definition/parameter/$menuItemName';
-import { $menuOptions } from '../../../../helpers/definition/parameter/$menuOptions';
-import { $path } from '../../../../helpers/definition/parameter/$path';
-import { $shouldInteger } from '../../../../helpers/definition/parameter/$shouldInteger';
-import { $shouldKeyword } from '../../../../helpers/definition/parameter/$shouldKeyword';
-import { $subcommand } from '../../../../helpers/definition/parameter/$subcommand';
-import type { ExpectedTestData } from '../../../../types';
+import type { ScopeName } from '../../../../../src/tmlanguage.ts';
+import { $ } from '../../../../helpers/definition/parameter/$.ts';
+import { $color } from '../../../../helpers/definition/parameter/$color.ts';
+import { $imagePath } from '../../../../helpers/definition/parameter/$imagePath.ts';
+import { $menuItemName } from '../../../../helpers/definition/parameter/$menuItemName.ts';
+import { $menuOptions } from '../../../../helpers/definition/parameter/$menuOptions.ts';
+import { $path } from '../../../../helpers/definition/parameter/$path.ts';
+import { $shouldInteger } from '../../../../helpers/definition/parameter/$shouldInteger.ts';
+import { $shouldKeyword } from '../../../../helpers/definition/parameter/$shouldKeyword.ts';
+import { $subcommand } from '../../../../helpers/definition/parameter/$subcommand.ts';
+import type { ExpectedTestData } from '../../../../types.ts';
 
 // https://www.autohotkey.com/docs/v1/lib/Menu.htm
 export function createMenuExpectedDataList(scopeName: ScopeName): ExpectedTestData[] {

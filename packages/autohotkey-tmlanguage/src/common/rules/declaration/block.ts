@@ -1,14 +1,14 @@
 import {
   capture,
   char,
-} from '../../../oniguruma';
+} from '../../../oniguruma.ts';
 import {
   nameRule,
   RuleName,
   type BeginEndRule,
   type Rule,
   type ScopeName,
-} from '../../../tmlanguage';
+} from '../../../tmlanguage.ts';
 
 interface Placeholder {
   statementsInBlock: Rule[];

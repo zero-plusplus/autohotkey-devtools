@@ -1,5 +1,4 @@
-const defaultRuleValue = 'error';
-module.exports.ruleNames = [
+export const ruleNames = [
   // eslint [release](https://github.com/eslint/eslint/releases)
   // [v9.10.0]
 
@@ -209,4 +208,6 @@ module.exports.ruleNames = [
   'unicode-bom',
   // #endregion Layout & Formatting
 ];
-module.exports.rules = Object.fromEntries(module.exports.ruleNames.map((ruleName) => [ ruleName, defaultRuleValue ]));
+
+const defaultRuleValue = 'error';
+export const rules = Object.fromEntries(ruleNames.map((ruleName) => [ ruleName, defaultRuleValue ]));

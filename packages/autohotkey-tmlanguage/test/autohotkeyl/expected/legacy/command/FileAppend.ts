@@ -1,8 +1,8 @@
-import type { ScopeName } from '../../../../../src/tmlanguage';
-import { $ } from '../../../../helpers/definition/parameter/$';
-import { $encoding } from '../../../../helpers/definition/parameter/$encoding';
-import { $path } from '../../../../helpers/definition/parameter/$path';
-import type { ExpectedTestData } from '../../../../types';
+import type { ScopeName } from '../../../../../src/tmlanguage.ts';
+import { $ } from '../../../../helpers/definition/parameter/$.ts';
+import { $encoding } from '../../../../helpers/definition/parameter/$encoding.ts';
+import { $path } from '../../../../helpers/definition/parameter/$path.ts';
+import type { ExpectedTestData } from '../../../../types.ts';
 
 // https://www.autohotkey.com/docs/v1/lib/FileAppend.htm
 export function createFileAppendExpectedDataList(scopeName: ScopeName): ExpectedTestData[] {

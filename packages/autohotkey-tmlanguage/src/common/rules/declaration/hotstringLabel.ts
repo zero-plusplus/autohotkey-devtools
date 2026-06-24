@@ -9,7 +9,7 @@ import {
   reluctant,
   seq,
   text,
-} from '../../../oniguruma';
+} from '../../../oniguruma.ts';
 import {
   includeRule,
   name,
@@ -20,7 +20,7 @@ import {
   StyleName,
   type MatchRule,
   type ScopeName,
-} from '../../../tmlanguage';
+} from '../../../tmlanguage.ts';
 
 interface Placeholder {
   startPattern: string;

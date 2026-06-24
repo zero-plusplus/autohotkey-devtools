@@ -1,7 +1,7 @@
-const js = require('./rules/js.js');
-const ts = require('./rules/ts.js');
+import * as js from './rules/js.js';
+import * as ts from './rules/ts.js';
 
-module.exports = {
+export default {
   js,
   ts,
 };

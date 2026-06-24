@@ -1,7 +1,7 @@
-import type { ScopeName } from '../../../../../src/tmlanguage';
-import { $ } from '../../../../helpers/definition/parameter/$';
-import { $input } from '../../../../helpers/definition/parameter/$input';
-import type { ExpectedTestData } from '../../../../types';
+import type { ScopeName } from '../../../../../src/tmlanguage.ts';
+import { $ } from '../../../../helpers/definition/parameter/$.ts';
+import { $input } from '../../../../helpers/definition/parameter/$input.ts';
+import type { ExpectedTestData } from '../../../../types.ts';
 
 // https://www.autohotkey.com/docs/v1/lib/SetEnv.htm
 export function createSetEnvExpectedDataList(scopeName: ScopeName): ExpectedTestData[] {

@@ -1,17 +1,17 @@
-import * as constants_v2 from '../../../src/autohotkey2/constants';
-import * as constants_vnext from '../../../src/autohotkeynext/constants';
-import type { ScopeName } from '../../../src/tmlanguage';
-import * as autohotkey2 from '../../autohotkey2/expected';
-import type { ExpectedTestData } from '../../types';
-import { createExportDeclarationExpectedData } from './declaration/export';
-import { createImportDeclarationExpectedData } from './declaration/import';
-import { createTypedAssignmentDeclarationExpectedData } from './declaration/typedAssignment';
-import { createCallExpressionExpectedData } from './expression/call';
-import { createFunctionExpressionExpectedData } from './expression/function';
-import { createObjectLiteralExpectedData } from './expression/object';
-import { createOperatorInExpressionExpectedData } from './expression/operator';
-import { createDirectiveStatementExpectedData } from './statement/directive';
-import { createStructPackExpectedDataList } from './statement/struct';
+import * as constants_v2 from '../../../src/autohotkey2/constants.ts';
+import * as constants_vnext from '../../../src/autohotkeynext/constants.ts';
+import type { ScopeName } from '../../../src/tmlanguage.ts';
+import * as autohotkey2 from '../../autohotkey2/expected/index.ts';
+import type { ExpectedTestData } from '../../types.ts';
+import { createExportDeclarationExpectedData } from './declaration/export.ts';
+import { createImportDeclarationExpectedData } from './declaration/import.ts';
+import { createTypedAssignmentDeclarationExpectedData } from './declaration/typedAssignment.ts';
+import { createCallExpressionExpectedData } from './expression/call.ts';
+import { createFunctionExpressionExpectedData } from './expression/function.ts';
+import { createObjectLiteralExpectedData } from './expression/object.ts';
+import { createOperatorInExpressionExpectedData } from './expression/operator.ts';
+import { createDirectiveStatementExpectedData } from './statement/directive/index.ts';
+import { createStructPackExpectedDataList } from './statement/struct.ts';
 
 export function createExpectedDataList(scopeName: ScopeName): ExpectedTestData[] {
   return [

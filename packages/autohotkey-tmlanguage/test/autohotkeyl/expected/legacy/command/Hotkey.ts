@@ -1,12 +1,12 @@
-import type { ScopeName } from '../../../../../src/tmlanguage';
-import { floatOption } from '../../../../helpers/definition/option/floatOption';
-import { keywordOption } from '../../../../helpers/definition/option/keywordOption';
-import { $ } from '../../../../helpers/definition/parameter/$';
-import { $expressionWithPercentExpression } from '../../../../helpers/definition/parameter/$expressionWithPercentExpression';
-import { $hotkeyName } from '../../../../helpers/definition/parameter/$hotkeyName';
-import { $subcommand } from '../../../../helpers/definition/parameter/$subcommand';
-import { $winTitle } from '../../../../helpers/definition/parameter/$winTitle';
-import type { ExpectedTestData } from '../../../../types';
+import type { ScopeName } from '../../../../../src/tmlanguage.ts';
+import { floatOption } from '../../../../helpers/definition/option/floatOption.ts';
+import { keywordOption } from '../../../../helpers/definition/option/keywordOption.ts';
+import { $ } from '../../../../helpers/definition/parameter/$.ts';
+import { $expressionWithPercentExpression } from '../../../../helpers/definition/parameter/$expressionWithPercentExpression.ts';
+import { $hotkeyName } from '../../../../helpers/definition/parameter/$hotkeyName.ts';
+import { $subcommand } from '../../../../helpers/definition/parameter/$subcommand.ts';
+import { $winTitle } from '../../../../helpers/definition/parameter/$winTitle.ts';
+import type { ExpectedTestData } from '../../../../types.ts';
 
 // https://www.autohotkey.com/docs/v1/lib/Hotkey.htm
 export function createHotkeyExpectedDataList(scopeName: ScopeName): ExpectedTestData[] {

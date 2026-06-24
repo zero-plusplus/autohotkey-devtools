@@ -14,7 +14,7 @@ import {
   quotableKeywordOption,
   signature,
   type CommandDefinition,
-} from '../definition';
+} from '../definition.ts';
 
 // #region directives
 export const directiveDefinitions: CommandDefinition[] = [

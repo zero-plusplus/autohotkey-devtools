@@ -1,7 +1,7 @@
-import type { ScopeName } from '../../../../../src/tmlanguage';
-import { $ } from '../../../../helpers/definition/parameter/$';
-import { $path } from '../../../../helpers/definition/parameter/$path';
-import type { ExpectedTestData } from '../../../../types';
+import type { ScopeName } from '../../../../../src/tmlanguage.ts';
+import { $ } from '../../../../helpers/definition/parameter/$.ts';
+import { $path } from '../../../../helpers/definition/parameter/$path.ts';
+import type { ExpectedTestData } from '../../../../types.ts';
 
 // https://www.autohotkey.com/docs/v1/lib/IniDelete.htm
 export function createIniDeleteExpectedDataList(scopeName: ScopeName): ExpectedTestData[] {

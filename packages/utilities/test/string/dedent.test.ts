@@ -1,8 +1,3 @@
-import {
-  describe,
-  expect,
-  test,
-} from '@jest/globals';
 import { dedent } from '../../src';
 
 describe('dedent', () => {

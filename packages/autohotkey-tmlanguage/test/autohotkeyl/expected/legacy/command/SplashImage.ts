@@ -1,14 +1,14 @@
-import type { ScopeName } from '../../../../../src/tmlanguage';
-import { colorOption } from '../../../../helpers/definition/option/colorOption';
-import { floatOption } from '../../../../helpers/definition/option/floatOption';
-import { keywordOption } from '../../../../helpers/definition/option/keywordOption';
-import { sizeOption } from '../../../../helpers/definition/option/sizeOption';
-import { $ } from '../../../../helpers/definition/parameter/$';
-import { $fontName } from '../../../../helpers/definition/parameter/$fontName';
-import { $imagePath } from '../../../../helpers/definition/parameter/$imagePath';
-import { $subcommandlike } from '../../../../helpers/definition/parameter/$subcommandlike';
-import { $winTitle } from '../../../../helpers/definition/parameter/$winTitle';
-import type { ExpectedTestData } from '../../../../types';
+import type { ScopeName } from '../../../../../src/tmlanguage.ts';
+import { colorOption } from '../../../../helpers/definition/option/colorOption.ts';
+import { floatOption } from '../../../../helpers/definition/option/floatOption.ts';
+import { keywordOption } from '../../../../helpers/definition/option/keywordOption.ts';
+import { sizeOption } from '../../../../helpers/definition/option/sizeOption.ts';
+import { $ } from '../../../../helpers/definition/parameter/$.ts';
+import { $fontName } from '../../../../helpers/definition/parameter/$fontName.ts';
+import { $imagePath } from '../../../../helpers/definition/parameter/$imagePath.ts';
+import { $subcommandlike } from '../../../../helpers/definition/parameter/$subcommandlike.ts';
+import { $winTitle } from '../../../../helpers/definition/parameter/$winTitle.ts';
+import type { ExpectedTestData } from '../../../../types.ts';
 
 // https://www.autohotkey.com/docs/v1/lib/SplashImage.htm
 export function createSplashImageExpectedDataList(scopeName: ScopeName): ExpectedTestData[] {

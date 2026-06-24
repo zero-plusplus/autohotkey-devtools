@@ -1,8 +1,8 @@
-import type { ScopeName } from '../../../../../src/tmlanguage';
-import { $ } from '../../../../helpers/definition/parameter/$';
-import { $menuItemName } from '../../../../helpers/definition/parameter/$menuItemName';
-import { $winTitle } from '../../../../helpers/definition/parameter/$winTitle';
-import type { ExpectedTestData } from '../../../../types';
+import type { ScopeName } from '../../../../../src/tmlanguage.ts';
+import { $ } from '../../../../helpers/definition/parameter/$.ts';
+import { $menuItemName } from '../../../../helpers/definition/parameter/$menuItemName.ts';
+import { $winTitle } from '../../../../helpers/definition/parameter/$winTitle.ts';
+import type { ExpectedTestData } from '../../../../types.ts';
 
 // https://www.autohotkey.com/docs/v1/lib/WinMenuSelectItem.htm
 export function createWinMenuSelectItemExpectedDataList(scopeName: ScopeName): ExpectedTestData[] {

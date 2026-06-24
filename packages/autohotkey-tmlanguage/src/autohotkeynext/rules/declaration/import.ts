@@ -9,7 +9,7 @@ import {
   optseq,
   reluctant,
   seq,
-} from '../../../oniguruma';
+} from '../../../oniguruma.ts';
 import {
   includeRule,
   name,
@@ -20,7 +20,7 @@ import {
   type PatternsRule,
   type Rule,
   type ScopeName,
-} from '../../../tmlanguage';
+} from '../../../tmlanguage.ts';
 
 interface Placeholder {
   startPattern: string;

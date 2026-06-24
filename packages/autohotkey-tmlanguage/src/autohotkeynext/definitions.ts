@@ -1,5 +1,5 @@
-import * as definitions_v2 from '../autohotkey2/definitions';
-import * as patterns_v2 from '../autohotkey2/patterns';
+import * as definitions_v2 from '../autohotkey2/definitions.ts';
+import * as patterns_v2 from '../autohotkey2/patterns.ts';
 import {
   $shouldInteger,
   command,
@@ -7,16 +7,16 @@ import {
   signature,
   type CommandDefinition,
   type CommandParameter,
-} from '../definition';
+} from '../definition.ts';
 import {
   anyChars1,
   seq,
   wordBound,
-} from '../oniguruma';
+} from '../oniguruma.ts';
 import {
   RuleName,
   StyleName,
-} from '../tmlanguage';
+} from '../tmlanguage.ts';
 
 export const directiveDefinitions: CommandDefinition[] = [
   ...definitions_v2.directiveDefinitions,

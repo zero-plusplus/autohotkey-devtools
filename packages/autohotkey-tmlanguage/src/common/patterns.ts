@@ -18,8 +18,8 @@ import {
   ordalt,
   seq,
   startAnchor,
-} from '../oniguruma';
-import * as constants_common from './constants';
+} from '../oniguruma.ts';
+import * as constants_common from './constants.ts';
 
 export const lineStartPattern: string = alt(startAnchor(), '\\G');
 export const lineEndPattern: string = alt(

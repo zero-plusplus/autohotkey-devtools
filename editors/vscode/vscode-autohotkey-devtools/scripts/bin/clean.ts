@@ -1,6 +1,5 @@
-import { cleanBuild } from '../helpers/clean';
+import { cleanBuild } from '../helpers/clean.ts';
 
-// eslint-disable-next-line jest/require-hook
 (async(): Promise<void> => {
   await cleanBuild();
 })();

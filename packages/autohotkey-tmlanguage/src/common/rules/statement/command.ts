@@ -1,4 +1,4 @@
-import { hasFlag } from '@zero-plusplus/utilities/src';
+import { hasFlag } from '@zero-plusplus/utilities/src/index.ts';
 import {
   $,
   CommandFlag,
@@ -14,7 +14,7 @@ import {
   type CommandParameter,
   type CommandSignature,
   type ParameterItemMatcher,
-} from '../../../definition';
+} from '../../../definition.ts';
 import {
   alt,
   anyChars0,
@@ -48,7 +48,7 @@ import {
   textalt,
   wordBound,
   wordChars1,
-} from '../../../oniguruma';
+} from '../../../oniguruma.ts';
 import {
   includeRule,
   name,
@@ -57,15 +57,14 @@ import {
   Repository,
   RuleName,
   StyleName,
-  type Captures,
   type ElementName,
   type MatchRule,
   type PatternsRule,
   type Rule,
   type ScopeName,
-} from '../../../tmlanguage';
-import * as constants_common from '../../constants';
-import * as patterns_common from '../../patterns';
+} from '../../../tmlanguage.ts';
+import * as constants_common from '../../constants.ts';
+import * as patterns_common from '../../patterns.ts';
 
 
 export interface Placeholder_SingleLineCommandLikeStatementRule {
@@ -751,7 +750,7 @@ function itemPatternToRules(scopeName: ScopeName, itemPattern: ParameterItemMatc
           Number(index),
           isNameRule ? rules[0] : patternsRule(...rules),
         ];
-      })) as unknown as Captures,
+      })),
     },
   ];
 }

@@ -1,11 +1,11 @@
-import { dedent } from '@zero-plusplus/utilities/src';
+import { dedent } from '@zero-plusplus/utilities/src/index.ts';
 import {
   name,
   RuleName,
   type ElementName,
   type ScopeName,
-} from '../../../src/tmlanguage';
-import type { ExpectedTestData } from '../../types';
+} from '../../../src/tmlanguage.ts';
+import type { ExpectedTestData } from '../../types.ts';
 
 interface Placeholder {
   ruleName: ElementName;

@@ -1,8 +1,8 @@
-import type { ScopeName } from '../../../../../src/tmlanguage';
-import { $ } from '../../../../helpers/definition/parameter/$';
-import { $shouldFloat } from '../../../../helpers/definition/parameter/$shouldFloat';
-import { $withNumber } from '../../../../helpers/definition/parameter/$withNumber';
-import type { ExpectedTestData } from '../../../../types';
+import type { ScopeName } from '../../../../../src/tmlanguage.ts';
+import { $ } from '../../../../helpers/definition/parameter/$.ts';
+import { $shouldFloat } from '../../../../helpers/definition/parameter/$shouldFloat.ts';
+import { $withNumber } from '../../../../helpers/definition/parameter/$withNumber.ts';
+import type { ExpectedTestData } from '../../../../types.ts';
 
 // https://www.autohotkey.com/docs/v1/lib/MsgBox.htm
 export function createMsgBoxExpectedDataList(scopeName: ScopeName): ExpectedTestData[] {

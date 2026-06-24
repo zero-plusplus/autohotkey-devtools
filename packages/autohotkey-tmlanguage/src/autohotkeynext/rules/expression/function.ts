@@ -4,7 +4,7 @@ import {
   inlineSpaces0,
   lookbehind,
   seq,
-} from '../../../oniguruma';
+} from '../../../oniguruma.ts';
 import {
   includeRule,
   nameRule,
@@ -13,7 +13,7 @@ import {
   RuleName,
   type PatternsRule,
   type ScopeName,
-} from '../../../tmlanguage';
+} from '../../../tmlanguage.ts';
 
 export function createFunctionExpressionBlockRule(scopeName: ScopeName): PatternsRule {
   return patternsRule({

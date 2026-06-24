@@ -1,4 +1,4 @@
-import * as constants_v2 from '../autohotkey2/constants';
+import * as constants_v2 from '../autohotkey2/constants.ts';
 
 const additionalBuiltinVaribles = [
   // [v2.1-alpha.7](https://www.autohotkey.com/docs/alpha/ChangeLog.htm#v2.1-alpha.7)

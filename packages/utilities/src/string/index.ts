@@ -1,1 +1,1 @@
-export * from './dedent';
+export * from './dedent.ts';

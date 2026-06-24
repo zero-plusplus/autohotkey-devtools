@@ -12,19 +12,19 @@ import {
   type CommandDefinition,
   type CommandParameter,
   type ParameterItemMatcher,
-} from '../definition';
+} from '../definition.ts';
 import {
   char,
   inlineSpace,
   negChars0,
   negChars1,
   seq,
-} from '../oniguruma';
+} from '../oniguruma.ts';
 import {
   includeRule,
   Repository,
   RuleName,
-} from '../tmlanguage';
+} from '../tmlanguage.ts';
 
 export const compilerDirectives: CommandDefinition[] = [
   command('@Ahk2Exe', signature([])),

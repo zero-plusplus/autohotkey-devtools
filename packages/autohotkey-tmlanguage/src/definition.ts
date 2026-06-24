@@ -1,6 +1,6 @@
-import { mergeFlags } from '@zero-plusplus/utilities/src';
-import * as patterns_v1 from './autohotkeyl/patterns';
-import * as constants_common from './common/constants';
+import { mergeFlags } from '@zero-plusplus/utilities/src/index.ts';
+import * as patterns_v1 from './autohotkeyl/patterns.ts';
+import * as constants_common from './common/constants.ts';
 import {
   alt,
   anyChars0,
@@ -26,7 +26,7 @@ import {
   seq,
   text,
   textalt,
-} from './oniguruma';
+} from './oniguruma.ts';
 import {
   includeRule,
   Repository,
@@ -34,7 +34,7 @@ import {
   StyleName,
   type ElementName,
   type IncludeRule,
-} from './tmlanguage';
+} from './tmlanguage.ts';
 
 // #region constants
 export const scopeNames = [ 'autohotkey', 'autohotkeynext', 'autohotkeyl', 'autohotkey2' ] as const;
@@ -78,7 +78,7 @@ export interface CommandParameterCapturedMatcher {
   match: string;
   captures: { [key in number ]: ParameterItemMatcher | ParameterItemMatcher[] };
 }
-export type ParameterItemMatcher = string | CommandParameterMatcher | CommandParameterCapturedMatcher | IncludeRule | ParameterItemMatcher[];
+export type ParameterItemMatcher = CommandParameterCapturedMatcher | CommandParameterMatcher | IncludeRule | ParameterItemMatcher[] | string;
 export interface CommandParameter {
   readonly flags: CommandParameterFlag;
   readonly itemMatchers?: ParameterItemMatcher[];

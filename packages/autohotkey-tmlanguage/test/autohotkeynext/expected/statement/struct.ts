@@ -1,10 +1,10 @@
-import { dedent } from '@zero-plusplus/utilities/src';
+import { dedent } from '@zero-plusplus/utilities/src/index.ts';
 import {
   name,
   RuleName,
   type ScopeName,
-} from '../../../../src/tmlanguage';
-import type { ExpectedTestData } from '../../../types';
+} from '../../../../src/tmlanguage.ts';
+import type { ExpectedTestData } from '../../../types.ts';
 
 // https://www.autohotkey.com/docs/alpha/Structs.htm#classdef
 export function createStructPackExpectedDataList(scopeName: ScopeName): ExpectedTestData[] {

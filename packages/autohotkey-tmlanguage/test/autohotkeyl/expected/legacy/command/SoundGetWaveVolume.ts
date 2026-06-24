@@ -1,7 +1,7 @@
-import type { ScopeName } from '../../../../../src/tmlanguage';
-import { $output } from '../../../../helpers/definition/parameter/$output';
-import { $shouldInteger } from '../../../../helpers/definition/parameter/$shouldInteger';
-import type { ExpectedTestData } from '../../../../types';
+import type { ScopeName } from '../../../../../src/tmlanguage.ts';
+import { $output } from '../../../../helpers/definition/parameter/$output.ts';
+import { $shouldInteger } from '../../../../helpers/definition/parameter/$shouldInteger.ts';
+import type { ExpectedTestData } from '../../../../types.ts';
 
 // https://www.autohotkey.com/docs/v1/lib/SoundGetWaveVolume.htm
 export function createSoundGetWaveVolumeExpectedDataList(scopeName: ScopeName): ExpectedTestData[] {

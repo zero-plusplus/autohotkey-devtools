@@ -11,29 +11,23 @@
   },
   "license": "SEE LICENSE IN README.md",
   "author": "zero-plusplus (https://github.com/zero-plusplus)",
+  "type": "module",
   "repository": "github:zero-plusplus/autohotkey-devtools",
   "scripts": {
-    "test": "npx jest"
+    "lint": "npm run lint --workspaces --if-present"
   },
   "devDependencies": {
-    "@eslint/js": "^9.16.0",
-    "@stylistic/eslint-plugin": "^2.11.0",
-    "@types/eslint__js": "^8.42.3",
-    "@types/jest": "^29.5.12",
-    "@types/node": "^22.5.4",
-    "@typescript-eslint/eslint-plugin": "^8.17.0",
-    "@typescript-eslint/parser": "^8.17.0",
+    "@eslint/js": "^10.0.1",
+    "@stylistic/eslint-plugin": "^5.10.0",
+    "@types/node": "^22.20.0",
     "@zero-plusplus/eslint-style-rules": "^0.0.0",
-    "esbuild": "^0.25.9",
-    "eslint": "^9.16.0",
-    "eslint-plugin-jest": "^28.9.0",
-    "globals": "^14.0.0",
-    "jest": "^29.7.0",
-    "ts-jest": "^29.2.5",
-    "tsx": "^4.19.1",
-    "type-fest": "^4.29.0",
-    "typescript": "^5.9.2",
-    "typescript-eslint": "^8.17.0"
+    "eslint": "^10.5.0",
+    "eslint-plugin-perfectionist": "^5.9.1",
+    "globals": "^17.6.0",
+    "rolldown": "^1.1.1",
+    "typescript": "^6.0.3",
+    "typescript-eslint": "^8.61.1",
+    "vitest": "^4.1.9"
   },
   "engines": {
     "node": ">=22.0.0"

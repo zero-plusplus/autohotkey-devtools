@@ -1,8 +1,8 @@
-import type { ScopeName } from '../../../../../src/tmlanguage';
-import { $input } from '../../../../helpers/definition/parameter/$input';
-import { $output } from '../../../../helpers/definition/parameter/$output';
-import { $shouldKeyword } from '../../../../helpers/definition/parameter/$shouldKeyword';
-import type { ExpectedTestData } from '../../../../types';
+import type { ScopeName } from '../../../../../src/tmlanguage.ts';
+import { $input } from '../../../../helpers/definition/parameter/$input.ts';
+import { $output } from '../../../../helpers/definition/parameter/$output.ts';
+import { $shouldKeyword } from '../../../../helpers/definition/parameter/$shouldKeyword.ts';
+import type { ExpectedTestData } from '../../../../types.ts';
 
 // https://www.autohotkey.com/docs/v1/lib/StringUpper.htm
 export function createStringUpperExpectedDataList(scopeName: ScopeName): ExpectedTestData[] {

@@ -8,7 +8,7 @@ import {
   lookbehind,
   seq,
   startAnchor,
-} from '../../../oniguruma';
+} from '../../../oniguruma.ts';
 import {
   includeRule,
   nameRule,
@@ -20,7 +20,7 @@ import {
   type PatternsRule,
   type Rule,
   type ScopeName,
-} from '../../../tmlanguage';
+} from '../../../tmlanguage.ts';
 
 interface Placeholder {
   callableNamePattern: string;

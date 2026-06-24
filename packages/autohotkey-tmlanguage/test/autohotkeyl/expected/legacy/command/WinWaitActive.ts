@@ -1,8 +1,8 @@
-import type { ScopeName } from '../../../../../src/tmlanguage';
-import { $ } from '../../../../helpers/definition/parameter/$';
-import { $expression } from '../../../../helpers/definition/parameter/$expression';
-import { $winTitle } from '../../../../helpers/definition/parameter/$winTitle';
-import type { ExpectedTestData } from '../../../../types';
+import type { ScopeName } from '../../../../../src/tmlanguage.ts';
+import { $ } from '../../../../helpers/definition/parameter/$.ts';
+import { $expression } from '../../../../helpers/definition/parameter/$expression.ts';
+import { $winTitle } from '../../../../helpers/definition/parameter/$winTitle.ts';
+import type { ExpectedTestData } from '../../../../types.ts';
 
 // https://www.autohotkey.com/docs/v1/lib/WinWaitActive.htm
 export function createWinWaitActiveExpectedDataList(scopeName: ScopeName): ExpectedTestData[] {

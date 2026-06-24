@@ -26,11 +26,7 @@
 		},
 	],
 	"settings": {
-		"typescript.preferences.preferTypeOnlyAutoImports": true,
 		"[typescript]": {
-			"editor.codeActionsOnSave": {
-				"source.organizeImports": "always"
-			},
 			"editor.foldingImportsByDefault": true,
 		},
 	}

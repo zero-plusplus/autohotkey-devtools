@@ -1,8 +1,8 @@
-import type { ScopeName } from '../../../../../src/tmlanguage';
-import { $keyName } from '../../../../helpers/definition/parameter/$keyName';
-import { $output } from '../../../../helpers/definition/parameter/$output';
-import { $shouldKeyword } from '../../../../helpers/definition/parameter/$shouldKeyword';
-import type { ExpectedTestData } from '../../../../types';
+import type { ScopeName } from '../../../../../src/tmlanguage.ts';
+import { $keyName } from '../../../../helpers/definition/parameter/$keyName.ts';
+import { $output } from '../../../../helpers/definition/parameter/$output.ts';
+import { $shouldKeyword } from '../../../../helpers/definition/parameter/$shouldKeyword.ts';
+import type { ExpectedTestData } from '../../../../types.ts';
 
 // https://www.autohotkey.com/docs/v1/lib/GetKeyState.htm
 export function createGetKeyStateExpectedDataList(scopeName: ScopeName): ExpectedTestData[] {

@@ -10,13 +10,13 @@ import {
   lookbehind,
   optseq,
   seq,
-} from '../../../oniguruma';
+} from '../../../oniguruma.ts';
 import {
   nameRule,
   RuleName,
   type MatchRule,
   type ScopeName,
-} from '../../../tmlanguage';
+} from '../../../tmlanguage.ts';
 
 interface Placeholder {
   startPattern: string;

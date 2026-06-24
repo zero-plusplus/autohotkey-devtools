@@ -4,7 +4,7 @@ import {
   char,
   inlineSpaces0,
   seq,
-} from '../../../oniguruma';
+} from '../../../oniguruma.ts';
 import {
   includeRule,
   name,
@@ -15,7 +15,7 @@ import {
   StyleName,
   type MatchRule,
   type ScopeName,
-} from '../../../tmlanguage';
+} from '../../../tmlanguage.ts';
 
 interface Placeholder_ObjectKeyRule {
   keyPattern: string;

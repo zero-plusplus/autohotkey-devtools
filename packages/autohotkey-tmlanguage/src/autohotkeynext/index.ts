@@ -1,9 +1,9 @@
-import * as v2 from '../autohotkey2';
-import * as patterns_v2 from '../autohotkey2/patterns';
-import * as rules_v2 from '../autohotkey2/rules';
-import * as constants_common from '../common/constants';
-import * as patterns_common from '../common/patterns';
-import * as rules_common from '../common/rules';
+import * as v2 from '../autohotkey2/index.ts';
+import * as patterns_v2 from '../autohotkey2/patterns.ts';
+import * as rules_v2 from '../autohotkey2/rules/index.ts';
+import * as constants_common from '../common/constants.ts';
+import * as patterns_common from '../common/patterns.ts';
+import * as rules_common from '../common/rules/index.ts';
 import {
   includeRule,
   patternsRule,
@@ -11,11 +11,11 @@ import {
   RuleName,
   type ScopeName,
   type TmLanguage,
-} from '../tmlanguage';
-import * as constants_vnext from './constants';
-import * as definitions_vnext from './definitions';
-import * as patterns_vnext from './patterns';
-import * as rules_vnext from './rules';
+} from '../tmlanguage.ts';
+import * as constants_vnext from './constants.ts';
+import * as definitions_vnext from './definitions.ts';
+import * as patterns_vnext from './patterns.ts';
+import * as rules_vnext from './rules/index.ts';
 
 export function createTmLanguage(): TmLanguage {
   const scopeName: ScopeName = 'autohotkeynext';

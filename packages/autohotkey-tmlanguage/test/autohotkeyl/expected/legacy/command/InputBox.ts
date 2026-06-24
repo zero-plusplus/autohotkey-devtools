@@ -1,9 +1,9 @@
-import type { ScopeName } from '../../../../../src/tmlanguage';
-import { $ } from '../../../../helpers/definition/parameter/$';
-import { $expression } from '../../../../helpers/definition/parameter/$expression';
-import { $output } from '../../../../helpers/definition/parameter/$output';
-import { $shouldKeyword } from '../../../../helpers/definition/parameter/$shouldKeyword';
-import type { ExpectedTestData } from '../../../../types';
+import type { ScopeName } from '../../../../../src/tmlanguage.ts';
+import { $ } from '../../../../helpers/definition/parameter/$.ts';
+import { $expression } from '../../../../helpers/definition/parameter/$expression.ts';
+import { $output } from '../../../../helpers/definition/parameter/$output.ts';
+import { $shouldKeyword } from '../../../../helpers/definition/parameter/$shouldKeyword.ts';
+import type { ExpectedTestData } from '../../../../types.ts';
 
 // https://www.autohotkey.com/docs/v1/lib/InputBox.htm
 export function createInputBoxExpectedDataList(scopeName: ScopeName): ExpectedTestData[] {

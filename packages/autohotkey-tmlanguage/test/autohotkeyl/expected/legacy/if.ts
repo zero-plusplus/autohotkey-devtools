@@ -1,11 +1,11 @@
-import { dedent } from '@zero-plusplus/utilities/src';
+import { dedent } from '@zero-plusplus/utilities/src/index.ts';
 import {
   name,
   Repository,
   RuleName,
   type ScopeName,
-} from '../../../../src/tmlanguage';
-import type { ExpectedTestData } from '../../../types';
+} from '../../../../src/tmlanguage.ts';
+import type { ExpectedTestData } from '../../../types.ts';
 
 export function createLegacyIfStatementExpectedData(scopeName: ScopeName): ExpectedTestData[] {
   return [

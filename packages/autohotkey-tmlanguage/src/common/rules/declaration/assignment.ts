@@ -6,7 +6,7 @@ import {
   optcapture,
   seq,
   textalt,
-} from '../../../oniguruma';
+} from '../../../oniguruma.ts';
 import {
   includeRule,
   nameRule,
@@ -15,7 +15,7 @@ import {
   RuleName,
   type MatchRule,
   type ScopeName,
-} from '../../../tmlanguage';
+} from '../../../tmlanguage.ts';
 
 interface Placeholder {
   startPattern: string;

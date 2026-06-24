@@ -1,9 +1,9 @@
-import type { ScopeName } from '../../../../src/tmlanguage';
-import type { ExpectedTestData } from '../../../types';
-import type { CommandPlaceholder } from '../helpers';
-import { decimalOption } from '../option/decimalOption';
-import { flagedKeywordOption } from '../option/flagedKeywordOption';
-import { $ } from './$';
+import type { ScopeName } from '../../../../src/tmlanguage.ts';
+import type { ExpectedTestData } from '../../../types.ts';
+import type { CommandPlaceholder } from '../helpers.ts';
+import { decimalOption } from '../option/decimalOption.ts';
+import { flagedKeywordOption } from '../option/flagedKeywordOption.ts';
+import { $ } from './$.ts';
 
 export function $menuOptions(scopeName: ScopeName, placeholder: CommandPlaceholder): ExpectedTestData[] {
   return [

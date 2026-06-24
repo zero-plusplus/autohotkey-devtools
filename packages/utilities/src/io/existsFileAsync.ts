@@ -1,4 +1,4 @@
-import * as fs from 'fs/promises';
+import * as fs from 'node:fs/promises';
 
 /**
  * Asynchronously checks whether a file exists in the specified path.

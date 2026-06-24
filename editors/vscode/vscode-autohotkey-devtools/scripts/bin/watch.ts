@@ -1,12 +1,11 @@
-import { debugBuildOptions } from '../config';
-import { buildDemoAll, buildLanguageConfigurationAll, buildTmLanguageAll } from '../helpers/build';
-import { cleanBuildSource } from '../helpers/clean';
-import { watch } from '../helpers/watch';
+import { debugBuildOptions } from '../config.ts';
+import { buildDemoAll, buildLanguageConfigurationAll, buildTmLanguageAll } from '../helpers/build.ts';
+import { cleanBuildSource } from '../helpers/clean.ts';
+import { watch } from '../helpers/watch.ts';
 
-// eslint-disable-next-line jest/require-hook
 (async(): Promise<void> => {
   await cleanBuildSource();
-  await watch(debugBuildOptions, async() => {
+  watch(debugBuildOptions, async() => {
     await Promise.all([
       buildDemoAll(),
       buildTmLanguageAll(true),

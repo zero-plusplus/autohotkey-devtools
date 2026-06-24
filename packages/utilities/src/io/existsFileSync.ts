@@ -1,4 +1,4 @@
-import * as fs from 'fs';
+import * as fs from 'node:fs';
 
 /**
  * Synchronously checks whether a file exists in the specified path.

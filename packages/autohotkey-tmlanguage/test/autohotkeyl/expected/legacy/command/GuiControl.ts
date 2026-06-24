@@ -1,10 +1,10 @@
-import type { ScopeName } from '../../../../../src/tmlanguage';
-import { $ } from '../../../../helpers/definition/parameter/$';
-import { $control } from '../../../../helpers/definition/parameter/$control';
-import { $controlMoveOptions } from '../../../../helpers/definition/parameter/$controlMoveOptions';
-import { $flagedGuiControlOptions } from '../../../../helpers/definition/parameter/$flagedGuiControlOptions';
-import { $guisubcommand } from '../../../../helpers/definition/parameter/$guisubcommand';
-import type { ExpectedTestData } from '../../../../types';
+import type { ScopeName } from '../../../../../src/tmlanguage.ts';
+import { $ } from '../../../../helpers/definition/parameter/$.ts';
+import { $control } from '../../../../helpers/definition/parameter/$control.ts';
+import { $controlMoveOptions } from '../../../../helpers/definition/parameter/$controlMoveOptions.ts';
+import { $flagedGuiControlOptions } from '../../../../helpers/definition/parameter/$flagedGuiControlOptions.ts';
+import { $guisubcommand } from '../../../../helpers/definition/parameter/$guisubcommand.ts';
+import type { ExpectedTestData } from '../../../../types.ts';
 
 // https://www.autohotkey.com/docs/v1/lib/GuiControl.htm
 export function createGuiControlExpectedDataList(scopeName: ScopeName): ExpectedTestData[] {

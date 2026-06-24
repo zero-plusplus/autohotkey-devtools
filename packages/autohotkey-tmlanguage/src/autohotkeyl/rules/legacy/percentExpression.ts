@@ -5,7 +5,7 @@ import {
   inlineSpaces1,
   negChars0,
   seq,
-} from '../../../oniguruma';
+} from '../../../oniguruma.ts';
 import {
   includeRule,
   name,
@@ -16,7 +16,7 @@ import {
   StyleName,
   type MatchRule,
   type ScopeName,
-} from '../../../tmlanguage';
+} from '../../../tmlanguage.ts';
 
 interface Placeholder {
   expressionPattern: string;

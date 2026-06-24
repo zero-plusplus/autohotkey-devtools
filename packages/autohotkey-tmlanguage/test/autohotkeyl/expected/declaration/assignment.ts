@@ -1,13 +1,13 @@
-import { dedent } from '@zero-plusplus/utilities/src';
-import * as constants_common from '../../../../src/common/constants';
+import { dedent } from '@zero-plusplus/utilities/src/index.ts';
+import * as constants_common from '../../../../src/common/constants.ts';
 import {
   name,
   RuleDescriptor,
   RuleName,
   type ScopeName,
-} from '../../../../src/tmlanguage';
-import * as common from '../../../common/declaration/assignment';
-import type { ExpectedTestData } from '../../../types';
+} from '../../../../src/tmlanguage.ts';
+import * as common from '../../../common/declaration/assignment.ts';
+import type { ExpectedTestData } from '../../../types.ts';
 
 export function createAssignmentDeclarationExpectedData(scopeName: ScopeName): ExpectedTestData[] {
   return [

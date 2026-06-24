@@ -1,5 +1,4 @@
-const defaultRuleValue = 'error';
-module.exports.ruleNames = [
+export const ruleNames = [
   // eslint-plugin-jest [release](https://github.com/jest-community/eslint-plugin-jest/releases)
   // [v28.8.3]
 
@@ -72,4 +71,5 @@ module.exports.ruleNames = [
   // #endregion Requires Type Checking
 ];
 
-module.exports.rules = Object.fromEntries(module.exports.ruleNames.map((ruleName) => [ ruleName, defaultRuleValue ]));
+const defaultRuleValue = 'error';
+export const rules = Object.fromEntries(ruleNames.map((ruleName) => [ ruleName, defaultRuleValue ]));

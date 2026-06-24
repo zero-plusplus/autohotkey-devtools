@@ -10,7 +10,7 @@ import {
   seq,
   text,
   textalt,
-} from '../../../oniguruma';
+} from '../../../oniguruma.ts';
 import {
   includeRule,
   name,
@@ -22,8 +22,8 @@ import {
   type MatchRule,
   type PatternsRule,
   type ScopeName,
-} from '../../../tmlanguage';
-import * as constants_common from '../../constants';
+} from '../../../tmlanguage.ts';
+import * as constants_common from '../../constants.ts';
 
 interface Placeholder {
   startPattern: string;

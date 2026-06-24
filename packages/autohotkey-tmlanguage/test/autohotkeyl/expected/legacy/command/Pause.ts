@@ -1,7 +1,7 @@
-import type { ScopeName } from '../../../../../src/tmlanguage';
-import { $onOffToggle } from '../../../../helpers/definition/parameter/$onOffToggle';
-import { $shouldKeyword } from '../../../../helpers/definition/parameter/$shouldKeyword';
-import type { ExpectedTestData } from '../../../../types';
+import type { ScopeName } from '../../../../../src/tmlanguage.ts';
+import { $onOffToggle } from '../../../../helpers/definition/parameter/$onOffToggle.ts';
+import { $shouldKeyword } from '../../../../helpers/definition/parameter/$shouldKeyword.ts';
+import type { ExpectedTestData } from '../../../../types.ts';
 
 // https://www.autohotkey.com/docs/v1/lib/Pause.htm
 export function createPauseExpectedDataList(scopeName: ScopeName): ExpectedTestData[] {

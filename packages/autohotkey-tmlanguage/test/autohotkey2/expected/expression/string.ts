@@ -1,10 +1,10 @@
-import * as constants_v2 from '../../../../src/autohotkey2/constants';
+import * as constants_v2 from '../../../../src/autohotkey2/constants.ts';
 import {
   RuleName,
   type ScopeName,
-} from '../../../../src/tmlanguage';
-import * as common from '../../../common/expression/string';
-import type { ExpectedTestData } from '../../../types';
+} from '../../../../src/tmlanguage.ts';
+import * as common from '../../../common/expression/string.ts';
+import type { ExpectedTestData } from '../../../types.ts';
 
 export function createStringLiteralExpectedData(scopeName: ScopeName): ExpectedTestData[] {
   return [

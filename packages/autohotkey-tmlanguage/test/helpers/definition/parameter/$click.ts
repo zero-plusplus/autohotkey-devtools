@@ -1,10 +1,10 @@
-import { isIntegerLike } from '@zero-plusplus/utilities/src';
-import { name, RuleName, StyleName, type ScopeName } from '../../../../src/tmlanguage';
-import type { ExpectedTestData, ParsedResult } from '../../../types';
-import { createDereferenceInKeywordParameterExpectedDataList } from '../common/dereference';
-import { createKeywordInvalidExpectedDataList } from '../common/invalid';
-import { createPercentExpressionParameterExpectedDataList } from '../common/percentExpression';
-import { createCommandExpectedData, type CommandPlaceholder } from '../helpers';
+import { isIntegerLike } from '@zero-plusplus/utilities/src/index.ts';
+import { name, RuleName, StyleName, type ScopeName } from '../../../../src/tmlanguage.ts';
+import type { ExpectedTestData, ParsedResult } from '../../../types.ts';
+import { createDereferenceInKeywordParameterExpectedDataList } from '../common/dereference.ts';
+import { createKeywordInvalidExpectedDataList } from '../common/invalid.ts';
+import { createPercentExpressionParameterExpectedDataList } from '../common/percentExpression.ts';
+import { createCommandExpectedData, type CommandPlaceholder } from '../helpers.ts';
 
 export function $click(scopeName: ScopeName, placeholder: CommandPlaceholder): ExpectedTestData[] {
   return [

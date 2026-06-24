@@ -1,8 +1,8 @@
-import type { ScopeName } from '../../../../../src/tmlanguage';
-import { $expression } from '../../../../helpers/definition/parameter/$expression';
-import { $soundComponent } from '../../../../helpers/definition/parameter/$soundComponent';
-import { $soundControlType } from '../../../../helpers/definition/parameter/$soundControlType';
-import type { ExpectedTestData } from '../../../../types';
+import type { ScopeName } from '../../../../../src/tmlanguage.ts';
+import { $expression } from '../../../../helpers/definition/parameter/$expression.ts';
+import { $soundComponent } from '../../../../helpers/definition/parameter/$soundComponent.ts';
+import { $soundControlType } from '../../../../helpers/definition/parameter/$soundControlType.ts';
+import type { ExpectedTestData } from '../../../../types.ts';
 
 // https://www.autohotkey.com/docs/v1/lib/SoundSet.htm
 export function createSoundSetExpectedDataList(scopeName: ScopeName): ExpectedTestData[] {

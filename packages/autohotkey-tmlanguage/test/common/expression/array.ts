@@ -1,17 +1,17 @@
 import {
   dedent,
-} from '@zero-plusplus/utilities/src';
+} from '@zero-plusplus/utilities/src/index.ts';
 import {
   name,
   RuleDescriptor,
   RuleName,
   type ScopeName,
-} from '../../../src/tmlanguage';
+} from '../../../src/tmlanguage.ts';
 import {
   createMultiLineExpectedData,
   createSingleLineExpectedData,
-} from '../../helpers/definition/helpers';
-import type { ExpectedTestData } from '../../types';
+} from '../../helpers/definition/helpers.ts';
+import type { ExpectedTestData } from '../../types.ts';
 
 export function createArrayLiteralExpectedData(scopeName: ScopeName): ExpectedTestData[] {
   return [

@@ -1,8 +1,7 @@
-import { buildOptions } from '../config';
-import { build } from '../helpers/build';
-import { cleanBuild } from '../helpers/clean';
+import { buildOptions } from '../config.ts';
+import { build } from '../helpers/build.ts';
+import { cleanBuild } from '../helpers/clean.ts';
 
-// eslint-disable-next-line jest/require-hook
 (async(): Promise<void> => {
   await cleanBuild();
   await build(buildOptions);

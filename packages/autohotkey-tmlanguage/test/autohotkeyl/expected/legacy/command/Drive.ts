@@ -1,10 +1,10 @@
-import type { ScopeName } from '../../../../../src/tmlanguage';
-import { $ } from '../../../../helpers/definition/parameter/$';
-import { $driveletter } from '../../../../helpers/definition/parameter/$driveletter';
-import { $invalidSubcommand } from '../../../../helpers/definition/parameter/$invalidSubcommand';
-import { $shouldKeyword } from '../../../../helpers/definition/parameter/$shouldKeyword';
-import { $subcommand } from '../../../../helpers/definition/parameter/$subcommand';
-import type { ExpectedTestData } from '../../../../types';
+import type { ScopeName } from '../../../../../src/tmlanguage.ts';
+import { $ } from '../../../../helpers/definition/parameter/$.ts';
+import { $driveletter } from '../../../../helpers/definition/parameter/$driveletter.ts';
+import { $invalidSubcommand } from '../../../../helpers/definition/parameter/$invalidSubcommand.ts';
+import { $shouldKeyword } from '../../../../helpers/definition/parameter/$shouldKeyword.ts';
+import { $subcommand } from '../../../../helpers/definition/parameter/$subcommand.ts';
+import type { ExpectedTestData } from '../../../../types.ts';
 
 // https://www.autohotkey.com/docs/v1/lib/Drive.htm
 export function createDriveExpectedDataList(scopeName: ScopeName): ExpectedTestData[] {

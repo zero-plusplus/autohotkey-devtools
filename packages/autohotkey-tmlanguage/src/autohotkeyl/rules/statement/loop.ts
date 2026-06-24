@@ -1,5 +1,5 @@
-import * as rules_common from '../../../common/rules';
-import type { CommandDefinition } from '../../../definition';
+import * as rules_common from '../../../common/rules/index.ts';
+import type { CommandDefinition } from '../../../definition.ts';
 import {
   alt,
   capture,
@@ -10,14 +10,14 @@ import {
   lookahead,
   lookbehind,
   seq,
-} from '../../../oniguruma';
+} from '../../../oniguruma.ts';
 import {
   nameRule,
   patternsRule,
   RuleName,
   type Rule,
   type ScopeName,
-} from '../../../tmlanguage';
+} from '../../../tmlanguage.ts';
 
 interface Placeholder {
   startPattern: string;

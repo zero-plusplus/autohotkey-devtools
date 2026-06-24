@@ -1,10 +1,10 @@
-import type { ScopeName } from '../../../../../src/tmlanguage';
-import type { ExpectedTestData } from '../../../../types';
-import { createFieldDeclarationExpectedData } from './field';
-import { createClassHeadDeclarationExpectedData } from './head';
-import { createMetaFunctionDeclarationExpectedData } from './metaFunction';
-import { createMethodDeclarationExpectedData } from './method';
-import { createPropertyDeclarationExpectedData } from './property';
+import type { ScopeName } from '../../../../../src/tmlanguage.ts';
+import type { ExpectedTestData } from '../../../../types.ts';
+import { createFieldDeclarationExpectedData } from './field.ts';
+import { createClassHeadDeclarationExpectedData } from './head.ts';
+import { createMetaFunctionDeclarationExpectedData } from './metaFunction.ts';
+import { createMethodDeclarationExpectedData } from './method.ts';
+import { createPropertyDeclarationExpectedData } from './property.ts';
 
 export function createClassDeclarationExpectedData(scopeName: ScopeName): ExpectedTestData[] {
   return [

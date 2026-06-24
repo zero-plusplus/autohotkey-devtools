@@ -1,11 +1,11 @@
-import type { ScopeName } from '../../../../src/tmlanguage';
-import type { ExpectedTestData } from '../../../types';
-import type { CommandPlaceholder } from '../helpers';
-import { flagedHexOption } from '../option/flagedHexOption';
-import { flagedIdentifierOption } from '../option/flagedIdentifierOption';
-import { flagedKeywordOption } from '../option/flagedKeywordOption';
-import { flagedSignedFloatOption } from '../option/flagedSignedFloatOption';
-import { flagedToggleOption } from '../option/flagedToggleOption';
+import type { ScopeName } from '../../../../src/tmlanguage.ts';
+import type { ExpectedTestData } from '../../../types.ts';
+import type { CommandPlaceholder } from '../helpers.ts';
+import { flagedHexOption } from '../option/flagedHexOption.ts';
+import { flagedIdentifierOption } from '../option/flagedIdentifierOption.ts';
+import { flagedKeywordOption } from '../option/flagedKeywordOption.ts';
+import { flagedSignedFloatOption } from '../option/flagedSignedFloatOption.ts';
+import { flagedToggleOption } from '../option/flagedToggleOption.ts';
 
 export function $flagedGuiControlOptions(scopeName: ScopeName, placeholder: CommandPlaceholder): ExpectedTestData[] {
   return [

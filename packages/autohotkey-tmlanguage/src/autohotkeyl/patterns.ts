@@ -1,4 +1,4 @@
-import * as patterns_common from '../common/patterns';
+import * as patterns_common from '../common/patterns.ts';
 import {
   alt,
   anyChars0,
@@ -21,8 +21,8 @@ import {
   text,
   textalt,
   wordChar,
-} from '../oniguruma';
-import * as constants_v1 from './constants';
+} from '../oniguruma.ts';
+import * as constants_v1 from './constants.ts';
 
 // #region [Names](https://www.autohotkey.com/docs/v1/Concepts.htm#names)
 const nameLimitLength = 253;

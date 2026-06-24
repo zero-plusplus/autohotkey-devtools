@@ -1,5 +1,4 @@
-const defaultRuleValue = 'error';
-module.exports.ruleNames = [
+export const ruleNames = [
   // eslint-stylistic [release](https://github.com/eslint-stylistic/eslint-stylistic/releases)
   // [v2.8.0] 95 rules
 
@@ -17,7 +16,7 @@ module.exports.ruleNames = [
   '@stylistic/computed-property-spacing',
   '@stylistic/dot-location',
   '@stylistic/eol-last',
-  '@stylistic/func-call-spacing',
+  '@stylistic/function-call-spacing',
   '@stylistic/function-call-argument-newline',
   '@stylistic/function-call-spacing',
   '@stylistic/function-paren-newline',
@@ -34,16 +33,13 @@ module.exports.ruleNames = [
   '@stylistic/jsx-equals-spacing',
   '@stylistic/jsx-first-prop-new-line',
   '@stylistic/jsx-function-call-newline',
-  '@stylistic/jsx-indent',
   '@stylistic/jsx-indent-props',
   '@stylistic/jsx-max-props-per-line',
   '@stylistic/jsx-newline',
   '@stylistic/jsx-one-expression-per-line',
   '@stylistic/jsx-pascal-case',
-  '@stylistic/jsx-props-no-multi-spaces',
   '@stylistic/jsx-quotes',
   '@stylistic/jsx-self-closing-comp',
-  '@stylistic/jsx-sort-props',
   '@stylistic/jsx-tag-spacing',
   '@stylistic/jsx-wrap-multilines',
   '@stylistic/key-spacing',
@@ -100,4 +96,6 @@ module.exports.ruleNames = [
   '@stylistic/wrap-regex',
   '@stylistic/yield-star-spacing',
 ];
-module.exports.rules = Object.fromEntries(module.exports.ruleNames.map((ruleName) => [ ruleName, defaultRuleValue ]));
+
+const defaultRuleValue = 'error';
+export const rules = Object.fromEntries(ruleNames.map((ruleName) => [ ruleName, defaultRuleValue ]));

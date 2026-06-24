@@ -1,7 +1,7 @@
-import type { ScopeName } from '../../../../../src/tmlanguage';
-import { $ } from '../../../../helpers/definition/parameter/$';
-import { $expression } from '../../../../helpers/definition/parameter/$expression';
-import type { ExpectedTestData } from '../../../../types';
+import type { ScopeName } from '../../../../../src/tmlanguage.ts';
+import { $ } from '../../../../helpers/definition/parameter/$.ts';
+import { $expression } from '../../../../helpers/definition/parameter/$expression.ts';
+import type { ExpectedTestData } from '../../../../types.ts';
 
 // https://www.autohotkey.com/docs/v1/lib/SplashTextOn.htm
 export function createSplashTextOnExpectedDataList(scopeName: ScopeName): ExpectedTestData[] {

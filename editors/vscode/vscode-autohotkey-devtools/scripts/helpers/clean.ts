@@ -1,5 +1,5 @@
-import * as fs from 'fs/promises';
-import { buildDir, buildSourceDir } from '../config';
+import * as fs from 'node:fs/promises';
+import { buildDir, buildSourceDir } from '../config.ts';
 
 export async function cleanBuild(): Promise<void> {
   try {

@@ -1,8 +1,8 @@
-import type { ScopeName } from '../../../../src/tmlanguage';
-import type { ExpectedTestData } from '../../../types';
-import type { CommandPlaceholder } from '../helpers';
-import { floatOption } from '../option/floatOption';
-import { $ } from './$';
+import type { ScopeName } from '../../../../src/tmlanguage.ts';
+import type { ExpectedTestData } from '../../../types.ts';
+import type { CommandPlaceholder } from '../helpers.ts';
+import { floatOption } from '../option/floatOption.ts';
+import { $ } from './$.ts';
 
 export function $controlMoveOptions(scopeName: ScopeName, placeholder: CommandPlaceholder): ExpectedTestData[] {
   return [

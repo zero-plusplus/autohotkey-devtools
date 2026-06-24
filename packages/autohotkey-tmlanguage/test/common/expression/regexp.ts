@@ -1,5 +1,5 @@
-import { dedent } from '@zero-plusplus/utilities/src';
-import * as constants_common from '../../../src/common/constants';
+import { dedent } from '@zero-plusplus/utilities/src/index.ts';
+import * as constants_common from '../../../src/common/constants.ts';
 import {
   name,
   RuleDescriptor,
@@ -7,11 +7,11 @@ import {
   StyleName,
   TokenType,
   type ScopeName,
-} from '../../../src/tmlanguage';
+} from '../../../src/tmlanguage.ts';
 import type {
   ExpectedTestData,
   ParsedResult,
-} from '../../types';
+} from '../../types.ts';
 
 interface Placeholder {
   quote: string;

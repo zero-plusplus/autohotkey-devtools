@@ -1,5 +1,4 @@
-const defaultRuleValue = 'error';
-module.exports.ruleNames = [
+export const ruleNames = [
   // typescript-eslint [release](https://github.com/typescript-eslint/typescript-eslint/releases)
   // [v8.5.0]
 
@@ -127,4 +126,5 @@ module.exports.ruleNames = [
   // #endregion Rules
 ];
 
-module.exports.rules = Object.fromEntries(module.exports.ruleNames.map((ruleName) => [ ruleName, defaultRuleValue ]));
+const defaultRuleValue = 'error';
+export const rules = Object.fromEntries(ruleNames.map((ruleName) => [ ruleName, defaultRuleValue ]));

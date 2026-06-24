@@ -1,12 +1,12 @@
-import { dedent } from '@zero-plusplus/utilities/src';
+import { dedent } from '@zero-plusplus/utilities/src/index.ts';
 import {
   name,
   RuleDescriptor,
   RuleName,
   TokenType,
   type ScopeName,
-} from '../../../src/tmlanguage';
-import type { ExpectedTestData } from '../../types';
+} from '../../../src/tmlanguage.ts';
+import type { ExpectedTestData } from '../../types.ts';
 
 export function createDocumentCommentExpectedData(scopeName: ScopeName): ExpectedTestData[] {
   return [

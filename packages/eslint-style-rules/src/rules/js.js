@@ -1,7 +1,7 @@
-const eslint = require('./all/eslint.js');
-const common = require('./common.js');
+import * as eslint from './all/eslint.js';
+import * as common from './common.js';
 
-module.exports.rules = {
+export const rules = {
   ...eslint.rules,
 
   'arrow-body-style': 'off',
@@ -54,7 +54,7 @@ module.exports.rules = {
   'sort-vars': 'off',
   'yoda': 'off',
 };
-module.exports.config = () => {
+export const config = () => {
   return [
     ...common.config(),
     {
@@ -64,7 +64,7 @@ module.exports.config = () => {
         '**/*.mjs',
       ],
       rules: {
-        ...module.exports.rules,
+        ...rules,
       },
     },
   ];

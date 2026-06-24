@@ -1,6 +1,6 @@
-import type { ScopeName } from '../../../../../src/tmlanguage';
-import { $onOff } from '../../../../helpers/definition/parameter/$onOff';
-import type { ExpectedTestData } from '../../../../types';
+import type { ScopeName } from '../../../../../src/tmlanguage.ts';
+import { $onOff } from '../../../../helpers/definition/parameter/$onOff.ts';
+import type { ExpectedTestData } from '../../../../types.ts';
 
 // https://www.autohotkey.com/docs/v1/lib/DetectHiddenWindows.htm
 export function createDetectHiddenWindowsExpectedDataList(scopeName: ScopeName): ExpectedTestData[] {

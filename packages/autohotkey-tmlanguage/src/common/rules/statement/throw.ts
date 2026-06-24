@@ -1,9 +1,9 @@
-import * as rule_common from '..';
 import {
   RuleName,
   type PatternsRule,
   type ScopeName,
-} from '../../../tmlanguage';
+} from '../../../tmlanguage.ts';
+import * as rule_common from '../index.ts';
 
 interface Placeholder {
   startPattern: string;

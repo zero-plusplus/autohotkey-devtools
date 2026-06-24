@@ -8,13 +8,13 @@ import {
   lookbehind,
   seq,
   startAnchor,
-} from '../../../oniguruma';
+} from '../../../oniguruma.ts';
 import {
   nameRule,
   RuleName,
   type MatchRule,
   type ScopeName,
-} from '../../../tmlanguage';
+} from '../../../tmlanguage.ts';
 
 export function createSingleLineCommentRule(scopeName: ScopeName): MatchRule {
   return {

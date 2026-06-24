@@ -1,5 +1,5 @@
-import type { LiteralUnion } from 'type-fest';
-import type { scopeNames } from './definition';
+import type { SuggestibleString } from '@zero-plusplus/utilities/src/index.ts';
+import type { scopeNames } from './definition.ts';
 
 // #region rule combinators
 export function includeRule(repositoryName: Repository): IncludeRule {
@@ -8,10 +8,10 @@ export function includeRule(repositoryName: Repository): IncludeRule {
 export function includeScope(scopeName: ScopeName): IncludeRule {
   return { include: `source.${scopeName}` };
 }
-export function name(scopeName: LiteralUnion<ScopeName, string>, ...ruleNames: ElementName[]): ElementName {
+export function name(scopeName: SuggestibleString<ScopeName>, ...ruleNames: ElementName[]): ElementName {
   return ruleNames.map((ruleName) => `${ruleName}.${scopeName}`).join(' ') as ElementName;
 }
-export function nameRule(scopeName: LiteralUnion<ScopeName, string>, ...ruleNames: ElementName[]): NameRule {
+export function nameRule(scopeName: SuggestibleString<ScopeName>, ...ruleNames: ElementName[]): NameRule {
   return { name: name(scopeName, ...ruleNames) };
 }
 export function patternsRule(...rules: Rule[]): PatternsRule {
@@ -383,7 +383,7 @@ export type Captures = {
   [key in number ]: Rule | undefined;
 };
 export type ScopeName = (typeof scopeNames)[number];
-export type ElementName = Repository | RuleName | RuleDescriptor | StyleName | TokenType;
+export type ElementName = Repository | RuleDescriptor | RuleName | StyleName | TokenType;
 export interface TmLanguage {
   scopeName: string;
   injectionSelector?: string;
@@ -392,7 +392,7 @@ export interface TmLanguage {
 }
 
 // https://macromates.com/manual/en/language_grammars#rule_keys
-export type Rule = NameRule | PatternsRule | MatchRule | BeginEndRule | BeginWhileRule | IncludeRule;
+export type Rule = BeginEndRule | BeginWhileRule | IncludeRule | MatchRule | NameRule | PatternsRule;
 export interface RuleBase {
   name?: ElementName | undefined;
   contentName?: ElementName;

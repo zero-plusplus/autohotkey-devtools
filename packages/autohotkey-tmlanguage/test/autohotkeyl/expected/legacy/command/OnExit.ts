@@ -1,6 +1,6 @@
-import type { ScopeName } from '../../../../../src/tmlanguage';
-import { $shouldLabel } from '../../../../helpers/definition/parameter/$shouldLabel';
-import type { ExpectedTestData } from '../../../../types';
+import type { ScopeName } from '../../../../../src/tmlanguage.ts';
+import { $shouldLabel } from '../../../../helpers/definition/parameter/$shouldLabel.ts';
+import type { ExpectedTestData } from '../../../../types.ts';
 
 // https://www.autohotkey.com/docs/v1/lib/OnExit.htm
 export function createOnExitExpectedDataList(scopeName: ScopeName): ExpectedTestData[] {

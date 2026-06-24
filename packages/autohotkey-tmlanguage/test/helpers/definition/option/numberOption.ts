@@ -1,9 +1,9 @@
-import type { ScopeName } from '../../../../src/tmlanguage';
-import type { ExpectedTestData } from '../../../types';
-import type { CommandPlaceholder } from '../helpers';
-import { decimalOption } from './decimalOption';
-import { floatOption } from './floatOption';
-import { hexOption } from './hexOption';
+import type { ScopeName } from '../../../../src/tmlanguage.ts';
+import type { ExpectedTestData } from '../../../types.ts';
+import type { CommandPlaceholder } from '../helpers.ts';
+import { decimalOption } from './decimalOption.ts';
+import { floatOption } from './floatOption.ts';
+import { hexOption } from './hexOption.ts';
 
 export function numberOption(scopeName: ScopeName, options: string[], placeholder: CommandPlaceholder): ExpectedTestData[] {
   return [

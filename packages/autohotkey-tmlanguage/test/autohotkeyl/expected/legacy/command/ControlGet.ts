@@ -1,14 +1,14 @@
-import type { ScopeName } from '../../../../../src/tmlanguage';
-import { keywordOption } from '../../../../helpers/definition/option/keywordOption';
-import { $ } from '../../../../helpers/definition/parameter/$';
-import { $blank } from '../../../../helpers/definition/parameter/$blank';
-import { $control } from '../../../../helpers/definition/parameter/$control';
-import { $invalidSubcommand } from '../../../../helpers/definition/parameter/$invalidSubcommand';
-import { $output } from '../../../../helpers/definition/parameter/$output';
-import { $shouldInteger } from '../../../../helpers/definition/parameter/$shouldInteger';
-import { $subcommand } from '../../../../helpers/definition/parameter/$subcommand';
-import { $winTitle } from '../../../../helpers/definition/parameter/$winTitle';
-import type { ExpectedTestData } from '../../../../types';
+import type { ScopeName } from '../../../../../src/tmlanguage.ts';
+import { keywordOption } from '../../../../helpers/definition/option/keywordOption.ts';
+import { $ } from '../../../../helpers/definition/parameter/$.ts';
+import { $blank } from '../../../../helpers/definition/parameter/$blank.ts';
+import { $control } from '../../../../helpers/definition/parameter/$control.ts';
+import { $invalidSubcommand } from '../../../../helpers/definition/parameter/$invalidSubcommand.ts';
+import { $output } from '../../../../helpers/definition/parameter/$output.ts';
+import { $shouldInteger } from '../../../../helpers/definition/parameter/$shouldInteger.ts';
+import { $subcommand } from '../../../../helpers/definition/parameter/$subcommand.ts';
+import { $winTitle } from '../../../../helpers/definition/parameter/$winTitle.ts';
+import type { ExpectedTestData } from '../../../../types.ts';
 
 // https://www.autohotkey.com/docs/v1/lib/ControlGet.htm
 export function createControlGetExpectedDataList(scopeName: ScopeName): ExpectedTestData[] {

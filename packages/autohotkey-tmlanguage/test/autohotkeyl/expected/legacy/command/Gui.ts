@@ -1,16 +1,16 @@
-import type { ScopeName } from '../../../../../src/tmlanguage';
-import { colorOption } from '../../../../helpers/definition/option/colorOption';
-import { floatOption } from '../../../../helpers/definition/option/floatOption';
-import { keywordOption } from '../../../../helpers/definition/option/keywordOption';
-import { $ } from '../../../../helpers/definition/parameter/$';
-import { $color } from '../../../../helpers/definition/parameter/$color';
-import { $fontName } from '../../../../helpers/definition/parameter/$fontName';
-import { $guiControlType } from '../../../../helpers/definition/parameter/$guiControlType';
-import { $guiOptions } from '../../../../helpers/definition/parameter/$guiOptions';
-import { $guisubcommand } from '../../../../helpers/definition/parameter/$guisubcommand';
-import { $shouldKeyword } from '../../../../helpers/definition/parameter/$shouldKeyword';
-import { $withNumber } from '../../../../helpers/definition/parameter/$withNumber';
-import type { ExpectedTestData } from '../../../../types';
+import type { ScopeName } from '../../../../../src/tmlanguage.ts';
+import { colorOption } from '../../../../helpers/definition/option/colorOption.ts';
+import { floatOption } from '../../../../helpers/definition/option/floatOption.ts';
+import { keywordOption } from '../../../../helpers/definition/option/keywordOption.ts';
+import { $ } from '../../../../helpers/definition/parameter/$.ts';
+import { $color } from '../../../../helpers/definition/parameter/$color.ts';
+import { $fontName } from '../../../../helpers/definition/parameter/$fontName.ts';
+import { $guiControlType } from '../../../../helpers/definition/parameter/$guiControlType.ts';
+import { $guiOptions } from '../../../../helpers/definition/parameter/$guiOptions.ts';
+import { $guisubcommand } from '../../../../helpers/definition/parameter/$guisubcommand.ts';
+import { $shouldKeyword } from '../../../../helpers/definition/parameter/$shouldKeyword.ts';
+import { $withNumber } from '../../../../helpers/definition/parameter/$withNumber.ts';
+import type { ExpectedTestData } from '../../../../types.ts';
 
 // https://www.autohotkey.com/docs/v1/lib/Gui.htm
 export function createGuiExpectedDataList(scopeName: ScopeName): ExpectedTestData[] {

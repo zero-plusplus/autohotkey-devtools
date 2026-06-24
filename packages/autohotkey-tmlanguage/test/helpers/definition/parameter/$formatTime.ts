@@ -1,10 +1,10 @@
-import { name, RuleName, StyleName, type ScopeName } from '../../../../src/tmlanguage';
-import type { ExpectedTestData } from '../../../types';
-import { createDereferenceInUnquotedParameterExpectedDataList } from '../common/dereference';
-import { createPercentExpressionParameterExpectedDataList } from '../common/percentExpression';
-import { createCommandExpectedData, type CommandPlaceholder } from '../helpers';
-import { keywordOption } from '../option/keywordOption';
-import { numberOption } from '../option/numberOption';
+import { name, RuleName, StyleName, type ScopeName } from '../../../../src/tmlanguage.ts';
+import type { ExpectedTestData } from '../../../types.ts';
+import { createDereferenceInUnquotedParameterExpectedDataList } from '../common/dereference.ts';
+import { createPercentExpressionParameterExpectedDataList } from '../common/percentExpression.ts';
+import { createCommandExpectedData, type CommandPlaceholder } from '../helpers.ts';
+import { keywordOption } from '../option/keywordOption.ts';
+import { numberOption } from '../option/numberOption.ts';
 
 export function $formatTime(scopeName: ScopeName, placeholder: CommandPlaceholder): ExpectedTestData[] {
   return [

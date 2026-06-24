@@ -1,9 +1,9 @@
-import type { ScopeName } from '../../../../../src/tmlanguage';
-import { $ } from '../../../../helpers/definition/parameter/$';
-import { $formatTime } from '../../../../helpers/definition/parameter/$formatTime';
-import { $output } from '../../../../helpers/definition/parameter/$output';
-import { $subcommandlike } from '../../../../helpers/definition/parameter/$subcommandlike';
-import type { ExpectedTestData } from '../../../../types';
+import type { ScopeName } from '../../../../../src/tmlanguage.ts';
+import { $ } from '../../../../helpers/definition/parameter/$.ts';
+import { $formatTime } from '../../../../helpers/definition/parameter/$formatTime.ts';
+import { $output } from '../../../../helpers/definition/parameter/$output.ts';
+import { $subcommandlike } from '../../../../helpers/definition/parameter/$subcommandlike.ts';
+import type { ExpectedTestData } from '../../../../types.ts';
 
 // https://www.autohotkey.com/docs/v1/lib/FormatTime.htm
 export function createFormatTimeExpectedDataList(scopeName: ScopeName): ExpectedTestData[] {

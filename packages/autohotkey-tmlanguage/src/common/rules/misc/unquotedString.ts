@@ -17,7 +17,7 @@ import {
   optseq,
   seq,
   textalt,
-} from '../../../oniguruma';
+} from '../../../oniguruma.ts';
 import {
   includeRule,
   name,
@@ -28,7 +28,7 @@ import {
   type MatchRule,
   type Rule,
   type ScopeName,
-} from '../../../tmlanguage';
+} from '../../../tmlanguage.ts';
 
 interface Placeholder_UnquotedStringRule {
   stringRuleName: RuleName;

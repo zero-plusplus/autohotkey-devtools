@@ -1,7 +1,7 @@
-import type { ScopeName } from '../../../../../src/tmlanguage';
-import { $output } from '../../../../helpers/definition/parameter/$output';
-import { $path } from '../../../../helpers/definition/parameter/$path';
-import type { ExpectedTestData } from '../../../../types';
+import type { ScopeName } from '../../../../../src/tmlanguage.ts';
+import { $output } from '../../../../helpers/definition/parameter/$output.ts';
+import { $path } from '../../../../helpers/definition/parameter/$path.ts';
+import type { ExpectedTestData } from '../../../../types.ts';
 
 // https://www.autohotkey.com/docs/v1/lib/FileGetAttrib.htm
 export function createFileGetAttribExpectedDataList(scopeName: ScopeName): ExpectedTestData[] {
