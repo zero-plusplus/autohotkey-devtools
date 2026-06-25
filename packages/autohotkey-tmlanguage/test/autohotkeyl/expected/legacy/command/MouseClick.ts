@@ -1,8 +1,8 @@
-import type { ScopeName } from '../../../../../src/tmlanguage';
-import { $expression } from '../../../../helpers/definition/parameter/$expression';
-import { $shouldKeyword } from '../../../../helpers/definition/parameter/$shouldKeyword';
-import { $whichButton } from '../../../../helpers/definition/parameter/$whichButton';
-import type { ExpectedTestData } from '../../../../types';
+import type { ScopeName } from '../../../../../src/tmlanguage.ts';
+import { $expression } from '../../../../helpers/definition/parameter/$expression.ts';
+import { $shouldKeyword } from '../../../../helpers/definition/parameter/$shouldKeyword.ts';
+import { $whichButton } from '../../../../helpers/definition/parameter/$whichButton.ts';
+import type { ExpectedTestData } from '../../../../types.ts';
 
 // https://www.autohotkey.com/docs/v1/lib/MouseClick.htm
 export function createMouseClickExpectedDataList(scopeName: ScopeName): ExpectedTestData[] {

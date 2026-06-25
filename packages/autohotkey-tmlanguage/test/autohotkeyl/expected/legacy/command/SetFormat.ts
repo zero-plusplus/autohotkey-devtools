@@ -1,8 +1,8 @@
-import type { ScopeName } from '../../../../../src/tmlanguage';
-import { keywordOption } from '../../../../helpers/definition/option/keywordOption';
-import { $shouldKeyword } from '../../../../helpers/definition/parameter/$shouldKeyword';
-import { $withNumber } from '../../../../helpers/definition/parameter/$withNumber';
-import type { ExpectedTestData } from '../../../../types';
+import type { ScopeName } from '../../../../../src/tmlanguage.ts';
+import { keywordOption } from '../../../../helpers/definition/option/keywordOption.ts';
+import { $shouldKeyword } from '../../../../helpers/definition/parameter/$shouldKeyword.ts';
+import { $withNumber } from '../../../../helpers/definition/parameter/$withNumber.ts';
+import type { ExpectedTestData } from '../../../../types.ts';
 
 // https://www.autohotkey.com/docs/v1/lib/SetFormat.htm
 export function createSetFormatExpectedDataList(scopeName: ScopeName): ExpectedTestData[] {

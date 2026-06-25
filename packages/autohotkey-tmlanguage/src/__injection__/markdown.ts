@@ -15,7 +15,7 @@ import {
   seq,
   startAnchor,
   text,
-} from '../oniguruma';
+} from '../oniguruma.ts';
 import {
   includeRule,
   includeScope,
@@ -29,7 +29,7 @@ import {
   type Rule,
   type ScopeName,
   type TmLanguage,
-} from '../tmlanguage';
+} from '../tmlanguage.ts';
 
 export function createTmLanguage(): TmLanguage {
   return {

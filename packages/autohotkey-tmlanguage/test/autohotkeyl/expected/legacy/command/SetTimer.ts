@@ -1,9 +1,9 @@
-import type { ScopeName } from '../../../../../src/tmlanguage';
-import { keywordOption } from '../../../../helpers/definition/option/keywordOption';
-import { $expression } from '../../../../helpers/definition/parameter/$expression';
-import { $shouldInteger } from '../../../../helpers/definition/parameter/$shouldInteger';
-import { $shouldLabel } from '../../../../helpers/definition/parameter/$shouldLabel';
-import type { ExpectedTestData } from '../../../../types';
+import type { ScopeName } from '../../../../../src/tmlanguage.ts';
+import { keywordOption } from '../../../../helpers/definition/option/keywordOption.ts';
+import { $expression } from '../../../../helpers/definition/parameter/$expression.ts';
+import { $shouldInteger } from '../../../../helpers/definition/parameter/$shouldInteger.ts';
+import { $shouldLabel } from '../../../../helpers/definition/parameter/$shouldLabel.ts';
+import type { ExpectedTestData } from '../../../../types.ts';
 
 // https://www.autohotkey.com/docs/v1/lib/SetTimer.htm
 export function createSetTimerExpectedDataList(scopeName: ScopeName): ExpectedTestData[] {

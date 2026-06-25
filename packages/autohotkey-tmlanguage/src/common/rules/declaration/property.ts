@@ -11,7 +11,7 @@ import {
   ordalt,
   seq,
   startAnchor,
-} from '../../../oniguruma';
+} from '../../../oniguruma.ts';
 import {
   includeRule,
   nameRule,
@@ -21,7 +21,7 @@ import {
   type MatchRule,
   type Rule,
   type ScopeName,
-} from '../../../tmlanguage';
+} from '../../../tmlanguage.ts';
 
 interface Placeholder {
   modifiers: readonly string[];

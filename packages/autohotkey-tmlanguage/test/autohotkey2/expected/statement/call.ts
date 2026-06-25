@@ -1,16 +1,16 @@
-import { dedent } from '@zero-plusplus/utilities/src';
+import { dedent } from '@zero-plusplus/utilities/src/index.ts';
 import {
   builtInFunctionNames,
   deprecatedBuiltinFunctionNames,
-} from '../../../../src/autohotkey2/constants';
+} from '../../../../src/autohotkey2/constants.ts';
 import {
   name,
   RuleDescriptor,
   RuleName,
   StyleName,
   type ScopeName,
-} from '../../../../src/tmlanguage';
-import type { ExpectedTestData } from '../../../types';
+} from '../../../../src/tmlanguage.ts';
+import type { ExpectedTestData } from '../../../types.ts';
 
 export function createCallStatementExpectedData(scopeName: ScopeName): ExpectedTestData[] {
   return [

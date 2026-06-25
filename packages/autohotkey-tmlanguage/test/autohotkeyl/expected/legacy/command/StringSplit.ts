@@ -1,9 +1,9 @@
-import type { ScopeName } from '../../../../../src/tmlanguage';
-import { $ } from '../../../../helpers/definition/parameter/$';
-import { $input } from '../../../../helpers/definition/parameter/$input';
-import { $output } from '../../../../helpers/definition/parameter/$output';
-import { $shouldEscapeComma } from '../../../../helpers/definition/parameter/$shouldEscapeComma';
-import type { ExpectedTestData } from '../../../../types';
+import type { ScopeName } from '../../../../../src/tmlanguage.ts';
+import { $ } from '../../../../helpers/definition/parameter/$.ts';
+import { $input } from '../../../../helpers/definition/parameter/$input.ts';
+import { $output } from '../../../../helpers/definition/parameter/$output.ts';
+import { $shouldEscapeComma } from '../../../../helpers/definition/parameter/$shouldEscapeComma.ts';
+import type { ExpectedTestData } from '../../../../types.ts';
 
 // https://www.autohotkey.com/docs/v1/lib/StringSplit.htm
 export function createStringSplitExpectedDataList(scopeName: ScopeName): ExpectedTestData[] {

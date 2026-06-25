@@ -2,9 +2,11 @@
   "name": "@zero-plusplus/autohotkey-tmlanguage",
   "version": "0.0.0",
   "description": "",
+  "type": "module",
   "scripts": {
-    "test": "npx jest",
-    "lint": "npx tsc --noEmit --skipLibCheck --incremental false"
+    "lint": "npm run lint:eslint && npm run lint:tsc",
+    "lint:eslint": "eslint --fix",
+    "lint:tsc": "tsc --noEmit --skipLibCheck --incremental false"
   },
   "devDependencies": {
     "vscode-oniguruma": "^2.0.1",

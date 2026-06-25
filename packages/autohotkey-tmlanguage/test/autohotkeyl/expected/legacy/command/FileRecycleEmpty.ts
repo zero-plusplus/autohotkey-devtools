@@ -1,6 +1,6 @@
-import type { ScopeName } from '../../../../../src/tmlanguage';
-import { $driveletter } from '../../../../helpers/definition/parameter/$driveletter';
-import type { ExpectedTestData } from '../../../../types';
+import type { ScopeName } from '../../../../../src/tmlanguage.ts';
+import { $driveletter } from '../../../../helpers/definition/parameter/$driveletter.ts';
+import type { ExpectedTestData } from '../../../../types.ts';
 
 // https://www.autohotkey.com/docs/v1/lib/FileRecycleEmpty.htm
 export function createFileRecycleEmptyExpectedDataList(scopeName: ScopeName): ExpectedTestData[] {

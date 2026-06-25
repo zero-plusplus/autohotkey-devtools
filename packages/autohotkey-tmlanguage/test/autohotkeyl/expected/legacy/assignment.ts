@@ -1,12 +1,12 @@
-import { dedent } from '@zero-plusplus/utilities/src';
-import * as constants_v1 from '../../../../src/autohotkeyl/constants';
+import { dedent } from '@zero-plusplus/utilities/src/index.ts';
+import * as constants_v1 from '../../../../src/autohotkeyl/constants.ts';
 import {
   name,
   RuleName,
   StyleName,
   type ScopeName,
-} from '../../../../src/tmlanguage';
-import type { ExpectedTestData } from '../../../types';
+} from '../../../../src/tmlanguage.ts';
+import type { ExpectedTestData } from '../../../types.ts';
 
 export function createLegacyAssignmentStatementExpectedData(scopeName: ScopeName): ExpectedTestData[] {
   return [

@@ -1,11 +1,11 @@
-import { dedent } from '@zero-plusplus/utilities/src';
+import { dedent } from '@zero-plusplus/utilities/src/index.ts';
 import {
   name,
   RuleName,
   type ScopeName,
-} from '../../../../src/tmlanguage';
-import * as v2 from '../../../autohotkey2/expected/expression/object';
-import type { ExpectedTestData } from '../../../types';
+} from '../../../../src/tmlanguage.ts';
+import * as v2 from '../../../autohotkey2/expected/expression/object.ts';
+import type { ExpectedTestData } from '../../../types.ts';
 
 export function createObjectLiteralExpectedData(scopeName: ScopeName): ExpectedTestData[] {
   return [

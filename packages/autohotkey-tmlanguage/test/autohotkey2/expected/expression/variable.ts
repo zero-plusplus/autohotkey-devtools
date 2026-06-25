@@ -1,13 +1,13 @@
-import { dedent } from '@zero-plusplus/utilities/src';
-import * as constants_v2 from '../../../../src/autohotkey2/constants';
+import { dedent } from '@zero-plusplus/utilities/src/index.ts';
+import * as constants_v2 from '../../../../src/autohotkey2/constants.ts';
 import {
   name,
   RuleName,
   StyleName,
   type ScopeName,
-} from '../../../../src/tmlanguage';
-import * as common from '../../../common/expression/variable';
-import type { ExpectedTestData } from '../../../types';
+} from '../../../../src/tmlanguage.ts';
+import * as common from '../../../common/expression/variable.ts';
+import type { ExpectedTestData } from '../../../types.ts';
 
 interface Placeholder {
   keywordLikeBuiltinVariables: readonly string[];

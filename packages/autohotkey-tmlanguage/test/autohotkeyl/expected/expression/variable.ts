@@ -1,13 +1,13 @@
-import { dedent } from '@zero-plusplus/utilities/src';
-import * as constants_v1 from '../../../../src/autohotkeyl/constants';
+import { dedent } from '@zero-plusplus/utilities/src/index.ts';
+import * as constants_v1 from '../../../../src/autohotkeyl/constants.ts';
 import {
   name,
   RuleName,
   StyleName,
   type ScopeName,
-} from '../../../../src/tmlanguage';
-import * as common from '../../../common/expression/variable';
-import type { ExpectedTestData } from '../../../types';
+} from '../../../../src/tmlanguage.ts';
+import * as common from '../../../common/expression/variable.ts';
+import type { ExpectedTestData } from '../../../types.ts';
 
 export function createVariableExpectedData(scopeName: ScopeName): ExpectedTestData[] {
   return [

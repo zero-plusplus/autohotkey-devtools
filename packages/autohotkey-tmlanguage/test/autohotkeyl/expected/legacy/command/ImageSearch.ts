@@ -1,10 +1,10 @@
-import type { ScopeName } from '../../../../../src/tmlanguage';
-import { floatOption } from '../../../../helpers/definition/option/floatOption';
-import { stringOption } from '../../../../helpers/definition/option/stringOption';
-import { $ } from '../../../../helpers/definition/parameter/$';
-import { $expression } from '../../../../helpers/definition/parameter/$expression';
-import { $output } from '../../../../helpers/definition/parameter/$output';
-import type { ExpectedTestData } from '../../../../types';
+import type { ScopeName } from '../../../../../src/tmlanguage.ts';
+import { floatOption } from '../../../../helpers/definition/option/floatOption.ts';
+import { stringOption } from '../../../../helpers/definition/option/stringOption.ts';
+import { $ } from '../../../../helpers/definition/parameter/$.ts';
+import { $expression } from '../../../../helpers/definition/parameter/$expression.ts';
+import { $output } from '../../../../helpers/definition/parameter/$output.ts';
+import type { ExpectedTestData } from '../../../../types.ts';
 
 // https://www.autohotkey.com/docs/v1/lib/ImageSearch.htm
 export function createImageSearchExpectedDataList(scopeName: ScopeName): ExpectedTestData[] {

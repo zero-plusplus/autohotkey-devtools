@@ -1,9 +1,9 @@
-import type { ScopeName } from '../../../../../src/tmlanguage';
-import { $ } from '../../../../helpers/definition/parameter/$';
-import { $output } from '../../../../helpers/definition/parameter/$output';
-import { $path } from '../../../../helpers/definition/parameter/$path';
-import { $shouldSpacedKeywords } from '../../../../helpers/definition/parameter/$shouldSpacedKeywords';
-import type { ExpectedTestData } from '../../../../types';
+import type { ScopeName } from '../../../../../src/tmlanguage.ts';
+import { $ } from '../../../../helpers/definition/parameter/$.ts';
+import { $output } from '../../../../helpers/definition/parameter/$output.ts';
+import { $path } from '../../../../helpers/definition/parameter/$path.ts';
+import { $shouldSpacedKeywords } from '../../../../helpers/definition/parameter/$shouldSpacedKeywords.ts';
+import type { ExpectedTestData } from '../../../../types.ts';
 
 // https://www.autohotkey.com/docs/v1/lib/Run.htm
 export function createRunExpectedDataList(scopeName: ScopeName, commandName = 'Run'): ExpectedTestData[] {

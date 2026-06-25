@@ -1,12 +1,12 @@
-import type { ScopeName } from '../../../../../src/tmlanguage';
-import { $ } from '../../../../helpers/definition/parameter/$';
-import { $blank } from '../../../../helpers/definition/parameter/$blank';
-import { $control } from '../../../../helpers/definition/parameter/$control';
-import { $shouldInteger } from '../../../../helpers/definition/parameter/$shouldInteger';
-import { $style } from '../../../../helpers/definition/parameter/$style';
-import { $subcommand } from '../../../../helpers/definition/parameter/$subcommand';
-import { $winTitle } from '../../../../helpers/definition/parameter/$winTitle';
-import type { ExpectedTestData } from '../../../../types';
+import type { ScopeName } from '../../../../../src/tmlanguage.ts';
+import { $ } from '../../../../helpers/definition/parameter/$.ts';
+import { $blank } from '../../../../helpers/definition/parameter/$blank.ts';
+import { $control } from '../../../../helpers/definition/parameter/$control.ts';
+import { $shouldInteger } from '../../../../helpers/definition/parameter/$shouldInteger.ts';
+import { $style } from '../../../../helpers/definition/parameter/$style.ts';
+import { $subcommand } from '../../../../helpers/definition/parameter/$subcommand.ts';
+import { $winTitle } from '../../../../helpers/definition/parameter/$winTitle.ts';
+import type { ExpectedTestData } from '../../../../types.ts';
 
 // https://www.autohotkey.com/docs/v1/lib/Control.htm
 export function createControlExpectedDataList(scopeName: ScopeName): ExpectedTestData[] {

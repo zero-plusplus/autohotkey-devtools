@@ -1,6 +1,6 @@
-import { times } from '@zero-plusplus/utilities/src';
-import { name, RuleName, StyleName, type ElementName, type ScopeName } from '../../../src/tmlanguage';
-import type { ExpectedTestData, ParsedResult } from '../../types';
+import { times } from '@zero-plusplus/utilities/src/index.ts';
+import { name, RuleName, StyleName, type ElementName, type ScopeName } from '../../../src/tmlanguage.ts';
+import type { ExpectedTestData, ParsedResult } from '../../types.ts';
 
 const indent = '    ';
 const commentColumn = 150;

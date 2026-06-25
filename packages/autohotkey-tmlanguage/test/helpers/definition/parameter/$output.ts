@@ -1,7 +1,7 @@
-import { name, RuleName, StyleName, type ScopeName } from '../../../../src/tmlanguage';
-import type { ExpectedTestData } from '../../../types';
-import { createDereferenceInKeywordParameterExpectedDataList } from '../common/dereference';
-import { createCommandExpectedData, type CommandPlaceholder } from '../helpers';
+import { name, RuleName, StyleName, type ScopeName } from '../../../../src/tmlanguage.ts';
+import type { ExpectedTestData } from '../../../types.ts';
+import { createDereferenceInKeywordParameterExpectedDataList } from '../common/dereference.ts';
+import { createCommandExpectedData, type CommandPlaceholder } from '../helpers.ts';
 
 export function $output(scopeName: ScopeName, placeholder: CommandPlaceholder): ExpectedTestData[] {
   return [

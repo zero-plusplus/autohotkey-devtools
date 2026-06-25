@@ -13,7 +13,7 @@ import {
   reluctant,
   seq,
   startAnchor,
-} from '../../../oniguruma';
+} from '../../../oniguruma.ts';
 import {
   includeRule,
   nameRule,
@@ -22,7 +22,7 @@ import {
   RuleName,
   type BeginEndRule,
   type ScopeName,
-} from '../../../tmlanguage';
+} from '../../../tmlanguage.ts';
 
 interface Placeholder {
   endPattern: string;

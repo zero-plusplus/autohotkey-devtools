@@ -1,6 +1,6 @@
-import type { ScopeName } from '../../src/tmlanguage';
-import { parse } from '../helpers/textmate-parser';
-import { createExpectedDataList } from './expected';
+import type { ScopeName } from '../../src/tmlanguage.ts';
+import { parse } from '../helpers/textmate-parser.ts';
+import { createExpectedDataList } from './expected/index.ts';
 
 describe('autohotkey', () => {
   const scopeName: ScopeName = 'autohotkey';

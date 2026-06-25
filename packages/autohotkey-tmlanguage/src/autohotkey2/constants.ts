@@ -1,4 +1,4 @@
-import * as constants_common from '../common/constants';
+import * as constants_common from '../common/constants.ts';
 
 // #region [Escape Sequences](https://www.autohotkey.com/docs/v2/misc/EscapeChar.htm)
 export const unquoteEscapeSequences = [ '``', '`;', '`:', '`{', '`n', '`r', '`b', '`t', '`s', '`v', '`a', '`f' ] as const;

@@ -1,8 +1,3 @@
-import {
-  describe,
-  expect,
-  test,
-} from '@jest/globals';
 import { isIntegerLike } from '../../src/predicate/isIntegerLike';
 
 describe('isIntegerLike', () => {

@@ -1,10 +1,10 @@
-import type { ScopeName } from '../../../../../src/tmlanguage';
-import { $ } from '../../../../helpers/definition/parameter/$';
-import { $output } from '../../../../helpers/definition/parameter/$output';
-import { $shouldInteger } from '../../../../helpers/definition/parameter/$shouldInteger';
-import { $shouldNumber } from '../../../../helpers/definition/parameter/$shouldNumber';
-import { $subcommand } from '../../../../helpers/definition/parameter/$subcommand';
-import type { ExpectedTestData } from '../../../../types';
+import type { ScopeName } from '../../../../../src/tmlanguage.ts';
+import { $ } from '../../../../helpers/definition/parameter/$.ts';
+import { $output } from '../../../../helpers/definition/parameter/$output.ts';
+import { $shouldInteger } from '../../../../helpers/definition/parameter/$shouldInteger.ts';
+import { $shouldNumber } from '../../../../helpers/definition/parameter/$shouldNumber.ts';
+import { $subcommand } from '../../../../helpers/definition/parameter/$subcommand.ts';
+import type { ExpectedTestData } from '../../../../types.ts';
 
 // https://www.autohotkey.com/docs/v1/lib/Transform.htm
 export function createTransformExpectedDataList(scopeName: ScopeName): ExpectedTestData[] {

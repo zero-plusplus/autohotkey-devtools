@@ -1,9 +1,9 @@
-import type { ScopeName } from '../../../../../src/tmlanguage';
-import { letterOption } from '../../../../helpers/definition/option/letterOption';
-import { $expression } from '../../../../helpers/definition/parameter/$expression';
-import { $glob } from '../../../../helpers/definition/parameter/$glob';
-import { $shouldKeyword } from '../../../../helpers/definition/parameter/$shouldKeyword';
-import type { ExpectedTestData } from '../../../../types';
+import type { ScopeName } from '../../../../../src/tmlanguage.ts';
+import { letterOption } from '../../../../helpers/definition/option/letterOption.ts';
+import { $expression } from '../../../../helpers/definition/parameter/$expression.ts';
+import { $glob } from '../../../../helpers/definition/parameter/$glob.ts';
+import { $shouldKeyword } from '../../../../helpers/definition/parameter/$shouldKeyword.ts';
+import type { ExpectedTestData } from '../../../../types.ts';
 
 // https://www.autohotkey.com/docs/v1/lib/FileSetTime.htm
 export function createFileSetTimeExpectedDataList(scopeName: ScopeName): ExpectedTestData[] {

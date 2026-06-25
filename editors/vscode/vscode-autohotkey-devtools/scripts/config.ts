@@ -1,8 +1,8 @@
-import * as esbuild from 'esbuild';
-import { globSync } from 'fs';
-import * as path from 'path';
+import { globSync } from 'node:fs';
+import * as path from 'node:path';
+import * as rolldown from 'rolldown';
 
-export const packageDir: string = path.resolve(__dirname, '..');
+export const packageDir: string = path.resolve(import.meta.dirname, '..');
 export const projectRootDir: string = path.resolve(packageDir, '../../../');
 export const buildDir: string = path.resolve(packageDir, 'build');
 export const demoDir: string = path.resolve(buildDir, 'demo');
@@ -10,19 +10,27 @@ export const buildSourceDir: string = path.resolve(buildDir, 'src');
 export const srcDir: string = path.resolve(packageDir, 'src');
 export const browserSrcDir: string = path.resolve(srcDir, 'browser');
 
-export const debugBuildOptions: esbuild.BuildOptions = {
+export const debugBuildOptions: rolldown.BuildOptions = {
   platform: 'node',
-  format: 'cjs',
-  entryPoints: globSync(path.resolve(srcDir, '**/*.ts')),
-  outdir: 'build/src',
-  sourcemap: true,
-};
-export const buildOptions: esbuild.BuildOptions = {
-  ...debugBuildOptions,
-  entryPoints: [ srcDir, browserSrcDir ].map((dir) => path.resolve(dir, 'extension.js')),
-  bundle: true,
-  minify: true,
-  treeShaking: true,
+  input: globSync(path.resolve(srcDir, '**/*.ts')),
+  output: {
+    dir: 'build/src/',
+    entryFileNames: '[name].js',
+    format: 'cjs',
+    preserveModules: true,
+
+    sourcemap: true,
+  },
   external: [ 'vscode' ],
-  sourcemap: false,
+};
+export const buildOptions: rolldown.BuildOptions = {
+  platform: 'node',
+  input: [ srcDir, browserSrcDir ].map((dir) => path.resolve(dir, 'extension.js')),
+  output: {
+    dir: 'build/src/',
+    entryFileNames: '[name].js',
+    format: 'cjs',
+    preserveModules: true,
+  },
+  external: [ 'vscode' ],
 };

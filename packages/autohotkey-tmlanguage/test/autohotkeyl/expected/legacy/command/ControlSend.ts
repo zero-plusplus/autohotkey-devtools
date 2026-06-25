@@ -1,9 +1,9 @@
-import type { ScopeName } from '../../../../../src/tmlanguage';
-import { $ } from '../../../../helpers/definition/parameter/$';
-import { $control } from '../../../../helpers/definition/parameter/$control';
-import { $sendKeyName } from '../../../../helpers/definition/parameter/$sendKeyName';
-import { $winTitle } from '../../../../helpers/definition/parameter/$winTitle';
-import type { ExpectedTestData } from '../../../../types';
+import type { ScopeName } from '../../../../../src/tmlanguage.ts';
+import { $ } from '../../../../helpers/definition/parameter/$.ts';
+import { $control } from '../../../../helpers/definition/parameter/$control.ts';
+import { $sendKeyName } from '../../../../helpers/definition/parameter/$sendKeyName.ts';
+import { $winTitle } from '../../../../helpers/definition/parameter/$winTitle.ts';
+import type { ExpectedTestData } from '../../../../types.ts';
 
 // https://www.autohotkey.com/docs/v1/lib/ControlSend.htm
 export function createControlSendExpectedDataList(scopeName: ScopeName, commandName = 'ControlSend'): ExpectedTestData[] {

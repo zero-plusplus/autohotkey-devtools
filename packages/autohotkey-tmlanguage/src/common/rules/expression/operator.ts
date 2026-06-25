@@ -5,14 +5,14 @@ import {
   negativeLookahead,
   seq,
   textalt,
-} from '../../../oniguruma';
+} from '../../../oniguruma.ts';
 import {
   name,
   RuleName,
   StyleName,
   type MatchRule,
   type ScopeName,
-} from '../../../tmlanguage';
+} from '../../../tmlanguage.ts';
 
 interface Placeholder_OperatorRule {
   operatorRuleName: RuleName;

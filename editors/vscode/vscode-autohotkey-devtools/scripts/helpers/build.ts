@@ -1,6 +1,8 @@
-import * as tmLanguages from '@zero-plusplus/autohotkey-tmlanguage/src';
-import * as patterns_v2 from '@zero-plusplus/autohotkey-tmlanguage/src/autohotkey2/patterns';
-import * as patterns_v1 from '@zero-plusplus/autohotkey-tmlanguage/src/autohotkeyl/patterns';
+import * as fs from 'node:fs/promises';
+import * as path from 'node:path';
+import * as patterns_v2 from '@zero-plusplus/autohotkey-tmlanguage/src/autohotkey2/patterns.ts';
+import * as patterns_v1 from '@zero-plusplus/autohotkey-tmlanguage/src/autohotkeyl/patterns.ts';
+import * as tmLanguages from '@zero-plusplus/autohotkey-tmlanguage/src/index.ts';
 import {
   char,
   endAnchor,
@@ -13,24 +15,22 @@ import {
   startAnchor,
   text,
   wordBound,
-} from '@zero-plusplus/autohotkey-tmlanguage/src/oniguruma';
-import type { ScopeName } from '@zero-plusplus/autohotkey-tmlanguage/src/tmlanguage';
-import * as autohotkey from '@zero-plusplus/autohotkey-tmlanguage/test/autohotkey/expected';
-import * as autohotkey2 from '@zero-plusplus/autohotkey-tmlanguage/test/autohotkey2/expected';
-import * as autohotkeyl from '@zero-plusplus/autohotkey-tmlanguage/test/autohotkeyl/expected';
-import * as autohotkeynext from '@zero-plusplus/autohotkey-tmlanguage/test/autohotkeynext/expected';
-import type { ExpectedTestData } from '@zero-plusplus/autohotkey-tmlanguage/test/types';
-import * as esbuild from 'esbuild';
-import * as fs from 'fs/promises';
-import * as path from 'path';
-import { buildDir, demoDir } from '../config';
+} from '@zero-plusplus/autohotkey-tmlanguage/src/oniguruma.ts';
+import type { ScopeName } from '@zero-plusplus/autohotkey-tmlanguage/src/tmlanguage.ts';
+import * as autohotkey from '@zero-plusplus/autohotkey-tmlanguage/test/autohotkey/expected/index.ts';
+import * as autohotkey2 from '@zero-plusplus/autohotkey-tmlanguage/test/autohotkey2/expected/index.ts';
+import * as autohotkeyl from '@zero-plusplus/autohotkey-tmlanguage/test/autohotkeyl/expected/index.ts';
+import * as autohotkeynext from '@zero-plusplus/autohotkey-tmlanguage/test/autohotkeynext/expected/index.ts';
+import type { ExpectedTestData } from '@zero-plusplus/autohotkey-tmlanguage/test/types.ts';
+import * as rolldown from 'rolldown';
+import { buildDir, demoDir } from '../config.ts';
 
-export async function build(buildOptions: esbuild.BuildOptions): Promise<void> {
+export async function build(buildOptions: rolldown.BuildOptions): Promise<void> {
   await fs.mkdir(buildDir, { recursive: true });
   await Promise.all([
     buildTmLanguageAll(),
     buildLanguageConfigurationAll(),
-    esbuild.build(buildOptions),
+    rolldown.build(buildOptions),
   ]);
 }
 export async function buildTmLanguageAll(debugMode = false): Promise<void> {

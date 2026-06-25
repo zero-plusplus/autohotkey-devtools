@@ -1,11 +1,11 @@
-import { dedent } from '@zero-plusplus/utilities/src';
+import { dedent } from '@zero-plusplus/utilities/src/index.ts';
 import {
   name,
   RuleName,
   type ScopeName,
-} from '../../../../src/tmlanguage';
-import { createMultiLineExpectedData } from '../../../helpers/definition/helpers';
-import type { ExpectedTestData } from '../../../types';
+} from '../../../../src/tmlanguage.ts';
+import { createMultiLineExpectedData } from '../../../helpers/definition/helpers.ts';
+import type { ExpectedTestData } from '../../../types.ts';
 
 export function createFieldDeclarationExpectedData(scopeName: ScopeName): ExpectedTestData[] {
   return [

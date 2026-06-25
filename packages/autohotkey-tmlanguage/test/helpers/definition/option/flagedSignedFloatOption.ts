@@ -1,7 +1,7 @@
-import { name, RuleName, StyleName, type ScopeName } from '../../../../src/tmlanguage';
-import type { ExpectedTestData } from '../../../types';
-import { createCommandExpectedData, type CommandPlaceholder } from '../helpers';
-import { floatOption } from './floatOption';
+import { name, RuleName, StyleName, type ScopeName } from '../../../../src/tmlanguage.ts';
+import type { ExpectedTestData } from '../../../types.ts';
+import { createCommandExpectedData, type CommandPlaceholder } from '../helpers.ts';
+import { floatOption } from './floatOption.ts';
 
 export function flagedSignedFloatOption(scopeName: ScopeName, options: string[], placeholder: CommandPlaceholder): ExpectedTestData[] {
   return [

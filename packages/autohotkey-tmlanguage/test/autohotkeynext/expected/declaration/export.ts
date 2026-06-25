@@ -1,10 +1,10 @@
-import { dedent } from '@zero-plusplus/utilities/src';
+import { dedent } from '@zero-plusplus/utilities/src/index.ts';
 import {
   name,
   RuleName,
   type ScopeName,
-} from '../../../../src/tmlanguage';
-import type { ExpectedTestData } from '../../../types';
+} from '../../../../src/tmlanguage.ts';
+import type { ExpectedTestData } from '../../../types.ts';
 
 export function createExportDeclarationExpectedData(scopeName: ScopeName): ExpectedTestData[] {
   return [
@@ -15,6 +15,7 @@ export function createExportDeclarationExpectedData(scopeName: ScopeName): Expec
           dedent`
             export x                                  ; comment
             export default x                          ; comment
+            export global x, y := 123                 ; comment
             export xxx() => yyy                       ; comment
           `,
           [
@@ -28,6 +29,17 @@ export function createExportDeclarationExpectedData(scopeName: ScopeName): Expec
               { text: 'export', scopes: name(scopeName, RuleName.MetaKeyword) },
               { text: 'default', scopes: name(scopeName, RuleName.MetaKeyword) },
               { text: 'x', scopes: name(scopeName, RuleName.Variable) },
+              { text: '; comment', scopes: name(scopeName, RuleName.InlineComment) },
+            ],
+
+            ...[
+              { text: 'export', scopes: name(scopeName, RuleName.MetaKeyword) },
+              { text: 'global', scopes: name(scopeName, RuleName.Modifier) },
+              { text: 'x', scopes: name(scopeName, RuleName.Variable) },
+              { text: ',', scopes: name(scopeName, RuleName.Comma) },
+              { text: 'y', scopes: name(scopeName, RuleName.Variable) },
+              { text: ':=', scopes: name(scopeName, RuleName.Operator) },
+              { text: '123', scopes: name(scopeName, RuleName.Integer) },
               { text: '; comment', scopes: name(scopeName, RuleName.InlineComment) },
             ],
 

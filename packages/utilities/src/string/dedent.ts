@@ -30,10 +30,7 @@ export function dedent(strings: TemplateStringsArray, ...values: any[]): string 
       }
       return result;
     })();
-
-    if (trimTargetIndent === undefined) {
-      trimTargetIndent = string.match(/^([^\S\r\n]*)/)?.[0] ?? '';
-    }
+    trimTargetIndent ??= string.match(/^([^\S\r\n]*)/)?.[0] ?? '';
 
     return prev
       + string.replaceAll(new RegExp(`^${trimTargetIndent}`, 'gm'), '')

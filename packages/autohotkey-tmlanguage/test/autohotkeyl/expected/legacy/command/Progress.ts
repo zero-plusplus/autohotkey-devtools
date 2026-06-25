@@ -1,10 +1,10 @@
-import type { ScopeName } from '../../../../../src/tmlanguage';
-import { $ } from '../../../../helpers/definition/parameter/$';
-import { $fontName } from '../../../../helpers/definition/parameter/$fontName';
-import { $subcommand } from '../../../../helpers/definition/parameter/$subcommand';
-import { $subcommandlike } from '../../../../helpers/definition/parameter/$subcommandlike';
-import { $winTitle } from '../../../../helpers/definition/parameter/$winTitle';
-import type { ExpectedTestData } from '../../../../types';
+import type { ScopeName } from '../../../../../src/tmlanguage.ts';
+import { $ } from '../../../../helpers/definition/parameter/$.ts';
+import { $fontName } from '../../../../helpers/definition/parameter/$fontName.ts';
+import { $subcommand } from '../../../../helpers/definition/parameter/$subcommand.ts';
+import { $subcommandlike } from '../../../../helpers/definition/parameter/$subcommandlike.ts';
+import { $winTitle } from '../../../../helpers/definition/parameter/$winTitle.ts';
+import type { ExpectedTestData } from '../../../../types.ts';
 
 // https://www.autohotkey.com/docs/v1/lib/Progress.htm
 export function createProgressExpectedDataList(scopeName: ScopeName): ExpectedTestData[] {

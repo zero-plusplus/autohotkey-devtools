@@ -9,7 +9,7 @@ import {
   optseq,
   reluctant,
   seq,
-} from '../../../oniguruma';
+} from '../../../oniguruma.ts';
 import {
   includeRule,
   name,
@@ -20,7 +20,7 @@ import {
   type PatternsRule,
   type Rule,
   type ScopeName,
-} from '../../../tmlanguage';
+} from '../../../tmlanguage.ts';
 
 interface Placeholder {
   startPattern: string;
@@ -38,71 +38,27 @@ export function createImportDeclarationRule(scopeName: ScopeName, placeholder: P
   ];
 
   return patternsRule(
-    // e.g. `import * from "path/to"`
-    //       ^^^^^^ ^ ^^^^
-    {
-      match: seq(
-        lookbehind(placeholder.startPattern),
-        inlineSpaces0(),
-        capture(keyword('import')),
-        inlineSpaces1(),
-        capture(char('*')),
-        optseq(
-          inlineSpaces1(),
-          capture(keyword('from')),
-        ),
-      ),
-      captures: {
-        1: nameRule(scopeName, RuleName.MetaKeyword),
-        2: nameRule(scopeName, RuleName.ImportExportAll),
-        3: nameRule(scopeName, RuleName.MetaKeyword),
-      },
-    },
-    // e.g. `import { Y as X, A as B } from X`
-    //       ^^^^^^ ^ ^ ^^ ^^ ^ ^^ ^ ^ ^^^^
+    // e.g. `#Import Export "path/to" as X { *, Y, Z as ZZ }`
+    //       ^^^^^^^^^^^^^^                ^^^^^^^^^^^^^^^^^
+    //                      ^^^^^^^^^^^^^^
+    //                Highlight as an expression
     {
       begin: seq(
         lookbehind(placeholder.startPattern),
         inlineSpaces0(),
-        capture(keyword('import')),
-        inlineSpaces1(),
-        capture(char('{')),
-      ),
-      beginCaptures: {
-        1: nameRule(scopeName, RuleName.MetaKeyword),
-        2: nameRule(scopeName, RuleName.OpenBrace),
-      },
-      end: seq(
-        capture(char('}')),
-        inlineSpaces0(),
-        capture(keyword('from')),
-      ),
-      endCaptures: {
-        1: nameRule(scopeName, RuleName.CloseBrace),
-        2: nameRule(scopeName, RuleName.MetaKeyword),
-      },
-      patterns: rulesInBrace,
-    },
-    // e.g. `export import "path/to" as X { *, Y, Z as ZZ }`
-    //       ^^^^^^
-    {
-      begin: seq(
-        lookbehind(placeholder.startPattern),
-        inlineSpaces0(),
+        capture(seq(char('#'), keyword('Import'))),
         optseq(
-          capture(keyword('export')),
           inlineSpaces1(),
+          capture(keyword('Export')),
         ),
         inlineSpaces0(),
-        capture(keyword('import')),
-        inlineSpaces1(),
         capture(reluctant(anyChars0())),
         capture(char('{')),
       ),
       beginCaptures: {
         1: nameRule(scopeName, RuleName.MetaKeyword),
         2: nameRule(scopeName, RuleName.MetaKeyword),
-        3: patternsRule(...rulesInBrace),
+        3: patternsRule(includeRule(Repository.Expression)),
         4: nameRule(scopeName, RuleName.OpenBrace),
       },
       end: capture(char('}')),
@@ -111,20 +67,25 @@ export function createImportDeclarationRule(scopeName: ScopeName, placeholder: P
       },
       patterns: rulesInBrace,
     },
-    // e.g. `import "path/to"`
-    //       ^^^^^^
-    // e.g. `import "path/to" as X`
-    //       ^^^^^^
+    // e.g. `#Import Export "path/to"`
+    //       ^^^^^^^ ^^^^^^
+    //                      ^^^^^^^^^
+    //             Highlight as an expression
+    //
+    // e.g. `#Import Export "path/to" as X`
+    //       ^^^^^^^ ^^^^^^
+    //                      ^^^^^^^^^^^^^^^
+    //                Highlight as an expression
     {
       match: seq(
         lookbehind(placeholder.startPattern),
         inlineSpaces0(),
+        capture(seq(char('#'), keyword('Import'))),
         optseq(
-          capture(keyword('export')),
           inlineSpaces1(),
+          capture(keyword('Export')),
         ),
         inlineSpaces0(),
-        capture(keyword('import')),
       ),
       captures: {
         1: nameRule(scopeName, RuleName.MetaKeyword),

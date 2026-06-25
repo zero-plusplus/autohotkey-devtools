@@ -1,5 +1,8 @@
 import {
+  alt,
   capture,
+  group,
+  inlineSpace,
   inlineSpaces0,
   inlineSpaces1,
   keyword,
@@ -7,14 +10,13 @@ import {
   lookbehind,
   optseq,
   seq,
-  wordBound,
-} from '../../../oniguruma';
+} from '../../../oniguruma.ts';
 import {
   nameRule,
   RuleName,
   type MatchRule,
   type ScopeName,
-} from '../../../tmlanguage';
+} from '../../../tmlanguage.ts';
 
 interface Placeholder {
   startPattern: string;
@@ -27,13 +29,17 @@ export function createExportDeclarationRule(scopeName: ScopeName, placeholder: P
       capture(keyword('export')),
       optseq(
         inlineSpaces1(),
-        capture(keyword('default')),
+        group(alt(
+          capture(keyword('default')),
+          capture(keyword('global')),
+        )),
       ),
-      lookahead(wordBound()),
+      lookahead(inlineSpace()),
     ),
     captures: {
       1: nameRule(scopeName, RuleName.MetaKeyword),
       2: nameRule(scopeName, RuleName.MetaKeyword),
+      3: nameRule(scopeName, RuleName.Modifier),
     },
   };
 }

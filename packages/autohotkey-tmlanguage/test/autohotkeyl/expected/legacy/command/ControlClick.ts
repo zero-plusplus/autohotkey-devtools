@@ -1,12 +1,12 @@
-import type { ScopeName } from '../../../../../src/tmlanguage';
-import { decimalOption } from '../../../../helpers/definition/option/decimalOption';
-import { keywordOption } from '../../../../helpers/definition/option/keywordOption';
-import { $ } from '../../../../helpers/definition/parameter/$';
-import { $control } from '../../../../helpers/definition/parameter/$control';
-import { $expression } from '../../../../helpers/definition/parameter/$expression';
-import { $whichButton } from '../../../../helpers/definition/parameter/$whichButton';
-import { $winTitle } from '../../../../helpers/definition/parameter/$winTitle';
-import type { ExpectedTestData } from '../../../../types';
+import type { ScopeName } from '../../../../../src/tmlanguage.ts';
+import { decimalOption } from '../../../../helpers/definition/option/decimalOption.ts';
+import { keywordOption } from '../../../../helpers/definition/option/keywordOption.ts';
+import { $ } from '../../../../helpers/definition/parameter/$.ts';
+import { $control } from '../../../../helpers/definition/parameter/$control.ts';
+import { $expression } from '../../../../helpers/definition/parameter/$expression.ts';
+import { $whichButton } from '../../../../helpers/definition/parameter/$whichButton.ts';
+import { $winTitle } from '../../../../helpers/definition/parameter/$winTitle.ts';
+import type { ExpectedTestData } from '../../../../types.ts';
 
 // https://www.autohotkey.com/docs/v1/lib/ControlClick.htm
 export function createControlClickExpectedDataList(scopeName: ScopeName): ExpectedTestData[] {

@@ -14,7 +14,7 @@ import {
   number,
   seq,
   textalt,
-} from '../../../oniguruma';
+} from '../../../oniguruma.ts';
 import {
   includeRule,
   nameRule,
@@ -25,7 +25,7 @@ import {
   type ElementName,
   type PatternsRule,
   type ScopeName,
-} from '../../../tmlanguage';
+} from '../../../tmlanguage.ts';
 
 type Placeholder = {
   startPattern: string;

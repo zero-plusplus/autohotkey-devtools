@@ -1,9 +1,9 @@
-import type { ScopeName } from '../../../../../src/tmlanguage';
-import { decimalOption } from '../../../../helpers/definition/option/decimalOption';
-import { keywordOption } from '../../../../helpers/definition/option/keywordOption';
-import { $ } from '../../../../helpers/definition/parameter/$';
-import { $keyName } from '../../../../helpers/definition/parameter/$keyName';
-import type { ExpectedTestData } from '../../../../types';
+import type { ScopeName } from '../../../../../src/tmlanguage.ts';
+import { decimalOption } from '../../../../helpers/definition/option/decimalOption.ts';
+import { keywordOption } from '../../../../helpers/definition/option/keywordOption.ts';
+import { $ } from '../../../../helpers/definition/parameter/$.ts';
+import { $keyName } from '../../../../helpers/definition/parameter/$keyName.ts';
+import type { ExpectedTestData } from '../../../../types.ts';
 
 // https://www.autohotkey.com/docs/v1/lib/KeyWait.htm
 export function createKeyWaitExpectedDataList(scopeName: ScopeName): ExpectedTestData[] {

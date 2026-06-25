@@ -1,12 +1,12 @@
-import type { ScopeName } from '../../../../src/tmlanguage';
-import type { ExpectedTestData } from '../../../types';
-import { createDereferenceInUnquotedParameterExpectedDataList } from '../common/dereference';
-import { createPercentExpressionParameterExpectedDataList } from '../common/percentExpression';
-import type { CommandPlaceholder } from '../helpers';
-import { flagedIdentifierOption } from '../option/flagedIdentifierOption';
-import { flagedKeywordOption } from '../option/flagedKeywordOption';
-import { flagedSizeOption } from '../option/flagedSizeOption';
-import { flagedStringOption } from '../option/flagedStringOption';
+import type { ScopeName } from '../../../../src/tmlanguage.ts';
+import type { ExpectedTestData } from '../../../types.ts';
+import { createDereferenceInUnquotedParameterExpectedDataList } from '../common/dereference.ts';
+import { createPercentExpressionParameterExpectedDataList } from '../common/percentExpression.ts';
+import type { CommandPlaceholder } from '../helpers.ts';
+import { flagedIdentifierOption } from '../option/flagedIdentifierOption.ts';
+import { flagedKeywordOption } from '../option/flagedKeywordOption.ts';
+import { flagedSizeOption } from '../option/flagedSizeOption.ts';
+import { flagedStringOption } from '../option/flagedStringOption.ts';
 
 export function $guiOptions(scopeName: ScopeName, placeholder: CommandPlaceholder): ExpectedTestData[] {
   return [

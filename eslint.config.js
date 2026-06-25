@@ -1,6 +1,6 @@
-const rules = require('@zero-plusplus/eslint-style-rules');
+import rules from '@zero-plusplus/eslint-style-rules';
 
-module.exports = [
+export default [
   ...rules.js.config(),
-  ...rules.ts.config(__dirname),
+  ...rules.ts.config(import.meta.dirname),
 ];

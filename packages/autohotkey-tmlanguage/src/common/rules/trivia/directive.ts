@@ -1,5 +1,5 @@
-import * as patterns_v1 from '../../../autohotkeyl/patterns';
-import type { CommandDefinition } from '../../../definition';
+import * as patterns_v1 from '../../../autohotkeyl/patterns.ts';
+import type { CommandDefinition } from '../../../definition.ts';
 import {
   alt,
   anyChars0,
@@ -17,7 +17,7 @@ import {
   seq,
   text,
   textalt,
-} from '../../../oniguruma';
+} from '../../../oniguruma.ts';
 import {
   includeRule,
   name,
@@ -33,12 +33,12 @@ import {
   type PatternsRule,
   type Repositories,
   type ScopeName,
-} from '../../../tmlanguage';
-import * as constants_common from '../../constants';
-import * as definitions_common from '../../definitions';
-import * as patterns_common from '../../patterns';
-import * as rules_common from '../../rules';
-import { createDirectiveCommentRule } from '../statement/command';
+} from '../../../tmlanguage.ts';
+import * as constants_common from '../../constants.ts';
+import * as definitions_common from '../../definitions.ts';
+import * as patterns_common from '../../patterns.ts';
+import * as rules_common from '../../rules/index.ts';
+import { createDirectiveCommentRule } from '../statement/command.ts';
 
 export function createDirectiveCommentRepositories(scopeName: ScopeName): Repositories {
   return {

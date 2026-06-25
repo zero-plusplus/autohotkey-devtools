@@ -1,11 +1,11 @@
-import type { ScopeName } from '../../../../src/tmlanguage';
-import type { ExpectedTestData } from '../../../types';
-import type { CommandPlaceholder } from '../helpers';
-import { hexOption } from '../option/hexOption';
-import { identifierOption } from '../option/identifierOption';
-import { keywordOption } from '../option/keywordOption';
-import { signedFloatOption } from '../option/signedFloatOption';
-import { toggleOption } from '../option/toggleOption';
+import type { ScopeName } from '../../../../src/tmlanguage.ts';
+import type { ExpectedTestData } from '../../../types.ts';
+import type { CommandPlaceholder } from '../helpers.ts';
+import { hexOption } from '../option/hexOption.ts';
+import { identifierOption } from '../option/identifierOption.ts';
+import { keywordOption } from '../option/keywordOption.ts';
+import { signedFloatOption } from '../option/signedFloatOption.ts';
+import { toggleOption } from '../option/toggleOption.ts';
 
 export function $guiControlOptions(scopeName: ScopeName, placeholder: CommandPlaceholder): ExpectedTestData[] {
   return [

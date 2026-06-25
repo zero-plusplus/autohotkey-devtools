@@ -1,6 +1,13 @@
-import * as rules_common from '../../../common/rules';
-import type { CommandDefinition } from '../../../definition';
-import { includeRule, patternsRule, Repository, RuleName, type Repositories, type ScopeName } from '../../../tmlanguage';
+import * as rules_common from '../../../common/rules/index.ts';
+import type { CommandDefinition } from '../../../definition.ts';
+import {
+  includeRule,
+  patternsRule,
+  Repository,
+  RuleName,
+  type Repositories,
+  type ScopeName,
+} from '../../../tmlanguage.ts';
 
 interface Placeholder_DirectiveRepositories {
   startPattern: string;

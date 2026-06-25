@@ -1,6 +1,6 @@
-import { singleton } from '@zero-plusplus/utilities/src';
 import * as fs from 'fs';
 import * as path from 'path';
+import { singleton } from '@zero-plusplus/utilities/src';
 import * as oniguruma from 'vscode-oniguruma';
 import * as vsctm from 'vscode-textmate';
 import * as grammars from '../../src';
@@ -10,7 +10,7 @@ import type {
 } from '../../src/tmlanguage';
 import type { ParsedResult } from '../types';
 
-const rootDirectory = path.resolve(__dirname, '../../../../');
+const rootDirectory = path.resolve(import.meta.dirname, '../../../../');
 const nodeModulesDirectory = path.resolve(rootDirectory, 'node_modules');
 const onigurumaWasmPath = path.resolve(nodeModulesDirectory, 'vscode-oniguruma', 'release', 'onig.wasm');
 

@@ -1,4 +1,4 @@
-import { onFlag } from './onFlag';
+import { onFlag } from './onFlag.ts';
 
 /**
  * Merges the specified flags and returns them.

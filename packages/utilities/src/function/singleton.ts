@@ -1,4 +1,4 @@
-import { memoize } from './memoize';
+import { memoize } from './memoize.ts';
 
 /**
  * Applies a singleton pattern to the specified function.

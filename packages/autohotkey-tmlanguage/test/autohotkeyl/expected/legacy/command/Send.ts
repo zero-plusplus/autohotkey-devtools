@@ -1,6 +1,6 @@
-import type { ScopeName } from '../../../../../src/tmlanguage';
-import { $sendKeyName } from '../../../../helpers/definition/parameter/$sendKeyName';
-import type { ExpectedTestData } from '../../../../types';
+import type { ScopeName } from '../../../../../src/tmlanguage.ts';
+import { $sendKeyName } from '../../../../helpers/definition/parameter/$sendKeyName.ts';
+import type { ExpectedTestData } from '../../../../types.ts';
 
 // https://www.autohotkey.com/docs/v1/lib/Send.htm
 export function createSendExpectedDataList(scopeName: ScopeName, commandName = 'Send'): ExpectedTestData[] {

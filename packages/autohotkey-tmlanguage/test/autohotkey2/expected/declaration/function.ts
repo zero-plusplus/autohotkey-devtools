@@ -1,11 +1,11 @@
-import { dedent } from '@zero-plusplus/utilities/src';
+import { dedent } from '@zero-plusplus/utilities/src/index.ts';
 import {
   name,
   RuleName,
   type ScopeName,
-} from '../../../../src/tmlanguage';
-import * as common from '../../../common/declaration/function';
-import type { ExpectedTestData } from '../../../types';
+} from '../../../../src/tmlanguage.ts';
+import * as common from '../../../common/declaration/function.ts';
+import type { ExpectedTestData } from '../../../types.ts';
 
 export function createFunctionDeclarationExpectedData(scopeName: ScopeName): ExpectedTestData[] {
   return [

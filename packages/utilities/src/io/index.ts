@@ -1,2 +1,2 @@
-export * from './existsFileAsync';
-export * from './existsFileSync';
+export * from './existsFileAsync.ts';
+export * from './existsFileSync.ts';

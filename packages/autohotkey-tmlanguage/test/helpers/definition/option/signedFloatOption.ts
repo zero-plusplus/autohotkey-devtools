@@ -1,7 +1,7 @@
-import { name, RuleName, StyleName, type ScopeName } from '../../../../src/tmlanguage';
-import type { ExpectedTestData } from '../../../types';
-import { createCommandExpectedData, type CommandPlaceholder } from '../helpers';
-import { signedDecimalOption } from './signedDecimalOption';
+import { name, RuleName, StyleName, type ScopeName } from '../../../../src/tmlanguage.ts';
+import type { ExpectedTestData } from '../../../types.ts';
+import { createCommandExpectedData, type CommandPlaceholder } from '../helpers.ts';
+import { signedDecimalOption } from './signedDecimalOption.ts';
 
 export function signedFloatOption(scopeName: ScopeName, options: string[], placeholder: CommandPlaceholder): ExpectedTestData[] {
   return [

@@ -1,7 +1,7 @@
-import type { ScopeName } from '../../../../../src/tmlanguage';
-import { $expression } from '../../../../helpers/definition/parameter/$expression';
-import { $glob } from '../../../../helpers/definition/parameter/$glob';
-import type { ExpectedTestData } from '../../../../types';
+import type { ScopeName } from '../../../../../src/tmlanguage.ts';
+import { $expression } from '../../../../helpers/definition/parameter/$expression.ts';
+import { $glob } from '../../../../helpers/definition/parameter/$glob.ts';
+import type { ExpectedTestData } from '../../../../types.ts';
 
 // https://www.autohotkey.com/docs/v1/lib/FileCopy.htm
 export function createFileCopyExpectedDataList(scopeName: ScopeName): ExpectedTestData[] {

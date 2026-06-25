@@ -1,44 +1,44 @@
-import { dedent } from '@zero-plusplus/utilities/src';
+import { dedent } from '@zero-plusplus/utilities/src/index.ts';
 import {
   name,
   RuleName,
   StyleName,
   type ScopeName,
-} from '../../../../../src/tmlanguage';
-import type { ExpectedTestData } from '../../../../types';
-import { createAllowSameLineCommentsExpectedDataList } from './#AllowSameLineComments';
-import { createClipboardTimeoutExpectedDataList } from './#ClipboardTimeout';
-import { createCommentFlagExpectedDataList } from './#CommentFlag';
-import { createDelimiterExpectedDataList } from './#Delimiter';
-import { createDerefCharExpectedDataList } from './#DerefChar';
-import { createErrorStdOutExpectedDataList } from './#ErrorStdOut';
-import { createEscapeCharExpectedDataList } from './#EscapeChar';
-import { createHotkeyIntervalExpectedDataList } from './#HotkeyInterval';
-import { createHotkeyModifierTimeoutExpectedDataList } from './#HotkeyModifierTimeout';
-import { createHotstringExpectedDataList } from './#Hotstring';
-import { createIfExpectedDataList } from './#If';
-import { createIfTimeoutExpectedDataList } from './#IfTimeout';
-import { createIfWinActiveExpectedDataList } from './#IfWinActive';
-import { createIncludeExpectedDataList } from './#Include';
-import { createInputLevelExpectedDataList } from './#InputLevel';
-import { createInstallKeybdHookExpectedDataList } from './#InstallKeybdHook';
-import { createInstallMouseHookExpectedDataList } from './#InstallMouseHook';
-import { createKeyHistoryExpectedDataList } from './#KeyHistory';
-import { createLTrimExpectedDataList } from './#LTrim';
-import { createMaxHotkeysPerIntervalExpectedDataList } from './#MaxHotkeysPerInterval';
-import { createMaxMemExpectedDataList } from './#MaxMem';
-import { createMaxThreadsExpectedDataList } from './#MaxThreads';
-import { createMaxThreadsBufferExpectedDataList } from './#MaxThreadsBuffer';
-import { createMaxThreadsPerHotkeyExpectedDataList } from './#MaxThreadsPerHotkey';
-import { createMenuMaskKeyExpectedDataList } from './#MenuMaskKey';
-import { createNoEnvExpectedDataList } from './#NoEnv';
-import { createNoTrayIconExpectedDataList } from './#NoTrayIcon';
-import { createPersistentExpectedDataList } from './#Persistent';
-import { createRequiresExpectedDataList } from './#Requires';
-import { createSingleInstanceExpectedDataList } from './#SingleInstance';
-import { createUseHookBufferExpectedDataList } from './#UseHook';
-import { createWarnExpectedDataList } from './#Warn';
-import { createWinActivateForceExpectedDataList } from './#WinActivateForce';
+} from '../../../../../src/tmlanguage.ts';
+import type { ExpectedTestData } from '../../../../types.ts';
+import { createAllowSameLineCommentsExpectedDataList } from './_AllowSameLineComments.ts';
+import { createClipboardTimeoutExpectedDataList } from './_ClipboardTimeout.ts';
+import { createCommentFlagExpectedDataList } from './_CommentFlag.ts';
+import { createDelimiterExpectedDataList } from './_Delimiter.ts';
+import { createDerefCharExpectedDataList } from './_DerefChar.ts';
+import { createErrorStdOutExpectedDataList } from './_ErrorStdOut.ts';
+import { createEscapeCharExpectedDataList } from './_EscapeChar.ts';
+import { createHotkeyIntervalExpectedDataList } from './_HotkeyInterval.ts';
+import { createHotkeyModifierTimeoutExpectedDataList } from './_HotkeyModifierTimeout.ts';
+import { createHotstringExpectedDataList } from './_Hotstring.ts';
+import { createIfExpectedDataList } from './_If.ts';
+import { createIfTimeoutExpectedDataList } from './_IfTimeout.ts';
+import { createIfWinActiveExpectedDataList } from './_IfWinActive.ts';
+import { createIncludeExpectedDataList } from './_Include.ts';
+import { createInputLevelExpectedDataList } from './_InputLevel.ts';
+import { createInstallKeybdHookExpectedDataList } from './_InstallKeybdHook.ts';
+import { createInstallMouseHookExpectedDataList } from './_InstallMouseHook.ts';
+import { createKeyHistoryExpectedDataList } from './_KeyHistory.ts';
+import { createLTrimExpectedDataList } from './_LTrim.ts';
+import { createMaxHotkeysPerIntervalExpectedDataList } from './_MaxHotkeysPerInterval.ts';
+import { createMaxMemExpectedDataList } from './_MaxMem.ts';
+import { createMaxThreadsExpectedDataList } from './_MaxThreads.ts';
+import { createMaxThreadsBufferExpectedDataList } from './_MaxThreadsBuffer.ts';
+import { createMaxThreadsPerHotkeyExpectedDataList } from './_MaxThreadsPerHotkey.ts';
+import { createMenuMaskKeyExpectedDataList } from './_MenuMaskKey.ts';
+import { createNoEnvExpectedDataList } from './_NoEnv.ts';
+import { createNoTrayIconExpectedDataList } from './_NoTrayIcon.ts';
+import { createPersistentExpectedDataList } from './_Persistent.ts';
+import { createRequiresExpectedDataList } from './_Requires.ts';
+import { createSingleInstanceExpectedDataList } from './_SingleInstance.ts';
+import { createUseHookBufferExpectedDataList } from './_UseHook.ts';
+import { createWarnExpectedDataList } from './_Warn.ts';
+import { createWinActivateForceExpectedDataList } from './_WinActivateForce.ts';
 
 export function createDirectiveStatementExpectedData(scopeName: ScopeName): ExpectedTestData[] {
   return [

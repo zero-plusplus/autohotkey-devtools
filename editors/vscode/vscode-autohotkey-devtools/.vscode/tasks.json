@@ -13,8 +13,8 @@
 					},
 					"background": {
 						"activeOnStart": true,
-						"beginsPattern": "^\\[esbuild\\] Build was started",
-						"endsPattern": "^\\[esbuild\\] Build was completed",
+						"beginsPattern": "^\\[rolldown\\] Build was started",
+						"endsPattern": "^\\[rolldown\\] Build was completed",
 					}
 				}
 			]

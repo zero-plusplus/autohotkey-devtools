@@ -1,10 +1,10 @@
-import type { ScopeName } from '../../../../../src/tmlanguage';
-import { decimalOption } from '../../../../helpers/definition/option/decimalOption';
-import { $ } from '../../../../helpers/definition/parameter/$';
-import { $output } from '../../../../helpers/definition/parameter/$output';
-import { $path } from '../../../../helpers/definition/parameter/$path';
-import { $shouldInteger } from '../../../../helpers/definition/parameter/$shouldInteger';
-import type { ExpectedTestData } from '../../../../types';
+import type { ScopeName } from '../../../../../src/tmlanguage.ts';
+import { decimalOption } from '../../../../helpers/definition/option/decimalOption.ts';
+import { $ } from '../../../../helpers/definition/parameter/$.ts';
+import { $output } from '../../../../helpers/definition/parameter/$output.ts';
+import { $path } from '../../../../helpers/definition/parameter/$path.ts';
+import { $shouldInteger } from '../../../../helpers/definition/parameter/$shouldInteger.ts';
+import type { ExpectedTestData } from '../../../../types.ts';
 
 // https://www.autohotkey.com/docs/v1/lib/FileSelectFile.htm
 export function createFileSelectFileExpectedDataList(scopeName: ScopeName): ExpectedTestData[] {

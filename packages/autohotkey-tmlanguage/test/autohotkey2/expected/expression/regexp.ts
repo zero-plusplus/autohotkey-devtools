@@ -1,8 +1,8 @@
-import * as constants_v2 from '../../../../src/autohotkey2/constants';
-import * as constants_common from '../../../../src/common/constants';
-import type { ScopeName } from '../../../../src/tmlanguage';
-import * as common from '../../../common';
-import type { ExpectedTestData } from '../../../types';
+import * as constants_v2 from '../../../../src/autohotkey2/constants.ts';
+import * as constants_common from '../../../../src/common/constants.ts';
+import type { ScopeName } from '../../../../src/tmlanguage.ts';
+import * as common from '../../../common/index.ts';
+import type { ExpectedTestData } from '../../../types.ts';
 
 export function createRegExpExpectedData(scopeName: ScopeName): ExpectedTestData[] {
   return [

@@ -1,6 +1,6 @@
-import { name, RuleName, StyleName, type ScopeName } from '../../../../src/tmlanguage';
-import type { ExpectedTestData } from '../../../types';
-import { createCommandExpectedData, type CommandPlaceholder } from '../helpers';
+import { name, RuleName, StyleName, type ScopeName } from '../../../../src/tmlanguage.ts';
+import type { ExpectedTestData } from '../../../types.ts';
+import { createCommandExpectedData, type CommandPlaceholder } from '../helpers.ts';
 
 export function floatOption(scopeName: ScopeName, options: string[], placeholder: CommandPlaceholder): ExpectedTestData[] {
   return [

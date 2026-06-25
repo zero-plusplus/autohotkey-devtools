@@ -1,29 +1,29 @@
-import { dedent } from '@zero-plusplus/utilities/src';
+import { dedent } from '@zero-plusplus/utilities/src/index.ts';
 import {
   name,
   RuleName,
   StyleName,
   type ScopeName,
-} from '../../../../../src/tmlanguage';
-import type { ExpectedTestData } from '../../../../types';
-import { createClipboardTimeoutExpectedDataList } from './#ClipboardTimeout';
-import { createDllLoadExpectedDataList } from './#DllLoad';
-import { createErrorStdOutExpectedDataList } from './#ErrorStdOut';
-import { createHotIfExpectedDataList } from './#HotIf';
-import { createHotIfTimeoutExpectedDataList } from './#HotIfTimeout';
-import { createHotstringExpectedDataList } from './#Hotstring';
-import { createIncludeExpectedDataList } from './#Include';
-import { createInputLevelExpectedDataList } from './#InputLevel';
-import { createMaxThreadsExpectedDataList } from './#MaxThreads';
-import { createMaxThreadsBufferExpectedDataList } from './#MaxThreadsBuffer';
-import { createMaxThreadsPerHotkeyExpectedDataList } from './#MaxThreadsPerHotkey';
-import { createNoTrayIconExpectedDataList } from './#NoTrayIcon';
-import { createRequiresExpectedDataList } from './#Requires';
-import { createSingleInstanceExpectedDataList } from './#SingleInstance';
-import { createSuspendExemptExpectedDataList } from './#SuspendExempt';
-import { createUseHookExpectedDataList } from './#UseHook';
-import { createWarnExpectedDataList } from './#Warn';
-import { createWinActivateForceExpectedDataList } from './#WinActivateForce';
+} from '../../../../../src/tmlanguage.ts';
+import type { ExpectedTestData } from '../../../../types.ts';
+import { createClipboardTimeoutExpectedDataList } from './_ClipboardTimeout.ts';
+import { createDllLoadExpectedDataList } from './_DllLoad.ts';
+import { createErrorStdOutExpectedDataList } from './_ErrorStdOut.ts';
+import { createHotIfExpectedDataList } from './_HotIf.ts';
+import { createHotIfTimeoutExpectedDataList } from './_HotIfTimeout.ts';
+import { createHotstringExpectedDataList } from './_Hotstring.ts';
+import { createIncludeExpectedDataList } from './_Include.ts';
+import { createInputLevelExpectedDataList } from './_InputLevel.ts';
+import { createMaxThreadsExpectedDataList } from './_MaxThreads.ts';
+import { createMaxThreadsBufferExpectedDataList } from './_MaxThreadsBuffer.ts';
+import { createMaxThreadsPerHotkeyExpectedDataList } from './_MaxThreadsPerHotkey.ts';
+import { createNoTrayIconExpectedDataList } from './_NoTrayIcon.ts';
+import { createRequiresExpectedDataList } from './_Requires.ts';
+import { createSingleInstanceExpectedDataList } from './_SingleInstance.ts';
+import { createSuspendExemptExpectedDataList } from './_SuspendExempt.ts';
+import { createUseHookExpectedDataList } from './_UseHook.ts';
+import { createWarnExpectedDataList } from './_Warn.ts';
+import { createWinActivateForceExpectedDataList } from './_WinActivateForce.ts';
 
 export function createDirectiveStatementExpectedData(scopeName: ScopeName): ExpectedTestData[] {
   return [

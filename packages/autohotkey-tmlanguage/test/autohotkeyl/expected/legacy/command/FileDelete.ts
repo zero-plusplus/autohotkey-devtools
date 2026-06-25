@@ -1,6 +1,6 @@
-import type { ScopeName } from '../../../../../src/tmlanguage';
-import { $glob } from '../../../../helpers/definition/parameter/$glob';
-import type { ExpectedTestData } from '../../../../types';
+import type { ScopeName } from '../../../../../src/tmlanguage.ts';
+import { $glob } from '../../../../helpers/definition/parameter/$glob.ts';
+import type { ExpectedTestData } from '../../../../types.ts';
 
 // https://www.autohotkey.com/docs/v1/lib/FileDelete.htm
 export function createFileDeleteExpectedDataList(scopeName: ScopeName): ExpectedTestData[] {

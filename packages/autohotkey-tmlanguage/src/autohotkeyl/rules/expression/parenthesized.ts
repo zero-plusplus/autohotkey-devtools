@@ -3,7 +3,7 @@ import {
   capture,
   char,
   seq,
-} from '../../../oniguruma';
+} from '../../../oniguruma.ts';
 import {
   includeRule,
   nameRule,
@@ -12,7 +12,7 @@ import {
   RuleName,
   type PatternsRule,
   type ScopeName,
-} from '../../../tmlanguage';
+} from '../../../tmlanguage.ts';
 
 export function createParenthesizedExpressionRule(scopeName: ScopeName): PatternsRule {
   return patternsRule(

@@ -1,13 +1,11 @@
-const typescriptPlugin = require('@typescript-eslint/eslint-plugin');
+import globals from 'globals';
+import typescriptEslint from 'typescript-eslint';
+import { ruleNames as eslintAllRuleNames } from './all/eslint.js';
+import { rules as tsAllRules } from './all/typescript-eslint.js';
+import * as common from './common.js';
+import { rules as myJsRules } from './js.js';
 
-const globals = require('globals');
-const typescriptParser = require('@typescript-eslint/parser');
-const { rules: tsAllRules } = require('./all/typescript-eslint.js');
-const { ruleNames: eslintAllRuleNames } = require('./all/eslint.js');
-const { rules: myJsRules } = require('./js.js');
-const common = require('./common.js');
-
-module.exports.rules = {
+export const rules = {
   ...tsAllRules,
 
   // Turn off javscript rules overridden by typescript-eslint/eslint-plugin
@@ -58,15 +56,15 @@ module.exports.rules = {
   '@typescript-eslint/switch-exhaustiveness-check': 'off',
   '@typescript-eslint/typedef': 'off',
 };
-module.exports.config = (tsconfigRootDir) => {
+export const config = (tsconfigRootDir) => {
   return [
     ...common.config(),
     {
       plugins: {
-        '@typescript-eslint': typescriptPlugin,
+        '@typescript-eslint': typescriptEslint.plugin,
       },
       languageOptions: {
-        parser: typescriptParser,
+        parser: typescriptEslint.parser,
         globals: globals.node,
         parserOptions: {
           project: true,
@@ -79,7 +77,7 @@ module.exports.config = (tsconfigRootDir) => {
         '**/*.mts',
       ],
       rules: {
-        ...module.exports.rules,
+        ...rules,
       },
     },
   ];

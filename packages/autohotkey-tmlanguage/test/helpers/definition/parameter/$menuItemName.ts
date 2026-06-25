@@ -1,7 +1,7 @@
-import { name, RuleName, StyleName, type ScopeName } from '../../../../src/tmlanguage';
-import type { ExpectedTestData } from '../../../types';
-import { createCommandExpectedData, type CommandPlaceholder } from '../helpers';
-import { $ } from './$';
+import { name, RuleName, StyleName, type ScopeName } from '../../../../src/tmlanguage.ts';
+import type { ExpectedTestData } from '../../../types.ts';
+import { createCommandExpectedData, type CommandPlaceholder } from '../helpers.ts';
+import { $ } from './$.ts';
 
 export function $menuItemName(scopeName: ScopeName, placeholder: CommandPlaceholder): ExpectedTestData[] {
   return [

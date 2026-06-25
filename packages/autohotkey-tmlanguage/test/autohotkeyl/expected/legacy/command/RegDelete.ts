@@ -1,7 +1,7 @@
-import type { ScopeName } from '../../../../../src/tmlanguage';
-import { $ } from '../../../../helpers/definition/parameter/$';
-import { $regkey } from '../../../../helpers/definition/parameter/$regkey';
-import type { ExpectedTestData } from '../../../../types';
+import type { ScopeName } from '../../../../../src/tmlanguage.ts';
+import { $ } from '../../../../helpers/definition/parameter/$.ts';
+import { $regkey } from '../../../../helpers/definition/parameter/$regkey.ts';
+import type { ExpectedTestData } from '../../../../types.ts';
 
 // https://www.autohotkey.com/docs/v1/lib/RegDelete.htm
 export function createRegDeleteExpectedDataList(scopeName: ScopeName): ExpectedTestData[] {

@@ -1,12 +1,12 @@
-import * as constant_v2 from '../../../../src/autohotkey2/constants';
-import * as constant_common from '../../../../src/common/constants';
+import * as constant_v2 from '../../../../src/autohotkey2/constants.ts';
+import * as constant_common from '../../../../src/common/constants.ts';
 import {
   name,
   RuleName,
   type ScopeName,
-} from '../../../../src/tmlanguage';
-import * as common from '../../../common';
-import type { ExpectedTestData } from '../../../types';
+} from '../../../../src/tmlanguage.ts';
+import * as common from '../../../common/index.ts';
+import type { ExpectedTestData } from '../../../types.ts';
 
 export function createOperatorInExpressionExpectedData(scopeName: ScopeName): ExpectedTestData[] {
   return [

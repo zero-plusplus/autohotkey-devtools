@@ -1,9 +1,9 @@
-import type { ScopeName } from '../../../../../src/tmlanguage';
-import { keywordOption } from '../../../../helpers/definition/option/keywordOption';
-import { $ } from '../../../../helpers/definition/parameter/$';
-import { $expression } from '../../../../helpers/definition/parameter/$expression';
-import { $path } from '../../../../helpers/definition/parameter/$path';
-import type { ExpectedTestData } from '../../../../types';
+import type { ScopeName } from '../../../../../src/tmlanguage.ts';
+import { keywordOption } from '../../../../helpers/definition/option/keywordOption.ts';
+import { $ } from '../../../../helpers/definition/parameter/$.ts';
+import { $expression } from '../../../../helpers/definition/parameter/$expression.ts';
+import { $path } from '../../../../helpers/definition/parameter/$path.ts';
+import type { ExpectedTestData } from '../../../../types.ts';
 
 // https://www.autohotkey.com/docs/v1/lib/FileCreateShortcut.htm
 export function createFileCreateShortcutExpectedDataList(scopeName: ScopeName): ExpectedTestData[] {

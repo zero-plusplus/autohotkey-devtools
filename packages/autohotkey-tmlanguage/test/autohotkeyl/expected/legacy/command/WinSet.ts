@@ -1,16 +1,16 @@
-import type { ScopeName } from '../../../../../src/tmlanguage';
-import { floatOption } from '../../../../helpers/definition/option/floatOption';
-import { keywordOption } from '../../../../helpers/definition/option/keywordOption';
-import { sizeOption } from '../../../../helpers/definition/option/sizeOption';
-import { $ } from '../../../../helpers/definition/parameter/$';
-import { $blank } from '../../../../helpers/definition/parameter/$blank';
-import { $color } from '../../../../helpers/definition/parameter/$color';
-import { $onOffToggle } from '../../../../helpers/definition/parameter/$onOffToggle';
-import { $shouldInteger } from '../../../../helpers/definition/parameter/$shouldInteger';
-import { $style } from '../../../../helpers/definition/parameter/$style';
-import { $subcommand } from '../../../../helpers/definition/parameter/$subcommand';
-import { $winTitle } from '../../../../helpers/definition/parameter/$winTitle';
-import type { ExpectedTestData } from '../../../../types';
+import type { ScopeName } from '../../../../../src/tmlanguage.ts';
+import { floatOption } from '../../../../helpers/definition/option/floatOption.ts';
+import { keywordOption } from '../../../../helpers/definition/option/keywordOption.ts';
+import { sizeOption } from '../../../../helpers/definition/option/sizeOption.ts';
+import { $ } from '../../../../helpers/definition/parameter/$.ts';
+import { $blank } from '../../../../helpers/definition/parameter/$blank.ts';
+import { $color } from '../../../../helpers/definition/parameter/$color.ts';
+import { $onOffToggle } from '../../../../helpers/definition/parameter/$onOffToggle.ts';
+import { $shouldInteger } from '../../../../helpers/definition/parameter/$shouldInteger.ts';
+import { $style } from '../../../../helpers/definition/parameter/$style.ts';
+import { $subcommand } from '../../../../helpers/definition/parameter/$subcommand.ts';
+import { $winTitle } from '../../../../helpers/definition/parameter/$winTitle.ts';
+import type { ExpectedTestData } from '../../../../types.ts';
 
 // https://www.autohotkey.com/docs/v1/lib/WinSet.htm
 export function createWinSetExpectedDataList(scopeName: ScopeName): ExpectedTestData[] {

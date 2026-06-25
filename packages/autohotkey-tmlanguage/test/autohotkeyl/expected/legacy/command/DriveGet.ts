@@ -1,11 +1,11 @@
-import type { ScopeName } from '../../../../../src/tmlanguage';
-import { $driveletter } from '../../../../helpers/definition/parameter/$driveletter';
-import { $invalidSubcommand } from '../../../../helpers/definition/parameter/$invalidSubcommand';
-import { $output } from '../../../../helpers/definition/parameter/$output';
-import { $path } from '../../../../helpers/definition/parameter/$path';
-import { $shouldKeyword } from '../../../../helpers/definition/parameter/$shouldKeyword';
-import { $subcommand } from '../../../../helpers/definition/parameter/$subcommand';
-import type { ExpectedTestData } from '../../../../types';
+import type { ScopeName } from '../../../../../src/tmlanguage.ts';
+import { $driveletter } from '../../../../helpers/definition/parameter/$driveletter.ts';
+import { $invalidSubcommand } from '../../../../helpers/definition/parameter/$invalidSubcommand.ts';
+import { $output } from '../../../../helpers/definition/parameter/$output.ts';
+import { $path } from '../../../../helpers/definition/parameter/$path.ts';
+import { $shouldKeyword } from '../../../../helpers/definition/parameter/$shouldKeyword.ts';
+import { $subcommand } from '../../../../helpers/definition/parameter/$subcommand.ts';
+import type { ExpectedTestData } from '../../../../types.ts';
 
 // https://www.autohotkey.com/docs/v1/lib/DriveGet.htm
 export function createDriveGetExpectedDataList(scopeName: ScopeName): ExpectedTestData[] {

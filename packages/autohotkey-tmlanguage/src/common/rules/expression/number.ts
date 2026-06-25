@@ -16,7 +16,7 @@ import {
   opt,
   seq,
   wordBound,
-} from '../../../oniguruma';
+} from '../../../oniguruma.ts';
 import {
   name,
   nameRule,
@@ -26,7 +26,7 @@ import {
   type MatchRule,
   type PatternsRule,
   type ScopeName,
-} from '../../../tmlanguage';
+} from '../../../tmlanguage.ts';
 
 export function createIntegerRule(scopeName: ScopeName): MatchRule {
   return {

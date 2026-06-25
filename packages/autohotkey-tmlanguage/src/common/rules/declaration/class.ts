@@ -1,4 +1,3 @@
-import * as rules_common from '..';
 import {
   alt,
   capture,
@@ -12,7 +11,7 @@ import {
   lookbehind,
   seq,
   startAnchor,
-} from '../../../oniguruma';
+} from '../../../oniguruma.ts';
 import {
   includeRule,
   name,
@@ -22,20 +21,24 @@ import {
   type BeginEndRule,
   type Rule,
   type ScopeName,
-} from '../../../tmlanguage';
+} from '../../../tmlanguage.ts';
+import * as rules_common from '../index.ts';
 
 interface Placeholder {
   startPattern: string;
   endPattern: string;
   identifierPattern: string;
   rulesInBody: Rule[];
+  keywords?: string[];
 }
 export function createClassDeclarationRule(scopeName: ScopeName, placeholder: Placeholder): BeginEndRule {
+  const declarationKeyword = keyword(...(placeholder.keywords ?? [ 'class' ]));
+
   return {
     begin: lookahead(seq(
       lookbehind(placeholder.startPattern),
       inlineSpaces0(),
-      keyword('class'),
+      declarationKeyword,
     )),
     end: lookbehind('}'),
     patterns: [
@@ -45,7 +48,7 @@ export function createClassDeclarationRule(scopeName: ScopeName, placeholder: Pl
       {
         begin: seq(
           inlineSpaces0(),
-          capture(keyword('class')),
+          capture(declarationKeyword),
         ),
         beginCaptures: {
           1: nameRule(scopeName, RuleName.ClassKeyword),

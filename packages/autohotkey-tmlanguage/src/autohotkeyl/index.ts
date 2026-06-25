@@ -1,11 +1,11 @@
-import * as markdown from '../__injection__/markdown';
-import * as constants_common from '../common/constants';
-import * as patterns_common from '../common/patterns';
-import * as rules_common from '../common/rules';
+import * as markdown from '../__injection__/markdown.ts';
+import * as constants_common from '../common/constants.ts';
+import * as patterns_common from '../common/patterns.ts';
+import * as rules_common from '../common/rules/index.ts';
 import {
   anyChars1,
   ordalt,
-} from '../oniguruma';
+} from '../oniguruma.ts';
 import {
   includeRule,
   name,
@@ -16,11 +16,11 @@ import {
   type Repositories,
   type ScopeName,
   type TmLanguage,
-} from '../tmlanguage';
-import * as constants_v1 from './constants';
-import * as definitions_v1 from './definitions';
-import * as patterns_v1 from './patterns';
-import * as rules_v1 from './rules';
+} from '../tmlanguage.ts';
+import * as constants_v1 from './constants.ts';
+import * as definitions_v1 from './definitions.ts';
+import * as patterns_v1 from './patterns.ts';
+import * as rules_v1 from './rules/index.ts';
 
 export function createTmLanguage(): TmLanguage {
   const scopeName: ScopeName = 'autohotkeyl';

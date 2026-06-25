@@ -4,11 +4,11 @@ export type LegacyPreReleaseStage = typeof legacyPreReleaseStageNames[number];
 export type MajorVersion = typeof majorVersions[number];
 export type LegacyMajorVersion = typeof legacyMajorVersions[number];
 
-export type AutoHotkeyVersion =
-  | ReleaseVersionArray
-  | PreReleaseVersionArray
-  | LegacyReleaseVersionArray
-  | LegacyPreReleaseVersionArray;
+export type AutoHotkeyVersion
+  = | LegacyPreReleaseVersionArray
+    | LegacyReleaseVersionArray
+    | PreReleaseVersionArray
+    | ReleaseVersionArray;
 export type ReleaseVersionArray = [ MajorVersion, number, number, undefined, undefined ];
 export type PreReleaseVersionArray = [ MajorVersion, number, number, PreReleaseStage, number ];
 export type LegacyReleaseVersionArray = [ LegacyMajorVersion, number, number, undefined, undefined ];

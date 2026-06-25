@@ -1,8 +1,8 @@
-import type { ScopeName } from '../../../../../src/tmlanguage';
-import { $expression } from '../../../../helpers/definition/parameter/$expression';
-import { $input } from '../../../../helpers/definition/parameter/$input';
-import { $output } from '../../../../helpers/definition/parameter/$output';
-import type { ExpectedTestData } from '../../../../types';
+import type { ScopeName } from '../../../../../src/tmlanguage.ts';
+import { $expression } from '../../../../helpers/definition/parameter/$expression.ts';
+import { $input } from '../../../../helpers/definition/parameter/$input.ts';
+import { $output } from '../../../../helpers/definition/parameter/$output.ts';
+import type { ExpectedTestData } from '../../../../types.ts';
 
 // https://www.autohotkey.com/docs/v1/lib/StringTrimLeft.htm
 export function createStringTrimLeftExpectedDataList(scopeName: ScopeName): ExpectedTestData[] {

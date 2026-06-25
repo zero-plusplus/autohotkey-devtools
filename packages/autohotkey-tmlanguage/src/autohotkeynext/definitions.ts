@@ -1,31 +1,36 @@
-import * as definitions_v2 from '../autohotkey2/definitions';
-import * as patterns_v2 from '../autohotkey2/patterns';
+import * as definitions_v2 from '../autohotkey2/definitions.ts';
+import * as patterns_v2 from '../autohotkey2/patterns.ts';
 import {
+  $shouldInteger,
   command,
   CommandParameterFlag,
   signature,
   type CommandDefinition,
   type CommandParameter,
-} from '../definition';
+} from '../definition.ts';
 import {
   anyChars1,
   seq,
   wordBound,
-} from '../oniguruma';
+} from '../oniguruma.ts';
 import {
   RuleName,
   StyleName,
-} from '../tmlanguage';
+} from '../tmlanguage.ts';
 
 export const directiveDefinitions: CommandDefinition[] = [
   ...definitions_v2.directiveDefinitions,
 
   // [v2.1-alpha.11](https://www.autohotkey.com/docs/alpha/ChangeLog.htm#v2.1-alpha.11)
   // https://www.autohotkey.com/docs/alpha/lib/_Module.htm
-  command('#Module', signature([ namespace() ])),
+  command('#Module', signature([ $namespace() ])),
+
+  // [v2.1-alpha.19](https://www.autohotkey.com/docs/alpha/ChangeLog.htm#v2.1-alpha.19)
+  // https://www.autohotkey.com/docs/alpha/lib/_StructPack.htm
+  command('#StructPack', signature([ $shouldInteger() ])),
 ];
 
-export function namespace(): CommandParameter {
+export function $namespace(): CommandParameter {
   // e.g. `#Module ModuleName`
   //               ^^^^^^^^^^
   return {

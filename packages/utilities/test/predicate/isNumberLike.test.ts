@@ -1,8 +1,3 @@
-import {
-  describe,
-  expect,
-  test,
-} from '@jest/globals';
 import { isNumberLike } from '../../src/predicate/isNumberLike';
 
 describe('isNumberLike', () => {

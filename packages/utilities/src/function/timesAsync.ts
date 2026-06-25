@@ -1,4 +1,7 @@
-import { TimesControllerState, type TimesController } from './times';
+import {
+  TimesControllerState,
+  type TimesController, 
+} from './times.ts';
 
 /**
  * Repeats the given async function a specified number of times, in sequence.

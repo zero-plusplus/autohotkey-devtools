@@ -1,4 +1,3 @@
-import * as rules_common from '..';
 import {
   alt,
   capture,
@@ -14,7 +13,7 @@ import {
   ordalt,
   seq,
   startAnchor,
-} from '../../../oniguruma';
+} from '../../../oniguruma.ts';
 import {
   includeRule,
   nameRule,
@@ -22,7 +21,8 @@ import {
   RuleName,
   type BeginEndRule,
   type ScopeName,
-} from '../../../tmlanguage';
+} from '../../../tmlanguage.ts';
+import * as rules_common from '../index.ts';
 
 interface Placeholder {
   startPattern: string;

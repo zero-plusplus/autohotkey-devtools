@@ -1,5 +1,5 @@
-import * as patterns_common from '../../../common/patterns';
-import type { CommandDefinition } from '../../../definition';
+import * as patterns_common from '../../../common/patterns.ts';
+import type { CommandDefinition } from '../../../definition.ts';
 import {
   alt,
   anyChars0,
@@ -20,13 +20,13 @@ import {
   reluctant,
   seq,
   textalt,
-} from '../../../oniguruma';
+} from '../../../oniguruma.ts';
 import {
   includeRule,
   patternsRule,
   Repository,
   type Rule,
-} from '../../../tmlanguage';
+} from '../../../tmlanguage.ts';
 
 interface Placeholder_CommandStatementRule {
   startPattern: string;

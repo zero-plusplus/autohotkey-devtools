@@ -1,4 +1,4 @@
-import type { CommandDefinition } from '../../../definition';
+import type { CommandDefinition } from '../../../definition.ts';
 import {
   alt,
   anyChars0,
@@ -15,13 +15,13 @@ import {
   seq,
   textalt,
   wordChar,
-} from '../../../oniguruma';
+} from '../../../oniguruma.ts';
 import {
   includeRule,
   patternsRule,
   Repository,
   type BeginWhileRule,
-} from '../../../tmlanguage';
+} from '../../../tmlanguage.ts';
 
 interface Placeholder_DirectiveStatementRule {
   startPattern: string;

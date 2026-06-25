@@ -1,1 +1,1 @@
-export * from './repeatArray';
+export * from './repeatArray.ts';

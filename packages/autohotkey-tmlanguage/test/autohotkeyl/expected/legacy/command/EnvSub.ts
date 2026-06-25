@@ -1,8 +1,8 @@
-import type { ScopeName } from '../../../../../src/tmlanguage';
-import { $expression } from '../../../../helpers/definition/parameter/$expression';
-import { $input } from '../../../../helpers/definition/parameter/$input';
-import { $timeunit } from '../../../../helpers/definition/parameter/$timeunit';
-import type { ExpectedTestData } from '../../../../types';
+import type { ScopeName } from '../../../../../src/tmlanguage.ts';
+import { $expression } from '../../../../helpers/definition/parameter/$expression.ts';
+import { $input } from '../../../../helpers/definition/parameter/$input.ts';
+import { $timeunit } from '../../../../helpers/definition/parameter/$timeunit.ts';
+import type { ExpectedTestData } from '../../../../types.ts';
 
 // https://www.autohotkey.com/docs/v1/lib/EnvSub.htm
 export function createEnvSubExpectedDataList(scopeName: ScopeName): ExpectedTestData[] {

@@ -1,7 +1,7 @@
-import { name, RuleName, StyleName, type ScopeName } from '../../../../src/tmlanguage';
-import type { ExpectedTestData } from '../../../types';
-import { createKeywordInvalidExpectedDataList } from '../common/invalid';
-import { createCommandExpectedData, type CommandPlaceholder } from '../helpers';
+import { name, RuleName, StyleName, type ScopeName } from '../../../../src/tmlanguage.ts';
+import type { ExpectedTestData } from '../../../types.ts';
+import { createKeywordInvalidExpectedDataList } from '../common/invalid.ts';
+import { createCommandExpectedData, type CommandPlaceholder } from '../helpers.ts';
 
 export function $blank(scopeName: ScopeName, placeholder: CommandPlaceholder): ExpectedTestData[] {
   return [

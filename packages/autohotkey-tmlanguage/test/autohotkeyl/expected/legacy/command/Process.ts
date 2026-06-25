@@ -1,11 +1,11 @@
-import { RuleName, StyleName, type ScopeName } from '../../../../../src/tmlanguage';
-import { $rest } from '../../../../helpers/definition/parameter/$rest';
-import { $shouldInteger } from '../../../../helpers/definition/parameter/$shouldInteger';
-import { $shouldKeyword } from '../../../../helpers/definition/parameter/$shouldKeyword';
-import { $subcommand } from '../../../../helpers/definition/parameter/$subcommand';
-import { $subcommandlike } from '../../../../helpers/definition/parameter/$subcommandlike';
-import { $withNumber } from '../../../../helpers/definition/parameter/$withNumber';
-import type { ExpectedTestData } from '../../../../types';
+import { RuleName, StyleName, type ScopeName } from '../../../../../src/tmlanguage.ts';
+import { $rest } from '../../../../helpers/definition/parameter/$rest.ts';
+import { $shouldInteger } from '../../../../helpers/definition/parameter/$shouldInteger.ts';
+import { $shouldKeyword } from '../../../../helpers/definition/parameter/$shouldKeyword.ts';
+import { $subcommand } from '../../../../helpers/definition/parameter/$subcommand.ts';
+import { $subcommandlike } from '../../../../helpers/definition/parameter/$subcommandlike.ts';
+import { $withNumber } from '../../../../helpers/definition/parameter/$withNumber.ts';
+import type { ExpectedTestData } from '../../../../types.ts';
 
 // https://www.autohotkey.com/docs/v1/lib/Process.htm
 export function createProcessExpectedDataList(scopeName: ScopeName): ExpectedTestData[] {

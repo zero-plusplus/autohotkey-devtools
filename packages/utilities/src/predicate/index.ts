@@ -1,2 +1,2 @@
-export * from './isIntegerLike';
-export * from './isNumberLike';
+export * from './isIntegerLike.ts';
+export * from './isNumberLike.ts';

@@ -1,8 +1,8 @@
-import { name, RuleName, StyleName, type ScopeName } from '../../../../src/tmlanguage';
-import type { ExpectedTestData } from '../../../types';
-import { createDereferenceInUnquotedParameterExpectedDataList } from '../common/dereference';
-import { createPercentExpressionParameterExpectedDataList } from '../common/percentExpression';
-import { createCommandExpectedData, type CommandPlaceholder } from '../helpers';
+import { name, RuleName, StyleName, type ScopeName } from '../../../../src/tmlanguage.ts';
+import type { ExpectedTestData } from '../../../types.ts';
+import { createDereferenceInUnquotedParameterExpectedDataList } from '../common/dereference.ts';
+import { createPercentExpressionParameterExpectedDataList } from '../common/percentExpression.ts';
+import { createCommandExpectedData, type CommandPlaceholder } from '../helpers.ts';
 
 export function $sendKeyName(scopeName: ScopeName, placeholder: CommandPlaceholder): ExpectedTestData[] {
   return [

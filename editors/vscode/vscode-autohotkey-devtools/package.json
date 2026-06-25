@@ -1,6 +1,6 @@
 {
   "name": "vscode-autohotkey-devtools",
-  "version": "0.0.2",
+  "version": "0.0.3",
   "author": "zero-plusplus (https://github.com/zero-plusplus)",
   "publisher": "zero-plusplus",
   "engines": {
@@ -167,15 +167,19 @@
   "qna": false,
   "devDependencies": {
     "@types/vscode": "^1.90.2",
-    "@vscode/vsce": "^3.3.2",
     "@zero-plusplus/autohotkey-tmlanguage": "^0.0.0"
   },
   "scripts": {
-    "build": "npx tsx scripts/bin/build.ts",
-    "watch": "npx tsx watch scripts/bin/watch.ts",
-    "clean": "npx tsx scripts/bin/clean.ts",
-    "package": "npx @vscode/vsce package",
-    "vscode:prepublish": "npx tsx scripts/bin/prepackage.ts"
+    "watch": "node --experimental-transform-types scripts/bin/watch.ts",
+
+    "build": "node --experimental-transform-types scripts/bin/build.ts",
+    "clean": "node --experimental-transform-types scripts/bin/clean.ts",
+    "package": "vsce package",
+    "vscode:prepublish": "node --experimental-transform-types scripts/bin/prepackage.ts",
+
+    "lint": "npm run lint:eslint && npm run lint:tsc",
+    "lint:eslint": "eslint --fix --ignore-pattern build/",
+    "lint:tsc": "tsc --noEmit --skipLibCheck --incremental false"
   },
   "icon": "icon.png",
   "pricing": "Free"

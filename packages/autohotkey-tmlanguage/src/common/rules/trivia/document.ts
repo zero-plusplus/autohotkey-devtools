@@ -27,7 +27,7 @@ import {
   seq,
   startAnchor,
   text,
-} from '../../../oniguruma';
+} from '../../../oniguruma.ts';
 import {
   includeRule,
   name,
@@ -44,7 +44,7 @@ import {
   type PatternsRule,
   type Rule,
   type ScopeName,
-} from '../../../tmlanguage';
+} from '../../../tmlanguage.ts';
 
 export function createDocumentCommentRule(scopeName: ScopeName): BeginEndRule {
   const contentStartPattern = seq(startAnchor(), inlineSpaces0(), char('*'));

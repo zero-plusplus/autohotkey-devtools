@@ -1,11 +1,11 @@
-import type { ScopeName } from '../../../../../src/tmlanguage';
-import { floatOption } from '../../../../helpers/definition/option/floatOption';
-import { keywordOption } from '../../../../helpers/definition/option/keywordOption';
-import { $ } from '../../../../helpers/definition/parameter/$';
-import { $endKeys } from '../../../../helpers/definition/parameter/$endKeys';
-import { $matchKeys } from '../../../../helpers/definition/parameter/$matchKeys';
-import { $output } from '../../../../helpers/definition/parameter/$output';
-import type { ExpectedTestData } from '../../../../types';
+import type { ScopeName } from '../../../../../src/tmlanguage.ts';
+import { floatOption } from '../../../../helpers/definition/option/floatOption.ts';
+import { keywordOption } from '../../../../helpers/definition/option/keywordOption.ts';
+import { $ } from '../../../../helpers/definition/parameter/$.ts';
+import { $endKeys } from '../../../../helpers/definition/parameter/$endKeys.ts';
+import { $matchKeys } from '../../../../helpers/definition/parameter/$matchKeys.ts';
+import { $output } from '../../../../helpers/definition/parameter/$output.ts';
+import type { ExpectedTestData } from '../../../../types.ts';
 
 // https://www.autohotkey.com/docs/v1/lib/Input.htm
 export function createInputExpectedDataList(scopeName: ScopeName): ExpectedTestData[] {

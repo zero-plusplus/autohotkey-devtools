@@ -1,10 +1,10 @@
-import type { ScopeName } from '../../../../../src/tmlanguage';
-import { $ } from '../../../../helpers/definition/parameter/$';
-import { $blank } from '../../../../helpers/definition/parameter/$blank';
-import { $output } from '../../../../helpers/definition/parameter/$output';
-import { $subcommand } from '../../../../helpers/definition/parameter/$subcommand';
-import { $winTitle } from '../../../../helpers/definition/parameter/$winTitle';
-import type { ExpectedTestData } from '../../../../types';
+import type { ScopeName } from '../../../../../src/tmlanguage.ts';
+import { $ } from '../../../../helpers/definition/parameter/$.ts';
+import { $blank } from '../../../../helpers/definition/parameter/$blank.ts';
+import { $output } from '../../../../helpers/definition/parameter/$output.ts';
+import { $subcommand } from '../../../../helpers/definition/parameter/$subcommand.ts';
+import { $winTitle } from '../../../../helpers/definition/parameter/$winTitle.ts';
+import type { ExpectedTestData } from '../../../../types.ts';
 
 // https://www.autohotkey.com/docs/v1/lib/WinGet.htm
 export function createWinGetExpectedDataList(scopeName: ScopeName): ExpectedTestData[] {

@@ -1,10 +1,10 @@
-import type { ScopeName } from '../../../../../src/tmlanguage';
-import { floatOption } from '../../../../helpers/definition/option/floatOption';
-import { identifierOption } from '../../../../helpers/definition/option/identifierOption';
-import { keywordOption } from '../../../../helpers/definition/option/keywordOption';
-import { $ } from '../../../../helpers/definition/parameter/$';
-import { $input } from '../../../../helpers/definition/parameter/$input';
-import type { ExpectedTestData } from '../../../../types';
+import type { ScopeName } from '../../../../../src/tmlanguage.ts';
+import { floatOption } from '../../../../helpers/definition/option/floatOption.ts';
+import { identifierOption } from '../../../../helpers/definition/option/identifierOption.ts';
+import { keywordOption } from '../../../../helpers/definition/option/keywordOption.ts';
+import { $ } from '../../../../helpers/definition/parameter/$.ts';
+import { $input } from '../../../../helpers/definition/parameter/$input.ts';
+import type { ExpectedTestData } from '../../../../types.ts';
 
 // https://www.autohotkey.com/docs/v1/lib/Sort.htm
 export function createSortExpectedDataList(scopeName: ScopeName): ExpectedTestData[] {

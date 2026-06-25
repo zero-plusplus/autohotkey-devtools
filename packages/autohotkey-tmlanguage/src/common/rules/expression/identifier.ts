@@ -9,14 +9,14 @@ import {
   seq,
   textalt,
   wordBound,
-} from '../../../oniguruma';
+} from '../../../oniguruma.ts';
 import {
   nameRule,
   RuleName,
   StyleName,
   type MatchRule,
   type ScopeName,
-} from '../../../tmlanguage';
+} from '../../../tmlanguage.ts';
 
 interface Placeholder_IdentifierRule {
   ruleName: RuleName;

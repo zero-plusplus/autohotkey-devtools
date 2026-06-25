@@ -18,14 +18,14 @@ import {
   seq,
   startAnchor,
   wordBound,
-} from '../oniguruma';
+} from '../oniguruma.ts';
 import {
   includeScope,
   patternsRule,
   type Rule,
   type ScopeName,
   type TmLanguage,
-} from '../tmlanguage';
+} from '../tmlanguage.ts';
 
 export function createTmLanguage(): TmLanguage {
   const scopeName: ScopeName = 'autohotkey';

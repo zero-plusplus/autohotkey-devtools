@@ -1,4 +1,4 @@
-import * as patterns_common from '../../../common/patterns';
+import * as patterns_common from '../../../common/patterns.ts';
 import {
   alt,
   capture,
@@ -15,7 +15,7 @@ import {
   ordalt,
   seq,
   textalt,
-} from '../../../oniguruma';
+} from '../../../oniguruma.ts';
 import {
   includeRule,
   name,
@@ -26,8 +26,8 @@ import {
   StyleName,
   type MatchRule,
   type ScopeName,
-} from '../../../tmlanguage';
-import * as constants_v1 from '../../constants';
+} from '../../../tmlanguage.ts';
+import * as constants_v1 from '../../constants.ts';
 
 interface Placeholder {
   startPattern: string;
