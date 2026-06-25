@@ -18,11 +18,13 @@
 		"strictPropertyInitialization": true,
 		"useUnknownInCatchVariables": true,
 
-		"module": "CommonJS",
+		"module": "esnext",
+		"moduleResolution": "bundler",
 		"resolveJsonModule": true,
+		"rootDir": ".",
 		"types": [
 			"node",
-			"jest"
+			"vitest/globals"
 		],
 
 		"declaration": true,

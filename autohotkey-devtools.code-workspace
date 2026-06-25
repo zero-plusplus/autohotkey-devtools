@@ -30,11 +30,7 @@
 		},
 	],
 	"settings": {
-		"js/ts.preferences.preferTypeOnlyAutoImports": true,
 		"[typescript]": {
-			"editor.codeActionsOnSave": {
-				"source.organizeImports": "always"
-			},
 			"editor.foldingImportsByDefault": true,
 		},
 	}
