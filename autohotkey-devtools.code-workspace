@@ -29,9 +29,4 @@
 			"name": "🏠"
 		},
 	],
-	"settings": {
-		"[typescript]": {
-			"editor.foldingImportsByDefault": true,
-		},
-	}
 }
