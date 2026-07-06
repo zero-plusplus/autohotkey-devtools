@@ -11,10 +11,16 @@ import {
 } from '../../constants';
 
 export const scanNewLineToken: LexerFunction = (lexer: Lexer): TokenKind | undefined => {
-  const startPosition = lexer.state.position;
-  lexer.consume(CharacterCodes.CarriageReturn);
-  lexer.consume(CharacterCodes.LineFeed);
-  if (startPosition < lexer.state.position) {
+  // \r\n or \r
+  if (lexer.consume(CharacterCodes.CarriageReturn)) {
+    if (lexer.consume(CharacterCodes.LineFeed)) {
+      return TokenKinds.NewLine;
+    }
+    return TokenKinds.NewLine;
+  }
+
+  // \n
+  if (lexer.consume(CharacterCodes.LineFeed)) {
     return TokenKinds.NewLine;
   }
   return undefined;

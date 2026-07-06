@@ -50,9 +50,7 @@ export function scanStringTokenByQuote(lexer: Lexer, quoteCharCode: number): Tok
         case CharacterCodes._F:
         case CharacterCodes.Colon: {
           lexer.advance();
-          if (lexer.peek() === CharacterCodes.Colon) {
-            lexer.advance();
-          }
+          lexer.consume(CharacterCodes.Colon);
           break;
         }
         case quoteCharCode:

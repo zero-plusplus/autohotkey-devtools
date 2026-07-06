@@ -46,9 +46,8 @@ export const scanDoubleStringToken: LexerFunction = (lexer: Lexer): TokenKind | 
           break;
         case CharacterCodes.Colon:
           lexer.advance();
-          if (lexer.consume(CharacterCodes.Colon)) {
-            lexer.advance();
-          }
+          lexer.consume(CharacterCodes.Colon);
+          lexer.consume(CharacterCodes.Colon);
           break;
         default: break;
       }
