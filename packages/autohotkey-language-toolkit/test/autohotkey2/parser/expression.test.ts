@@ -5,7 +5,6 @@ import {
   makeBinaryExpressionNode,
   makeIdentifierToken,
   makeMinusToken,
-  makeNodeFromToken,
   makeNumericLiteralToken,
   makePlusPlusToken,
   makePlusToken,
@@ -15,8 +14,8 @@ import { expressionParser } from '../../../src/languages/autohotkey2';
 
 describe('expression', () => {
   test.each([
-    [ '1', makeNodeFromToken(makeNumericLiteralToken(1)) ],
-    [ 'var', makeNodeFromToken(makeIdentifierToken('var')) ],
+    [ '1', makeNumericLiteralToken(1) ],
+    [ 'var', makeIdentifierToken('var') ],
   ])('literal expressions', (source, expected) => {
     const node = expressionParser.parse(source);
     expect(node).toEqual(expected);
@@ -24,8 +23,8 @@ describe('expression', () => {
 
   test.each([
     [ '++var', makePrefixUnaryExpressionNode([
-      makeNodeFromToken(makePlusPlusToken()),
-      makeNodeFromToken(makeIdentifierToken('var')),
+      makePlusPlusToken(),
+      makeIdentifierToken('var'),
     ]) ],
   ])('unary expressions', (source, expected) => {
     const node = expressionParser.parse(source);
@@ -34,14 +33,14 @@ describe('expression', () => {
 
   test.each([
     [ '1+2', makeBinaryExpressionNode([
-      makeNodeFromToken(makeNumericLiteralToken(1)),
-      makeNodeFromToken(makePlusToken()),
-      makeNodeFromToken(makeNumericLiteralToken(2)),
+      makeNumericLiteralToken(1),
+      makePlusToken(),
+      makeNumericLiteralToken(2),
     ]) ],
     [ '1-2', makeBinaryExpressionNode([
-      makeNodeFromToken(makeNumericLiteralToken(1)),
-      makeNodeFromToken(makeMinusToken()),
-      makeNodeFromToken(makeNumericLiteralToken(2)),
+      makeNumericLiteralToken(1),
+      makeMinusToken(),
+      makeNumericLiteralToken(2),
     ]) ],
   ])('binary expressions', (source, expected) => {
     const node = expressionParser.parse(source);
@@ -50,30 +49,30 @@ describe('expression', () => {
 
   test.each([
     [ '1+2*3', makeBinaryExpressionNode([
-      makeNodeFromToken(makeNumericLiteralToken(1)),
-      makeNodeFromToken(makePlusToken()),
+      makeNumericLiteralToken(1),
+      makePlusToken(),
       makeBinaryExpressionNode([
-        makeNodeFromToken(makeNumericLiteralToken(2)),
-        makeNodeFromToken(makeAsteriskToken()),
-        makeNodeFromToken(makeNumericLiteralToken(3)),
+        makeNumericLiteralToken(2),
+        makeAsteriskToken(),
+        makeNumericLiteralToken(3),
       ]),
     ]) ],
     [ '1*2**3', makeBinaryExpressionNode([
-      makeNodeFromToken(makeNumericLiteralToken(1)),
-      makeNodeFromToken(makeAsteriskToken()),
+      makeNumericLiteralToken(1),
+      makeAsteriskToken(),
       makeBinaryExpressionNode([
-        makeNodeFromToken(makeNumericLiteralToken(2)),
-        makeNodeFromToken(makeAsteriskAsteriskToken()),
-        makeNodeFromToken(makeNumericLiteralToken(3)),
+        makeNumericLiteralToken(2),
+        makeAsteriskAsteriskToken(),
+        makeNumericLiteralToken(3),
       ]),
     ]) ],
     [ '1&&2+3', makeBinaryExpressionNode([
-      makeNodeFromToken(makeNumericLiteralToken(1)),
-      makeNodeFromToken(makeAmpersandAmpersandToken()),
+      makeNumericLiteralToken(1),
+      makeAmpersandAmpersandToken(),
       makeBinaryExpressionNode([
-        makeNodeFromToken(makeNumericLiteralToken(2)),
-        makeNodeFromToken(makePlusToken()),
-        makeNodeFromToken(makeNumericLiteralToken(3)),
+        makeNumericLiteralToken(2),
+        makePlusToken(),
+        makeNumericLiteralToken(3),
       ]),
     ]) ],
   ])('operator precedence/associative', (source, expected) => {

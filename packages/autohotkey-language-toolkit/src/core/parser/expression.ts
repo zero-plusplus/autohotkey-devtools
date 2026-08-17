@@ -1,6 +1,7 @@
 import type {
   ExpressionParserConfig,
   Parser,
+  SyntaxElement,
   SyntaxNode,
   SyntaxToken,
   SyntaxTokenStream,
@@ -8,20 +9,21 @@ import type {
 } from '../../types';
 import {
   makeBinaryExpressionNode,
-  makeNodeFromToken,
   makePrefixUnaryExpressionNode,
 } from '../factory';
 
 export function createExpressionParser(stream: SyntaxTokenStream, config: ExpressionParserConfig): Parser {
   return {
-    parse(source: string): SyntaxNode {
+    parse(source: string): SyntaxElement {
       stream.initialize(source);
 
       return parseExpression(stream, config);
     },
   };
 }
-export function parseExpression(cursor: TokenStreamView<SyntaxToken>, config: ExpressionParserConfig, prevBindingPower = 0): SyntaxNode {
+
+// #region helpers
+function parseExpression(cursor: TokenStreamView<SyntaxToken>, config: ExpressionParserConfig, prevBindingPower = 0): SyntaxElement {
   let left = nud(cursor, config, prevBindingPower);
 
   while (!cursor.eof()) {
@@ -43,21 +45,19 @@ export function parseExpression(cursor: TokenStreamView<SyntaxToken>, config: Ex
   }
   return left;
 }
-
-// #region helpers
-function nud(cursor: TokenStreamView<SyntaxToken>, config: ExpressionParserConfig, bp = 0): SyntaxNode {
+function nud(cursor: TokenStreamView<SyntaxToken>, config: ExpressionParserConfig, bp = 0): SyntaxElement {
   const token = cursor.read();
   const prefixConfig = config.operators.prefix[token.text];
   if (prefixConfig) {
-    const operatorNode = makeNodeFromToken(token);
+    const operator = token;
     const operandNode = parseExpression(cursor, config, prefixConfig.bindingPower);
-    return makePrefixUnaryExpressionNode([ operatorNode, operandNode ]);
+    return makePrefixUnaryExpressionNode([ operator, operandNode ]);
   }
 
-  return makeNodeFromToken(token);
+  return token;
 }
-function led(cursor: TokenStreamView<SyntaxToken>, config: ExpressionParserConfig, leftNode: SyntaxNode, operatorToken: SyntaxToken, currentBindingPower = 0): SyntaxNode {
+function led(cursor: TokenStreamView<SyntaxToken>, config: ExpressionParserConfig, left: SyntaxElement, operatorToken: SyntaxToken, currentBindingPower = 0): SyntaxNode {
   const right = parseExpression(cursor, config, currentBindingPower);
-  return makeBinaryExpressionNode([ leftNode, makeNodeFromToken(operatorToken), right ]);
+  return makeBinaryExpressionNode([ left, operatorToken, right ]);
 }
 // #endregion helpers

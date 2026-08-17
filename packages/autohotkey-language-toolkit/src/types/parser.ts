@@ -1,4 +1,4 @@
-import { SyntaxNode } from './factory';
+import { SyntaxElement } from './factory';
 
 export interface OperatorDefinition {
   bindingPower: number;
@@ -14,5 +14,5 @@ export interface ExpressionParserConfig {
 }
 
 export interface Parser {
-  parse: (source: string) => SyntaxNode;
+  parse: (source: string) => SyntaxElement;
 }

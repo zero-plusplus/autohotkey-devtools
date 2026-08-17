@@ -10,9 +10,6 @@ import { makeSyntaxElement } from './internal';
 export function makeNode(kind: SyntaxKind, children: SyntaxElement[], flags = 0): SyntaxNode {
   return makeSyntaxElement(kind, flags, children) as SyntaxNode;
 }
-export function makeNodeFromToken(token: SyntaxToken, flags = 0): SyntaxNode {
-  return makeNode(token.kind, [ token ], flags);
-}
 export function makePrefixUnaryExpressionNode(children: SyntaxElement[], flags = 0): SyntaxNode {
   return makeNode(SyntaxKinds.PrefixUnaryExpression, children, flags);
 }
