@@ -4,7 +4,7 @@ import type {
   SyntaxNode,
   SyntaxToken,
 } from '../../types';
-import { NodeKind } from '../constants';
+import { SyntaxKinds } from '../constants';
 import { makeSyntaxElement } from './internal';
 
 export function makeNode(kind: SyntaxKind, children: SyntaxElement[], flags = 0): SyntaxNode {
@@ -14,12 +14,12 @@ export function makeNodeFromToken(token: SyntaxToken, flags = 0): SyntaxNode {
   return makeNode(token.kind, [ token ], flags);
 }
 export function makePrefixUnaryExpressionNode(children: SyntaxElement[], flags = 0): SyntaxNode {
-  return makeNode(NodeKind.PrefixUnaryExpression, children, flags);
+  return makeNode(SyntaxKinds.PrefixUnaryExpression, children, flags);
 }
 export function makePostfixUnaryExpressionNode(children: SyntaxElement[], flags = 0): SyntaxNode {
-  return makeNode(NodeKind.PostfixUnaryExpression, children, flags);
+  return makeNode(SyntaxKinds.PostfixUnaryExpression, children, flags);
 }
 export function makeBinaryExpressionNode(children: SyntaxElement[], flags = 0): SyntaxNode {
-  return makeNode(NodeKind.BinaryExpression, children, flags);
+  return makeNode(SyntaxKinds.BinaryExpression, children, flags);
 }
 

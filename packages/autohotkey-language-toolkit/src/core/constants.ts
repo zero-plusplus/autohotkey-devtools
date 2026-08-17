@@ -193,7 +193,7 @@ export const TokenKinds = {
   Unknown: 'Unknown',
 } as const;
 
-export const NodeKind = {
+export const SyntaxKinds = {
   PrefixUnaryExpression: 'PrefixUnaryExpression',
   PostfixUnaryExpression: 'PostfixUnaryExpression',
   BinaryExpression: 'BinaryExpression',
