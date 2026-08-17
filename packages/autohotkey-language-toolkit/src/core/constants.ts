@@ -1,7 +1,9 @@
-import {
-  EndOfFileTokenKind,
-  UnknownTokenKind, 
-} from './types';
+/* eslint-disable @stylistic/no-multi-spaces */
+export const enum TokenFlag {
+  None =                          0,
+  HasLineBreakInLeadingTrivias =  1 << 0,
+  HasSpacesInTralingTrivias =     1 << 1,
+}
 
 export const CharacterCodes = {
   Null: 0,
@@ -116,5 +118,86 @@ export const CharacterCodes = {
   FullWidthStart: 0x10000,
 } as const;
 
-export const endOfFileTokenKind: EndOfFileTokenKind = 'EndOfFile';
-export const unknownTokenKind: UnknownTokenKind = 'Unknown';
+export const TokenKinds = {
+  Ampersand: 'Ampersand',
+  AmpersandAmpersand: 'AmpersandAmpersand',
+  AmpersandEqual: 'AmpersandEqual',
+  Asterisk: 'Asterisk',
+  AsteriskAsterisk: 'AsteriskAsterisk',
+  AsteriskEquals: 'AsteriskEquals',
+  Bar: 'Bar',
+  BarBar: 'BarBar',
+  BarEquals: 'BarEquals',
+  Caret: 'Caret',
+  CaretEquals: 'CaretEquals',
+  CloseBrace: 'CloseBrace',
+  CloseBracket: 'CloseBracket',
+  CloseParen: 'CloseParen',
+  Colon: 'Colon',
+  ColonEquals: 'ColonEquals',
+  Comma: 'Comma',
+  Dot: 'Dot',
+  DotEquals: 'DotEquals',
+  Equals: 'Equals',
+  EqualsEquals: 'EqualsEquals',
+  EqualsGreaterThan: 'EqualsGreaterThan',
+  Exclamation: 'Exclamation',
+  ExclamationEquals: 'ExclamationEquals',
+  ExclamationEqualsEquals: 'ExclamationEqualsEquals',
+  GreaterThan: 'GreaterThan',
+  GreaterThanEquals: 'GreaterThanEquals',
+  GreaterThanGreaterThan: 'GreaterThanGreaterThan',
+  GreaterThanGreaterThanEquals: 'GreaterThanGreaterThanEquals',
+  GreaterThanGreaterThanGreaterThan: 'GreaterThanGreaterThanGreaterThan',
+  GreaterThanGreaterThanGreaterThanEquals: 'GreaterThanGreaterThanGreaterThanEquals',
+  LessThan: 'LessThan',
+  LessThanEquals: 'LessThanEquals',
+  LessThanGreaterThan: 'LessThanGreaterThan',
+  LessThanLessThan: 'LessThanLessThan',
+  LessThanLessThanEquals: 'LessThanLessThanEquals',
+  Minus: 'Minus',
+  MinusEquals: 'MinusEquals',
+  MinusMinus: 'MinusMinus',
+  OpenBrace: 'OpenBrace',
+  OpenBracket: 'OpenBracket',
+  OpenParen: 'OpenParen',
+  Percent: 'Percent',
+  Pipe: 'Pipe',
+  Plus: 'Plus',
+  PlusEquals: 'PlusEquals',
+  PlusPlus: 'PlusPlus',
+  Question: 'Question',
+  QuestionQuestion: 'QuestionQuestion',
+  QuestionQuestionEquals: 'QuestionQuestionEquals',
+  Slash: 'Slash',
+  SlashEquals: 'SlashEquals',
+  SlashSlash: 'SlashSlash',
+  SlashSlashEquals: 'SlashSlashEquals',
+  Tilde: 'Tilde',
+  TildeEquals: 'TildeEquals',
+
+  Identifier: 'Identifier',
+  StringLiteral: 'StringLiteral',
+  NumericLiteral: 'NumericLiteral',
+
+  Bom: 'Bom',
+  Space: 'Space',
+  Tab: 'Tab',
+  NewLine: 'NewLine',
+  LineComment: 'LineComment',
+  BlockComment: 'BlockComment',
+
+  EndOfFile: 'EndOfFile',
+  EndOfView: 'EndOfView',
+
+  Unknown: 'Unknown',
+} as const;
+
+export const NodeKind = {
+  PrefixUnaryExpression: 'PrefixUnaryExpression',
+  PostfixUnaryExpression: 'PostfixUnaryExpression',
+  BinaryExpression: 'BinaryExpression',
+
+  EndOfFile: 'EndOfFile',
+  EndOfView: 'EndOfView',
+} as const;

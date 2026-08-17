@@ -1,7 +1,7 @@
+import type { TokenKind } from '../types';
 import {
   CharacterCodes,
 } from './constants';
-import type { TokenKind } from './types';
 
 export function isAlphaCharCode(charCode: number | undefined): charCode is number {
   if (charCode === undefined) {
