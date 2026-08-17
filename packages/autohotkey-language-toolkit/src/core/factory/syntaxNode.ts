@@ -2,7 +2,6 @@ import type {
   SyntaxElement,
   SyntaxKind,
   SyntaxNode,
-  SyntaxToken,
 } from '../../types';
 import { SyntaxKinds } from '../constants';
 import { makeSyntaxElement } from './internal';
