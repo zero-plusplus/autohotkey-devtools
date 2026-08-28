@@ -44,6 +44,7 @@ export interface TokenStreamView<T> {
   eof: () => boolean;
   peek: () => T;
   read: () => T;
+  advance: () => this;
 }
 export interface Stream<T> extends TokenStreamView<T> {
   readonly state: StreamState;

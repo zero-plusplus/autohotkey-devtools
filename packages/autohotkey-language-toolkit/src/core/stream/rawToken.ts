@@ -47,6 +47,8 @@ export function createRawTokenStream(stream: CharStream, rootRawTokenTable: RawT
     read(): RawToken {
       if (nextRawTokenPosition) {
         const token = peekedRawTokenCache!;
+
+        startPosition = nextRawTokenPosition;
         stream.seek(nextRawTokenPosition);
 
         peekedRawTokenCache = undefined;
@@ -55,6 +57,10 @@ export function createRawTokenStream(stream: CharStream, rootRawTokenTable: RawT
       }
 
       return readRawToken(stream, rootRawTokenTable);
+    },
+    advance(): RawTokenStream {
+      this.read();
+      return this;
     },
     consume(expected: TokenKind): boolean {
       const token = this.peek();

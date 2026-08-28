@@ -79,6 +79,10 @@ export function createSyntaxTokenStream(spec: LexicalSpec): SyntaxTokenStream {
 
       return makeSyntaxToken(token.kind, token.text, leadingTrivia, trailingTrivia, rawTokenStream.state.flags);
     },
+    advance(): SyntaxTokenStream {
+      this.read();
+      return this;
+    },
     consume(expected: TokenKind): boolean {
       if (this.peek().kind === expected) {
         this.read();

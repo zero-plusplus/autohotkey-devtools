@@ -1,6 +1,6 @@
 import { createExpressionParser } from '../../../../core';
-import type { Parser } from '../../../../types';
+import type { ExpressionParser } from '../../../../types';
 import { stream } from '../../lexer';
-import { operatorDefinitions } from './grammar';
+import { expressionParserConfig } from './grammar';
 
-export const expressionParser: Parser = createExpressionParser(stream, operatorDefinitions);
+export const expressionParser: ExpressionParser = createExpressionParser(stream, expressionParserConfig);

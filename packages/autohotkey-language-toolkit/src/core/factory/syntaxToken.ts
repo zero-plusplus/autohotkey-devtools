@@ -39,10 +39,33 @@ export function makeAmpersandToken(leadingTrivia: RawToken[] = [], trailingTrivi
 export function makeAmpersandAmpersandToken(leadingTrivia: RawToken[] = [], trailingTrivia: RawToken[] = []): SyntaxToken {
   return makeSyntaxToken(TokenKinds.AmpersandAmpersand, '&&', leadingTrivia, trailingTrivia);
 }
+export function makeOpenParenToken(leadingTrivia: RawToken[] = [], trailingTrivia: RawToken[] = []): SyntaxToken {
+  return makeSyntaxToken(TokenKinds.OpenParen, '(', leadingTrivia, trailingTrivia);
+}
+export function makeCloseParenToken(leadingTrivia: RawToken[] = [], trailingTrivia: RawToken[] = []): SyntaxToken {
+  return makeSyntaxToken(TokenKinds.CloseParen, ')', leadingTrivia, trailingTrivia);
+}
+export function makeOpenBraceToken(leadingTrivia: RawToken[] = [], trailingTrivia: RawToken[] = []): SyntaxToken {
+  return makeSyntaxToken(TokenKinds.OpenBrace, '{', leadingTrivia, trailingTrivia);
+}
+export function makeCloseBraceToken(leadingTrivia: RawToken[] = [], trailingTrivia: RawToken[] = []): SyntaxToken {
+  return makeSyntaxToken(TokenKinds.CloseBrace, '}', leadingTrivia, trailingTrivia);
+}
+export function makeOpenBracketToken(leadingTrivia: RawToken[] = [], trailingTrivia: RawToken[] = []): SyntaxToken {
+  return makeSyntaxToken(TokenKinds.OpenBracket, '[', leadingTrivia, trailingTrivia);
+}
+export function makeCloseBracketToken(leadingTrivia: RawToken[] = [], trailingTrivia: RawToken[] = []): SyntaxToken {
+  return makeSyntaxToken(TokenKinds.CloseBracket, ']', leadingTrivia, trailingTrivia);
+}
+export function makeDotToken(leadingTrivia: RawToken[] = [], trailingTrivia: RawToken[] = []): SyntaxToken {
+  return makeSyntaxToken(TokenKinds.Dot, '.', leadingTrivia, trailingTrivia);
+}
 export function makeEndOfFileToken(leadingTrivia: RawToken[] = [], trailingTrivia: RawToken[] = []): SyntaxToken {
   return makeSyntaxToken(TokenKinds.EndOfFile, '', leadingTrivia, trailingTrivia);
 }
 export function makeEndOfViewToken(leadingTrivia: RawToken[] = [], trailingTrivia: RawToken[] = []): SyntaxToken {
   return makeSyntaxToken(TokenKinds.EndOfView, '', leadingTrivia, trailingTrivia);
 }
-
+export function makeMissingToken(kind: TokenKind, leadingTrivia: RawToken[] = [], trailingTrivia: RawToken[] = [], flags = 0): SyntaxToken {
+  return makeSyntaxToken(kind, undefined, leadingTrivia, trailingTrivia, flags);
+}

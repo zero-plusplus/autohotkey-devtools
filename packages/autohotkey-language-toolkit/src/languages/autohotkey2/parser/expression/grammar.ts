@@ -1,3 +1,6 @@
+import {
+  SyntaxKinds,
+} from '../../../../core';
 import { ExpressionParserConfig } from '../../../../types';
 
 export const Precedences = {
@@ -26,7 +29,7 @@ export const Precedences = {
   Highest: 200,
 } as const;
 
-export const operatorDefinitions: ExpressionParserConfig = {
+export const expressionParserConfig: ExpressionParserConfig = {
   operators: {
     prefix: {
       '++': { bindingPower: Precedences.Update },
@@ -37,7 +40,6 @@ export const operatorDefinitions: ExpressionParserConfig = {
     infix: {
       '+': { bindingPower: Precedences.Additive },
       '-': { bindingPower: Precedences.Additive },
-      '.': { bindingPower: Precedences.Additive },
       '*': { bindingPower: Precedences.Multiplicative },
       '/': { bindingPower: Precedences.Multiplicative },
       '//': { bindingPower: Precedences.Multiplicative },
@@ -62,6 +64,26 @@ export const operatorDefinitions: ExpressionParserConfig = {
       '++': { bindingPower: Precedences.Update },
       '--': { bindingPower: Precedences.Update },
       '*': { bindingPower: Precedences.Update },
+    },
+
+    circumfix: {
+      '(': {
+        kind: SyntaxKinds.ParenthesizedExpression,
+        close: ')',
+        bindingPower: Precedences.Highest,
+      },
+      '[': {
+        kind: SyntaxKinds.ArrayLiteralExpression,
+        close: ']',
+        bindingPower: Precedences.Primary,
+      },
+    },
+    postcircumfix: {
+      '[': {
+        kind: SyntaxKinds.ElementAccessExpression,
+        close: ']',
+        bindingPower: Precedences.Member,
+      },
     },
   },
 };

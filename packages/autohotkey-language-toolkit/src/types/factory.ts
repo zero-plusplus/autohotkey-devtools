@@ -10,16 +10,31 @@ export interface SyntaxToken {
   readonly text: string;
   readonly leadingTrivia: RawToken[];
   readonly trailingTrivia: RawToken[];
+
+  readonly children?: undefined;
 }
 // #endregion token
 
 // #region node
 export type SyntaxKind = string;
-export type SyntaxElement = SyntaxToken | SyntaxNode;
+export type SyntaxElement = SyntaxToken | SyntaxNode | MissingNode;
 export interface SyntaxNode {
   readonly kind: SyntaxKind;
   readonly flags: number;
   readonly children: SyntaxElement[];
+
+  readonly text?: undefined;
+  readonly leadingTrivia?: undefined;
+  readonly trailingTrivia?: undefined;
+}
+export interface MissingNode {
+  readonly kind: SyntaxKind;
+  readonly flags: number;
+
+  readonly children?: SyntaxElement[];
+  readonly text?: undefined;
+  readonly leadingTrivia?: undefined;
+  readonly trailingTrivia?: undefined;
 }
 // #endregion node
 
